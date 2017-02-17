@@ -1,0 +1,31 @@
+{
+"nodes":
+[
+{"id":"A", "concept":{"conceptTitle": "A"}},
+{"id":"B", "concept":{"conceptTitle": "B"}},
+{"id":"C", "concept":{"conceptTitle": "C"}},
+{"id":"test_question6_6_1", "concept":{"conceptTitle": "test_question6_6_1"}},
+{"id":"test_question6_8_2", "concept":{"conceptTitle": "test_question6_8_2"}},
+{"id":"test_question6_7_1", "concept":{"conceptTitle": "test_question6_7_1"}},
+{"id":"test_question6_7_2", "concept":{"conceptTitle": "test_question6_7_2"}},
+{"id":"test_question6_4_1", "concept":{"conceptTitle": "test_question6_4_1"}},
+{"id":"test_question6_4_2", "concept":{"conceptTitle": "test_question6_4_2"}},
+{"id":"test_question6_4_3", "concept":{"conceptTitle": "test_question6_4_3"}},
+{"id":"test_question3_5_2", "concept":{"conceptTitle": "test_question3_5_2"}}
+
+],
+"links":
+[
+{"parent":"A", "child":"B"},
+{"parent":"A", "child":"C"},
+{"parent":"B", "child":"C"},
+{"parent":"A", "child":"test_question3_5_2"},
+{"parent":"B", "child":"test_question6_4_1"},
+{"parent":"B", "child":"test_question6_4_2"},
+{"parent":"B", "child":"test_question6_4_3"},
+{"parent":"C", "child":"test_question6_6_1"},
+{"parent":"C", "child":"test_question6_8_2"},
+{"parent":"C", "child":"test_question6_7_1"},
+{"parent":"C", "child":"test_question6_7_2"}
+]
+}
