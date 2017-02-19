@@ -1,40 +1,53 @@
 package edu.ithaca.dragonlab.ckc;
 
-import java.io.File;
-import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Paths;
-
-import edu.ithaca.dragonlab.ckc.util.ErrorUtil;
+import com.fasterxml.jackson.databind.DeserializationFeature;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import edu.ithaca.dragonlab.ckc.learningobject.ExampleLearningObjectFactory;
+import edu.ithaca.dragonlab.ckc.learningobject.ExampleLearningObjectResponseFactory;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.junit.Assert;
 import org.junit.Test;
 
-import com.fasterxml.jackson.core.JsonGenerationException;
-import com.fasterxml.jackson.databind.DeserializationFeature;
-import com.fasterxml.jackson.databind.JsonMappingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
+import java.io.File;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 
-import static org.junit.Assert.fail;
 
 public class ConceptGraphTest {
 	static Logger logger = LogManager.getLogger(ConceptGraphTest.class);
 
-    @Test
-    public void multiFileConstructorTest(){
-        NodesAndIDLinks struct = null;
-        try {
-            struct = NodesAndIDLinks.buildfromJson("test/testresources/structureConcept.json");
-            NodesAndIDLinks lists = NodesAndIDLinks.buildfromJson("test/testresources/learningOutcomes.json");
-            ConceptGraph graph = new ConceptGraph(struct,lists);
-            NodesAndIDLinks links = graph.buildNodesAndLinks();
+    public static float ERROR_MARGIN = (float) 0.001;
 
-            Assert.assertEquals(9, links.getLinks().size());
-            Assert.assertEquals(10, links.getNodes().size());
-        } catch (IOException e) {
-            fail(ErrorUtil.errorToStr(e));
-        }
+    @Test
+    public void addLearningObjectsTest(){
+        ConceptGraph graph = ExampleConceptGraphFactory.makeSimple();
+        graph.addLearningObjects(ExampleLearningObjectFactory.makeSimpleLearningObjectDef());
+
+        Assert.assertEquals(2, graph.findNodeById("B").getLearningObjectMap().size());
+        Assert.assertEquals(4, graph.findNodeById("C").getLearningObjectMap().size());
+    }
+
+    @Test
+    public void addLearningObjectsAndResponsesTest(){
+        ConceptGraph graph = ExampleConceptGraphFactory.makeSimple();
+        graph.addLearningObjects(ExampleLearningObjectFactory.makeSimpleLearningObjectDef());
+        graph.addSummariesToGraph(ExampleLearningObjectResponseFactory.makeSimpleResponses());
+
+        Assert.assertEquals(3, graph.findNodeById("B").getLearningObjectMap().get("Q1").getResponses().size());
+        Assert.assertEquals(3, graph.findNodeById("B").getLearningObjectMap().get("Q2").getResponses().size());
+        Assert.assertEquals(3, graph.findNodeById("C").getLearningObjectMap().get("Q3").getResponses().size());
+        Assert.assertEquals(3, graph.findNodeById("C").getLearningObjectMap().get("Q4").getResponses().size());
+        Assert.assertEquals(2, graph.findNodeById("C").getLearningObjectMap().get("Q5").getResponses().size());
+        Assert.assertEquals(2, graph.findNodeById("C").getLearningObjectMap().get("Q6").getResponses().size());
+
+        Assert.assertEquals(1,     graph.findNodeById("B").getLearningObjectMap().get("Q1").calcKnowledgeEstimate(), ERROR_MARGIN);
+        Assert.assertEquals(1,     graph.findNodeById("B").getLearningObjectMap().get("Q2").calcKnowledgeEstimate(), ERROR_MARGIN);
+        Assert.assertEquals(0.667, graph.findNodeById("C").getLearningObjectMap().get("Q3").calcKnowledgeEstimate(), ERROR_MARGIN);
+        Assert.assertEquals(0.333, graph.findNodeById("C").getLearningObjectMap().get("Q4").calcKnowledgeEstimate(), ERROR_MARGIN);
+        Assert.assertEquals(0.5,   graph.findNodeById("C").getLearningObjectMap().get("Q5").calcKnowledgeEstimate(), ERROR_MARGIN);
+        Assert.assertEquals(0.5,   graph.findNodeById("C").getLearningObjectMap().get("Q6").calcKnowledgeEstimate(), ERROR_MARGIN);
     }
 
     @Test
@@ -135,7 +148,7 @@ public class ConceptGraphTest {
 	}
 	
 	@Test
-	public void makeJSONfromConceptGraphTest(){
+	public void makeJsonFromConceptGraphTest(){
 
 		ObjectMapper mapper = new ObjectMapper();
 		mapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
@@ -172,7 +185,7 @@ public class ConceptGraphTest {
 	}
 	
 	@Test
-	public void makeJSONfromConceptGraphTreeTest(){
+	public void makeJsonFromConceptGraphTreeTest(){
 
 		ObjectMapper mapper = new ObjectMapper();
 		mapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
@@ -212,7 +225,7 @@ public class ConceptGraphTest {
     //TODO: Adapt to new graph creation once data is reinstated
 //	@Test
 //	public void calcActualCompTest() {
-//        List<LearningObjectResponse> responses = PerUserPerProblemSummary.parseLearningObjectsFromFile("test/testdata/timeTest.xml");
+//        List<LearningObjectResponse> responses = ExampleLearningObjectResponseFactory.makeSimple();
 //        ConceptGraph structureGraph = ConceptGraph
 //
 //		float delta = (float) .01;

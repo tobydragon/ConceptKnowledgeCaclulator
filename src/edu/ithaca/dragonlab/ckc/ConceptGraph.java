@@ -16,13 +16,57 @@ public class ConceptGraph {
     private static final Logger logger = LogManager.getLogger(ConceptGraph.class);
 	public static final Integer DIVISION_FACTOR = 2;
 
-
 	List<ConceptNode> roots;
-	String stringToReturn = "";
 
 	//This information will be duplicated, links will be found in nodes, but also here.
 	Map<String, LearningObject> learningObjectMap;
+	Map<String, ConceptNode> nodeMap;
+	
+	//TODO: This seems to use and change the same nodes. Calling this constructor twice would break things...
+	public ConceptGraph(NodesAndIDLinks structureDef){
+        learningObjectMap = new HashMap<>();
+        nodeMap = new HashMap<>();
+		List<ConceptNode> nodes =structureDef.getNodes();
+		List<IDLink> links = structureDef.getLinks();
 
+		this.roots = findRoots(nodes, links);
+        this.nodeMap = addChildren(nodes, links);
+	}
+
+	public ConceptGraph(ConceptGraph graph){
+		NodesAndIDLinks lists = graph.buildNodesAndLinks();
+        List<ConceptNode> nodes = new ArrayList<>();
+		List<ConceptNode> nodesIn = lists.getNodes();
+		for(ConceptNode node: nodesIn){
+			ConceptNode tempNode = new ConceptNode(node.getID());
+			nodes.add(tempNode);
+		}
+
+		List<IDLink> links = new ArrayList<>();
+		List<IDLink> linksIn = lists.getLinks();
+		for(IDLink link: linksIn){
+			IDLink tempLink = new IDLink(link.getParent(),link.getChild());
+			links.add(tempLink);
+		}
+		
+		this.roots = findRoots(nodes, links);
+		this.nodeMap = addChildren(nodes, links);
+	}
+
+	//TODO: When book code is integrated
+//	public ConceptGraph(Book b, NodesAndIDLinks lists){
+//		List<ConceptNode> nodes = lists.getNodes();
+//		List<IDLink> links = lists.getLinks();
+//
+//		List<IDLink> newLinks = b.buildTagLinks();
+//		for(IDLink link : newLinks){
+//			links.add(link);
+//		}
+//
+//		this.roots = findRoots(nodes, links);
+//
+//		addChildren(nodes, links);
+//	}
 
 	/*
 	 *Takes in a book, starts at the root, then goes through each level (chapters, sub chapters, questions) and creates
@@ -60,77 +104,42 @@ public class ConceptGraph {
 //		this.roots.add(root);
 //	}
 	
-	//TODO: This seems to use anc change the same nodes, rather than making new ones...
-	public ConceptGraph(NodesAndIDLinks lists) {
-		List<ConceptNode> nodes = lists.getNodes();
-		List<IDLink> links = lists.getLinks();
-		this.roots = findRoot(nodes, links);
-		
-		addChildren(nodes, links);
-	}
-	
-	public ConceptGraph(NodesAndIDLinks structure, NodesAndIDLinks lists) {
-		List<ConceptNode> nodes = lists.getNodes();
-		List<IDLink> links = lists.getLinks();
-		for(ConceptNode node: structure.getNodes()){
-			nodes.add(node);
-		}
-		for(IDLink link: structure.getLinks()){
-			links.add(link);
-		}
-		this.roots = findRoot(nodes, links);
-		
-		addChildren(nodes, links);
-	}
-	
-	public ConceptGraph(ConceptGraph graph){
-		NodesAndIDLinks lists = graph.buildNodesAndLinks();
-        List<ConceptNode> nodes = new ArrayList<>();
-		List<ConceptNode> nodesIn = lists.getNodes();
-		for(ConceptNode node: nodesIn){
-			ConceptNode tempNode = new ConceptNode(node.getID());
-			nodes.add(tempNode);
-		}
-
-		List<IDLink> links = new ArrayList<>();
-		List<IDLink> linksIn = lists.getLinks();
-		for(IDLink link: linksIn){
-			IDLink tempLink = new IDLink(link.getParent(),link.getChild());
-			links.add(tempLink);
-		}
-		
-		this.roots = findRoot(nodes, links);
-		
-		addChildren(nodes, links);
-	}
-
-	//TODO: When book code is integrated
-//	public ConceptGraph(Book b, NodesAndIDLinks lists){
-//		List<ConceptNode> nodes = lists.getNodes();
-//		List<IDLink> links = lists.getLinks();
-//
-//		List<IDLink> newLinks = b.buildTagLinks();
-//		for(IDLink link : newLinks){
-//			links.add(link);
-//		}
-//
-//		this.roots = findRoot(nodes, links);
-//
-//		addChildren(nodes, links);
-//	}
-	
 	public ConceptGraph(List<ConceptNode> rootsIn){
-		this.roots = rootsIn;
+        learningObjectMap = new HashMap<>();
+        this.roots = rootsIn;
 	}
-	
-	public void addSummariesToGraph(List<LearningObjectResponse> summaries){
-        //TODO: look up each learningObject in map, add this response
-        //TODO: print warning if learningObject is not found (or make a new list of unconnected learning objects
+
+
+
+    public void addLearningObjects(NodesAndIDLinks learningObjectDef){
+        for (ConceptNode node : learningObjectDef.getNodes()){
+            learningObjectMap.put(node.getID(), new LearningObject(node.getID()));
+        }
+        for (IDLink link : learningObjectDef.getLinks()){
+            ConceptNode node = nodeMap.get(link.getParent());
+            if (node != null){
+                node.addLearningObject(learningObjectMap.get(link.getChild()));
+            }
+            else {
+                logger.warn("Adding a Learning Object:" + link.getChild() + " has no matching node in the graph:" + link.getParent());
+            }
+        }
+    }
+
+    public void addSummariesToGraph(List<LearningObjectResponse> summaries){
+        for (LearningObjectResponse response : summaries) {
+            LearningObject learningObject = learningObjectMap.get(response.getLearningObjectId());
+            if (learningObject != null) {
+                learningObject.addResponse(response);
+            } else {
+                logger.warn("No learning object:" + response.getLearningObjectId() + " for response: " + response.toString());
+                //TODO: maybe make a new list of unconnected learning objects???
+            }
+        }
 	}	
 
-	private void addChildren(List<ConceptNode> nodes, List<IDLink> links){
-
-		HashMap<String, ConceptNode> fullNodesMap = new HashMap<String, ConceptNode>();
+	private Map<String, ConceptNode> addChildren(List<ConceptNode> nodes, List<IDLink> links){
+		HashMap<String, ConceptNode> fullNodesMap = new HashMap<>();
 		for( ConceptNode currNode : nodes){
 			fullNodesMap.put(currNode.getID(), currNode);
 		}
@@ -151,10 +160,11 @@ public class ConceptGraph {
 			}
 			
 		}
+		return fullNodesMap;
 	}
 	
- 	private List<ConceptNode> findRoot(List<ConceptNode> nodes, List<IDLink> links) {
-		List<ConceptNode> runningTotal = new ArrayList<ConceptNode>();
+ 	private List<ConceptNode> findRoots(List<ConceptNode> nodes, List<IDLink> links) {
+		List<ConceptNode> runningTotal = new ArrayList<>();
 		for (ConceptNode node : nodes) {
 			runningTotal.add(node);
 		}
@@ -244,13 +254,11 @@ public class ConceptGraph {
 		
 	}
 	
-	public ConceptNode findNode(String ID, List<ConceptNode> NodesToSearch){
-		for(ConceptNode currNode : NodesToSearch){
-			if(currNode.getID().equals(ID)){
-				return currNode;
-			}
-		}
-		return null;
+	public ConceptNode findNodeById(String id){
+		return nodeMap.get(id);
 	}
-	
+
+    public Map<String, LearningObject> getLearningObjectMap() {
+        return learningObjectMap;
+    }
 }

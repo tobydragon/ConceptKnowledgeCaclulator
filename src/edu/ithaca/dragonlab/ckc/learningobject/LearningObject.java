@@ -1,31 +1,51 @@
 package edu.ithaca.dragonlab.ckc.learningobject;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Created by tdragon on 2/14/17.
+ * @uathor tdragon
+ * 2/14/17.
  */
 public class LearningObject {
 
     String id;
     List<LearningObjectResponse> responses;
 
-    public boolean addResponse(LearningObjectResponse response){
-        if (id.equals(response.getLearningObjectId())){
+    public LearningObject(String id){
+        this.id = id;
+        this.responses = new ArrayList<>();
+    }
+
+    public void addResponse(LearningObjectResponse response){
+        if (id.equals(response.getLearningObjectId())) {
             responses.add(response);
-            return true;
         }
-        else {
-            System.err.println("ERROR: wrong learning object for this response");
-            return false;
+        else{
+            throw new IllegalArgumentException("Response object id:"+ response.getLearningObjectId()
+                    + " does not match LearningObjectId:" + id);
         }
     }
 
+    //TODO: should this be differnt than averaging, how about data weight??
     public double calcKnowledgeEstimate(){
-        //TODO: calculate just by averaging?
-        return 0;
+        double estimate = 0;
+        for (LearningObjectResponse response : responses){
+            estimate += response.calcKnowledgeEstimate();
+        }
+        if (responses.size() > 0){
+            estimate /= responses.size();
+        }
+        return estimate;
 
     }
 
+    public String getId() {
+        return id;
+    }
+
+    public List<LearningObjectResponse> getResponses() {
+        return responses;
+    }
 
 }

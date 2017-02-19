@@ -3,20 +3,23 @@ package edu.ithaca.dragonlab.ckc.learningobject;
 import java.util.*;
 
 /**
- * Created by tdragon on 2/14/17.
+ * @author tdragon
+ * 2/14/17.
  */
-public interface LearningObjectResponse {
+public class LearningObjectResponse {
 
-    public String getLearningObjectId();
+    private String userId;
+    private String learningObjectId;
+    private double knowledgeEstimate;
 
-    public double calcKnowledgeEstimate();
-
-
-    //TODO: should this be user Ids? Should there be more than one possible user to a response?
-    public String getUserId();
+    public LearningObjectResponse(String userId, String learningObjectId, double knowledgeEstimate) {
+        this.userId = userId;
+        this.learningObjectId = learningObjectId;
+        this.knowledgeEstimate = knowledgeEstimate;
+    }
 
     //TODO: this needs to be tested
-    static Map<String, List<LearningObjectResponse>> getUserResponseMap(List<LearningObjectResponse> responses) {
+    public static Map<String, List<LearningObjectResponse>> getUserResponseMap(List<LearningObjectResponse> responses) {
         Map<String, List<LearningObjectResponse>> userIdToResponses = new TreeMap<>();
         for(LearningObjectResponse response : responses){
             List<LearningObjectResponse> userResponses = userIdToResponses.get(response.getUserId());
@@ -30,5 +33,18 @@ public interface LearningObjectResponse {
         }
 
         return userIdToResponses;
+    }
+
+    public String getLearningObjectId(){
+        return learningObjectId;
+    }
+
+    public double calcKnowledgeEstimate(){
+        return knowledgeEstimate;
+    }
+
+    //TODO: should this be user Ids? Should there be more than one possible user to a response?
+    public String getUserId(){
+        return userId;
     }
 }

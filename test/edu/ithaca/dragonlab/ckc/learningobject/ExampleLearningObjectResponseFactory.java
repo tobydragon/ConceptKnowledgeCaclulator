@@ -9,8 +9,33 @@ import java.util.List;
  */
 public class ExampleLearningObjectResponseFactory {
 
-    //TODO: make this a real list (either manually or by reading from file), and fix all tests that use it.
+    //TODO: fix all tests that use this.
+    //3 students, 5 questions: 1 stud all right, one half right, one half right and missing 2 questions
     public static List<LearningObjectResponse> makeSimpleResponses(){
-        return new ArrayList<>();
+        List<LearningObjectResponse>  responses = new ArrayList<>();
+
+        responses.add(new LearningObjectResponse("student1", "Q1", 1));
+        responses.add(new LearningObjectResponse("student1", "Q2", 1));
+        responses.add(new LearningObjectResponse("student1", "Q3", 1));
+        responses.add(new LearningObjectResponse("student1", "Q4", 1));
+        responses.add(new LearningObjectResponse("student1", "Q5", 1));
+        responses.add(new LearningObjectResponse("student1", "Q6", 1));
+
+
+        responses.add(new LearningObjectResponse("student2", "Q1", 1));
+        responses.add(new LearningObjectResponse("student2", "Q2", 1));
+        responses.add(new LearningObjectResponse("student2", "Q3", 1));
+        responses.add(new LearningObjectResponse("student2", "Q4", 0));
+        responses.add(new LearningObjectResponse("student2", "Q5", 0));
+        responses.add(new LearningObjectResponse("student2", "Q6", 0));
+
+
+        responses.add(new LearningObjectResponse("student3", "Q1", 1));
+        responses.add(new LearningObjectResponse("student3", "Q2", 1));
+        responses.add(new LearningObjectResponse("student3", "Q3", 0));
+        responses.add(new LearningObjectResponse("student3", "Q4", 0));
+
+        return responses;
     }
 }
+

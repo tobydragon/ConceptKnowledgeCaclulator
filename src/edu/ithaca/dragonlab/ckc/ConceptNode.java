@@ -4,6 +4,7 @@ package edu.ithaca.dragonlab.ckc;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import edu.ithaca.dragonlab.ckc.learningobject.LearningObject;
@@ -14,7 +15,8 @@ public class ConceptNode {
 	String id; 		//unique to each node
 	String label; 	//can be the same as id, or different if you want displayed different
 	List<ConceptNode> children;
-	List<LearningObject> learningObjects;
+
+    Map<String, LearningObject> learningObjectMap;
 	
 	//TODO: Rename
 	private double actualComp;
@@ -29,7 +31,7 @@ public class ConceptNode {
 		this.id = null;
 		this.label = null;
 		children = new ArrayList<>();
-		learningObjects = new ArrayList<>();
+		learningObjectMap = new HashMap<>();
 		numParents = 0;
 		predictedComp = 0;
 		actualComp = 0;
@@ -72,6 +74,10 @@ public class ConceptNode {
 				links.add(new IDLink(this.getID(),child.getID()));
 			}
 		}
+	}
+
+	public void addLearningObject(LearningObject learningObject) {
+			learningObjectMap.put(learningObject.getId(), learningObject);
 	}
 
 	//////////////////  TREE CONVERSION  //////////////////////
@@ -213,6 +219,10 @@ public class ConceptNode {
 	public void setNumParents(int numParents) {
 		this.numParents = numParents;
 	}
+
+    public Map<String, LearningObject> getLearningObjectMap() {
+        return learningObjectMap;
+    }
 }
 
 	

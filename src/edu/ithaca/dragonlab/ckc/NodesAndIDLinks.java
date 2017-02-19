@@ -2,6 +2,7 @@ package edu.ithaca.dragonlab.ckc;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -26,8 +27,12 @@ public class NodesAndIDLinks {
 		mapper.writeValue(new File(filename), this);
 		
 	}
-	
-	public NodesAndIDLinks(){}
+
+	//needed for json creation
+	public NodesAndIDLinks(){
+		this.nodes = new ArrayList<>();
+		this.links = new ArrayList<>();
+	}
 	
 	public NodesAndIDLinks(List<ConceptNode> nodesIn, List<IDLink> linksIn){
 		this.nodes = nodesIn;
@@ -71,7 +76,7 @@ public class NodesAndIDLinks {
 	}
 	
 	public Map<String, ConceptNode> buildNodeMap(){
-		Map<String, ConceptNode> nodeMap = new HashMap<String, ConceptNode>();
+		Map<String, ConceptNode> nodeMap = new HashMap<>();
 		for(ConceptNode node : nodes){
 			nodeMap.put(node.getID(), node);
 		}

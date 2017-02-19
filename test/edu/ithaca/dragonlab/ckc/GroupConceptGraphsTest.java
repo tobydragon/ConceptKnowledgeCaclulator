@@ -27,7 +27,7 @@ public class GroupConceptGraphsTest {
 	@Test
 	public void userCountTest(){
 		GroupConceptGraphs group = new GroupConceptGraphs(ExampleConceptGraphFactory.makeSimple(), ExampleLearningObjectResponseFactory.makeSimpleResponses());
-		Assert.assertEquals(2,group.userCount());
+		Assert.assertEquals(3,group.userCount());
 	}
 	
 	@Test
@@ -35,7 +35,7 @@ public class GroupConceptGraphsTest {
 		GroupConceptGraphs group = new GroupConceptGraphs(ExampleConceptGraphFactory.makeSimple(), ExampleLearningObjectResponseFactory.makeSimpleResponses());
 		Map<String, ConceptGraph> userGraphMap = group.getUserToGraphMap();
 		
-		ConceptGraph user2Graph = userGraphMap.get("CLTestStudent1");
+		ConceptGraph user2Graph = userGraphMap.get("student1");
 		NodesAndIDLinks user2Nodes = user2Graph.buildNodesAndLinks();
 		
 		Assert.assertEquals(6,user2Nodes.getNodes().size());
