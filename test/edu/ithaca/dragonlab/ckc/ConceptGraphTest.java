@@ -270,6 +270,17 @@ public class ConceptGraphTest {
 //		Assert.assertEquals(sumOfChildren/childCounter, selectionListMap.get("Control").getActualComp(),delta);
 //	}
 
+    public static void main(String[] args){
+	    ConceptGraph graph = ExampleConceptGraphFactory.makeSimple();
+	    NodesAndIDLinks export = graph.buildNodesAndLinks();
+	    try {
+            export.writeToJson("ckcvisualizer/testinput/simple.json");
+        }
+        catch(IOException e){
+	        logger.error(ErrorUtil.errorToStr(e));
+        }
+    }
+
 }
 
 	
