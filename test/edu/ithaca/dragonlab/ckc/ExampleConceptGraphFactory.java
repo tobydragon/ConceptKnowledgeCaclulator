@@ -1,4 +1,4 @@
-package edu.ithaca.dragonlab.ckc.testdatafactories;
+package edu.ithaca.dragonlab.ckc;
 
 import edu.ithaca.dragonlab.ckc.ConceptGraph;
 import edu.ithaca.dragonlab.ckc.ConceptNode;

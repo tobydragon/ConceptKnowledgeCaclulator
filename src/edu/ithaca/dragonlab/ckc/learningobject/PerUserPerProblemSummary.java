@@ -27,7 +27,12 @@ public class PerUserPerProblemSummary implements LearningObjectResponse {
 		return 0;
 	}
 
-    public static List<? extends LearningObjectResponse> parseLearningObjectsFromFile(String filename){
+	@Override
+	public String getUserId() {
+		return null;
+	}
+
+	public static List<? extends LearningObjectResponse> parseLearningObjectsFromFile(String filename){
 //        String inputXML = "test/testdata/simple.xml";
 //
 //        //Get behaviors from runsetone xml
@@ -243,7 +248,7 @@ public class PerUserPerProblemSummary implements LearningObjectResponse {
 //	}
 //
 //	//Move to PUPPS File and make Public Static, create tests in PUPPS Test file
-//	public static SortedSet<String> getUsers(List<PerUserPerProblemSummary> puppsList){
+//	public static SortedSet<String> getUserIdSet(List<PerUserPerProblemSummary> puppsList){
 //		SortedSet<String> users = new TreeSet<>();
 //		for(PerUserPerProblemSummary summary: puppsList){
 //			users.add(summary.user);

@@ -5,7 +5,6 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 
-import edu.ithaca.dragonlab.ckc.testdatafactories.ExampleConceptGraphFactory;
 import edu.ithaca.dragonlab.ckc.util.ErrorUtil;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -147,16 +146,9 @@ public class ConceptGraphTest {
 			NodesAndIDLinks lists = mapper.readValue(new File("test/testresources/ABCSimple.json"), NodesAndIDLinks.class);
 			try{
 			mapper.writeValue(new File(outputLocation), lists);
-			}catch (JsonGenerationException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			} catch (JsonMappingException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
         } catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -168,7 +160,6 @@ public class ConceptGraphTest {
 			    jsonString += line;
 			}
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		
@@ -194,16 +185,9 @@ public class ConceptGraphTest {
 			
 			try{
 			mapper.writeValue(new File(outputLocation), tree.buildNodesAndLinks());
-			}catch (JsonGenerationException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			} catch (JsonMappingException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
         } catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -215,7 +199,6 @@ public class ConceptGraphTest {
 			    jsonString += line;
 			}
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		
@@ -269,17 +252,6 @@ public class ConceptGraphTest {
 //		//makes sure the calculated number is equal to the number stored in If Statements
 //		Assert.assertEquals(sumOfChildren/childCounter, selectionListMap.get("Control").getActualComp(),delta);
 //	}
-
-    public static void main(String[] args){
-	    ConceptGraph graph = ExampleConceptGraphFactory.makeSimple();
-	    NodesAndIDLinks export = graph.buildNodesAndLinks();
-	    try {
-            export.writeToJson("ckcvisualizer/testinput/simple.json");
-        }
-        catch(IOException e){
-	        logger.error(ErrorUtil.errorToStr(e));
-        }
-    }
 
 }
 
