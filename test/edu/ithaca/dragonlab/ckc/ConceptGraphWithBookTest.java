@@ -9,19 +9,19 @@ public class ConceptGraphWithBookTest {
 
 //    @Test
 //	public void ConceptGraphFromBookNodesTest(){
-//		NodesAndIDLinks lists = graphFromBook.buildNodesAndLinks();
+//		ConceptGraphRecord lists = graphFromBook.buildNodesAndLinks();
 //		Assert.assertEquals(217, lists.getNodes().size());
 //	}
 //
 //	@Test
 //	public void ConceptGraphFromBookLinksTest(){
-//		NodesAndIDLinks lists = graphFromBook.buildNodesAndLinks();
+//		ConceptGraphRecord lists = graphFromBook.buildNodesAndLinks();
 //		Assert.assertEquals(216, lists.getLinks().size());
 //	}
 
 //  	@Test
 //	public void ConceptGraphFromBookSelectionTest(){
-//		NodesAndIDLinks lists = graphFromBook.buildNodesAndLinks();
+//		ConceptGraphRecord lists = graphFromBook.buildNodesAndLinks();
 //		String[] selectionTitles = {"BooleanValuesandBooleanExpressions", "Logicaloperators", "PrecedenceofOperators", "ConditionalExecutionBinarySelection", "OmittingtheelseClauseUnarySelection", "Nestedconditionals", "Chainedconditionals", "BooleanFunctions"};
 //		List<ConceptNode> nodes = lists.getNodes();
 //		List<ConceptNode> selectionNodes = new ArrayList<ConceptNode>();

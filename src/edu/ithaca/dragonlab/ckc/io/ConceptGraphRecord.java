@@ -9,17 +9,19 @@ import java.util.Map;
 
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import edu.ithaca.dragonlab.ckc.ConceptNode;
+import edu.ithaca.dragonlab.ckc.conceptgraph.ConceptNode;
 
-public class NodesAndIDLinks {
+// Represents a ConceptGraph when serializing
+//also used to denote LearningObjects and their relation to the ConceptGraph ( see @ExampleLearningObjectFactory )
+public class ConceptGraphRecord {
 	
 	private List<ConceptNode> nodes;
 	private List<LinkRecord> links;
 	
-	public static NodesAndIDLinks buildfromJson(String filename) throws IOException{
+	public static ConceptGraphRecord buildfromJson(String filename) throws IOException{
 		ObjectMapper mapper = new ObjectMapper();
 		mapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
-		NodesAndIDLinks lists = mapper.readValue(new File(filename), NodesAndIDLinks.class);
+		ConceptGraphRecord lists = mapper.readValue(new File(filename), ConceptGraphRecord.class);
 		return lists;
 	}
 	
@@ -30,12 +32,12 @@ public class NodesAndIDLinks {
 	}
 
 	//needed for json creation
-	public NodesAndIDLinks(){
+	public ConceptGraphRecord(){
 		this.nodes = new ArrayList<>();
 		this.links = new ArrayList<>();
 	}
 	
-	public NodesAndIDLinks(List<ConceptNode> nodesIn, List<LinkRecord> linksIn){
+	public ConceptGraphRecord(List<ConceptNode> nodesIn, List<LinkRecord> linksIn){
 		this.nodes = nodesIn;
 		this.links = linksIn;
 	}

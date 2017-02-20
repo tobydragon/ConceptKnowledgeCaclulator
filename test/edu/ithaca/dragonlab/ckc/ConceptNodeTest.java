@@ -1,5 +1,6 @@
 package edu.ithaca.dragonlab.ckc;
 
+import edu.ithaca.dragonlab.ckc.conceptgraph.ConceptNode;
 import org.junit.Assert;
 import org.junit.Test;
 

@@ -1,8 +1,8 @@
-package edu.ithaca.dragonlab.ckc;
+package edu.ithaca.dragonlab.ckc.conceptgraph;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import edu.ithaca.dragonlab.ckc.io.NodesAndIDLinks;
+import edu.ithaca.dragonlab.ckc.io.ConceptGraphRecord;
 import edu.ithaca.dragonlab.ckc.learningobject.LearningObjectResponse;
 
 import java.io.File;
@@ -44,9 +44,9 @@ public class GroupConceptGraphs {
 	}
 	
 	public void calcDistanceFromAvg(){
-		NodesAndIDLinks avgLinks = averageGraph.buildNodesAndLinks();
+		ConceptGraphRecord avgLinks = averageGraph.buildNodesAndLinks();
 		for(String user: userToGraph.keySet()){
-			NodesAndIDLinks tempLinks = userToGraph.get(user).buildNodesAndLinks();
+			ConceptGraphRecord tempLinks = userToGraph.get(user).buildNodesAndLinks();
 			
 			for(ConceptNode tempNode: tempLinks.getNodes()){
 				for(ConceptNode avgNode: avgLinks.getNodes()){

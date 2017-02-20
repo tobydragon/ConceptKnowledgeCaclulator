@@ -1,5 +1,5 @@
 
-package edu.ithaca.dragonlab.ckc;
+package edu.ithaca.dragonlab.ckc.conceptgraph;
 
 import java.util.ArrayList;
 import java.util.HashMap;

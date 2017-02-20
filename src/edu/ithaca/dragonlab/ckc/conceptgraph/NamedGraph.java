@@ -1,10 +1,10 @@
-package edu.ithaca.dragonlab.ckc;
+package edu.ithaca.dragonlab.ckc.conceptgraph;
 
-import edu.ithaca.dragonlab.ckc.io.NodesAndIDLinks;
+import edu.ithaca.dragonlab.ckc.io.ConceptGraphRecord;
 
 public class NamedGraph {
 	public String name;
-	public NodesAndIDLinks cg;
+	public ConceptGraphRecord cg;
 	
 	public NamedGraph(String nameIn, ConceptGraph cgIn){
 		name = nameIn;

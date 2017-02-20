@@ -1,7 +1,9 @@
 package edu.ithaca.dragonlab.ckc;
 
+import edu.ithaca.dragonlab.ckc.conceptgraph.ConceptGraph;
+import edu.ithaca.dragonlab.ckc.conceptgraph.ConceptNode;
+import edu.ithaca.dragonlab.ckc.io.ConceptGraphRecord;
 import edu.ithaca.dragonlab.ckc.io.LinkRecord;
-import edu.ithaca.dragonlab.ckc.io.NodesAndIDLinks;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -24,7 +26,7 @@ public class ExampleConceptGraphFactory {
         clList.add(new LinkRecord("A","C")); //A -> C
         clList.add(new LinkRecord("B","C")); //B -> C
 
-        NodesAndIDLinks inputNodesAndLinks = new NodesAndIDLinks(cnList,clList);
+        ConceptGraphRecord inputNodesAndLinks = new ConceptGraphRecord(cnList,clList);
         return new ConceptGraph(inputNodesAndLinks);
 
     }
@@ -44,7 +46,7 @@ public class ExampleConceptGraphFactory {
         clList.add(new LinkRecord("B","D")); //B -> D
         clList.add(new LinkRecord("C","D")); //C -> D
 
-        NodesAndIDLinks inputNodesAndLinks = new NodesAndIDLinks(cnList,clList);
+        ConceptGraphRecord inputNodesAndLinks = new ConceptGraphRecord(cnList,clList);
         return new ConceptGraph(inputNodesAndLinks);
     }
 
@@ -67,7 +69,7 @@ public class ExampleConceptGraphFactory {
         clList.add(new LinkRecord("C","E")); //C -> E
         clList.add(new LinkRecord("D","E")); //D -> E
 
-        NodesAndIDLinks inputNodesAndLinks = new NodesAndIDLinks(cnList,clList);
+        ConceptGraphRecord inputNodesAndLinks = new ConceptGraphRecord(cnList,clList);
         return new ConceptGraph(inputNodesAndLinks);
     }
 
@@ -94,7 +96,7 @@ public class ExampleConceptGraphFactory {
         clList.add(new LinkRecord("D","F"));
         clList.add(new LinkRecord("E","F"));
 
-        NodesAndIDLinks inputNodesAndLinks = new NodesAndIDLinks(cnList,clList);
+        ConceptGraphRecord inputNodesAndLinks = new ConceptGraphRecord(cnList,clList);
         return new ConceptGraph(inputNodesAndLinks);
     }
 
@@ -113,7 +115,7 @@ public class ExampleConceptGraphFactory {
         clList.add(new LinkRecord("B","D"));
         clList.add(new LinkRecord("C","E"));
 
-        NodesAndIDLinks inputNodesAndLinks = new NodesAndIDLinks(cnList, clList);
+        ConceptGraphRecord inputNodesAndLinks = new ConceptGraphRecord(cnList, clList);
         return new ConceptGraph(inputNodesAndLinks);
     }
 
@@ -148,7 +150,7 @@ public class ExampleConceptGraphFactory {
         link = new LinkRecord("G","I");
         linkList.add(link);
 
-        NodesAndIDLinks lists = new NodesAndIDLinks(cnList, linkList);
+        ConceptGraphRecord lists = new ConceptGraphRecord(cnList, linkList);
         return new ConceptGraph(lists);
     }
 }

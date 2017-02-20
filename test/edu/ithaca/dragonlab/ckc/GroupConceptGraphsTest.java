@@ -2,7 +2,10 @@ package edu.ithaca.dragonlab.ckc;
 
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import edu.ithaca.dragonlab.ckc.io.NodesAndIDLinks;
+import edu.ithaca.dragonlab.ckc.conceptgraph.ConceptGraph;
+import edu.ithaca.dragonlab.ckc.conceptgraph.ConceptNode;
+import edu.ithaca.dragonlab.ckc.conceptgraph.GroupConceptGraphs;
+import edu.ithaca.dragonlab.ckc.io.ConceptGraphRecord;
 import edu.ithaca.dragonlab.ckc.learningobject.ExampleLearningObjectFactory;
 import edu.ithaca.dragonlab.ckc.learningobject.ExampleLearningObjectResponseFactory;
 import edu.ithaca.dragonlab.ckc.learningobject.LearningObjectResponse;
@@ -59,7 +62,7 @@ public class GroupConceptGraphsTest {
 		Map<String, ConceptGraph> userGraphMap = group.getUserToGraphMap();
 		
 		ConceptGraph user2 = userGraphMap.get("student1");
-		NodesAndIDLinks user2NL = user2.buildNodesAndLinks();
+		ConceptGraphRecord user2NL = user2.buildNodesAndLinks();
 		ConceptNode testNode = user2NL.getNodes().get(0);
 		Assert.assertEquals(.5, testNode.getKnowledgeDistanceFromAvg(),0);
 		System.out.println(testNode.getKnowledgeDistanceFromAvg());
@@ -103,7 +106,7 @@ public class GroupConceptGraphsTest {
 			//Reads in the file that was written earlier
 			
 			List<LearningObjectResponse> sums = new ArrayList<>();
-			NodesAndIDLinks nodes = mapper.readValue(new File("war/conffiles/domainfiles/conceptgraph/domainStructure.json"), NodesAndIDLinks.class);
+			ConceptGraphRecord nodes = mapper.readValue(new File("war/conffiles/domainfiles/conceptgraph/domainStructure.json"), ConceptGraphRecord.class);
 			ConceptGraph graph = new ConceptGraph(nodes);
 			GroupConceptGraphs group = new GroupConceptGraphs(graph,sums);
 			try {
@@ -132,7 +135,7 @@ public class GroupConceptGraphsTest {
 		mapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES,false);
 		
 		ConceptGraph user2Tree = group.getAllGraphs().get(1).graphToTree();
-		NodesAndIDLinks user2Nodes = user2Tree.buildNodesAndLinks();
+		ConceptGraphRecord user2Nodes = user2Tree.buildNodesAndLinks();
 		
 		Assert.assertEquals(3, group.getUserToGraphMap().keySet().size());
 		Assert.assertEquals(4, user2Nodes.getNodes().size());

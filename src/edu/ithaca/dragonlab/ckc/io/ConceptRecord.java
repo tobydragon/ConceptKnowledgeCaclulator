@@ -1,6 +1,6 @@
 package edu.ithaca.dragonlab.ckc.io;
 
-import edu.ithaca.dragonlab.ckc.ConceptNode;
+import edu.ithaca.dragonlab.ckc.conceptgraph.ConceptNode;
 
 /**
  * @author tdragon
@@ -9,7 +9,7 @@ import edu.ithaca.dragonlab.ckc.ConceptNode;
  */
 public class ConceptRecord {
 
-    //TODO: NodesAndIDLinks should hold these instead of actual nodes, so we know what is being held and what not...
+    //TODO: ConceptGraphRecord should hold these instead of actual nodes, so we know what is being held and what not...
     String id;
     String label;
 
