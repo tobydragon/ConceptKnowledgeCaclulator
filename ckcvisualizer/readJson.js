@@ -1,5 +1,5 @@
 //Define some global variables
-var fileName = "experimentInput/fullExperimentFile.json"; //fileName of JSON file to read in
+var fileName = "testInput/newTest.json"; //fileName of JSON file to read in
 var dataObject; //the object that one concept graph gets saved to when a student button is clicked
 var objectsArray; //the object that the json file gets parsed to, an array of "student objects"
 var names = []; //list of names of the students
@@ -92,7 +92,7 @@ function makeChart(currName,typeGraph){
         
         var p = dataObject.links[i].parent;        //def parents
         
-        //search through the list of nodes to find the node that correspondes with the child in the link
+        //search through the list of nodes to find the node that corresponds with the child in the link
         for(var j = 0; j < dataObject.nodes.length; j++){
             //if the node ID matches the name in the link
             if(dataObject.nodes[j].id == dataObject.links[i].child){
@@ -100,12 +100,12 @@ function makeChart(currName,typeGraph){
                 
                 //def Score
                 if(typeGraph == "reg"){
-                    var s = dataObject.nodes[j].actualComp;
+                    var s = dataObject.nodes[j].knowledgeEstimate;
                     //add Topic (this is formatted to show the node ID without the iterative tag at the end and the score)
                     
         row.push({v:c, f:stripTitle(q)+'<div style="color:blue; font-style:italic">Score: '+s+'</div>'});
                 }else{
-                    var s = dataObject.nodes[j].distanceFromAvg;
+                    var s = dataObject.nodes[j].knowledgeDistanceFromAvg;
                     //add Topic (this is formatted to show the node ID without the iterative tag at the end and the score)
                     if(q.indexOf("_Q") > 0){
         row.push({v:c, f:stripTitle(q)+'<div style="color:blue; font-style:italic"></div>'});
@@ -140,7 +140,7 @@ function removeQ(visList){
 }
 
 //returns an array of the IDs of the roots of the tree
-//takes in the dataObject informatin of one org chart
+//takes in the dataObject information of one org chart
 //NOTE: The reason that we iterate through the dataList.nodes list instead of just iterating through roots is because we cannot iterate through it and remove things from it at the same time.
 function findRoot(dataList){
     //initialize roots
@@ -165,7 +165,6 @@ function findRoot(dataList){
 
 //returns a string that is everything before the "-" in a string
 //takes a string, expecting format "Boolean-3" or "Boolean_Expressions-12"
-
 function stripTitle(title) {
   for (var i = 0; i < title.length; i++) {
     if (title[i] == "-") {
