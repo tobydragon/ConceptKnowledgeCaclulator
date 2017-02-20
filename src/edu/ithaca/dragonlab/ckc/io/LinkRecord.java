@@ -1,13 +1,13 @@
-package edu.ithaca.dragonlab.ckc;
+package edu.ithaca.dragonlab.ckc.io;
 
-public class IDLink {
+public class LinkRecord {
 	
 	private String parent;
 	private String child;
 	
-	public IDLink(){}
+	public LinkRecord(){}
 	
-	public IDLink(String parentIn, String childIn){
+	public LinkRecord(String parentIn, String childIn){
 		this.parent = parentIn;
 		this.child = childIn;
 	}

@@ -1,4 +1,4 @@
-package edu.ithaca.dragonlab.ckc;
+package edu.ithaca.dragonlab.ckc.io;
 
 import java.io.File;
 import java.io.IOException;
@@ -9,11 +9,12 @@ import java.util.Map;
 
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import edu.ithaca.dragonlab.ckc.ConceptNode;
 
 public class NodesAndIDLinks {
 	
 	private List<ConceptNode> nodes;
-	private List<IDLink> links;
+	private List<LinkRecord> links;
 	
 	public static NodesAndIDLinks buildfromJson(String filename) throws IOException{
 		ObjectMapper mapper = new ObjectMapper();
@@ -34,7 +35,7 @@ public class NodesAndIDLinks {
 		this.links = new ArrayList<>();
 	}
 	
-	public NodesAndIDLinks(List<ConceptNode> nodesIn, List<IDLink> linksIn){
+	public NodesAndIDLinks(List<ConceptNode> nodesIn, List<LinkRecord> linksIn){
 		this.nodes = nodesIn;
 		this.links = linksIn;
 	}
@@ -43,7 +44,7 @@ public class NodesAndIDLinks {
 		return nodes;
 	}
 	
-	public List<IDLink> getLinks(){
+	public List<LinkRecord> getLinks(){
 		return links;
 	}
 	
@@ -51,7 +52,7 @@ public class NodesAndIDLinks {
 		this.nodes = nodesIn;
 	}
 	
-	public void setLinks(List<IDLink> linksIn){
+	public void setLinks(List<LinkRecord> linksIn){
 		this.links = linksIn;
 	}
 	
@@ -59,9 +60,9 @@ public class NodesAndIDLinks {
 		
 		String linkString = "";
 		String nodeString = "";
-		String combinedString = "";
+		String combinedString;
 		
-		for(IDLink link : links){
+		for(LinkRecord link : links){
 			linkString += "Parent: " + link.getParent() + "\n" + 
 					"Child: " + link.getChild() + "\n\n";
 		}

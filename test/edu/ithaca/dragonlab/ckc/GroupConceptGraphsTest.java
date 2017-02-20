@@ -1,23 +1,21 @@
 package edu.ithaca.dragonlab.ckc;
 
-import java.io.File;
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-
+import com.fasterxml.jackson.databind.DeserializationFeature;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import edu.ithaca.dragonlab.ckc.io.NodesAndIDLinks;
+import edu.ithaca.dragonlab.ckc.learningobject.ExampleLearningObjectFactory;
 import edu.ithaca.dragonlab.ckc.learningobject.ExampleLearningObjectResponseFactory;
 import edu.ithaca.dragonlab.ckc.learningobject.LearningObjectResponse;
-import edu.ithaca.dragonlab.ckc.util.ErrorUtil;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.junit.Assert;
 import org.junit.Test;
 
-import com.fasterxml.jackson.core.JsonGenerationException;
-import com.fasterxml.jackson.databind.DeserializationFeature;
-import com.fasterxml.jackson.databind.JsonMappingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
+import java.io.File;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
 
 //TODO: make data that will test appropriately, see ExampleLearningObjectResponseFactory
 public class GroupConceptGraphsTest {
@@ -26,59 +24,49 @@ public class GroupConceptGraphsTest {
 
 	@Test
 	public void userCountTest(){
-		GroupConceptGraphs group = new GroupConceptGraphs(ExampleConceptGraphFactory.makeSimple(), ExampleLearningObjectResponseFactory.makeSimpleResponses());
+		ConceptGraph graph = ExampleConceptGraphFactory.makeSimple();
+		graph.addLearningObjects(ExampleLearningObjectFactory.makeSimpleLearningObjectDef());
+		GroupConceptGraphs group = new GroupConceptGraphs(graph, ExampleLearningObjectResponseFactory.makeSimpleResponses());
 		Assert.assertEquals(3,group.userCount());
 	}
 	
 	@Test
 	public void addSummariesTest(){
-		GroupConceptGraphs group = new GroupConceptGraphs(ExampleConceptGraphFactory.makeSimple(), ExampleLearningObjectResponseFactory.makeSimpleResponses());
-		Map<String, ConceptGraph> userGraphMap = group.getUserToGraphMap();
-		
-		ConceptGraph user2Graph = userGraphMap.get("student1");
-		NodesAndIDLinks user2Nodes = user2Graph.buildNodesAndLinks();
-		
-		Assert.assertEquals(6,user2Nodes.getNodes().size());
-		Assert.assertEquals(6,user2Nodes.getLinks().size());
-	}
-	
-	
+        ConceptGraph graph = ExampleConceptGraphFactory.makeSimple();
+        graph.addLearningObjects(ExampleLearningObjectFactory.makeSimpleLearningObjectDef());
+        GroupConceptGraphs group = new GroupConceptGraphs(graph, ExampleLearningObjectResponseFactory.makeSimpleResponses());
+
+
+        Assert.assertEquals(6,group.getAvgGraph().getLearningObjectMap().size());
+        Map<String, ConceptGraph> userGraphMap = group.getUserToGraphMap();
+		Assert.assertEquals(6,userGraphMap.get("student1").getLearningObjectMap().size());
+        Assert.assertEquals(6,userGraphMap.get("student2").getLearningObjectMap().size());
+        Assert.assertEquals(6,userGraphMap.get("student3").getLearningObjectMap().size());
+
+        Assert.assertEquals(3,group.getAvgGraph().getLearningObjectMap().get("Q1").getResponses().size());
+        Assert.assertEquals(2,group.getAvgGraph().getLearningObjectMap().get("Q5").getResponses().size());
+
+        Assert.assertEquals(1,userGraphMap.get("student1").getLearningObjectMap().get("Q1").getResponses().size());
+        Assert.assertEquals(0,userGraphMap.get("student3").getLearningObjectMap().get("Q5").getResponses().size());
+    }
+
+    //TODO: fix to current data from example
 	@Test
-	public void getAllGraphsTest(){
-		GroupConceptGraphs group = new GroupConceptGraphs(ExampleConceptGraphFactory.makeSimple(), ExampleLearningObjectResponseFactory.makeSimpleResponses());
+	public void calcDistFromAvgTest(){
+        ConceptGraph graph = ExampleConceptGraphFactory.makeSimple();
+        graph.addLearningObjects(ExampleLearningObjectFactory.makeSimpleLearningObjectDef());
+        GroupConceptGraphs group = new GroupConceptGraphs(graph, ExampleLearningObjectResponseFactory.makeSimpleResponses());
 		Map<String, ConceptGraph> userGraphMap = group.getUserToGraphMap();
 		
-		List<String> namesList = new ArrayList<String>();
-		for (String name: userGraphMap.keySet()){
-			namesList.add(name);
-		}
-		Assert.assertEquals("CLTestStudent2",namesList.get(0));
-		Assert.assertEquals("CLTestStudent1",namesList.get(1));
-		Assert.assertEquals(2,namesList.size());
-		
-		ConceptGraph user2Tree = userGraphMap.get("CLTestStudent2").graphToTree();
-		NodesAndIDLinks user2Nodes = user2Tree.buildNodesAndLinks();
-		
-		
-		Assert.assertEquals(8,user2Nodes.getNodes().size());
-		Assert.assertEquals(7,user2Nodes.getLinks().size());
-	}
-	
-	@Test
-	public void testCalcDistFromAvg(){
-		GroupConceptGraphs group = new GroupConceptGraphs(ExampleConceptGraphFactory.makeSimple(), ExampleLearningObjectResponseFactory.makeSimpleResponses());
-		Map<String, ConceptGraph> userGraphMap = group.getUserToGraphMap();
-		
-		ConceptGraph user2 = userGraphMap.get("CLTestStudent2");
+		ConceptGraph user2 = userGraphMap.get("student1");
 		NodesAndIDLinks user2NL = user2.buildNodesAndLinks();
 		ConceptNode testNode = user2NL.getNodes().get(0);
-		Assert.assertEquals(.5, testNode.getDistanceFromAvg(),0);
-		System.out.println(testNode.getDistanceFromAvg());
+		Assert.assertEquals(.5, testNode.getKnowledgeDistanceFromAvg(),0);
+		System.out.println(testNode.getKnowledgeDistanceFromAvg());
 		ConceptNode testNode2 = user2NL.getNodes().get(2);
-		System.out.println(testNode2.getDistanceFromAvg());
-		Assert.assertEquals(1, testNode2.getDistanceFromAvg(),0);
-		
-		
+		System.out.println(testNode2.getKnowledgeDistanceFromAvg());
+		Assert.assertEquals(1, testNode2.getKnowledgeDistanceFromAvg(),0);
+
 	}
 	
 	//TODO: make this test functional, why is half commented out? (may not have been working in previous project)
@@ -146,9 +134,11 @@ public class GroupConceptGraphsTest {
 		ConceptGraph user2Tree = group.getAllGraphs().get(1).graphToTree();
 		NodesAndIDLinks user2Nodes = user2Tree.buildNodesAndLinks();
 		
-		Assert.assertEquals(2, group.getUserToGraphMap().keySet().size());
-		Assert.assertEquals(8, user2Nodes.getNodes().size());
-		Assert.assertEquals(7, user2Nodes.getLinks().size());
+		Assert.assertEquals(3, group.getUserToGraphMap().keySet().size());
+		Assert.assertEquals(4, user2Nodes.getNodes().size());
+		Assert.assertEquals(3, user2Nodes.getLinks().size());
+
+		//TODO: This shouldn't be part of an automated test if it doesn't result in asserts
 		/*
 		try {
 			//Reads in the file that was written earlier

@@ -2,6 +2,7 @@ package edu.ithaca.dragonlab.ckc;
 
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import edu.ithaca.dragonlab.ckc.io.NodesAndIDLinks;
 import edu.ithaca.dragonlab.ckc.learningobject.ExampleLearningObjectFactory;
 import edu.ithaca.dragonlab.ckc.learningobject.ExampleLearningObjectResponseFactory;
 import org.apache.logging.log4j.LogManager;
@@ -233,37 +234,37 @@ public class ConceptGraphTest {
 //		//Checks children on If Statement to make sure their actualComps are correct
 //		//(gotten from visualized graph)
 //		//file:///Users/willsuchanek/git/metafora-project/MonitorInterventionMetafora/war/TreeDisplay/index.html
-//		Assert.assertEquals(0, selectionListMap.get("Boolean").getActualComp(),delta);
-//		Assert.assertEquals(1, selectionListMap.get("test_question6_4_2").getActualComp(),delta);
-//		Assert.assertEquals(1, selectionListMap.get("test_question6_4_1").getActualComp(),delta);
+//		Assert.assertEquals(0, selectionListMap.get("Boolean").getKnowledgeEstimate(),delta);
+//		Assert.assertEquals(1, selectionListMap.get("test_question6_4_2").getKnowledgeEstimate(),delta);
+//		Assert.assertEquals(1, selectionListMap.get("test_question6_4_1").getKnowledgeEstimate(),delta);
 //
 //
 //		//Calculates the actualComp for If statements children
 //		float sumOfChildren = 0;
 //		int childCounter = 0;
 //		for(ConceptNode node :selectionListMap.get("If Statement").getChildren()){
-//			sumOfChildren+=node.getActualComp();
+//			sumOfChildren+=node.getKnowledgeEstimate();
 //			childCounter++;
 //		}
 //		//makes sure the calculated number is equal to the number stored in If Statements
-//		Assert.assertEquals(sumOfChildren/childCounter, selectionListMap.get("If Statement").getActualComp(),delta);
+//		Assert.assertEquals(sumOfChildren/childCounter, selectionListMap.get("If Statement").getKnowledgeEstimate(),delta);
 //
 //		//Checks children on Control to make sure their actualComps are correct
 //		//(gotten from visualized graph)
 //		//file:///Users/willsuchanek/git/metafora-project/MonitorInterventionMetafora/war/TreeDisplay/index.html
-//		Assert.assertEquals(.67, selectionListMap.get("If Statement").getActualComp(),delta);
-//		Assert.assertEquals(0, selectionListMap.get("Loops").getActualComp(),delta);
+//		Assert.assertEquals(.67, selectionListMap.get("If Statement").getKnowledgeEstimate(),delta);
+//		Assert.assertEquals(0, selectionListMap.get("Loops").getKnowledgeEstimate(),delta);
 //
 //		//Calculates the actualComp for Control children
 //		sumOfChildren = 0;
 //		childCounter = 0;
 //		for(ConceptNode node :selectionListMap.get("Control").getChildren()){
-//			sumOfChildren+=node.getActualComp();
+//			sumOfChildren+=node.getKnowledgeEstimate();
 //			childCounter++;
 //		}
 //
 //		//makes sure the calculated number is equal to the number stored in If Statements
-//		Assert.assertEquals(sumOfChildren/childCounter, selectionListMap.get("Control").getActualComp(),delta);
+//		Assert.assertEquals(sumOfChildren/childCounter, selectionListMap.get("Control").getKnowledgeEstimate(),delta);
 //	}
 
 }

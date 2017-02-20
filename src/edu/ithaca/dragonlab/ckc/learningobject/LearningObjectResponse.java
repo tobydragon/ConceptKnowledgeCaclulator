@@ -18,6 +18,12 @@ public class LearningObjectResponse {
         this.knowledgeEstimate = knowledgeEstimate;
     }
 
+    public LearningObjectResponse (LearningObjectResponse other){
+        this.userId = other.userId;
+        this.learningObjectId = other.learningObjectId;
+        this.knowledgeEstimate = other.knowledgeEstimate;
+    }
+
     //TODO: this needs to be tested
     public static Map<String, List<LearningObjectResponse>> getUserResponseMap(List<LearningObjectResponse> responses) {
         Map<String, List<LearningObjectResponse>> userIdToResponses = new TreeMap<>();

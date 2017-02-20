@@ -1,8 +1,8 @@
 package edu.ithaca.dragonlab.ckc.learningobject;
 
 import edu.ithaca.dragonlab.ckc.ConceptNode;
-import edu.ithaca.dragonlab.ckc.IDLink;
-import edu.ithaca.dragonlab.ckc.NodesAndIDLinks;
+import edu.ithaca.dragonlab.ckc.io.LinkRecord;
+import edu.ithaca.dragonlab.ckc.io.NodesAndIDLinks;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -15,7 +15,7 @@ public class ExampleLearningObjectFactory {
 
     public static NodesAndIDLinks makeSimpleLearningObjectDef(){
         List<ConceptNode> cnList = new ArrayList<>();
-        List<IDLink> clList = new ArrayList<>();
+        List<LinkRecord> clList = new ArrayList<>();
 
         cnList.add(new ConceptNode("Q1"));
         cnList.add(new ConceptNode("Q2"));
@@ -24,12 +24,12 @@ public class ExampleLearningObjectFactory {
         cnList.add(new ConceptNode("Q5"));
         cnList.add(new ConceptNode("Q6"));
 
-        clList.add(new IDLink("B","Q1"));
-        clList.add(new IDLink("B","Q2"));
-        clList.add(new IDLink("C","Q3"));
-        clList.add(new IDLink("C","Q4"));
-        clList.add(new IDLink("C","Q5"));
-        clList.add(new IDLink("C","Q6"));
+        clList.add(new LinkRecord("B","Q1"));
+        clList.add(new LinkRecord("B","Q2"));
+        clList.add(new LinkRecord("C","Q3"));
+        clList.add(new LinkRecord("C","Q4"));
+        clList.add(new LinkRecord("C","Q5"));
+        clList.add(new LinkRecord("C","Q6"));
 
         return new NodesAndIDLinks(cnList,clList);
     }

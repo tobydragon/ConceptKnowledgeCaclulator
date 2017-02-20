@@ -2,6 +2,7 @@ package edu.ithaca.dragonlab.ckc;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import edu.ithaca.dragonlab.ckc.io.NodesAndIDLinks;
 import edu.ithaca.dragonlab.ckc.learningobject.LearningObjectResponse;
 
 import java.io.File;
@@ -50,7 +51,7 @@ public class GroupConceptGraphs {
 			for(ConceptNode tempNode: tempLinks.getNodes()){
 				for(ConceptNode avgNode: avgLinks.getNodes()){
 					if(tempNode.getID().equals(avgNode.getID())){
-						double avgCalc = avgNode.getActualComp();
+						double avgCalc = avgNode.getKnowledgeEstimate();
 						tempNode.calcDistanceFromAvg(avgCalc);
 					}
 				}
@@ -111,5 +112,7 @@ public class GroupConceptGraphs {
 	}
 
 
-
+	public ConceptGraph getAvgGraph() {
+		return averageGraph;
+	}
 }

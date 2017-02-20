@@ -1,5 +1,7 @@
 package edu.ithaca.dragonlab.ckc;
 
+import edu.ithaca.dragonlab.ckc.io.NodesAndIDLinks;
+
 public class NamedGraph {
 	public String name;
 	public NodesAndIDLinks cg;

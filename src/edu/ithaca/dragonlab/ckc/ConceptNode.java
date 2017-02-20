@@ -7,24 +7,22 @@ import java.util.List;
 import java.util.Map;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import edu.ithaca.dragonlab.ckc.io.LinkRecord;
 import edu.ithaca.dragonlab.ckc.learningobject.LearningObject;
 
 public class ConceptNode {
-
 	private static final String symbol = "-";
+
 	String id; 		//unique to each node
 	String label; 	//can be the same as id, or different if you want displayed different
+	private double knowledgeEstimate;
+	private double knowledgePrediction;
+	private double knowledgeDistanceFromAvg;
+
+	Map<String, LearningObject> learningObjectMap;
 	List<ConceptNode> children;
 
-    Map<String, LearningObject> learningObjectMap;
-	
-	//TODO: Rename
-	private double actualComp;
-	private double predictedComp;
-
 	private int numParents; //TODO: remove?
-
-	private double distanceFromAvg;
 
 	//need default constructor for jackson
 	public ConceptNode() {
@@ -33,9 +31,9 @@ public class ConceptNode {
 		children = new ArrayList<>();
 		learningObjectMap = new HashMap<>();
 		numParents = 0;
-		predictedComp = 0;
-		actualComp = 0;
-		distanceFromAvg = 0;
+		knowledgePrediction = 0;
+		knowledgeEstimate = 0;
+		knowledgeDistanceFromAvg = 0;
 	}
 
 	public ConceptNode(String id, String label) {
@@ -62,7 +60,7 @@ public class ConceptNode {
 		return 0;
 	}
 
-	public void addToNodesAndLinksLists(List<ConceptNode> nodes, List<IDLink> links){
+	public void addToNodesAndLinksLists(List<ConceptNode> nodes, List<LinkRecord> links){
 		//if I am not in the list
 		if(!nodes.contains(this)){
 			//add me to the nodes list
@@ -71,7 +69,7 @@ public class ConceptNode {
 				//recurse call on children
 				child.addToNodesAndLinksLists(nodes,links);
 				//add the links between me and my children to link list
-				links.add(new IDLink(this.getID(),child.getID()));
+				links.add(new LinkRecord(this.getID(),child.getID()));
 			}
 		}
 	}
@@ -87,9 +85,9 @@ public class ConceptNode {
 		if(nodeCopies == null){
 			nodeCopy = new ConceptNode(makeName(this.getLabel()), this.getLabel());
 		/*
-		nodeCopy.setActualComp(this.actualComp);
-		nodeCopy.setPredictedComp(this.predictedComp);
-		nodeCopy.setDistanceFromAvg(this.distanceFromAvg);
+		nodeCopy.setKnowledgeEstimate(this.knowledgeEstimate);
+		nodeCopy.setKnowledgePrediction(this.knowledgePrediction);
+		nodeCopy.setKnowledgeDistanceFromAvg(this.knowledgeDistanceFromAvg);
 		*/
 			nodeCopies = new ArrayList<String>();
 			nodeCopies.add(nodeCopy.getID());
@@ -100,9 +98,9 @@ public class ConceptNode {
 			nodeCopy = new ConceptNode(makeName(prevName), this.getLabel());
 			//TODO: does it matter that these values are not being copied?
 			/*
-		nodeCopy.setActualComp(this.actualComp);
-		nodeCopy.setPredictedComp(this.predictedComp);
-		nodeCopy.setDistanceFromAvg(this.distanceFromAvg);
+		nodeCopy.setKnowledgeEstimate(this.knowledgeEstimate);
+		nodeCopy.setKnowledgePrediction(this.knowledgePrediction);
+		nodeCopy.setKnowledgeDistanceFromAvg(this.knowledgeDistanceFromAvg);
 		*/
 			nodeCopies.add(nodeCopy.getID());
 			multCopies.put(nodeCopy.getLabel(), nodeCopies);
@@ -158,7 +156,7 @@ public class ConceptNode {
 
 	//////////////////  TO STRING  //////////////////////
 	public String toString(String indent) {
-		String stringToReturn = indent + getLabel() +  "\t actual: " + getActualComp() + " pred: " +getPredictedComp();
+		String stringToReturn = indent + getLabel() +  "\t actual: " + getKnowledgeEstimate() + " pred: " + getKnowledgePrediction();
 		for (ConceptNode child :getChildren()){
 			stringToReturn += child.toString(indent + "\t");
 		}
@@ -184,32 +182,32 @@ public class ConceptNode {
 		return label;
 	}
 
-	public double getActualComp() {
-		return Math.round(actualComp*100.0)/100.0;
+	public double getKnowledgeEstimate() {
+		return Math.round(knowledgeEstimate *100.0)/100.0;
 	}
 
-	public void setActualComp(double actualComp) {
-		this.actualComp = actualComp;
+	public void setKnowledgeEstimate(double knowledgeEstimate) {
+		this.knowledgeEstimate = knowledgeEstimate;
 	}
 
 	public void calcDistanceFromAvg(double avgCalc){
-		this.distanceFromAvg = this.actualComp - avgCalc;
+		this.knowledgeDistanceFromAvg = this.knowledgeEstimate - avgCalc;
 	}
 
-	public void setDistanceFromAvg(double setTo){
-		this.distanceFromAvg = setTo;
+	public void setKnowledgeDistanceFromAvg(double setTo){
+		this.knowledgeDistanceFromAvg = setTo;
 	}
 
-	public double getDistanceFromAvg(){
-		return distanceFromAvg;
+	public double getKnowledgeDistanceFromAvg(){
+		return knowledgeDistanceFromAvg;
 	}
 
-	public double getPredictedComp() {
-		return Math.round(predictedComp*100.0)/100.0;
+	public double getKnowledgePrediction() {
+		return Math.round(knowledgePrediction *100.0)/100.0;
 	}
 
-	public void setPredictedComp(double predictedComp) {
-		this.predictedComp = predictedComp;
+	public void setKnowledgePrediction(double knowledgePrediction) {
+		this.knowledgePrediction = knowledgePrediction;
 	}
 
 	public int getNumParents() {

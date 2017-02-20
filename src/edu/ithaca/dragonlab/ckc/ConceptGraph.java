@@ -1,5 +1,7 @@
 package edu.ithaca.dragonlab.ckc;
 
+import edu.ithaca.dragonlab.ckc.io.LinkRecord;
+import edu.ithaca.dragonlab.ckc.io.NodesAndIDLinks;
 import edu.ithaca.dragonlab.ckc.learningobject.LearningObject;
 import edu.ithaca.dragonlab.ckc.learningobject.LearningObjectResponse;
 import org.apache.logging.log4j.LogManager;
@@ -24,15 +26,10 @@ public class ConceptGraph {
 	
 	//TODO: This seems to use and change the same nodes. Calling this constructor twice would break things...
 	public ConceptGraph(NodesAndIDLinks structureDef){
-        learningObjectMap = new HashMap<>();
-        nodeMap = new HashMap<>();
-		List<ConceptNode> nodes =structureDef.getNodes();
-		List<IDLink> links = structureDef.getLinks();
-
-		this.roots = findRoots(nodes, links);
-        this.nodeMap = addChildren(nodes, links);
+		buildObjectFromNodesAndLinks(structureDef);
 	}
 
+	//TODO: this should be calling the buildObjectFromNodesAndLinks as above, on a copy of the object
 	public ConceptGraph(ConceptGraph graph){
 		NodesAndIDLinks lists = graph.buildNodesAndLinks();
         List<ConceptNode> nodes = new ArrayList<>();
@@ -42,24 +39,39 @@ public class ConceptGraph {
 			nodes.add(tempNode);
 		}
 
-		List<IDLink> links = new ArrayList<>();
-		List<IDLink> linksIn = lists.getLinks();
-		for(IDLink link: linksIn){
-			IDLink tempLink = new IDLink(link.getParent(),link.getChild());
+		List<LinkRecord> links = new ArrayList<>();
+		List<LinkRecord> linksIn = lists.getLinks();
+		for(LinkRecord link: linksIn){
+			LinkRecord tempLink = new LinkRecord(link.getParent(),link.getChild());
 			links.add(tempLink);
 		}
-		
+
 		this.roots = findRoots(nodes, links);
 		this.nodeMap = addChildren(nodes, links);
+
+        //deep copy, doesn't fix the deep copy problems above...
+		this.learningObjectMap = new HashMap<>();
+        for (Map.Entry<String, LearningObject> entry: graph.getLearningObjectMap().entrySet()){
+            this.learningObjectMap.put(entry.getKey(), new LearningObject(entry.getValue()));
+        }
+	}
+
+	public void buildObjectFromNodesAndLinks(NodesAndIDLinks nodeAndLinks){
+		List<ConceptNode> nodes =nodeAndLinks.getNodes();
+		List<LinkRecord> links = nodeAndLinks.getLinks();
+
+		this.roots = findRoots(nodes, links);
+		this.nodeMap = addChildren(nodes, links);
+		this.learningObjectMap = new HashMap<>();
 	}
 
 	//TODO: When book code is integrated
 //	public ConceptGraph(Book b, NodesAndIDLinks lists){
 //		List<ConceptNode> nodes = lists.getNodes();
-//		List<IDLink> links = lists.getLinks();
+//		List<LinkRecord> links = lists.getLinks();
 //
-//		List<IDLink> newLinks = b.buildTagLinks();
-//		for(IDLink link : newLinks){
+//		List<LinkRecord> newLinks = b.buildTagLinks();
+//		for(LinkRecord link : newLinks){
 //			links.add(link);
 //		}
 //
@@ -115,7 +127,7 @@ public class ConceptGraph {
         for (ConceptNode node : learningObjectDef.getNodes()){
             learningObjectMap.put(node.getID(), new LearningObject(node.getID()));
         }
-        for (IDLink link : learningObjectDef.getLinks()){
+        for (LinkRecord link : learningObjectDef.getLinks()){
             ConceptNode node = nodeMap.get(link.getParent());
             if (node != null){
                 node.addLearningObject(learningObjectMap.get(link.getChild()));
@@ -138,13 +150,13 @@ public class ConceptGraph {
         }
 	}	
 
-	private Map<String, ConceptNode> addChildren(List<ConceptNode> nodes, List<IDLink> links){
+	private Map<String, ConceptNode> addChildren(List<ConceptNode> nodes, List<LinkRecord> links){
 		HashMap<String, ConceptNode> fullNodesMap = new HashMap<>();
 		for( ConceptNode currNode : nodes){
 			fullNodesMap.put(currNode.getID(), currNode);
 		}
 		
-		for( IDLink currLink : links){
+		for( LinkRecord currLink : links){
 			ConceptNode currParent = fullNodesMap.get(currLink.getParent());
 			if(currParent == null){
 				logger.warn("In ConceptGraph.addChildren(): " + currLink.getParent()+" node not found in nodes list for link " + currLink);
@@ -163,12 +175,12 @@ public class ConceptGraph {
 		return fullNodesMap;
 	}
 	
- 	private List<ConceptNode> findRoots(List<ConceptNode> nodes, List<IDLink> links) {
+ 	private List<ConceptNode> findRoots(List<ConceptNode> nodes, List<LinkRecord> links) {
 		List<ConceptNode> runningTotal = new ArrayList<>();
 		for (ConceptNode node : nodes) {
 			runningTotal.add(node);
 		}
-		for (IDLink link : links) {
+		for (LinkRecord link : links) {
 			for(ConceptNode node : nodes){
 	 			if(node.getID().equals(link.getChild())){
 	 				runningTotal.remove(node);
@@ -188,7 +200,7 @@ public class ConceptGraph {
 		
 	public NodesAndIDLinks buildNodesAndLinks() {
 		List<ConceptNode> tempNodes = new ArrayList<ConceptNode>();
-		List<IDLink> tempLinks = new ArrayList<IDLink>();
+		List<LinkRecord> tempLinks = new ArrayList<LinkRecord>();
 		for(ConceptNode currRoot : this.roots){
 			currRoot.addToNodesAndLinksLists(tempNodes,tempLinks);
 		}
@@ -210,9 +222,9 @@ public class ConceptGraph {
 		
 	}
 	
-	//TODO: currentRoot.getActualComp used to be this.root.getActualComp, analyze how this changed things
+	//TODO: currentRoot.getKnowledgeEstimate used to be this.root.getKnowledgeEstimate, analyze how this changed things
 	private void calcPredictedScores(ConceptNode currentRoot) {
-		calcPredictedScores(currentRoot, currentRoot.getActualComp(), currentRoot);
+		calcPredictedScores(currentRoot, currentRoot.getKnowledgeEstimate(), currentRoot);
 	}
 	
 	// pre order traversal
@@ -220,24 +232,24 @@ public class ConceptGraph {
 		
 		// simple check for if we"re dealing with the root, which has its own rule
 		if (current == currentRoot) {
-			current.setPredictedComp(current.getActualComp());
+			current.setKnowledgePrediction(current.getKnowledgeEstimate());
 		} else {
 			current.setNumParents(current.getNumParents() + 1);
 			
 			// Calculating the new predicted, take the the old predicted with the weight it has based off of the number of parents
 			// calculate the new pred from the new information passed down and the adding it to old pred
-			double oldPred = current.getPredictedComp() * (1.0 - (1.0/current.getNumParents()));
+			double oldPred = current.getKnowledgePrediction() * (1.0 - (1.0/current.getNumParents()));
 			double newPred = (passedDown * (1.0/current.getNumParents())) + oldPred;
 			
-			current.setPredictedComp(newPred);
+			current.setKnowledgePrediction(newPred);
 		}
 		
 		for (ConceptNode child : current.getChildren()) {
-			if (current.getActualComp() == 0) {
+			if (current.getKnowledgeEstimate() == 0) {
 				
-				calcPredictedScores(child, current.getPredictedComp()/ DIVISION_FACTOR, currentRoot);
+				calcPredictedScores(child, current.getKnowledgePrediction()/ DIVISION_FACTOR, currentRoot);
 			} else {
-				calcPredictedScores(child, current.getActualComp(), currentRoot);
+				calcPredictedScores(child, current.getKnowledgeEstimate(), currentRoot);
 			}
 		}
 		

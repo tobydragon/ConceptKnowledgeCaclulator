@@ -17,6 +17,14 @@ public class LearningObject {
         this.responses = new ArrayList<>();
     }
 
+    public LearningObject(LearningObject other){
+        this.id = other.id;
+        this.responses = new ArrayList<>();
+        for (LearningObjectResponse response : responses){
+            this.responses.add(new LearningObjectResponse(response));
+        }
+    }
+
     public void addResponse(LearningObjectResponse response){
         if (id.equals(response.getLearningObjectId())) {
             responses.add(response);
