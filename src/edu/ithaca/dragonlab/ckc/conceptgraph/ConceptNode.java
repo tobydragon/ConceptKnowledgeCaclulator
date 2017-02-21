@@ -78,23 +78,12 @@ public class ConceptNode {
 
         this.numParents = other.numParents;
     }
-
-    //called after copy has been made, recursively adds all nodes and leaningObjects to respective maps
-    public void populateMaps(Map<String, ConceptNode> nodeMap, Map<String, LearningObject> graphLearningObjectMap) {
-        nodeMap.put(this.getID(), this);
-        for (LearningObject learningObject : this.learningObjectMap.values()){
-            graphLearningObjectMap.put(learningObject.getId(), learningObject);
-        }
-        for (ConceptNode child : children){
-            child.populateMaps(nodeMap, graphLearningObjectMap);
-        }
-    }
 	
 	public void addChild(ConceptNode child){
 		children.add(child);
 	}
 
-	public void calcActualComp() {
+	public void calcKnowledgeEstimate() {
         //TODO: take dataImportance into consideration
         //calculate value for this current concept
         double currentConceptEstimate = 0;
@@ -108,7 +97,7 @@ public class ConceptNode {
         //calculate estimate from children
         double childrenTotal = 0;
         for (ConceptNode child : children){
-            child.calcActualComp();
+            child.calcKnowledgeEstimate();
             childrenTotal += child.getKnowledgeEstimate();
         }
 

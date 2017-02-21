@@ -191,7 +191,7 @@ public class ConceptGraph {
 
 	public void calcKnowledgeEstimates(){
 		for(ConceptNode root : this.roots){
-			root.calcActualComp();
+			root.calcKnowledgeEstimate();
 		}
 	}
 
