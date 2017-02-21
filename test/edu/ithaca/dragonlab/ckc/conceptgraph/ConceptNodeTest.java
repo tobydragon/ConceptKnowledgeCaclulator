@@ -1,4 +1,4 @@
-package edu.ithaca.dragonlab.ckc;
+package edu.ithaca.dragonlab.ckc.conceptgraph;
 
 import edu.ithaca.dragonlab.ckc.conceptgraph.ConceptNode;
 import org.junit.Assert;

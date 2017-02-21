@@ -1,4 +1,4 @@
-package edu.ithaca.dragonlab.ckc;
+package edu.ithaca.dragonlab.ckc.conceptgraph;
 
 /**
  * Created by tdragon on 2/15/17.

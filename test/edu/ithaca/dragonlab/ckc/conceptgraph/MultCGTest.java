@@ -1,13 +1,10 @@
-package edu.ithaca.dragonlab.ckc;
+package edu.ithaca.dragonlab.ckc.conceptgraph;
 
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import edu.ithaca.dragonlab.ckc.conceptgraph.ConceptGraph;
-import edu.ithaca.dragonlab.ckc.conceptgraph.ConceptNode;
-import edu.ithaca.dragonlab.ckc.conceptgraph.NamedGraph;
 import edu.ithaca.dragonlab.ckc.io.LinkRecord;
 import edu.ithaca.dragonlab.ckc.io.ConceptGraphRecord;
 
