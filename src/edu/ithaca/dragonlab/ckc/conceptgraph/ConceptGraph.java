@@ -7,11 +7,7 @@ import edu.ithaca.dragonlab.ckc.learningobject.LearningObjectResponse;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 
 public class ConceptGraph {
@@ -29,30 +25,18 @@ public class ConceptGraph {
 		buildObjectFromNodesAndLinks(structureDef);
 	}
 
-	//TODO: this should be calling the buildObjectFromNodesAndLinks as above, on a copy of the object
-	public ConceptGraph(ConceptGraph graph){
-		ConceptGraphRecord lists = graph.buildNodesAndLinks();
-        List<ConceptNode> nodes = new ArrayList<>();
-		List<ConceptNode> nodesIn = lists.getNodes();
-		for(ConceptNode node: nodesIn){
-			ConceptNode tempNode = new ConceptNode(node.getID());
-			nodes.add(tempNode);
-		}
+	public ConceptGraph(ConceptGraph other){
+		this.roots = new ArrayList<>();
+		//recursively copy entire graph
+		for (ConceptNode otherRoot : other.roots){
+		    this.roots.add(new ConceptNode(otherRoot));
+        }
 
-		List<LinkRecord> links = new ArrayList<>();
-		List<LinkRecord> linksIn = lists.getLinks();
-		for(LinkRecord link: linksIn){
-			LinkRecord tempLink = new LinkRecord(link.getParent(),link.getChild());
-			links.add(tempLink);
-		}
-
-		this.roots = findRoots(nodes, links);
-		this.nodeMap = addChildren(nodes, links);
-
-        //deep copy, doesn't fix the deep copy problems above...
-		this.learningObjectMap = new HashMap<>();
-        for (Map.Entry<String, LearningObject> entry: graph.getLearningObjectMap().entrySet()){
-            this.learningObjectMap.put(entry.getKey(), new LearningObject(entry.getValue()));
+        nodeMap = new HashMap<>();
+		learningObjectMap = new HashMap<>();
+        //recursively populate maps
+        for (ConceptNode root : roots){
+		    root.populateMaps(nodeMap, learningObjectMap);
         }
 	}
 
@@ -256,7 +240,7 @@ public class ConceptGraph {
 	}
 	
 	public ConceptGraph graphToTree(){
-		List<ConceptNode> newRoots = new ArrayList<ConceptNode>();
+		List<ConceptNode> newRoots = new ArrayList<>();
 		HashMap<String, List<String>> initMultCopies = new HashMap<String, List<String>>();
 		for(ConceptNode root : this.roots){
 			newRoots.add(root.makeTree(initMultCopies));

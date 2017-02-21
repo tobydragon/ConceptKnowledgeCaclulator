@@ -1,5 +1,5 @@
 //Define some global variables
-var fileName = "testInput/newTest.json"; //fileName of JSON file to read in
+var fileName = "../out/test/sampleoutput/GroupConceptGraphSimple.json"; //fileName of JSON file to read in
 var dataObject; //the object that one concept graph gets saved to when a student button is clicked
 var objectsArray; //the object that the json file gets parsed to, an array of "student objects"
 var names = []; //list of names of the students
@@ -147,7 +147,7 @@ function findRoot(dataList){
     var roots = []; 
     //add all of the node IDs to the roots array
     for(var i = 0; i < dataList.nodes.length; i++){
-        roots.push(new RootNode(dataList.nodes[i].id, dataList.nodes[i].actualComp, dataList.nodes[i].distanceFromAvg));
+        roots.push(new RootNode(dataList.nodes[i].id, dataList.nodes[i].knowledgeEstimate, dataList.nodes[i].knowledgeDistanceFromAvg));
     }
     //loop through all of the links
     for(var i = 0; i < dataList.links.length; i++){

@@ -41,16 +41,15 @@ public class GroupConceptGraphsTest {
 
 
         Assert.assertEquals(6,group.getAvgGraph().getLearningObjectMap().size());
-        Map<String, ConceptGraph> userGraphMap = group.getUserToGraphMap();
-		Assert.assertEquals(6,userGraphMap.get("student1").getLearningObjectMap().size());
-        Assert.assertEquals(6,userGraphMap.get("student2").getLearningObjectMap().size());
-        Assert.assertEquals(6,userGraphMap.get("student3").getLearningObjectMap().size());
+		Assert.assertEquals(6,group.getUserToGraphMap().get("student1").getLearningObjectMap().size());
+        Assert.assertEquals(6,group.getUserToGraphMap().get("student2").getLearningObjectMap().size());
+        Assert.assertEquals(6,group.getUserToGraphMap().get("student3").getLearningObjectMap().size());
 
         Assert.assertEquals(3,group.getAvgGraph().getLearningObjectMap().get("Q1").getResponses().size());
         Assert.assertEquals(2,group.getAvgGraph().getLearningObjectMap().get("Q5").getResponses().size());
 
-        Assert.assertEquals(1,userGraphMap.get("student1").getLearningObjectMap().get("Q1").getResponses().size());
-        Assert.assertEquals(0,userGraphMap.get("student3").getLearningObjectMap().get("Q5").getResponses().size());
+        Assert.assertEquals(1,group.getUserToGraphMap().get("student1").getLearningObjectMap().get("Q1").getResponses().size());
+        Assert.assertEquals(0,group.getUserToGraphMap().get("student3").getLearningObjectMap().get("Q5").getResponses().size());
     }
 
     //TODO: fix to current data from example
@@ -73,14 +72,16 @@ public class GroupConceptGraphsTest {
 	}
 	
 	//TODO: make this test functional, why is half commented out? (may not have been working in previous project)
-	public void jsonTester(){
+	@Test
+    public void jsonTester(){
 		ObjectMapper mapper = new ObjectMapper();
-		
-		GroupConceptGraphs group = new GroupConceptGraphs(ExampleConceptGraphFactory.makeSimple(), ExampleLearningObjectResponseFactory.makeSimpleResponses());
 
+        ConceptGraph graph = ExampleConceptGraphFactory.makeSimple();
+        graph.addLearningObjects(ExampleLearningObjectFactory.makeSimpleLearningObjectDef());
+        GroupConceptGraphs group = new GroupConceptGraphs(graph, ExampleLearningObjectResponseFactory.makeSimpleResponses());
 		try {
 			//writes JSON to file
-			mapper.writeValue(new File("out/test/sampleoutput/GroupCOnceptGraphSimple.json"), group.getAllNamedGraphs());
+			mapper.writeValue(new File("out/test/sampleoutput/GroupConceptGraphSimple.json"), group.getAllNamedGraphs());
         } catch (Exception e) {
             e.printStackTrace();
         }

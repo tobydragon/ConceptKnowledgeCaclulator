@@ -46,18 +46,76 @@ public class ConceptNode {
 	public ConceptNode(String id){
 		this(id, id);
 	}
+
+    public ConceptNode(ConceptNode other){
+	    this.id = other.id;
+        this.label = other.label;
+        this.knowledgeEstimate = other.knowledgeEstimate;
+        this.knowledgePrediction = other.knowledgePrediction;
+        this.knowledgeDistanceFromAvg = other.knowledgeDistanceFromAvg;
+
+        this.learningObjectMap = new HashMap<>();
+        for (Map.Entry<String, LearningObject> entry: other.getLearningObjectMap().entrySet()){
+            this.learningObjectMap.put(entry.getKey(), new LearningObject(entry.getValue()));
+        }
+
+        this.children = new ArrayList<>();
+        for (ConceptNode otherChild : other.children){
+            this.addChild( new ConceptNode (otherChild));
+        }
+
+        this.numParents = other.numParents;
+    }
+
+    //called after copy has been made, recursively adds all nodes and leaningObjects to respective maps
+    public void populateMaps(Map<String, ConceptNode> nodeMap, Map<String, LearningObject> graphLearningObjectMap) {
+        nodeMap.put(this.getID(), this);
+        for (LearningObject learningObject : this.learningObjectMap.values()){
+            graphLearningObjectMap.put(learningObject.getId(), learningObject);
+        }
+        for (ConceptNode child : children){
+            child.populateMaps(nodeMap, graphLearningObjectMap);
+        }
+    }
 	
 	public void addChild(ConceptNode child){
 		children.add(child);
 	}
 
-	public double calcActualComp() {
-		if (getChildren().size() == 0) {
-			//TODO: calculate from learningObjects considering weights
-		} else {
-			//TODO: calculate from children and learningObjects
-		}
-		return 0;
+	public void calcActualComp() {
+        //TODO: take dataImportance into consideration
+
+        //calculate value for this current concept
+        double currentConceptEstimate = 0;
+        for (LearningObject learningObject : learningObjectMap.values()){
+            currentConceptEstimate += learningObject.calcKnowledgeEstimate();
+        }
+        if (learningObjectMap.size() > 0) {
+            currentConceptEstimate /= learningObjectMap.size();
+        }
+
+        //calculate estimate from children
+        double childrenEstimate = 0;
+        for (ConceptNode child : children){
+            child.calcActualComp();
+            childrenEstimate += child.getKnowledgeEstimate();
+        }
+        if (children.size() > 0) {
+            childrenEstimate /= children.size();
+        }
+
+        //TODO: this is probably not right, needs more thought
+        //TODO: if ever putting data on non-leaf nodes, this needs revisiting
+        //if you have both, average them
+        if (currentConceptEstimate > 0 && childrenEstimate > 0){
+            this.knowledgeEstimate = (currentConceptEstimate+childrenEstimate)/2;
+        }
+        else if (currentConceptEstimate > 0 ){
+            this.knowledgeEstimate = currentConceptEstimate;
+        }
+        else {
+            this.knowledgeEstimate = childrenEstimate;
+        }
 	}
 
 	public void addToNodesAndLinksLists(List<ConceptNode> nodes, List<LinkRecord> links){
@@ -82,39 +140,28 @@ public class ConceptNode {
 	public ConceptNode makeTree(HashMap<String, List<String>> multCopies){
 		ConceptNode nodeCopy;
 		List<String> nodeCopies = multCopies.get(this.getLabel());
+		//if there are no copies, make a new list to store all the copies and add it to the map
 		if(nodeCopies == null){
 			nodeCopy = new ConceptNode(makeName(this.getLabel()), this.getLabel());
-		/*
-		nodeCopy.setKnowledgeEstimate(this.knowledgeEstimate);
-		nodeCopy.setKnowledgePrediction(this.knowledgePrediction);
-		nodeCopy.setKnowledgeDistanceFromAvg(this.knowledgeDistanceFromAvg);
-		*/
-			nodeCopies = new ArrayList<String>();
-			nodeCopies.add(nodeCopy.getID());
-			multCopies.put(nodeCopy.getLabel(), nodeCopies);
-
+			nodeCopies = new ArrayList<>();
+            multCopies.put(nodeCopy.getLabel(), nodeCopies);
+		//else get the previous name from the list and make a new name from it
 		}else{
 			String prevName = nodeCopies.get(nodeCopies.size()-1);
 			nodeCopy = new ConceptNode(makeName(prevName), this.getLabel());
-			//TODO: does it matter that these values are not being copied?
-			/*
-		nodeCopy.setKnowledgeEstimate(this.knowledgeEstimate);
-		nodeCopy.setKnowledgePrediction(this.knowledgePrediction);
-		nodeCopy.setKnowledgeDistanceFromAvg(this.knowledgeDistanceFromAvg);
-		*/
-			nodeCopies.add(nodeCopy.getID());
-			multCopies.put(nodeCopy.getLabel(), nodeCopies);
 		}
+		//add the new name to the list
+        nodeCopies.add(nodeCopy.getID());
 
-		try{
-			for(ConceptNode origChild : this.getChildren()){
-				ConceptNode childCopy = origChild.makeTree(multCopies);
-				nodeCopy.addChild(childCopy);
-			}
-		}catch(NullPointerException e){
-			System.out.println("Broke on this node: "+this.getID());
-		}
+		//set all the data from the node copy
+        nodeCopy.setKnowledgeEstimate(this.knowledgeEstimate);
+        nodeCopy.setKnowledgePrediction(this.knowledgePrediction);
+        nodeCopy.setKnowledgeDistanceFromAvg(this.knowledgeDistanceFromAvg);
 
+        for(ConceptNode origChild : this.getChildren()){
+            ConceptNode childCopy = origChild.makeTree(multCopies);
+            nodeCopy.addChild(childCopy);
+        }
 		return nodeCopy;
 	}
 
@@ -221,6 +268,8 @@ public class ConceptNode {
     public Map<String, LearningObject> getLearningObjectMap() {
         return learningObjectMap;
     }
+
+
 }
 
 	
