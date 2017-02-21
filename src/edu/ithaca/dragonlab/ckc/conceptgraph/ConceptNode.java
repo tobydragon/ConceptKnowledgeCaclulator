@@ -47,7 +47,8 @@ public class ConceptNode {
 		this(id, id);
 	}
 
-    public ConceptNode(ConceptNode other){
+	//Complicated because it is a graph, so it should only recurse when a child hasn't already been created, which we can only tell from graphNodeMap
+    public ConceptNode(ConceptNode other, Map<String, ConceptNode> graphNodeMap, Map<String, LearningObject> graphLearningObjectMap){
 	    this.id = other.id;
         this.label = other.label;
         this.knowledgeEstimate = other.knowledgeEstimate;
@@ -56,12 +57,23 @@ public class ConceptNode {
 
         this.learningObjectMap = new HashMap<>();
         for (Map.Entry<String, LearningObject> entry: other.getLearningObjectMap().entrySet()){
-            this.learningObjectMap.put(entry.getKey(), new LearningObject(entry.getValue()));
+            LearningObject newLearningObject = new LearningObject(entry.getValue());
+            this.learningObjectMap.put(entry.getKey(), newLearningObject);
+            graphLearningObjectMap.put(entry.getKey(), newLearningObject);
         }
 
         this.children = new ArrayList<>();
         for (ConceptNode otherChild : other.children){
-            this.addChild( new ConceptNode (otherChild));
+            //if this node has already been copied (due to graph structure), just link it in new graph structure
+            ConceptNode alreadyCopiedNode = graphNodeMap.get(otherChild.getID());
+            if (alreadyCopiedNode != null){
+                this.addChild(alreadyCopiedNode);
+            }
+            else {
+                ConceptNode newChild = new ConceptNode(otherChild, graphNodeMap, graphLearningObjectMap);
+                graphNodeMap.put(newChild.getID(), newChild);
+                this.addChild(newChild);
+            }
         }
 
         this.numParents = other.numParents;
@@ -84,7 +96,6 @@ public class ConceptNode {
 
 	public void calcActualComp() {
         //TODO: take dataImportance into consideration
-
         //calculate value for this current concept
         double currentConceptEstimate = 0;
         for (LearningObject learningObject : learningObjectMap.values()){
@@ -95,26 +106,26 @@ public class ConceptNode {
         }
 
         //calculate estimate from children
-        double childrenEstimate = 0;
+        double childrenTotal = 0;
         for (ConceptNode child : children){
             child.calcActualComp();
-            childrenEstimate += child.getKnowledgeEstimate();
-        }
-        if (children.size() > 0) {
-            childrenEstimate /= children.size();
+            childrenTotal += child.getKnowledgeEstimate();
         }
 
-        //TODO: this is probably not right, needs more thought
-        //TODO: if ever putting data on non-leaf nodes, this needs revisiting
-        //if you have both, average them
-        if (currentConceptEstimate > 0 && childrenEstimate > 0){
-            this.knowledgeEstimate = (currentConceptEstimate+childrenEstimate)/2;
+        if (children.size() > 0) {
+            //if you have both children and data, count yourself equal to your children
+            if (currentConceptEstimate > 0){
+                this.knowledgeEstimate = currentConceptEstimate + childrenTotal;
+                this.knowledgeEstimate /= children.size() + 1;
+            }
+            //else you only have children, just count them
+            else {
+                this.knowledgeEstimate = childrenTotal / children.size();
+            }
         }
-        else if (currentConceptEstimate > 0 ){
-            this.knowledgeEstimate = currentConceptEstimate;
-        }
+        //else you don't have children, only count yourself
         else {
-            this.knowledgeEstimate = childrenEstimate;
+            this.knowledgeEstimate = currentConceptEstimate;
         }
 	}
 
@@ -230,7 +241,7 @@ public class ConceptNode {
 	}
 
 	public double getKnowledgeEstimate() {
-		return Math.round(knowledgeEstimate *100.0)/100.0;
+		return Math.round(knowledgeEstimate *1000.0)/1000.0;
 	}
 
 	public void setKnowledgeEstimate(double knowledgeEstimate) {
@@ -250,7 +261,7 @@ public class ConceptNode {
 	}
 
 	public double getKnowledgePrediction() {
-		return Math.round(knowledgePrediction *100.0)/100.0;
+		return Math.round(knowledgePrediction *10000)/1000.0;
 	}
 
 	public void setKnowledgePrediction(double knowledgePrediction) {

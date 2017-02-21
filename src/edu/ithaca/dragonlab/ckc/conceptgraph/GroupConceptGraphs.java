@@ -21,8 +21,8 @@ public class GroupConceptGraphs {
 		
 		averageGraph = new ConceptGraph(structureGraph);
 		averageGraph.addSummariesToGraph(summaries);
-		averageGraph.calcActualComp();
-		averageGraph.calcPredictedScores();
+		averageGraph.calcKnowledgeEstimates();
+		//averageGraph.calcPredictedScores();
 		
 		Map<String, List<LearningObjectResponse>> userIdToResponses = LearningObjectResponse.getUserResponseMap(summaries);
 		userToGraph = new HashMap<>();
@@ -30,7 +30,7 @@ public class GroupConceptGraphs {
 		for(String user: userIdToResponses.keySet()){
 			ConceptGraph structureCopy = new ConceptGraph(structureGraph);
 			structureCopy.addSummariesToGraph(userIdToResponses.get(user));
-			structureCopy.calcActualComp();
+			structureCopy.calcKnowledgeEstimates();
 			structureCopy.calcPredictedScores();
 			userToGraph.put(user, structureCopy);
 		}

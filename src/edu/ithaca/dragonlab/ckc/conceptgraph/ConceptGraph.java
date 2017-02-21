@@ -27,16 +27,14 @@ public class ConceptGraph {
 
 	public ConceptGraph(ConceptGraph other){
 		this.roots = new ArrayList<>();
+        nodeMap = new HashMap<>();
+        learningObjectMap = new HashMap<>();
+
 		//recursively copy entire graph
 		for (ConceptNode otherRoot : other.roots){
-		    this.roots.add(new ConceptNode(otherRoot));
-        }
-
-        nodeMap = new HashMap<>();
-		learningObjectMap = new HashMap<>();
-        //recursively populate maps
-        for (ConceptNode root : roots){
-		    root.populateMaps(nodeMap, learningObjectMap);
+		    ConceptNode newRoot = new ConceptNode(otherRoot, nodeMap, learningObjectMap);
+		    nodeMap.put(newRoot.getID(), newRoot);
+		    this.roots.add(newRoot);
         }
 	}
 
@@ -104,8 +102,6 @@ public class ConceptGraph {
         learningObjectMap = new HashMap<>();
         this.roots = rootsIn;
 	}
-
-
 
     public void addLearningObjects(ConceptGraphRecord learningObjectDef){
         for (ConceptNode node : learningObjectDef.getNodes()){
@@ -193,7 +189,7 @@ public class ConceptGraph {
 	}
 		
 
-	public void calcActualComp(){
+	public void calcKnowledgeEstimates(){
 		for(ConceptNode root : this.roots){
 			root.calcActualComp();
 		}

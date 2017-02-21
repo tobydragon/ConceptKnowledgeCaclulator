@@ -7,6 +7,7 @@ import edu.ithaca.dragonlab.ckc.conceptgraph.ConceptNode;
 import edu.ithaca.dragonlab.ckc.io.ConceptGraphRecord;
 import edu.ithaca.dragonlab.ckc.learningobject.ExampleLearningObjectFactory;
 import edu.ithaca.dragonlab.ckc.learningobject.ExampleLearningObjectResponseFactory;
+import edu.ithaca.dragonlab.ckc.util.TestUtil;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.junit.Assert;
@@ -21,7 +22,16 @@ import java.nio.file.Paths;
 public class ConceptGraphTest {
 	static Logger logger = LogManager.getLogger(ConceptGraphTest.class);
 
-    public static float ERROR_MARGIN = (float) 0.001;
+	@Test
+    public void copyConstructorTest(){
+	    ConceptGraph orig = ExampleConceptGraphFactory.makeSimple();
+	    orig.addLearningObjects(ExampleLearningObjectFactory.makeSimpleLearningObjectDef());
+	    orig.addSummariesToGraph(ExampleLearningObjectResponseFactory.makeSimpleResponses());
+
+	    ConceptGraph copy = new ConceptGraph(orig);
+	    Assert.assertNotNull(copy.findNodeById("A"));
+	    Assert.assertEquals(copy.findNodeById("C"), copy.findNodeById("B").getChildren().get(0));
+    }
 
     @Test
     public void addLearningObjectsTest(){
@@ -45,12 +55,12 @@ public class ConceptGraphTest {
         Assert.assertEquals(2, graph.findNodeById("C").getLearningObjectMap().get("Q5").getResponses().size());
         Assert.assertEquals(2, graph.findNodeById("C").getLearningObjectMap().get("Q6").getResponses().size());
 
-        Assert.assertEquals(1,     graph.findNodeById("B").getLearningObjectMap().get("Q1").calcKnowledgeEstimate(), ERROR_MARGIN);
-        Assert.assertEquals(1,     graph.findNodeById("B").getLearningObjectMap().get("Q2").calcKnowledgeEstimate(), ERROR_MARGIN);
-        Assert.assertEquals(0.667, graph.findNodeById("C").getLearningObjectMap().get("Q3").calcKnowledgeEstimate(), ERROR_MARGIN);
-        Assert.assertEquals(0.333, graph.findNodeById("C").getLearningObjectMap().get("Q4").calcKnowledgeEstimate(), ERROR_MARGIN);
-        Assert.assertEquals(0.5,   graph.findNodeById("C").getLearningObjectMap().get("Q5").calcKnowledgeEstimate(), ERROR_MARGIN);
-        Assert.assertEquals(0.5,   graph.findNodeById("C").getLearningObjectMap().get("Q6").calcKnowledgeEstimate(), ERROR_MARGIN);
+        Assert.assertEquals(1,     graph.findNodeById("B").getLearningObjectMap().get("Q1").calcKnowledgeEstimate(), TestUtil.OK_FLOAT_MARGIN);
+        Assert.assertEquals(1,     graph.findNodeById("B").getLearningObjectMap().get("Q2").calcKnowledgeEstimate(), TestUtil.OK_FLOAT_MARGIN);
+        Assert.assertEquals(0.667, graph.findNodeById("C").getLearningObjectMap().get("Q3").calcKnowledgeEstimate(), TestUtil.OK_FLOAT_MARGIN);
+        Assert.assertEquals(0.333, graph.findNodeById("C").getLearningObjectMap().get("Q4").calcKnowledgeEstimate(), TestUtil.OK_FLOAT_MARGIN);
+        Assert.assertEquals(0.5,   graph.findNodeById("C").getLearningObjectMap().get("Q5").calcKnowledgeEstimate(), TestUtil.OK_FLOAT_MARGIN);
+        Assert.assertEquals(0.5,   graph.findNodeById("C").getLearningObjectMap().get("Q6").calcKnowledgeEstimate(), TestUtil.OK_FLOAT_MARGIN);
     }
 
     @Test
@@ -126,6 +136,7 @@ public class ConceptGraphTest {
         Assert.assertEquals(lists3.getLinks().size() + 1, lists3.getNodes().size());
     }
 
+    //TODO: Don't know how these tests are still passing, I think they should be broken, so they should be re-written to catch errors, then the format of test files should be fixed
 	@Test
 	public void makeConceptGraphFromFileTest(){
 		ObjectMapper mapper = new ObjectMapper();
@@ -149,8 +160,9 @@ public class ConceptGraphTest {
 		}
 		
 	}
-	
-	@Test
+
+    //TODO: Don't know how these tests are still passing, I think they should be broken, so they should be re-written to catch errors, then the format of test files should be fixed
+    @Test
 	public void makeJsonFromConceptGraphTest(){
 
 		ObjectMapper mapper = new ObjectMapper();
@@ -186,8 +198,9 @@ public class ConceptGraphTest {
 		Assert.assertEquals(11, numID);
 		Assert.assertEquals(11, numLink);
 	}
-	
-	@Test
+
+    //TODO: Don't know how these tests are still passing, I think they should be broken, so they should be re-written to catch errors, then the format of test files should be fixed
+    @Test
 	public void makeJsonFromConceptGraphTreeTest(){
 
 		ObjectMapper mapper = new ObjectMapper();
@@ -225,11 +238,22 @@ public class ConceptGraphTest {
 		Assert.assertEquals(15, numLink);
 	}
 
+	@Test
+	public void calcKnowledgeEstimateTest(){
+        ConceptGraph graph = ExampleConceptGraphFactory.makeSimple();
+        graph.addLearningObjects(ExampleLearningObjectFactory.makeSimpleLearningObjectDef());
+        graph.addSummariesToGraph(ExampleLearningObjectResponseFactory.makeSimpleResponses());
+        graph.calcKnowledgeEstimates();
+
+        Assert.assertEquals(0.625, graph.findNodeById("A").getKnowledgeEstimate(), TestUtil.OK_FLOAT_MARGIN);
+        Assert.assertEquals(0.75, graph.findNodeById("B").getKnowledgeEstimate(), TestUtil.OK_FLOAT_MARGIN);
+        Assert.assertEquals(0.5, graph.findNodeById("C").getKnowledgeEstimate(), TestUtil.OK_FLOAT_MARGIN);
+    }
+
     //TODO: Adapt to new graph creation once data is reinstated
 //	@Test
 //	public void calcActualCompTest() {
-//        List<LearningObjectResponse> responses = ExampleLearningObjectResponseFactory.makeSimple();
-//        ConceptGraph structureGraph = ConceptGraph
+//        //create your selectionGraph and add responses to it
 //
 //		float delta = (float) .01;
 //
