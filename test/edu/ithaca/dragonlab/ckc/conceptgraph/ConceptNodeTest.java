@@ -6,6 +6,8 @@ import org.junit.Test;
 
 public class ConceptNodeTest {
 
+
+
 	@Test
 	public void makeNameWithInitialInputTest() {
 		Assert.assertEquals("Title-1", ConceptNode.makeName("Title"));

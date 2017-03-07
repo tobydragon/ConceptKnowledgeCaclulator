@@ -20,6 +20,23 @@ import java.nio.file.Paths;
 public class ConceptGraphTest {
 	static Logger logger = LogManager.getLogger(ConceptGraphTest.class);
 
+    @Test
+    public void learningObjectsTest(){
+        ConceptGraph graph = ExampleConceptGraphFactory.makeSimple();
+        graph.addLearningObjects(ExampleLearningObjectFactory.makeSimpleLearningObjectDef());
+
+        Assert.assertEquals(4, graph.findNodeById("C").buildLearningObjectList().size());
+        Assert.assertEquals(6, graph.findNodeById("A").buildLearningObjectList().size());
+        Assert.assertEquals(6, graph.findNodeById("B").buildLearningObjectList().size());
+
+    }
+
+
+    @test
+    public void findNodeTest(){
+
+    }
+
 	@Test
     public void copyConstructorTest(){
 	    ConceptGraph orig = ExampleConceptGraphFactory.makeSimple();

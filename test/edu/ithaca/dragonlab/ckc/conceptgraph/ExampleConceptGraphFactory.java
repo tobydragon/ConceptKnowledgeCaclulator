@@ -153,4 +153,7 @@ public class ExampleConceptGraphFactory {
         ConceptGraphRecord lists = new ConceptGraphRecord(cnList, linkList);
         return new ConceptGraph(lists);
     }
+
+
+
 }

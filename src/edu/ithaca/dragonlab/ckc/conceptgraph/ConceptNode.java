@@ -1,10 +1,8 @@
 
 package edu.ithaca.dragonlab.ckc.conceptgraph;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
+
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import edu.ithaca.dragonlab.ckc.io.LinkRecord;
@@ -46,6 +44,93 @@ public class ConceptNode {
 	public ConceptNode(String id){
 		this(id, id);
 	}
+
+
+
+	//find node()
+	public ConceptNode findNode(String findConcept){
+		if (this.id.equals(findConcept)){
+			return this;
+		}else{
+
+			for (ConceptNode child: children){
+				ConceptNode myNode = child.findNode(findConcept);
+				if(myNode != null){
+					return myNode;
+				}
+			}
+		}
+		return null;
+	}
+
+
+	public  HashMap<String, Integer> buildLearningObjectList(){
+
+		HashMap<String, Integer> learningObjectMap2 = new HashMap<String, Integer>();
+
+		if (this.children.size() <= 0){
+			//if there are not children, then you want to add the current questions.
+
+			Iterator <String> itr = this.learningObjectMap.keySet().iterator();
+			for (int i =0; i< this.learningObjectMap.size(); i++){
+				//need to get each of the values in the learningObjectMap
+				 LearningObject label = this.learningObjectMap.get(itr.next());
+
+				if (learningObjectMap2.containsValue(label.getId())){
+
+					learningObjectMap2.put(label.getId() ,learningObjectMap2.get(label.getId())+1);
+
+				}else{
+
+					learningObjectMap2.put(label.getId() ,1);
+				}
+			}
+
+
+			return learningObjectMap2;
+
+		}else{
+
+		//to add the current node's learning object data
+			Iterator <String> itr2 = this.learningObjectMap.keySet().iterator();
+			for (int f =0; f< this.learningObjectMap.size(); f++){
+				LearningObject label2 = this.learningObjectMap.get(itr2.next());
+
+				if (learningObjectMap2.containsValue(label2.getId())){
+					learningObjectMap2.put(label2.getId() ,learningObjectMap2.get(label2.getId())+1);
+
+				}else{
+					learningObjectMap2.put(label2.getId() ,1);
+				}
+			}
+
+
+
+			//take each and go through the nodes
+			for(ConceptNode child: children) {
+
+				Iterator <String> itr3 = child.learningObjectMap.keySet().iterator();
+				for (int j = 0; j < child.learningObjectMap.size(); j++) {
+
+					LearningObject label3 = child.learningObjectMap.get(itr3.next());
+					if (learningObjectMap2.containsValue(label3.getId())){
+							learningObjectMap2.put(label3.getId() ,learningObjectMap2.get(label3.getId())+1);
+
+					}else{
+
+						learningObjectMap2.put(label3.getId() ,1);
+					}
+				}
+
+			}
+		}
+
+			return learningObjectMap2;
+
+		}
+
+
+
 
 	//Complicated because it is a graph, so it should only recurse when a child hasn't already been created, which we can only tell from graphNodeMap
     public ConceptNode(ConceptNode other, Map<String, ConceptNode> graphNodeMap, Map<String, LearningObject> graphLearningObjectMap){
