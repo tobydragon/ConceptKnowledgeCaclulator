@@ -41,9 +41,7 @@ public class LearningObjectResponse {
         return userIdToResponses;
     }
 
-    public String getLearningObjectId(){
-        return learningObjectId;
-    }
+    public String getLearningObjectId(){ return learningObjectId; }
 
     public double calcKnowledgeEstimate(){
         return knowledgeEstimate;
