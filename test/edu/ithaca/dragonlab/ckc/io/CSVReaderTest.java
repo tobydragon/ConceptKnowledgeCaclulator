@@ -12,7 +12,7 @@ import edu.ithaca.dragonlab.ckc.learningobject.ManualGradedResponse;
 public class CSVReaderTest {
     @Test
     public void createQuestionsTest(){
-        String file = "test/testresources/DataCSVReaderTest.csv";
+        String file = "test/testresources/DataCSVExample.csv";
         CSVReader readfile = new CSVReader(file);
         ArrayList<ManualGradedResponse> manualGradedResponseList = readfile.getManualGradedResponses();
         ArrayList<LearningObject> manualGradedLearningObjectList = readfile.getManualGradedLearningObjects();
@@ -22,7 +22,7 @@ public class CSVReaderTest {
         ManualGradedResponse testQ = new ManualGradedResponse("Week 8 Exercises",6,6,"stu1");
         Assert.assertEquals(testQ.calcKnowledgeEstimate(), manualGradedResponseList.get(0).calcKnowledgeEstimate(),0);
         Assert.assertEquals(testQ.getNonNormalizedScore(), manualGradedResponseList.get(0).getNonNormalizedScore(),0);
-        Assert.assertEquals(testQ.getMaxScore(), manualGradedResponseList.get(0).getMaxScore(),0);
+        Assert.assertEquals(testQ.getMaxPossibleScore(), manualGradedResponseList.get(0).getMaxPossibleScore(),0);
         Assert.assertEquals(testQ.getUserId(), manualGradedResponseList.get(0).getUserId());
         Assert.assertEquals(testQ.getLearningObjectId(), manualGradedResponseList.get(0).getLearningObjectId());
 
@@ -31,7 +31,7 @@ public class CSVReaderTest {
         int lastIndex = manualGradedResponseList.size()-1;
         Assert.assertEquals(testQ2.calcKnowledgeEstimate(),manualGradedResponseList.get(lastIndex).calcKnowledgeEstimate(),0);
         Assert.assertEquals(testQ2.getNonNormalizedScore(),manualGradedResponseList.get(lastIndex).getNonNormalizedScore(),0);
-        Assert.assertEquals(testQ2.getMaxScore(),manualGradedResponseList.get(lastIndex).getMaxScore(),0);
+        Assert.assertEquals(testQ2.getMaxPossibleScore(),manualGradedResponseList.get(lastIndex).getMaxPossibleScore(),0);
         Assert.assertEquals(testQ2.getUserId(),manualGradedResponseList.get(lastIndex).getUserId());
         Assert.assertEquals(testQ2.getLearningObjectId(),manualGradedResponseList.get(lastIndex).getLearningObjectId());
 
@@ -42,6 +42,8 @@ public class CSVReaderTest {
         Assert.assertEquals(manualGradedResponseList.get(0).calcKnowledgeEstimate(),manualGradedLearningObjectList.get(0).getResponses().get(0).calcKnowledgeEstimate(),0);
         Assert.assertEquals(manualGradedResponseList.get(0).getUserId(),manualGradedLearningObjectList.get(0).getResponses().get(0).getUserId());
         Assert.assertEquals(manualGradedResponseList.get(0).getLearningObjectId(),manualGradedLearningObjectList.get(0).getResponses().get(0).getLearningObjectId());
-
+        //Can't access these but they are tested above
+        //Assert.assertEquals(manualGradedResponseList.get(0).getNonNormalizedScore(),manualGradedLearningObjectList.get(0).getResponses().get(0).getNonNormalizedScore(),0);
+        //Assert.assertEquals(manualGradedResponseList.get(0).getMaxPossibleScore(),manualGradedLearningObjectList.get(0).getResponses().get(0).getMaxPossibleScore(),0);
     }
 }

@@ -7,7 +7,7 @@ import edu.ithaca.dragonlab.ckc.util.GraphConstants;
  */
 public class ManualGradedResponse extends LearningObjectResponse {
 
-    double maxScore;
+    double maxPossibleScore;
     double studentScore;
 
     public ManualGradedResponse(String learningObjectId, double max, double studentScore, String userId){
@@ -16,7 +16,7 @@ public class ManualGradedResponse extends LearningObjectResponse {
         //this.userId = userId
         //this.learningObjectId = learningObjectId
         //this.knowledgeEstimate = studentScore/max
-        this.maxScore = max;
+        this.maxPossibleScore = max;
         this.studentScore = studentScore;
     }
 
@@ -30,7 +30,7 @@ public class ManualGradedResponse extends LearningObjectResponse {
         return studentScore;
     }
 
-    public double getMaxScore(){
-        return maxScore;
+    public double getMaxPossibleScore(){
+        return maxPossibleScore;
     }
 }

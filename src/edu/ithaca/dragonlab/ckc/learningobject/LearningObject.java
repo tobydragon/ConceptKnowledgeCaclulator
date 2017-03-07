@@ -11,17 +11,17 @@ public class LearningObject {
 
     String id;
     List<LearningObjectResponse> responses;
-    double maxKnowledgeEstimate;
+    double maxPossibleKnowledgeEstimate;
 
     public LearningObject(String id){
         this.id = id;
         this.responses = new ArrayList<>();
-        this.maxKnowledgeEstimate = 1;
+        this.maxPossibleKnowledgeEstimate = 1;
     }
 
     public LearningObject(LearningObject other){
         this.id = other.id;
-        this.maxKnowledgeEstimate = other.maxKnowledgeEstimate;
+        this.maxPossibleKnowledgeEstimate = other.maxPossibleKnowledgeEstimate;
         this.responses = new ArrayList<>();
         for (LearningObjectResponse response : responses){
             this.responses.add(new LearningObjectResponse(response));
@@ -52,9 +52,9 @@ public class LearningObject {
     }
 
 
-    public void setMaxKnowledgeEstimate(double max){ this.maxKnowledgeEstimate = max; }
+    public void setMaxPossibleKnowledgeEstimate(double max){ this.maxPossibleKnowledgeEstimate = max; }
 
-    public double getMaxKnowledgeEstimate() {return maxKnowledgeEstimate; }
+    public double getMaxPossibleKnowledgeEstimate()  {return maxPossibleKnowledgeEstimate; }
 
     public String getId() {
         return id;

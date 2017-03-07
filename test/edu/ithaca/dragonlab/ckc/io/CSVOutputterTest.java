@@ -1,6 +1,11 @@
 /**package edu.ithaca.dragonlab.ckc.io;
 
+import edu.ithaca.dragonlab.ckc.conceptgraph.ConceptGraph;
+import edu.ithaca.dragonlab.ckc.conceptgraph.ExampleConceptGraphFactory;
+import edu.ithaca.dragonlab.ckc.learningobject.ExampleLearningObjectFactory;
+import edu.ithaca.dragonlab.ckc.learningobject.ExampleLearningObjectResponseFactory;
 import edu.ithaca.dragonlab.ckc.learningobject.LearningObjectResponse;
+import org.junit.Assert;
 import org.junit.Test;
 import java.io.IOException;
 
@@ -18,16 +23,10 @@ public class CSVOutputterTest {
     public void questionsToSortedSetTest(){
         String inputXML = "test/testdata/CSVOutputterTest.xml";
 
-        //Get behaviors from runsetone xml
-        XmlFragment runestoneFrag = XmlFragment.getFragmentFromLocalFile(inputXML);
-        CfInteractionData testCf = CfInteractionDataParser.fromRunestoneXml(runestoneFrag);
-
-        List<CfAction> allActions = testCf.getCfActions();
-
-        //Creates problem summaries from user actions
-        ObjectSummaryIdentifier myIdentifier = new ObjectSummaryIdentifier();
-        List<String> involvedUsers = AnalysisActions.getOriginatingUsernames(allActions);
-        List<LearningObjectResponse> summaries = myIdentifier.buildPerUserPerProblemSummaries(allActions, involvedUsers);
+        ConceptGraph orig = ExampleConceptGraphFactory.makeSimple();
+        orig.addLearningObjects(ExampleLearningObjectFactory.makeSimpleLearningObjectDef());
+        orig.addSummariesToGraph(ExampleLearningObjectResponseFactory.makeSimpleResponses());
+        List<LearningObjectResponse> summaries = ExampleLearningObjectResponseFactory.makeSimpleResponses();
 
         CSVOutputter sumSet = new CSVOutputter(summaries);
 
@@ -39,7 +38,7 @@ public class CSVOutputterTest {
         testCase.add("test_question6_3_1");
         testCase.add("test_question6_2_1");
         testCase.add("test_question6_1_1");
-        Assert.assertEquals(testCase,CSVOutputter.questionsToSortedSet(sumSet.studentsToQuestions));
+        Assert.assertEquals(testCase, CSVOutputter.questionsToSortedSet(sumSet.studentsToQuestions));
 
     }
 
@@ -91,4 +90,4 @@ public class CSVOutputterTest {
     }
 
 }
-*/
+**/
