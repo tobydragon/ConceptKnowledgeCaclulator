@@ -1,4 +1,4 @@
-/**package edu.ithaca.dragonlab.ckc.io;
+package edu.ithaca.dragonlab.ckc.io;
 
 import edu.ithaca.dragonlab.ckc.conceptgraph.ConceptGraph;
 import edu.ithaca.dragonlab.ckc.conceptgraph.ExampleConceptGraphFactory;
@@ -16,78 +16,44 @@ import java.util.TreeSet;
 
 /**
  * Created by willsuchanek on 2/28/17.
- *
+ */
 public class CSVOutputterTest {
 
     @Test
     public void questionsToSortedSetTest(){
-        String inputXML = "test/testdata/CSVOutputterTest.xml";
+        List<LearningObjectResponse> responses = ExampleLearningObjectResponseFactory.makeSimpleResponses();
 
-        ConceptGraph orig = ExampleConceptGraphFactory.makeSimple();
-        orig.addLearningObjects(ExampleLearningObjectFactory.makeSimpleLearningObjectDef());
-        orig.addSummariesToGraph(ExampleLearningObjectResponseFactory.makeSimpleResponses());
-        List<LearningObjectResponse> summaries = ExampleLearningObjectResponseFactory.makeSimpleResponses();
+        CSVOutputter outputter = new CSVOutputter(responses);
 
-        CSVOutputter sumSet = new CSVOutputter(summaries);
+        SortedSet<String> testSet = new TreeSet<String>();
 
-        //Creates a SortedSet with the unique question names in the XML files
-        SortedSet<String> testCase = new TreeSet<String>();
-        testCase.add("test_question6_4_3");
-        testCase.add("test_question6_4_2");
-        testCase.add("test_question6_4_1");
-        testCase.add("test_question6_3_1");
-        testCase.add("test_question6_2_1");
-        testCase.add("test_question6_1_1");
-        Assert.assertEquals(testCase, CSVOutputter.questionsToSortedSet(sumSet.studentsToQuestions));
+        testSet.add("Q1");
+        testSet.add("Q5");
+        testSet.add("Q3");
+        testSet.add("Q2");
+        testSet.add("Q6");
+        testSet.add("Q4");
+
+        SortedSet<String> outputterSet = CSVOutputter.questionsToSortedSet(outputter.studentsToQuestions);
+
+        Assert.assertEquals(testSet.first(),outputterSet.first());
+        Assert.assertEquals(testSet.last(),outputterSet.last());
+        Assert.assertEquals(testSet, outputterSet);
 
     }
 
     @Test
     public void makeCSVTest(){
-        String inputXML = "test/testdata/CSVOutputterTest.xml";
+        List<LearningObjectResponse> responses = ExampleLearningObjectResponseFactory.makeSimpleResponses();
 
-        //Get behaviors from runsetone xml
-        XmlFragment runestoneFrag = XmlFragment.getFragmentFromLocalFile(inputXML);
-        CfInteractionData testCf = CfInteractionDataParser.fromRunestoneXml(runestoneFrag);
+        CSVOutputter outputter = new CSVOutputter(responses);
 
-        List<CfAction> allActions = testCf.getCfActions();
+        String testString = ",Q1,Q2,Q3,Q4,Q5,Q6,\n"
+                +"student1,1,1,1,1,1,1,\n"
+                +"student2,1,1,1,0,0,0,\n"
+                +"student3,1,1,0,0,,,\n";
 
-        //Creates problem summaries from user actions
-        ObjectSummaryIdentifier myIdentifier = new ObjectSummaryIdentifier();
-        List<String> involvedUsers = AnalysisActions.getOriginatingUsernames(allActions);
-        List<LearningObjectResponse> summaries = myIdentifier.buildPerUserPerProblemSummaries(allActions, involvedUsers);
-
-        CSVOutputter sumSet = new CSVOutputter(summaries);
-
-        String testString = ",test_question6_1_1,test_question6_2_1,test_question6_3_1,test_question6_4_1,test_question6_4_2,test_question6_4_3,\n"
-                +"CLTestStudent2,,,1,1,1,1,\n"
-                +"CLTestStudent1,0,1,,0,,,\n";
-        System.out.println(sumSet.makeCSV());
-        System.out.println(testString);
-        Assert.assertEquals(testString, sumSet.makeCSV());
-    }
-
-    public static void main(String[] args){
-        String inputXML = "test/testdata/CSVOutputterTest.xml";
-
-        //Get behaviors from runsetone xml
-        XmlFragment runestoneFrag = XmlFragment.getFragmentFromLocalFile(inputXML);
-        CfInteractionData testCf = CfInteractionDataParser.fromRunestoneXml(runestoneFrag);
-
-        List<CfAction> allActions = testCf.getCfActions();
-
-        //Creates problem summaries from user actions
-        ObjectSummaryIdentifier myIdentifier = new ObjectSummaryIdentifier();
-        List<String> involvedUsers = AnalysisActions.getOriginatingUsernames(allActions);
-        List<LearningObjectResponse> summaries = myIdentifier.buildPerUserPerProblemSummaries(allActions, involvedUsers);
-
-        try {
-            CSVOutputter sumSet = new CSVOutputter("testCSVfile",summaries);
-        } catch (IOException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-        }
+        Assert.assertEquals(testString,outputter.makeCSV());
     }
 
 }
-**/
