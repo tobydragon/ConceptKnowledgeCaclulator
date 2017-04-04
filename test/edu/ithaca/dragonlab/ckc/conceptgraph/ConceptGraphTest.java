@@ -15,27 +15,92 @@ import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
+import java.util.HashMap;
 
 
 public class ConceptGraphTest {
 	static Logger logger = LogManager.getLogger(ConceptGraphTest.class);
 
+	@Test
+    public void suggestedOrderBuildLearningObjectList(){
+
+
+        ConceptGraph orig = ExampleConceptGraphFactory.makeSimple();
+        orig.addLearningObjects(ExampleLearningObjectFactory.makeSimpleLearningObjectDef());
+
+
+//        //from A nodes
+//        HashMap<String, Integer> testCompareA = new HashMap<String, Integer>();
+//        testCompareA.put("Q3",2);
+//        testCompareA.put("Q4",2);
+//        testCompareA.put("Q5",2);
+//        testCompareA.put("Q6",2);
+//        testCompareA.put("Q1",1);
+//        testCompareA.put("Q2",1);
+//
+//        System.out.println("testCompareA "+ testCompareA);
+
+
+        HashMap<String, Integer> learningSummary = orig.buildLearningObjectSummaryList("A");
+        System.out.println("A "+ learningSummary);
+
+        orig.suggestedOrderBuildLearningObjectList(learningSummary);
+
+
+
+////        if (learningSummary == null){
+//            Assert.assertEquals(null ,null);
+////        }
+
+
+    }
+
+
     @Test
-    public void learningObjectsTest(){
-        ConceptGraph graph = ExampleConceptGraphFactory.makeSimple();
-        graph.addLearningObjects(ExampleLearningObjectFactory.makeSimpleLearningObjectDef());
+    public void buildLearningObjectListSimpleTest(){
+        ConceptGraph orig = ExampleConceptGraphFactory.makeSimple();
+        orig.addLearningObjects(ExampleLearningObjectFactory.makeSimpleLearningObjectDef());
 
-        Assert.assertEquals(4, graph.findNodeById("C").buildLearningObjectList().size());
-        Assert.assertEquals(6, graph.findNodeById("A").buildLearningObjectList().size());
-        Assert.assertEquals(6, graph.findNodeById("B").buildLearningObjectList().size());
+        //from A nodes
+        HashMap<String, Integer> testCompareA = new HashMap<String, Integer>();
+        testCompareA.put("Q1",1);
+        testCompareA.put("Q2",1);
+        testCompareA.put("Q3",2);
+        testCompareA.put("Q4",2);
+        testCompareA.put("Q5",2);
+        testCompareA.put("Q6",2);
 
+        Assert.assertEquals(testCompareA, orig.buildLearningObjectSummaryList("A"));
+
+
+        //from B node
+        HashMap<String, Integer> testCompareB = new HashMap<String, Integer>();
+        testCompareB.put("Q1",1);
+        testCompareB.put("Q2",1);
+        testCompareB.put("Q3",1);
+        testCompareB.put("Q4",1);
+        testCompareB.put("Q5",1);
+        testCompareB.put("Q6",1);
+
+        Assert.assertEquals(testCompareB, orig.buildLearningObjectSummaryList("B"));
+
+
+        //from c node
+        HashMap<String, Integer> testCompareC = new HashMap<String, Integer>();
+        testCompareC.put("Q3",1);
+        testCompareC.put("Q4",1);
+        testCompareC.put("Q5",1);
+        testCompareC.put("Q6",1);
+
+        Assert.assertEquals(testCompareC, orig.buildLearningObjectSummaryList("C"));
+
+
+
+        //from a node not in graph
+        Assert.assertEquals(null, orig.buildLearningObjectSummaryList("W"));
     }
 
 
-    @test
-    public void findNodeTest(){
-
-    }
 
 	@Test
     public void copyConstructorTest(){

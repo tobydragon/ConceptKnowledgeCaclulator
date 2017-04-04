@@ -47,87 +47,36 @@ public class ConceptNode {
 
 
 
-	//find node()
-	public ConceptNode findNode(String findConcept){
-		if (this.id.equals(findConcept)){
-			return this;
-		}else{
 
-			for (ConceptNode child: children){
-				ConceptNode myNode = child.findNode(findConcept);
-				if(myNode != null){
-					return myNode;
-				}
+
+
+	//stub function in graph class
+	//value == paths to reach the learning object
+
+	public void buildLearningObjectSummaryList(HashMap <String, Integer> learningObjectSummary){
+
+		//add the current questions.
+		Iterator <String> itr = this.learningObjectMap.keySet().iterator();
+
+		for (int i =0; i< this.learningObjectMap.size(); i++){
+			//need to get each of the values in the learningObjectMap
+			LearningObject label = this.learningObjectMap.get(itr.next());
+
+			if (learningObjectSummary.containsKey(label.getId())){
+                learningObjectSummary.put(label.getId() ,learningObjectSummary.get(label.getId())+1);
+
+			}else{
+                learningObjectSummary.put(label.getId() ,1);
+
 			}
+
 		}
-		return null;
+		//go to each of the children and call on child so that the child node's learning objects will be added.
+		for(ConceptNode child: children){
+			child.buildLearningObjectSummaryList(learningObjectSummary);
+
+		}
 	}
-
-
-	public  HashMap<String, Integer> buildLearningObjectList(){
-
-		HashMap<String, Integer> learningObjectMap2 = new HashMap<String, Integer>();
-
-		if (this.children.size() <= 0){
-			//if there are not children, then you want to add the current questions.
-
-			Iterator <String> itr = this.learningObjectMap.keySet().iterator();
-			for (int i =0; i< this.learningObjectMap.size(); i++){
-				//need to get each of the values in the learningObjectMap
-				 LearningObject label = this.learningObjectMap.get(itr.next());
-
-				if (learningObjectMap2.containsValue(label.getId())){
-
-					learningObjectMap2.put(label.getId() ,learningObjectMap2.get(label.getId())+1);
-
-				}else{
-
-					learningObjectMap2.put(label.getId() ,1);
-				}
-			}
-
-
-			return learningObjectMap2;
-
-		}else{
-
-		//to add the current node's learning object data
-			Iterator <String> itr2 = this.learningObjectMap.keySet().iterator();
-			for (int f =0; f< this.learningObjectMap.size(); f++){
-				LearningObject label2 = this.learningObjectMap.get(itr2.next());
-
-				if (learningObjectMap2.containsValue(label2.getId())){
-					learningObjectMap2.put(label2.getId() ,learningObjectMap2.get(label2.getId())+1);
-
-				}else{
-					learningObjectMap2.put(label2.getId() ,1);
-				}
-			}
-
-
-
-			//take each and go through the nodes
-			for(ConceptNode child: children) {
-
-				Iterator <String> itr3 = child.learningObjectMap.keySet().iterator();
-				for (int j = 0; j < child.learningObjectMap.size(); j++) {
-
-					LearningObject label3 = child.learningObjectMap.get(itr3.next());
-					if (learningObjectMap2.containsValue(label3.getId())){
-							learningObjectMap2.put(label3.getId() ,learningObjectMap2.get(label3.getId())+1);
-
-					}else{
-
-						learningObjectMap2.put(label3.getId() ,1);
-					}
-				}
-
-			}
-		}
-
-			return learningObjectMap2;
-
-		}
 
 
 

@@ -24,6 +24,7 @@ public class ExampleLearningObjectFactory {
         cnList.add(new ConceptNode("Q5"));
         cnList.add(new ConceptNode("Q6"));
 
+
         clList.add(new LinkRecord("B","Q1"));
         clList.add(new LinkRecord("B","Q2"));
         clList.add(new LinkRecord("C","Q3"));

@@ -12,40 +12,111 @@ import java.util.*;
 
 public class ConceptGraph {
     private static final Logger logger = LogManager.getLogger(ConceptGraph.class);
-	public static final Integer DIVISION_FACTOR = 2;
+    public static final Integer DIVISION_FACTOR = 2;
 
-	List<ConceptNode> roots;
+    List<ConceptNode> roots;
 
-	//This information will be duplicated, links will be found in nodes, but also here.
-	Map<String, LearningObject> learningObjectMap;
-	Map<String, ConceptNode> nodeMap;
-	
-	//TODO: This seems to use and change the same nodes. Calling this constructor twice would break things...
-	public ConceptGraph(ConceptGraphRecord structureDef){
-		buildObjectFromNodesAndLinks(structureDef);
-	}
+    //This information will be duplicated, links will be found in nodes, but also here.
+    Map<String, LearningObject> learningObjectMap;
+    Map<String, ConceptNode> nodeMap;
 
-	public ConceptGraph(ConceptGraph other){
-		this.roots = new ArrayList<>();
+    //TODO: This seems to use and change the same nodes. Calling this constructor twice would break things...
+    public ConceptGraph(ConceptGraphRecord structureDef) {
+        buildObjectFromNodesAndLinks(structureDef);
+    }
+
+    public ConceptGraph(ConceptGraph other) {
+        this.roots = new ArrayList<>();
         nodeMap = new HashMap<>();
         learningObjectMap = new HashMap<>();
 
-		//recursively copy entire graph
-		for (ConceptNode otherRoot : other.roots){
-		    ConceptNode newRoot = new ConceptNode(otherRoot, nodeMap, learningObjectMap);
-		    nodeMap.put(newRoot.getID(), newRoot);
-		    this.roots.add(newRoot);
+        //recursively copy entire graph
+        for (ConceptNode otherRoot : other.roots) {
+            ConceptNode newRoot = new ConceptNode(otherRoot, nodeMap, learningObjectMap);
+            nodeMap.put(newRoot.getID(), newRoot);
+            this.roots.add(newRoot);
         }
-	}
+    }
 
-	public void buildObjectFromNodesAndLinks(ConceptGraphRecord nodeAndLinks){
-		List<ConceptNode> nodes =nodeAndLinks.getNodes();
-		List<LinkRecord> links = nodeAndLinks.getLinks();
+    public void buildObjectFromNodesAndLinks(ConceptGraphRecord nodeAndLinks) {
+        List<ConceptNode> nodes = nodeAndLinks.getNodes();
+        List<LinkRecord> links = nodeAndLinks.getLinks();
 
-		this.roots = findRoots(nodes, links);
-		this.nodeMap = addChildren(nodes, links);
-		this.learningObjectMap = new HashMap<>();
-	}
+        this.roots = findRoots(nodes, links);
+        this.nodeMap = addChildren(nodes, links);
+        this.learningObjectMap = new HashMap<>();
+    }
+
+
+
+    //comparator
+//    public static Comparator<>
+    //sorting by numPath
+
+
+
+    public void suggestedOrderBuildLearningObjectList(HashMap<String, Integer> summaryList){
+
+        //make a list of objects
+        List<learningObjectSuggestionNode> myList = new ArrayList<learningObjectSuggestionNode>();
+
+        //build objects through the hashmap
+        //iterate through the hashmap and make the new objects
+        //put object in list
+
+
+        for (String key : summaryList.keySet()){
+
+            System.out.println(key);
+            System.out.println("string "+ summaryList.get(key));
+
+            String name = key;
+            int lineNum = summaryList.get(key);
+
+            LearningObject node = learningObjectMap.get(key);
+
+//            LearningObject node = nodeMap.get(key);
+
+            double estimate = node.calcKnowledgeEstimate();
+            System.out.println("estimate "+ estimate);
+            String level;
+
+            if (estimate== 0){
+                level = "incomplete";
+            }else if (estimate< 0){
+                level = "wrong";
+            }else{
+                level = "right";
+            }
+
+
+            learningObjectSuggestionNode suggestionNode = new learningObjectSuggestionNode(name,lineNum,level);
+            myList.add(suggestionNode);
+
+        }
+
+
+
+
+        //sort list (with comparable)
+
+    }
+
+
+
+	public HashMap<String,Integer> buildLearningObjectSummaryList(String node) {
+
+        ConceptNode findNode = findNodeById(node);
+        if (findNode != null) {
+            HashMap<String, Integer> learningObjectSummary = new HashMap<>();
+            findNode.buildLearningObjectSummaryList(learningObjectSummary);
+            return learningObjectSummary;
+        }else{
+            logger.warn("Building learningObjectSummaryList:" + node + " is not found in the graph");
+            return null;
+        }
+    }
+
 
 	//TODO: When book code is integrated
 //	public ConceptGraph(Book b, ConceptGraphRecord lists){
