@@ -1,6 +1,7 @@
 package edu.ithaca.dragonlab.ckc.conceptgraph;
 
 import edu.ithaca.dragonlab.ckc.io.ConceptGraphRecord;
+import edu.ithaca.dragonlab.ckc.io.LearningObjectLinkRecord;
 import edu.ithaca.dragonlab.ckc.io.LinkRecord;
 import edu.ithaca.dragonlab.ckc.learningobject.LearningObject;
 import edu.ithaca.dragonlab.ckc.learningobject.LearningObjectResponse;
@@ -139,7 +140,7 @@ public class ConceptGraph {
 		for( LinkRecord currLink : links){
 			ConceptNode currParent = fullNodesMap.get(currLink.getParent());
 			if(currParent == null){
-				logger.warn("In ConceptGraph.addChildren(): " + currLink.getParent()+" node not found in nodes list for link " + currLink);
+				logger.warn("In ConceptGraph.addChildren(): " + currLink.getParent() + " node not found in nodes list for link " + currLink);
 			}
 			else{
 				ConceptNode currChild = fullNodesMap.get(currLink.getChild());
@@ -234,6 +235,37 @@ public class ConceptGraph {
 		}
 		
 	}
+
+
+	// Returns true if the linking of learning object to conceptId was successful, false if not (concept doesn't exist)
+	//Also checks to see if it the Learning Object ID is already in the map and if it is, it makes sure it is the exact same learning object
+	// to avoid the issue of trying to add another learning object of the same name with different information
+	public boolean linkLearningObject(LearningObject toLink, String conceptId){
+		if (nodeMap.get(conceptId) != null){
+			if (learningObjectMap.get(toLink.getId()) == null ){
+				learningObjectMap.put(toLink.getId(),toLink);
+				ConceptNode current = nodeMap.get(conceptId);
+				current.addLearningObject(toLink);
+				return true;
+			} else if (learningObjectMap.get(toLink.getId()) == toLink){
+				ConceptNode current = nodeMap.get(conceptId);
+				current.addLearningObject(toLink);
+				return true;
+			}
+		}
+		return false;
+	}
+
+	/*public void addLearningObjectsFromLearningObjectLinkRecords(List<LearningObject> learningObjects, List<LearningObjectLinkRecord> learningObjectLinkRecords){
+		for (LearningObjectLinkRecord record: learningObjectLinkRecords){
+			LearningObject current;
+			for (LearningObject object: learningObjects){
+				if (object.getId().equals(record.getLearningObject())){
+					current = object;
+				}
+			}
+		}
+	}*/
 	
 	public ConceptGraph graphToTree(){
 		List<ConceptNode> newRoots = new ArrayList<>();

@@ -5,6 +5,8 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import edu.ithaca.dragonlab.ckc.io.ConceptGraphRecord;
 import edu.ithaca.dragonlab.ckc.learningobject.ExampleLearningObjectFactory;
 import edu.ithaca.dragonlab.ckc.learningobject.ExampleLearningObjectResponseFactory;
+import edu.ithaca.dragonlab.ckc.learningobject.LearningObject;
+import edu.ithaca.dragonlab.ckc.learningobject.LearningObjectResponse;
 import edu.ithaca.dragonlab.ckc.util.TestUtil;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -235,6 +237,43 @@ public class ConceptGraphTest {
 		Assert.assertEquals(16, numID);
 		Assert.assertEquals(15, numLink);
 	}
+    @Test
+    public void linkLearningObjectTest(){
+        ConceptGraph graph = ExampleConceptGraphFactory.makeSimple();
+        graph.addLearningObjects(ExampleLearningObjectFactory.makeSimpleLearningObjectDef());
+        LearningObject duplicateObject = new LearningObject("Q1");
+        LearningObjectResponse duplicateResponse = new LearningObjectResponse("user1","Q1",1);
+
+        // Tries to add Q1 but it already exists so it does not get added and returns false
+        duplicateObject.addResponse(duplicateResponse);
+        Assert.assertEquals(false, graph.linkLearningObject(duplicateObject, "B"));
+        Assert.assertEquals(false, graph.linkLearningObject(duplicateObject, "C"));
+
+
+        // New question to be linked in to the existing graph
+        LearningObject myObject = new LearningObject("Q7");
+        LearningObjectResponse myResponse = new LearningObjectResponse("user1","Q7",1);
+
+        myObject.addResponse(myResponse);
+        graph.linkLearningObject(myObject, "B");
+        graph.linkLearningObject(myObject, "C");
+
+
+        //returns false if it doesn't add to graph because concept node doesn't exist
+        Assert.assertEquals(false, graph.linkLearningObject(myObject, "D"));
+        // all info is correct
+        Assert.assertEquals(myObject, graph.findNodeById("B").getLearningObjectMap().get("Q7"));
+        Assert.assertEquals(myObject.getResponses().size(),graph.findNodeById("B").getLearningObjectMap().get("Q7").getResponses().size());
+        Assert.assertEquals("Q7",graph.findNodeById("B").getLearningObjectMap().get("Q7").getId());
+        Assert.assertEquals("user1",graph.findNodeById("B").getLearningObjectMap().get("Q7").getResponses().get(0).getUserId());
+        Assert.assertEquals(3,graph.findNodeById("B").getLearningObjectMap().size());
+        // If adding learning object to multiple different Concepts, it points to the same learning object
+        Assert.assertEquals(true, graph.findNodeById("B").getLearningObjectMap().get("Q7") == graph.findNodeById("C").getLearningObjectMap().get("Q7"));
+        Assert.assertEquals("Q7",graph.getLearningObjectMap().get("Q7").getId());
+        // Makes sure the new question was only added once to Learning Object map (previously had 6 questions, now 7)
+        Assert.assertEquals(7,graph.getLearningObjectMap().size());
+    }
+
 
 	@Test
 	public void calcKnowledgeEstimateTest(){
