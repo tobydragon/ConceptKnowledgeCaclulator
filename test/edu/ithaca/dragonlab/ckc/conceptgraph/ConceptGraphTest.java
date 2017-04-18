@@ -3,6 +3,7 @@ package edu.ithaca.dragonlab.ckc.conceptgraph;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import edu.ithaca.dragonlab.ckc.io.ConceptGraphRecord;
+import edu.ithaca.dragonlab.ckc.io.LearningObjectLinkRecord;
 import edu.ithaca.dragonlab.ckc.learningobject.ExampleLearningObjectFactory;
 import edu.ithaca.dragonlab.ckc.learningobject.ExampleLearningObjectResponseFactory;
 import edu.ithaca.dragonlab.ckc.learningobject.LearningObject;
@@ -240,7 +241,7 @@ public class ConceptGraphTest {
 		Assert.assertEquals(15, numLink);
 	}
     @Test
-    public void linkLearningObjectTest(){
+    public void linkLearningObjectsTest(){
         ConceptGraph graph = ExampleConceptGraphFactory.makeSimple();
         graph.addLearningObjects(ExampleLearningObjectFactory.makeSimpleLearningObjectDef());
         LearningObject duplicateObject = new LearningObject("Q1");
@@ -275,6 +276,56 @@ public class ConceptGraphTest {
         Assert.assertEquals("Q7",graph.getLearningObjectMap().get("Q7").getId());
         // Makes sure the new question was only added once to Learning Object map (previously had 6 questions, now 7)
         Assert.assertEquals(7,graph.getLearningObjectMap().size());
+    }
+    @Test
+    public void addLearningObjectsFromLearningObjectLinkRecords(){
+        //Creating graph
+        ConceptGraph graph = ExampleConceptGraphFactory.makeSimple();
+        graph.addLearningObjects(ExampleLearningObjectFactory.makeSimpleLearningObjectDef());
+
+        //Creating Learning Object List
+        List<LearningObject> learningObjects = new ArrayList<>();
+
+        LearningObject duplicateObject = new LearningObject("Q1");
+        LearningObjectResponse duplicateResponse = new LearningObjectResponse("user1","Q1",1);
+        duplicateObject.addResponse(duplicateResponse);
+        learningObjects.add(duplicateObject);
+
+        LearningObject question7 = new LearningObject("Q7");
+        LearningObjectResponse question7Response = new LearningObjectResponse("user1","Q7",1);
+        question7.addResponse(question7Response);
+        learningObjects.add(question7);
+
+
+
+
+        //Creating learningObjectLinkedRecord list
+        List<LearningObjectLinkRecord> learningObjectLinkRecords = new ArrayList<>();
+
+        List<String> concepts = new ArrayList<>();
+        concepts.add("B");
+        concepts.add("C");
+        LearningObjectLinkRecord duplicateRecord = new LearningObjectLinkRecord(duplicateObject.getId(),concepts);
+        learningObjectLinkRecords.add(duplicateRecord);
+        LearningObjectLinkRecord question7Record = new LearningObjectLinkRecord(question7.getId(),concepts);
+        learningObjectLinkRecords.add(question7Record);
+
+        graph.addLearningObjectsFromLearningObjectLinkRecords(learningObjects,learningObjectLinkRecords);
+
+        Assert.assertTrue(graph.getLearningObjectMap().get("Q1") != duplicateObject);
+        // all info is correct
+        Assert.assertEquals(question7, graph.findNodeById("B").getLearningObjectMap().get("Q7"));
+        Assert.assertEquals(question7.getResponses().size(),graph.findNodeById("B").getLearningObjectMap().get("Q7").getResponses().size());
+        Assert.assertEquals("Q7",graph.findNodeById("B").getLearningObjectMap().get("Q7").getId());
+        Assert.assertEquals("user1",graph.findNodeById("B").getLearningObjectMap().get("Q7").getResponses().get(0).getUserId());
+        Assert.assertEquals(3,graph.findNodeById("B").getLearningObjectMap().size());
+        // If adding learning object to multiple different Concepts, it points to the same learning object
+        Assert.assertEquals(true, graph.findNodeById("B").getLearningObjectMap().get("Q7") == graph.findNodeById("C").getLearningObjectMap().get("Q7"));
+        Assert.assertEquals("Q7",graph.getLearningObjectMap().get("Q7").getId());
+        // Makes sure the new question was only added once to Learning Object map (previously had 6 questions, now 7)
+        Assert.assertEquals(7,graph.getLearningObjectMap().size());
+
+
     }
 
 

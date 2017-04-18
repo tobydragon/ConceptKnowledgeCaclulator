@@ -236,6 +236,14 @@ public class ConceptGraph {
 		
 	}
 
+	/**
+	 * Takes a Learning Object and a list of concept Id's it connects to. Adds the learning object to the corresponding concepts
+	 * If a concept doesn't exist it is logged in the logger
+	 * If the learning Object already exists in the graph that is recorded in the logger and nothing happens
+	 * @param toLink - the learning object that is going to be linked to the incoming concept IDs
+	 * @param conceptIds - list of strings of the concept IDs the learning object will be linked to
+	 * @return the number of concepts the learning object was added to, or -1 if the learning object already exists
+	 */
 	public int linkLearningObjects(LearningObject toLink, List<String> conceptIds){
 		int numAdded = 0;
 		if (learningObjectMap.get(toLink.getId()) != null){
@@ -254,26 +262,41 @@ public class ConceptGraph {
 		return numAdded;
 	}
 
-	// Returns true if the linking of learning object to conceptId was successful, false if not (concept doesn't exist)
-	//Also checks to see if it the Learning Object ID is already in the map and if it is, it makes sure it is the exact same learning object
-	// to avoid the issue of trying to add another learning object of the same name with different information
-	private void linkLearningObject(LearningObject toLink, String conceptId){
 
+	/**
+	 * Links a learning object to a concept in the node map
+	 * @param toLink - learning object being linked to concept
+	 * @param conceptId - ID of the concept the learning object will be linked to
+	 */
+	private void linkLearningObject(LearningObject toLink, String conceptId){
 		ConceptNode current = nodeMap.get(conceptId);
 		current.addLearningObject(toLink);
-
 	}
 
-	/*public void addLearningObjectsFromLearningObjectLinkRecords(List<LearningObject> learningObjects, List<LearningObjectLinkRecord> learningObjectLinkRecords){
+	/**
+	 * takes a list of learning objects and a list of learningObjectLinkRecords matches each to their correspondent and calls linkLearningObjects on the pairing
+	 * @param learningObjects - list of LearningObjects
+	 * @param learningObjectLinkRecords - list of learningObjectLinkRecords
+	 */
+	public void addLearningObjectsFromLearningObjectLinkRecords(List<LearningObject> learningObjects, List<LearningObjectLinkRecord> learningObjectLinkRecords){
+
 		for (LearningObjectLinkRecord record: learningObjectLinkRecords){
-			LearningObject current;
+			LearningObject learningObject = null;
+
+			//Finds the matching learning object for the learningObjectLinkRecord
 			for (LearningObject object: learningObjects){
 				if (object.getId().equals(record.getLearningObject())){
-					current = object;
+					learningObject = object;
 				}
 			}
+			// Makes sure the learning object was in there, calls linkLearningObjects on the learning object and the conceptIds for the corresponding record
+			if (learningObject != null){
+				linkLearningObjects(learningObject, record.getConceptIds());
+			} else {
+				logger.warn("No learning object found: "+record.getLearningObject());
+			}
 		}
-	}*/
+	}
 	
 	public ConceptGraph graphToTree(){
 		List<ConceptNode> newRoots = new ArrayList<>();
