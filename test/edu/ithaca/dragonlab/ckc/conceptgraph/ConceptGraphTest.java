@@ -17,6 +17,8 @@ import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
+import java.util.List;
+import java.util.ArrayList;
 
 
 public class ConceptGraphTest {
@@ -246,21 +248,22 @@ public class ConceptGraphTest {
 
         // Tries to add Q1 but it already exists so it does not get added and returns false
         duplicateObject.addResponse(duplicateResponse);
-        Assert.assertEquals(false, graph.linkLearningObject(duplicateObject, "B"));
-        Assert.assertEquals(false, graph.linkLearningObject(duplicateObject, "C"));
+        List<String> concepts = new ArrayList<>();
+        concepts.add("B");
+        concepts.add("C");
+        Assert.assertEquals(-1, graph.linkLearningObjects(duplicateObject,concepts));
 
 
         // New question to be linked in to the existing graph
         LearningObject myObject = new LearningObject("Q7");
         LearningObjectResponse myResponse = new LearningObjectResponse("user1","Q7",1);
 
+        concepts.add("D");
         myObject.addResponse(myResponse);
-        graph.linkLearningObject(myObject, "B");
-        graph.linkLearningObject(myObject, "C");
 
 
-        //returns false if it doesn't add to graph because concept node doesn't exist
-        Assert.assertEquals(false, graph.linkLearningObject(myObject, "D"));
+        // Tests adding myObject to B C and D and returns 2 because it only added to B and C but D does not exist
+        Assert.assertEquals(2, graph.linkLearningObjects(myObject, concepts));
         // all info is correct
         Assert.assertEquals(myObject, graph.findNodeById("B").getLearningObjectMap().get("Q7"));
         Assert.assertEquals(myObject.getResponses().size(),graph.findNodeById("B").getLearningObjectMap().get("Q7").getResponses().size());

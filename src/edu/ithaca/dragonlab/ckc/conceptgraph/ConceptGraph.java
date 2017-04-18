@@ -228,7 +228,7 @@ public class ConceptGraph {
 		for (ConceptNode child : current.getChildren()) {
 			if (current.getKnowledgeEstimate() == 0) {
 				
-				calcPredictedScores(child, current.getKnowledgePrediction()/ DIVISION_FACTOR, currentRoot);
+				calcPredictedScores(child, current.getKnowledgePrediction() / DIVISION_FACTOR, currentRoot);
 			} else {
 				calcPredictedScores(child, current.getKnowledgeEstimate(), currentRoot);
 			}
@@ -236,24 +236,32 @@ public class ConceptGraph {
 		
 	}
 
+	public int linkLearningObjects(LearningObject toLink, List<String> conceptIds){
+		int numAdded = 0;
+		if (learningObjectMap.get(toLink.getId()) != null){
+			logger.warn(toLink.getId()+" already exists in this graph. Nothing was added.");
+			return -1;
+		}
+		learningObjectMap.put(toLink.getId(), toLink);
+		for (String id: conceptIds){
+			if(nodeMap.get(id) != null){
+				numAdded++;
+				linkLearningObject(toLink,id);
+			} else{
+				logger.warn("Authoring Warning: Concept '"+id+"' is not in your concept map. "+toLink.getId()+" was not added to the map under the concept ID "+id);
+			}
+		}
+		return numAdded;
+	}
 
 	// Returns true if the linking of learning object to conceptId was successful, false if not (concept doesn't exist)
 	//Also checks to see if it the Learning Object ID is already in the map and if it is, it makes sure it is the exact same learning object
 	// to avoid the issue of trying to add another learning object of the same name with different information
-	public boolean linkLearningObject(LearningObject toLink, String conceptId){
-		if (nodeMap.get(conceptId) != null){
-			if (learningObjectMap.get(toLink.getId()) == null ){
-				learningObjectMap.put(toLink.getId(),toLink);
-				ConceptNode current = nodeMap.get(conceptId);
-				current.addLearningObject(toLink);
-				return true;
-			} else if (learningObjectMap.get(toLink.getId()) == toLink){
-				ConceptNode current = nodeMap.get(conceptId);
-				current.addLearningObject(toLink);
-				return true;
-			}
-		}
-		return false;
+	private void linkLearningObject(LearningObject toLink, String conceptId){
+
+		ConceptNode current = nodeMap.get(conceptId);
+		current.addLearningObject(toLink);
+
 	}
 
 	/*public void addLearningObjectsFromLearningObjectLinkRecords(List<LearningObject> learningObjects, List<LearningObjectLinkRecord> learningObjectLinkRecords){
