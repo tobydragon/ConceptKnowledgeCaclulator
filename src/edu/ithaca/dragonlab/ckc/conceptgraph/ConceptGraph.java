@@ -106,13 +106,24 @@ public class ConceptGraph {
 	}
 
     public void addLearningObjects(ConceptGraphRecord learningObjectDef){
-        for (ConceptNode node : learningObjectDef.getNodes()){
-            learningObjectMap.put(node.getID(), new LearningObject(node.getID()));
+        //learningObjects might need to be created or they might already exist
+		for (ConceptNode learningObjectRecord : learningObjectDef.getNodes()){
+            LearningObject learningObject = learningObjectMap.get(learningObjectRecord.getID());
+			if (learningObject == null) {
+				learningObjectMap.put(learningObjectRecord.getID(), new LearningObject(learningObjectRecord.getID()));
+			}
         }
+
         for (LinkRecord link : learningObjectDef.getLinks()){
             ConceptNode node = nodeMap.get(link.getParent());
             if (node != null){
-                node.addLearningObject(learningObjectMap.get(link.getChild()));
+            	LearningObject learningObject = learningObjectMap.get(link.getChild());
+            	if (learningObject != null){
+					node.addLearningObject(learningObject);
+				}
+                else {
+					logger.warn("Adding a Learning Object:" + link.getChild() + " has no matching learning object definition:" + link.getChild());
+				}
             }
             else {
                 logger.warn("Adding a Learning Object:" + link.getChild() + " has no matching node in the graph:" + link.getParent());
