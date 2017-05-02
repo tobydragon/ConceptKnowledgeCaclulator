@@ -26,6 +26,7 @@ public class ConceptGraph {
 		buildObjectFromNodesAndLinks(structureDef);
 	}
 
+
 	public ConceptGraph(ConceptGraph other){
 		this.roots = new ArrayList<>();
         nodeMap = new HashMap<>();

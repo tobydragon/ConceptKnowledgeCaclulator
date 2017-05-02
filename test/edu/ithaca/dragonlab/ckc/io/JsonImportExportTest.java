@@ -20,19 +20,17 @@ public class JsonImportExportTest {
         ObjectMapper mapper = new ObjectMapper();
         mapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
 
-        try {
-            List<LearningObjectLinkRecord> list = mapper.readValue(new File("test/testresources/recordsSimple.json"), new TypeReference<List<LearningObjectLinkRecord>>(){});
 
-            Assert.assertEquals(3, list.size());
-            Assert.assertEquals("A", list.get(0).getLearningObject());
-            Assert.assertEquals(3, list.get(0).getConceptIds().size());
-            Assert.assertEquals("Q5", list.get(2).getConceptIds().get(0));
-            Assert.assertEquals(2,list.get(0).getDataImportance(), TestUtil.OK_FLOAT_MARGIN);
-            Assert.assertEquals(1,list.get(1).getDataImportance(),TestUtil.OK_FLOAT_MARGIN);
-            Assert.assertEquals(.2,list.get(2).getDataImportance(),TestUtil.OK_FLOAT_MARGIN);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        List<LearningObjectLinkRecord> list =JsonImportExport.LOLRFromRecords("test/testresources/recordsSimple.json");
+
+        Assert.assertEquals(3, list.size());
+        Assert.assertEquals("A", list.get(0).getLearningObject());
+        Assert.assertEquals(3, list.get(0).getConceptIds().size());
+        Assert.assertEquals("Q5", list.get(2).getConceptIds().get(0));
+        Assert.assertEquals(2,list.get(0).getDataImportance(), TestUtil.OK_FLOAT_MARGIN);
+        Assert.assertEquals(1,list.get(1).getDataImportance(),TestUtil.OK_FLOAT_MARGIN);
+        Assert.assertEquals(.2,list.get(2).getDataImportance(),TestUtil.OK_FLOAT_MARGIN);
+
 
     }
 }
