@@ -82,12 +82,12 @@ public class GroupConceptGraphsTest {
         GroupConceptGraphs group = new GroupConceptGraphs(graph, ExampleLearningObjectResponseFactory.makeSimpleResponses());
 		Map<String, ConceptGraph> userGraphMap = group.getUserToGraphMap();
 		
-		ConceptGraph user2 = userGraphMap.get("student1");
-		ConceptGraphRecord user2NL = user2.buildNodesAndLinks();
-		ConceptNode testNode = user2NL.getNodes().get(0);
+		ConceptGraph user = userGraphMap.get("student1");
+		ConceptGraphRecord userNL = user.buildNodesAndLinks();
+		ConceptNode testNode = userNL.getNodes().get(0);
 		Assert.assertEquals(.5, testNode.getKnowledgeDistanceFromAvg(),0);
 		System.out.println(testNode.getKnowledgeDistanceFromAvg());
-		ConceptNode testNode2 = user2NL.getNodes().get(2);
+		ConceptNode testNode2 = userNL.getNodes().get(2);
 		System.out.println(testNode2.getKnowledgeDistanceFromAvg());
 		Assert.assertEquals(1, testNode2.getKnowledgeDistanceFromAvg(),0);
 
