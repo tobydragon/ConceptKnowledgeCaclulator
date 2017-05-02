@@ -244,6 +244,7 @@ public class ConceptGraphTest {
     public void linkLearningObjectsTest(){
         ConceptGraph graph = ExampleConceptGraphFactory.makeSimple();
         graph.addLearningObjects(ExampleLearningObjectFactory.makeSimpleLearningObjectDef());
+
         LearningObject duplicateObject = new LearningObject("Q1");
         LearningObjectResponse duplicateResponse = new LearningObjectResponse("user1","Q1",1);
 
@@ -277,6 +278,7 @@ public class ConceptGraphTest {
         // Makes sure the new question was only added once to Learning Object map (previously had 6 questions, now 7)
         Assert.assertEquals(7,graph.getLearningObjectMap().size());
     }
+
     @Test
     public void addLearningObjectsFromLearningObjectLinkRecords(){
         //Creating graph

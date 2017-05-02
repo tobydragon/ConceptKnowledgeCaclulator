@@ -1,8 +1,12 @@
 package edu.ithaca.dragonlab.ckc.io;
 
+import com.fasterxml.jackson.databind.DeserializationFeature;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.Assert;
 import org.junit.Test;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 
 /**
@@ -22,6 +26,7 @@ public class LearningObjectLinkRecordTest {
         Assert.assertEquals("concept 2", loObject.getConceptIds().get(1));
         Assert.assertEquals(2,loObject.getConceptIds().size());
     }
+    @Test
     public void toStringTest(){
         ArrayList<String> concepts = new ArrayList<>();
         concepts.add("concept 1");
@@ -29,5 +34,34 @@ public class LearningObjectLinkRecordTest {
         String id = "id 1";
         LearningObjectLinkRecord loObject = new LearningObjectLinkRecord(id,concepts);
         Assert.assertEquals("(Learning Object ID: id 1 Concept IDs: concept 1, concept 2)\n",loObject.toString());
+    }
+    @Test
+    public void toJsonTest(){
+        ArrayList<String> concepts = new ArrayList<>();
+        concepts.add("concept 1");
+        concepts.add("concept 2");
+        String id = "id 1";
+        LearningObjectLinkRecord loObject = new LearningObjectLinkRecord(id,concepts);
+
+        ObjectMapper mapper = new ObjectMapper();
+        try {
+            mapper.writeValue(new File("test/testresources/recordToJson.json"), loObject);
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+
+        mapper = new ObjectMapper();
+        mapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
+
+        try {
+            LearningObjectLinkRecord  record = mapper.readValue(new File("test/testresources/recordToJson.json"), LearningObjectLinkRecord.class);
+
+            Assert.assertEquals("id 1", record.getLearningObject());
+            Assert.assertEquals(2, record.getConceptIds().size());
+            Assert.assertEquals("concept 2", record.getConceptIds().get(1));
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 }
