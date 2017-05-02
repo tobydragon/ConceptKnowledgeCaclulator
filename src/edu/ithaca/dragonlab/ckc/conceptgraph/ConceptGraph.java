@@ -48,50 +48,43 @@ public class ConceptGraph {
         this.learningObjectMap = new HashMap<>();
     }
 
-    public void SuggestedConceptNodeMapTest(){
+    public HashMap<ConceptNode, List<learningObjectSuggestion>> SuggestedConceptNodeMapTest(){
         HashMap<ConceptNode, List<learningObjectSuggestion>> suggestedConceptNodeMap = new HashMap<>();
 
         for (String key : nodeMap.keySet()) {
             String name = key;
             ConceptNode node = nodeMap.get(key);
-//            System.out.println(name+ " "+ node.getID()+ " "+ node.getKnowledgeEstimate());
-
             List<learningObjectSuggestion> testList = new ArrayList<>();
 
             if(node.getKnowledgeEstimate()<=0 && node.getKnowledgeEstimate()>=-0.5){
-
 
                 HashMap<String,Integer> map = buildLearningObjectSummaryList(name);
                 List<learningObjectSuggestion> list =buildLearningObjectSuggestionList(map);
                 suggestedOrderBuildLearningObjectList(list);
 
                 for (int i=0; i<list.size(); i++){
-//                    System.out.println(list.get(i).getId());
+
+//                    ConceptNode conceptNode1 = nodeMap.get(list.get(i).getId());
+//                    System.out.println(conceptNode1);
+//                    for (int x =0; x<list.size(); x++){
+//                        ConceptNode potentialChild = nodeMap.get(list.get(i));
+//
+//                        if (conceptNode1.isAParentOf(potentialChild)){
+//                            System.out.println(conceptNode1.getID());
+//                        }
+//
+//
+//                    }
+
+
                     if (list.get(i).getLevel().equals(learningObjectSuggestion.Level.INCOMPLETE)){
-                        System.out.println(list.get(i).getId());
                         testList.add(list.get(i));
                     }
                 }
-
                 suggestedConceptNodeMap.put(node, testList);
-
             }
-
         }
-
-        //print out to test hashmap
-        for (ConceptNode key : suggestedConceptNodeMap.keySet()) {
-            ConceptNode name = key;
-            List<learningObjectSuggestion> listlist = suggestedConceptNodeMap.get(key);
-            System.out.println(name.getID());
-//            System.out.print(name.getID() + ": ");
-//            for (int x=0; x<listlist.size(); x++){
-//                System.out.print(listlist.get(x).getId()+ " ");
-//
-//            }
-
-        }
-
+        return suggestedConceptNodeMap;
     }
 
 

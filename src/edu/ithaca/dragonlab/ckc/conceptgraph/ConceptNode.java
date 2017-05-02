@@ -47,12 +47,6 @@ public class ConceptNode {
 
 
 
-
-
-
-	//stub function in graph class
-	//value == paths to reach the learning object
-
 	public void buildLearningObjectSummaryList(HashMap <String, Integer> learningObjectSummary){
 
 		//add the current questions.
@@ -79,6 +73,15 @@ public class ConceptNode {
 	}
 
 
+
+	//call on the parent to see if other node is a child of it
+	public boolean isAParentOf(ConceptNode child){
+	    if (this.children.contains(child)){
+	        return true;
+        }else{
+	        return false;
+        }
+    }
 
 
 	//Complicated because it is a graph, so it should only recurse when a child hasn't already been created, which we can only tell from graphNodeMap

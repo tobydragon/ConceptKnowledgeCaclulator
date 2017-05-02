@@ -27,16 +27,29 @@ public class ConceptGraphTest {
         ConceptGraph orig = ExampleConceptGraphFactory.makeSimpleWithEstimates();
         orig.addLearningObjects(ExampleLearningObjectFactory.simpleTreeLearningObjectWithKnowledgeEstimates());
 
-//        HashMap<String, Integer> map = orig.buildLearningObjectSummaryList("A");
-//
-//        for (String key : map.keySet()){
-//            int pathNum = map.get(key);
-//
-//            System.out.println(key + " " +pathNum );
-//        }
+        List<learningObjectSuggestion> testList = new ArrayList<>();
+        testList.add(new learningObjectSuggestion("Q2",1, learningObjectSuggestion.Level.INCOMPLETE));
+        testList.add(new learningObjectSuggestion("Q3", 2, learningObjectSuggestion.Level.INCOMPLETE));
+        testList.add(new learningObjectSuggestion("Q6", 2, learningObjectSuggestion.Level.INCOMPLETE));
 
-        orig.SuggestedConceptNodeMapTest();
+        HashMap<ConceptNode, List<learningObjectSuggestion>> mapTest = new HashMap<>();
+        mapTest.put(new ConceptNode("B"), testList);
 
+
+
+        HashMap<ConceptNode, List<learningObjectSuggestion>> ObjectSuggestionMapTest = orig.SuggestedConceptNodeMapTest();
+
+
+        //print out to test hashmap
+        for (ConceptNode key : ObjectSuggestionMapTest.keySet()) {
+            ConceptNode name = key;
+            List<learningObjectSuggestion> listlist = ObjectSuggestionMapTest.get(key);
+            System.out.print(name.getID() + ": ");
+            for (int x=0; x<listlist.size(); x++){
+                System.out.print(listlist.get(x).getId()+ "- " + listlist.get(x).getLevel()+ " ");
+            }
+
+        }
 
     }
 
