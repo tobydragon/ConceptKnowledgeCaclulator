@@ -47,15 +47,14 @@ public class ConceptGraphTest {
 
             List<learningObjectSuggestion> obSuggList = objectSuggestionMap.get(key);
 
-            List<learningObjectSuggestion> mapTestList = objectSuggestionMap.get(key);
-
+            List<learningObjectSuggestion> mapTestList = mapTest.get(key);
 
             for (int x=0; x<obSuggList.size(); x++){
                 Assert.assertEquals(obSuggList.get(x), mapTestList.get(x));
                 Assert.assertEquals(obSuggList.get(x).getLevel(), mapTestList.get(x).getLevel());
                 Assert.assertEquals(obSuggList.get(x).getLevel(), mapTestList.get(x).getLevel());
 
-//                System.out.print(obSuggList.get(x).getId()+ "- " + obSuggList.get(x).getLevel()+ " ");
+                System.out.print(obSuggList.get(x).getId()+ "- " + obSuggList.get(x).getLevel()+ " ");
             }
 
         }
