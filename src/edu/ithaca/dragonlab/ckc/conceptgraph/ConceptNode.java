@@ -19,7 +19,7 @@ public class ConceptNode {
 	private double knowledgePrediction;
 	private double knowledgeDistanceFromAvg;
 
-	Map<String, LearningObject> learningObjectMap;
+	Map<String, LearningObject> learningObjectMap;  //These learningObjects might also be held by other nodes
 	List<ConceptNode> children;
 
 	private int numParents; //TODO: remove?
