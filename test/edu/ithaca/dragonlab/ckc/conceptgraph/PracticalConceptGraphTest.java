@@ -29,7 +29,7 @@ public class PracticalConceptGraphTest {
             List<LearningObjectLinkRecord> LOLRlist = JsonImportExport.LOLRFromRecords("test/testresources/basicRealisticExampleLOLRecord.json");
             graph.addLearningObjectsFromLearningObjectLinkRecords(csvReader.getManualGradedLearningObjects(), LOLRlist);
             graph.calcKnowledgeEstimates();
-            System.out.println(graph.toString());
+            //System.out.println(graph.toString());
         }catch (Exception e){
             e.printStackTrace();
         }
