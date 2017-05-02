@@ -21,12 +21,12 @@ public class PracticalConceptGraphTest {
         ObjectMapper graphMapper = new ObjectMapper();
 
         graphMapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
-        CSVReader csvReader = new CSVReader("test/testresources/willExampleGradeBook.csv");
+        CSVReader csvReader = new CSVReader("test/testresources/basicRealisticExampleGradeBook.csv");
 
         try {
-            ConceptGraphRecord graphRecord = ConceptGraphRecord.buildfromJson("test/testresources/willExampleConceptGraph.json");
+            ConceptGraphRecord graphRecord = ConceptGraphRecord.buildfromJson("test/testresources/basicRealisticExampleConceptGraph.json");
             ConceptGraph graph = new ConceptGraph(graphRecord);
-            List<LearningObjectLinkRecord> LOLRlist = JsonImportExport.LOLRFromRecords("test/testresources/willExampleLOLRecord.json");
+            List<LearningObjectLinkRecord> LOLRlist = JsonImportExport.LOLRFromRecords("test/testresources/basicRealisticExampleLOLRecord.json");
             graph.addLearningObjectsFromLearningObjectLinkRecords(csvReader.getManualGradedLearningObjects(), LOLRlist);
             graph.calcKnowledgeEstimates();
             System.out.println(graph.toString());
