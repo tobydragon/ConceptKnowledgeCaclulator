@@ -5,6 +5,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import edu.ithaca.dragonlab.ckc.io.ConceptGraphRecord;
 import edu.ithaca.dragonlab.ckc.learningobject.ExampleLearningObjectFactory;
 import edu.ithaca.dragonlab.ckc.learningobject.ExampleLearningObjectResponseFactory;
+import edu.ithaca.dragonlab.ckc.learningobject.LearningObject;
 import edu.ithaca.dragonlab.ckc.util.TestUtil;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -15,46 +16,29 @@ import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
-import java.util.HashMap;
+import java.util.*;
 
 
 public class ConceptGraphTest {
 	static Logger logger = LogManager.getLogger(ConceptGraphTest.class);
 
 	@Test
-    public void suggestedOrderBuildLearningObjectList(){
+    public void SuggestedConceptNodeMapTest() {
+        ConceptGraph orig = ExampleConceptGraphFactory.makeSimpleWithEstimates();
+        orig.addLearningObjects(ExampleLearningObjectFactory.simpleTreeLearningObjectWithKnowledgeEstimates());
 
-
-        ConceptGraph orig = ExampleConceptGraphFactory.makeSimple();
-        orig.addLearningObjects(ExampleLearningObjectFactory.makeSimpleLearningObjectDef());
-
-
-//        //from A nodes
-//        HashMap<String, Integer> testCompareA = new HashMap<String, Integer>();
-//        testCompareA.put("Q3",2);
-//        testCompareA.put("Q4",2);
-//        testCompareA.put("Q5",2);
-//        testCompareA.put("Q6",2);
-//        testCompareA.put("Q1",1);
-//        testCompareA.put("Q2",1);
+//        HashMap<String, Integer> map = orig.buildLearningObjectSummaryList("A");
 //
-//        System.out.println("testCompareA "+ testCompareA);
+//        for (String key : map.keySet()){
+//            int pathNum = map.get(key);
+//
+//            System.out.println(key + " " +pathNum );
+//        }
 
-
-        HashMap<String, Integer> learningSummary = orig.buildLearningObjectSummaryList("A");
-        System.out.println("A "+ learningSummary);
-
-        orig.suggestedOrderBuildLearningObjectList(learningSummary);
-
-
-
-////        if (learningSummary == null){
-//            Assert.assertEquals(null ,null);
-////        }
+        orig.SuggestedConceptNodeMapTest();
 
 
     }
-
 
     @Test
     public void buildLearningObjectListSimpleTest(){
@@ -71,7 +55,6 @@ public class ConceptGraphTest {
         testCompareA.put("Q6",2);
 
         Assert.assertEquals(testCompareA, orig.buildLearningObjectSummaryList("A"));
-
 
         //from B node
         HashMap<String, Integer> testCompareB = new HashMap<String, Integer>();
@@ -94,12 +77,103 @@ public class ConceptGraphTest {
 
         Assert.assertEquals(testCompareC, orig.buildLearningObjectSummaryList("C"));
 
-
-
         //from a node not in graph
         Assert.assertEquals(null, orig.buildLearningObjectSummaryList("W"));
     }
 
+
+    @Test
+    public void suggestionComparatorTest(){
+
+        List<learningObjectSuggestion> suggestList = new ArrayList<>();
+        suggestList.add(new learningObjectSuggestion("Q1", 2,learningObjectSuggestion.Level.INCOMPLETE) );
+        suggestList.add(new learningObjectSuggestion("Q2", 1,learningObjectSuggestion.Level.WRONG) );
+        Collections.sort(suggestList, new learningObjectSuggestionComparator());
+
+
+        List<learningObjectSuggestion> suggestListTest = new ArrayList<>();
+        suggestListTest.add(new learningObjectSuggestion("Q2", 1,learningObjectSuggestion.Level.WRONG) );
+        suggestListTest.add(new learningObjectSuggestion("Q1", 2,learningObjectSuggestion.Level.INCOMPLETE) );
+
+
+        for (int i =0; i<suggestListTest.size(); i++){
+
+            Assert.assertEquals(suggestList.get(i).getId(),suggestListTest.get(i).getId());
+            Assert.assertEquals(suggestList.get(i).getPathNum(),suggestListTest.get(i).getPathNum());
+            Assert.assertEquals(suggestList.get(i).getLevel(),suggestListTest.get(i).getLevel());
+
+        }
+//
+//        suggestListTest.add(new learningObjectSuggestion("Q3", 2,learningObjectSuggestion.Level.INCOMPLETE) );
+//        suggestListTest.add(new learningObjectSuggestion("Q4", 3,learningObjectSuggestion.Level.INCOMPLETE) );
+
+    }
+
+    @Test
+    public void suggestedOrderBuildLearningObjectListTest(){
+        ConceptGraph orig = ExampleConceptGraphFactory.makeSimple();
+        orig.addLearningObjects(ExampleLearningObjectFactory.makeSimpleLearningObjectDef());
+
+//        //from A nodes
+        HashMap<String, Integer> testCompareA = new HashMap<String, Integer>();
+        testCompareA.put("Q3",2);
+        testCompareA.put("Q4",2);
+        testCompareA.put("Q5",2);
+        testCompareA.put("Q6",2);
+        testCompareA.put("Q1",1);
+        testCompareA.put("Q2",1);
+        HashMap<String, Integer> learningSummaryFromA = orig.buildLearningObjectSummaryList("A");
+        //makes sure that buildLearningObjectSummaryList works
+        Assert.assertEquals(testCompareA,learningSummaryFromA);
+
+        //build the sugggested learning object list
+        List<learningObjectSuggestion> suggestedList = orig.buildLearningObjectSuggestionList(learningSummaryFromA);
+
+
+        for (int i =0; i< suggestedList.size(); i++) {
+            learningObjectSuggestion node = suggestedList.get(i);
+            if (node.getId().equals("Q1")) {
+                node.setLevel(learningObjectSuggestion.Level.RIGHT);
+            }
+            if (node.getId().equals("Q3")){
+                node.setLevel(learningObjectSuggestion.Level.WRONG);
+            }
+            if (node.getId().equals("Q4")){
+                node.setLevel(learningObjectSuggestion.Level.RIGHT);
+
+            }
+            if (node.getId().equals("Q6")){
+                node.setLevel(learningObjectSuggestion.Level.WRONG);
+            }
+        }
+
+
+        //this is ordered based on "level"
+        List<learningObjectSuggestion> suggestListTest = new ArrayList<>();
+        suggestListTest.add(new learningObjectSuggestion("Q4", 2,learningObjectSuggestion.Level.RIGHT) );
+        suggestListTest.add(new learningObjectSuggestion("Q1", 1,learningObjectSuggestion.Level.RIGHT) );
+        suggestListTest.add(new learningObjectSuggestion("Q3", 2,learningObjectSuggestion.Level.WRONG) );
+        suggestListTest.add(new learningObjectSuggestion("Q6", 2,learningObjectSuggestion.Level.WRONG) );
+        suggestListTest.add(new learningObjectSuggestion("Q5", 2,learningObjectSuggestion.Level.INCOMPLETE) );
+        suggestListTest.add(new learningObjectSuggestion("Q2", 1,learningObjectSuggestion.Level.INCOMPLETE) );
+
+
+
+        //orders the list based off of "level"
+        orig.suggestedOrderBuildLearningObjectList(suggestedList);
+
+//        //who should call orderedList
+
+
+        for (int i =0; i<suggestedList.size(); i++){
+
+            Assert.assertEquals(suggestedList.get(i).getId(),suggestListTest.get(i).getId());
+            Assert.assertEquals(suggestedList.get(i).getPathNum(),suggestListTest.get(i).getPathNum());
+            Assert.assertEquals(suggestedList.get(i).getLevel(),suggestListTest.get(i).getLevel());
+
+        }
+
+    }
 
 
 	@Test

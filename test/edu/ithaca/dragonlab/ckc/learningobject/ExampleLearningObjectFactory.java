@@ -34,4 +34,39 @@ public class ExampleLearningObjectFactory {
 
         return new ConceptGraphRecord(cnList,clList);
     }
+
+
+    public static ConceptGraphRecord simpleTreeLearningObjectWithKnowledgeEstimates(){
+        List<ConceptNode> cnList = new ArrayList<>();
+        List<LinkRecord> clList = new ArrayList<>();
+
+        cnList.add(new ConceptNode("Q1"));
+        ConceptNode node = cnList.get(0);
+        node.setKnowledgeEstimate(1.0);
+        cnList.add(new ConceptNode("Q2"));
+        ConceptNode node1 = cnList.get(1);
+        node1.setKnowledgeEstimate(0.0);
+        cnList.add(new ConceptNode("Q3"));
+        ConceptNode node2 = cnList.get(2);
+        node2.setKnowledgeEstimate(0.0);
+        cnList.add(new ConceptNode("Q4"));
+        ConceptNode node3 = cnList.get(3);
+        node3.setKnowledgeEstimate(0.9);
+        cnList.add(new ConceptNode("Q5"));
+        ConceptNode node4 = cnList.get(4);
+        node4.setKnowledgeEstimate(-0.5);
+        cnList.add(new ConceptNode("Q6"));
+        ConceptNode node5 = cnList.get(5);
+        node5.setKnowledgeEstimate(0.0);
+
+
+        clList.add(new LinkRecord("B","Q1"));
+        clList.add(new LinkRecord("B","Q2"));
+        clList.add(new LinkRecord("C","Q3"));
+        clList.add(new LinkRecord("C","Q4"));
+        clList.add(new LinkRecord("C","Q5"));
+        clList.add(new LinkRecord("C","Q6"));
+
+        return new ConceptGraphRecord(cnList,clList);
+    }
 }

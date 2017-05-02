@@ -4,6 +4,7 @@ import edu.ithaca.dragonlab.ckc.io.ConceptGraphRecord;
 import edu.ithaca.dragonlab.ckc.io.LinkRecord;
 import edu.ithaca.dragonlab.ckc.learningobject.LearningObject;
 import edu.ithaca.dragonlab.ckc.learningobject.LearningObjectResponse;
+import org.apache.logging.log4j.Level;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -47,61 +48,91 @@ public class ConceptGraph {
         this.learningObjectMap = new HashMap<>();
     }
 
+    public void SuggestedConceptNodeMapTest(){
+        HashMap<ConceptNode, List<learningObjectSuggestion>> suggestedConceptNodeMap = new HashMap<>();
+
+        for (String key : nodeMap.keySet()) {
+            String name = key;
+            ConceptNode node = nodeMap.get(key);
+//            System.out.println(name+ " "+ node.getID()+ " "+ node.getKnowledgeEstimate());
+
+            List<learningObjectSuggestion> testList = new ArrayList<>();
+
+            if(node.getKnowledgeEstimate()<=0 && node.getKnowledgeEstimate()>=-0.5){
 
 
-    //comparator
-//    public static Comparator<>
-    //sorting by numPath
+                HashMap<String,Integer> map = buildLearningObjectSummaryList(name);
+                List<learningObjectSuggestion> list =buildLearningObjectSuggestionList(map);
+                suggestedOrderBuildLearningObjectList(list);
+
+                for (int i=0; i<list.size(); i++){
+//                    System.out.println(list.get(i).getId());
+                    if (list.get(i).getLevel().equals(learningObjectSuggestion.Level.INCOMPLETE)){
+                        System.out.println(list.get(i).getId());
+                        testList.add(list.get(i));
+                    }
+                }
+
+                suggestedConceptNodeMap.put(node, testList);
+
+            }
+
+        }
+
+        //print out to test hashmap
+        for (ConceptNode key : suggestedConceptNodeMap.keySet()) {
+            ConceptNode name = key;
+            List<learningObjectSuggestion> listlist = suggestedConceptNodeMap.get(key);
+            System.out.println(name.getID());
+//            System.out.print(name.getID() + ": ");
+//            for (int x=0; x<listlist.size(); x++){
+//                System.out.print(listlist.get(x).getId()+ " ");
+//
+//            }
+
+        }
+
+    }
 
 
+    public List<learningObjectSuggestion> suggestedOrderBuildLearningObjectList(List<learningObjectSuggestion> myList){
 
-    public void suggestedOrderBuildLearningObjectList(HashMap<String, Integer> summaryList){
+        Collections.sort(myList, new learningObjectSuggestionComparator());
 
-        //make a list of objects
-        List<learningObjectSuggestionNode> myList = new ArrayList<learningObjectSuggestionNode>();
+        return myList;
+    }
 
+    public List<learningObjectSuggestion> buildLearningObjectSuggestionList(HashMap<String, Integer> summaryList){
         //build objects through the hashmap
         //iterate through the hashmap and make the new objects
         //put object in list
-
+        List<learningObjectSuggestion> myList = new ArrayList<learningObjectSuggestion>();
 
         for (String key : summaryList.keySet()){
-
-            System.out.println(key);
-            System.out.println("string "+ summaryList.get(key));
 
             String name = key;
             int lineNum = summaryList.get(key);
 
             LearningObject node = learningObjectMap.get(key);
 
-//            LearningObject node = nodeMap.get(key);
-
             double estimate = node.calcKnowledgeEstimate();
-            System.out.println("estimate "+ estimate);
-            String level;
+            learningObjectSuggestion.Level level;
 
+            //fix to fit preconditions
             if (estimate== 0){
-                level = "incomplete";
+                level = learningObjectSuggestion.Level.INCOMPLETE;
             }else if (estimate< 0){
-                level = "wrong";
+                level = learningObjectSuggestion.Level.WRONG;
             }else{
-                level = "right";
+                level = learningObjectSuggestion.Level.RIGHT;
             }
 
-
-            learningObjectSuggestionNode suggestionNode = new learningObjectSuggestionNode(name,lineNum,level);
+            learningObjectSuggestion suggestionNode = new learningObjectSuggestion(name,lineNum,level);
             myList.add(suggestionNode);
-
         }
-
-
-
-
-        //sort list (with comparable)
+        return myList;
 
     }
-
 
 
 	public HashMap<String,Integer> buildLearningObjectSummaryList(String node) {
