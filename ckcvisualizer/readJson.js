@@ -1,5 +1,5 @@
 //Define some global variables
-var fileName = "../out/test/sampleoutput/GroupConceptGraphSimple.json"; //fileName of JSON file to read in
+var fileName = "experimentInput/fullExperimentFile.json"; //fileName of JSON file to read in
 //var fileName = "../experimentInput/fullExperimentFile.json"; //NEW fileName of JSON to read in
 var dataObject; //the object that one concept graph gets saved to when a student button is clicked
 var objectsArray; //the object that the json file gets parsed to, an array of "student objects"
