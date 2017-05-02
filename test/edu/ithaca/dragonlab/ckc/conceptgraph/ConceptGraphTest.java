@@ -1,5 +1,6 @@
 package edu.ithaca.dragonlab.ckc.conceptgraph;
 
+import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import edu.ithaca.dragonlab.ckc.io.ConceptGraphRecord;
@@ -33,23 +34,43 @@ public class ConceptGraphTest {
         testList.add(new learningObjectSuggestion("Q6", 2, learningObjectSuggestion.Level.INCOMPLETE));
 
         HashMap<ConceptNode, List<learningObjectSuggestion>> mapTest = new HashMap<>();
+        //what it should become
         mapTest.put(new ConceptNode("B"), testList);
 
-
-
-        HashMap<ConceptNode, List<learningObjectSuggestion>> ObjectSuggestionMapTest = orig.SuggestedConceptNodeMapTest();
+        //what it is
+        HashMap<ConceptNode, List<learningObjectSuggestion>> objectSuggestionMap = orig.SuggestedConceptNodeMapTest();
 
 
         //print out to test hashmap
-        for (ConceptNode key : ObjectSuggestionMapTest.keySet()) {
+        for (ConceptNode key : objectSuggestionMap.keySet()) {
             ConceptNode name = key;
-            List<learningObjectSuggestion> listlist = ObjectSuggestionMapTest.get(key);
-            System.out.print(name.getID() + ": ");
-            for (int x=0; x<listlist.size(); x++){
-                System.out.print(listlist.get(x).getId()+ "- " + listlist.get(x).getLevel()+ " ");
+
+            List<learningObjectSuggestion> obSuggList = objectSuggestionMap.get(key);
+
+            List<learningObjectSuggestion> mapTestList = objectSuggestionMap.get(key);
+
+
+            for (int x=0; x<obSuggList.size(); x++){
+                Assert.assertEquals(obSuggList.get(x), mapTestList.get(x));
+                Assert.assertEquals(obSuggList.get(x).getLevel(), mapTestList.get(x).getLevel());
+                Assert.assertEquals(obSuggList.get(x).getLevel(), mapTestList.get(x).getLevel());
+
+//                System.out.print(obSuggList.get(x).getId()+ "- " + obSuggList.get(x).getLevel()+ " ");
             }
 
         }
+
+//        //print out to test hashmap
+//        for (ConceptNode key : ObjectSuggestionMapTest.keySet()) {
+//            ConceptNode name = key;
+//            List<learningObjectSuggestion> listlist = ObjectSuggestionMapTest.get(key);
+//            System.out.print(name.getID() + ": ");
+//            for (int x=0; x<listlist.size(); x++){
+//                System.out.print(listlist.get(x).getId()+ "- " + listlist.get(x).getLevel()+ " ");
+//            }
+//
+//        }
+
 
     }
 
