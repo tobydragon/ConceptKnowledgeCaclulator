@@ -1,0 +1,25 @@
+[
+  {"learningObject":"A",
+    "conceptIds":[
+      "Q1",
+      "Q2",
+      "Q3"
+    ],
+    "dataImportance": "2"
+  },{
+    "learningObject": "B",
+    "conceptIds":[
+      "Q1",
+      "Q3",
+      "Q4"
+    ]
+  },{
+    "learningObject": "D",
+    "conceptIds":[
+      "Q5",
+      "Q6",
+      "Q7"
+    ],
+    "dataImportance": ".2"
+  }
+]

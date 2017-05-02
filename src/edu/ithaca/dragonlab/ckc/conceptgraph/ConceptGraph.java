@@ -1,6 +1,7 @@
 package edu.ithaca.dragonlab.ckc.conceptgraph;
 
 import edu.ithaca.dragonlab.ckc.io.ConceptGraphRecord;
+import edu.ithaca.dragonlab.ckc.io.LearningObjectLinkRecord;
 import edu.ithaca.dragonlab.ckc.io.LinkRecord;
 import edu.ithaca.dragonlab.ckc.learningobject.LearningObject;
 import edu.ithaca.dragonlab.ckc.learningobject.LearningObjectResponse;
@@ -26,8 +27,10 @@ public class ConceptGraph {
         buildObjectFromNodesAndLinks(structureDef);
     }
 
-    public ConceptGraph(ConceptGraph other) {
-        this.roots = new ArrayList<>();
+
+
+	public ConceptGraph(ConceptGraph other){
+		this.roots = new ArrayList<>();
         nodeMap = new HashMap<>();
         learningObjectMap = new HashMap<>();
 
@@ -199,13 +202,24 @@ public class ConceptGraph {
 	}
 
     public void addLearningObjects(ConceptGraphRecord learningObjectDef){
-        for (ConceptNode node : learningObjectDef.getNodes()){
-            learningObjectMap.put(node.getID(), new LearningObject(node.getID()));
+        //learningObjects might need to be created or they might already exist
+		for (ConceptNode learningObjectRecord : learningObjectDef.getNodes()){
+            LearningObject learningObject = learningObjectMap.get(learningObjectRecord.getID());
+			if (learningObject == null) {
+				learningObjectMap.put(learningObjectRecord.getID(), new LearningObject(learningObjectRecord.getID()));
+			}
         }
+
         for (LinkRecord link : learningObjectDef.getLinks()){
             ConceptNode node = nodeMap.get(link.getParent());
             if (node != null){
-                node.addLearningObject(learningObjectMap.get(link.getChild()));
+            	LearningObject learningObject = learningObjectMap.get(link.getChild());
+            	if (learningObject != null){
+					node.addLearningObject(learningObject);
+				}
+                else {
+					logger.warn("Adding a Learning Object:" + link.getChild() + " has no matching learning object definition:" + link.getChild());
+				}
             }
             else {
                 logger.warn("Adding a Learning Object:" + link.getChild() + " has no matching node in the graph:" + link.getParent());
@@ -234,7 +248,7 @@ public class ConceptGraph {
 		for( LinkRecord currLink : links){
 			ConceptNode currParent = fullNodesMap.get(currLink.getParent());
 			if(currParent == null){
-				logger.warn("In ConceptGraph.addChildren(): " + currLink.getParent()+" node not found in nodes list for link " + currLink);
+				logger.warn("In ConceptGraph.addChildren(): " + currLink.getParent() + " node not found in nodes list for link " + currLink);
 			}
 			else{
 				ConceptNode currChild = fullNodesMap.get(currLink.getChild());
@@ -322,12 +336,74 @@ public class ConceptGraph {
 		for (ConceptNode child : current.getChildren()) {
 			if (current.getKnowledgeEstimate() == 0) {
 				
-				calcPredictedScores(child, current.getKnowledgePrediction()/ DIVISION_FACTOR, currentRoot);
+				calcPredictedScores(child, current.getKnowledgePrediction() / DIVISION_FACTOR, currentRoot);
 			} else {
 				calcPredictedScores(child, current.getKnowledgeEstimate(), currentRoot);
 			}
 		}
 		
+	}
+
+	/**
+	 * Takes a Learning Object and a list of concept Id's it connects to. Adds the learning object to the corresponding concepts
+	 * If a concept doesn't exist it is logged in the logger
+	 * If the learning Object already exists in the graph that is recorded in the logger and nothing happens
+	 * @param toLink - the learning object that is going to be linked to the incoming concept IDs
+	 * @param conceptIds - list of strings of the concept IDs the learning object will be linked to
+	 * @return the number of concepts the learning object was added to, or -1 if the learning object already exists
+	 */
+	public int linkLearningObjects(LearningObject toLink, List<String> conceptIds){
+		int numAdded = 0;
+		if (learningObjectMap.get(toLink.getId()) != null){
+			logger.warn(toLink.getId()+" already exists in this graph. Nothing was added.");
+			return -1;
+		}
+		learningObjectMap.put(toLink.getId(), toLink);
+		for (String id: conceptIds){
+			if(nodeMap.get(id) != null){
+				numAdded++;
+				linkLearningObject(toLink,id);
+			} else{
+				logger.warn("Authoring Warning: Concept '"+id+"' is not in your concept map. "+toLink.getId()+" was not added to the map under the concept ID "+id);
+			}
+		}
+		return numAdded;
+	}
+
+
+	/**
+	 * Links a learning object to a concept in the node map
+	 * @param toLink - learning object being linked to concept
+	 * @param conceptId - ID of the concept the learning object will be linked to
+	 */
+	private void linkLearningObject(LearningObject toLink, String conceptId){
+		ConceptNode current = nodeMap.get(conceptId);
+		current.addLearningObject(toLink);
+	}
+
+	/**
+	 * takes a list of learning objects and a list of learningObjectLinkRecords matches each to their correspondent and calls linkLearningObjects on the pairing
+	 * @param learningObjects - list of LearningObjects
+	 * @param learningObjectLinkRecords - list of learningObjectLinkRecords
+	 */
+	public void addLearningObjectsFromLearningObjectLinkRecords(List<LearningObject> learningObjects, List<LearningObjectLinkRecord> learningObjectLinkRecords){
+
+		for (LearningObjectLinkRecord record: learningObjectLinkRecords){
+			LearningObject learningObject = null;
+
+			//Finds the matching learning object for the learningObjectLinkRecord
+			for (LearningObject object: learningObjects){
+				if (object.getId().equals(record.getLearningObject())){
+					learningObject = object;
+				}
+			}
+			// Makes sure the learning object was in there, calls linkLearningObjects on the learning object and the conceptIds for the corresponding record
+			if (learningObject != null){
+				linkLearningObjects(learningObject, record.getConceptIds());
+			} else {
+				logger.warn("No learning object found: "+record.getLearningObject());
+			}
+		}
 	}
 	
 	public ConceptGraph graphToTree(){

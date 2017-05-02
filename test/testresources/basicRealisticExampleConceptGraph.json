@@ -1,0 +1,60 @@
+{
+  "nodes": [{
+    "id": "Intro CS",
+    "label": "Intro CS"
+
+  }, {
+    "id": "Loops",
+    "label": "Loops"
+
+  } , {
+    "id": "For Loop",
+    "label": "For Loop"
+
+  } , {
+    "id": "While Loop",
+    "label":"While Loop"
+
+  } ,{
+    "id": "Boolean Expressions",
+    "label":"Boolean Expressions"
+
+  }, {
+    "id": "Boolean",
+    "label":"Boolean"
+
+  },  {
+    "id": "Control",
+    "label":"Control"
+
+  }, {
+    "id": "If Statement",
+    "label":"If Statement"
+
+  }],
+  "links": [{
+    "parent": "Intro CS",
+    "child": "Control"
+  }, {
+    "parent": "Control",
+    "child": "If Statement"
+  }, {
+    "parent": "If Statement",
+    "child": "Boolean Expressions"
+  },{
+    "parent": "Boolean Expressions",
+    "child": "Boolean"
+  },{
+    "parent": "Control",
+    "child": "Loops"
+  },{
+    "parent": "Loops",
+    "child": "While Loop"
+  },{
+    "parent": "Loops",
+    "child": "For Loop"
+  },{
+    "parent": "While Loop",
+    "child": "Boolean Expressions"
+  }]
+}

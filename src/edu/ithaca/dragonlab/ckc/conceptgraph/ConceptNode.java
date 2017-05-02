@@ -17,7 +17,7 @@ public class ConceptNode {
 	private double knowledgePrediction;
 	private double knowledgeDistanceFromAvg;
 
-	Map<String, LearningObject> learningObjectMap;
+	Map<String, LearningObject> learningObjectMap;  //These learningObjects might also be held by other nodes
 	List<ConceptNode> children;
 
 	private int numParents; //TODO: remove?
@@ -122,6 +122,7 @@ public class ConceptNode {
 
 	public void calcKnowledgeEstimate() {
         //TODO: take dataImportance into consideration
+		//TODO: This is the location of the issue with the failing test. Need to look into this more.
         //calculate value for this current concept
         double currentConceptEstimate = 0;
         for (LearningObject learningObject : learningObjectMap.values()){
