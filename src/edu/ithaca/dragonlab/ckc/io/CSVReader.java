@@ -86,7 +86,7 @@ public class CSVReader {
         return this.learningObjectList;
     }
 
-    public static ArrayList<String> lineToList(String line) {
+    private static ArrayList<String> lineToList(String line) {
         ArrayList<String> returnlist = new ArrayList<String>();
 
         if (line != null) {
