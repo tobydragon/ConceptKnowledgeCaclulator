@@ -168,6 +168,7 @@ public class GroupConceptGraphsTest {
 		/*
 		try {
 			//Reads in the file that was written earlier
+			//TODO: fix path to file that will be written
 			GroupConceptGraphs gcg = mapper.readValue(new File("war/TreeDisplay/input.json"), GroupConceptGraphs.class);
 			
 			Assert.assertEquals(2,gcg.getUserToGraphMap().keySet().size());

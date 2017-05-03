@@ -1,0 +1,100 @@
+[{
+  "name": "Average Graph",
+  "cg": {
+    "nodes": [{
+      "id": "Node A-1",
+      "concept": {
+        "conceptTitle": "A title",
+        "summaryInfo": {
+          "users": [],
+          "time": 0,
+          "unansweredObjectIds": [],
+          "numAssessable": 0,
+          "numCorrect": 0,
+          "numSummaries": 0,
+          "objectIds": [],
+          "totalFalseEntries": 0
+        }
+      },
+      "actualComp": 0.75,
+      "predictedComp": 0.75,
+      "numParents": 0,
+      "distanceFromAvg": 0.0,
+      "summaryInfo": {
+        "users": ["StudentA", "StudentB", "StudentC", "StudentD", "StudentE", "StudentF"],
+        "time": 10410,
+        "unansweredObjectIds": [],
+        "numAssessable": 354,
+        "numCorrect": 340,
+        "numSummaries": 354,
+        "objectIds": ["Assignment", "If Statement", "String", "List", "For Loop", "Returning Values", "Parameters", "Defining Functions", "Arguments", "Catching Return Values", "Boolean", "Int", "Float", "Variables", "Literals", "Expressions"],
+        "totalFalseEntries": 29
+      }
+    }, {
+      "id": "Node B-1",
+      "concept": {
+        "conceptTitle": "B title",
+        "summaryInfo": {
+          "users": [],
+          "time": 0,
+          "unansweredObjectIds": [],
+          "numAssessable": 0,
+          "numCorrect": 0,
+          "numSummaries": 0,
+          "objectIds": [],
+          "totalFalseEntries": 0
+        }
+      },
+      "actualComp": 0.75,
+      "predictedComp": 0.75,
+      "numParents": 0,
+      "distanceFromAvg": 0.0,
+      "summaryInfo": {
+        "users": ["StudentA", "StudentB", "StudentC", "StudentD", "StudentE", "StudentF"],
+        "time": 10410,
+        "unansweredObjectIds": [],
+        "numAssessable": 354,
+        "numCorrect": 340,
+        "numSummaries": 354,
+        "objectIds": ["Assignment", "If Statement", "String", "List", "For Loop", "Returning Values", "Parameters", "Defining Functions", "Arguments", "Catching Return Values", "Boolean", "Int", "Float", "Variables", "Literals", "Expressions"],
+        "totalFalseEntries": 29
+      }
+    }, {
+      "id": "Node C-1",
+      "concept": {
+        "conceptTitle": "C title",
+        "summaryInfo": {
+          "users": [],
+          "time": 0,
+          "unansweredObjectIds": [],
+          "numAssessable": 0,
+          "numCorrect": 0,
+          "numSummaries": 0,
+          "objectIds": [],
+          "totalFalseEntries": 0
+        }
+      },
+      "actualComp": 0.97,
+      "predictedComp": 0.38,
+      "numParents": 2,
+      "distanceFromAvg": 0.0,
+      "summaryInfo": {
+        "users": ["StudentA", "StudentB", "StudentC", "StudentD", "StudentE", "StudentF"],
+        "time": 2970,
+        "unansweredObjectIds": [],
+        "numAssessable": 102,
+        "numCorrect": 100,
+        "numSummaries": 102,
+        "objectIds": ["Expressions", "Literals", "Assignment", "Variables", "Boolean", "Int", "Float", "String", "List"],
+        "totalFalseEntries": 7
+      }
+    }],
+    "links": [{
+      "parent":  "Node A-1",
+      "child": "Node B-1"
+    }, {
+      "parent": "Node A-1",
+      "child": "Node C-1"
+    }]
+  }
+}]
