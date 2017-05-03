@@ -1,6 +1,7 @@
 package edu.ithaca.dragonlab.ckc.io;
 
 import edu.ithaca.dragonlab.ckc.conceptgraph.ConceptNode;
+import edu.ithaca.dragonlab.ckc.util.DataUtil;
 
 /**
  * @author tdragon
@@ -78,5 +79,22 @@ public class ConceptRecord {
 
     public void setKnowledgeDistFromAvg(double knowledgeDistFromAvg) {
         this.knowledgeDistFromAvg = knowledgeDistFromAvg;
+    }
+
+    public boolean equals(Object other){
+        if(other == null){
+            return false;
+        }
+        if(!ConceptRecord.class.isAssignableFrom(other.getClass())){
+            return false;
+        }
+        ConceptRecord otherNode = (ConceptRecord) other;
+        if(this.id.equals(otherNode.id) && DataUtil.equalsDoubles(this.knowledgeEstimate, otherNode.knowledgeEstimate)
+                && DataUtil.equalsDoubles(this.knowledgeEstimate, otherNode.knowledgeEstimate)
+                && DataUtil.equalsDoubles(this.knowledgeEstimate, otherNode.knowledgeEstimate)){
+            return true;
+        } else {
+            return false;
+        }
     }
 }

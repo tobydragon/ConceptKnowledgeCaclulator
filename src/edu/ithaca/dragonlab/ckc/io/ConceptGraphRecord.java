@@ -16,7 +16,7 @@ public class ConceptGraphRecord {
 	private List<ConceptRecord> concepts;
 	private List<LinkRecord> links;
 
-	public static ConceptGraphRecord buildfromJson(String filename) throws IOException{
+	public static ConceptGraphRecord buildFromJson(String filename) throws IOException{
 		ObjectMapper mapper = new ObjectMapper();
 		mapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
 		ConceptGraphRecord lists = mapper.readValue(new File(filename), ConceptGraphRecord.class);
