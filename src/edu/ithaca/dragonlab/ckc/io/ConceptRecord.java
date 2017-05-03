@@ -8,8 +8,6 @@ import edu.ithaca.dragonlab.ckc.conceptgraph.ConceptNode;
  *         This class represents all the information that should be recorded about a concept when serializing
  */
 public class ConceptRecord {
-
-    //TODO: ConceptGraphRecord should hold these instead of actual nodes, so we know what is being held and what not...
     String id;
     String label;
 
@@ -30,8 +28,16 @@ public class ConceptRecord {
         this.id = conceptToRecord.getID();
         this.label = conceptToRecord.getLabel();
         this.knowledgeEstimate = conceptToRecord.getKnowledgeEstimate();
-        this.knowledgePrediction = conceptToRecord.getKnowledgeEstimate();
+        this.knowledgePrediction = 0;
         this.knowledgeDistFromAvg = conceptToRecord.getKnowledgeDistanceFromAvg();
+    }
+
+    public ConceptRecord(String id) {
+        this.id = id;
+        this.label = id;
+        this.knowledgeEstimate = 0;
+        this.knowledgePrediction = 0;
+        this.knowledgeDistFromAvg = 0;
     }
 
     public String getId() {

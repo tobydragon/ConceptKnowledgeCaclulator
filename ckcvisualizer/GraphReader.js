@@ -9,10 +9,10 @@ function readJson(fileName){
 
 //node object made to hold the root node information.
 //used in findRoots
-function RootNode(idIn, knowledgeEstimateIn, distIn){
+function RootNode(idIn, knowledgeEstimateIn, knowledgeDistFromAvgIn){
     this.id = idIn;
     this.knowledgeEstimate = knowledgeEstimateIn;
-    this.dist = distIn;
+    this.knowledgeDistFromAvg = knowledgeDistFromAvgIn;
 }
 
 //takes the name of the student whose org chart should be drawn
@@ -34,7 +34,7 @@ function makeChart(dataObject,typeGraph){
             var s = roots[i].knowledgeEstimate;
             row1.push({v:c, f:stripTitle(c)+'<div style="color:blue; font-style:italic">Score: '+s+'</div>'});//add the topic
         }else{
-            var s = roots[i].dist;
+            var s = roots[i].knowledgeDistFromAvg;
             console.log(s);
             row1.push({v:c, f:stripTitle(c)+'<div style="color:blue; font-style:italic">Distance: '+s+'</div>'});//add the topic
         }
@@ -56,7 +56,7 @@ function makeChart(dataObject,typeGraph){
                     var s = dataObject.concepts[j].knowledgeEstimate;
                     row.push({v:c, f:stripTitle(c)+'<div style="color:blue; font-style:italic">Score: '+s+'</div>'});
                 }else{
-                    var s = dataObject.concepts[j].distanceFromAvg;
+                    var s = dataObject.concepts[j].knowledgeDistFromAvg;
                     row.push({v:c, f:stripTitle(c)+'<div style="color:blue; font-style:italic">Distance: '+s+'</div>'});
                 }
             }
@@ -78,7 +78,7 @@ function findRoot(graphToCheck){
     var roots = []; 
     //add all of the node IDs to the roots array
     for(var i = 0; i < graphToCheck.concepts.length; i++){
-        roots.push(new RootNode(graphToCheck.concepts[i].id, graphToCheck.concepts[i].knowledgeEstimate, graphToCheck.concepts[i].distanceFromAvg));
+        roots.push(new RootNode(graphToCheck.concepts[i].id, graphToCheck.concepts[i].knowledgeEstimate, graphToCheck.concepts[i].knowledgeDistFromAvg));
     }
     //loop through all of the links
     for(var i = 0; i < graphToCheck.links.length; i++){
@@ -103,9 +103,10 @@ function stripTitle(title) {
       return title;
     }
   }
-    return "invalid node title";
+    return title;
 }
 
 
-graph = readJson("json/exampleGraphStructure.json");
-makeChart(graph, "reg")
+//graph = readJson("../test/testresources/superComplexStructureGraph.json")
+graph = readJson("json/exampleMediumStructureGraph.json");
+makeChart(graph, "dist")

@@ -2,15 +2,15 @@
   "concepts": [{
     "id": "Node C-1",
     "knowledgeEstimate": 0.75,
-    "distanceFromAvg": 0.0
+    "knowledgeDistFromAvg": 0.0
   }, {
     "id": "Node D-1",
     "knowledgeEstimate": 0.75,
-    "distanceFromAvg": 0.0
+    "knowledgeDistFromAvg": 0.0
   }, {
     "id": "Node E-1",
     "knowledgeEstimate": -0.97,
-    "numParents": 2
+    "knowledgeDistFromAvg": 2
   }],
   "links": [{
     "parent":  "Node C-1",

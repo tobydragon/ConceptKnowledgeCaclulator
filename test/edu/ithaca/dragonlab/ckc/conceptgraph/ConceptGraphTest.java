@@ -2,7 +2,7 @@ package edu.ithaca.dragonlab.ckc.conceptgraph;
 
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import edu.ithaca.dragonlab.ckc.io.ConceptGraphRecord;
+import edu.ithaca.dragonlab.ckc.io.ConceptGraphRecordOld;
 import edu.ithaca.dragonlab.ckc.io.LearningObjectLinkRecord;
 import edu.ithaca.dragonlab.ckc.learningobject.ExampleLearningObjectFactory;
 import edu.ithaca.dragonlab.ckc.learningobject.ExampleLearningObjectResponseFactory;
@@ -73,7 +73,7 @@ public class ConceptGraphTest {
         int numB = 0;
         int numC = 0;
 
-        ConceptGraphRecord treeLists = ExampleConceptGraphFactory.makeSimple().graphToTree().buildNodesAndLinks();
+        ConceptGraphRecordOld treeLists = ExampleConceptGraphFactory.makeSimple().graphToTree().buildNodesAndLinks();
         for(ConceptNode node : treeLists.getNodes()){
 			if(node.getLabel().equals("A")){
                 numA++;
@@ -97,11 +97,11 @@ public class ConceptGraphTest {
 	}
 
 	public void checkTreeConversionByNodesAndLinksNumbers(ConceptGraph graphToTest, int expectedGraphNodeCount, int expectedGraphLinkCount, int expectedTreeNodeCount, int expectedTreeLinkCount){
-		ConceptGraphRecord graphLists = graphToTest.buildNodesAndLinks();
+		ConceptGraphRecordOld graphLists = graphToTest.buildNodesAndLinks();
 		Assert.assertEquals(expectedGraphNodeCount, graphLists.getNodes().size());
 		Assert.assertEquals(expectedGraphLinkCount, graphLists.getLinks().size());
 
-		ConceptGraphRecord treeLists = graphToTest.graphToTree().buildNodesAndLinks();
+		ConceptGraphRecordOld treeLists = graphToTest.graphToTree().buildNodesAndLinks();
 
 		Assert.assertEquals(expectedTreeNodeCount, treeLists.getNodes().size());
 		Assert.assertEquals(expectedTreeLinkCount, treeLists.getLinks().size());
@@ -114,10 +114,10 @@ public class ConceptGraphTest {
     }
 
     public void treeToTreeCheck(ConceptGraph treeToTest){
-        ConceptGraphRecord initialLists = treeToTest.buildNodesAndLinks();
+        ConceptGraphRecordOld initialLists = treeToTest.buildNodesAndLinks();
         ConceptGraph treeFromTree = treeToTest.graphToTree();
 
-        ConceptGraphRecord postLists = treeFromTree.buildNodesAndLinks();
+        ConceptGraphRecordOld postLists = treeFromTree.buildNodesAndLinks();
         Assert.assertEquals(postLists.getNodes().size(), initialLists.getNodes().size());
         Assert.assertEquals(postLists.getLinks().size(), initialLists.getLinks().size());
     }
@@ -128,9 +128,9 @@ public class ConceptGraphTest {
         ConceptGraph myTree = myGraph.graphToTree();
         ConceptGraph myTree2 = myTree.graphToTree();
 
-        ConceptGraphRecord lists1 = myGraph.buildNodesAndLinks();
-        ConceptGraphRecord lists2 = myTree.buildNodesAndLinks();
-        ConceptGraphRecord lists3 = myTree2.buildNodesAndLinks();
+        ConceptGraphRecordOld lists1 = myGraph.buildNodesAndLinks();
+        ConceptGraphRecordOld lists2 = myTree.buildNodesAndLinks();
+        ConceptGraphRecordOld lists3 = myTree2.buildNodesAndLinks();
 
         Assert.assertEquals(lists2.getNodes().size(), lists3.getNodes().size());
 
@@ -146,14 +146,14 @@ public class ConceptGraphTest {
 		mapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
 		
         try {
-			ConceptGraphRecord lists = mapper.readValue(new File("test/testresources/ABCSimple.json"), ConceptGraphRecord.class);
+			ConceptGraphRecordOld lists = mapper.readValue(new File("test/testresources/ABCSimple.json"), ConceptGraphRecordOld.class);
 			Assert.assertEquals(11, lists.getNodes().size());
 			Assert.assertEquals(11, lists.getLinks().size());
 			
 			ConceptGraph myGraph = new ConceptGraph(lists);
 			ConceptGraph myTree = myGraph.graphToTree();
 			
-			ConceptGraphRecord listsFromTree = myTree.buildNodesAndLinks();
+			ConceptGraphRecordOld listsFromTree = myTree.buildNodesAndLinks();
 			
 			Assert.assertEquals(16, listsFromTree.getNodes().size());
 			Assert.assertEquals(15, listsFromTree.getLinks().size());
@@ -174,7 +174,7 @@ public class ConceptGraphTest {
 		String outputLocation = "out/test/sampleoutput/CarrieJsonGraph.json";
 		
         try {
-			ConceptGraphRecord lists = mapper.readValue(new File("test/testresources/ABCSimple.json"), ConceptGraphRecord.class);
+			ConceptGraphRecordOld lists = mapper.readValue(new File("test/testresources/ABCSimple.json"), ConceptGraphRecordOld.class);
 			try{
 			mapper.writeValue(new File(outputLocation), lists);
             } catch (Exception e) {
@@ -212,7 +212,7 @@ public class ConceptGraphTest {
 		String outputLocation = "out/test/sampleoutput/CarrieJsonGraph.json";
 		
         try {
-			ConceptGraphRecord lists = mapper.readValue(new File("test/testresources/ABCSimple.json"), ConceptGraphRecord.class);
+			ConceptGraphRecordOld lists = mapper.readValue(new File("test/testresources/ABCSimple.json"), ConceptGraphRecordOld.class);
 			ConceptGraph tree = new ConceptGraph(lists).graphToTree();
 			
 			try{

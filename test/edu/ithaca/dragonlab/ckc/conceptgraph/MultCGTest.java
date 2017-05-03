@@ -5,8 +5,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import edu.ithaca.dragonlab.ckc.io.ConceptGraphRecordOld;
 import edu.ithaca.dragonlab.ckc.io.LinkRecord;
-import edu.ithaca.dragonlab.ckc.io.ConceptGraphRecord;
 
 //TODO, this shouldn't be in this test folder with no automated tests, it also doesn't correspond to a class...
 public class MultCGTest {
@@ -83,7 +83,7 @@ public class MultCGTest {
 		link = new LinkRecord("C","E");
 		linkList.add(link);
 		
-		ConceptGraphRecord lists = new ConceptGraphRecord(cnList, linkList);
+		ConceptGraphRecordOld lists = new ConceptGraphRecordOld(cnList, linkList);
 		return new ConceptGraph(lists);
 	}
 	

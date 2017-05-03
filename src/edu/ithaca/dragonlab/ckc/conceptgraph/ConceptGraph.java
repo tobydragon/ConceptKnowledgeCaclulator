@@ -1,6 +1,6 @@
 package edu.ithaca.dragonlab.ckc.conceptgraph;
 
-import edu.ithaca.dragonlab.ckc.io.ConceptGraphRecord;
+import edu.ithaca.dragonlab.ckc.io.ConceptGraphRecordOld;
 import edu.ithaca.dragonlab.ckc.io.LearningObjectLinkRecord;
 import edu.ithaca.dragonlab.ckc.io.LinkRecord;
 import edu.ithaca.dragonlab.ckc.learningobject.LearningObject;
@@ -22,7 +22,7 @@ public class ConceptGraph {
 	Map<String, ConceptNode> nodeMap;
 	
 	//TODO: This seems to use and change the same nodes. Calling this constructor twice would break things...
-	public ConceptGraph(ConceptGraphRecord structureDef){
+	public ConceptGraph(ConceptGraphRecordOld structureDef){
 		buildObjectFromNodesAndLinks(structureDef);
 	}
 
@@ -40,7 +40,7 @@ public class ConceptGraph {
         }
 	}
 
-	public void buildObjectFromNodesAndLinks(ConceptGraphRecord nodeAndLinks){
+	public void buildObjectFromNodesAndLinks(ConceptGraphRecordOld nodeAndLinks){
 		List<ConceptNode> nodes =nodeAndLinks.getNodes();
 		List<LinkRecord> links = nodeAndLinks.getLinks();
 
@@ -50,8 +50,8 @@ public class ConceptGraph {
 	}
 
 	//TODO: When book code is integrated
-//	public ConceptGraph(Book b, ConceptGraphRecord lists){
-//		List<ConceptNode> nodes = lists.getNodes();
+//	public ConceptGraph(Book b, ConceptGraphRecordOld lists){
+//		List<ConceptNode> nodes = lists.getConcepts();
 //		List<LinkRecord> links = lists.getLinks();
 //
 //		List<LinkRecord> newLinks = b.buildTagLinks();
@@ -105,7 +105,7 @@ public class ConceptGraph {
         this.roots = rootsIn;
 	}
 
-    public void addLearningObjects(ConceptGraphRecord learningObjectDef){
+    public void addLearningObjects(ConceptGraphRecordOld learningObjectDef){
         //learningObjects might need to be created or they might already exist
 		for (ConceptNode learningObjectRecord : learningObjectDef.getNodes()){
             LearningObject learningObject = learningObjectMap.get(learningObjectRecord.getID());
@@ -184,20 +184,20 @@ public class ConceptGraph {
 	}
 	
 	public String toString(){
-		ConceptGraphRecord thisGraph = this.buildNodesAndLinks();
+		ConceptGraphRecordOld thisGraph = this.buildNodesAndLinks();
 		return "Nodes:\n"+thisGraph.getNodes()+"\nLinks:\n"+thisGraph.getLinks();
 		
 		//return roots.toString();
 		
 	}
 		
-	public ConceptGraphRecord buildNodesAndLinks() {
+	public ConceptGraphRecordOld buildNodesAndLinks() {
 		List<ConceptNode> tempNodes = new ArrayList<ConceptNode>();
 		List<LinkRecord> tempLinks = new ArrayList<LinkRecord>();
 		for(ConceptNode currRoot : this.roots){
 			currRoot.addToNodesAndLinksLists(tempNodes,tempLinks);
 		}
-		ConceptGraphRecord outputLists = new ConceptGraphRecord(tempNodes, tempLinks);
+		ConceptGraphRecordOld outputLists = new ConceptGraphRecordOld(tempNodes, tempLinks);
 		return outputLists;
 	}
 		

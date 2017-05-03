@@ -1,13 +1,9 @@
 package edu.ithaca.dragonlab.ckc.io;
 
-import edu.ithaca.dragonlab.ckc.conceptgraph.ConceptGraph;
-import edu.ithaca.dragonlab.ckc.conceptgraph.ExampleConceptGraphFactory;
-import edu.ithaca.dragonlab.ckc.learningobject.ExampleLearningObjectFactory;
 import edu.ithaca.dragonlab.ckc.learningobject.ExampleLearningObjectResponseFactory;
 import edu.ithaca.dragonlab.ckc.learningobject.LearningObjectResponse;
 import org.junit.Assert;
 import org.junit.Test;
-import java.io.IOException;
 
 import java.util.List;
 

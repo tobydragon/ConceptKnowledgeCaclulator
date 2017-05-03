@@ -1,7 +1,7 @@
 package edu.ithaca.dragonlab.ckc.learningobject;
 
 import edu.ithaca.dragonlab.ckc.conceptgraph.ConceptNode;
-import edu.ithaca.dragonlab.ckc.io.ConceptGraphRecord;
+import edu.ithaca.dragonlab.ckc.io.ConceptGraphRecordOld;
 import edu.ithaca.dragonlab.ckc.io.LinkRecord;
 
 import java.util.ArrayList;
@@ -13,7 +13,7 @@ import java.util.List;
  */
 public class ExampleLearningObjectFactory {
 
-    public static ConceptGraphRecord makeSimpleLearningObjectDef(){
+    public static ConceptGraphRecordOld makeSimpleLearningObjectDef(){
         List<ConceptNode> cnList = new ArrayList<>();
         List<LinkRecord> clList = new ArrayList<>();
 
@@ -31,6 +31,6 @@ public class ExampleLearningObjectFactory {
         clList.add(new LinkRecord("C","Q5"));
         clList.add(new LinkRecord("C","Q6"));
 
-        return new ConceptGraphRecord(cnList,clList);
+        return new ConceptGraphRecordOld(cnList,clList);
     }
 }
