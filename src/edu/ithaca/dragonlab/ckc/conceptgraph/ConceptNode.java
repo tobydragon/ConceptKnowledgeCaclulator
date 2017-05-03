@@ -7,6 +7,7 @@ import java.util.List;
 import java.util.Map;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import edu.ithaca.dragonlab.ckc.io.ConceptRecord;
 import edu.ithaca.dragonlab.ckc.io.LinkRecord;
 import edu.ithaca.dragonlab.ckc.learningobject.LearningObject;
 
@@ -34,6 +35,18 @@ public class ConceptNode {
 		knowledgePrediction = 0;
 		knowledgeEstimate = 0;
 		knowledgeDistanceFromAvg = 0;
+	}
+
+	public ConceptNode(ConceptRecord conceptRecord) {
+		this.id = conceptRecord.getId();
+		this.label = conceptRecord.getLabel();
+		knowledgePrediction = conceptRecord.getKnowledgePrediction();
+		knowledgeEstimate = conceptRecord.getKnowledgeEstimate();
+		knowledgeDistanceFromAvg = conceptRecord.getKnowledgeDistFromAvg();
+
+		children = new ArrayList<>();
+		learningObjectMap = new HashMap<>();
+		numParents = 0;
 	}
 
 	public ConceptNode(String id, String label) {
@@ -119,14 +132,15 @@ public class ConceptNode {
         }
 	}
 
-	public void addToNodesAndLinksLists(List<ConceptNode> nodes, List<LinkRecord> links){
+	public void addToNodesAndLinksLists(List<ConceptRecord> concepts, List<LinkRecord> links){
 		//if I am not in the list
-		if(!nodes.contains(this)){
+		ConceptRecord newConceptRecord = new ConceptRecord(this);
+		if(!concepts.contains(newConceptRecord)){
 			//add me to the nodes list
-			nodes.add(this);
+			concepts.add(newConceptRecord);
 			for(ConceptNode child : this.children){
 				//recurse call on children
-				child.addToNodesAndLinksLists(nodes,links);
+				child.addToNodesAndLinksLists(concepts,links);
 				//add the links between me and my children to link list
 				links.add(new LinkRecord(this.getID(),child.getID()));
 			}

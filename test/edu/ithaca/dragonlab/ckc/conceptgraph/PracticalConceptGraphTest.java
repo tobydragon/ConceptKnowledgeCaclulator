@@ -2,10 +2,7 @@ package edu.ithaca.dragonlab.ckc.conceptgraph;
 
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import edu.ithaca.dragonlab.ckc.io.CSVReader;
-import edu.ithaca.dragonlab.ckc.io.ConceptGraphRecordOld;
-import edu.ithaca.dragonlab.ckc.io.JsonImportExport;
-import edu.ithaca.dragonlab.ckc.io.LearningObjectLinkRecord;
+import edu.ithaca.dragonlab.ckc.io.*;
 import org.junit.Test;
 
 import java.util.List;
@@ -22,7 +19,7 @@ public class PracticalConceptGraphTest {
         CSVReader csvReader = new CSVReader("test/testresources/basicRealisticExampleGradeBook.csv");
 
         try {
-            ConceptGraphRecordOld graphRecord = ConceptGraphRecordOld.buildfromJson("test/testresources/basicRealisticExampleConceptGraph.json");
+            ConceptGraphRecord graphRecord = ConceptGraphRecord.buildFromJson("test/testresources/basicRealisticExampleConceptGraph.json");
             ConceptGraph graph = new ConceptGraph(graphRecord);
             List<LearningObjectLinkRecord> LOLRlist = JsonImportExport.LOLRFromRecords("test/testresources/basicRealisticExampleLOLRecord.json");
             graph.addLearningObjectsFromLearningObjectLinkRecords(csvReader.getManualGradedLearningObjects(), LOLRlist);

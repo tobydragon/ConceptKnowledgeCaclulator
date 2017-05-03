@@ -14,7 +14,7 @@ public class ConceptGraphRecordTest {
 
 
     @Test
-    public void buildFromJsonSimpleTest() throws Exception {
+    public void buildFromJsonTest() throws Exception {
         try {
             String file = TEST_DIR + "simple.json";
             ConceptGraphRecord toFile = ExampleConceptGraphRecordFactory.makeSimple();

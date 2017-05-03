@@ -1,8 +1,6 @@
 package edu.ithaca.dragonlab.ckc.conceptgraph;
 
-import edu.ithaca.dragonlab.ckc.io.ConceptGraphRecordOld;
-import edu.ithaca.dragonlab.ckc.io.LearningObjectLinkRecord;
-import edu.ithaca.dragonlab.ckc.io.LinkRecord;
+import edu.ithaca.dragonlab.ckc.io.*;
 import edu.ithaca.dragonlab.ckc.learningobject.LearningObject;
 import edu.ithaca.dragonlab.ckc.learningobject.LearningObjectResponse;
 import org.apache.logging.log4j.LogManager;
@@ -21,12 +19,6 @@ public class ConceptGraph {
 	Map<String, LearningObject> learningObjectMap;
 	Map<String, ConceptNode> nodeMap;
 	
-	//TODO: This seems to use and change the same nodes. Calling this constructor twice would break things...
-	public ConceptGraph(ConceptGraphRecordOld structureDef){
-		buildObjectFromNodesAndLinks(structureDef);
-	}
-
-
 	public ConceptGraph(ConceptGraph other){
 		this.roots = new ArrayList<>();
         nodeMap = new HashMap<>();
@@ -40,13 +32,51 @@ public class ConceptGraph {
         }
 	}
 
-	public void buildObjectFromNodesAndLinks(ConceptGraphRecordOld nodeAndLinks){
-		List<ConceptNode> nodes =nodeAndLinks.getNodes();
-		List<LinkRecord> links = nodeAndLinks.getLinks();
-
-		this.roots = findRoots(nodes, links);
-		this.nodeMap = addChildren(nodes, links);
+	public ConceptGraph(ConceptGraphRecord structureDef){
+		buildStructureFromGraphRecord(structureDef);
 		this.learningObjectMap = new HashMap<>();
+	}
+
+	private void buildStructureFromGraphRecord(ConceptGraphRecord graphRecord){
+		this.roots = new ArrayList<>();
+		this.nodeMap = new HashMap<>();
+
+		List<ConceptRecord> rootRecords = graphRecord.findRoots();
+
+		for (ConceptRecord conceptRecord :graphRecord.getConcepts() ){
+			ConceptNode newNode = new ConceptNode(conceptRecord);
+			nodeMap.put(newNode.getID(), newNode);
+			if (rootRecords.contains(conceptRecord)) {
+				roots.add(newNode);
+			}
+		}
+
+		linkConceptsToEachOther(graphRecord.getLinks());
+	}
+
+	/**
+	 * Creates all connections listed in @links between the nodes that already exist
+	 * @pre nodes must already exist for all ids listed in links
+	 * @param links
+	 * @post the ConceptNodes themselves are altered to include the new links
+	 */
+	private void linkConceptsToEachOther(List<LinkRecord> links){
+		for( LinkRecord currLink : links){
+			ConceptNode currParent = nodeMap.get(currLink.getParent());
+			if(currParent == null){
+				logger.warn("In ConceptGraph.addChildren(): " + currLink.getParent() + " node not found in nodes list for link " + currLink);
+			}
+			else{
+				ConceptNode currChild = nodeMap.get(currLink.getChild());
+				if(currChild == null){
+					logger.warn("In ConceptGraph.addChildren(): " + currLink.getChild()+" node not found in nodes list for link " + currLink);
+				}
+				else{
+					currParent.addChild(currChild);
+				}
+			}
+
+		}
 	}
 
 	//TODO: When book code is integrated
@@ -141,64 +171,26 @@ public class ConceptGraph {
                 //TODO: maybe make a new list of unconnected learning objects???
             }
         }
-	}	
+	}
 
-	private Map<String, ConceptNode> addChildren(List<ConceptNode> nodes, List<LinkRecord> links){
-		HashMap<String, ConceptNode> fullNodesMap = new HashMap<>();
-		for( ConceptNode currNode : nodes){
-			fullNodesMap.put(currNode.getID(), currNode);
-		}
-		
-		for( LinkRecord currLink : links){
-			ConceptNode currParent = fullNodesMap.get(currLink.getParent());
-			if(currParent == null){
-				logger.warn("In ConceptGraph.addChildren(): " + currLink.getParent() + " node not found in nodes list for link " + currLink);
-			}
-			else{
-				ConceptNode currChild = fullNodesMap.get(currLink.getChild());
-				if(currChild == null){
-					logger.warn("In ConceptGraph.addChildren(): " + currLink.getChild()+" node not found in nodes list for link " + currLink);
-				}
-				else{
-					currParent.addChild(currChild);
-				}
-			}
-			
-		}
-		return fullNodesMap;
-	}
-	
- 	private List<ConceptNode> findRoots(List<ConceptNode> nodes, List<LinkRecord> links) {
-		List<ConceptNode> runningTotal = new ArrayList<>();
-		for (ConceptNode node : nodes) {
-			runningTotal.add(node);
-		}
-		for (LinkRecord link : links) {
-			for(ConceptNode node : nodes){
-	 			if(node.getID().equals(link.getChild())){
-	 				runningTotal.remove(node);
-	 			}
-	 		}
-		}
-		return runningTotal;
-	}
+
 	
 	public String toString(){
-		ConceptGraphRecordOld thisGraph = this.buildNodesAndLinks();
-		return "Nodes:\n"+thisGraph.getNodes()+"\nLinks:\n"+thisGraph.getLinks();
+		ConceptGraphRecord thisGraph = this.buildNodesAndLinks();
+		return "Nodes:\n"+thisGraph.getConcepts()+"\nLinks:\n"+thisGraph.getLinks();
 		
 		//return roots.toString();
 		
 	}
 		
-	public ConceptGraphRecordOld buildNodesAndLinks() {
-		List<ConceptNode> tempNodes = new ArrayList<ConceptNode>();
-		List<LinkRecord> tempLinks = new ArrayList<LinkRecord>();
+	public ConceptGraphRecord buildNodesAndLinks() {
+		List<ConceptRecord> tempNodes = new ArrayList<>();
+		List<LinkRecord> tempLinks = new ArrayList<>();
 		for(ConceptNode currRoot : this.roots){
 			currRoot.addToNodesAndLinksLists(tempNodes,tempLinks);
 		}
-		ConceptGraphRecordOld outputLists = new ConceptGraphRecordOld(tempNodes, tempLinks);
-		return outputLists;
+		ConceptGraphRecord graphRecord = new ConceptGraphRecord(tempNodes, tempLinks);
+		return graphRecord;
 	}
 		
 

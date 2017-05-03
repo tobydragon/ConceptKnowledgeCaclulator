@@ -2,7 +2,9 @@ package edu.ithaca.dragonlab.ckc.conceptgraph;
 
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import edu.ithaca.dragonlab.ckc.io.ConceptGraphRecord;
 import edu.ithaca.dragonlab.ckc.io.ConceptGraphRecordOld;
+import edu.ithaca.dragonlab.ckc.io.ConceptRecord;
 import edu.ithaca.dragonlab.ckc.learningobject.ExampleLearningObjectFactory;
 import edu.ithaca.dragonlab.ckc.learningobject.ExampleLearningObjectResponseFactory;
 import edu.ithaca.dragonlab.ckc.learningobject.LearningObjectResponse;
@@ -83,13 +85,13 @@ public class GroupConceptGraphsTest {
 		Map<String, ConceptGraph> userGraphMap = group.getUserToGraphMap();
 		
 		ConceptGraph user = userGraphMap.get("student1");
-		ConceptGraphRecordOld userNL = user.buildNodesAndLinks();
-		ConceptNode testNode = userNL.getNodes().get(0);
-		Assert.assertEquals(.5, testNode.getKnowledgeDistanceFromAvg(),0);
-		System.out.println(testNode.getKnowledgeDistanceFromAvg());
-		ConceptNode testNode2 = userNL.getNodes().get(2);
-		System.out.println(testNode2.getKnowledgeDistanceFromAvg());
-		Assert.assertEquals(1, testNode2.getKnowledgeDistanceFromAvg(),0);
+		ConceptGraphRecord userNL = user.buildNodesAndLinks();
+		ConceptRecord testNode = userNL.getConcepts().get(0);
+		Assert.assertEquals(.5, testNode.getKnowledgeDistFromAvg(),0);
+		System.out.println(testNode.getKnowledgeDistFromAvg());
+		ConceptRecord testNode2 = userNL.getConcepts().get(2);
+		System.out.println(testNode2.getKnowledgeDistFromAvg());
+		Assert.assertEquals(1, testNode2.getKnowledgeDistFromAvg(),0);
 
 	}
 	
@@ -122,30 +124,6 @@ public class GroupConceptGraphsTest {
 		}*/
 	}
 	
-	//TODO: this isn't a test, because it doesn't do any automated checking...
-	public void jsonTesterWithBigData(){
-		ObjectMapper mapper = new ObjectMapper();
-		try {
-			//Reads in the file that was written earlier
-			
-			List<LearningObjectResponse> sums = new ArrayList<>();
-			ConceptGraphRecordOld nodes = mapper.readValue(new File("war/conffiles/domainfiles/conceptgraph/domainStructure.json"), ConceptGraphRecordOld.class);
-			ConceptGraph graph = new ConceptGraph(nodes);
-			GroupConceptGraphs group = new GroupConceptGraphs(graph,sums);
-			try {
-				//writes JSON to file
-				mapper.writeValue(new File("war/TreeDisplay/testInput/inputBigData"+".json"), group.getAllNamedGraphs());
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-			
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-		
-		
-	}
-	
 	
 	
 	@Test
@@ -158,10 +136,10 @@ public class GroupConceptGraphsTest {
 		mapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES,false);
 		
 		ConceptGraph user2Tree = group.getAllGraphs().get(1).graphToTree();
-		ConceptGraphRecordOld user2Nodes = user2Tree.buildNodesAndLinks();
+		ConceptGraphRecord user2Nodes = user2Tree.buildNodesAndLinks();
 		
 		Assert.assertEquals(3, group.getUserToGraphMap().keySet().size());
-		Assert.assertEquals(4, user2Nodes.getNodes().size());
+		Assert.assertEquals(4, user2Nodes.getConcepts().size());
 		Assert.assertEquals(3, user2Nodes.getLinks().size());
 
 		//TODO: This shouldn't be part of an automated test if it doesn't result in asserts

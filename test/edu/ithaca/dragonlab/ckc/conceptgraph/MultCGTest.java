@@ -24,68 +24,68 @@ public class MultCGTest {
 	String outputLocation = "MultStudentsOutput.json";
 	
 	public MultCGTest(){
-		setCG();
-		studA = new NamedGraph("StudentA", cgA);
-		studB = new NamedGraph("StudentB", cgB);
-		studC = new NamedGraph("StudentC", cgC);
-		students = new ArrayList();
-		students.add(studA);
-		students.add(studB);
-		students.add(studC);
-		
-		try {
-			//writes JSON to file
-			mapper.writeValue(new File(outputLocation), this.students);
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
+//		setCG();
+//		studA = new NamedGraph("StudentA", cgA);
+//		studB = new NamedGraph("StudentB", cgB);
+//		studC = new NamedGraph("StudentC", cgC);
+//		students = new ArrayList();
+//		students.add(studA);
+//		students.add(studB);
+//		students.add(studC);
+//
+//		try {
+//			//writes JSON to file
+//			mapper.writeValue(new File(outputLocation), this.students);
+//		} catch (Exception e) {
+//			e.printStackTrace();
+//		}
 	}
 	
 	public String toString(){
 		return students+" ";
 	}
-	public void setCG(){
-		cgA = makeSimple();
-		System.out.println(cgA);
-		cgB = makeSimple();
-		cgC = makeSimple();
-	}
+//	public void setCG(){
+//		cgA = makeSimple();
+//		System.out.println(cgA);
+//		cgB = makeSimple();
+//		cgC = makeSimple();
+//	}
 
 	//TODO: Integrate this with ExampleConceptGraphFactory, either use one from there or add this there with a different name
-	public ConceptGraph makeSimple(){
-		List<ConceptNode> cnList = new ArrayList<ConceptNode>();
-		List<LinkRecord> linkList = new ArrayList<LinkRecord>();
-
-		ConceptNode cn = new ConceptNode("A");
-		cn.setKnowledgeEstimate(Math.random());
-		cnList.add(cn);
-		cn = new ConceptNode("B");
-		cn.setKnowledgeEstimate(Math.random());
-		cnList.add(cn);
-		cn = new ConceptNode("C");
-		cn.setKnowledgeEstimate(Math.random());
-		cnList.add(cn);
-		cn = new ConceptNode("D");
-		cn.setKnowledgeEstimate(Math.random());
-		cnList.add(cn);
-		cn = new ConceptNode("E");
-		cn.setKnowledgeEstimate(Math.random());
-		cnList.add(cn);
-		
-		LinkRecord link = new LinkRecord("A","B");
-		linkList.add(link);
-		link = new LinkRecord("A","C");
-		linkList.add(link);
-		link = new LinkRecord("B","D");
-		linkList.add(link);
-		link = new LinkRecord("D","E");
-		linkList.add(link);
-		link = new LinkRecord("C","E");
-		linkList.add(link);
-		
-		ConceptGraphRecordOld lists = new ConceptGraphRecordOld(cnList, linkList);
-		return new ConceptGraph(lists);
-	}
+//	public ConceptGraph makeSimple(){
+//		List<ConceptNode> cnList = new ArrayList<ConceptNode>();
+//		List<LinkRecord> linkList = new ArrayList<LinkRecord>();
+//
+//		ConceptNode cn = new ConceptNode("A");
+//		cn.setKnowledgeEstimate(Math.random());
+//		cnList.add(cn);
+//		cn = new ConceptNode("B");
+//		cn.setKnowledgeEstimate(Math.random());
+//		cnList.add(cn);
+//		cn = new ConceptNode("C");
+//		cn.setKnowledgeEstimate(Math.random());
+//		cnList.add(cn);
+//		cn = new ConceptNode("D");
+//		cn.setKnowledgeEstimate(Math.random());
+//		cnList.add(cn);
+//		cn = new ConceptNode("E");
+//		cn.setKnowledgeEstimate(Math.random());
+//		cnList.add(cn);
+//
+//		LinkRecord link = new LinkRecord("A","B");
+//		linkList.add(link);
+//		link = new LinkRecord("A","C");
+//		linkList.add(link);
+//		link = new LinkRecord("B","D");
+//		linkList.add(link);
+//		link = new LinkRecord("D","E");
+//		linkList.add(link);
+//		link = new LinkRecord("C","E");
+//		linkList.add(link);
+//
+//		ConceptGraphRecordOld lists = new ConceptGraphRecordOld(cnList, linkList);
+//		return new ConceptGraph(lists);
+//	}
 	
 	public static void main(String args[]){
 		MultCGTest myTest = new MultCGTest();

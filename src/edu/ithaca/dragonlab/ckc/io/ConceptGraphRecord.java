@@ -40,7 +40,25 @@ public class ConceptGraphRecord {
 		this.concepts = nodesIn;
 		this.links = linksIn;
 	}
-	
+
+	/**
+	 * Finds all root ConceptRecords (ones that have no parents in this graph)
+	 * @return a list of references to all root ConceptRecords (could allow side effects)
+	 */
+	public List<ConceptRecord> findRoots() {
+		//Shallow copy
+		List<ConceptRecord> runningTotal = new ArrayList<>(getConcepts());
+
+		for (LinkRecord link : links) {
+			for(ConceptRecord record : getConcepts()){
+				if(record.getId().equals(link.getChild())){
+					runningTotal.remove(record);
+				}
+			}
+		}
+		return runningTotal;
+	}
+
 	public List<ConceptRecord> getConcepts(){
 		return concepts;
 	}
