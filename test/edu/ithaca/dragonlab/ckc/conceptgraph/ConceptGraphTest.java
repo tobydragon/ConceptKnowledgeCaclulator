@@ -16,7 +16,6 @@ import org.junit.Test;
 import java.util.ArrayList;
 import java.util.List;
 
-import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.collection.IsIterableContainingInAnyOrder.containsInAnyOrder;
 
 
@@ -39,9 +38,8 @@ public class ConceptGraphTest {
         ConceptGraphRecord origRecord = ExampleConceptGraphRecordFactory.makeSimple();
         ConceptGraph toTest = new ConceptGraph(origRecord);
         ConceptGraphRecord newRecord = toTest.buildNodesAndLinks();
-        Assert.assertThat(newRecord.getConcepts(), is(origRecord.getConcepts()));
-        Assert.assertThat(newRecord.getLinks(), containsInAnyOrder(origRecord.getLinks()));
-
+        Assert.assertThat(newRecord.getConcepts(), containsInAnyOrder(origRecord.getConcepts().toArray()));
+        Assert.assertThat(newRecord.getLinks(), containsInAnyOrder(origRecord.getLinks().toArray()));
     }
 
     @Test
