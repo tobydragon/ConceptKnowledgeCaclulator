@@ -3,8 +3,6 @@ package edu.ithaca.dragonlab.ckc.conceptgraph;
 import edu.ithaca.dragonlab.ckc.io.ConceptGraphRecord;
 import edu.ithaca.dragonlab.ckc.io.ConceptRecord;
 import edu.ithaca.dragonlab.ckc.io.LearningObjectLinkRecord;
-import edu.ithaca.dragonlab.ckc.learningobject.ExampleLearningObjectFactory;
-import edu.ithaca.dragonlab.ckc.learningobject.ExampleLearningObjectResponseFactory;
 import edu.ithaca.dragonlab.ckc.learningobject.LearningObject;
 import edu.ithaca.dragonlab.ckc.learningobject.LearningObjectResponse;
 import edu.ithaca.dragonlab.ckc.util.DataUtil;
@@ -24,7 +22,7 @@ public class ConceptGraphTest {
 
 	@Test
     public void copyConstructorTest(){
-	    ConceptGraph orig = ExampleConceptGraphFactory.makeSimple();
+	    ConceptGraph orig = ExampleConceptGraphFactory.makeSimpleWithData();
 
 	    ConceptGraph copy = new ConceptGraph(orig);
 	    Assert.assertNotNull(copy.findNodeById("A"));
@@ -52,7 +50,7 @@ public class ConceptGraphTest {
 
     @Test
     public void addLearningObjectsTest(){
-        ConceptGraph graph = ExampleConceptGraphFactory.makeSimple();
+        ConceptGraph graph = ExampleConceptGraphFactory.makeSimpleWithData();
 
         Assert.assertEquals(2, graph.findNodeById("B").getLearningObjectMap().size());
         Assert.assertEquals(4, graph.findNodeById("C").getLearningObjectMap().size());
@@ -60,7 +58,7 @@ public class ConceptGraphTest {
 
     @Test
     public void addLearningObjectsAndResponsesTest(){
-        ConceptGraph graph = ExampleConceptGraphFactory.makeSimple();
+        ConceptGraph graph = ExampleConceptGraphFactory.makeSimpleWithData();
 
         Assert.assertEquals(3, graph.findNodeById("B").getLearningObjectMap().get("Q1").getResponses().size());
         Assert.assertEquals(3, graph.findNodeById("B").getLearningObjectMap().get("Q2").getResponses().size());
@@ -84,7 +82,7 @@ public class ConceptGraphTest {
         int numB = 0;
         int numC = 0;
 
-        ConceptGraphRecord treeLists = ExampleConceptGraphFactory.makeSimple().graphToTree().buildNodesAndLinks();
+        ConceptGraphRecord treeLists = ExampleConceptGraphFactory.makeSimpleWithData().graphToTree().buildNodesAndLinks();
         for(ConceptRecord node : treeLists.getConcepts()){
 			if(node.getLabel().equals("A")){
                 numA++;
@@ -101,7 +99,7 @@ public class ConceptGraphTest {
 
     @Test
 	public void treeConversionTest(){
-		checkTreeConversionByNodesAndLinksNumbers(ExampleConceptGraphFactory.makeSimple(), 3, 3, 4, 3);
+		checkTreeConversionByNodesAndLinksNumbers(ExampleConceptGraphFactory.makeSimpleWithData(), 3, 3, 4, 3);
 		checkTreeConversionByNodesAndLinksNumbers(ExampleConceptGraphFactory.makeMedium(), 4, 5, 7, 6);
 		checkTreeConversionByNodesAndLinksNumbers(ExampleConceptGraphFactory.makeComplex(), 5, 8, 13, 12);
 		checkTreeConversionByNodesAndLinksNumbers(ExampleConceptGraphFactory.makeSuperComplex(), 6, 11, 24, 23);
@@ -216,7 +214,7 @@ public class ConceptGraphTest {
 	}
     @Test
     public void linkLearningObjectsTest(){
-        ConceptGraph graph = ExampleConceptGraphFactory.makeSimple();
+        ConceptGraph graph = ExampleConceptGraphFactory.makeSimpleWithData();
         //TODO: Did this line matter, because it can't work like that anymore...
         //graph.addLearningObjects(ExampleLearningObjectFactory.makeSimpleLearningObjectDef());
 
@@ -257,7 +255,7 @@ public class ConceptGraphTest {
     @Test
     public void addLearningObjectsFromLearningObjectLinkRecords(){
         //Creating graph
-        ConceptGraph graph = ExampleConceptGraphFactory.makeSimple();
+        ConceptGraph graph = ExampleConceptGraphFactory.makeSimpleWithData();
         //TODO: Did this line matter, because it can't work like that anymore...
         //graph.addLearningObjects(ExampleLearningObjectFactory.makeSimpleLearningObjectDef());
 
@@ -309,7 +307,7 @@ public class ConceptGraphTest {
 
 	@Test
 	public void calcKnowledgeEstimateTest(){
-        ConceptGraph graph = ExampleConceptGraphFactory.makeSimple();
+        ConceptGraph graph = ExampleConceptGraphFactory.makeSimpleWithData();
         graph.calcKnowledgeEstimates();
 
         Assert.assertEquals(0.625, graph.findNodeById("A").getKnowledgeEstimate(), DataUtil.OK_FLOAT_MARGIN);

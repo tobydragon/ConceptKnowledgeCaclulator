@@ -9,6 +9,10 @@ import edu.ithaca.dragonlab.ckc.learningobject.ExampleLearningObjectFactory;
 public class ExampleConceptGraphFactory {
 
     public static ConceptGraph makeSimple(){
+        return new ConceptGraph(ExampleConceptGraphRecordFactory.makeSimple());
+    }
+
+    public static ConceptGraph makeSimpleWithData(){
         return new ConceptGraph(ExampleConceptGraphRecordFactory.makeSimple(),
                 ExampleLearningObjectFactory.makeSimpleLearningObject(),
                 ExampleLearningObjectFactory.makeSimpleLOLRecords());

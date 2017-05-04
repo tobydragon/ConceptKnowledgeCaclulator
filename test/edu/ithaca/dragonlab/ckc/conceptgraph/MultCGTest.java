@@ -1,12 +1,8 @@
 package edu.ithaca.dragonlab.ckc.conceptgraph;
 
-import java.io.File;
-import java.util.ArrayList;
-import java.util.List;
-
 import com.fasterxml.jackson.databind.ObjectMapper;
-import edu.ithaca.dragonlab.ckc.io.ConceptGraphRecordOld;
-import edu.ithaca.dragonlab.ckc.io.LinkRecord;
+
+import java.util.List;
 
 //TODO, this shouldn't be in this test folder with no automated tests, it also doesn't correspond to a class...
 public class MultCGTest {
@@ -45,14 +41,14 @@ public class MultCGTest {
 		return students+" ";
 	}
 //	public void setCG(){
-//		cgA = makeSimple();
+//		cgA = makeSimpleWithData();
 //		System.out.println(cgA);
-//		cgB = makeSimple();
-//		cgC = makeSimple();
+//		cgB = makeSimpleWithData();
+//		cgC = makeSimpleWithData();
 //	}
 
 	//TODO: Integrate this with ExampleConceptGraphFactory, either use one from there or add this there with a different name
-//	public ConceptGraph makeSimple(){
+//	public ConceptGraph makeSimpleWithData(){
 //		List<ConceptNode> cnList = new ArrayList<ConceptNode>();
 //		List<LinkRecord> linkList = new ArrayList<LinkRecord>();
 //

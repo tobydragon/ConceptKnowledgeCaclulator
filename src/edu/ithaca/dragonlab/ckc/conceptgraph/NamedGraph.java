@@ -1,7 +1,6 @@
 package edu.ithaca.dragonlab.ckc.conceptgraph;
 
 import edu.ithaca.dragonlab.ckc.io.ConceptGraphRecord;
-import edu.ithaca.dragonlab.ckc.io.ConceptGraphRecordOld;
 
 public class NamedGraph {
 	public String name;

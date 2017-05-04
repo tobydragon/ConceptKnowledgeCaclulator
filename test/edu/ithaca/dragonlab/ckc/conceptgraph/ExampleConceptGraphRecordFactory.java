@@ -1,7 +1,6 @@
 package edu.ithaca.dragonlab.ckc.conceptgraph;
 
 import edu.ithaca.dragonlab.ckc.io.ConceptGraphRecord;
-import edu.ithaca.dragonlab.ckc.io.ConceptGraphRecordOld;
 import edu.ithaca.dragonlab.ckc.io.ConceptRecord;
 import edu.ithaca.dragonlab.ckc.io.LinkRecord;
 

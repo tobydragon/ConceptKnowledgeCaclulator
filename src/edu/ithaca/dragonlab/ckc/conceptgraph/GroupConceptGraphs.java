@@ -2,6 +2,7 @@ package edu.ithaca.dragonlab.ckc.conceptgraph;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import edu.ithaca.dragonlab.ckc.io.LearningObjectLinkRecord;
 import edu.ithaca.dragonlab.ckc.learningobject.LearningObjectResponse;
 
 import java.io.File;
@@ -14,8 +15,13 @@ public class GroupConceptGraphs {
 	ConceptGraph averageGraph;
 	Map<String, ConceptGraph> userToGraph;
 	List<NamedGraph> allNamedGraphs;
-	
-	
+
+	/**
+	 * Takes a graph (including LearningObjectLinks)
+	 * @param structureGraph
+	 * @param summaries
+	 * @param lolRecords
+	 */
 	public GroupConceptGraphs(ConceptGraph structureGraph, List<LearningObjectResponse> summaries){
 		
 		averageGraph = new ConceptGraph(structureGraph);
