@@ -3,6 +3,7 @@ package edu.ithaca.dragonlab.ckc.conceptgraph;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import edu.ithaca.dragonlab.ckc.io.*;
+import org.junit.Assert;
 import org.junit.Test;
 
 import java.util.List;
@@ -12,7 +13,7 @@ import java.util.List;
  */
 public class PracticalConceptGraphTest {
     @Test
-    public void willExampleConceptGraphTest(){
+    public void basicRealisticConceptGraphTest(){
         ObjectMapper graphMapper = new ObjectMapper();
 
         graphMapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
@@ -20,11 +21,13 @@ public class PracticalConceptGraphTest {
 
         try {
             ConceptGraphRecord graphRecord = ConceptGraphRecord.buildFromJson("test/testresources/basicRealisticExampleConceptGraph.json");
-            ConceptGraph graph = new ConceptGraph(graphRecord);
+
             List<LearningObjectLinkRecord> LOLRlist = JsonImportExport.LOLRFromRecords("test/testresources/basicRealisticExampleLOLRecord.json");
-            graph.addLearningObjectsFromLearningObjectLinkRecords(csvReader.getManualGradedLearningObjects(), LOLRlist);
+            ConceptGraph graph = new ConceptGraph(graphRecord,csvReader.getManualGradedLearningObjects(), LOLRlist);
             graph.calcKnowledgeEstimates();
-            System.out.println(graph.toString());
+            Assert.assertEquals("Intro CS", graph.findNodeById("Intro CS").getID());
+            Assert.assertEquals(7,graph.findNodeById("Boolean").getLearningObjectMap().size());
+            Assert.assertEquals(,graph.getLearningObjectMap());
         }catch (Exception e){
             e.printStackTrace();
         }
