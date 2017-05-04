@@ -25,8 +25,6 @@ public class ConceptGraphTest {
 	@Test
     public void copyConstructorTest(){
 	    ConceptGraph orig = ExampleConceptGraphFactory.makeSimple();
-	    orig.addLearningObjects(ExampleLearningObjectFactory.makeSimpleLearningObjectDef());
-	    orig.addSummariesToGraph(ExampleLearningObjectResponseFactory.makeSimpleResponses());
 
 	    ConceptGraph copy = new ConceptGraph(orig);
 	    Assert.assertNotNull(copy.findNodeById("A"));
@@ -38,6 +36,16 @@ public class ConceptGraphTest {
         ConceptGraphRecord origRecord = ExampleConceptGraphRecordFactory.makeSimple();
         ConceptGraph toTest = new ConceptGraph(origRecord);
         ConceptGraphRecord newRecord = toTest.buildNodesAndLinks();
+        Assert.assertEquals(3, newRecord.getConcepts().size());
+        Assert.assertEquals(3, newRecord.getLinks().size());
+        Assert.assertThat(newRecord.getConcepts(), containsInAnyOrder(origRecord.getConcepts().toArray()));
+        Assert.assertThat(newRecord.getLinks(), containsInAnyOrder(origRecord.getLinks().toArray()));
+
+        origRecord = ExampleConceptGraphRecordFactory.makeSuperComplex();
+        toTest = new ConceptGraph(origRecord);
+        newRecord = toTest.buildNodesAndLinks();
+        Assert.assertEquals(6, newRecord.getConcepts().size());
+        Assert.assertEquals(11, newRecord.getLinks().size());
         Assert.assertThat(newRecord.getConcepts(), containsInAnyOrder(origRecord.getConcepts().toArray()));
         Assert.assertThat(newRecord.getLinks(), containsInAnyOrder(origRecord.getLinks().toArray()));
     }
@@ -45,7 +53,6 @@ public class ConceptGraphTest {
     @Test
     public void addLearningObjectsTest(){
         ConceptGraph graph = ExampleConceptGraphFactory.makeSimple();
-        graph.addLearningObjects(ExampleLearningObjectFactory.makeSimpleLearningObjectDef());
 
         Assert.assertEquals(2, graph.findNodeById("B").getLearningObjectMap().size());
         Assert.assertEquals(4, graph.findNodeById("C").getLearningObjectMap().size());
@@ -54,8 +61,6 @@ public class ConceptGraphTest {
     @Test
     public void addLearningObjectsAndResponsesTest(){
         ConceptGraph graph = ExampleConceptGraphFactory.makeSimple();
-        graph.addLearningObjects(ExampleLearningObjectFactory.makeSimpleLearningObjectDef());
-        graph.addSummariesToGraph(ExampleLearningObjectResponseFactory.makeSimpleResponses());
 
         Assert.assertEquals(3, graph.findNodeById("B").getLearningObjectMap().get("Q1").getResponses().size());
         Assert.assertEquals(3, graph.findNodeById("B").getLearningObjectMap().get("Q2").getResponses().size());
@@ -212,7 +217,8 @@ public class ConceptGraphTest {
     @Test
     public void linkLearningObjectsTest(){
         ConceptGraph graph = ExampleConceptGraphFactory.makeSimple();
-        graph.addLearningObjects(ExampleLearningObjectFactory.makeSimpleLearningObjectDef());
+        //TODO: Did this line matter, because it can't work like that anymore...
+        //graph.addLearningObjects(ExampleLearningObjectFactory.makeSimpleLearningObjectDef());
 
         LearningObject duplicateObject = new LearningObject("Q1");
         LearningObjectResponse duplicateResponse = new LearningObjectResponse("user1","Q1",1);
@@ -252,7 +258,8 @@ public class ConceptGraphTest {
     public void addLearningObjectsFromLearningObjectLinkRecords(){
         //Creating graph
         ConceptGraph graph = ExampleConceptGraphFactory.makeSimple();
-        graph.addLearningObjects(ExampleLearningObjectFactory.makeSimpleLearningObjectDef());
+        //TODO: Did this line matter, because it can't work like that anymore...
+        //graph.addLearningObjects(ExampleLearningObjectFactory.makeSimpleLearningObjectDef());
 
         //Creating Learning Object List
         List<LearningObject> learningObjects = new ArrayList<>();
@@ -303,8 +310,6 @@ public class ConceptGraphTest {
 	@Test
 	public void calcKnowledgeEstimateTest(){
         ConceptGraph graph = ExampleConceptGraphFactory.makeSimple();
-        graph.addLearningObjects(ExampleLearningObjectFactory.makeSimpleLearningObjectDef());
-        graph.addSummariesToGraph(ExampleLearningObjectResponseFactory.makeSimpleResponses());
         graph.calcKnowledgeEstimates();
 
         Assert.assertEquals(0.625, graph.findNodeById("A").getKnowledgeEstimate(), DataUtil.OK_FLOAT_MARGIN);

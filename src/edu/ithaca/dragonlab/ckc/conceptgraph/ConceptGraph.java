@@ -37,6 +37,11 @@ public class ConceptGraph {
 		this.learningObjectMap = new HashMap<>();
 	}
 
+	public ConceptGraph(ConceptGraphRecord structureDef, List<LearningObject> learningObjects, List<LearningObjectLinkRecord> lolRecords){
+	    this(structureDef);
+	    addLearningObjectsFromLearningObjectLinkRecords(learningObjects, lolRecords);
+    }
+
 	private void buildStructureFromGraphRecord(ConceptGraphRecord graphRecord){
 		this.roots = new ArrayList<>();
 		this.nodeMap = new HashMap<>();
@@ -135,31 +140,31 @@ public class ConceptGraph {
         this.roots = rootsIn;
 	}
 
-    public void addLearningObjects(ConceptGraphRecordOld learningObjectDef){
-        //learningObjects might need to be created or they might already exist
-		for (ConceptNode learningObjectRecord : learningObjectDef.getNodes()){
-            LearningObject learningObject = learningObjectMap.get(learningObjectRecord.getID());
-			if (learningObject == null) {
-				learningObjectMap.put(learningObjectRecord.getID(), new LearningObject(learningObjectRecord.getID()));
-			}
-        }
-
-        for (LinkRecord link : learningObjectDef.getLinks()){
-            ConceptNode node = nodeMap.get(link.getParent());
-            if (node != null){
-            	LearningObject learningObject = learningObjectMap.get(link.getChild());
-            	if (learningObject != null){
-					node.addLearningObject(learningObject);
-				}
-                else {
-					logger.warn("Adding a Learning Object:" + link.getChild() + " has no matching learning object definition:" + link.getChild());
-				}
-            }
-            else {
-                logger.warn("Adding a Learning Object:" + link.getChild() + " has no matching node in the graph:" + link.getParent());
-            }
-        }
-    }
+//    public void addLearningObjects(ConceptGraphRecordOld learningObjectDef){
+//        //learningObjects might need to be created or they might already exist
+//		for (ConceptNode learningObjectRecord : learningObjectDef.getNodes()){
+//            LearningObject learningObject = learningObjectMap.get(learningObjectRecord.getID());
+//			if (learningObject == null) {
+//				learningObjectMap.put(learningObjectRecord.getID(), new LearningObject(learningObjectRecord.getID()));
+//			}
+//        }
+//
+//        for (LinkRecord link : learningObjectDef.getLinks()){
+//            ConceptNode node = nodeMap.get(link.getParent());
+//            if (node != null){
+//            	LearningObject learningObject = learningObjectMap.get(link.getChild());
+//            	if (learningObject != null){
+//					node.addLearningObject(learningObject);
+//				}
+//                else {
+//					logger.warn("Adding a Learning Object:" + link.getChild() + " has no matching learning object definition:" + link.getChild());
+//				}
+//            }
+//            else {
+//                logger.warn("Adding a Learning Object:" + link.getChild() + " has no matching node in the graph:" + link.getParent());
+//            }
+//        }
+//    }
 
     public void addSummariesToGraph(List<LearningObjectResponse> summaries){
         for (LearningObjectResponse response : summaries) {
@@ -246,6 +251,7 @@ public class ConceptGraph {
 	 * If the learning Object already exists in the graph that is recorded in the logger and nothing happens
 	 * @param toLink - the learning object that is going to be linked to the incoming concept IDs
 	 * @param conceptIds - list of strings of the concept IDs the learning object will be linked to
+	 * @post   the learningObject is added to the graph's map, and to all associated concept's maps
 	 * @return the number of concepts the learning object was added to, or -1 if the learning object already exists
 	 */
 	public int linkLearningObjects(LearningObject toLink, List<String> conceptIds){

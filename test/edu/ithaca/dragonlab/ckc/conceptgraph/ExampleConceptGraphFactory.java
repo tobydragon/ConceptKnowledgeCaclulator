@@ -1,10 +1,6 @@
 package edu.ithaca.dragonlab.ckc.conceptgraph;
 
-import edu.ithaca.dragonlab.ckc.io.ConceptGraphRecordOld;
-import edu.ithaca.dragonlab.ckc.io.LinkRecord;
-
-import java.util.ArrayList;
-import java.util.List;
+import edu.ithaca.dragonlab.ckc.learningobject.ExampleLearningObjectFactory;
 
 /**
  * @author tdragon
@@ -13,7 +9,9 @@ import java.util.List;
 public class ExampleConceptGraphFactory {
 
     public static ConceptGraph makeSimple(){
-        return new ConceptGraph(ExampleConceptGraphRecordFactory.makeSimple());
+        return new ConceptGraph(ExampleConceptGraphRecordFactory.makeSimple(),
+                ExampleLearningObjectFactory.makeSimpleLearningObject(),
+                ExampleLearningObjectFactory.makeSimpleLOLRecords());
     }
 
     public static ConceptGraph makeMedium(){
