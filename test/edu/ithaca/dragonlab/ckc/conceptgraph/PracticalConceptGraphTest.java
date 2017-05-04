@@ -27,7 +27,7 @@ public class PracticalConceptGraphTest {
             graph.calcKnowledgeEstimates();
             Assert.assertEquals("Intro CS", graph.findNodeById("Intro CS").getID());
             Assert.assertEquals(7,graph.findNodeById("Boolean").getLearningObjectMap().size());
-            Assert.assertEquals(,graph.getLearningObjectMap());
+            Assert.assertEquals(10,graph.getLearningObjectMap().size());
         }catch (Exception e){
             e.printStackTrace();
         }
