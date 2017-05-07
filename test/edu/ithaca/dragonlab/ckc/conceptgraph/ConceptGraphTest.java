@@ -26,7 +26,7 @@ public class ConceptGraphTest {
     public void copyConstructorTest(){
 	    ConceptGraph orig = ExampleConceptGraphFactory.makeSimpleWithData();
 
-	    ConceptGraph copy = new ConceptGraph(orig);
+	    ConceptGraph copy = new ConceptGraph(orig, "Copy");
 	    Assert.assertNotNull(copy.findNodeById("A"));
 	    Assert.assertEquals(copy.findNodeById("C"), copy.findNodeById("B").getChildren().get(0));
     }

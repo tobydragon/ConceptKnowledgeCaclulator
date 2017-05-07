@@ -13,13 +13,15 @@ public class ConceptGraph {
     private static final Logger logger = LogManager.getLogger(ConceptGraph.class);
 	public static final Integer DIVISION_FACTOR = 2;
 
+	String name;
 	List<ConceptNode> roots;
 
 	//This information will be duplicated, links will be found in nodes, but also here.
 	Map<String, LearningObject> learningObjectMap;
 	Map<String, ConceptNode> nodeMap;
 	
-	public ConceptGraph(ConceptGraph other){
+	public ConceptGraph(ConceptGraph other, String newName){
+	    this.name = newName;
 		this.roots = new ArrayList<>();
         nodeMap = new HashMap<>();
         learningObjectMap = new HashMap<>();
@@ -33,13 +35,18 @@ public class ConceptGraph {
 	}
 
 	public ConceptGraph(ConceptGraphRecord structureDef){
+	    this.name = "Concept Graph";
 		buildStructureFromGraphRecord(structureDef);
 		this.learningObjectMap = new HashMap<>();
 	}
 
+    public ConceptGraph(ConceptGraphRecord structureDef, List<LearningObjectLinkRecord> lolRecords){
+        this(structureDef);
+        addLearningObjectsFromLearningObjectLinkRecords(lolRecords);
+    }
+
 	public ConceptGraph(ConceptGraphRecord structureDef, List<LearningObjectLinkRecord> lolRecords, List<LearningObjectResponse> learningObjectsResponses){
-	    this(structureDef);
-	    addLearningObjectsFromLearningObjectLinkRecords(lolRecords);
+	    this(structureDef, lolRecords);
 	    addLearningObjectResponses(learningObjectsResponses);
     }
 
