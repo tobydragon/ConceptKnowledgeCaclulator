@@ -37,12 +37,25 @@ public class ConceptGraph {
 		this.learningObjectMap = new HashMap<>();
 	}
 
-	public ConceptGraph(ConceptGraphRecord structureDef, List<LearningObject> learningObjects, List<LearningObjectLinkRecord> lolRecords){
+	public ConceptGraph(ConceptGraphRecord structureDef, List<LearningObjectLinkRecord> lolRecords, List<LearningObjectResponse> learningObjectsResponses){
 	    this(structureDef);
-	    addLearningObjectsFromLearningObjectLinkRecords(learningObjects, lolRecords);
+	    addLearningObjectsFromLearningObjectLinkRecords(lolRecords);
+	    addLearningObjectResponses(learningObjectsResponses);
     }
 
-	private void buildStructureFromGraphRecord(ConceptGraphRecord graphRecord){
+    public void addLearningObjectResponses(List<LearningObjectResponse> learningObjectsResponses) {
+        for (LearningObjectResponse response : learningObjectsResponses){
+            LearningObject resource = learningObjectMap.get(response.getLearningObjectId());
+            if (resource != null){
+                resource.addResponse(response);
+            }
+            else {
+                logger.warn("No matching learning object for response" + response);
+            }
+        }
+    }
+
+    private void buildStructureFromGraphRecord(ConceptGraphRecord graphRecord){
 		this.roots = new ArrayList<>();
 		this.nodeMap = new HashMap<>();
 
@@ -284,27 +297,15 @@ public class ConceptGraph {
 	}
 
 	/**
-	 * takes a list of learning objects and a list of learningObjectLinkRecords matches each to their correspondent and calls linkLearningObjects on the pairing
-	 * @param learningObjects - list of LearningObjects
+	 * creates learningObjects and links them to concepts based on a list of learningObjectLinkRecords
 	 * @param learningObjectLinkRecords - list of learningObjectLinkRecords
 	 */
-	public void addLearningObjectsFromLearningObjectLinkRecords(List<LearningObject> learningObjects, List<LearningObjectLinkRecord> learningObjectLinkRecords){
+	public void addLearningObjectsFromLearningObjectLinkRecords(List<LearningObjectLinkRecord> learningObjectLinkRecords){
 
 		for (LearningObjectLinkRecord record: learningObjectLinkRecords){
-			LearningObject learningObject = null;
+			LearningObject learningObject = new LearningObject(record);
 
-			//Finds the matching learning object for the learningObjectLinkRecord
-			for (LearningObject object: learningObjects){
-				if (object.getId().equals(record.getLearningObject())){
-					learningObject = object;
-				}
-			}
-			// Makes sure the learning object was in there, calls linkLearningObjects on the learning object and the conceptIds for the corresponding record
-			if (learningObject != null){
-				linkLearningObjects(learningObject, record.getConceptIds());
-			} else {
-				logger.warn("No learning object found: "+record.getLearningObject());
-			}
+            linkLearningObjects(learningObject, record.getConceptIds());
 		}
 	}
 	

@@ -1,5 +1,7 @@
 package edu.ithaca.dragonlab.ckc.learningobject;
 
+import edu.ithaca.dragonlab.ckc.io.LearningObjectLinkRecord;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -26,6 +28,12 @@ public class LearningObject {
         for (LearningObjectResponse response : responses){
             this.responses.add(new LearningObjectResponse(response));
         }
+    }
+
+    public LearningObject(LearningObjectLinkRecord record) {
+        this.id = record.getLearningObject();
+        this.responses = new ArrayList<>();
+        this.maxPossibleKnowledgeEstimate = 1;
     }
 
     public void addResponse(LearningObjectResponse response){

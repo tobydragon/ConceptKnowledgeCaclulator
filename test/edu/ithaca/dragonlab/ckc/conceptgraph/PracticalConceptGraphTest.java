@@ -20,9 +20,8 @@ public class PracticalConceptGraphTest {
 
         try {
             ConceptGraphRecord graphRecord = ConceptGraphRecord.buildFromJson("test/testresources/basicRealisticExampleConceptGraph.json");
-            ConceptGraph graph = new ConceptGraph(graphRecord);
             List<LearningObjectLinkRecord> LOLRlist = JsonImportExport.LOLRFromRecords("test/testresources/basicRealisticExampleLOLRecord.json");
-            graph.addLearningObjectsFromLearningObjectLinkRecords(csvReader.getManualGradedLearningObjects(), LOLRlist);
+            ConceptGraph graph = new ConceptGraph(graphRecord, LOLRlist, csvReader.getManualGradedResponses());
             graph.calcKnowledgeEstimates();
             //System.out.println(graph.toString());
         }catch (Exception e){

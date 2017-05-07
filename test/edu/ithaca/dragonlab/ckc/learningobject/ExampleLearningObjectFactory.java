@@ -22,26 +22,26 @@ public class ExampleLearningObjectFactory {
         cnList.add(new LearningObject("Q5"));
         cnList.add(new LearningObject("Q6"));
 
-        cnList.get(0).addResponse(new LearningObjectResponse("student1", "Q1", 1));
-        cnList.get(1).addResponse(new LearningObjectResponse("student1", "Q2", 1));
-        cnList.get(2).addResponse(new LearningObjectResponse("student1", "Q3", 1));
-        cnList.get(3).addResponse(new LearningObjectResponse("student1", "Q4", 1));
-        cnList.get(4).addResponse(new LearningObjectResponse("student1", "Q5", 1));
-        cnList.get(5).addResponse(new LearningObjectResponse("student1", "Q6", 1));
-
-
-        cnList.get(0).addResponse(new LearningObjectResponse("student2", "Q1", 1));
-        cnList.get(1).addResponse(new LearningObjectResponse("student2", "Q2", 1));
-        cnList.get(2).addResponse(new LearningObjectResponse("student2", "Q3", 1));
-        cnList.get(3).addResponse(new LearningObjectResponse("student2", "Q4", 0));
-        cnList.get(4).addResponse(new LearningObjectResponse("student2", "Q5", 0));
-        cnList.get(5).addResponse(new LearningObjectResponse("student2", "Q6", 0));
-
-
-        cnList.get(0).addResponse(new LearningObjectResponse("student3", "Q1", 1));
-        cnList.get(1).addResponse(new LearningObjectResponse("student3", "Q2", 1));
-        cnList.get(2).addResponse(new LearningObjectResponse("student3", "Q3", 0));
-        cnList.get(3).addResponse(new LearningObjectResponse("student3", "Q4", 0));
+//        cnList.get(0).addResponse(new LearningObjectResponse("student1", "Q1", 1));
+//        cnList.get(1).addResponse(new LearningObjectResponse("student1", "Q2", 1));
+//        cnList.get(2).addResponse(new LearningObjectResponse("student1", "Q3", 1));
+//        cnList.get(3).addResponse(new LearningObjectResponse("student1", "Q4", 1));
+//        cnList.get(4).addResponse(new LearningObjectResponse("student1", "Q5", 1));
+//        cnList.get(5).addResponse(new LearningObjectResponse("student1", "Q6", 1));
+//
+//
+//        cnList.get(0).addResponse(new LearningObjectResponse("student2", "Q1", 1));
+//        cnList.get(1).addResponse(new LearningObjectResponse("student2", "Q2", 1));
+//        cnList.get(2).addResponse(new LearningObjectResponse("student2", "Q3", 1));
+//        cnList.get(3).addResponse(new LearningObjectResponse("student2", "Q4", 0));
+//        cnList.get(4).addResponse(new LearningObjectResponse("student2", "Q5", 0));
+//        cnList.get(5).addResponse(new LearningObjectResponse("student2", "Q6", 0));
+//
+//
+//        cnList.get(0).addResponse(new LearningObjectResponse("student3", "Q1", 1));
+//        cnList.get(1).addResponse(new LearningObjectResponse("student3", "Q2", 1));
+//        cnList.get(2).addResponse(new LearningObjectResponse("student3", "Q3", 0));
+//        cnList.get(3).addResponse(new LearningObjectResponse("student3", "Q4", 0));
 
         return cnList;
     }

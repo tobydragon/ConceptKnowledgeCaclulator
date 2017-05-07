@@ -19,6 +19,7 @@ public class ConceptGraphRecordTest {
             String file = TEST_DIR + "simple.json";
             ConceptGraphRecord toFile = ExampleConceptGraphRecordFactory.makeSimple();
             toFile.writeToJson(file);
+
             ConceptGraphRecord fromFile = ConceptGraphRecord.buildFromJson(file);
 
             Assert.assertThat(toFile.getConcepts(), is(fromFile.getConcepts()));
