@@ -19,6 +19,7 @@ public class ConceptNode {
 	private double knowledgeEstimate;
 	private double knowledgePrediction;
 	private double knowledgeDistanceFromAvg;
+	private double dataImportance;
 
 	Map<String, LearningObject> learningObjectMap;  //These learningObjects might also be held by other nodes
 	List<ConceptNode> children;
@@ -100,21 +101,37 @@ public class ConceptNode {
         //TODO: take dataImportance into consideration
 		//TODO: This is the location of the issue with the failing test. Need to look into this more.
         //calculate value for this current concept
+		if (dataImportance!=0){
+			return;
+		}
         double currentConceptEstimate = 0;
-        for (LearningObject learningObject : learningObjectMap.values()){
-            currentConceptEstimate += learningObject.calcKnowledgeEstimate();
-        }
-        if (learningObjectMap.size() > 0) {
+
+		double tempDataImportance = 0;
+		for (LearningObject learningObject : learningObjectMap.values()){
+
+			currentConceptEstimate += learningObject.calcKnowledgeEstimate();
+			tempDataImportance++;
+		}
+		dataImportance = tempDataImportance;
+		//calculate estimate from children
+		double childrenTotal = 0;
+		for (ConceptNode child : children){
+			child.calcKnowledgeEstimate();
+			double childConceptEstimate = child.getKnowledgeEstimate();
+			currentConceptEstimate += child.getDataImportance()* childConceptEstimate;
+			dataImportance += child.getDataImportance();
+		}
+
+
+		//Gets Taken care of by dataImportance divisor
+        /*if (learningObjectMap.size() > 0) {
             currentConceptEstimate /= learningObjectMap.size();
-        }
+        }*/
 
-        //calculate estimate from children
-        double childrenTotal = 0;
-        for (ConceptNode child : children){
-            child.calcKnowledgeEstimate();
-            childrenTotal += child.getKnowledgeEstimate();
-        }
 
+
+		//Replaced this with dataImportance
+		/*
         if (children.size() > 0) {
             //if you have both children and data, count yourself equal to your children
             if (currentConceptEstimate > 0){
@@ -129,7 +146,15 @@ public class ConceptNode {
         //else you don't have children, only count yourself
         else {
             this.knowledgeEstimate = currentConceptEstimate;
-        }
+        }*/
+
+		//Data importance used to calculate
+		if (dataImportance > 0){
+			this.knowledgeEstimate = currentConceptEstimate / dataImportance;
+		} else {
+			this.knowledgeEstimate = currentConceptEstimate;
+		}
+
 	}
 
 	public void addToNodesAndLinksLists(List<ConceptRecord> concepts, List<LinkRecord> links){
@@ -270,6 +295,12 @@ public class ConceptNode {
 
 	public void setKnowledgePrediction(double knowledgePrediction) {
 		this.knowledgePrediction = knowledgePrediction;
+	}
+
+	public double getDataImportance() { return dataImportance; }
+
+	public void setDataImportance(double dataImportance) {
+		this.dataImportance = dataImportance;
 	}
 
 	public int getNumParents() {

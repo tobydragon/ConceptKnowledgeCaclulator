@@ -23,6 +23,10 @@
     "id": "Boolean",
     "label":"Boolean"
 
+  }, {
+    "id": "Operators",
+    "label":"Operators"
+
   },  {
     "id": "Control",
     "label":"Control"
@@ -31,6 +35,15 @@
     "id": "If Statement",
     "label":"If Statement"
 
+  },{
+    "id": "Sequence Types",
+    "label":"Sequence Types"
+  },{
+    "id": "List",
+    "label":"List"
+  },{
+    "id": "String",
+    "label":"String"
   }],
   "links": [{
     "parent": "Intro CS",
@@ -56,5 +69,17 @@
   },{
     "parent": "While Loop",
     "child": "Boolean Expressions"
+  },{
+    "parent": "Sequence Types",
+    "child": "String"
+  }, {
+    "parent": "For Loop",
+    "child": "Sequence Types"
+  }, {
+    "parent": "Sequence Types",
+    "child": "List"
+  },{
+    "parent": "Boolean Expressions",
+    "child": "Operators"
   }]
 }

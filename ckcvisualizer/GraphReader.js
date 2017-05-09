@@ -108,5 +108,9 @@ function stripTitle(title) {
 
 
 //graph = readJson("../test/testresources/superComplexStructureGraph.json")
-graph = readJson("json/exampleMediumStructureGraph.json");
-makeChart(graph, "dist")
+//graph = readJson("json/exampleMediumStructureGraph.json");
+//graph = readJson("../test/testresources/practicalExamples/basicRealisticExample.json");
+graph = readJson("../test/testresources/practicalExamples/advancedRealisticExample.json");
+//graph = readJson("../test/testresources/practicalExamples/singleStudentRealisticExample.json");
+
+makeChart(graph, "reg")

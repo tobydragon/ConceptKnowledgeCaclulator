@@ -41,15 +41,15 @@ public class GroupConceptGraphsTest {
         GroupConceptGraphs group = new GroupConceptGraphs(graph, ExampleLearningObjectResponseFactory.makeSimpleResponses());
 
         Assert.assertEquals(0.5, group.getAvgGraph().findNodeById("C").getKnowledgeEstimate(), DataUtil.OK_FLOAT_MARGIN);
-        Assert.assertEquals(0.75, group.getAvgGraph().findNodeById("B").getKnowledgeEstimate(), DataUtil.OK_FLOAT_MARGIN);
-        Assert.assertEquals(0.625, group.getAvgGraph().findNodeById("A").getKnowledgeEstimate(), DataUtil.OK_FLOAT_MARGIN);
+        Assert.assertEquals(0.667, group.getAvgGraph().findNodeById("B").getKnowledgeEstimate(), DataUtil.OK_FLOAT_MARGIN);
+        Assert.assertEquals(0.6, group.getAvgGraph().findNodeById("A").getKnowledgeEstimate(), DataUtil.OK_FLOAT_MARGIN);
 
         Assert.assertEquals(1, group.getUserToGraphMap().get("student1").findNodeById("A").getKnowledgeEstimate(), DataUtil.OK_FLOAT_MARGIN);
         Assert.assertEquals(1, group.getUserToGraphMap().get("student1").findNodeById("B").getKnowledgeEstimate(), DataUtil.OK_FLOAT_MARGIN);
         Assert.assertEquals(1, group.getUserToGraphMap().get("student1").findNodeById("C").getKnowledgeEstimate(), DataUtil.OK_FLOAT_MARGIN);
 
-        Assert.assertEquals(0.438, group.getUserToGraphMap().get("student2").findNodeById("A").getKnowledgeEstimate(), DataUtil.OK_FLOAT_MARGIN);
-        Assert.assertEquals(0.625, group.getUserToGraphMap().get("student2").findNodeById("B").getKnowledgeEstimate(), DataUtil.OK_FLOAT_MARGIN);
+        Assert.assertEquals(0.4, group.getUserToGraphMap().get("student2").findNodeById("A").getKnowledgeEstimate(), DataUtil.OK_FLOAT_MARGIN);
+        Assert.assertEquals(0.5, group.getUserToGraphMap().get("student2").findNodeById("B").getKnowledgeEstimate(), DataUtil.OK_FLOAT_MARGIN);
         Assert.assertEquals(0.25, group.getUserToGraphMap().get("student2").findNodeById("C").getKnowledgeEstimate(), DataUtil.OK_FLOAT_MARGIN);
 
         Assert.assertEquals(0.25, group.getUserToGraphMap().get("student3").findNodeById("A").getKnowledgeEstimate(), DataUtil.OK_FLOAT_MARGIN);

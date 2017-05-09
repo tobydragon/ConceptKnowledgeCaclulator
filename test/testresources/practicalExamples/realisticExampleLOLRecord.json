@@ -13,22 +13,25 @@
   },
   {"learningObject":"Q3",
   "conceptIds":[
-    "If Statement",
-    "For Loop"
+    "For Loop",
+    "Sequence Types",
+    "List"
   ],
   "dataImportance": "1"
   },
   {"learningObject":"Q4",
   "conceptIds":[
     "Boolean Expressions",
-    "Boolean"
+    "Boolean",
+    "Operators"
   ],
   "dataImportance": "1"
   },
   {"learningObject":"Q5",
   "conceptIds":[
     "Boolean Expressions",
-    "Boolean"
+    "Boolean",
+    "Operators"
   ],
   "dataImportance": "1"
   },
@@ -40,29 +43,61 @@
   },
   {"learningObject":"Q7",
     "conceptIds":[
-      "Boolean"
+      "Boolean",
+      "Operators"
     ],
     "dataImportance": "1"
   },
   {"learningObject":"Q8",
     "conceptIds":[
-      "Boolean"
+      "Operators"
     ],
     "dataImportance": "1"
   },{"learningObject":"Q9",
     "conceptIds":[
       "While Loop",
       "Boolean Expressions",
-      "Boolean"
+      "Boolean",
+      "Operators"
     ],
     "dataImportance": "1"
   },
   {"learningObject":"Q10",
     "conceptIds":[
-      "While Loop",
-      "If Statement",
-      "Boolean Expressions",
-      "Boolean"
+      "While Loop"
+    ],
+    "dataImportance": "1"
+  },
+  {"learningObject":"Q11",
+    "conceptIds":[
+      "List"
+    ],
+    "dataImportance": "1"
+  },
+  {"learningObject":"Q12",
+    "conceptIds":[
+      "String"
+    ],
+    "dataImportance": "1"
+  },
+  {"learningObject":"Q13",
+    "conceptIds":[
+      "List"
+    ],
+    "dataImportance": "1"
+  },
+  {"learningObject":"Q14",
+    "conceptIds":[
+      "Sequence Types",
+      "String",
+      "List"
+    ],
+    "dataImportance": "1"
+  },
+  {"learningObject":"Q15",
+    "conceptIds":[
+      "Sequence Types",
+      "List"
     ],
     "dataImportance": "1"
   }

@@ -1,22 +1,29 @@
 {
-  "concepts": [{
-    "id": "Node C-1",
-    "knowledgeEstimate": 0.75,
-    "knowledgeDistFromAvg": 0.0
-  }, {
-    "id": "Node D-1",
-    "knowledgeEstimate": 0.75,
-    "knowledgeDistFromAvg": 0.0
-  }, {
-    "id": "Node E-1",
-    "knowledgeEstimate": -0.97,
-    "knowledgeDistFromAvg": 2
-  }],
-  "links": [{
-    "parent":  "Node C-1",
-    "child": "Node D-1"
-  }, {
-    "parent": "Node C-1",
-    "child": "Node E-1"
-  }]
+  "concepts":[
+    {
+      "id":"Node C-1",
+      "knowledgeEstimate":0.75,
+      "knowledgeDistFromAvg":0.0
+    },
+    {
+      "id":"Node D-1",
+      "knowledgeEstimate":0.75,
+      "knowledgeDistFromAvg":0.0
+    },
+    {
+      "id":"Node E-1",
+      "knowledgeEstimate":-0.97,
+      "knowledgeDistFromAvg":2
+    }
+  ],
+  "links":[
+    {
+      "parent":"Node C-1",
+      "child":"Node D-1"
+    },
+    {
+      "parent":"Node C-1",
+      "child":"Node E-1"
+    }
+  ]
 }

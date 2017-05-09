@@ -310,9 +310,9 @@ public class ConceptGraphTest {
         ConceptGraph graph = ExampleConceptGraphFactory.makeSimpleWithData();
         graph.calcKnowledgeEstimates();
 
-        Assert.assertEquals(0.625, graph.findNodeById("A").getKnowledgeEstimate(), DataUtil.OK_FLOAT_MARGIN);
-        Assert.assertEquals(0.75, graph.findNodeById("B").getKnowledgeEstimate(), DataUtil.OK_FLOAT_MARGIN);
         Assert.assertEquals(0.5, graph.findNodeById("C").getKnowledgeEstimate(), DataUtil.OK_FLOAT_MARGIN);
+        Assert.assertEquals(0.667, graph.findNodeById("B").getKnowledgeEstimate(), DataUtil.OK_FLOAT_MARGIN);
+        Assert.assertEquals(0.6, graph.findNodeById("A").getKnowledgeEstimate(), DataUtil.OK_FLOAT_MARGIN);
     }
 
     //TODO: Adapt to new graph creation once data is reinstated
