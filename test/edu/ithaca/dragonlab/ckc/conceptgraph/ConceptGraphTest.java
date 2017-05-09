@@ -3,6 +3,8 @@ package edu.ithaca.dragonlab.ckc.conceptgraph;
 import edu.ithaca.dragonlab.ckc.io.ConceptGraphRecord;
 import edu.ithaca.dragonlab.ckc.io.ConceptRecord;
 import edu.ithaca.dragonlab.ckc.io.LearningObjectLinkRecord;
+import edu.ithaca.dragonlab.ckc.learningobject.ExampleLearningObjectFactory;
+import edu.ithaca.dragonlab.ckc.learningobject.ExampleLearningObjectResponseFactory;
 import edu.ithaca.dragonlab.ckc.learningobject.LearningObject;
 import edu.ithaca.dragonlab.ckc.learningobject.LearningObjectResponse;
 import edu.ithaca.dragonlab.ckc.util.DataUtil;
@@ -24,7 +26,7 @@ public class ConceptGraphTest {
     public void copyConstructorTest(){
 	    ConceptGraph orig = ExampleConceptGraphFactory.makeSimpleWithData();
 
-	    ConceptGraph copy = new ConceptGraph(orig);
+	    ConceptGraph copy = new ConceptGraph(orig, "Copy");
 	    Assert.assertNotNull(copy.findNodeById("A"));
 	    Assert.assertEquals(copy.findNodeById("C"), copy.findNodeById("B").getChildren().get(0));
     }
@@ -47,6 +49,30 @@ public class ConceptGraphTest {
         Assert.assertThat(newRecord.getConcepts(), containsInAnyOrder(origRecord.getConcepts().toArray()));
         Assert.assertThat(newRecord.getLinks(), containsInAnyOrder(origRecord.getLinks().toArray()));
     }
+
+    @Test
+    public void buildGraphConstructorTest(){
+        ConceptGraphRecord structure = ExampleConceptGraphRecordFactory.makeSimple();
+        List<LearningObjectLinkRecord> lolinks = ExampleLearningObjectFactory.makeSimpleLOLRecords();
+        List<LearningObjectResponse> responses = ExampleLearningObjectResponseFactory.makeSimpleResponses();
+
+        ConceptGraph graph = new ConceptGraph(structure, lolinks, responses);
+
+        Assert.assertEquals(2, graph.findNodeById("A").getChildren().size());
+        Assert.assertEquals(1, graph.findNodeById("B").getChildren().size());
+        Assert.assertEquals(0, graph.findNodeById("C").getChildren().size());
+
+        Assert.assertEquals(6, graph.getLearningObjectMap().size());
+        Assert.assertEquals(0, graph.findNodeById("A").getLearningObjectMap().size());
+        Assert.assertEquals(2, graph.findNodeById("B").getLearningObjectMap().size());
+        Assert.assertEquals(4, graph.findNodeById("C").getLearningObjectMap().size());
+
+        Assert.assertEquals(3, graph.getLearningObjectMap().get("Q1").getResponses().size());
+        Assert.assertEquals(3, graph.getLearningObjectMap().get("Q4").getResponses().size());
+        Assert.assertEquals(2, graph.getLearningObjectMap().get("Q6").getResponses().size());
+    }
+
+    //TODO: Write a test where a single learning object is connected to multiple ConceptNodes, makes sure its the same learning object by address
 
     @Test
     public void addLearningObjectsTest(){
@@ -256,24 +282,11 @@ public class ConceptGraphTest {
     public void addLearningObjectsFromLearningObjectLinkRecords(){
         //Creating graph
         ConceptGraph graph = ExampleConceptGraphFactory.makeSimpleWithData();
-        //TODO: Did this line matter, because it can't work like that anymore...
-        //graph.addLearningObjects(ExampleLearningObjectFactory.makeSimpleLearningObjectDef());
 
-        //Creating Learning Object List
-        List<LearningObject> learningObjects = new ArrayList<>();
+        List<LearningObjectResponse> responses = new ArrayList<>();
 
-        LearningObject duplicateObject = new LearningObject("Q1");
-        LearningObjectResponse duplicateResponse = new LearningObjectResponse("user1","Q1",1);
-        duplicateObject.addResponse(duplicateResponse);
-        learningObjects.add(duplicateObject);
-
-        LearningObject question7 = new LearningObject("Q7");
-        LearningObjectResponse question7Response = new LearningObjectResponse("user1","Q7",1);
-        question7.addResponse(question7Response);
-        learningObjects.add(question7);
-
-
-
+        responses.add( new LearningObjectResponse("user1","Q1",1));
+        responses.add( new LearningObjectResponse("user1","Q7",1));
 
         //Creating learningObjectLinkedRecord list
         List<LearningObjectLinkRecord> learningObjectLinkRecords = new ArrayList<>();
@@ -281,17 +294,14 @@ public class ConceptGraphTest {
         List<String> concepts = new ArrayList<>();
         concepts.add("B");
         concepts.add("C");
-        LearningObjectLinkRecord duplicateRecord = new LearningObjectLinkRecord(duplicateObject.getId(),concepts);
-        learningObjectLinkRecords.add(duplicateRecord);
-        LearningObjectLinkRecord question7Record = new LearningObjectLinkRecord(question7.getId(),concepts);
+        LearningObjectLinkRecord question7Record = new LearningObjectLinkRecord("Q7",concepts);
         learningObjectLinkRecords.add(question7Record);
 
-        graph.addLearningObjectsFromLearningObjectLinkRecords(learningObjects,learningObjectLinkRecords);
+        graph.addLearningObjectsFromLearningObjectLinkRecords(learningObjectLinkRecords);
+        graph.addLearningObjectResponses(responses);
 
-        Assert.assertTrue(graph.getLearningObjectMap().get("Q1") != duplicateObject);
         // all info is correct
-        Assert.assertEquals(question7, graph.findNodeById("B").getLearningObjectMap().get("Q7"));
-        Assert.assertEquals(question7.getResponses().size(),graph.findNodeById("B").getLearningObjectMap().get("Q7").getResponses().size());
+        Assert.assertEquals(1,graph.findNodeById("B").getLearningObjectMap().get("Q7").getResponses().size());
         Assert.assertEquals("Q7",graph.findNodeById("B").getLearningObjectMap().get("Q7").getId());
         Assert.assertEquals("user1",graph.findNodeById("B").getLearningObjectMap().get("Q7").getResponses().get(0).getUserId());
         Assert.assertEquals(3,graph.findNodeById("B").getLearningObjectMap().size());
@@ -308,11 +318,12 @@ public class ConceptGraphTest {
 	@Test
 	public void calcKnowledgeEstimateTest(){
         ConceptGraph graph = ExampleConceptGraphFactory.makeSimpleWithData();
+        graph.calcDataImportance();
         graph.calcKnowledgeEstimates();
 
         Assert.assertEquals(0.5, graph.findNodeById("C").getKnowledgeEstimate(), DataUtil.OK_FLOAT_MARGIN);
-        Assert.assertEquals(0.667, graph.findNodeById("B").getKnowledgeEstimate(), DataUtil.OK_FLOAT_MARGIN);
-        Assert.assertEquals(0.6, graph.findNodeById("A").getKnowledgeEstimate(), DataUtil.OK_FLOAT_MARGIN);
+        Assert.assertEquals(0.688, graph.findNodeById("B").getKnowledgeEstimate(), DataUtil.OK_FLOAT_MARGIN);
+        Assert.assertEquals(0.615, graph.findNodeById("A").getKnowledgeEstimate(), DataUtil.OK_FLOAT_MARGIN);
     }
 
     //TODO: Adapt to new graph creation once data is reinstated

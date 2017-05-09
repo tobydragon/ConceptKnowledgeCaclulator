@@ -97,29 +97,35 @@ public class ConceptNode {
 		children.add(child);
 	}
 
+	public void calcDataImportance(){
+		double tempDI=0;
+		for(LearningObject learningObject: learningObjectMap.values()){
+			tempDI+=learningObject.getDataImportance();
+		}
+
+		for (ConceptNode child: children){
+			child.calcDataImportance();
+			tempDI+=child.getDataImportance();
+		}
+		dataImportance = tempDI;
+	}
+
 	public void calcKnowledgeEstimate() {
         //TODO: take dataImportance into consideration
 		//TODO: This is the location of the issue with the failing test. Need to look into this more.
         //calculate value for this current concept
-		if (dataImportance!=0){
-			return;
-		}
+
         double currentConceptEstimate = 0;
 
-		double tempDataImportance = 0;
 		for (LearningObject learningObject : learningObjectMap.values()){
 
-			currentConceptEstimate += learningObject.calcKnowledgeEstimate();
-			tempDataImportance++;
+			currentConceptEstimate += learningObject.calcKnowledgeEstimate()*learningObject.getDataImportance();
 		}
-		dataImportance = tempDataImportance;
 		//calculate estimate from children
 		double childrenTotal = 0;
 		for (ConceptNode child : children){
 			child.calcKnowledgeEstimate();
-			double childConceptEstimate = child.getKnowledgeEstimate();
-			currentConceptEstimate += child.getDataImportance()* childConceptEstimate;
-			dataImportance += child.getDataImportance();
+			currentConceptEstimate +=   child.getKnowledgeEstimate()*child.getDataImportance();
 		}
 
 

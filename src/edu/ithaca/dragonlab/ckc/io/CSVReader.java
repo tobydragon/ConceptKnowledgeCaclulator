@@ -7,6 +7,7 @@ import java.io.*;
 import java.util.ArrayList;
 
 import edu.ithaca.dragonlab.ckc.learningobject.LearningObject;
+import edu.ithaca.dragonlab.ckc.learningobject.LearningObjectResponse;
 import edu.ithaca.dragonlab.ckc.learningobject.ManualGradedResponse;
 
 
@@ -14,7 +15,7 @@ public class CSVReader {
     String filename;
     BufferedReader csvBuffer = null;
     ArrayList<LearningObject> learningObjectList;
-    ArrayList<ManualGradedResponse> manualGradedResponseList;
+    ArrayList<LearningObjectResponse> manualGradedResponseList;
 
     /**
      * This function is passed a filename of a gradebook directly exported from Sakai's built in gradebook.
@@ -23,8 +24,8 @@ public class CSVReader {
      */
     public CSVReader(String filename){
         this.filename = filename;
-        manualGradedResponseList = new ArrayList<ManualGradedResponse>();
-        learningObjectList = new ArrayList<LearningObject>();
+        manualGradedResponseList = new ArrayList<>();
+        learningObjectList = new ArrayList<>();
         try {
             String line;
             this.csvBuffer = new BufferedReader(new FileReader(filename));
@@ -78,7 +79,7 @@ public class CSVReader {
 
     }
 
-    public ArrayList<ManualGradedResponse> getManualGradedResponses(){
+    public ArrayList<LearningObjectResponse> getManualGradedResponses(){
         return this.manualGradedResponseList;
     }
 

@@ -13,13 +13,15 @@ public class ConceptGraph {
     private static final Logger logger = LogManager.getLogger(ConceptGraph.class);
 	public static final Integer DIVISION_FACTOR = 2;
 
+	String name;
 	List<ConceptNode> roots;
 
 	//This information will be duplicated, links will be found in nodes, but also here.
 	Map<String, LearningObject> learningObjectMap;
 	Map<String, ConceptNode> nodeMap;
 	
-	public ConceptGraph(ConceptGraph other){
+	public ConceptGraph(ConceptGraph other, String newName){
+	    this.name = newName;
 		this.roots = new ArrayList<>();
         nodeMap = new HashMap<>();
         learningObjectMap = new HashMap<>();
@@ -33,16 +35,34 @@ public class ConceptGraph {
 	}
 
 	public ConceptGraph(ConceptGraphRecord structureDef){
+	    this.name = "Concept Graph";
 		buildStructureFromGraphRecord(structureDef);
 		this.learningObjectMap = new HashMap<>();
 	}
 
-	public ConceptGraph(ConceptGraphRecord structureDef, List<LearningObject> learningObjects, List<LearningObjectLinkRecord> lolRecords){
-	    this(structureDef);
-	    addLearningObjectsFromLearningObjectLinkRecords(learningObjects, lolRecords);
+    public ConceptGraph(ConceptGraphRecord structureDef, List<LearningObjectLinkRecord> lolRecords){
+        this(structureDef);
+        addLearningObjectsFromLearningObjectLinkRecords(lolRecords);
     }
 
-	private void buildStructureFromGraphRecord(ConceptGraphRecord graphRecord){
+	public ConceptGraph(ConceptGraphRecord structureDef, List<LearningObjectLinkRecord> lolRecords, List<LearningObjectResponse> learningObjectsResponses){
+	    this(structureDef, lolRecords);
+	    addLearningObjectResponses(learningObjectsResponses);
+    }
+
+    public void addLearningObjectResponses(List<LearningObjectResponse> learningObjectsResponses) {
+        for (LearningObjectResponse response : learningObjectsResponses){
+            LearningObject resource = learningObjectMap.get(response.getLearningObjectId());
+            if (resource != null){
+                resource.addResponse(response);
+            }
+            else {
+                logger.warn("No matching learning object for response" + response);
+            }
+        }
+    }
+
+    private void buildStructureFromGraphRecord(ConceptGraphRecord graphRecord){
 		this.roots = new ArrayList<>();
 		this.nodeMap = new HashMap<>();
 
@@ -205,6 +225,12 @@ public class ConceptGraph {
 		}
 	}
 
+	public void calcDataImportance(){
+		for(ConceptNode root : this.roots){
+			root.calcDataImportance();
+		}
+	}
+
 	public void calcPredictedScores() {
 		for(ConceptNode root : this.roots){
 			calcPredictedScores(root);
@@ -284,27 +310,15 @@ public class ConceptGraph {
 	}
 
 	/**
-	 * takes a list of learning objects and a list of learningObjectLinkRecords matches each to their correspondent and calls linkLearningObjects on the pairing
-	 * @param learningObjects - list of LearningObjects
+	 * creates learningObjects and links them to concepts based on a list of learningObjectLinkRecords
 	 * @param learningObjectLinkRecords - list of learningObjectLinkRecords
 	 */
-	public void addLearningObjectsFromLearningObjectLinkRecords(List<LearningObject> learningObjects, List<LearningObjectLinkRecord> learningObjectLinkRecords){
+	public void addLearningObjectsFromLearningObjectLinkRecords(List<LearningObjectLinkRecord> learningObjectLinkRecords){
 
 		for (LearningObjectLinkRecord record: learningObjectLinkRecords){
-			LearningObject learningObject = null;
+			LearningObject learningObject = new LearningObject(record);
 
-			//Finds the matching learning object for the learningObjectLinkRecord
-			for (LearningObject object: learningObjects){
-				if (object.getId().equals(record.getLearningObject())){
-					learningObject = object;
-				}
-			}
-			// Makes sure the learning object was in there, calls linkLearningObjects on the learning object and the conceptIds for the corresponding record
-			if (learningObject != null){
-				linkLearningObjects(learningObject, record.getConceptIds());
-			} else {
-				logger.warn("No learning object found: "+record.getLearningObject());
-			}
+            linkLearningObjects(learningObject, record.getConceptIds());
 		}
 	}
 	

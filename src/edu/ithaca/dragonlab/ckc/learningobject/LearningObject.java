@@ -1,5 +1,7 @@
 package edu.ithaca.dragonlab.ckc.learningobject;
 
+import edu.ithaca.dragonlab.ckc.io.LearningObjectLinkRecord;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -28,6 +30,12 @@ public class LearningObject {
         }
     }
 
+    public LearningObject(LearningObjectLinkRecord record) {
+        this.id = record.getLearningObject();
+        this.responses = new ArrayList<>();
+        this.maxPossibleKnowledgeEstimate = 1;
+    }
+
     public void addResponse(LearningObjectResponse response){
         if (id.equals(response.getLearningObjectId())) {
             responses.add(response);
@@ -36,6 +44,10 @@ public class LearningObject {
             throw new IllegalArgumentException("Response object id:"+ response.getLearningObjectId()
                     + " does not match LearningObjectId:" + id);
         }
+    }
+
+    public double getDataImportance(){
+        return responses.size();
     }
 
     //TODO: should this be differnt than averaging, how about data weight??
@@ -49,8 +61,6 @@ public class LearningObject {
         }
         String string;
         return estimate;
-
-
     }
 
 

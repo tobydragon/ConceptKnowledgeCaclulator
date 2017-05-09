@@ -30,7 +30,8 @@ public class PracticalConceptGraphTest {
             ConceptGraphRecord graphRecord = ConceptGraphRecord.buildFromJson(TEST_DIR+"realisticExampleConceptGraph.json");
 
             List<LearningObjectLinkRecord> LOLRlist = JsonImportExport.LOLRFromRecords(TEST_DIR+"realisticExampleLOLRecord.json");
-            ConceptGraph graph = new ConceptGraph(graphRecord,csvReader.getManualGradedLearningObjects(), LOLRlist);
+            ConceptGraph graph = new ConceptGraph(graphRecord, LOLRlist, csvReader.getManualGradedResponses());
+            graph.calcDataImportance();
             graph.calcKnowledgeEstimates();
             Assert.assertEquals("Intro CS", graph.findNodeById("Intro CS").getID());
             Assert.assertEquals(5,graph.findNodeById("Boolean").getLearningObjectMap().size());
@@ -58,7 +59,8 @@ public class PracticalConceptGraphTest {
             ConceptGraphRecord graphRecord = ConceptGraphRecord.buildFromJson(TEST_DIR+"realisticExampleConceptGraph.json");
 
             List<LearningObjectLinkRecord> LOLRlist = JsonImportExport.LOLRFromRecords(TEST_DIR+"realisticExampleLOLRecord.json");
-            ConceptGraph graph = new ConceptGraph(graphRecord,csvReader.getManualGradedLearningObjects(), LOLRlist);
+            ConceptGraph graph = new ConceptGraph(graphRecord, LOLRlist, csvReader.getManualGradedResponses());
+            graph.calcDataImportance();
             graph.calcKnowledgeEstimates();
             Assert.assertEquals("Intro CS", graph.findNodeById("Intro CS").getID());
             Assert.assertEquals(5, graph.findNodeById("Boolean").getLearningObjectMap().size());
@@ -82,10 +84,17 @@ public class PracticalConceptGraphTest {
         CSVReader csvReader = new CSVReader(TEST_DIR+"SingleStudentRealisticExampleGradeBook.csv");
 
         try {
+            /*
             ConceptGraphRecord graphRecord = ConceptGraphRecord.buildFromJson(TEST_DIR+"realisticExampleConceptGraph.json");
 
             List<LearningObjectLinkRecord> LOLRlist = JsonImportExport.LOLRFromRecords(TEST_DIR+"realisticExampleLOLRecord.json");
             ConceptGraph graph = new ConceptGraph(graphRecord,csvReader.getManualGradedLearningObjects(), LOLRlist);
+            */
+            ConceptGraphRecord graphRecord = ConceptGraphRecord.buildFromJson(TEST_DIR+"realisticExampleConceptGraph.json");
+            List<LearningObjectLinkRecord> LOLRlist = JsonImportExport.LOLRFromRecords(TEST_DIR+"realisticExampleLOLRecord.json");
+            ConceptGraph graph = new ConceptGraph(graphRecord, LOLRlist, csvReader.getManualGradedResponses());
+            graph.calcDataImportance();
+
             graph.calcKnowledgeEstimates();
             Assert.assertEquals("Intro CS", graph.findNodeById("Intro CS").getID());
             Assert.assertEquals(5, graph.findNodeById("Boolean").getLearningObjectMap().size());

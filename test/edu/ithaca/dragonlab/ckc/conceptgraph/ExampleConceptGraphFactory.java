@@ -1,6 +1,7 @@
 package edu.ithaca.dragonlab.ckc.conceptgraph;
 
 import edu.ithaca.dragonlab.ckc.learningobject.ExampleLearningObjectFactory;
+import edu.ithaca.dragonlab.ckc.learningobject.ExampleLearningObjectResponseFactory;
 
 /**
  * @author tdragon
@@ -14,8 +15,8 @@ public class ExampleConceptGraphFactory {
 
     public static ConceptGraph makeSimpleWithData(){
         return new ConceptGraph(ExampleConceptGraphRecordFactory.makeSimple(),
-                ExampleLearningObjectFactory.makeSimpleLearningObject(),
-                ExampleLearningObjectFactory.makeSimpleLOLRecords());
+                ExampleLearningObjectFactory.makeSimpleLOLRecords(),
+                ExampleLearningObjectResponseFactory.makeSimpleResponses());
     }
 
     public static ConceptGraph makeMedium(){

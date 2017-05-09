@@ -20,12 +20,12 @@ public class GroupConceptGraphs {
 	 * Takes a graph (including LearningObjectLinks)
 	 * @param structureGraph
 	 * @param summaries
-	 * @param lolRecords
 	 */
 	public GroupConceptGraphs(ConceptGraph structureGraph, List<LearningObjectResponse> summaries){
 		
-		averageGraph = new ConceptGraph(structureGraph);
+		averageGraph = new ConceptGraph(structureGraph, "Average Graph");
 		averageGraph.addSummariesToGraph(summaries);
+		averageGraph.calcDataImportance();
 		averageGraph.calcKnowledgeEstimates();
 		//averageGraph.calcPredictedScores();
 		
@@ -33,8 +33,9 @@ public class GroupConceptGraphs {
 		userToGraph = new HashMap<>();
 		
 		for(String user: userIdToResponses.keySet()){
-			ConceptGraph structureCopy = new ConceptGraph(structureGraph);
+			ConceptGraph structureCopy = new ConceptGraph(structureGraph, user);
 			structureCopy.addSummariesToGraph(userIdToResponses.get(user));
+			structureCopy.calcDataImportance();
 			structureCopy.calcKnowledgeEstimates();
 			structureCopy.calcPredictedScores();
 			userToGraph.put(user, structureCopy);
