@@ -29,17 +29,22 @@ public class PracticalConceptGraphTest {
         try {
             ConceptGraphRecord graphRecord = ConceptGraphRecord.buildFromJson(TEST_DIR+"realisticExampleConceptGraph.json");
 
-            List<LearningObjectLinkRecord> LOLRlist = JsonImportExport.LOLRFromRecords(TEST_DIR+"realisticExampleLOLRecord.json");
+            List<LearningObjectLinkRecord> LOLRlist = JsonImportExport.LOLRFromRecords(TEST_DIR + "realisticExampleLOLRecord.json");
             ConceptGraph graph = new ConceptGraph(graphRecord, LOLRlist, csvReader.getManualGradedResponses());
+
+            ObjectMapper mapper = new ObjectMapper();
+            mapper.writeValue(new File("test/testresources/practicalExamples/blankRealisticExample.json"), graph.graphToTree().buildNodesAndLinks());
+
             graph.calcDataImportance();
             graph.calcKnowledgeEstimates();
+
             Assert.assertEquals("Intro CS", graph.findNodeById("Intro CS").getID());
             Assert.assertEquals(5,graph.findNodeById("Boolean").getLearningObjectMap().size());
             Assert.assertEquals(15,graph.getLearningObjectMap().size());
 
             ConceptGraphRecord tree = graph.graphToTree().buildNodesAndLinks();
-            ObjectMapper mapper = new ObjectMapper();
             //Object to JSON in file
+            mapper = new ObjectMapper();
             mapper.writeValue(new File("test/testresources/practicalExamples/basicRealisticExample.json"), tree);
 
 
