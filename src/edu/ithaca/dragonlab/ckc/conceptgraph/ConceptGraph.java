@@ -51,41 +51,94 @@ public class ConceptGraph {
         this.learningObjectMap = new HashMap<>();
     }
 
-    public HashMap<ConceptNode, List<learningObjectSuggestion>> SuggestedConceptNodeMapTest(){
+
+//    public HashMap<ConceptNode, List<learningObjectSuggestion>> addWrongToSuggestNodeMap(HashMap<ConceptNode, List<learningObjectSuggestion>> suggestedConceptNodeMap){
+//
+//        for (String key : nodeMap.keySet()) {
+//            ConceptNode node = nodeMap.get(key);
+//            List<learningObjectSuggestion> testList = new ArrayList<>();
+//
+////            System.out.println("Estimate!: " +node.getKnowledgeEstimate());
+//            if(node.getKnowledgeEstimate()>=0.55 && node.getKnowledgeEstimate()<=0.75) {
+//
+//                //if false, then it is not an ancestor, therefore it can be added to the list
+//                boolean anc = ancestry(node);
+//                if (!anc) {
+//
+//                    HashMap<String, Integer> map = buildLearningObjectSummaryList(key);
+//                    List<learningObjectSuggestion> list = buildLearningObjectSuggestionList(map);
+//                    suggestedOrderBuildLearningObjectList(list);
+//
+//                    for (int i = 0; i < list.size(); i++) {
+//
+//                        //if it is incomplete
+//                        if (list.get(i).getLevel().equals(learningObjectSuggestion.Level.WRONG)) {
+//
+//                            //then add it
+//                            testList.add(list.get(i));
+//                        }
+//                    }
+//                    suggestedConceptNodeMap.put(node, testList);
+//                }
+//            }
+//        }
+//        return suggestedConceptNodeMap;
+//	}
+
+    //if false, then it is not an ancestor therefore it can be added to the list
+    public boolean ancestry(ConceptNode node) {
+	    boolean isAnc = false;
+        for (String key : nodeMap.keySet()) {
+//                    System.out.println("NODE " + node.getID());
+
+            ConceptNode compareNode = nodeMap.get(key);
+//            System.out.println("compare " +compareNode.getID());
+            boolean ances =  node.isAncestorOf(compareNode);
+//            System.out.println("anc " + ances + "\n");
+            //This allows for if it does have an ancestor, but it has a high knowledge estimate, it wont be added to the suggestion list
+            if (ances && node.getKnowledgeEstimate()<0.75){
+                isAnc=true;
+                break;
+            }
+        }
+        return  isAnc;
+    }
+
+
+    public HashMap<ConceptNode, List<learningObjectSuggestion>> SuggestedConceptNodeMap(){
+
         HashMap<ConceptNode, List<learningObjectSuggestion>> suggestedConceptNodeMap = new HashMap<>();
 
         for (String key : nodeMap.keySet()) {
-            String name = key;
             ConceptNode node = nodeMap.get(key);
             List<learningObjectSuggestion> testList = new ArrayList<>();
 
-            if(node.getKnowledgeEstimate()<=0 && node.getKnowledgeEstimate()>=-0.5){
+//            System.out.println("Estimate!: " +node.getKnowledgeEstimate());
+            if(node.getKnowledgeEstimate()>=0.55 && node.getKnowledgeEstimate()<=0.75) {
 
-                HashMap<String,Integer> map = buildLearningObjectSummaryList(name);
-                List<learningObjectSuggestion> list =buildLearningObjectSuggestionList(map);
-                suggestedOrderBuildLearningObjectList(list);
+                //if false, then it is not an ancestor, therefore it can be added to the list
+                boolean anc = ancestry(node);
+                if (!anc) {
 
-                for (int i=0; i<list.size(); i++){
+                    HashMap<String, Integer> map = buildLearningObjectSummaryList(key);
+                    List<learningObjectSuggestion> list = buildLearningObjectSuggestionList(map);
+                    suggestedOrderBuildLearningObjectList(list);
 
-//                    ConceptNode conceptNode1 = nodeMap.get(list.get(i).getId());
-//                    System.out.println(conceptNode1);
-//                    for (int x =0; x<list.size(); x++){
-//                        ConceptNode potentialChild = nodeMap.get(list.get(i));
-//
-//                        if (conceptNode1.isAParentOf(potentialChild)){
-//                            System.out.println(conceptNode1.getID());
-//                        }
-//
-//
-//                    }
+                    for (int i = 0; i < list.size(); i++) {
 
+                        //if it is incomplete
+                        if (list.get(i).getLevel().equals(learningObjectSuggestion.Level.INCOMPLETE)) {
 
-                    if (list.get(i).getLevel().equals(learningObjectSuggestion.Level.INCOMPLETE)){
-                        testList.add(list.get(i));
+                            //then add it
+                            testList.add(list.get(i));
+                        }
                     }
+                    suggestedConceptNodeMap.put(node, testList);
                 }
-                suggestedConceptNodeMap.put(node, testList);
             }
+        }
+        if(suggestedConceptNodeMap.size()<3){
+            addWrongToSuggestNodeMap(suggestedConceptNodeMap);
         }
         return suggestedConceptNodeMap;
     }
@@ -115,9 +168,9 @@ public class ConceptGraph {
             learningObjectSuggestion.Level level;
 
             //fix to fit preconditions
-            if (estimate== 0){
+            if (estimate== 0.0){
                 level = learningObjectSuggestion.Level.INCOMPLETE;
-            }else if (estimate< 0){
+            }else if (estimate> 0 && estimate<= 0.59){
                 level = learningObjectSuggestion.Level.WRONG;
             }else{
                 level = learningObjectSuggestion.Level.RIGHT;

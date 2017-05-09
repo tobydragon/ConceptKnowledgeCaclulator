@@ -10,6 +10,26 @@ import java.util.HashMap;
 
 public class ConceptNodeTest {
 
+    @Test
+    public void isAncestorTest() {
+        ConceptGraph orig = PracticalConceptGraphTest.simpleTestGraphTest();
+
+        ConceptNode node = orig.findNodeById("C");
+        boolean num = orig.findNodeById("A").isAncestorOf(node);
+        Assert.assertEquals(true,num);
+
+        ConceptNode node2 = orig.findNodeById("A");
+        boolean num2 = orig.findNodeById("C").isAncestorOf(node2);
+        Assert.assertEquals(false,num2);
+
+
+        ConceptNode node3 = orig.findNodeById("B");
+        boolean num3 = orig.findNodeById("A").isAncestorOf(node3);
+        Assert.assertEquals(true,num3);
+
+    }
+
+
 
     @Test
     public void buildLearningObjectSummaryOccurrenceSimpleTest(){

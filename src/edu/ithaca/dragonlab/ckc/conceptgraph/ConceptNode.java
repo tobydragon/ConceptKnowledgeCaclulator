@@ -73,14 +73,41 @@ public class ConceptNode {
 	}
 
 
+    //find node()
+    public ConceptNode findNode(String findConcept){
 
-	//call on the parent to see if other node is a child of it
-	public boolean isAParentOf(ConceptNode child){
-	    if (this.children.contains(child)){
-	        return true;
+        if (this.id.equals(findConcept)){
+            return this;
         }else{
-	        return false;
+
+            for (ConceptNode child: children){
+                ConceptNode myNode = child.findNode(findConcept);
+                if(myNode != null){
+                    return myNode;
+                }
+            }
         }
+
+        return null;
+
+    }
+
+	public boolean isAncestorOf(ConceptNode child){
+		//is a descendant , ancestor
+		//iterate through the tree and see if it's below it
+
+        if (this.children.contains(child)){
+            return true;
+        }else {
+
+            for (ConceptNode nchild : children) {
+                nchild.isAncestorOf(child);
+            }
+
+            return false;
+
+        }
+
     }
 
 

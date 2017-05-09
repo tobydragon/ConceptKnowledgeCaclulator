@@ -1,0 +1,32 @@
+{
+  "nodes": [{
+    "id": "Intro CS",
+    "label": "Intro CS"
+
+  }, {
+    "id": "A",
+    "label": "A"
+
+  } , {
+    "id": "B",
+    "label": "B"
+
+  } , {
+    "id": "C",
+    "label":"C"
+
+  }],
+  "links": [{
+    "parent": "Intro CS",
+    "child": "A"
+  }, {
+    "parent": "A",
+    "child": "B"
+  },{
+    "parent": "A",
+    "child": "C"
+  },{
+    "parent": "B",
+    "child": "C"
+  }]
+}

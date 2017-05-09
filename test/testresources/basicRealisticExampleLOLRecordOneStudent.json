@@ -1,0 +1,102 @@
+[
+  {"learningObject":"Q14",
+    "conceptIds":[
+      "Counting"
+    ],
+    "dataImportance": "1"
+  },
+  {"learningObject":"Q1",
+  "conceptIds":[
+    "If Statement"
+  ],
+  "dataImportance": "1"
+  },
+  {"learningObject":"Q2",
+  "conceptIds":[
+    "If Statement"
+  ],
+  "dataImportance": "1"
+  },
+  {"learningObject":"Q3",
+  "conceptIds":[
+    "If Statement",
+    "For Loop"
+  ],
+  "dataImportance": "1"
+  },
+  {"learningObject":"Q4",
+  "conceptIds":[
+    "Boolean Expressions",
+    "Boolean"
+  ],
+  "dataImportance": "1"
+  },
+  {"learningObject":"Q5",
+  "conceptIds":[
+    "Boolean Expressions",
+    "Boolean"
+  ],
+  "dataImportance": "1"
+  },
+  {"learningObject":"Q6",
+    "conceptIds":[
+      "Boolean"
+    ],
+    "dataImportance": "1"
+  },
+  {"learningObject":"Q7",
+    "conceptIds":[
+      "Boolean"
+    ],
+    "dataImportance": "1"
+  },
+  {"learningObject":"Q8",
+    "conceptIds":[
+      "Boolean"
+    ],
+    "dataImportance": "1"
+  },{"learningObject":"Q9",
+    "conceptIds":[
+      "While Loop",
+      "Boolean Expressions",
+      "Boolean"
+    ],
+    "dataImportance": "1"
+  },
+  {"learningObject":"Q10",
+    "conceptIds":[
+      "While Loop",
+      "If Statement",
+      "Boolean Expressions",
+      "Boolean"
+    ],
+    "dataImportance": "1"
+  },
+  {"learningObject": "Q11",
+    "conceptIds": [
+    "For Loop"
+  ],
+    "dataImportance": "1"
+  },
+  {
+    "learningObject": "Q12",
+    "conceptIds": [
+      "Counting"
+    ],
+    "dataImportance": "1"
+  },
+  {
+    "learningObject": "Q13",
+    "conceptIds": [
+      "Counting"
+    ],
+    "dataImportance": "1"
+  },
+  {
+    "learningObject": "Q14",
+    "conceptIds": [
+      "Counting"
+    ],
+    "dataImportance": "1"
+  }
+]
