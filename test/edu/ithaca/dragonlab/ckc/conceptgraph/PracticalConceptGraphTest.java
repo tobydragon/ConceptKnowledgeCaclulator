@@ -58,18 +58,24 @@ public class PracticalConceptGraphTest {
         try {
             ConceptGraphRecord graphRecord = ConceptGraphRecord.buildFromJson(TEST_DIR+"realisticExampleConceptGraph.json");
 
-            List<LearningObjectLinkRecord> LOLRlist = JsonImportExport.LOLRFromRecords(TEST_DIR+"realisticExampleLOLRecord.json");
-            ConceptGraph graph = new ConceptGraph(graphRecord, LOLRlist, csvReader.getManualGradedResponses());
+            List<LearningObjectLinkRecord> LOLRlist = JsonImportExport.LOLRFromRecords(TEST_DIR + "realisticExampleLOLRecord.json");
+            ConceptGraph graph = new ConceptGraph(graphRecord, LOLRlist);
+
+            GroupConceptGraphs gcg = new GroupConceptGraphs(graph,csvReader.getManualGradedResponses());
             graph.calcDataImportance();
             graph.calcKnowledgeEstimates();
+
+
             Assert.assertEquals("Intro CS", graph.findNodeById("Intro CS").getID());
             Assert.assertEquals(5, graph.findNodeById("Boolean").getLearningObjectMap().size());
             Assert.assertEquals(15,graph.getLearningObjectMap().size());
 
-            ConceptGraphRecord tree = graph.graphToTree().buildNodesAndLinks();
             ObjectMapper mapper = new ObjectMapper();
+            ConceptGraphRecord tree = graph.graphToTree().buildNodesAndLinks();
             //Object to JSON in file
             mapper.writeValue(new File("test/testresources/practicalExamples/advancedRealisticExample.json"), tree);
+            mapper.writeValue(new File("test/testresources/practicalExamples/groupConceptGraphAdvancedRealisticExample.json"), gcg.getAllNamedGraphs());
+
         }catch (Exception e){
             e.printStackTrace();
         }
@@ -94,8 +100,9 @@ public class PracticalConceptGraphTest {
             List<LearningObjectLinkRecord> LOLRlist = JsonImportExport.LOLRFromRecords(TEST_DIR+"realisticExampleLOLRecord.json");
             ConceptGraph graph = new ConceptGraph(graphRecord, LOLRlist, csvReader.getManualGradedResponses());
             graph.calcDataImportance();
-
             graph.calcKnowledgeEstimates();
+
+
             Assert.assertEquals("Intro CS", graph.findNodeById("Intro CS").getID());
             Assert.assertEquals(5, graph.findNodeById("Boolean").getLearningObjectMap().size());
             Assert.assertEquals(15, graph.getLearningObjectMap().size());
