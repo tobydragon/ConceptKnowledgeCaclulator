@@ -2,7 +2,7 @@ package edu.ithaca.dragonlab.ckc.conceptgraph;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import edu.ithaca.dragonlab.ckc.io.ConceptGraphRecord;
+import edu.ithaca.dragonlab.ckc.io.LearningObjectLinkRecord;
 import edu.ithaca.dragonlab.ckc.learningobject.LearningObjectResponse;
 
 import java.io.File;
@@ -15,12 +15,17 @@ public class GroupConceptGraphs {
 	ConceptGraph averageGraph;
 	Map<String, ConceptGraph> userToGraph;
 	List<NamedGraph> allNamedGraphs;
-	
-	
+
+	/**
+	 * Takes a graph (including LearningObjectLinks)
+	 * @param structureGraph
+	 * @param summaries
+	 */
 	public GroupConceptGraphs(ConceptGraph structureGraph, List<LearningObjectResponse> summaries){
 		
-		averageGraph = new ConceptGraph(structureGraph);
+		averageGraph = new ConceptGraph(structureGraph, "Average Graph");
 		averageGraph.addSummariesToGraph(summaries);
+		averageGraph.calcDataImportance();
 		averageGraph.calcKnowledgeEstimates();
 		//averageGraph.calcPredictedScores();
 		
@@ -28,8 +33,9 @@ public class GroupConceptGraphs {
 		userToGraph = new HashMap<>();
 		
 		for(String user: userIdToResponses.keySet()){
-			ConceptGraph structureCopy = new ConceptGraph(structureGraph);
+			ConceptGraph structureCopy = new ConceptGraph(structureGraph, user);
 			structureCopy.addSummariesToGraph(userIdToResponses.get(user));
+			structureCopy.calcDataImportance();
 			structureCopy.calcKnowledgeEstimates();
 			structureCopy.calcPredictedScores();
 			userToGraph.put(user, structureCopy);
@@ -44,19 +50,20 @@ public class GroupConceptGraphs {
 	}
 	
 	public void calcDistanceFromAvg(){
-		ConceptGraphRecord avgLinks = averageGraph.buildNodesAndLinks();
-		for(String user: userToGraph.keySet()){
-			ConceptGraphRecord tempLinks = userToGraph.get(user).buildNodesAndLinks();
-			
-			for(ConceptNode tempNode: tempLinks.getNodes()){
-				for(ConceptNode avgNode: avgLinks.getNodes()){
-					if(tempNode.getID().equals(avgNode.getID())){
-						double avgCalc = avgNode.getKnowledgeEstimate();
-						tempNode.calcDistanceFromAvg(avgCalc);
-					}
-				}
-			}
-		}
+		//TODO: This should be owkring on nodes, not records
+//		ConceptGraphRecord avgLinks = averageGraph.buildNodesAndLinks();
+//		for(String user: userToGraph.keySet()){
+//			ConceptGraphRecord tempLinks = userToGraph.get(user).buildNodesAndLinks();
+//
+//			for(ConceptRecord tempNode: tempLinks.getConcepts()){
+//				for(ConceptRecord avgNode: avgLinks.getConcepts()){
+//					if(tempNode.getId().equals(avgNode.getId())){
+//						double avgCalc = avgNode.getKnowledgeEstimate();
+//						tempNode.calcDistanceFromAvg(avgCalc);
+//					}
+//				}
+//			}
+//		}
 	}
 	
 	public List<NamedGraph> getAllNamedGraphs(){

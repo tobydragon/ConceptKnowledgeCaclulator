@@ -7,6 +7,7 @@ import java.util.List;
 import java.util.Map;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import edu.ithaca.dragonlab.ckc.io.ConceptRecord;
 import edu.ithaca.dragonlab.ckc.io.LinkRecord;
 import edu.ithaca.dragonlab.ckc.learningobject.LearningObject;
 
@@ -18,6 +19,7 @@ public class ConceptNode {
 	private double knowledgeEstimate;
 	private double knowledgePrediction;
 	private double knowledgeDistanceFromAvg;
+	private double dataImportance;
 
 	Map<String, LearningObject> learningObjectMap;  //These learningObjects might also be held by other nodes
 	List<ConceptNode> children;
@@ -34,6 +36,18 @@ public class ConceptNode {
 		knowledgePrediction = 0;
 		knowledgeEstimate = 0;
 		knowledgeDistanceFromAvg = 0;
+	}
+
+	public ConceptNode(ConceptRecord conceptRecord) {
+		this.id = conceptRecord.getId();
+		this.label = conceptRecord.getLabel();
+		knowledgePrediction = conceptRecord.getKnowledgePrediction();
+		knowledgeEstimate = conceptRecord.getKnowledgeEstimate();
+		knowledgeDistanceFromAvg = conceptRecord.getKnowledgeDistFromAvg();
+
+		children = new ArrayList<>();
+		learningObjectMap = new HashMap<>();
+		numParents = 0;
 	}
 
 	public ConceptNode(String id, String label) {
@@ -83,25 +97,47 @@ public class ConceptNode {
 		children.add(child);
 	}
 
+	public void calcDataImportance(){
+		double tempDI=0;
+		for(LearningObject learningObject: learningObjectMap.values()){
+			tempDI+=learningObject.getDataImportance();
+		}
+
+		for (ConceptNode child: children){
+			child.calcDataImportance();
+			tempDI+=child.getDataImportance();
+		}
+		dataImportance = tempDI;
+	}
+
 	public void calcKnowledgeEstimate() {
         //TODO: take dataImportance into consideration
 		//TODO: This is the location of the issue with the failing test. Need to look into this more.
         //calculate value for this current concept
+
         double currentConceptEstimate = 0;
-        for (LearningObject learningObject : learningObjectMap.values()){
-            currentConceptEstimate += learningObject.calcKnowledgeEstimate();
-        }
-        if (learningObjectMap.size() > 0) {
+
+		for (LearningObject learningObject : learningObjectMap.values()){
+
+			currentConceptEstimate += learningObject.calcKnowledgeEstimate()*learningObject.getDataImportance();
+		}
+		//calculate estimate from children
+		double childrenTotal = 0;
+		for (ConceptNode child : children){
+			child.calcKnowledgeEstimate();
+			currentConceptEstimate +=   child.getKnowledgeEstimate()*child.getDataImportance();
+		}
+
+
+		//Gets Taken care of by dataImportance divisor
+        /*if (learningObjectMap.size() > 0) {
             currentConceptEstimate /= learningObjectMap.size();
-        }
+        }*/
 
-        //calculate estimate from children
-        double childrenTotal = 0;
-        for (ConceptNode child : children){
-            child.calcKnowledgeEstimate();
-            childrenTotal += child.getKnowledgeEstimate();
-        }
 
+
+		//Replaced this with dataImportance
+		/*
         if (children.size() > 0) {
             //if you have both children and data, count yourself equal to your children
             if (currentConceptEstimate > 0){
@@ -116,17 +152,26 @@ public class ConceptNode {
         //else you don't have children, only count yourself
         else {
             this.knowledgeEstimate = currentConceptEstimate;
-        }
+        }*/
+
+		//Data importance used to calculate
+		if (dataImportance > 0){
+			this.knowledgeEstimate = currentConceptEstimate / dataImportance;
+		} else {
+			this.knowledgeEstimate = currentConceptEstimate;
+		}
+
 	}
 
-	public void addToNodesAndLinksLists(List<ConceptNode> nodes, List<LinkRecord> links){
+	public void addToNodesAndLinksLists(List<ConceptRecord> concepts, List<LinkRecord> links){
 		//if I am not in the list
-		if(!nodes.contains(this)){
+		ConceptRecord newConceptRecord = new ConceptRecord(this);
+		if(!concepts.contains(newConceptRecord)){
 			//add me to the nodes list
-			nodes.add(this);
+			concepts.add(newConceptRecord);
 			for(ConceptNode child : this.children){
 				//recurse call on children
-				child.addToNodesAndLinksLists(nodes,links);
+				child.addToNodesAndLinksLists(concepts,links);
 				//add the links between me and my children to link list
 				links.add(new LinkRecord(this.getID(),child.getID()));
 			}
@@ -256,6 +301,12 @@ public class ConceptNode {
 
 	public void setKnowledgePrediction(double knowledgePrediction) {
 		this.knowledgePrediction = knowledgePrediction;
+	}
+
+	public double getDataImportance() { return dataImportance; }
+
+	public void setDataImportance(double dataImportance) {
+		this.dataImportance = dataImportance;
 	}
 
 	public int getNumParents() {

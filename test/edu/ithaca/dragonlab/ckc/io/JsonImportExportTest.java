@@ -1,14 +1,11 @@
 package edu.ithaca.dragonlab.ckc.io;
 
-import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import edu.ithaca.dragonlab.ckc.util.TestUtil;
+import edu.ithaca.dragonlab.ckc.util.DataUtil;
 import org.junit.Assert;
 import org.junit.Test;
 
-import java.io.File;
-import java.io.IOException;
 import java.util.List;
 
 /**
@@ -27,9 +24,9 @@ public class JsonImportExportTest {
         Assert.assertEquals("A", list.get(0).getLearningObject());
         Assert.assertEquals(3, list.get(0).getConceptIds().size());
         Assert.assertEquals("Q5", list.get(2).getConceptIds().get(0));
-        Assert.assertEquals(2,list.get(0).getDataImportance(), TestUtil.OK_FLOAT_MARGIN);
-        Assert.assertEquals(1,list.get(1).getDataImportance(),TestUtil.OK_FLOAT_MARGIN);
-        Assert.assertEquals(.2,list.get(2).getDataImportance(),TestUtil.OK_FLOAT_MARGIN);
+        Assert.assertEquals(2,list.get(0).getDataImportance(), DataUtil.OK_FLOAT_MARGIN);
+        Assert.assertEquals(1,list.get(1).getDataImportance(), DataUtil.OK_FLOAT_MARGIN);
+        Assert.assertEquals(.2,list.get(2).getDataImportance(), DataUtil.OK_FLOAT_MARGIN);
 
 
     }
