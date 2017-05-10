@@ -16,6 +16,7 @@ import org.apache.logging.log4j.Logger;
 import org.junit.Assert;
 import org.junit.Test;
 
+import javax.swing.plaf.synth.SynthTextAreaUI;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
@@ -26,6 +27,21 @@ import java.util.*;
 public class ConceptGraphTest {
 	static Logger logger = LogManager.getLogger(ConceptGraphTest.class);
 
+	public Hashtable<String,Integer> suggestedConceptNodeTest(HashMap<ConceptNode, List<learningObjectSuggestion>> map){
+        Hashtable<String,Integer> testCase = new Hashtable<String,Integer>();
+        for (ConceptNode key : map.keySet()) {
+            List<learningObjectSuggestion> valuetester = map.get(key);
+            testCase.put(key.getID(),0);
+            for (int i=0; i<valuetester.size(); i++){
+                testCase.put(valuetester.get(i).getId(),0);
+                testCase.put(Integer.toString(valuetester.get(i).getPathNum()),0);
+            }
+        }
+        return testCase;
+
+    }
+
+
         @Test
     public void SuggestedConceptNodeMapSimpleTest() {
         ConceptGraph orig= PracticalConceptGraphTest.simpleTestGraphTest();
@@ -33,113 +49,40 @@ public class ConceptGraphTest {
         HashMap<ConceptNode, List<learningObjectSuggestion>> objectSuggestionMap = orig.SuggestedConceptNodeMap();
         //what it should be
         HashMap<ConceptNode, List<learningObjectSuggestion>> mapTest = new HashMap<>();
-
         List<learningObjectSuggestion> testList3 = new ArrayList<>();
         mapTest.put(new ConceptNode("C"), testList3);
 
-//        Assert.assertEquals(objectSuggestionMap.size(), mapTest.size());
+        Hashtable<String, Integer> testCase = suggestedConceptNodeTest(mapTest);
+        Hashtable<String, Integer> actualCase = suggestedConceptNodeTest(objectSuggestionMap);
 
-        System.out.print("actual map (objectsuggestionMap)");
-        for (ConceptNode key : objectSuggestionMap.keySet()) {
-//            List<learningObjectSuggestion> listlist2 = mapTest.get(key);
-
-            List<learningObjectSuggestion> SuggestionObjectList = objectSuggestionMap.get(key);
-            System.out.println("\n");
-            System.out.print(key.getID() + " " + key.getKnowledgeEstimate()+ ": ");
-            for (int x=0; x<SuggestionObjectList.size(); x++){
-                System.out.print(SuggestionObjectList.get(x).getId()+ "- " + SuggestionObjectList.get(x).getLevel()+ " "+ " pathnum "+SuggestionObjectList.get(x).getPathNum()+ " " );
-            }
-        }
-
-
-        System.out.println("\n");
-        System.out.print("\n testing against (maptest)");
-        for (ConceptNode name : mapTest.keySet()) {
-
-            List<learningObjectSuggestion> testObjectList = mapTest.get(name);
-            System.out.println("\n");
-            System.out.print(name.getID() + " " + name.getKnowledgeEstimate()+ ": ");
-            for (int x=0; x<testObjectList.size(); x++){
-                System.out.print(testObjectList.get(x).getId()+ "- " + testObjectList.get(x).getLevel()+ " "+ " pathnum "+testObjectList.get(x).getPathNum()+ " " );
-
-            }
-        }
-
-
-//        for (ConceptNode key : mapTest.keySet()) {
-//
-//            List<learningObjectSuggestion> objectSuggestionList = objectSuggestionMap.get(key);
-//            List<learningObjectSuggestion> mapTestList = mapTest.get(key);
-//
-//            System.out.println(key.getID());
-//            if (!key.getLabel().equals("C")){
-//
-////                System.out.println("list size " + objectSuggestionList.size());
-//                System.out.println("list size 2 " + mapTestList.size());
-//
-//            }
-//
-////            if (list2 != null){
-////                Assert.assertEquals(list1,list2);
-////
-////            }else{
-////                System.out.println("BAD!");
-////            }
-//
-//        }
-
+        Assert.assertEquals(actualCase,testCase);
     }
-
 
 
     @Test
     public void SuggestedConceptNodeMapWillOneStudentTest() {
         ConceptGraph orig= PracticalConceptGraphTest.willExampleConceptGraphTestOneStudent();
-
         //what it is
         HashMap<ConceptNode, List<learningObjectSuggestion>> objectSuggestionMap = orig.SuggestedConceptNodeMap();
         //what it should be
         HashMap<ConceptNode, List<learningObjectSuggestion>> mapTest = new HashMap<>();
 
         List<learningObjectSuggestion> testList = new ArrayList<>();
-        testList.add(new learningObjectSuggestion("Q6",1, learningObjectSuggestion.Level.INCOMPLETE));
-        testList.add(new learningObjectSuggestion("Q7",1, learningObjectSuggestion.Level.INCOMPLETE));
-        mapTest.put(new ConceptNode("If Statement"), testList);
+        testList.add(new learningObjectSuggestion("Q13",1, learningObjectSuggestion.Level.INCOMPLETE));
+        mapTest.put(new ConceptNode("Counting"), testList);
 
         List<learningObjectSuggestion> testList2 = new ArrayList<>();
-        testList2.add(new learningObjectSuggestion("Q7", 1, learningObjectSuggestion.Level.INCOMPLETE));
+        testList2.add(new learningObjectSuggestion("Q10", 1, learningObjectSuggestion.Level.INCOMPLETE));
+        testList2.add(new learningObjectSuggestion("Q6", 1, learningObjectSuggestion.Level.INCOMPLETE));
         mapTest.put(new ConceptNode("Boolean"), testList2);
-//        Assert.assertEquals(objectSuggestionMap.size(), mapTest.size());
-//        for (ConceptNode key : mapTest.keySet()) {
-//
-//            ConceptNode name = key;
-//            List<learningObjectSuggestion> list2 = objectSuggestionMap.get(name);
-//            if (list2 != null){
-//                List<learningObjectSuggestion> list1 = mapTest.get(name);
-//                Assert.assertEquals(list1,list2);
-//
-//            }
-//        }
 
-        for (ConceptNode key : objectSuggestionMap.keySet()) {
+        Hashtable<String, Integer> actualCase = suggestedConceptNodeTest(objectSuggestionMap);
+        Hashtable<String, Integer> testCase = suggestedConceptNodeTest(mapTest);
 
-            ConceptNode name = key;
-
-            List<learningObjectSuggestion> SuggestionObjectList = objectSuggestionMap.get(key);
-            System.out.println("\n");
-            System.out.print(name.getID() + " " + name.getKnowledgeEstimate()+ ": \n");
-            for (int x=0; x<SuggestionObjectList.size(); x++){
-                System.out.println(SuggestionObjectList.get(x).getId());
-                System.out.println(SuggestionObjectList.get(x).getLevel());
-                System.out.println("pathnum "+SuggestionObjectList.get(x).getPathNum()+ "\n");
-
-//                System.out.print(listlist.get(x).getId()+ "- " + listlist.get(x).getLevel()+ " "+ " pathnum "+listlist.get(x).getPathNum()+ " " );
-
-            }
-//
-        }
-
+        Assert.assertEquals(actualCase,testCase);
     }
+
+
     @Test
     public void buildLearningObjectListSimpleTest(){
         ConceptGraph orig = ExampleConceptGraphFactory.makeSimple();
@@ -258,12 +201,10 @@ public class ConceptGraphTest {
         suggestListTest.add(new learningObjectSuggestion("Q2", 1,learningObjectSuggestion.Level.INCOMPLETE) );
 
 
-
         //orders the list based off of "level"
         orig.suggestedOrderBuildLearningObjectList(suggestedList);
 
 //        //who should call orderedList
-
 
         for (int i =0; i<suggestedList.size(); i++){
 
