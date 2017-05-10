@@ -110,8 +110,8 @@ function stripTitle(title) {
 //graph = readJson("../test/testresources/superComplexStructureGraph.json")
 //graph = readJson("json/exampleMediumStructureGraph.json");
 //graph = readJson("../test/testresources/practicalExamples/basicRealisticExample.json");
-graph = readJson("../test/testresources/practicalExamples/advancedRealisticExample.json");
-//graph = readJson("../test/testresources/practicalExamples/inputFromTest.json");
+//graph = readJson("../test/testresources/practicalExamples/advancedRealisticExample.json");
+graph = readJson("../test/testresources/practicalExamples/blankRealisticExample.json");
 
 //graph = readJson("../test/testresources/practicalExamples/singleStudentRealisticExample.json");
 

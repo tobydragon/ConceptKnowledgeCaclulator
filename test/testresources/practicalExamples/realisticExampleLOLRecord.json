@@ -12,12 +12,12 @@
   "dataImportance": "1"
   },
   {"learningObject":"Q3",
-  "conceptIds":[
-    "For Loop",
-    "Sequence Types",
-    "List"
-  ],
-  "dataImportance": "1"
+   "conceptIds":[
+      "For Loop",
+      "Sequence Types",
+      "List"
+    ],
+    "dataImportance": "1"
   },
   {"learningObject":"Q4",
   "conceptIds":[
