@@ -58,7 +58,7 @@ public class learningObjectSuggestion {
 
 
     public String toString(){
-            return id;
+            return id + " " + level + " "+ pathNum;
     }
 
 

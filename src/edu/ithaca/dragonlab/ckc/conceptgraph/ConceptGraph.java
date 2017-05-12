@@ -61,8 +61,20 @@ public class ConceptGraph {
         HashMap<ConceptNode, List<learningObjectSuggestion>> suggestedConceptNodeMap = new HashMap<>();
         for (String key : nodeMap.keySet()) {
             ConceptNode node = nodeMap.get(key);
+
+            Map<String, LearningObject> learningMp= node.learningObjectMap;
+
+			System.out.println(node.getID()+ " " + node.getKnowledgeEstimate());
+			for(String thing : learningMp.keySet()){
+				System.out.print(thing + " ");
+				LearningObject ob = learningMp.get(thing);
+				System.out.println(ob.calcKnowledgeEstimate());
+			}
+
+
+
             List<learningObjectSuggestion> testList = new ArrayList<>();
-            if(node.getKnowledgeEstimate()>=0.55 && node.getKnowledgeEstimate()<=0.75) {
+			if(node.getKnowledgeEstimate()>=0.55 && node.getKnowledgeEstimate()<=0.75) {
                 //if false, then it is not an ancestor, therefore it can be added to the list
                 boolean anc = ancestry(node);
                 if (!anc) {
@@ -105,25 +117,31 @@ public class ConceptGraph {
             learningObjectSuggestion.Level level;
             //fix to fit preconditions
             //TODO: fix so that if the list is empty then it's set to incomplete
-
+			learningObjectSuggestion.Level levelIn;
             List<LearningObjectResponse> resList = node.getResponses();
-//            if(resList.size()==0){
+            if(resList.size()==0){
+                levelIn = learningObjectSuggestion.Level.INCOMPLETE;
+				learningObjectSuggestion suggestionNode = new learningObjectSuggestion(key,lineNum,levelIn);
+				myList.add(suggestionNode);
+
+			}else{
+				if(estimate> 0 && estimate<= 0.59){
+					level = learningObjectSuggestion.Level.WRONG;
+				}else{
+					level = learningObjectSuggestion.Level.RIGHT;
+				}
+				learningObjectSuggestion suggestionNode = new learningObjectSuggestion(key,lineNum,level);
+				myList.add(suggestionNode);
+
+			}
+
+//            if(estimate==0){
 //                level = learningObjectSuggestion.Level.INCOMPLETE;
-//            } else if(estimate> 0 && estimate<= 0.59){
+//            }else if(estimate> 0 && estimate<= 0.59){
 //                level = learningObjectSuggestion.Level.WRONG;
 //            }else{
 //                level = learningObjectSuggestion.Level.RIGHT;
 //            }
-
-            if(estimate==0){
-                level = learningObjectSuggestion.Level.INCOMPLETE;
-            }else if(estimate> 0 && estimate<= 0.59){
-                level = learningObjectSuggestion.Level.WRONG;
-            }else{
-                level = learningObjectSuggestion.Level.RIGHT;
-            }
-            learningObjectSuggestion suggestionNode = new learningObjectSuggestion(key,lineNum,level);
-            myList.add(suggestionNode);
         }
         return myList;
     }
