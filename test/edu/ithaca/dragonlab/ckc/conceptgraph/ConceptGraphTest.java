@@ -55,11 +55,6 @@ public class ConceptGraphTest {
         //what it is
         HashMap<ConceptNode, List<learningObjectSuggestion>> objectSuggestionMap = orig.SuggestedConceptNodeMap();
         System.out.println(objectSuggestionMap.size());
-//        for (ConceptNode key : objectSuggestionMap.keySet()) {
-//
-//            System.out.println("key!" + key.getID());
-//        }
-
 
         //what it should be
         HashMap<ConceptNode, List<learningObjectSuggestion>> mapTest = new HashMap<>();
