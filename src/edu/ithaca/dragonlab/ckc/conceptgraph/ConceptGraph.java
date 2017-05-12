@@ -120,7 +120,7 @@ public class ConceptGraph {
             //fix to fit preconditions
             //TODO: fix so that if the list is empty then it's set to incomplete
 
-//            List<LearningObjectResponse> resList = node.getResponses();
+            List<LearningObjectResponse> resList = node.getResponses();
 //            if(resList.size()==0){
 //                level = learningObjectSuggestion.Level.INCOMPLETE;
 //            } else if(estimate> 0 && estimate<= 0.59){

@@ -41,10 +41,10 @@ public class ConceptGraphTest {
 
     }
 
-
         @Test
     public void SuggestedConceptNodeMapSimpleTest() {
-        ConceptGraph orig= PracticalConceptGraphTest.simpleTestGraphTest();
+            ConceptGraph orig= ExampleConceptGraphFactory.simpleTestGraphTest();
+
         //what it is
         HashMap<ConceptNode, List<learningObjectSuggestion>> objectSuggestionMap = orig.SuggestedConceptNodeMap();
         //what it should be
@@ -61,7 +61,7 @@ public class ConceptGraphTest {
 
     @Test
     public void SuggestedConceptNodeMapWillOneStudentTest() {
-        ConceptGraph orig= PracticalConceptGraphTest.willExampleConceptGraphTestOneStudent();
+        ConceptGraph orig= ExampleConceptGraphFactory.willExampleConceptGraphTestOneStudent();
         //what it is
         HashMap<ConceptNode, List<learningObjectSuggestion>> objectSuggestionMap = orig.SuggestedConceptNodeMap();
         //what it should be
@@ -125,32 +125,7 @@ public class ConceptGraphTest {
     }
 
 
-    @Test
-    public void suggestionComparatorTest(){
 
-        List<learningObjectSuggestion> suggestList = new ArrayList<>();
-        suggestList.add(new learningObjectSuggestion("Q1", 2,learningObjectSuggestion.Level.INCOMPLETE) );
-        suggestList.add(new learningObjectSuggestion("Q2", 1,learningObjectSuggestion.Level.WRONG) );
-        Collections.sort(suggestList, new learningObjectSuggestionComparator());
-
-
-        List<learningObjectSuggestion> suggestListTest = new ArrayList<>();
-        suggestListTest.add(new learningObjectSuggestion("Q2", 1,learningObjectSuggestion.Level.WRONG) );
-        suggestListTest.add(new learningObjectSuggestion("Q1", 2,learningObjectSuggestion.Level.INCOMPLETE) );
-
-
-        for (int i =0; i<suggestListTest.size(); i++){
-
-            Assert.assertEquals(suggestList.get(i).getId(),suggestListTest.get(i).getId());
-            Assert.assertEquals(suggestList.get(i).getPathNum(),suggestListTest.get(i).getPathNum());
-            Assert.assertEquals(suggestList.get(i).getLevel(),suggestListTest.get(i).getLevel());
-
-        }
-//
-//        suggestListTest.add(new learningObjectSuggestion("Q3", 2,learningObjectSuggestion.Level.INCOMPLETE) );
-//        suggestListTest.add(new learningObjectSuggestion("Q4", 3,learningObjectSuggestion.Level.INCOMPLETE) );
-
-    }
 
     @Test
     public void suggestedOrderBuildLearningObjectListTest(){

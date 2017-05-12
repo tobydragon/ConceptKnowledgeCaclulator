@@ -17,7 +17,7 @@ import java.util.logging.Logger;
  */
 public class PracticalConceptGraphTest {
     @Test
-    public static ConceptGraph willExampleConceptGraphTest(){
+    public void willExampleConceptGraphTest(){
         ObjectMapper graphMapper = new ObjectMapper();
 
         graphMapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
@@ -30,69 +30,13 @@ public class PracticalConceptGraphTest {
             graph.addLearningObjectsFromLearningObjectLinkRecords(csvReader.getManualGradedLearningObjects(), LOLRlist);
             graph.calcKnowledgeEstimates();
             //System.out.println(graph.toString());
-            return graph;
 
         }catch (Exception e){
             e.printStackTrace();
         }
 
-        return null;
-
     }
 
-
-    @Test
-    public static ConceptGraph willExampleConceptGraphTestOneStudent(){
-        ObjectMapper graphMapper = new ObjectMapper();
-
-        graphMapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
-        CSVReader csvReader = new CSVReader("test/testresources/basicRealisticExampleGradeBook2.csv");
-
-        try {
-            ConceptGraphRecord graphRecord = ConceptGraphRecord.buildfromJson("test/testresources/basicRealisticExampleConceptGraphOneStudent.json");
-            ConceptGraph graph = new ConceptGraph(graphRecord);
-            List<LearningObjectLinkRecord> LOLRlist = JsonImportExport.LOLRFromRecords("test/testresources/basicRealisticExampleLOLRecordOneStudent.json");
-            graph.addLearningObjectsFromLearningObjectLinkRecords(csvReader.getManualGradedLearningObjects(), LOLRlist);
-            graph.calcKnowledgeEstimates();
-            //System.out.println(graph.toString());
-            return graph;
-
-        }catch (Exception e){
-            e.printStackTrace();
-        }
-
-        return null;
-
-    }
-
-
-
-    @Test
-    public static ConceptGraph simpleTestGraphTest() {
-
-//    public static void simpleTestGraphTest() {
-        ObjectMapper graphMapper = new ObjectMapper();
-
-        graphMapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
-        CSVReader csvReader = new CSVReader("test/testresources/simpleGraphTest.csv");
-
-        try {
-            ConceptGraphRecord graphRecord = ConceptGraphRecord.buildfromJson("test/testresources/simpleGraphTestConceptNodes.json");
-            ConceptGraph graph = new ConceptGraph(graphRecord);
-            List<LearningObjectLinkRecord> LOLRlist = JsonImportExport.LOLRFromRecords("test/testresources/simpleGraphTestLearningObjects.json");
-            graph.addLearningObjectsFromLearningObjectLinkRecords(csvReader.getManualGradedLearningObjects(), LOLRlist);
-            graph.calcKnowledgeEstimates();
-            //            System.out.println(graph.toString());
-
-            return graph;
-
-
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-
-        return null;
-    }
 
 
 

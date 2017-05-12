@@ -95,19 +95,20 @@ public class ConceptNode {
 	public boolean isAncestorOf(ConceptNode child){
 		//is a descendant , ancestor
 		//iterate through the tree and see if it's below it
+        boolean flag =false;
 
         if (this.children.contains(child)){
-            return true;
+            flag = true;
+//            return true;
         }else {
 
             for (ConceptNode nchild : children) {
-                nchild.isAncestorOf(child);
+                if(nchild.isAncestorOf(child)){
+                    flag=true;
+                }
             }
-
-            return false;
-
         }
-
+        return flag;
     }
 
 

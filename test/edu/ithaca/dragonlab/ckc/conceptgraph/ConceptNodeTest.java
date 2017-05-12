@@ -10,23 +10,56 @@ import java.util.HashMap;
 
 public class ConceptNodeTest {
 
+//    @Test
+//    public void isAncestorTest() {
+//        ConceptGraph orig = PracticalConceptGraphTest.simpleTestGraphTest();
+//
+//        ConceptNode node = orig.findNodeById("C");
+//        boolean num = orig.findNodeById("A").isAncestorOf(node);
+//        Assert.assertEquals(true,num);
+//
+//        ConceptNode node2 = orig.findNodeById("A");
+//        boolean num2 = orig.findNodeById("C").isAncestorOf(node2);
+//        Assert.assertEquals(false,num2);
+//
+//
+//        ConceptNode node3 = orig.findNodeById("B");
+//        boolean num3 = orig.findNodeById("A").isAncestorOf(node3);
+//        Assert.assertEquals(true,num3);
+//
+//    }
+
     @Test
     public void isAncestorTest() {
-        ConceptGraph orig = PracticalConceptGraphTest.simpleTestGraphTest();
+        ConceptGraph orig = ExampleConceptGraphFactory.mediumTestGraphTest();
+
+
 
         ConceptNode node = orig.findNodeById("C");
         boolean num = orig.findNodeById("A").isAncestorOf(node);
         Assert.assertEquals(true,num);
 
-        ConceptNode node2 = orig.findNodeById("A");
-        boolean num2 = orig.findNodeById("C").isAncestorOf(node2);
-        Assert.assertEquals(false,num2);
+        ConceptNode node2 = orig.findNodeById("F");
+        boolean num2 = orig.findNodeById("A").isAncestorOf(node2);
+        Assert.assertEquals(true,num2);
 
 
-        ConceptNode node3 = orig.findNodeById("B");
-        boolean num3 = orig.findNodeById("A").isAncestorOf(node3);
+        ConceptNode node3 = orig.findNodeById("D");
+        boolean num3 = orig.findNodeById("B").isAncestorOf(node3);
         Assert.assertEquals(true,num3);
 
+
+        ConceptNode node4 = orig.findNodeById("D");
+        boolean num4 = orig.findNodeById("G").isAncestorOf(node4);
+        Assert.assertEquals(false,num4);
+
+        ConceptNode node5 = orig.findNodeById("F");
+        boolean num5 = orig.findNodeById("A").isAncestorOf(node5);
+        Assert.assertEquals(true,num5);
+
+        ConceptNode node6 = orig.findNodeById("D");
+        boolean num6 = orig.findNodeById("A").isAncestorOf(node6);
+        Assert.assertEquals(true,num6);
     }
 
 
