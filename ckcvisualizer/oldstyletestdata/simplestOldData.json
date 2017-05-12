@@ -1,0 +1,25 @@
+[{
+  "name": "Average Graph",
+  "cg": {
+    "nodes": [{
+      "id": "Node C-1",
+      "actualComp": 0.75,
+      "distanceFromAvg": 0.0
+    }, {
+      "id": "Node D-1",
+      "actualComp": 0.75,
+      "distanceFromAvg": 0.0
+    }, {
+      "id": "Node E-1",
+      "actualComp": 0.97,
+      "numParents": 2
+    }],
+    "links": [{
+      "parent":  "Node C-1",
+      "child": "Node D-1"
+    }, {
+      "parent": "Node C-1",
+      "child": "Node E-1"
+    }]
+  }
+}]

@@ -32,4 +32,19 @@ public class LinkRecord {
 		return "(Parent: " + this.parent + " Child: " + this.child + ")\n";
 	}
 
+	public boolean equals(Object other){
+		if(other == null){
+			return false;
+		}
+		if(!this.getClass().isAssignableFrom(other.getClass())){
+			return false;
+		}
+		LinkRecord otherNode = (LinkRecord) other;
+		if(this.parent.equals(otherNode.parent) && this.child.equals(otherNode.child)) {
+			return true;
+		} else {
+			return false;
+		}
+	}
+
 }

@@ -1,57 +1,74 @@
 package edu.ithaca.dragonlab.ckc.io;
 
+import com.fasterxml.jackson.databind.DeserializationFeature;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.SerializationFeature;
+
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
-
-import com.fasterxml.jackson.databind.DeserializationFeature;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import edu.ithaca.dragonlab.ckc.conceptgraph.ConceptNode;
 
 // Represents a ConceptGraph when serializing
 //also used to denote LearningObjects and their relation to the ConceptGraph ( see @ExampleLearningObjectFactory )
 public class ConceptGraphRecord {
-	
-	private List<ConceptNode> nodes;
+
+	private List<ConceptRecord> concepts;
 	private List<LinkRecord> links;
-	
-	public static ConceptGraphRecord buildfromJson(String filename) throws IOException{
+
+	public static ConceptGraphRecord buildFromJson(String filename) throws IOException{
 		ObjectMapper mapper = new ObjectMapper();
 		mapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
 		ConceptGraphRecord lists = mapper.readValue(new File(filename), ConceptGraphRecord.class);
 		return lists;
 	}
-	
+
 	public void writeToJson(String filename) throws IOException{
 		ObjectMapper mapper = new ObjectMapper();
+		mapper.enable(SerializationFeature.INDENT_OUTPUT);
 		mapper.writeValue(new File(filename), this);
-		
+
 	}
 
 	//needed for json creation
 	public ConceptGraphRecord(){
-		this.nodes = new ArrayList<>();
+		this.concepts = new ArrayList<>();
 		this.links = new ArrayList<>();
 	}
-	
-	public ConceptGraphRecord(List<ConceptNode> nodesIn, List<LinkRecord> linksIn){
-		this.nodes = nodesIn;
+
+	public ConceptGraphRecord(List<ConceptRecord> nodesIn, List<LinkRecord> linksIn){
+		this.concepts = nodesIn;
 		this.links = linksIn;
 	}
-	
-	public List<ConceptNode> getNodes(){
-		return nodes;
+
+	/**
+	 * Finds all root ConceptRecords (ones that have no parents in this graph)
+	 * @return a list of references to all root ConceptRecords (could allow side effects)
+	 */
+	public List<ConceptRecord> findRoots() {
+		//Shallow copy
+		List<ConceptRecord> runningTotal = new ArrayList<>(getConcepts());
+
+		for (LinkRecord link : links) {
+			for(ConceptRecord record : getConcepts()){
+				if(record.getId().equals(link.getChild())){
+					runningTotal.remove(record);
+				}
+			}
+		}
+		return runningTotal;
+	}
+
+	public List<ConceptRecord> getConcepts(){
+		return concepts;
 	}
 	
 	public List<LinkRecord> getLinks(){
 		return links;
 	}
 	
-	public void setNodes(List<ConceptNode> nodesIn){
-		this.nodes = nodesIn;
+	public void setConcepts(List<ConceptRecord> nodesIn){
+		this.concepts = nodesIn;
 	}
 	
 	public void setLinks(List<LinkRecord> linksIn){
@@ -69,20 +86,12 @@ public class ConceptGraphRecord {
 					"Child: " + link.getChild() + "\n\n";
 		}
 		
-		for(ConceptNode node : nodes){
-			nodeString += node.getID()+ "\n";
+		for(ConceptRecord node : concepts){
+			nodeString += node.getId()+ "\n";
 		}
 		
 		combinedString = linkString + "\n\n\n" + nodeString;
 
 		return combinedString;
-	}
-	
-	public Map<String, ConceptNode> buildNodeMap(){
-		Map<String, ConceptNode> nodeMap = new HashMap<>();
-		for(ConceptNode node : nodes){
-			nodeMap.put(node.getID(), node);
-		}
-		return nodeMap;
 	}
 }

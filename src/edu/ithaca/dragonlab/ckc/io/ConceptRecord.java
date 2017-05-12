@@ -1,6 +1,7 @@
 package edu.ithaca.dragonlab.ckc.io;
 
 import edu.ithaca.dragonlab.ckc.conceptgraph.ConceptNode;
+import edu.ithaca.dragonlab.ckc.util.DataUtil;
 
 /**
  * @author tdragon
@@ -8,8 +9,6 @@ import edu.ithaca.dragonlab.ckc.conceptgraph.ConceptNode;
  *         This class represents all the information that should be recorded about a concept when serializing
  */
 public class ConceptRecord {
-
-    //TODO: ConceptGraphRecord should hold these instead of actual nodes, so we know what is being held and what not...
     String id;
     String label;
 
@@ -30,8 +29,16 @@ public class ConceptRecord {
         this.id = conceptToRecord.getID();
         this.label = conceptToRecord.getLabel();
         this.knowledgeEstimate = conceptToRecord.getKnowledgeEstimate();
-        this.knowledgePrediction = conceptToRecord.getKnowledgeEstimate();
+        this.knowledgePrediction = 0;
         this.knowledgeDistFromAvg = conceptToRecord.getKnowledgeDistanceFromAvg();
+    }
+
+    public ConceptRecord(String id) {
+        this.id = id;
+        this.label = id;
+        this.knowledgeEstimate = 0;
+        this.knowledgePrediction = 0;
+        this.knowledgeDistFromAvg = 0;
     }
 
     public String getId() {
@@ -72,5 +79,22 @@ public class ConceptRecord {
 
     public void setKnowledgeDistFromAvg(double knowledgeDistFromAvg) {
         this.knowledgeDistFromAvg = knowledgeDistFromAvg;
+    }
+
+    public boolean equals(Object other){
+        if(other == null){
+            return false;
+        }
+        if(!ConceptRecord.class.isAssignableFrom(other.getClass())){
+            return false;
+        }
+        ConceptRecord otherNode = (ConceptRecord) other;
+        if(this.id.equals(otherNode.id) && DataUtil.equalsDoubles(this.knowledgeEstimate, otherNode.knowledgeEstimate)
+                && DataUtil.equalsDoubles(this.knowledgeEstimate, otherNode.knowledgeEstimate)
+                && DataUtil.equalsDoubles(this.knowledgeEstimate, otherNode.knowledgeEstimate)){
+            return true;
+        } else {
+            return false;
+        }
     }
 }
