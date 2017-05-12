@@ -73,8 +73,7 @@ public class ConceptNodeTest {
         //tests the size of the buildLearningObjectList
 
 
-        ConceptGraph graph = ExampleConceptGraphFactory.makeSimple();
-        graph.addLearningObjects(ExampleLearningObjectFactory.makeSimpleLearningObjectDef());
+        ConceptGraph graph = ExampleConceptGraphFactory.makeSimpleWithData();
 
         HashMap<String, Integer> testA = new HashMap<String, Integer>();
         graph.findNodeById("A").buildLearningObjectSummaryList(testA);

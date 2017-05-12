@@ -86,14 +86,14 @@ public class ConceptGraphTest {
         Hashtable<String, Integer> actualCase = suggestedConceptNodeTest(objectSuggestionMap);
         Hashtable<String, Integer> testCase = suggestedConceptNodeTest(mapTest);
 
-        Assert.assertEquals(actualCase,testCase);
+        //test is expected
+        Assert.assertEquals(testCase,actualCase);
     }
 
 
     @Test
     public void buildLearningObjectListSimpleTest(){
-        ConceptGraph orig = ExampleConceptGraphFactory.makeSimple();
-        orig.addLearningObjects(ExampleLearningObjectFactory.makeSimpleLearningObjectDef());
+        ConceptGraph orig = ExampleConceptGraphFactory.makeSimpleWithData();
 
         //from A nodes
         HashMap<String, Integer> testCompareA = new HashMap<String, Integer>();
@@ -136,8 +136,7 @@ public class ConceptGraphTest {
 
     @Test
     public void suggestedOrderBuildLearningObjectListTest(){
-        ConceptGraph orig = ExampleConceptGraphFactory.makeSimple();
-        orig.addLearningObjects(ExampleLearningObjectFactory.makeSimpleLearningObjectDef());
+        ConceptGraph orig = ExampleConceptGraphFactory.makeSimpleWithData();
 
 //        //from A nodes
         HashMap<String, Integer> testCompareA = new HashMap<String, Integer>();
@@ -187,6 +186,8 @@ public class ConceptGraphTest {
         orig.suggestedOrderBuildLearningObjectList(suggestedList);
 
 //        //who should call orderedList
+        System.out.println(suggestedList);
+
 
         for (int i =0; i<suggestedList.size(); i++){
 

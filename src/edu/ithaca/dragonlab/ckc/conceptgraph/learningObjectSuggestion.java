@@ -57,5 +57,9 @@ public class learningObjectSuggestion {
     }
 
 
+    public String toString(){
+            return id;
+    }
+
 
 }

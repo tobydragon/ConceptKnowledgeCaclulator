@@ -39,15 +39,6 @@ public class ConceptGraph {
     }
 
 
-    public void buildObjectFromNodesAndLinks(ConceptGraphRecord nodeAndLinks) {
-        List<ConceptNode> nodes = nodeAndLinks.getNodes();
-        List<LinkRecord> links = nodeAndLinks.getLinks();
-
-        this.roots = findRoots(nodes, links);
-        this.nodeMap = addChildren(nodes, links);
-        this.learningObjectMap = new HashMap<>();
-    }
-
 
     //if false, then it is not an ancestor therefore it can be added to the list
     public boolean ancestry(ConceptNode node) {

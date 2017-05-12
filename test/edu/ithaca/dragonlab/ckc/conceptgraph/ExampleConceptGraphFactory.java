@@ -27,30 +27,30 @@ public class ExampleConceptGraphFactory {
                 ExampleLearningObjectResponseFactory.makeSimpleResponses());
     }
 
-
-    public static ConceptGraph makeSimpleWithEstimates(){
-        List<ConceptNode> cnList = new ArrayList<>();
-        List<LinkRecord> clList = new ArrayList<>();
-
-        cnList.add(new ConceptNode("A"));
-        ConceptNode node = cnList.get(0);
-        node.setKnowledgeEstimate(0.5);
-
-        cnList.add(new ConceptNode("B"));
-        ConceptNode node2 = cnList.get(1);
-        node2.setKnowledgeEstimate(-0.5);
-        cnList.add(new ConceptNode("C"));
-        ConceptNode node3 = cnList.get(2);
-        node3.setKnowledgeEstimate(-0.7);
-
-        clList.add(new LinkRecord("A","B")); //A -> B
-        clList.add(new LinkRecord("A","C")); //A -> C
-        clList.add(new LinkRecord("B","C")); //B -> C
-
-        ConceptGraphRecord inputNodesAndLinks = new ConceptGraphRecord(cnList,clList);
-        return new ConceptGraph(inputNodesAndLinks);
-
-    }
+//TODO: make work with new concept graph
+//    public static ConceptGraph makeSimpleWithEstimates(){
+//        List<ConceptNode> cnList = new ArrayList<>();
+//        List<LinkRecord> clList = new ArrayList<>();
+//
+//        cnList.add(new ConceptNode("A"));
+//        ConceptNode node = cnList.get(0);
+//        node.setKnowledgeEstimate(0.5);
+//
+//        cnList.add(new ConceptNode("B"));
+//        ConceptNode node2 = cnList.get(1);
+//        node2.setKnowledgeEstimate(-0.5);
+//        cnList.add(new ConceptNode("C"));
+//        ConceptNode node3 = cnList.get(2);
+//        node3.setKnowledgeEstimate(-0.7);
+//
+//        clList.add(new LinkRecord("A","B")); //A -> B
+//        clList.add(new LinkRecord("A","C")); //A -> C
+//        clList.add(new LinkRecord("B","C")); //B -> C
+//
+//        ConceptGraphRecord inputNodesAndLinks = new ConceptGraphRecord(cnList,clList);
+//        return new ConceptGraph(inputNodesAndLinks);
+//
+//    }
 
     public static ConceptGraph makeMedium(){
         return new ConceptGraph(ExampleConceptGraphRecordFactory.makeMedium());
@@ -127,10 +127,10 @@ public class ExampleConceptGraphFactory {
         CSVReader csvReader = new CSVReader("test/testresources/basicRealisticExampleGradeBook2.csv");
 
         try {
-            ConceptGraphRecord graphRecord = ConceptGraphRecord.buildfromJson("test/testresources/basicRealisticExampleConceptGraphOneStudent.json");
-            ConceptGraph graph = new ConceptGraph(graphRecord);
+            ConceptGraphRecord graphRecord = ConceptGraphRecord.buildFromJson("test/testresources/basicRealisticExampleConceptGraphOneStudent.json");
             List<LearningObjectLinkRecord> LOLRlist = JsonImportExport.LOLRFromRecords("test/testresources/basicRealisticExampleLOLRecordOneStudent.json");
-            graph.addLearningObjectsFromLearningObjectLinkRecords(csvReader.getManualGradedLearningObjects(), LOLRlist);
+
+            ConceptGraph graph = new ConceptGraph(graphRecord, LOLRlist, csvReader.getManualGradedResponses());
             graph.calcKnowledgeEstimates();
             //System.out.println(graph.toString());
             return graph;
@@ -150,10 +150,9 @@ public class ExampleConceptGraphFactory {
         CSVReader csvReader = new CSVReader("test/testresources/simpleGraphTest.csv");
 
         try {
-            ConceptGraphRecord graphRecord = ConceptGraphRecord.buildfromJson("test/testresources/simpleGraphTestConceptNodes.json");
-            ConceptGraph graph = new ConceptGraph(graphRecord);
+            ConceptGraphRecord graphRecord = ConceptGraphRecord.buildFromJson("test/testresources/simpleGraphTestConceptNodes.json");
             List<LearningObjectLinkRecord> LOLRlist = JsonImportExport.LOLRFromRecords("test/testresources/simpleGraphTestLearningObjects.json");
-            graph.addLearningObjectsFromLearningObjectLinkRecords(csvReader.getManualGradedLearningObjects(), LOLRlist);
+            ConceptGraph graph = new ConceptGraph(graphRecord, LOLRlist, csvReader.getManualGradedResponses());
             graph.calcKnowledgeEstimates();
             //            System.out.println(graph.toString());
 
@@ -175,12 +174,10 @@ public class ExampleConceptGraphFactory {
         CSVReader csvReader = new CSVReader("test/testresources/simpleGraphTest.csv");
 
         try {
-            ConceptGraphRecord graphRecord = ConceptGraphRecord.buildfromJson("test/testresources/mediumGraphTestConceptNodes.json");
-            ConceptGraph graph = new ConceptGraph(graphRecord);
+            ConceptGraphRecord graphRecord = ConceptGraphRecord.buildFromJson("test/testresources/mediumGraphTestConceptNodes.json");
             List<LearningObjectLinkRecord> LOLRlist = JsonImportExport.LOLRFromRecords("test/testresources/simpleGraphTestLearningObjects.json");
-            graph.addLearningObjectsFromLearningObjectLinkRecords(csvReader.getManualGradedLearningObjects(), LOLRlist);
+            ConceptGraph graph = new ConceptGraph(graphRecord, LOLRlist, csvReader.getManualGradedResponses());
             graph.calcKnowledgeEstimates();
-            //            System.out.println(graph.toString());
 
             return graph;
 
