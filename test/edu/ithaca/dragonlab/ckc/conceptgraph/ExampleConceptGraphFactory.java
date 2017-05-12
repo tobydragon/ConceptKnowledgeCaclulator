@@ -168,24 +168,11 @@ public class ExampleConceptGraphFactory {
 
 
     public static ConceptGraph mediumTestGraphTest() {
-        ObjectMapper graphMapper = new ObjectMapper();
-
-        graphMapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
-        CSVReader csvReader = new CSVReader("test/testresources/simpleGraphTest.csv");
-
         try {
-            ConceptGraphRecord graphRecord = ConceptGraphRecord.buildFromJson("test/testresources/mediumGraphTestConceptNodes.json");
-            List<LearningObjectLinkRecord> LOLRlist = JsonImportExport.LOLRFromRecords("test/testresources/simpleGraphTestLearningObjects.json");
-            ConceptGraph graph = new ConceptGraph(graphRecord, LOLRlist, csvReader.getManualGradedResponses());
-            graph.calcKnowledgeEstimates();
-
-            return graph;
-
-
+            return new ConceptGraph(ConceptGraphRecord.buildFromJson("test/testresources/mediumGraphTestConceptNodes.json"));
         } catch (Exception e) {
             e.printStackTrace();
         }
-
         return null;
     }
 }

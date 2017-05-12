@@ -33,8 +33,6 @@ public class ConceptNodeTest {
     public void isAncestorTest() {
         ConceptGraph orig = ExampleConceptGraphFactory.mediumTestGraphTest();
 
-
-
         ConceptNode node = orig.findNodeById("C");
         boolean num = orig.findNodeById("A").isAncestorOf(node);
         Assert.assertEquals(true,num);
