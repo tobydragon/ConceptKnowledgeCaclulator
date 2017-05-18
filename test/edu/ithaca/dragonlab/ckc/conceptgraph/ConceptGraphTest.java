@@ -34,38 +34,21 @@ import static org.hamcrest.collection.IsIterableContainingInAnyOrder.containsInA
 public class ConceptGraphTest {
 	static Logger logger = LogManager.getLogger(ConceptGraphTest.class);
 
-	public Hashtable<String,Integer> suggestedConceptNodeTest(HashMap<ConceptNode, List<learningObjectSuggestion>> map){
-        Hashtable<String,Integer> testCase = new Hashtable<String,Integer>();
-        for (ConceptNode key : map.keySet()) {
-            List<learningObjectSuggestion> valuetester = map.get(key);
-            testCase.put(key.getID(),0);
-            for (int i=0; i<valuetester.size(); i++){
-                testCase.put(valuetester.get(i).getId(),0);
-                testCase.put(Integer.toString(valuetester.get(i).getPathNum()),0);
-            }
-        }
-        return testCase;
-
-    }
 
     @Test
     public void SuggestedConceptNodeMapSimpleTest() {
-            ConceptGraph orig= ExampleConceptGraphFactory.simpleTestGraphTest();
+        ConceptGraph orig = ExampleConceptGraphFactory.simpleTestGraphTest();
 
         //what it is
-        HashMap<ConceptNode, List<learningObjectSuggestion>> objectSuggestionMap = orig.SuggestedConceptNodeMap();
-        System.out.println(objectSuggestionMap.size());
+        HashMap<String, List<learningObjectSuggestion>> objectSuggestionMap = orig.SuggestedConceptNodeMap();
 
         //what it should be
-        HashMap<ConceptNode, List<learningObjectSuggestion>> mapTest = new HashMap<>();
         List<learningObjectSuggestion> testList3 = new ArrayList<>();
-        mapTest.put(new ConceptNode("C"), testList3);
-
-        Hashtable<String, Integer> testCase = suggestedConceptNodeTest(mapTest);
-        Hashtable<String, Integer> actualCase = suggestedConceptNodeTest(objectSuggestionMap);
+        Assert.assertEquals(1, objectSuggestionMap.size());
+        Assert.assertEquals(testList3, objectSuggestionMap.get("C"));
 
 
-        Assert.assertEquals(actualCase,testCase);
+
     }
 
 
@@ -73,24 +56,13 @@ public class ConceptGraphTest {
     public void SuggestedConceptNodeMapWillOneStudentTest() {
         ConceptGraph orig= ExampleConceptGraphFactory.willExampleConceptGraphTestOneStudent();
         //what it is
-        HashMap<ConceptNode, List<learningObjectSuggestion>> objectSuggestionMap = orig.SuggestedConceptNodeMap();
-        //what it should be
-        HashMap<ConceptNode, List<learningObjectSuggestion>> mapTest = new HashMap<>();
+        HashMap<String, List<learningObjectSuggestion>> objectSuggestionMap = orig.SuggestedConceptNodeMap();
 
-        List<learningObjectSuggestion> testList = new ArrayList<>();
-        testList.add(new learningObjectSuggestion("Q13",1, learningObjectSuggestion.Level.INCOMPLETE));
-        mapTest.put(new ConceptNode("Counting"), testList);
+        Assert.assertEquals(2, objectSuggestionMap.size());
+        Assert.assertEquals(objectSuggestionMap.get("If Statement").get(1).getId(), "Q3");
+        Assert.assertEquals(objectSuggestionMap.get("If Statement").get(0).getId(), "Q10");
+        Assert.assertEquals(objectSuggestionMap.get("While Loop").get(0).getId(), "Q10");
 
-        List<learningObjectSuggestion> testList2 = new ArrayList<>();
-        testList2.add(new learningObjectSuggestion("Q10", 1, learningObjectSuggestion.Level.INCOMPLETE));
-        testList2.add(new learningObjectSuggestion("Q6", 1, learningObjectSuggestion.Level.INCOMPLETE));
-        mapTest.put(new ConceptNode("Boolean"), testList2);
-
-        Hashtable<String, Integer> actualCase = suggestedConceptNodeTest(objectSuggestionMap);
-        Hashtable<String, Integer> testCase = suggestedConceptNodeTest(mapTest);
-
-        //test is expected
-        Assert.assertEquals(testCase,actualCase);
     }
 
 
@@ -485,12 +457,13 @@ public class ConceptGraphTest {
     public void calcKnowledgeEstimateMoreComplexTest() {
         ConceptGraph orig = ExampleConceptGraphFactory.willExampleConceptGraphTestOneStudent();
 
-        Assert.assertEquals(0.3, orig.findNodeById("If Statement").getKnowledgeEstimate(), DataUtil.OK_FLOAT_MARGIN);
-        Assert.assertEquals(0.557, orig.findNodeById("Boolean Expression").getKnowledgeEstimate(), DataUtil.OK_FLOAT_MARGIN);
-        Assert.assertEquals(0.575, orig.findNodeById("Boolean").getKnowledgeEstimate(), DataUtil.OK_FLOAT_MARGIN);
-        Assert.assertEquals(0.115, orig.findNodeById("While Loop").getKnowledgeEstimate(), DataUtil.OK_FLOAT_MARGIN);
-        Assert.assertEquals(0.3, orig.findNodeById("For Loop").getKnowledgeEstimate(), DataUtil.OK_FLOAT_MARGIN);
-        Assert.assertEquals(0.566, orig.findNodeById("Counting").getKnowledgeEstimate(), DataUtil.OK_FLOAT_MARGIN);
+        Assert.assertEquals(0.806, orig.findNodeById("Boolean").getKnowledgeEstimate(), DataUtil.OK_FLOAT_MARGIN);
+        Assert.assertEquals(0.783090, orig.findNodeById("Boolean Expressions").getKnowledgeEstimate(), DataUtil.OK_FLOAT_MARGIN);
+        Assert.assertEquals(0.746, orig.findNodeById("If Statement").getKnowledgeEstimate(), DataUtil.OK_FLOAT_MARGIN);
+
+        Assert.assertEquals(0.722, orig.findNodeById("While Loop").getKnowledgeEstimate(), DataUtil.OK_FLOAT_MARGIN);
+        Assert.assertEquals(0.85, orig.findNodeById("Counting").getKnowledgeEstimate(), DataUtil.OK_FLOAT_MARGIN);
+        Assert.assertEquals(0.7666, orig.findNodeById("For Loop").getKnowledgeEstimate(), DataUtil.OK_FLOAT_MARGIN);
 
     }
 

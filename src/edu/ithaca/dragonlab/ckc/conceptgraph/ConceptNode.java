@@ -317,7 +317,7 @@ public class ConceptNode {
 	}
 
 	public double getKnowledgeEstimate() {
-		return Math.round(knowledgeEstimate *1000.0)/1000.0;
+		return knowledgeEstimate;
 	}
 
 	public void setKnowledgeEstimate(double knowledgeEstimate) {

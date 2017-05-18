@@ -47,7 +47,9 @@ public class ConceptGraph {
             ConceptNode compareNode = nodeMap.get(key);
             boolean ances =  node.isAncestorOf(compareNode);
             //This allows for if it does have an ancestor, but it has a high knowledge estimate, it wont be added to the suggestion list
-            if (ances && node.getKnowledgeEstimate()<0.75){
+            if (ances && compareNode.getKnowledgeEstimate()<0.75){
+
+//                if (ances && node.getKnowledgeEstimate()<0.75){
                 isAnc=true;
                 break;
             }
@@ -56,13 +58,12 @@ public class ConceptGraph {
     }
 
 
-    public HashMap<ConceptNode, List<learningObjectSuggestion>> SuggestedConceptNodeMap(){
+    public HashMap<String, List<learningObjectSuggestion>> SuggestedConceptNodeMap(){
 
-        HashMap<ConceptNode, List<learningObjectSuggestion>> suggestedConceptNodeMap = new HashMap<>();
+        HashMap<String, List<learningObjectSuggestion>> suggestedConceptNodeMap = new HashMap<>();
         for (String key : nodeMap.keySet()) {
             ConceptNode node = nodeMap.get(key);
-
-            System.out.println("estimate "+ node.getID() + node.getKnowledgeEstimate());
+//            System.out.println("estimate "+ node.getID() + node.getKnowledgeEstimate());
 
             List<learningObjectSuggestion> testList = new ArrayList<>();
 			if(node.getKnowledgeEstimate()>=0.55 && node.getKnowledgeEstimate()<=0.75) {
@@ -80,7 +81,7 @@ public class ConceptGraph {
                         }
                     }
 //                    System.out.println("the testList size is "+testList.size());
-                    suggestedConceptNodeMap.put(node, testList);
+                    suggestedConceptNodeMap.put(node.getID(), testList);
                 }
             }
         }
