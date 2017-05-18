@@ -62,6 +62,8 @@ public class ConceptGraph {
         for (String key : nodeMap.keySet()) {
             ConceptNode node = nodeMap.get(key);
 
+            System.out.println("estimate "+ node.getID() + node.getKnowledgeEstimate());
+
             List<learningObjectSuggestion> testList = new ArrayList<>();
 			if(node.getKnowledgeEstimate()>=0.55 && node.getKnowledgeEstimate()<=0.75) {
                 //if false, then it is not an ancestor, therefore it can be added to the list
