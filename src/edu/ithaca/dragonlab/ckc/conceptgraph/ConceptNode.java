@@ -24,6 +24,7 @@ public class ConceptNode {
 
 	private int numParents; //TODO: remove?
 
+	//TODO: remove default constructor and all jackson references, these are built through conceptRecords now
 	//need default constructor for jackson
 	public ConceptNode() {
 		this.id = null;
@@ -34,6 +35,7 @@ public class ConceptNode {
 		knowledgePrediction = 0;
 		knowledgeEstimate = 0;
 		knowledgeDistanceFromAvg = 0;
+		dataImportance = 0;
 	}
 
 	public ConceptNode(ConceptRecord conceptRecord) {
@@ -175,55 +177,29 @@ public class ConceptNode {
 		dataImportance = tempDI;
 	}
 
+	//TODO: something should ensure that calcDataImportance has already been called, or this doesn't work right...
+
+	/**
+	 * @pre calcDataImportance must have already been called
+	 */
 	public void calcKnowledgeEstimate() {
-        //TODO: take dataImportance into consideration
-		//TODO: This is the location of the issue with the failing test. Need to look into this more.
-        //calculate value for this current concept
-
+		//calculate estimate from learning objects directly connected to this node
         double currentConceptEstimate = 0;
-
 		for (LearningObject learningObject : learningObjectMap.values()){
-
 			currentConceptEstimate += learningObject.calcKnowledgeEstimate()*learningObject.getDataImportance();
 		}
+
 		//calculate estimate from children
-		double childrenTotal = 0;
 		for (ConceptNode child : children){
 			child.calcKnowledgeEstimate();
 			currentConceptEstimate +=   child.getKnowledgeEstimate()*child.getDataImportance();
 		}
 
-
-		//Gets Taken care of by dataImportance divisor
-        /*if (learningObjectMap.size() > 0) {
-            currentConceptEstimate /= learningObjectMap.size();
-        }*/
-
-
-
-		//Replaced this with dataImportance
-		/*
-        if (children.size() > 0) {
-            //if you have both children and data, count yourself equal to your children
-            if (currentConceptEstimate > 0){
-                this.knowledgeEstimate = currentConceptEstimate + childrenTotal;
-                this.knowledgeEstimate /= children.size() + 1;
-            }
-            //else you only have children, just count them
-            else {
-                this.knowledgeEstimate = childrenTotal / children.size();
-            }
-        }
-        //else you don't have children, only count yourself
-        else {
-            this.knowledgeEstimate = currentConceptEstimate;
-        }*/
-
-		//Data importance used to calculate
 		if (dataImportance > 0){
 			this.knowledgeEstimate = currentConceptEstimate / dataImportance;
 		} else {
-			this.knowledgeEstimate = currentConceptEstimate;
+			//in this case, this node has no data and can't be estimated
+			this.knowledgeEstimate = 0;
 		}
 
 	}
