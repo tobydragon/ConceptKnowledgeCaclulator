@@ -1,10 +1,8 @@
 
 package edu.ithaca.dragonlab.ckc.conceptgraph;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
+
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import edu.ithaca.dragonlab.ckc.io.ConceptRecord;
@@ -26,6 +24,7 @@ public class ConceptNode {
 
 	private int numParents; //TODO: remove?
 
+	//TODO: remove default constructor and all jackson references, these are built through conceptRecords now
 	//need default constructor for jackson
 	public ConceptNode() {
 		this.id = null;
@@ -36,6 +35,7 @@ public class ConceptNode {
 		knowledgePrediction = 0;
 		knowledgeEstimate = 0;
 		knowledgeDistanceFromAvg = 0;
+		dataImportance = 0;
 	}
 
 	public ConceptNode(ConceptRecord conceptRecord) {
@@ -60,6 +60,73 @@ public class ConceptNode {
 	public ConceptNode(String id){
 		this(id, id);
 	}
+
+
+
+	public void buildLearningObjectSummaryList(HashMap <String, Integer> learningObjectSummary){
+
+		//add the current questions.
+		Iterator <String> itr = this.learningObjectMap.keySet().iterator();
+
+		for (int i =0; i< this.learningObjectMap.size(); i++){
+			//need to get each of the values in the learningObjectMap
+			LearningObject label = this.learningObjectMap.get(itr.next());
+
+			if (learningObjectSummary.containsKey(label.getId())){
+                learningObjectSummary.put(label.getId() ,learningObjectSummary.get(label.getId())+1);
+
+			}else{
+                learningObjectSummary.put(label.getId() ,1);
+
+			}
+
+		}
+		//go to each of the children and call on child so that the child node's learning objects will be added.
+		for(ConceptNode child: children){
+			child.buildLearningObjectSummaryList(learningObjectSummary);
+
+		}
+	}
+
+
+    //find node()
+    public ConceptNode findNode(String findConcept){
+
+        if (this.id.equals(findConcept)){
+            return this;
+        }else{
+
+            for (ConceptNode child: children){
+                ConceptNode myNode = child.findNode(findConcept);
+                if(myNode != null){
+                    return myNode;
+                }
+            }
+        }
+
+        return null;
+
+    }
+
+	public boolean isAncestorOf(ConceptNode child){
+		//is a descendant , ancestor
+		//iterate through the tree and see if it's below it
+        boolean flag =false;
+
+        if (this.children.contains(child)){
+            flag = true;
+//            return true;
+        }else {
+
+            for (ConceptNode nchild : children) {
+                if(nchild.isAncestorOf(child)){
+                    flag=true;
+                }
+            }
+        }
+        return flag;
+    }
+
 
 	//Complicated because it is a graph, so it should only recurse when a child hasn't already been created, which we can only tell from graphNodeMap
     public ConceptNode(ConceptNode other, Map<String, ConceptNode> graphNodeMap, Map<String, LearningObject> graphLearningObjectMap){
@@ -110,55 +177,29 @@ public class ConceptNode {
 		dataImportance = tempDI;
 	}
 
+	//TODO: something should ensure that calcDataImportance has already been called, or this doesn't work right...
+
+	/**
+	 * @pre calcDataImportance must have already been called
+	 */
 	public void calcKnowledgeEstimate() {
-        //TODO: take dataImportance into consideration
-		//TODO: This is the location of the issue with the failing test. Need to look into this more.
-        //calculate value for this current concept
-
+		//calculate estimate from learning objects directly connected to this node
         double currentConceptEstimate = 0;
-
 		for (LearningObject learningObject : learningObjectMap.values()){
-
 			currentConceptEstimate += learningObject.calcKnowledgeEstimate()*learningObject.getDataImportance();
 		}
+
 		//calculate estimate from children
-		double childrenTotal = 0;
 		for (ConceptNode child : children){
 			child.calcKnowledgeEstimate();
 			currentConceptEstimate +=   child.getKnowledgeEstimate()*child.getDataImportance();
 		}
 
-
-		//Gets Taken care of by dataImportance divisor
-        /*if (learningObjectMap.size() > 0) {
-            currentConceptEstimate /= learningObjectMap.size();
-        }*/
-
-
-
-		//Replaced this with dataImportance
-		/*
-        if (children.size() > 0) {
-            //if you have both children and data, count yourself equal to your children
-            if (currentConceptEstimate > 0){
-                this.knowledgeEstimate = currentConceptEstimate + childrenTotal;
-                this.knowledgeEstimate /= children.size() + 1;
-            }
-            //else you only have children, just count them
-            else {
-                this.knowledgeEstimate = childrenTotal / children.size();
-            }
-        }
-        //else you don't have children, only count yourself
-        else {
-            this.knowledgeEstimate = currentConceptEstimate;
-        }*/
-
-		//Data importance used to calculate
 		if (dataImportance > 0){
 			this.knowledgeEstimate = currentConceptEstimate / dataImportance;
 		} else {
-			this.knowledgeEstimate = currentConceptEstimate;
+			//in this case, this node has no data and can't be estimated
+			this.knowledgeEstimate = 0;
 		}
 
 	}
@@ -276,7 +317,7 @@ public class ConceptNode {
 	}
 
 	public double getKnowledgeEstimate() {
-		return Math.round(knowledgeEstimate *1000.0)/1000.0;
+		return knowledgeEstimate;
 	}
 
 	public void setKnowledgeEstimate(double knowledgeEstimate) {

@@ -65,9 +65,12 @@ public class CSVReader {
                     while(i<singleList.size()){
                         LearningObject currentLearningObject = this.learningObjectList.get(i - 2);
                         String qid = currentLearningObject.getId();
-                        ManualGradedResponse response = new ManualGradedResponse(qid,currentLearningObject.getMaxPossibleKnowledgeEstimate(),Double.parseDouble(singleList.get(i)),stdID);
-                        currentLearningObject.addResponse(response);
-                        this.manualGradedResponseList.add(response);
+                        if(!("".equals(singleList.get(i)))) {
+                            ManualGradedResponse response = new ManualGradedResponse(qid, currentLearningObject.getMaxPossibleKnowledgeEstimate(), Double.parseDouble(singleList.get(i)), stdID);
+                            currentLearningObject.addResponse(response);
+                            this.manualGradedResponseList.add(response);
+                        }
+
                         i++;
                     }
 

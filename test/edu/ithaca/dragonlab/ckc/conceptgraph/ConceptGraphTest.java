@@ -1,11 +1,17 @@
 package edu.ithaca.dragonlab.ckc.conceptgraph;
 
+
+import com.fasterxml.jackson.annotation.JsonTypeInfo;
+import com.fasterxml.jackson.databind.DeserializationFeature;
+import com.fasterxml.jackson.databind.ObjectMapper;
+
 import edu.ithaca.dragonlab.ckc.io.ConceptGraphRecord;
 import edu.ithaca.dragonlab.ckc.io.ConceptRecord;
 import edu.ithaca.dragonlab.ckc.io.LearningObjectLinkRecord;
 import edu.ithaca.dragonlab.ckc.learningobject.ExampleLearningObjectFactory;
 import edu.ithaca.dragonlab.ckc.learningobject.ExampleLearningObjectResponseFactory;
 import edu.ithaca.dragonlab.ckc.learningobject.LearningObject;
+
 import edu.ithaca.dragonlab.ckc.learningobject.LearningObjectResponse;
 import edu.ithaca.dragonlab.ckc.util.DataUtil;
 import org.apache.logging.log4j.LogManager;
@@ -13,6 +19,12 @@ import org.apache.logging.log4j.Logger;
 import org.junit.Assert;
 import org.junit.Test;
 
+
+import java.io.File;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+import java.util.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -21,6 +33,133 @@ import static org.hamcrest.collection.IsIterableContainingInAnyOrder.containsInA
 
 public class ConceptGraphTest {
 	static Logger logger = LogManager.getLogger(ConceptGraphTest.class);
+
+
+    @Test
+    public void SuggestedConceptNodeMapSimpleTest() {
+        ConceptGraph orig = ExampleConceptGraphFactory.simpleTestGraphTest();
+
+        //what it is
+        HashMap<String, List<learningObjectSuggestion>> objectSuggestionMap = orig.SuggestedConceptNodeMap();
+
+        //what it should be
+        List<learningObjectSuggestion> testList3 = new ArrayList<>();
+        Assert.assertEquals(1, objectSuggestionMap.size());
+        Assert.assertEquals(testList3, objectSuggestionMap.get("C"));
+
+
+
+    }
+
+
+    @Test
+    public void SuggestedConceptNodeMapWillOneStudentTest() {
+        ConceptGraph orig= ExampleConceptGraphFactory.willExampleConceptGraphTestOneStudent();
+        //what it is
+        HashMap<String, List<learningObjectSuggestion>> objectSuggestionMap = orig.SuggestedConceptNodeMap();
+
+        Assert.assertEquals(2, objectSuggestionMap.size());
+        Assert.assertEquals(objectSuggestionMap.get("If Statement").get(1).getId(), "Q3");
+        Assert.assertEquals(objectSuggestionMap.get("If Statement").get(0).getId(), "Q10");
+        Assert.assertEquals(objectSuggestionMap.get("While Loop").get(0).getId(), "Q10");
+
+    }
+
+
+    @Test
+    public void buildLearningObjectListSimpleTest(){
+        ConceptGraph orig = ExampleConceptGraphFactory.makeSimpleWithData();
+
+        //from A nodes
+        HashMap<String, Integer> testCompareA = new HashMap<String, Integer>();
+        testCompareA.put("Q1",1);
+        testCompareA.put("Q2",1);
+        testCompareA.put("Q3",2);
+        testCompareA.put("Q4",2);
+        testCompareA.put("Q5",2);
+        testCompareA.put("Q6",2);
+
+        Assert.assertEquals(testCompareA, orig.buildLearningObjectSummaryList("A"));
+
+        //from B node
+        HashMap<String, Integer> testCompareB = new HashMap<String, Integer>();
+        testCompareB.put("Q1",1);
+        testCompareB.put("Q2",1);
+        testCompareB.put("Q3",1);
+        testCompareB.put("Q4",1);
+        testCompareB.put("Q5",1);
+        testCompareB.put("Q6",1);
+
+        Assert.assertEquals(testCompareB, orig.buildLearningObjectSummaryList("B"));
+
+
+        //from c node
+        HashMap<String, Integer> testCompareC = new HashMap<String, Integer>();
+        testCompareC.put("Q3",1);
+        testCompareC.put("Q4",1);
+        testCompareC.put("Q5",1);
+        testCompareC.put("Q6",1);
+
+        Assert.assertEquals(testCompareC, orig.buildLearningObjectSummaryList("C"));
+
+        //from a node not in graph
+        Assert.assertEquals(null, orig.buildLearningObjectSummaryList("W"));
+    }
+
+
+
+
+    @Test
+    public void suggestedOrderBuildLearningObjectListTest(){
+        List<LearningObjectLinkRecord> myList = ExampleLearningObjectFactory.makeSimpleLOLRecords();
+        myList.add(new LearningObjectLinkRecord("Q10", Arrays.asList("A"),1));
+        ConceptGraph orig = new ConceptGraph(ExampleConceptGraphRecordFactory.makeSimple(),
+                myList, ExampleLearningObjectResponseFactory.makeSimpleResponses());
+
+//        //from A nodes
+        HashMap<String, Integer> testCompareA = new HashMap<String, Integer>();
+        testCompareA.put("Q3",2);
+        testCompareA.put("Q4",2);
+        testCompareA.put("Q5",2);
+        testCompareA.put("Q6",2);
+        testCompareA.put("Q1",1);
+        testCompareA.put("Q2",1);
+        testCompareA.put("Q10",1);
+
+        HashMap<String, Integer> learningSummaryFromA = orig.buildLearningObjectSummaryList("A");
+        //makes sure that buildLearningObjectSummaryList works
+        Assert.assertEquals(testCompareA,learningSummaryFromA);
+
+        //build the sugggested learning object list
+        List<learningObjectSuggestion> suggestedList = orig.buildLearningObjectSuggestionList(learningSummaryFromA);
+
+
+        //this is ordered based on "level"
+        List<learningObjectSuggestion> suggestListTest = new ArrayList<>();
+        suggestListTest.add(new learningObjectSuggestion("Q3", 2,learningObjectSuggestion.Level.RIGHT) );
+        suggestListTest.add(new learningObjectSuggestion("Q1", 1,learningObjectSuggestion.Level.RIGHT) );
+        suggestListTest.add(new learningObjectSuggestion("Q2", 1,learningObjectSuggestion.Level.RIGHT) );
+        suggestListTest.add(new learningObjectSuggestion("Q4", 2,learningObjectSuggestion.Level.WRONG) );
+        suggestListTest.add(new learningObjectSuggestion("Q5", 2,learningObjectSuggestion.Level.WRONG) );
+        suggestListTest.add(new learningObjectSuggestion("Q6", 2,learningObjectSuggestion.Level.WRONG) );
+        suggestListTest.add(new learningObjectSuggestion("Q10", 1,learningObjectSuggestion.Level.INCOMPLETE) );
+
+
+        //orders the list based off of "level"
+        orig.suggestedOrderBuildLearningObjectList(suggestedList);
+
+//        //who should call orderedList
+
+        for (int i =0; i<suggestedList.size(); i++){
+
+            Assert.assertEquals(suggestedList.get(i).getId(),suggestListTest.get(i).getId());
+            Assert.assertEquals(suggestedList.get(i).getPathNum(),suggestListTest.get(i).getPathNum());
+            Assert.assertEquals(suggestedList.get(i).getLevel(),suggestListTest.get(i).getLevel());
+
+        }
+
+    }
+
 
 	@Test
     public void copyConstructorTest(){
@@ -311,6 +450,20 @@ public class ConceptGraphTest {
         // Makes sure the new question was only added once to Learning Object map (previously had 6 questions, now 7)
         Assert.assertEquals(7,graph.getLearningObjectMap().size());
 
+
+    }
+
+    @Test
+    public void calcKnowledgeEstimateMoreComplexTest() {
+        ConceptGraph orig = ExampleConceptGraphFactory.willExampleConceptGraphTestOneStudent();
+
+        Assert.assertEquals(0.806, orig.findNodeById("Boolean").getKnowledgeEstimate(), DataUtil.OK_FLOAT_MARGIN);
+        Assert.assertEquals(0.783090, orig.findNodeById("Boolean Expressions").getKnowledgeEstimate(), DataUtil.OK_FLOAT_MARGIN);
+        Assert.assertEquals(0.746, orig.findNodeById("If Statement").getKnowledgeEstimate(), DataUtil.OK_FLOAT_MARGIN);
+
+        Assert.assertEquals(0.722, orig.findNodeById("While Loop").getKnowledgeEstimate(), DataUtil.OK_FLOAT_MARGIN);
+        Assert.assertEquals(0.85, orig.findNodeById("Counting").getKnowledgeEstimate(), DataUtil.OK_FLOAT_MARGIN);
+        Assert.assertEquals(0.7666, orig.findNodeById("For Loop").getKnowledgeEstimate(), DataUtil.OK_FLOAT_MARGIN);
 
     }
 

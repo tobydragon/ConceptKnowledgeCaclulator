@@ -83,8 +83,8 @@ public class MultCGTest {
 //		return new ConceptGraph(lists);
 //	}
 	
-	public static void main(String args[]){
-		MultCGTest myTest = new MultCGTest();
-		System.out.println(myTest);
-	}
+//	public static void main(String args[]){
+//		MultCGTest myTest = new MultCGTest();
+//		System.out.println(myTest);
+//	}
 }

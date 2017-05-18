@@ -57,6 +57,7 @@ public class LearningObject {
             estimate += response.calcKnowledgeEstimate();
         }
         if (responses.size() > 0){
+
             estimate /= responses.size();
         }
         String string;
