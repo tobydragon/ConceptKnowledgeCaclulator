@@ -4,9 +4,6 @@ import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import edu.ithaca.dragonlab.ckc.io.*;
 import edu.ithaca.dragonlab.ckc.util.DataUtil;
-import edu.ithaca.dragonlab.ckc.util.ErrorUtil;
-import edu.ithaca.dragonlab.ckc.util.GraphConstants;
-import jdk.nashorn.internal.ir.debug.JSONWriter;
 import org.junit.Assert;
 import org.junit.Test;
 
@@ -66,7 +63,7 @@ public class PracticalConceptGraphTest {
             List<LearningObjectLinkRecord> LOLRlist = JsonImportExport.LOLRFromRecords(TEST_DIR + "realisticExampleLOLRecord.json");
             ConceptGraph graph = new ConceptGraph(graphRecord, LOLRlist);
 
-            GroupConceptGraphs gcg = new GroupConceptGraphs(graph,csvReader.getManualGradedResponses());
+            CohortConceptGraphs gcg = new CohortConceptGraphs(graph,csvReader.getManualGradedResponses());
             graph.calcDataImportance();
             graph.calcKnowledgeEstimates();
 
@@ -79,7 +76,7 @@ public class PracticalConceptGraphTest {
             ConceptGraphRecord tree = graph.graphToTree().buildNodesAndLinks();
             //Object to JSON in file
             mapper.writeValue(new File("test/testresources/practicalExamples/advancedRealisticExample.json"), tree);
-            mapper.writeValue(new File("test/testresources/practicalExamples/groupConceptGraphAdvancedRealisticExample.json"), gcg.getAllNamedGraphs());
+            //mapper.writeValue(new File("test/testresources/practicalExamples/groupConceptGraphAdvancedRealisticExample.json"), gcg.getAllNamedGraphs());
 
         }catch (Exception e){
             e.printStackTrace();

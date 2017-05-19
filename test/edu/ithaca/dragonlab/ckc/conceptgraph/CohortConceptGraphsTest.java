@@ -1,6 +1,5 @@
 package edu.ithaca.dragonlab.ckc.conceptgraph;
 
-import edu.ithaca.dragonlab.ckc.io.LearningObjectLinkRecord;
 import edu.ithaca.dragonlab.ckc.learningobject.ExampleLearningObjectFactory;
 import edu.ithaca.dragonlab.ckc.learningobject.ExampleLearningObjectResponseFactory;
 import edu.ithaca.dragonlab.ckc.util.DataUtil;
@@ -9,54 +8,54 @@ import org.apache.logging.log4j.Logger;
 import org.junit.Assert;
 import org.junit.Test;
 
-public class GroupConceptGraphsTest {
+public class CohortConceptGraphsTest {
 
 	static Logger logger = LogManager.getLogger(ConceptGraphTest.class);
 
 	@Test
 	public void userCountTest(){
 		ConceptGraph graph = ExampleConceptGraphFactory.makeSimple();
-		GroupConceptGraphs group = new GroupConceptGraphs(graph, ExampleLearningObjectResponseFactory.makeSimpleResponses());
-		Assert.assertEquals(3,group.userCount());
+		CohortConceptGraphs group = new CohortConceptGraphs(graph, ExampleLearningObjectResponseFactory.makeSimpleResponses());
+		Assert.assertEquals(3,group.getUserCount());
 	}
 
 	@Test
 	public void addSummariesTest(){
         ConceptGraph graph = new ConceptGraph(ExampleConceptGraphRecordFactory.makeSimple(), ExampleLearningObjectFactory.makeSimpleLOLRecords());
-        GroupConceptGraphs group = new GroupConceptGraphs(graph, ExampleLearningObjectResponseFactory.makeSimpleResponses());
+        CohortConceptGraphs group = new CohortConceptGraphs(graph, ExampleLearningObjectResponseFactory.makeSimpleResponses());
 
         Assert.assertEquals(6,group.getAvgGraph().getLearningObjectMap().size());
-		Assert.assertEquals(6,group.getUserToGraphMap().get("student1").getLearningObjectMap().size());
-        Assert.assertEquals(6,group.getUserToGraphMap().get("student2").getLearningObjectMap().size());
-        Assert.assertEquals(6,group.getUserToGraphMap().get("student3").getLearningObjectMap().size());
+		Assert.assertEquals(6,group.getUserGraph("student1").getLearningObjectMap().size());
+        Assert.assertEquals(6,group.getUserGraph("student2").getLearningObjectMap().size());
+        Assert.assertEquals(6,group.getUserGraph("student3").getLearningObjectMap().size());
 
         Assert.assertEquals(3,group.getAvgGraph().getLearningObjectMap().get("Q1").getResponses().size());
         Assert.assertEquals(2,group.getAvgGraph().getLearningObjectMap().get("Q5").getResponses().size());
 
-        Assert.assertEquals(1,group.getUserToGraphMap().get("student1").getLearningObjectMap().get("Q1").getResponses().size());
-        Assert.assertEquals(0,group.getUserToGraphMap().get("student3").getLearningObjectMap().get("Q5").getResponses().size());
+        Assert.assertEquals(1,group.getUserGraph("student1").getLearningObjectMap().get("Q1").getResponses().size());
+        Assert.assertEquals(0,group.getUserGraph("student3").getLearningObjectMap().get("Q5").getResponses().size());
     }
 
     @Test
     public void calcKnowledgeEstimateTest() {
         ConceptGraph graph = ExampleConceptGraphFactory.makeSimpleWithData();
-        GroupConceptGraphs group = new GroupConceptGraphs(graph, ExampleLearningObjectResponseFactory.makeSimpleResponses());
+        CohortConceptGraphs group = new CohortConceptGraphs(graph, ExampleLearningObjectResponseFactory.makeSimpleResponses());
 
         Assert.assertEquals(0.5, group.getAvgGraph().findNodeById("C").getKnowledgeEstimate(), DataUtil.OK_FLOAT_MARGIN);
         Assert.assertEquals(0.688, group.getAvgGraph().findNodeById("B").getKnowledgeEstimate(), DataUtil.OK_FLOAT_MARGIN);
         Assert.assertEquals(0.615, group.getAvgGraph().findNodeById("A").getKnowledgeEstimate(), DataUtil.OK_FLOAT_MARGIN);
 
-        Assert.assertEquals(1, group.getUserToGraphMap().get("student1").findNodeById("A").getKnowledgeEstimate(), DataUtil.OK_FLOAT_MARGIN);
-        Assert.assertEquals(1, group.getUserToGraphMap().get("student1").findNodeById("B").getKnowledgeEstimate(), DataUtil.OK_FLOAT_MARGIN);
-        Assert.assertEquals(1, group.getUserToGraphMap().get("student1").findNodeById("C").getKnowledgeEstimate(), DataUtil.OK_FLOAT_MARGIN);
+        Assert.assertEquals(1, group.getUserGraph("student1").findNodeById("A").getKnowledgeEstimate(), DataUtil.OK_FLOAT_MARGIN);
+        Assert.assertEquals(1, group.getUserGraph("student1").findNodeById("B").getKnowledgeEstimate(), DataUtil.OK_FLOAT_MARGIN);
+        Assert.assertEquals(1, group.getUserGraph("student1").findNodeById("C").getKnowledgeEstimate(), DataUtil.OK_FLOAT_MARGIN);
 
-        Assert.assertEquals(0.4, group.getUserToGraphMap().get("student2").findNodeById("A").getKnowledgeEstimate(), DataUtil.OK_FLOAT_MARGIN);
-        Assert.assertEquals(0.5, group.getUserToGraphMap().get("student2").findNodeById("B").getKnowledgeEstimate(), DataUtil.OK_FLOAT_MARGIN);
-        Assert.assertEquals(0.25, group.getUserToGraphMap().get("student2").findNodeById("C").getKnowledgeEstimate(), DataUtil.OK_FLOAT_MARGIN);
+        Assert.assertEquals(0.4, group.getUserGraph("student2").findNodeById("A").getKnowledgeEstimate(), DataUtil.OK_FLOAT_MARGIN);
+        Assert.assertEquals(0.5, group.getUserGraph("student2").findNodeById("B").getKnowledgeEstimate(), DataUtil.OK_FLOAT_MARGIN);
+        Assert.assertEquals(0.25, group.getUserGraph("student2").findNodeById("C").getKnowledgeEstimate(), DataUtil.OK_FLOAT_MARGIN);
 
-        Assert.assertEquals(0.333, group.getUserToGraphMap().get("student3").findNodeById("A").getKnowledgeEstimate(), DataUtil.OK_FLOAT_MARGIN);
-        Assert.assertEquals(0.5, group.getUserToGraphMap().get("student3").findNodeById("B").getKnowledgeEstimate(), DataUtil.OK_FLOAT_MARGIN);
-        Assert.assertEquals(0, group.getUserToGraphMap().get("student3").findNodeById("C").getKnowledgeEstimate(), DataUtil.OK_FLOAT_MARGIN);
+        Assert.assertEquals(0.333, group.getUserGraph("student3").findNodeById("A").getKnowledgeEstimate(), DataUtil.OK_FLOAT_MARGIN);
+        Assert.assertEquals(0.5, group.getUserGraph("student3").findNodeById("B").getKnowledgeEstimate(), DataUtil.OK_FLOAT_MARGIN);
+        Assert.assertEquals(0, group.getUserGraph("student3").findNodeById("C").getKnowledgeEstimate(), DataUtil.OK_FLOAT_MARGIN);
     }
 //
 //
@@ -66,7 +65,7 @@ public class GroupConceptGraphsTest {
 //	public void calcDistFromAvgTest(){
 //        ConceptGraph graph = ExampleConceptGraphFactory.makeSimpleWithData();
 //        graph.addLearningObjects(ExampleLearningObjectFactory.makeSimpleLearningObjectDef());
-//        GroupConceptGraphs group = new GroupConceptGraphs(graph, ExampleLearningObjectResponseFactory.makeSimpleResponses());
+//        CohortConceptGraphs group = new CohortConceptGraphs(graph, ExampleLearningObjectResponseFactory.makeSimpleResponses());
 //		Map<String, ConceptGraph> userGraphMap = group.getUserToGraphMap();
 //
 //		ConceptGraph user = userGraphMap.get("student1");
@@ -87,7 +86,7 @@ public class GroupConceptGraphsTest {
 //
 //        ConceptGraph graph = ExampleConceptGraphFactory.makeSimpleWithData();
 //        graph.addLearningObjects(ExampleLearningObjectFactory.makeSimpleLearningObjectDef());
-//        GroupConceptGraphs group = new GroupConceptGraphs(graph, ExampleLearningObjectResponseFactory.makeSimpleResponses());
+//        CohortConceptGraphs group = new CohortConceptGraphs(graph, ExampleLearningObjectResponseFactory.makeSimpleResponses());
 //		try {
 //			//writes JSON to file
 //			mapper.writeValue(new File("out/test/sampleoutput/GroupConceptGraphSimple.json"), group.getAllNamedGraphs());
@@ -98,7 +97,7 @@ public class GroupConceptGraphsTest {
 //		/*
 //		try {
 //			//Reads in the file that was written earlier
-//			GroupConceptGraphs gcg = mapper.readValue(new File("out/test/sampleoutput/GroupCOnceptGraphSimple.json"), GroupConceptGraphs.class);
+//			CohortConceptGraphs gcg = mapper.readValue(new File("out/test/sampleoutput/GroupCOnceptGraphSimple.json"), CohortConceptGraphs.class);
 //
 //			Assert.assertEquals(2,gcg.getUserToGraphMap().keySet().size());
 //			Assert.assertEquals(7, gcg.getAllGraphs().get(1).getIDLinks().size());
@@ -115,7 +114,7 @@ public class GroupConceptGraphsTest {
 //	public void jsonOutputTest(){
 //
 //		//Writes the JSON File for GCG
-//		GroupConceptGraphs group = new GroupConceptGraphs("out/test/sampleoutput/GroupConceptGraph-jsonOutputTest",
+//		CohortConceptGraphs group = new CohortConceptGraphs("out/test/sampleoutput/GroupConceptGraph-jsonOutputTest",
 //				ExampleConceptGraphFactory.makeSimpleWithData(), ExampleLearningObjectResponseFactory.makeSimpleResponses());
 //		ObjectMapper mapper = new ObjectMapper();
 //		mapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES,false);
@@ -132,7 +131,7 @@ public class GroupConceptGraphsTest {
 //		try {
 //			//Reads in the file that was written earlier
 //			//TODO: fix path to file that will be written
-//			GroupConceptGraphs gcg = mapper.readValue(new File("war/TreeDisplay/input.json"), GroupConceptGraphs.class);
+//			CohortConceptGraphs gcg = mapper.readValue(new File("war/TreeDisplay/input.json"), CohortConceptGraphs.class);
 //
 //			Assert.assertEquals(2,gcg.getUserToGraphMap().keySet().size());
 //			Assert.assertEquals(7, gcg.getAllGraphs().get(1).getIDLinks().size());
