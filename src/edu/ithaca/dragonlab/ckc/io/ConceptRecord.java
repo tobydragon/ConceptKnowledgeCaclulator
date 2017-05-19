@@ -25,12 +25,16 @@ public class ConceptRecord {
 
     }
 
-    public ConceptRecord(ConceptNode conceptToRecord) {
-        this.id = conceptToRecord.getID();
+    public ConceptRecord(ConceptNode conceptToRecord, String newId) {
+        this.id = newId;
         this.label = conceptToRecord.getLabel();
         this.knowledgeEstimate = conceptToRecord.getKnowledgeEstimate();
         this.knowledgePrediction = 0;
         this.knowledgeDistFromAvg = conceptToRecord.getKnowledgeDistanceFromAvg();
+    }
+
+    public ConceptRecord(ConceptNode conceptToRecord) {
+        this(conceptToRecord, conceptToRecord.getID());
     }
 
     public ConceptRecord(String id) {

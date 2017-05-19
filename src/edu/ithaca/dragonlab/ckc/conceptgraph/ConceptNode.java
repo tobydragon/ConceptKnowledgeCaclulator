@@ -10,7 +10,6 @@ import edu.ithaca.dragonlab.ckc.io.LinkRecord;
 import edu.ithaca.dragonlab.ckc.learningobject.LearningObject;
 
 public class ConceptNode {
-	private static final String symbol = "-";
 
 	String id; 		//unique to each node
 	String label; 	//can be the same as id, or different if you want displayed different
@@ -178,7 +177,6 @@ public class ConceptNode {
 	}
 
 	//TODO: something should ensure that calcDataImportance has already been called, or this doesn't work right...
-
 	/**
 	 * @pre calcDataImportance must have already been called
 	 */
@@ -223,70 +221,6 @@ public class ConceptNode {
 			learningObjectMap.put(learningObject.getId(), learningObject);
 	}
 
-	//////////////////  TREE CONVERSION  //////////////////////
-	public ConceptNode makeTree(HashMap<String, List<String>> multCopies){
-		ConceptNode nodeCopy;
-		List<String> nodeCopies = multCopies.get(this.getLabel());
-		//if there are no copies, make a new list to store all the copies and add it to the map
-		if(nodeCopies == null){
-			nodeCopy = new ConceptNode(makeName(this.getLabel()), this.getLabel());
-			nodeCopies = new ArrayList<>();
-            multCopies.put(nodeCopy.getLabel(), nodeCopies);
-		//else get the previous name from the list and make a new name from it
-		}else{
-			String prevName = nodeCopies.get(nodeCopies.size()-1);
-			nodeCopy = new ConceptNode(makeName(prevName), this.getLabel());
-		}
-		//add the new name to the list
-        nodeCopies.add(nodeCopy.getID());
-
-		//set all the data from the node copy
-        nodeCopy.setKnowledgeEstimate(this.knowledgeEstimate);
-        nodeCopy.setKnowledgePrediction(this.knowledgePrediction);
-        nodeCopy.setKnowledgeDistanceFromAvg(this.knowledgeDistanceFromAvg);
-
-        for(ConceptNode origChild : this.getChildren()){
-            ConceptNode childCopy = origChild.makeTree(multCopies);
-            nodeCopy.addChild(childCopy);
-        }
-		return nodeCopy;
-	}
-
-	/***
-	 * makes next name based on prevName, everything before "-" symbol is the name and the number after it will iterate
-	 * @param prevName
-	 * @return String next name
-	 */
-	public static String makeName(String prevName) {
-		if(prevName != "" && prevName != null){
-			String[] nameList = prevName.split(symbol);
-			String name = "";
-			for(int i = 0; i < nameList.length-1; i++){
-				name += nameList[i];
-			}
-			int num = 0;
-
-			if(nameList.length <= 1){
-				String fullName = nameList[0] + "-1";
-				return fullName;
-			}else{
-				try{
-					String numString = nameList[nameList.length-1];
-					num = Integer.parseInt(numString);
-					num += 1;
-				}catch(NumberFormatException e){
-					name += nameList[nameList.length-1];
-					num = 1;
-				}
-			}
-
-
-			String fullName = name+"-"+num;
-			return fullName;
-		}else{
-			return "";
-		}
-	}
 
 	//////////////////  TO STRING  //////////////////////
 	public String toString(String indent) {

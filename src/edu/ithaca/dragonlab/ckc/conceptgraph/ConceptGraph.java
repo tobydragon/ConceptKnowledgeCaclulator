@@ -18,7 +18,7 @@ public class ConceptGraph {
 	String name;
 	List<ConceptNode> roots;
 
-	//This information will be duplicated, links will be found in nodes, but also here.
+	//This information will be duplicated, nodes will be found within each other, but also here.
 	Map<String, LearningObject> learningObjectMap;
 	Map<String, ConceptNode> nodeMap;
 
@@ -329,16 +329,7 @@ public class ConceptGraph {
 		}
 	}
 	
-	public ConceptGraph graphToTree(){
-		List<ConceptNode> newRoots = new ArrayList<>();
-		HashMap<String, List<String>> initMultCopies = new HashMap<String, List<String>>();
-		for(ConceptNode root : this.roots){
-			newRoots.add(root.makeTree(initMultCopies));
-		}
-		
-		return new ConceptGraph(newRoots);
-		
-	}
+
 	
 	public ConceptNode findNodeById(String id){
 		return nodeMap.get(id);
@@ -350,5 +341,9 @@ public class ConceptGraph {
 
     public Map<String, LearningObject> getLearningObjectMap() {
         return learningObjectMap;
+    }
+
+    public List<ConceptNode> getRoots() {
+        return roots;
     }
 }
