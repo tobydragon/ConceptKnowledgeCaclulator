@@ -18,7 +18,7 @@ public class CohortConceptGraphs {
 	public CohortConceptGraphs(ConceptGraph structureGraph, List<LearningObjectResponse> summaries){
 		
 		averageGraph = new ConceptGraph(structureGraph, "Average Graph");
-		averageGraph.addSummariesToGraph(summaries);
+		averageGraph.addLearningObjectResponses(summaries);
 		averageGraph.calcDataImportance();
 		averageGraph.calcKnowledgeEstimates();
 		//averageGraph.calcPredictedScores();
@@ -28,7 +28,7 @@ public class CohortConceptGraphs {
 		
 		for(String user: userIdToResponses.keySet()){
 			ConceptGraph structureCopy = new ConceptGraph(structureGraph, user);
-			structureCopy.addSummariesToGraph(userIdToResponses.get(user));
+			structureCopy.addLearningObjectResponses(userIdToResponses.get(user));
 			structureCopy.calcDataImportance();
 			structureCopy.calcKnowledgeEstimates();
 			structureCopy.calcPredictedScores();
@@ -44,9 +44,9 @@ public class CohortConceptGraphs {
 	
 	public void calcDistanceFromAvg(){
 		//TODO: This should be working on nodes, not records
-//		ConceptGraphRecord avgLinks = averageGraph.buildNodesAndLinks();
+//		ConceptGraphRecord avgLinks = averageGraph.buildConceptGraphRecord();
 //		for(String user: userToGraph.keySet()){
-//			ConceptGraphRecord tempLinks = userToGraph.get(user).buildNodesAndLinks();
+//			ConceptGraphRecord tempLinks = userToGraph.get(user).buildConceptGraphRecord();
 //
 //			for(ConceptRecord tempNode: tempLinks.getConcepts()){
 //				for(ConceptRecord avgNode: avgLinks.getConcepts()){

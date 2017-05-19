@@ -2,7 +2,6 @@ package edu.ithaca.dragonlab.ckc.conceptgraph;
 
 
 import edu.ithaca.dragonlab.ckc.io.ConceptGraphRecord;
-import edu.ithaca.dragonlab.ckc.io.ConceptRecord;
 import edu.ithaca.dragonlab.ckc.io.LearningObjectLinkRecord;
 import edu.ithaca.dragonlab.ckc.learningobject.ExampleLearningObjectFactory;
 import edu.ithaca.dragonlab.ckc.learningobject.ExampleLearningObjectResponseFactory;
@@ -168,7 +167,7 @@ public class ConceptGraphTest {
     public void buildGraphFromRecordAndRecordFromGraphTest(){
         ConceptGraphRecord origRecord = ExampleConceptGraphRecordFactory.makeSimple();
         ConceptGraph toTest = new ConceptGraph(origRecord);
-        ConceptGraphRecord newRecord = toTest.buildNodesAndLinks();
+        ConceptGraphRecord newRecord = toTest.buildConceptGraphRecord();
         Assert.assertEquals(3, newRecord.getConcepts().size());
         Assert.assertEquals(3, newRecord.getLinks().size());
         Assert.assertThat(newRecord.getConcepts(), containsInAnyOrder(origRecord.getConcepts().toArray()));
@@ -176,7 +175,7 @@ public class ConceptGraphTest {
 
         origRecord = ExampleConceptGraphRecordFactory.makeSuperComplex();
         toTest = new ConceptGraph(origRecord);
-        newRecord = toTest.buildNodesAndLinks();
+        newRecord = toTest.buildConceptGraphRecord();
         Assert.assertEquals(6, newRecord.getConcepts().size());
         Assert.assertEquals(11, newRecord.getLinks().size());
         Assert.assertThat(newRecord.getConcepts(), containsInAnyOrder(origRecord.getConcepts().toArray()));
@@ -235,7 +234,7 @@ public class ConceptGraphTest {
     }
 
 
-    //TODO: Don't know how these tests are still passing, I think they should be broken, so they should be re-written to catch errors, then the format of test files should be fixed
+    //TODO
 	@Test
 	public void makeConceptGraphFromFileTest(){
 //		ObjectMapper mapper = new ObjectMapper();
@@ -249,7 +248,7 @@ public class ConceptGraphTest {
 //			ConceptGraph myGraph = new ConceptGraph(lists);
 //			ConceptGraph myTree = myGraph.graphToTree();
 //
-//			ConceptGraphRecordOld listsFromTree = myTree.buildNodesAndLinks();
+//			ConceptGraphRecordOld listsFromTree = myTree.buildConceptGraphRecord();
 //
 //			Assert.assertEquals(16, listsFromTree.getNodes().size());
 //			Assert.assertEquals(15, listsFromTree.getLinks().size());
@@ -260,7 +259,7 @@ public class ConceptGraphTest {
 		
 	}
 
-    //TODO: Don't know how these tests are still passing, I think they should be broken, so they should be re-written to catch errors, then the format of test files should be fixed
+    //TODO
     @Test
 	public void makeJsonFromConceptGraphTreeTest(){
 
@@ -274,7 +273,7 @@ public class ConceptGraphTest {
 //			ConceptGraph tree = new ConceptGraph(lists).graphToTree();
 //
 //			try{
-//			mapper.writeValue(new File(outputLocation), tree.buildNodesAndLinks());
+//			mapper.writeValue(new File(outputLocation), tree.buildConceptGraphRecord());
 //            } catch (Exception e) {
 //                e.printStackTrace();
 //            }

@@ -26,7 +26,7 @@ public class TreeConverterTest {
         int numB = 0;
         int numC = 0;
 
-        ConceptGraphRecord treeLists = TreeConverter.makeTreeCopy(ExampleConceptGraphFactory.makeSimpleWithData()).buildNodesAndLinks();
+        ConceptGraphRecord treeLists = TreeConverter.makeTreeCopy(ExampleConceptGraphFactory.makeSimpleWithData()).buildConceptGraphRecord();
         for(ConceptRecord node : treeLists.getConcepts()){
             if(node.getLabel().equals("A")){
                 numA++;
@@ -50,11 +50,11 @@ public class TreeConverterTest {
     }
 
     public void checkTreeConversionByNodesAndLinksNumbers(ConceptGraph graphToTest, int expectedGraphNodeCount, int expectedGraphLinkCount, int expectedTreeNodeCount, int expectedTreeLinkCount){
-        ConceptGraphRecord graphLists = graphToTest.buildNodesAndLinks();
+        ConceptGraphRecord graphLists = graphToTest.buildConceptGraphRecord();
         Assert.assertEquals(expectedGraphNodeCount, graphLists.getConcepts().size());
         Assert.assertEquals(expectedGraphLinkCount, graphLists.getLinks().size());
 
-        ConceptGraphRecord treeLists = TreeConverter.makeTreeCopy(graphToTest).buildNodesAndLinks();
+        ConceptGraphRecord treeLists = TreeConverter.makeTreeCopy(graphToTest).buildConceptGraphRecord();
 
         Assert.assertEquals(expectedTreeNodeCount, treeLists.getConcepts().size());
         Assert.assertEquals(expectedTreeLinkCount, treeLists.getLinks().size());
@@ -68,10 +68,10 @@ public class TreeConverterTest {
     }
 
     public void treeToTreeCheck(ConceptGraph treeToTest){
-        ConceptGraphRecord initialLists = treeToTest.buildNodesAndLinks();
+        ConceptGraphRecord initialLists = treeToTest.buildConceptGraphRecord();
         ConceptGraph treeFromTree = TreeConverter.makeTreeCopy(treeToTest);
 
-        ConceptGraphRecord postLists = treeFromTree.buildNodesAndLinks();
+        ConceptGraphRecord postLists = treeFromTree.buildConceptGraphRecord();
         Assert.assertEquals(postLists.getConcepts().size(), initialLists.getConcepts().size());
         Assert.assertEquals(postLists.getLinks().size(), initialLists.getLinks().size());
     }
@@ -82,8 +82,8 @@ public class TreeConverterTest {
         ConceptGraph myTree = TreeConverter.makeTreeCopy(myGraph);
         ConceptGraph myTree2 = TreeConverter.makeTreeCopy(myTree);
 
-        ConceptGraphRecord lists2 = myTree.buildNodesAndLinks();
-        ConceptGraphRecord lists3 = myTree2.buildNodesAndLinks();
+        ConceptGraphRecord lists2 = myTree.buildConceptGraphRecord();
+        ConceptGraphRecord lists3 = myTree2.buildConceptGraphRecord();
 
         Assert.assertEquals(lists2.getConcepts().size(), lists3.getConcepts().size());
         Assert.assertEquals(lists2.getLinks().size(), lists3.getLinks().size());
