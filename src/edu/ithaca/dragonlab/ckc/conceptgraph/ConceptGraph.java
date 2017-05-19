@@ -3,11 +3,9 @@ package edu.ithaca.dragonlab.ckc.conceptgraph;
 import edu.ithaca.dragonlab.ckc.io.*;
 import edu.ithaca.dragonlab.ckc.learningobject.LearningObject;
 import edu.ithaca.dragonlab.ckc.learningobject.LearningObjectResponse;
-import org.apache.logging.log4j.Level;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import java.awt.*;
 import java.util.*;
 import java.util.List;
 
@@ -23,7 +21,13 @@ public class ConceptGraph {
 	//This information will be duplicated, links will be found in nodes, but also here.
 	Map<String, LearningObject> learningObjectMap;
 	Map<String, ConceptNode> nodeMap;
-	
+
+
+	public ConceptGraph(List<ConceptNode> rootsIn){
+		learningObjectMap = new HashMap<>();
+		this.roots = rootsIn;
+	}
+
 	public ConceptGraph(ConceptGraph other, String newName){
 	  this.name = newName;
 		this.roots = new ArrayList<>();
@@ -37,121 +41,6 @@ public class ConceptGraph {
             this.roots.add(newRoot);
         }
     }
-
-
-
-    //if false, then it is not an ancestor therefore it can be added to the list
-    public boolean ancestry(ConceptNode node) {
-	    boolean isAnc = false;
-        for (String key : nodeMap.keySet()) {
-            ConceptNode compareNode = nodeMap.get(key);
-            boolean ances =  node.isAncestorOf(compareNode);
-            //This allows for if it does have an ancestor, but it has a high knowledge estimate, it wont be added to the suggestion list
-            if (ances && compareNode.getKnowledgeEstimate()<0.75){
-
-//                if (ances && node.getKnowledgeEstimate()<0.75){
-                isAnc=true;
-                break;
-            }
-        }
-        return  isAnc;
-    }
-
-
-    public HashMap<String, List<learningObjectSuggestion>> SuggestedConceptNodeMap(){
-
-        HashMap<String, List<learningObjectSuggestion>> suggestedConceptNodeMap = new HashMap<>();
-        for (String key : nodeMap.keySet()) {
-            ConceptNode node = nodeMap.get(key);
-//            System.out.println("estimate "+ node.getID() + node.getKnowledgeEstimate());
-
-            List<learningObjectSuggestion> testList = new ArrayList<>();
-			if(node.getKnowledgeEstimate()>=0.55 && node.getKnowledgeEstimate()<=0.75) {
-                //if false, then it is not an ancestor, therefore it can be added to the list
-                boolean anc = ancestry(node);
-                if (!anc) {
-                    HashMap<String, Integer> map = buildLearningObjectSummaryList(key);
-                    List<learningObjectSuggestion> list = buildLearningObjectSuggestionList(map);
-                    suggestedOrderBuildLearningObjectList(list);
-                    for (int i = 0; i < list.size(); i++) {
-                        //if it is incomplete
-                        if (list.get(i).getLevel().equals(learningObjectSuggestion.Level.INCOMPLETE)) {
-                            //then add it
-                            testList.add(list.get(i));
-                        }
-                    }
-//                    System.out.println("the testList size is "+testList.size());
-                    suggestedConceptNodeMap.put(node.getID(), testList);
-                }
-            }
-        }
-
-        return suggestedConceptNodeMap;
-    }
-
-
-    public List<learningObjectSuggestion> suggestedOrderBuildLearningObjectList(List<learningObjectSuggestion> myList){
-
-        Collections.sort(myList, new learningObjectSuggestionComparator());
-
-        return myList;
-    }
-
-    public List<learningObjectSuggestion> buildLearningObjectSuggestionList(HashMap<String, Integer> summaryList){
-        //build objects through the hashmap
-        //iterate through the hashmap and make the new objects
-        //put object in list
-        List<learningObjectSuggestion> myList = new ArrayList<learningObjectSuggestion>();
-        for (String key : summaryList.keySet()){
-            int lineNum = summaryList.get(key);
-            LearningObject node = learningObjectMap.get(key);
-            double estimate = node.calcKnowledgeEstimate();
-            learningObjectSuggestion.Level level;
-            //fix to fit preconditions
-            //TODO: fix so that if the list is empty then it's set to incomplete
-			learningObjectSuggestion.Level levelIn;
-            List<LearningObjectResponse> resList = node.getResponses();
-            if(resList.size()==0){
-                levelIn = learningObjectSuggestion.Level.INCOMPLETE;
-				learningObjectSuggestion suggestionNode = new learningObjectSuggestion(key,lineNum,levelIn);
-				myList.add(suggestionNode);
-
-			}else{
-				if(estimate> 0 && estimate<= 0.59){
-					level = learningObjectSuggestion.Level.WRONG;
-				}else{
-					level = learningObjectSuggestion.Level.RIGHT;
-				}
-				learningObjectSuggestion suggestionNode = new learningObjectSuggestion(key,lineNum,level);
-				myList.add(suggestionNode);
-
-			}
-
-//            if(estimate==0){
-//                level = learningObjectSuggestion.Level.INCOMPLETE;
-//            }else if(estimate> 0 && estimate<= 0.59){
-//                level = learningObjectSuggestion.Level.WRONG;
-//            }else{
-//                level = learningObjectSuggestion.Level.RIGHT;
-//            }
-        }
-        return myList;
-    }
-
-
-	public HashMap<String,Integer> buildLearningObjectSummaryList(String node) {
-
-        ConceptNode findNode = findNodeById(node);
-        if (findNode != null) {
-            HashMap<String, Integer> learningObjectSummary = new HashMap<>();
-            findNode.buildLearningObjectSummaryList(learningObjectSummary);
-            return learningObjectSummary;
-        }else{
-            logger.warn("Building learningObjectSummaryList:" + node + " is not found in the graph");
-            return null;
-        }
-    }
-
 
 	public ConceptGraph(ConceptGraphRecord structureDef){
 	    this.name = "Concept Graph";
@@ -223,6 +112,50 @@ public class ConceptGraph {
 		}
 	}
 
+	public void addSummariesToGraph(List<LearningObjectResponse> summaries){
+		for (LearningObjectResponse response : summaries) {
+			LearningObject learningObject = learningObjectMap.get(response.getLearningObjectId());
+			if (learningObject != null) {
+				learningObject.addResponse(response);
+			} else {
+				logger.warn("No learning object:" + response.getLearningObjectId() + " for response: " + response.toString());
+				//TODO: maybe make a new list of unconnected learning objects???
+			}
+		}
+	}
+
+	//if false, then it is not an ancestor therefore it can be added to the list
+	public boolean ancestry(ConceptNode node) {
+		boolean isAnc = false;
+		for (String key : nodeMap.keySet()) {
+			ConceptNode compareNode = nodeMap.get(key);
+			boolean ances =  node.isAncestorOf(compareNode);
+			//This allows for if it does have an ancestor, but it has a high knowledge estimate, it wont be added to the suggestion list
+			if (ances && compareNode.getKnowledgeEstimate()<0.75){
+
+//                if (ances && node.getKnowledgeEstimate()<0.75){
+				isAnc=true;
+				break;
+			}
+		}
+		return  isAnc;
+	}
+
+	public HashMap<String,Integer> buildLearningObjectSummaryList(String node) {
+
+		ConceptNode findNode = findNodeById(node);
+		if (findNode != null) {
+			HashMap<String, Integer> learningObjectSummary = new HashMap<>();
+			findNode.buildLearningObjectSummaryList(learningObjectSummary);
+			return learningObjectSummary;
+		}else{
+			logger.warn("Building learningObjectSummaryList:" + node + " is not found in the graph");
+			return null;
+		}
+	}
+
+
+
 	//TODO: When book code is integrated
 //	public ConceptGraph(Book b, ConceptGraphRecordOld lists){
 //		List<ConceptNode> nodes = lists.getConcepts();
@@ -273,58 +206,12 @@ public class ConceptGraph {
 //		this.roots = new ArrayList<ConceptNode>();
 //		this.roots.add(root);
 //	}
-	
-	public ConceptGraph(List<ConceptNode> rootsIn){
-        learningObjectMap = new HashMap<>();
-        this.roots = rootsIn;
-	}
-
-//    public void addLearningObjects(ConceptGraphRecordOld learningObjectDef){
-//        //learningObjects might need to be created or they might already exist
-//		for (ConceptNode learningObjectRecord : learningObjectDef.getNodes()){
-//            LearningObject learningObject = learningObjectMap.get(learningObjectRecord.getID());
-//			if (learningObject == null) {
-//				learningObjectMap.put(learningObjectRecord.getID(), new LearningObject(learningObjectRecord.getID()));
-//			}
-//        }
-//
-//        for (LinkRecord link : learningObjectDef.getLinks()){
-//            ConceptNode node = nodeMap.get(link.getParent());
-//            if (node != null){
-//            	LearningObject learningObject = learningObjectMap.get(link.getChild());
-//            	if (learningObject != null){
-//					node.addLearningObject(learningObject);
-//				}
-//                else {
-//					logger.warn("Adding a Learning Object:" + link.getChild() + " has no matching learning object definition:" + link.getChild());
-//				}
-//            }
-//            else {
-//                logger.warn("Adding a Learning Object:" + link.getChild() + " has no matching node in the graph:" + link.getParent());
-//            }
-//        }
-//    }
-
-    public void addSummariesToGraph(List<LearningObjectResponse> summaries){
-        for (LearningObjectResponse response : summaries) {
-            LearningObject learningObject = learningObjectMap.get(response.getLearningObjectId());
-            if (learningObject != null) {
-                learningObject.addResponse(response);
-            } else {
-                logger.warn("No learning object:" + response.getLearningObjectId() + " for response: " + response.toString());
-                //TODO: maybe make a new list of unconnected learning objects???
-            }
-        }
-	}
 
 
 	
 	public String toString(){
 		ConceptGraphRecord thisGraph = this.buildNodesAndLinks();
 		return "Nodes:\n"+thisGraph.getConcepts()+"\nLinks:\n"+thisGraph.getLinks();
-		
-		//return roots.toString();
-		
 	}
 		
 	public ConceptGraphRecord buildNodesAndLinks() {
@@ -455,6 +342,10 @@ public class ConceptGraph {
 	
 	public ConceptNode findNodeById(String id){
 		return nodeMap.get(id);
+	}
+
+	public Collection<String> getAllNodeIds(){
+		return nodeMap.keySet();
 	}
 
     public Map<String, LearningObject> getLearningObjectMap() {

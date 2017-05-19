@@ -1,9 +1,9 @@
-package edu.ithaca.dragonlab.ckc.conceptgraph;
+package edu.ithaca.dragonlab.ckc.suggester;
 
 /**
  * Created by Mia Kimmich Mitchell on 3/28/2017.
  */
-public class learningObjectSuggestion {
+public class LearningObjectSuggestion {
     private String id;
     private int pathNum;
     private Level level;
@@ -15,14 +15,14 @@ public class learningObjectSuggestion {
     }
 
 
-    public learningObjectSuggestion() {
+    public LearningObjectSuggestion() {
         this.id = null;
         this.pathNum= 0;
         this.level = Level.INCOMPLETE;
 
     }
 
-    public learningObjectSuggestion(String id, int path, Level lev) {
+    public LearningObjectSuggestion(String id, int path, Level lev) {
         this();
         this.id = id;
         this.pathNum= path;
