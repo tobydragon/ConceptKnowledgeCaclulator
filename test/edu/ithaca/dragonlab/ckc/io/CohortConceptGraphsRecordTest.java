@@ -33,4 +33,20 @@ public class CohortConceptGraphsRecordTest {
             Assert.fail();
         }
     }
+
+    public static void main(String[] args){
+        try {
+            CohortConceptGraphs graphs = new CohortConceptGraphs(ExampleConceptGraphFactory.makeSimpleStructureAndLearningObjects(), ExampleLearningObjectResponseFactory.makeSimpleResponses());
+            CohortConceptGraphsRecord toFile = graphs.buildCohortConceptTreeRecord();
+            String file = TEST_DIR + "simpleCohortTree.json";
+            toFile.writeToJson(file);
+
+            CohortConceptGraphsRecord fromFile = CohortConceptGraphsRecord.buildFromJson(file);
+
+            Assert.assertThat(toFile.getGraphRecords(), is(fromFile.getGraphRecords()));
+        }
+        catch (IOException e){
+            e.printStackTrace();
+        }
+    }
 }
