@@ -23,7 +23,7 @@ public class ConceptGraphTest {
 
     @Test
     public void buildLearningObjectListSimpleTest(){
-        ConceptGraph orig = ExampleConceptGraphFactory.makeSimpleWithData();
+        ConceptGraph orig = ExampleConceptGraphFactory.makeSimpleCompleteWithData();
 
         //from A nodes
         HashMap<String, Integer> testCompareA = new HashMap<String, Integer>();
@@ -64,7 +64,7 @@ public class ConceptGraphTest {
 
 	@Test
     public void copyConstructorTest(){
-	    ConceptGraph orig = ExampleConceptGraphFactory.makeSimpleWithData();
+	    ConceptGraph orig = ExampleConceptGraphFactory.makeSimpleCompleteWithData();
 
 	    ConceptGraph copy = new ConceptGraph(orig, "Copy");
 	    Assert.assertNotNull(copy.findNodeById("A"));
@@ -114,7 +114,7 @@ public class ConceptGraphTest {
 
     @Test
     public void addLearningObjectsTest(){
-        ConceptGraph graph = ExampleConceptGraphFactory.makeSimpleWithData();
+        ConceptGraph graph = ExampleConceptGraphFactory.makeSimpleCompleteWithData();
 
         Assert.assertEquals(2, graph.findNodeById("B").getLearningObjectMap().size());
         Assert.assertEquals(4, graph.findNodeById("C").getLearningObjectMap().size());
@@ -122,7 +122,7 @@ public class ConceptGraphTest {
 
     @Test
     public void addLearningObjectsAndResponsesTest(){
-        ConceptGraph graph = ExampleConceptGraphFactory.makeSimpleWithData();
+        ConceptGraph graph = ExampleConceptGraphFactory.makeSimpleCompleteWithData();
 
         Assert.assertEquals(3, graph.findNodeById("B").getLearningObjectMap().get("Q1").getResponses().size());
         Assert.assertEquals(3, graph.findNodeById("B").getLearningObjectMap().get("Q2").getResponses().size());
@@ -141,7 +141,7 @@ public class ConceptGraphTest {
 
     @Test
     public void linkLearningObjectsTest(){
-        ConceptGraph graph = ExampleConceptGraphFactory.makeSimpleWithData();
+        ConceptGraph graph = ExampleConceptGraphFactory.makeSimpleCompleteWithData();
         //TODO: Did this line matter, because it can't work like that anymore...
         //graph.addLearningObjects(ExampleLearningObjectLinkRecordFactory.makeSimpleLearningObjectDef());
 
@@ -182,7 +182,7 @@ public class ConceptGraphTest {
     @Test
     public void addLearningObjectsFromLearningObjectLinkRecordsTest(){
         //Creating graph
-        ConceptGraph graph = ExampleConceptGraphFactory.makeSimpleWithData();
+        ConceptGraph graph = ExampleConceptGraphFactory.makeSimpleCompleteWithData();
 
         List<LearningObjectResponse> responses = new ArrayList<>();
 
@@ -215,7 +215,7 @@ public class ConceptGraphTest {
 
 	@Test
 	public void calcKnowledgeEstimateTest(){
-        ConceptGraph graph = ExampleConceptGraphFactory.makeSimpleWithData();
+        ConceptGraph graph = ExampleConceptGraphFactory.makeSimpleCompleteWithData();
         graph.calcDataImportance();
         graph.calcKnowledgeEstimates();
 

@@ -25,7 +25,7 @@ public class ConceptGraph {
 
 
     public ConceptGraph(ConceptGraphRecord structureDef){
-        this.name = "Concept Graph";
+        this.name = structureDef.getName();
         buildStructureFromGraphRecord(structureDef);
         this.learningObjectMap = new HashMap<>();
     }
@@ -46,7 +46,7 @@ public class ConceptGraph {
      * @param newName the new name of the graph
      */
 	public ConceptGraph(ConceptGraph other, String newName){
-	  this.name = newName;
+	    this.name = newName;
 		this.roots = new ArrayList<>();
         nodeMap = new HashMap<>();
         learningObjectMap = new HashMap<>();
@@ -63,7 +63,8 @@ public class ConceptGraph {
      * used only by TreeConverter, does not have proper learningObjectMap or nodeMap
      * @param rootsIn
      */
-    public ConceptGraph(List<ConceptNode> rootsIn){
+    public ConceptGraph(List<ConceptNode> rootsIn, String name){
+        this.name = name;
         learningObjectMap = new HashMap<>();
         nodeMap = new HashMap<>();
         this.roots = rootsIn;
@@ -206,14 +207,20 @@ public class ConceptGraph {
 	}
 
 	////////////////////////////////////////////  Simple Functions    //////////////////////////////////////
-		
+
+    public void setDistFromAvg(ConceptGraph avgGraph){
+        for (ConceptNode nodeToSet : nodeMap.values()){
+            nodeToSet.calcDistanceFromAvg(avgGraph.findNodeById(nodeToSet.getID()).getKnowledgeEstimate());
+        }
+    }
+
 	public ConceptGraphRecord buildConceptGraphRecord() {
 		List<ConceptRecord> tempNodes = new ArrayList<>();
 		List<LinkRecord> tempLinks = new ArrayList<>();
 		for(ConceptNode currRoot : this.roots){
 			currRoot.addToRecords(tempNodes,tempLinks);
 		}
-		ConceptGraphRecord graphRecord = new ConceptGraphRecord(tempNodes, tempLinks);
+		ConceptGraphRecord graphRecord = new ConceptGraphRecord(name, tempNodes, tempLinks);
 		return graphRecord;
 	}
 
@@ -251,6 +258,10 @@ public class ConceptGraph {
 
     public List<ConceptNode> getRoots() {
         return roots;
+    }
+
+    public String getName(){
+	    return name;
     }
 
     public String toString(){

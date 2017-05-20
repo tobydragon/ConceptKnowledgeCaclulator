@@ -9,12 +9,12 @@ import edu.ithaca.dragonlab.ckc.util.DataUtil;
  *         This class represents all the information that should be recorded about a concept when serializing
  */
 public class ConceptRecord {
-    String id;
-    String label;
+    private String id;
+    private String label;
 
-    double knowledgeEstimate;
-    double knowledgePrediction;
-    double knowledgeDistFromAvg;
+    private double knowledgeEstimate;
+    private double knowledgePrediction;
+    private double knowledgeDistFromAvg;
 
     public ConceptRecord() {
         this.id = null;

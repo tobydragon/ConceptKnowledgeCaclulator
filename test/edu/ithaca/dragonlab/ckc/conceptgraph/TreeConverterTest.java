@@ -26,7 +26,7 @@ public class TreeConverterTest {
         int numB = 0;
         int numC = 0;
 
-        ConceptGraphRecord treeLists = TreeConverter.makeTreeCopy(ExampleConceptGraphFactory.makeSimpleWithData()).buildConceptGraphRecord();
+        ConceptGraphRecord treeLists = TreeConverter.makeTreeCopy(ExampleConceptGraphFactory.makeSimpleCompleteWithData()).buildConceptGraphRecord();
         for(ConceptRecord node : treeLists.getConcepts()){
             if(node.getLabel().equals("A")){
                 numA++;
@@ -43,7 +43,7 @@ public class TreeConverterTest {
 
     @Test
     public void treeConversionTest(){
-        checkTreeConversionByNodesAndLinksNumbers(ExampleConceptGraphFactory.makeSimpleWithData(), 3, 3, 4, 3);
+        checkTreeConversionByNodesAndLinksNumbers(ExampleConceptGraphFactory.makeSimpleCompleteWithData(), 3, 3, 4, 3);
         checkTreeConversionByNodesAndLinksNumbers(ExampleConceptGraphFactory.makeMedium(), 4, 5, 7, 6);
         checkTreeConversionByNodesAndLinksNumbers(ExampleConceptGraphFactory.makeComplex(), 5, 8, 13, 12);
         checkTreeConversionByNodesAndLinksNumbers(ExampleConceptGraphFactory.makeSuperComplex(), 6, 11, 24, 23);

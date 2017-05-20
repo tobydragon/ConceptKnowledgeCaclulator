@@ -14,11 +14,16 @@ import edu.ithaca.dragonlab.ckc.learningobject.ExampleLearningObjectResponseFact
  */
 public class ExampleConceptGraphFactory {
 
-    public static ConceptGraph makeSimple(){
+    public static ConceptGraph makeSimpleStructure(){
         return new ConceptGraph(ExampleConceptGraphRecordFactory.makeSimple());
     }
 
-    public static ConceptGraph makeSimpleWithData(){
+    public static ConceptGraph makeSimpleStructureAndLearningObjects(){
+        return new ConceptGraph(ExampleConceptGraphRecordFactory.makeSimple(),
+                ExampleLearningObjectLinkRecordFactory.makeSimpleLOLRecords());
+    }
+
+    public static ConceptGraph makeSimpleCompleteWithData(){
         return new ConceptGraph(ExampleConceptGraphRecordFactory.makeSimple(),
                 ExampleLearningObjectLinkRecordFactory.makeSimpleLOLRecords(),
                 ExampleLearningObjectResponseFactory.makeSimpleResponses());
