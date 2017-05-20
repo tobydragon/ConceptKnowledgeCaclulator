@@ -12,7 +12,8 @@ import java.util.*;
  */
 public class LearningObjectSuggester {
 
-    public static HashMap<String, List<LearningObjectSuggestion>> SuggestedConceptNodeMap(ConceptGraph graph){
+    //TODO javadoc
+    public static HashMap<String, List<LearningObjectSuggestion>> buildSuggestionMap(ConceptGraph graph){
 
         HashMap<String, List<LearningObjectSuggestion>> suggestedConceptNodeMap = new HashMap<>();
         for (String key : graph.getAllNodeIds()) {
@@ -26,7 +27,7 @@ public class LearningObjectSuggester {
                 if (!anc) {
                     HashMap<String, Integer> map = graph.buildLearningObjectSummaryList(key);
                     List<LearningObjectSuggestion> list = buildLearningObjectSuggestionList(map, graph.getLearningObjectMap());
-                    suggestedOrderBuildLearningObjectList(list);
+                    sortSuggestions(list);
                     for (int i = 0; i < list.size(); i++) {
                         //if it is incomplete
                         if (list.get(i).getLevel().equals(LearningObjectSuggestion.Level.INCOMPLETE)) {
@@ -43,7 +44,7 @@ public class LearningObjectSuggester {
         return suggestedConceptNodeMap;
     }
 
-    public static void suggestedOrderBuildLearningObjectList(List<LearningObjectSuggestion> myList){
+    public static void sortSuggestions(List<LearningObjectSuggestion> myList){
         Collections.sort(myList, new LearningObjectSuggestionComparator());
     }
 

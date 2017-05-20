@@ -173,7 +173,7 @@ public class ConceptGraph {
         }
     }
 
-    //TODO I think this should take two nodes, the one that is the ancestor and the one that is the descendent, not sure how it makes sense otherwise
+    //TODO I think this should take two nodes, the one that is the ancestor and the one that is the descendant, not sure how it makes sense otherwise
 	//if false, then it is not an ancestor therefore it can be added to the list
 	public boolean ancestry(ConceptNode node) {
 		boolean isAnc = false;
