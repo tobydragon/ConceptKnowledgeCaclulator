@@ -1,5 +1,6 @@
 {
   "graphRecords" : [ {
+    "name" : "Average Graph",
     "concepts" : [ {
       "id" : "A",
       "label" : "A",
@@ -30,6 +31,7 @@
       "child" : "C"
     } ]
   }, {
+    "name" : "student2",
     "concepts" : [ {
       "id" : "A",
       "label" : "A",
@@ -60,6 +62,7 @@
       "child" : "C"
     } ]
   }, {
+    "name" : "student1",
     "concepts" : [ {
       "id" : "A",
       "label" : "A",
@@ -90,6 +93,7 @@
       "child" : "C"
     } ]
   }, {
+    "name" : "student3",
     "concepts" : [ {
       "id" : "A",
       "label" : "A",

@@ -23,7 +23,7 @@ public class TreeConverter {
         for(ConceptNode root : graphToCopy.getRoots()){
             newRoots.add(makeTreeNodeCopy(root, initMultCopies));
         }
-        return new ConceptGraph(newRoots);
+        return new ConceptGraph(newRoots, graphToCopy.getName());
     }
 
     public static ConceptNode makeTreeNodeCopy(ConceptNode nodeToMakeTreeCopyOf, HashMap<String, List<String>> labelToListOfIds){

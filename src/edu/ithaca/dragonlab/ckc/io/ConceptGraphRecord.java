@@ -14,6 +14,7 @@ import java.util.List;
 //also used to denote LearningObjects and their relation to the ConceptGraph ( see @ExampleLearningObjectFactory )
 public class ConceptGraphRecord {
 
+	private String name;
 	private List<ConceptRecord> concepts;
 	private List<LinkRecord> links;
 
@@ -33,11 +34,13 @@ public class ConceptGraphRecord {
 
 	//needed for json creation
 	public ConceptGraphRecord(){
-		this.concepts = new ArrayList<>();
-		this.links = new ArrayList<>();
+		this.name = null;
+		this.concepts = null;
+		this.links = null;
 	}
 
-	public ConceptGraphRecord(List<ConceptRecord> nodesIn, List<LinkRecord> linksIn){
+	public ConceptGraphRecord(String name, List<ConceptRecord> nodesIn, List<LinkRecord> linksIn){
+	    this.name = name;
 		this.concepts = nodesIn;
 		this.links = linksIn;
 	}
@@ -60,6 +63,10 @@ public class ConceptGraphRecord {
 		return runningTotal;
 	}
 
+	public String getName(){
+		return name;
+	}
+
 	public List<ConceptRecord> getConcepts(){
 		return concepts;
 	}
@@ -67,6 +74,8 @@ public class ConceptGraphRecord {
 	public List<LinkRecord> getLinks(){
 		return links;
 	}
+
+	public void setName(String name){ this.name = name;}
 	
 	public void setConcepts(List<ConceptRecord> nodesIn){
 		this.concepts = nodesIn;
@@ -104,28 +113,29 @@ public class ConceptGraphRecord {
 			return false;
 		}
 		ConceptGraphRecord otherGraphRecord = (ConceptGraphRecord) other;
-		if (this.concepts.size() == otherGraphRecord.concepts.size()){
-			for (int i=0; i<this.concepts.size(); i++){
-				if(! this.concepts.get(i).equals(otherGraphRecord.concepts.get(i))){
-					return false;
-				}
-			}
-			if (this.links.size() == otherGraphRecord.links.size()) {
-				for (int i = 0; i < this.links.size(); i++) {
-					if (!this.links.get(i).equals(otherGraphRecord.links.get(i))) {
+		if (this.name.equals(otherGraphRecord.name)) {
+			if (this.concepts.size() == otherGraphRecord.concepts.size()) {
+				for (int i = 0; i < this.concepts.size(); i++) {
+					if (!this.concepts.get(i).equals(otherGraphRecord.concepts.get(i))) {
 						return false;
 					}
 				}
-				return true;
-			}
-			else {
+				if (this.links.size() == otherGraphRecord.links.size()) {
+					for (int i = 0; i < this.links.size(); i++) {
+						if (!this.links.get(i).equals(otherGraphRecord.links.get(i))) {
+							return false;
+						}
+					}
+					return true;
+				} else {
+					return false;
+				}
+			} else {
 				return false;
 			}
 		}
 		else {
 			return false;
 		}
-
-
 	}
 }
