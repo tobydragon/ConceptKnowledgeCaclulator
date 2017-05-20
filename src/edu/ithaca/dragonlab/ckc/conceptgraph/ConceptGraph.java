@@ -207,7 +207,13 @@ public class ConceptGraph {
 	}
 
 	////////////////////////////////////////////  Simple Functions    //////////////////////////////////////
-		
+
+    public void setDistFromAvg(ConceptGraph avgGraph){
+        for (ConceptNode nodeToSet : nodeMap.values()){
+            nodeToSet.calcDistanceFromAvg(avgGraph.findNodeById(nodeToSet.getID()).getKnowledgeEstimate());
+        }
+    }
+
 	public ConceptGraphRecord buildConceptGraphRecord() {
 		List<ConceptRecord> tempNodes = new ArrayList<>();
 		List<LinkRecord> tempLinks = new ArrayList<>();

@@ -46,22 +46,10 @@ public class CohortConceptGraphs {
 	}
 	
 	public void calcDistanceFromAvg(){
-		//TODO: This should be working on nodes, not records
-//		ConceptGraphRecord avgLinks = averageGraph.buildConceptGraphRecord();
-//		for(String user: userToGraph.keySet()){
-//			ConceptGraphRecord tempLinks = userToGraph.get(user).buildConceptGraphRecord();
-//
-//			for(ConceptRecord tempNode: tempLinks.getConcepts()){
-//				for(ConceptRecord avgNode: avgLinks.getConcepts()){
-//					if(tempNode.getId().equals(avgNode.getId())){
-//						double avgCalc = avgNode.getKnowledgeEstimate();
-//						tempNode.calcDistanceFromAvg(avgCalc);
-//					}
-//				}
-//			}
-//		}
+		for (ConceptGraph graph : userToGraph.values()){
+			graph.setDistFromAvg(averageGraph);
+		}
 	}
-
 
 	public CohortConceptGraphsRecord buildCohortConceptGraphsRecord(){
 		List<ConceptGraphRecord> graphRecords = new ArrayList<>();
