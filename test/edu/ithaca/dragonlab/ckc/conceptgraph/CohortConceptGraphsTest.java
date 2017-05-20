@@ -1,6 +1,6 @@
 package edu.ithaca.dragonlab.ckc.conceptgraph;
 
-import edu.ithaca.dragonlab.ckc.learningobject.ExampleLearningObjectFactory;
+import edu.ithaca.dragonlab.ckc.learningobject.ExampleLearningObjectLinkRecordFactory;
 import edu.ithaca.dragonlab.ckc.learningobject.ExampleLearningObjectResponseFactory;
 import edu.ithaca.dragonlab.ckc.util.DataUtil;
 import org.apache.logging.log4j.LogManager;
@@ -21,7 +21,7 @@ public class CohortConceptGraphsTest {
 
 	@Test
 	public void addSummariesTest(){
-        ConceptGraph graph = new ConceptGraph(ExampleConceptGraphRecordFactory.makeSimple(), ExampleLearningObjectFactory.makeSimpleLOLRecords());
+        ConceptGraph graph = new ConceptGraph(ExampleConceptGraphRecordFactory.makeSimple(), ExampleLearningObjectLinkRecordFactory.makeSimpleLOLRecords());
         CohortConceptGraphs group = new CohortConceptGraphs(graph, ExampleLearningObjectResponseFactory.makeSimpleResponses());
 
         Assert.assertEquals(6,group.getAvgGraph().getLearningObjectMap().size());
@@ -64,7 +64,7 @@ public class CohortConceptGraphsTest {
 //	@Test
 //	public void calcDistFromAvgTest(){
 //        ConceptGraph graph = ExampleConceptGraphFactory.makeSimpleWithData();
-//        graph.addLearningObjects(ExampleLearningObjectFactory.makeSimpleLearningObjectDef());
+//        graph.addLearningObjects(ExampleLearningObjectLinkRecordFactory.makeSimpleLearningObjectDef());
 //        CohortConceptGraphs group = new CohortConceptGraphs(graph, ExampleLearningObjectResponseFactory.makeSimpleResponses());
 //		Map<String, ConceptGraph> userGraphMap = group.getUserToGraphMap();
 //
@@ -85,7 +85,7 @@ public class CohortConceptGraphsTest {
 //		ObjectMapper mapper = new ObjectMapper();
 //
 //        ConceptGraph graph = ExampleConceptGraphFactory.makeSimpleWithData();
-//        graph.addLearningObjects(ExampleLearningObjectFactory.makeSimpleLearningObjectDef());
+//        graph.addLearningObjects(ExampleLearningObjectLinkRecordFactory.makeSimpleLearningObjectDef());
 //        CohortConceptGraphs group = new CohortConceptGraphs(graph, ExampleLearningObjectResponseFactory.makeSimpleResponses());
 //		try {
 //			//writes JSON to file

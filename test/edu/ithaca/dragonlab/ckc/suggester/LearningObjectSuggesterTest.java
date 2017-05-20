@@ -4,7 +4,7 @@ import edu.ithaca.dragonlab.ckc.conceptgraph.ConceptGraph;
 import edu.ithaca.dragonlab.ckc.conceptgraph.ExampleConceptGraphFactory;
 import edu.ithaca.dragonlab.ckc.conceptgraph.ExampleConceptGraphRecordFactory;
 import edu.ithaca.dragonlab.ckc.io.LearningObjectLinkRecord;
-import edu.ithaca.dragonlab.ckc.learningobject.ExampleLearningObjectFactory;
+import edu.ithaca.dragonlab.ckc.learningobject.ExampleLearningObjectLinkRecordFactory;
 import edu.ithaca.dragonlab.ckc.learningobject.ExampleLearningObjectResponseFactory;
 import org.junit.Assert;
 import org.junit.Test;
@@ -51,7 +51,7 @@ public class LearningObjectSuggesterTest {
 
     @Test
     public void suggestedOrderBuildLearningObjectListTest(){
-        List<LearningObjectLinkRecord> myList = ExampleLearningObjectFactory.makeSimpleLOLRecords();
+        List<LearningObjectLinkRecord> myList = ExampleLearningObjectLinkRecordFactory.makeSimpleLOLRecords();
         myList.add(new LearningObjectLinkRecord("Q10", Arrays.asList("A"),1));
         ConceptGraph orig = new ConceptGraph(ExampleConceptGraphRecordFactory.makeSimple(),
                 myList, ExampleLearningObjectResponseFactory.makeSimpleResponses());

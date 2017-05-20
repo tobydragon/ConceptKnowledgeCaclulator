@@ -260,7 +260,7 @@ public class ConceptGraph {
 
 
     //TODO update this defunct code
-    //TODO: currentRoot.getKnowledgeEstimate used to be this.root.getKnowledgeEstimate, analyze how this changed things
+    //currentRoot.getKnowledgeEstimate used to be this.root.getKnowledgeEstimate, analyze how this changed things
     private void calcPredictedScores(ConceptNode currentRoot) {
         calcPredictedScores(currentRoot, currentRoot.getKnowledgeEstimate(), currentRoot);
     }

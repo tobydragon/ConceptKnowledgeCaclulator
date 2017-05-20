@@ -12,17 +12,12 @@ public class ManualGradedResponse extends LearningObjectResponse {
 
     public ManualGradedResponse(String learningObjectId, double max, double studentScore, String userId){
         super(userId,learningObjectId,studentScore/max);
-        //This is where the the variables in the super constructor are going
-        //this.userId = userId
-        //this.learningObjectId = learningObjectId
-        //this.knowledgeEstimate = studentScore/max
         this.maxPossibleScore = max;
         this.studentScore = studentScore;
     }
 
 
     public double getDataImportance() {
-        // TODO Auto-generated method stub
         return GraphConstants.HAND_GRADED_QUESTIONS_WEIGHT;
     }
 

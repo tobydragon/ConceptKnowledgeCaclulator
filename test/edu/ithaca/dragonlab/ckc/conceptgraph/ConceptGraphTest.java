@@ -2,7 +2,7 @@ package edu.ithaca.dragonlab.ckc.conceptgraph;
 
 import edu.ithaca.dragonlab.ckc.io.ConceptGraphRecord;
 import edu.ithaca.dragonlab.ckc.io.LearningObjectLinkRecord;
-import edu.ithaca.dragonlab.ckc.learningobject.ExampleLearningObjectFactory;
+import edu.ithaca.dragonlab.ckc.learningobject.ExampleLearningObjectLinkRecordFactory;
 import edu.ithaca.dragonlab.ckc.learningobject.ExampleLearningObjectResponseFactory;
 import edu.ithaca.dragonlab.ckc.learningobject.LearningObject;
 import edu.ithaca.dragonlab.ckc.learningobject.LearningObjectResponse;
@@ -93,7 +93,7 @@ public class ConceptGraphTest {
     @Test
     public void buildGraphConstructorTest(){
         ConceptGraphRecord structure = ExampleConceptGraphRecordFactory.makeSimple();
-        List<LearningObjectLinkRecord> lolinks = ExampleLearningObjectFactory.makeSimpleLOLRecords();
+        List<LearningObjectLinkRecord> lolinks = ExampleLearningObjectLinkRecordFactory.makeSimpleLOLRecords();
         List<LearningObjectResponse> responses = ExampleLearningObjectResponseFactory.makeSimpleResponses();
 
         ConceptGraph graph = new ConceptGraph(structure, lolinks, responses);
@@ -143,7 +143,7 @@ public class ConceptGraphTest {
     public void linkLearningObjectsTest(){
         ConceptGraph graph = ExampleConceptGraphFactory.makeSimpleWithData();
         //TODO: Did this line matter, because it can't work like that anymore...
-        //graph.addLearningObjects(ExampleLearningObjectFactory.makeSimpleLearningObjectDef());
+        //graph.addLearningObjects(ExampleLearningObjectLinkRecordFactory.makeSimpleLearningObjectDef());
 
         LearningObject duplicateObject = new LearningObject("Q1");
         LearningObjectResponse duplicateResponse = new LearningObjectResponse("user1","Q1",1);

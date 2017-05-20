@@ -9,12 +9,6 @@ import java.util.List;
  */
 public class ExampleLearningObjectResponseFactory {
 
-
-
-
-
-
-    //TODO: fix all tests that use this.
     //3 students, 5 questions: 1 stud all right, one half right, one half right and missing 2 questions
     public static List<LearningObjectResponse> makeSimpleResponses(){
         List<LearningObjectResponse>  responses = new ArrayList<>();

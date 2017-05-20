@@ -47,7 +47,6 @@ public class LearningObjectResponse {
         return knowledgeEstimate;
     }
 
-    //TODO: should this be user Ids? Should there be more than one possible user to a response?
     public String getUserId(){
         return userId;
     }

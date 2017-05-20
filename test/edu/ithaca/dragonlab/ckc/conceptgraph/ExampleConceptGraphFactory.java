@@ -2,13 +2,10 @@ package edu.ithaca.dragonlab.ckc.conceptgraph;
 
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import edu.ithaca.dragonlab.ckc.conceptgraph.ConceptGraph;
-import edu.ithaca.dragonlab.ckc.conceptgraph.ConceptNode;
 import edu.ithaca.dragonlab.ckc.io.*;
 
-import java.util.ArrayList;
 import java.util.List;
-import edu.ithaca.dragonlab.ckc.learningobject.ExampleLearningObjectFactory;
+import edu.ithaca.dragonlab.ckc.learningobject.ExampleLearningObjectLinkRecordFactory;
 import edu.ithaca.dragonlab.ckc.learningobject.ExampleLearningObjectResponseFactory;
 
 /**
@@ -23,7 +20,7 @@ public class ExampleConceptGraphFactory {
 
     public static ConceptGraph makeSimpleWithData(){
         return new ConceptGraph(ExampleConceptGraphRecordFactory.makeSimple(),
-                ExampleLearningObjectFactory.makeSimpleLOLRecords(),
+                ExampleLearningObjectLinkRecordFactory.makeSimpleLOLRecords(),
                 ExampleLearningObjectResponseFactory.makeSimpleResponses());
     }
 

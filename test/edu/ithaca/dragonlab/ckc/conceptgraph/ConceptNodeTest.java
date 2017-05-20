@@ -1,8 +1,5 @@
 package edu.ithaca.dragonlab.ckc.conceptgraph;
 
-import edu.ithaca.dragonlab.ckc.conceptgraph.ConceptNode;
-import edu.ithaca.dragonlab.ckc.io.LinkRecord;
-import edu.ithaca.dragonlab.ckc.learningobject.ExampleLearningObjectFactory;
 import org.junit.Assert;
 import org.junit.Test;
 
