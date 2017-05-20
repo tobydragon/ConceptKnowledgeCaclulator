@@ -3,6 +3,7 @@ package edu.ithaca.dragonlab.ckc.io;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
+import edu.ithaca.dragonlab.ckc.util.DataUtil;
 
 import java.io.File;
 import java.io.IOException;
@@ -93,5 +94,38 @@ public class ConceptGraphRecord {
 		combinedString = linkString + "\n\n\n" + nodeString;
 
 		return combinedString;
+	}
+
+	public boolean equals(Object other){
+		if(other == null){
+			return false;
+		}
+		if(!ConceptGraphRecord.class.isAssignableFrom(other.getClass())){
+			return false;
+		}
+		ConceptGraphRecord otherGraphRecord = (ConceptGraphRecord) other;
+		if (this.concepts.size() == otherGraphRecord.concepts.size()){
+			for (int i=0; i<this.concepts.size(); i++){
+				if(! this.concepts.get(i).equals(otherGraphRecord.concepts.get(i))){
+					return false;
+				}
+			}
+			if (this.links.size() == otherGraphRecord.links.size()) {
+				for (int i = 0; i < this.links.size(); i++) {
+					if (!this.links.get(i).equals(otherGraphRecord.links.get(i))) {
+						return false;
+					}
+				}
+				return true;
+			}
+			else {
+				return false;
+			}
+		}
+		else {
+			return false;
+		}
+
+
 	}
 }

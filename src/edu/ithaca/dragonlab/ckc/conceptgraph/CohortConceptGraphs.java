@@ -1,7 +1,10 @@
 package edu.ithaca.dragonlab.ckc.conceptgraph;
 
+import edu.ithaca.dragonlab.ckc.io.CohortConceptGraphsRecord;
+import edu.ithaca.dragonlab.ckc.io.ConceptGraphRecord;
 import edu.ithaca.dragonlab.ckc.learningobject.LearningObjectResponse;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -59,6 +62,16 @@ public class CohortConceptGraphs {
 //		}
 	}
 
+
+	public CohortConceptGraphsRecord buildCohortConceptGraphsRecord(){
+		List<ConceptGraphRecord> graphRecords = new ArrayList<>();
+		graphRecords.add(averageGraph.buildConceptGraphRecord());
+		for (ConceptGraph graph : userToGraph.values()){
+			graphRecords.add(graph.buildConceptGraphRecord());
+		}
+		return new CohortConceptGraphsRecord(graphRecords);
+	}
+
 	public int getUserCount(){
 		return userToGraph.size();
 	}
@@ -70,4 +83,5 @@ public class CohortConceptGraphs {
 	public ConceptGraph getAvgGraph() {
 		return averageGraph;
 	}
+
 }

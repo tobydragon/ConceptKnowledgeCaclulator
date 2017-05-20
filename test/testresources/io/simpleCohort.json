@@ -1,0 +1,123 @@
+{
+  "graphRecords" : [ {
+    "concepts" : [ {
+      "id" : "A",
+      "label" : "A",
+      "knowledgeEstimate" : 0.6153846153846154,
+      "knowledgePrediction" : 0.0,
+      "knowledgeDistFromAvg" : 0.0
+    }, {
+      "id" : "B",
+      "label" : "B",
+      "knowledgeEstimate" : 0.6875,
+      "knowledgePrediction" : 0.0,
+      "knowledgeDistFromAvg" : 0.0
+    }, {
+      "id" : "C",
+      "label" : "C",
+      "knowledgeEstimate" : 0.5,
+      "knowledgePrediction" : 0.0,
+      "knowledgeDistFromAvg" : 0.0
+    } ],
+    "links" : [ {
+      "parent" : "B",
+      "child" : "C"
+    }, {
+      "parent" : "A",
+      "child" : "B"
+    }, {
+      "parent" : "A",
+      "child" : "C"
+    } ]
+  }, {
+    "concepts" : [ {
+      "id" : "A",
+      "label" : "A",
+      "knowledgeEstimate" : 0.4,
+      "knowledgePrediction" : 0.0,
+      "knowledgeDistFromAvg" : 0.0
+    }, {
+      "id" : "B",
+      "label" : "B",
+      "knowledgeEstimate" : 0.5,
+      "knowledgePrediction" : 0.0,
+      "knowledgeDistFromAvg" : 0.0
+    }, {
+      "id" : "C",
+      "label" : "C",
+      "knowledgeEstimate" : 0.25,
+      "knowledgePrediction" : 0.0,
+      "knowledgeDistFromAvg" : 0.0
+    } ],
+    "links" : [ {
+      "parent" : "B",
+      "child" : "C"
+    }, {
+      "parent" : "A",
+      "child" : "B"
+    }, {
+      "parent" : "A",
+      "child" : "C"
+    } ]
+  }, {
+    "concepts" : [ {
+      "id" : "A",
+      "label" : "A",
+      "knowledgeEstimate" : 1.0,
+      "knowledgePrediction" : 0.0,
+      "knowledgeDistFromAvg" : 0.0
+    }, {
+      "id" : "B",
+      "label" : "B",
+      "knowledgeEstimate" : 1.0,
+      "knowledgePrediction" : 0.0,
+      "knowledgeDistFromAvg" : 0.0
+    }, {
+      "id" : "C",
+      "label" : "C",
+      "knowledgeEstimate" : 1.0,
+      "knowledgePrediction" : 0.0,
+      "knowledgeDistFromAvg" : 0.0
+    } ],
+    "links" : [ {
+      "parent" : "B",
+      "child" : "C"
+    }, {
+      "parent" : "A",
+      "child" : "B"
+    }, {
+      "parent" : "A",
+      "child" : "C"
+    } ]
+  }, {
+    "concepts" : [ {
+      "id" : "A",
+      "label" : "A",
+      "knowledgeEstimate" : 0.3333333333333333,
+      "knowledgePrediction" : 0.0,
+      "knowledgeDistFromAvg" : 0.0
+    }, {
+      "id" : "B",
+      "label" : "B",
+      "knowledgeEstimate" : 0.5,
+      "knowledgePrediction" : 0.0,
+      "knowledgeDistFromAvg" : 0.0
+    }, {
+      "id" : "C",
+      "label" : "C",
+      "knowledgeEstimate" : 0.0,
+      "knowledgePrediction" : 0.0,
+      "knowledgeDistFromAvg" : 0.0
+    } ],
+    "links" : [ {
+      "parent" : "B",
+      "child" : "C"
+    }, {
+      "parent" : "A",
+      "child" : "B"
+    }, {
+      "parent" : "A",
+      "child" : "C"
+    } ]
+  } ]
+}

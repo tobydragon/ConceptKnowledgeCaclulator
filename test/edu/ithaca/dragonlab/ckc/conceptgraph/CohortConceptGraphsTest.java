@@ -14,7 +14,7 @@ public class CohortConceptGraphsTest {
 
 	@Test
 	public void userCountTest(){
-		ConceptGraph graph = ExampleConceptGraphFactory.makeSimple();
+		ConceptGraph graph = ExampleConceptGraphFactory.makeSimpleStructure();
 		CohortConceptGraphs group = new CohortConceptGraphs(graph, ExampleLearningObjectResponseFactory.makeSimpleResponses());
 		Assert.assertEquals(3,group.getUserCount());
 	}
@@ -38,7 +38,7 @@ public class CohortConceptGraphsTest {
 
     @Test
     public void calcKnowledgeEstimateTest() {
-        ConceptGraph graph = ExampleConceptGraphFactory.makeSimpleWithData();
+        ConceptGraph graph = ExampleConceptGraphFactory.makeSimpleCompleteWithData();
         CohortConceptGraphs group = new CohortConceptGraphs(graph, ExampleLearningObjectResponseFactory.makeSimpleResponses());
 
         Assert.assertEquals(0.5, group.getAvgGraph().findNodeById("C").getKnowledgeEstimate(), DataUtil.OK_FLOAT_MARGIN);
@@ -63,7 +63,7 @@ public class CohortConceptGraphsTest {
 //    //TODO: fix to current data from example
 //	@Test
 //	public void calcDistFromAvgTest(){
-//        ConceptGraph graph = ExampleConceptGraphFactory.makeSimpleWithData();
+//        ConceptGraph graph = ExampleConceptGraphFactory.makeSimpleCompleteWithData();
 //        graph.addLearningObjects(ExampleLearningObjectLinkRecordFactory.makeSimpleLearningObjectDef());
 //        CohortConceptGraphs group = new CohortConceptGraphs(graph, ExampleLearningObjectResponseFactory.makeSimpleResponses());
 //		Map<String, ConceptGraph> userGraphMap = group.getUserToGraphMap();
@@ -84,7 +84,7 @@ public class CohortConceptGraphsTest {
 //    public void jsonTester(){
 //		ObjectMapper mapper = new ObjectMapper();
 //
-//        ConceptGraph graph = ExampleConceptGraphFactory.makeSimpleWithData();
+//        ConceptGraph graph = ExampleConceptGraphFactory.makeSimpleCompleteWithData();
 //        graph.addLearningObjects(ExampleLearningObjectLinkRecordFactory.makeSimpleLearningObjectDef());
 //        CohortConceptGraphs group = new CohortConceptGraphs(graph, ExampleLearningObjectResponseFactory.makeSimpleResponses());
 //		try {
@@ -115,7 +115,7 @@ public class CohortConceptGraphsTest {
 //
 //		//Writes the JSON File for GCG
 //		CohortConceptGraphs group = new CohortConceptGraphs("out/test/sampleoutput/GroupConceptGraph-jsonOutputTest",
-//				ExampleConceptGraphFactory.makeSimpleWithData(), ExampleLearningObjectResponseFactory.makeSimpleResponses());
+//				ExampleConceptGraphFactory.makeSimpleCompleteWithData(), ExampleLearningObjectResponseFactory.makeSimpleResponses());
 //		ObjectMapper mapper = new ObjectMapper();
 //		mapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES,false);
 //
