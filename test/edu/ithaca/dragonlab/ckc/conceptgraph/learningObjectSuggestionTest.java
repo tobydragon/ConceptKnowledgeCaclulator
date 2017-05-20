@@ -4,6 +4,7 @@ package edu.ithaca.dragonlab.ckc.conceptgraph;
  * Created by Mia Kimmich Mitchell on 3/28/2017.
  */
 
+import edu.ithaca.dragonlab.ckc.suggester.LearningObjectSuggestion;
 import org.junit.Assert;
 import org.junit.Test;
 
@@ -13,11 +14,11 @@ public class learningObjectSuggestionTest {
     public void getTest(){
 
 
-        learningObjectSuggestion test1= new learningObjectSuggestion("A", 2, learningObjectSuggestion.Level.INCOMPLETE);
+        LearningObjectSuggestion test1= new LearningObjectSuggestion("A", 2, LearningObjectSuggestion.Level.INCOMPLETE);
 
         Assert.assertEquals("A", test1.getId() );
         Assert.assertEquals(2, test1.getPathNum() );
-        Assert.assertEquals(learningObjectSuggestion.Level.INCOMPLETE, test1.getLevel() );
+        Assert.assertEquals(LearningObjectSuggestion.Level.INCOMPLETE, test1.getLevel() );
 
 
     }
@@ -25,7 +26,7 @@ public class learningObjectSuggestionTest {
     @Test
     public void setTest(){
 
-        learningObjectSuggestion test2= new learningObjectSuggestion("A", 2, learningObjectSuggestion.Level.INCOMPLETE);
+        LearningObjectSuggestion test2= new LearningObjectSuggestion("A", 2, LearningObjectSuggestion.Level.INCOMPLETE);
 
         test2.setId("W");
         Assert.assertEquals("W", test2.getId() );
@@ -33,8 +34,8 @@ public class learningObjectSuggestionTest {
         test2.setPathNum(10);
         Assert.assertEquals(10, test2.getPathNum() );
 
-        test2.setLevel(learningObjectSuggestion.Level.RIGHT);
-        Assert.assertEquals(learningObjectSuggestion.Level.RIGHT, test2.getLevel() );
+        test2.setLevel(LearningObjectSuggestion.Level.RIGHT);
+        Assert.assertEquals(LearningObjectSuggestion.Level.RIGHT, test2.getLevel() );
     }
 
 

@@ -4,9 +4,6 @@ import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import edu.ithaca.dragonlab.ckc.io.*;
 import edu.ithaca.dragonlab.ckc.util.DataUtil;
-import edu.ithaca.dragonlab.ckc.util.ErrorUtil;
-import edu.ithaca.dragonlab.ckc.util.GraphConstants;
-import jdk.nashorn.internal.ir.debug.JSONWriter;
 import org.junit.Assert;
 import org.junit.Test;
 
@@ -33,7 +30,7 @@ public class PracticalConceptGraphTest {
             ConceptGraph graph = new ConceptGraph(graphRecord, LOLRlist, csvReader.getManualGradedResponses());
 
             ObjectMapper mapper = new ObjectMapper();
-            mapper.writeValue(new File("test/testresources/practicalExamples/blankRealisticExample.json"), graph.graphToTree().buildNodesAndLinks());
+            mapper.writeValue(new File("test/testresources/practicalExamples/blankRealisticExample.json"), TreeConverter.makeTreeCopy(graph).buildConceptGraphRecord());
 
             graph.calcDataImportance();
             graph.calcKnowledgeEstimates();
@@ -42,7 +39,7 @@ public class PracticalConceptGraphTest {
             Assert.assertEquals(5,graph.findNodeById("Boolean").getLearningObjectMap().size());
             Assert.assertEquals(15,graph.getLearningObjectMap().size());
 
-            ConceptGraphRecord tree = graph.graphToTree().buildNodesAndLinks();
+            ConceptGraphRecord tree = TreeConverter.makeTreeCopy(graph).buildConceptGraphRecord();
             //Object to JSON in file
             mapper = new ObjectMapper();
             mapper.writeValue(new File("test/testresources/practicalExamples/basicRealisticExample.json"), tree);
@@ -66,7 +63,7 @@ public class PracticalConceptGraphTest {
             List<LearningObjectLinkRecord> LOLRlist = JsonImportExport.LOLRFromRecords(TEST_DIR + "realisticExampleLOLRecord.json");
             ConceptGraph graph = new ConceptGraph(graphRecord, LOLRlist);
 
-            GroupConceptGraphs gcg = new GroupConceptGraphs(graph,csvReader.getManualGradedResponses());
+            CohortConceptGraphs gcg = new CohortConceptGraphs(graph,csvReader.getManualGradedResponses());
             graph.calcDataImportance();
             graph.calcKnowledgeEstimates();
 
@@ -76,10 +73,10 @@ public class PracticalConceptGraphTest {
             Assert.assertEquals(15,graph.getLearningObjectMap().size());
 
             ObjectMapper mapper = new ObjectMapper();
-            ConceptGraphRecord tree = graph.graphToTree().buildNodesAndLinks();
+            ConceptGraphRecord tree = TreeConverter.makeTreeCopy(graph).buildConceptGraphRecord();
             //Object to JSON in file
             mapper.writeValue(new File("test/testresources/practicalExamples/advancedRealisticExample.json"), tree);
-            mapper.writeValue(new File("test/testresources/practicalExamples/groupConceptGraphAdvancedRealisticExample.json"), gcg.getAllNamedGraphs());
+            //mapper.writeValue(new File("test/testresources/practicalExamples/groupConceptGraphAdvancedRealisticExample.json"), gcg.getAllNamedGraphs());
 
         }catch (Exception e){
             e.printStackTrace();
@@ -117,7 +114,7 @@ public class PracticalConceptGraphTest {
 
 
 
-            ConceptGraphRecord tree = graph.graphToTree().buildNodesAndLinks();
+            ConceptGraphRecord tree = TreeConverter.makeTreeCopy(graph).buildConceptGraphRecord();
             ObjectMapper mapper = new ObjectMapper();
             //Object to JSON in file
             mapper.writeValue(new File("test/testresources/practicalExamples/singleStudentRealisticExample.json"), tree);

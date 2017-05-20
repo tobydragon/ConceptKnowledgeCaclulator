@@ -50,7 +50,6 @@ public class LearningObject {
         return responses.size();
     }
 
-    //TODO: should this be differnt than averaging, how about data weight??
     public double calcKnowledgeEstimate(){
         double estimate = 0;
         for (LearningObjectResponse response : responses){
@@ -60,7 +59,6 @@ public class LearningObject {
 
             estimate /= responses.size();
         }
-        String string;
         return estimate;
     }
 

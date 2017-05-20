@@ -1,14 +1,13 @@
-package edu.ithaca.dragonlab.ckc.conceptgraph;
+package edu.ithaca.dragonlab.ckc.suggester;
 
 import java.util.Comparator;
-import java.util.HashMap;
 
 /**
  * Created by Mia Kimmich Mitchell on 4/10/2017.
  */
-public class learningObjectSuggestionComparator implements Comparator<learningObjectSuggestion> {
+public class LearningObjectSuggestionComparator implements Comparator<LearningObjectSuggestion> {
 
-    public int compare(learningObjectSuggestion one, learningObjectSuggestion two){
+    public int compare(LearningObjectSuggestion one, LearningObjectSuggestion two){
         //have some tests
         //if levels are equal, then compare the path nums
 

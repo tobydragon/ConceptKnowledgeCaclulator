@@ -26,7 +26,7 @@ public class ExampleConceptGraphRecordFactory {
         clList.add(new LinkRecord("A","C")); //A -> C
         clList.add(new LinkRecord("B","C")); //B -> C
 
-        ConceptGraphRecord inputNodesAndLinks = new ConceptGraphRecord(cnList,clList);
+        ConceptGraphRecord inputNodesAndLinks = new ConceptGraphRecord("Simple Example", cnList,clList);
         return inputNodesAndLinks;
         //return new ConceptGraph(inputNodesAndLinks);
 
@@ -47,7 +47,7 @@ public class ExampleConceptGraphRecordFactory {
         clList.add(new LinkRecord("B","D")); //B -> D
         clList.add(new LinkRecord("C","D")); //C -> D
 
-        ConceptGraphRecord inputNodesAndLinks = new ConceptGraphRecord(cnList,clList);
+        ConceptGraphRecord inputNodesAndLinks = new ConceptGraphRecord("Medium Example", cnList,clList);
         return inputNodesAndLinks;
         //return new ConceptGraph(inputNodesAndLinks);
     }
@@ -71,7 +71,7 @@ public class ExampleConceptGraphRecordFactory {
         clList.add(new LinkRecord("C","E")); //C -> E
         clList.add(new LinkRecord("D","E")); //D -> E
 
-        ConceptGraphRecord inputNodesAndLinks = new ConceptGraphRecord(cnList,clList);
+        ConceptGraphRecord inputNodesAndLinks = new ConceptGraphRecord("Complex Example", cnList,clList);
         return inputNodesAndLinks;
         //return new ConceptGraph(inputNodesAndLinks);
     }
@@ -99,7 +99,7 @@ public class ExampleConceptGraphRecordFactory {
         clList.add(new LinkRecord("D","F"));
         clList.add(new LinkRecord("E","F"));
 
-        ConceptGraphRecord inputNodesAndLinks = new ConceptGraphRecord(cnList,clList);
+        ConceptGraphRecord inputNodesAndLinks = new ConceptGraphRecord("Super Complex", cnList,clList);
         return inputNodesAndLinks;
         //return new ConceptGraph(inputNodesAndLinks);
     }

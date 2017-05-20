@@ -2,13 +2,10 @@ package edu.ithaca.dragonlab.ckc.conceptgraph;
 
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import edu.ithaca.dragonlab.ckc.conceptgraph.ConceptGraph;
-import edu.ithaca.dragonlab.ckc.conceptgraph.ConceptNode;
 import edu.ithaca.dragonlab.ckc.io.*;
 
-import java.util.ArrayList;
 import java.util.List;
-import edu.ithaca.dragonlab.ckc.learningobject.ExampleLearningObjectFactory;
+import edu.ithaca.dragonlab.ckc.learningobject.ExampleLearningObjectLinkRecordFactory;
 import edu.ithaca.dragonlab.ckc.learningobject.ExampleLearningObjectResponseFactory;
 
 /**
@@ -17,13 +14,18 @@ import edu.ithaca.dragonlab.ckc.learningobject.ExampleLearningObjectResponseFact
  */
 public class ExampleConceptGraphFactory {
 
-    public static ConceptGraph makeSimple(){
+    public static ConceptGraph makeSimpleStructure(){
         return new ConceptGraph(ExampleConceptGraphRecordFactory.makeSimple());
     }
 
-    public static ConceptGraph makeSimpleWithData(){
+    public static ConceptGraph makeSimpleStructureAndLearningObjects(){
         return new ConceptGraph(ExampleConceptGraphRecordFactory.makeSimple(),
-                ExampleLearningObjectFactory.makeSimpleLOLRecords(),
+                ExampleLearningObjectLinkRecordFactory.makeSimpleLOLRecords());
+    }
+
+    public static ConceptGraph makeSimpleCompleteWithData(){
+        return new ConceptGraph(ExampleConceptGraphRecordFactory.makeSimple(),
+                ExampleLearningObjectLinkRecordFactory.makeSimpleLOLRecords(),
                 ExampleLearningObjectResponseFactory.makeSimpleResponses());
     }
 
