@@ -192,6 +192,10 @@ public class ConceptGraph {
 		return  isAnc;
 	}
 
+	/*
+
+
+	 */
 	//TODO This needs a javadoc comment, being explicti about what it does, and what the return data structure is (what it represents).
 	public HashMap<String,Integer> buildLearningObjectSummaryList(String node) {
 
