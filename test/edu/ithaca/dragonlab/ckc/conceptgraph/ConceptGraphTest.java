@@ -226,7 +226,9 @@ public class ConceptGraphTest {
 
     @Test
     public void calcKnowledgeEstimateMoreComplexTest() {
+
         ConceptGraph orig = ExampleConceptGraphFactory.willExampleConceptGraphTestOneStudent();
+
 
         Assert.assertEquals(0.806, orig.findNodeById("Boolean").getKnowledgeEstimate(), DataUtil.OK_FLOAT_MARGIN);
         Assert.assertEquals(0.783090, orig.findNodeById("Boolean Expressions").getKnowledgeEstimate(), DataUtil.OK_FLOAT_MARGIN);
@@ -235,6 +237,17 @@ public class ConceptGraphTest {
         Assert.assertEquals(0.722, orig.findNodeById("While Loop").getKnowledgeEstimate(), DataUtil.OK_FLOAT_MARGIN);
         Assert.assertEquals(0.85, orig.findNodeById("Counting").getKnowledgeEstimate(), DataUtil.OK_FLOAT_MARGIN);
         Assert.assertEquals(0.7666, orig.findNodeById("For Loop").getKnowledgeEstimate(), DataUtil.OK_FLOAT_MARGIN);
+
+
+
+
+    }
+
+    @Test
+    public void ancestryTest(){
+        ConceptGraph graph = ExampleConceptGraphFactory.mediumStructure();
+        System.out.println(graph);
+
 
     }
 

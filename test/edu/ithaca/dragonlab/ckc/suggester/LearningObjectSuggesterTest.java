@@ -24,14 +24,12 @@ public class LearningObjectSuggesterTest {
         ConceptGraph orig = ExampleConceptGraphFactory.simpleTestGraphTest();
 
         //what it is
-        HashMap<String, List<LearningObjectSuggestion>> objectSuggestionMap = LearningObjectSuggester.buildSuggestionMap(orig);
+        HashMap<String, List<LearningObjectSuggestion>> objectSuggestionMap = LearningObjectSuggester.buildSuggestionMap(orig,1);
 
         //what it should be
         List<LearningObjectSuggestion> testList3 = new ArrayList<>();
         Assert.assertEquals(1, objectSuggestionMap.size());
         Assert.assertEquals(testList3, objectSuggestionMap.get("C"));
-
-
 
     }
 
@@ -40,7 +38,7 @@ public class LearningObjectSuggesterTest {
     public void SuggestedConceptNodeMapWillOneStudentTest() {
         ConceptGraph orig= ExampleConceptGraphFactory.willExampleConceptGraphTestOneStudent();
         //what it is
-        HashMap<String, List<LearningObjectSuggestion>> objectSuggestionMap = LearningObjectSuggester.buildSuggestionMap(orig);
+        HashMap<String, List<LearningObjectSuggestion>> objectSuggestionMap = LearningObjectSuggester.buildSuggestionMap(orig,1);
 
         Assert.assertEquals(2, objectSuggestionMap.size());
         Assert.assertEquals(objectSuggestionMap.get("If Statement").get(1).getId(), "Q3");

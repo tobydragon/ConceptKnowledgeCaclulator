@@ -12,8 +12,14 @@ import java.util.*;
  */
 public class LearningObjectSuggester {
 
-    //TODO javadoc
-    public static HashMap<String, List<LearningObjectSuggestion>> buildSuggestionMap(ConceptGraph graph){
+/*
+goes through the graph and creates a map of ConceptNodes that are between 55%-75% and are not ancestors (unless the child node does better than 75%)
+then it sorts the list of LearningObjectSuggestions and takes the incomplete learningObjects. (The list is ordered by incomplete, wrong, and right and
+within each of those categories based on the highest importance value to lowest).
+@param the graph
+return the map of incomplete learningObjectSuggestions in order of highest importance value to lowest
+ */
+    public static HashMap<String, List<LearningObjectSuggestion>> buildSuggestionMap(ConceptGraph graph, Integer choice){
 
         HashMap<String, List<LearningObjectSuggestion>> suggestedConceptNodeMap = new HashMap<>();
         for (String key : graph.getAllNodeIds()) {
@@ -30,10 +36,18 @@ public class LearningObjectSuggester {
                     sortSuggestions(list);
                     for (int i = 0; i < list.size(); i++) {
                         //if it is incomplete
-                        if (list.get(i).getLevel().equals(LearningObjectSuggestion.Level.INCOMPLETE)) {
-                            //then add it
-                            testList.add(list.get(i));
+                        if (choice.equals(1)){
+                            if (list.get(i).getLevel().equals(LearningObjectSuggestion.Level.INCOMPLETE)) {
+                                //then add it
+                                testList.add(list.get(i));
+                            }
+                        }else{
+                            if (list.get(i).getLevel().equals(LearningObjectSuggestion.Level.WRONG)) {
+                                //then add it
+                                testList.add(list.get(i));
+                            }
                         }
+
                     }
 //                    System.out.println("the testList size is "+testList.size());
                     suggestedConceptNodeMap.put(node.getID(), testList);
@@ -48,6 +62,9 @@ public class LearningObjectSuggester {
         Collections.sort(myList, new LearningObjectSuggestionComparator());
     }
 
+    /*
+    takes a map of strings and creates a list of learningObjectSuggestion that hold if the learningObject was incomplete, wrong, or right
+     */
     public static List<LearningObjectSuggestion> buildLearningObjectSuggestionList(Map<String, Integer> summaryList, Map<String, LearningObject> learningObjectMap){
         //build objects through the hashmap
         //iterate through the hashmap and make the new objects
@@ -78,13 +95,7 @@ public class LearningObjectSuggester {
 
             }
 
-//            if(estimate==0){
-//                level = LearningObjectSuggestion.Level.INCOMPLETE;
-//            }else if(estimate> 0 && estimate<= 0.59){
-//                level = LearningObjectSuggestion.Level.WRONG;
-//            }else{
-//                level = LearningObjectSuggestion.Level.RIGHT;
-//            }
+
         }
         return myList;
     }
