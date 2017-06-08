@@ -1,5 +1,7 @@
 package edu.ithaca.dragonlab.ckc.io;
 
+import com.fasterxml.jackson.core.JsonGenerationException;
+import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import edu.ithaca.dragonlab.ckc.learningobject.LearningObject;
@@ -32,6 +34,13 @@ public class LearningObjectLinkRecord {
         learningObject = "";
         conceptIds = new ArrayList<>();
         this.dataImportance = 1;
+    }
+
+    public static List<LearningObjectLinkRecord> buildListFromJson(String fullFileName) throws IOException {
+        ObjectMapper mapper = new ObjectMapper();
+        mapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
+        List<LearningObjectLinkRecord> LORLList = mapper.readValue(new File(fullFileName), new TypeReference<List<LearningObjectLinkRecord>>(){});
+        return LORLList;
     }
 
     public String getLearningObject(){ return this.learningObject; }
