@@ -1,5 +1,6 @@
 package edu.ithaca.dragonlab.ckc.suggester;
 
+import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import edu.ithaca.dragonlab.ckc.conceptgraph.ConceptGraph;
 import edu.ithaca.dragonlab.ckc.conceptgraph.ExampleConceptGraphFactory;
 import edu.ithaca.dragonlab.ckc.conceptgraph.ExampleConceptGraphRecordFactory;
@@ -19,10 +20,45 @@ import java.util.List;
  */
 public class LearningObjectSuggesterTest {
 
+
+    @Test
+    public void suggestionResourceMediumTest(){
+        ConceptGraph orig= ExampleConceptGraphFactory.willExampleConceptGraphTestOneStudent();
+
+        List<LearningObjectSuggestion> incomTest =  new SuggestionResource(orig).incompleteList;
+        List<LearningObjectSuggestion> wrongTest = new SuggestionResource(orig).wrongList;
+
+        Assert.assertEquals(incomTest.size(),5);
+        Assert.assertEquals(incomTest.get(0).getId(),"Q10");
+        Assert.assertEquals(incomTest.get(1).getId(),"Q10");
+        Assert.assertEquals(incomTest.get(2).getId(),"Q3");
+        Assert.assertEquals(incomTest.get(3).getId(),"Q6");
+        Assert.assertEquals(incomTest.get(4).getId(),"Q6");
+
+
+        Assert.assertEquals(wrongTest.size(),3);
+        Assert.assertEquals(wrongTest.get(0).getId(), "Q9");
+        Assert.assertEquals(wrongTest.get(1).getId(), "Q9");
+        Assert.assertEquals(wrongTest.get(2).getId(), "Q1");
+    }
+
+    @Test
+    public void suggestionResourceSimpleTest(){
+        ConceptGraph orig = ExampleConceptGraphFactory.simpleTestGraphTest();
+
+        List<LearningObjectSuggestion> incomTest =  new SuggestionResource(orig).incompleteList;
+        List<LearningObjectSuggestion> wrongTest = new SuggestionResource(orig).wrongList;
+
+        Assert.assertEquals(wrongTest.size(),2);
+        Assert.assertEquals(wrongTest.get(0).getId(), "Q4");
+        Assert.assertEquals(wrongTest.get(1).getId(), "Q5");
+
+        Assert.assertEquals(incomTest.size(),0);
+    }
+
     @Test
     public void SuggestedConceptNodeMapSimpleTest() {
         ConceptGraph orig = ExampleConceptGraphFactory.simpleTestGraphTest();
-
         //what it is
         HashMap<String, List<LearningObjectSuggestion>> objectSuggestionMap = LearningObjectSuggester.buildSuggestionMap(orig,1);
 
@@ -43,7 +79,10 @@ public class LearningObjectSuggesterTest {
         Assert.assertEquals(2, objectSuggestionMap.size());
         Assert.assertEquals(objectSuggestionMap.get("If Statement").get(1).getId(), "Q3");
         Assert.assertEquals(objectSuggestionMap.get("If Statement").get(0).getId(), "Q10");
+        Assert.assertEquals(objectSuggestionMap.get("If Statement").get(2).getId(), "Q6");
         Assert.assertEquals(objectSuggestionMap.get("While Loop").get(0).getId(), "Q10");
+        Assert.assertEquals(objectSuggestionMap.get("While Loop").get(1).getId(), "Q6");
+
 
     }
 
@@ -82,11 +121,8 @@ public class LearningObjectSuggesterTest {
         suggestListTest.add(new LearningObjectSuggestion("Q6", 2, LearningObjectSuggestion.Level.WRONG) );
         suggestListTest.add(new LearningObjectSuggestion("Q10", 1, LearningObjectSuggestion.Level.INCOMPLETE) );
 
-
         //orders the list based off of "level"
         LearningObjectSuggester.sortSuggestions(suggestedList);
-
-//        //who should call orderedList
 
         for (int i =0; i<suggestedList.size(); i++){
 

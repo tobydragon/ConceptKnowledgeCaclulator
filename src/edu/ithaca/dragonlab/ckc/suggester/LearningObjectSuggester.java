@@ -17,6 +17,7 @@ goes through the graph and creates a map of ConceptNodes that are between 55%-75
 then it sorts the list of LearningObjectSuggestions and takes the incomplete learningObjects. (The list is ordered by incomplete, wrong, and right and
 within each of those categories based on the highest importance value to lowest).
 @param the graph
+@param choices: 1= incomplete, 0 = wrong
 return the map of incomplete learningObjectSuggestions in order of highest importance value to lowest
  */
     public static HashMap<String, List<LearningObjectSuggestion>> buildSuggestionMap(ConceptGraph graph, Integer choice){
@@ -76,7 +77,6 @@ return the map of incomplete learningObjectSuggestions in order of highest impor
             double estimate = node.calcKnowledgeEstimate();
             LearningObjectSuggestion.Level level;
             //fix to fit preconditions
-            //TODO: fix so that if the list is empty then it's set to incomplete
             LearningObjectSuggestion.Level levelIn;
             List<LearningObjectResponse> resList = node.getResponses();
             if(resList.size()==0){

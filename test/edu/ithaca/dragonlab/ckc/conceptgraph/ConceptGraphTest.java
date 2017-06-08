@@ -246,7 +246,7 @@ public class ConceptGraphTest {
     @Test
     public void ancestryTest(){
         ConceptGraph graph = ExampleConceptGraphFactory.mediumStructure();
-        System.out.println(graph);
+//        System.out.println(graph);
 
 
     }

@@ -192,11 +192,12 @@ public class ConceptGraph {
 		return  isAnc;
 	}
 
-	/*
 
-
-	 */
-	//TODO This needs a javadoc comment, being explicti about what it does, and what the return data structure is (what it represents).
+    /*
+    Finds where to start building the summaryList via the parameter and creates a empty hashmap to pass with it to buildLearningObjectSummaryList
+    @param string that is used to find a ConceptNode
+    return filled hashmap from other buildLearningobjectSummaryList.
+     */
 	public HashMap<String,Integer> buildLearningObjectSummaryList(String node) {
 
 		ConceptNode findNode = findNodeById(node);
