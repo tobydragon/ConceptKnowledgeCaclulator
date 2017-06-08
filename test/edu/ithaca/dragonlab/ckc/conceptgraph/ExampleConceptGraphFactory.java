@@ -130,7 +130,7 @@ public class ExampleConceptGraphFactory {
 
         try {
             ConceptGraphRecord graphRecord = ConceptGraphRecord.buildFromJson("test/testresources/basicRealisticExampleConceptGraphOneStudent.json");
-            List<LearningObjectLinkRecord> LOLRlist = JsonImportExport.LOLRFromRecords("test/testresources/basicRealisticExampleLOLRecordOneStudent.json");
+            List<LearningObjectLinkRecord> LOLRlist = LearningObjectLinkRecord.buildListFromJson("test/testresources/basicRealisticExampleLOLRecordOneStudent.json");
 
             ConceptGraph graph = new ConceptGraph(graphRecord, LOLRlist, csvReader.getManualGradedResponses());
             graph.calcKnowledgeEstimates();
@@ -178,7 +178,7 @@ public class ExampleConceptGraphFactory {
 
         try {
             ConceptGraphRecord graphRecord = ConceptGraphRecord.buildFromJson("test/testresources/simpleGraphTestConceptNodes.json");
-            List<LearningObjectLinkRecord> LOLRlist = JsonImportExport.LOLRFromRecords("test/testresources/simpleGraphTestLearningObjects.json");
+            List<LearningObjectLinkRecord> LOLRlist = LearningObjectLinkRecord.buildListFromJson("test/testresources/simpleGraphTestLearningObjects.json");
              ConceptGraph graph = new ConceptGraph(graphRecord, LOLRlist, csvReader.getManualGradedResponses());
 
             graph.calcKnowledgeEstimates();

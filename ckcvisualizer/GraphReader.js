@@ -159,6 +159,6 @@ function writeMenu(){
     document.getElementById("menu").innerHTML = newCode;
 }
 
-cohortGraphs = readJson("../test/testresources/io/simpleCohortTree.json")
+cohortGraphs = readJson("../out/ckcCurrent.json")
 console.log(cohortGraphs)
 writeMenu()
