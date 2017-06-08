@@ -19,15 +19,17 @@ public class SuggestionResource {
     public SuggestionResource(ConceptGraph graph){
         this.incompleteList= new ArrayList<LearningObjectSuggestion>();
         this.wrongList= new ArrayList<LearningObjectSuggestion>();
-        completeList(graph,0);
+        completeList(graph, 0);
         completeList(graph,1);
+
+
     }
 
-    /*
-    Creates a list of the LearningObjects where it goes from the object with highest individual pathnum from highest to the lowest
-    @param a hashmap of suggested Concept Nodes and a list of LearningObjectSuggestions
-    returns a list of strings of ordered names
-     */
+    /**
+    *Creates a list of the LearningObjects where it goes from the object with highest individual pathnum from highest to the lowest
+    *@param suggestionMap - suggested Concept Nodes and a list of LearningObjectSuggestions
+    *@return a list of strings of ordered names
+    */
     public List<String> sortHighToLow(HashMap<String, List<LearningObjectSuggestion>> suggestionMap){
         List<String> workingList = new ArrayList<>();
         List<String> orderedNames = new ArrayList<>();
@@ -59,20 +61,22 @@ public class SuggestionResource {
         return orderedNames;
     }
 
-    /*
-    Creates a list of incomplete or wrong learningObjects that are ordered from greatest importance level to least
-    go through map and pick the first suggestions, and go through all concepts then go through all concepts again and get the second LearningObject
-    @param concept graph
-    @param integer 0= wrong list, 1= incomplete list
-     */
+    /**
+    *Creates a list of incomplete or wrong learningObjects that are ordered from greatest importance level to least
+    *go through map and pick the first suggestions, and go through all concepts then go through all concepts again and get the second LearningObject
+    *@param graph of concepts
+    *@param choice  0= wrong list, 1= incomplete list
+    */
     public void completeList(ConceptGraph graph, int choice) {
         HashMap<String, List<LearningObjectSuggestion>> suggestionMap;
         if (choice == 1) {
 //            incomplete
-            suggestionMap = LearningObjectSuggester.buildSuggestionMap(graph, 1);
+            List<ConceptNode> concepts = LearningObjectSuggester.conceptsToWorkOn(graph);
+            suggestionMap = LearningObjectSuggester.buildSuggestionMap(concepts, 1,graph);
         } else {
 //            //wrong
-            suggestionMap = LearningObjectSuggester.buildSuggestionMap(graph, 0);
+            List<ConceptNode> concepts = LearningObjectSuggester.conceptsToWorkOn(graph);
+            suggestionMap = LearningObjectSuggester.buildSuggestionMap(concepts,0,graph);
         }
 
 
@@ -87,9 +91,9 @@ public class SuggestionResource {
             int itr = 0;
             while (itr < max) {
                 for (int i = 0; i < suggestionOrder.size(); i++) {
-                    List<LearningObjectSuggestion> listTest = suggestionMap.get(suggestionOrder.get(i));
-                    if (itr < listTest.size()) {
-                        LearningObjectSuggestion sug = listTest.get(itr);
+                    List<LearningObjectSuggestion> LOSList = suggestionMap.get(suggestionOrder.get(i));
+                    if (itr < LOSList.size()) {
+                        LearningObjectSuggestion sug = LOSList.get(itr);
 
                         if (choice == 1) {
                             incompleteList.add(sug);

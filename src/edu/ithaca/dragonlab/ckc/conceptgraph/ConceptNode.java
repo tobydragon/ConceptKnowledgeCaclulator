@@ -72,11 +72,10 @@ public class ConceptNode {
 		}
 	}
 
-	/*
-        fills up a hashmap with the LearningObjects IDs and the amount of ways to get to the learning object from the root (which is how importance is measured)
-        @param HashMap<String, Integer>
-        no returns
-         */
+	/**
+     *fills up a hashmap with the LearningObjects IDs and the amount of ways to get to the learning object from the root (which is how importance is measured)
+     *@param learningObjectSummary map>
+     */
 	public void buildLearningObjectSummaryList(HashMap <String, Integer> learningObjectSummary){
 
 		//add the current questions.
@@ -102,11 +101,11 @@ public class ConceptNode {
 		}
 	}
 
-/*
-checks to see if the called on ConceptNode is a parents (grandparent, ect.) to the parameter
-@param the potential child node
-returns true of the called node is in the lineage of the parameter
- */
+    /**
+    checks to see if the called on ConceptNode is a parents (grandparent, ect.) to the parameter
+    @param possibleDescendent node
+    @returns true of the called node is in the lineage of the parameter
+     */
 	public boolean isAncestorOf(ConceptNode possibleDescendent){
         boolean isAncestor =false;
         if (this.children.contains(possibleDescendent)){

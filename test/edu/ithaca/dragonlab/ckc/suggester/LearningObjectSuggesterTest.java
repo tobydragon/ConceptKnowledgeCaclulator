@@ -2,6 +2,7 @@ package edu.ithaca.dragonlab.ckc.suggester;
 
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import edu.ithaca.dragonlab.ckc.conceptgraph.ConceptGraph;
+import edu.ithaca.dragonlab.ckc.conceptgraph.ConceptNode;
 import edu.ithaca.dragonlab.ckc.conceptgraph.ExampleConceptGraphFactory;
 import edu.ithaca.dragonlab.ckc.conceptgraph.ExampleConceptGraphRecordFactory;
 import edu.ithaca.dragonlab.ckc.io.LearningObjectLinkRecord;
@@ -20,34 +21,15 @@ import java.util.List;
  */
 public class LearningObjectSuggesterTest {
 
-
-    @Test
-    public void suggestionResourceMediumTest(){
-        ConceptGraph orig= ExampleConceptGraphFactory.willExampleConceptGraphTestOneStudent();
-
-        List<LearningObjectSuggestion> incomTest =  new SuggestionResource(orig).incompleteList;
-        List<LearningObjectSuggestion> wrongTest = new SuggestionResource(orig).wrongList;
-
-        Assert.assertEquals(incomTest.size(),5);
-        Assert.assertEquals(incomTest.get(0).getId(),"Q10");
-        Assert.assertEquals(incomTest.get(1).getId(),"Q10");
-        Assert.assertEquals(incomTest.get(2).getId(),"Q3");
-        Assert.assertEquals(incomTest.get(3).getId(),"Q6");
-        Assert.assertEquals(incomTest.get(4).getId(),"Q6");
-
-
-        Assert.assertEquals(wrongTest.size(),3);
-        Assert.assertEquals(wrongTest.get(0).getId(), "Q9");
-        Assert.assertEquals(wrongTest.get(1).getId(), "Q9");
-        Assert.assertEquals(wrongTest.get(2).getId(), "Q1");
-    }
-
     @Test
     public void suggestionResourceSimpleTest(){
         ConceptGraph orig = ExampleConceptGraphFactory.simpleTestGraphTest();
 
-        List<LearningObjectSuggestion> incomTest =  new SuggestionResource(orig).incompleteList;
-        List<LearningObjectSuggestion> wrongTest = new SuggestionResource(orig).wrongList;
+        List<ConceptNode> concepts = LearningObjectSuggester.conceptsToWorkOn(orig);
+
+        SuggestionResource res =  new SuggestionResource(orig);
+        List<LearningObjectSuggestion> incomTest = res.incompleteList;
+        List<LearningObjectSuggestion> wrongTest = res.wrongList;
 
         Assert.assertEquals(wrongTest.size(),2);
         Assert.assertEquals(wrongTest.get(0).getId(), "Q4");
@@ -57,10 +39,46 @@ public class LearningObjectSuggesterTest {
     }
 
     @Test
-    public void SuggestedConceptNodeMapSimpleTest() {
+    public void suggestionResourceMediumTest(){
+        ConceptGraph orig= ExampleConceptGraphFactory.willExampleConceptGraphTestOneStudent();
+
+
+        SuggestionResource res =  new SuggestionResource(orig);
+        List<LearningObjectSuggestion> incomTest = res.incompleteList;
+        List<LearningObjectSuggestion> wrongTest = res.wrongList;
+
+        Assert.assertEquals(incomTest.size(),5);
+        Assert.assertEquals(incomTest.get(0).getId(),"Q10");
+        Assert.assertEquals(incomTest.get(1).getId(),"Q10");
+        Assert.assertEquals(incomTest.get(2).getId(),"Q3");
+        Assert.assertEquals(incomTest.get(3).getId(),"Q6");
+        Assert.assertEquals(incomTest.get(4).getId(),"Q6");
+
+        Assert.assertEquals(wrongTest.size(),3);
+        Assert.assertEquals(wrongTest.get(0).getId(), "Q9");
+        Assert.assertEquals(wrongTest.get(1).getId(), "Q9");
+        Assert.assertEquals(wrongTest.get(2).getId(), "Q1");
+    }
+
+    @Test
+    public void conceptsToWorkOnTest(){
+        ConceptGraph orig= ExampleConceptGraphFactory.willExampleConceptGraphTestOneStudent();
+
+        List<ConceptNode> concepts = LearningObjectSuggester.conceptsToWorkOn(orig);
+
+        Assert.assertEquals(concepts.size(), 2);
+        Assert.assertEquals(concepts.get(0).getID(), "If Statement");
+        Assert.assertEquals(concepts.get(1).getID(), "While Loop");
+
+    }
+
+    @Test
+    public void buildSuggestionMapSimpleTest() {
         ConceptGraph orig = ExampleConceptGraphFactory.simpleTestGraphTest();
         //what it is
-        HashMap<String, List<LearningObjectSuggestion>> objectSuggestionMap = LearningObjectSuggester.buildSuggestionMap(orig,1);
+
+        List<ConceptNode> concepts = LearningObjectSuggester.conceptsToWorkOn(orig);
+        HashMap<String, List<LearningObjectSuggestion>> objectSuggestionMap = LearningObjectSuggester.buildSuggestionMap(concepts,1,orig);
 
         //what it should be
         List<LearningObjectSuggestion> testList3 = new ArrayList<>();
@@ -69,12 +87,12 @@ public class LearningObjectSuggesterTest {
 
     }
 
-
     @Test
-    public void SuggestedConceptNodeMapWillOneStudentTest() {
+    public void buildSuggestionMapWillOneStudentTest() {
         ConceptGraph orig= ExampleConceptGraphFactory.willExampleConceptGraphTestOneStudent();
-        //what it is
-        HashMap<String, List<LearningObjectSuggestion>> objectSuggestionMap = LearningObjectSuggester.buildSuggestionMap(orig,1);
+
+        List<ConceptNode> concepts = LearningObjectSuggester.conceptsToWorkOn(orig);
+        HashMap<String, List<LearningObjectSuggestion>> objectSuggestionMap = LearningObjectSuggester.buildSuggestionMap(concepts,1,orig);
 
         Assert.assertEquals(2, objectSuggestionMap.size());
         Assert.assertEquals(objectSuggestionMap.get("If Statement").get(1).getId(), "Q3");
@@ -107,19 +125,19 @@ public class LearningObjectSuggesterTest {
         //makes sure that buildLearningObjectSummaryList works
         Assert.assertEquals(testCompareA,learningSummaryFromA);
 
-        //build the sugggested learning object list
-        List<LearningObjectSuggestion> suggestedList = LearningObjectSuggester.buildLearningObjectSuggestionList(learningSummaryFromA, orig.getLearningObjectMap());
+        //build the suggested learning object list
+        List<LearningObjectSuggestion> suggestedList = LearningObjectSuggester.buildLearningObjectSuggestionList(learningSummaryFromA, orig.getLearningObjectMap(),"A");
 
 
         //this is ordered based on "level"
         List<LearningObjectSuggestion> suggestListTest = new ArrayList<>();
-        suggestListTest.add(new LearningObjectSuggestion("Q3", 2, LearningObjectSuggestion.Level.RIGHT) );
-        suggestListTest.add(new LearningObjectSuggestion("Q1", 1, LearningObjectSuggestion.Level.RIGHT) );
-        suggestListTest.add(new LearningObjectSuggestion("Q2", 1, LearningObjectSuggestion.Level.RIGHT) );
-        suggestListTest.add(new LearningObjectSuggestion("Q4", 2, LearningObjectSuggestion.Level.WRONG) );
-        suggestListTest.add(new LearningObjectSuggestion("Q5", 2, LearningObjectSuggestion.Level.WRONG) );
-        suggestListTest.add(new LearningObjectSuggestion("Q6", 2, LearningObjectSuggestion.Level.WRONG) );
-        suggestListTest.add(new LearningObjectSuggestion("Q10", 1, LearningObjectSuggestion.Level.INCOMPLETE) );
+        suggestListTest.add(new LearningObjectSuggestion("Q3", 2, LearningObjectSuggestion.Level.RIGHT,"A") );
+        suggestListTest.add(new LearningObjectSuggestion("Q1", 1, LearningObjectSuggestion.Level.RIGHT, "A") );
+        suggestListTest.add(new LearningObjectSuggestion("Q2", 1, LearningObjectSuggestion.Level.RIGHT, "A") );
+        suggestListTest.add(new LearningObjectSuggestion("Q4", 2, LearningObjectSuggestion.Level.WRONG, "A") );
+        suggestListTest.add(new LearningObjectSuggestion("Q5", 2, LearningObjectSuggestion.Level.WRONG, "A") );
+        suggestListTest.add(new LearningObjectSuggestion("Q6", 2, LearningObjectSuggestion.Level.WRONG, "A") );
+        suggestListTest.add(new LearningObjectSuggestion("Q10", 1, LearningObjectSuggestion.Level.INCOMPLETE, "A") );
 
         //orders the list based off of "level"
         LearningObjectSuggester.sortSuggestions(suggestedList);
@@ -129,6 +147,7 @@ public class LearningObjectSuggesterTest {
             Assert.assertEquals(suggestedList.get(i).getId(),suggestListTest.get(i).getId());
             Assert.assertEquals(suggestedList.get(i).getPathNum(),suggestListTest.get(i).getPathNum());
             Assert.assertEquals(suggestedList.get(i).getLevel(),suggestListTest.get(i).getLevel());
+            Assert.assertEquals(suggestedList.get(i).getCausedConcept(), suggestListTest.get(i).getCausedConcept());
 
         }
 
