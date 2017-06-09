@@ -19,7 +19,7 @@ public class CSVReader {
 
     /**
      * This function is passed a filename of a gradebook directly exported from Sakai's built in gradebook.
-     * (See DataCSVExample.csv in test/testresources/ for proper file format example)
+     * (See DataCSVExample.csv in test/testresources/io for proper file format example)
      * @param filename
      */
     public CSVReader(String filename){
