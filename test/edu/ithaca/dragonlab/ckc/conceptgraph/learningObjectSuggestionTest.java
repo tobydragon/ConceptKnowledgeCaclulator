@@ -20,7 +20,7 @@ public class learningObjectSuggestionTest {
         Assert.assertEquals(2, test1.getPathNum() );
         Assert.assertEquals(LearningObjectSuggestion.Level.INCOMPLETE, test1.getLevel() );
 
-        Assert.assertEquals("Intro to CS", test1.getCausedConcept());
+        Assert.assertEquals("Intro to CS", test1.getReasoning());
 
 
     }

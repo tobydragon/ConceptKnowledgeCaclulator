@@ -26,8 +26,7 @@ public class LearningObjectSuggesterTest {
         ConceptGraph orig = ExampleConceptGraphFactory.simpleTestGraphTest();
 
         List<ConceptNode> concepts = LearningObjectSuggester.conceptsToWorkOn(orig);
-
-        SuggestionResource res =  new SuggestionResource(orig);
+        SuggestionResource res =  new SuggestionResource(orig, concepts);
         List<LearningObjectSuggestion> incomTest = res.incompleteList;
         List<LearningObjectSuggestion> wrongTest = res.wrongList;
 
@@ -42,8 +41,9 @@ public class LearningObjectSuggesterTest {
     public void suggestionResourceMediumTest(){
         ConceptGraph orig= ExampleConceptGraphFactory.willExampleConceptGraphTestOneStudent();
 
+        List<ConceptNode> concepts = LearningObjectSuggester.conceptsToWorkOn(orig);
+        SuggestionResource res =  new SuggestionResource(orig, concepts);
 
-        SuggestionResource res =  new SuggestionResource(orig);
         List<LearningObjectSuggestion> incomTest = res.incompleteList;
         List<LearningObjectSuggestion> wrongTest = res.wrongList;
 
@@ -147,7 +147,7 @@ public class LearningObjectSuggesterTest {
             Assert.assertEquals(suggestedList.get(i).getId(),suggestListTest.get(i).getId());
             Assert.assertEquals(suggestedList.get(i).getPathNum(),suggestListTest.get(i).getPathNum());
             Assert.assertEquals(suggestedList.get(i).getLevel(),suggestListTest.get(i).getLevel());
-            Assert.assertEquals(suggestedList.get(i).getCausedConcept(), suggestListTest.get(i).getCausedConcept());
+            Assert.assertEquals(suggestedList.get(i).getReasoning(), suggestListTest.get(i).getReasoning());
 
         }
 

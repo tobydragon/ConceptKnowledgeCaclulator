@@ -1,10 +1,4 @@
 [
-  {"learningObject":"Q14",
-    "conceptIds":[
-      "Counting"
-    ],
-    "dataImportance": "1"
-  },
   {"learningObject":"Q1",
   "conceptIds":[
     "If Statement"

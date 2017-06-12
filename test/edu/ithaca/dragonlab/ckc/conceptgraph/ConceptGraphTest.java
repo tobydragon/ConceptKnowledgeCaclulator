@@ -238,18 +238,9 @@ public class ConceptGraphTest {
         Assert.assertEquals(0.85, orig.findNodeById("Counting").getKnowledgeEstimate(), DataUtil.OK_FLOAT_MARGIN);
         Assert.assertEquals(0.7666, orig.findNodeById("For Loop").getKnowledgeEstimate(), DataUtil.OK_FLOAT_MARGIN);
 
-
-
-
     }
 
-    @Test
-    public void ancestryTest(){
-        ConceptGraph graph = ExampleConceptGraphFactory.mediumStructure();
-//        System.out.println(graph);
 
-
-    }
 
 }
 

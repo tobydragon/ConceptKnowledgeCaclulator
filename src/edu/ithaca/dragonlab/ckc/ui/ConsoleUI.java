@@ -3,12 +3,19 @@ package edu.ithaca.dragonlab.ckc.ui;
 import edu.ithaca.dragonlab.ckc.ConceptKnowledgeCalculator;
 import edu.ithaca.dragonlab.ckc.ConceptKnowledgeCalculatorAPI;
 import edu.ithaca.dragonlab.ckc.conceptgraph.ConceptGraph;
+import edu.ithaca.dragonlab.ckc.conceptgraph.ConceptNode;
+import edu.ithaca.dragonlab.ckc.suggester.SuggestionResource;
+
+import java.io.IOException;
+import java.util.*;
 
 /**
  * Created by tdragon on 6/8/17.
  */
 public class ConsoleUI {
-    ConceptKnowledgeCalculatorAPI ckc;
+    //private ConceptKnowledgeCalculatorAPI ckc;
+
+    public ConceptKnowledgeCalculatorAPI ckc;
 
     public ConsoleUI(String structureFilename, String resourceFilename, String assessmentFilename){
         try {
@@ -19,11 +26,114 @@ public class ConsoleUI {
             ckc = new ConceptKnowledgeCalculator();
         }
         run();
+
     }
 
-    public void run(){
+    public void run() {
         System.out.println("Current graphs:\t" + ckc.getCohortGraphsUrl());
+        Scanner scanner = new Scanner(System.in);
 
-        //TODO: Make a menu that allows you to change data, request different kinds of suggestions, or quit
+        int contQuit = 1;
+
+        while(contQuit==1) {
+
+            System.out.println("What do you want to do? \n 1 - calculate a list of concept nodes to work on \n 2 - calculate learning object suggestions based on a specific concept \n 3 - automatically calculate suggestions");
+            Integer num = scanner.nextInt();
+
+            while (num < 1 || num > 3) {
+                System.out.println("Out of bounds");
+                System.out.println("What do you want to do? \n 1 - calculate a list of concept nodes to work on \n 2 - calculate learning object suggestions based on a specific concept \n 3 - automatically calculate suggestions \n 4 - View graph \n 5 - Create new graph ");
+                num = scanner.nextInt();
+            }
+
+            scanner.nextLine();
+
+            if (num == 1) {
+                System.out.println("calculate a list of concept nodes to work ");
+                System.out.println("User ID");
+                String userID = scanner.nextLine();
+
+                List<ConceptNode> suggestedConceptNodeList = ckc.calcIndividualConceptNodesSuggestions(userID);
+                System.out.println(suggestedConceptNodeList);
+
+            } else if (num == 2) {
+                System.out.println("calculate learning object suggestions based on a specific concept");
+                System.out.println("User ID");
+                String userID = scanner.nextLine();
+
+                System.out.println("Concept ID");
+                String conceptID = scanner.nextLine();
+                SuggestionResource sugRes= ckc.calcIndividualSpecificConceptSuggestions(userID, conceptID);
+
+                System.out.println(" 1- Try something new 2- try again");
+                Integer option = scanner.nextInt();
+                while (option>2 || option<1){
+                    System.out.println(" 1- Try something new 2- try again");
+                    option = scanner.nextInt();
+                }
+                if(option==1){
+                    System.out.println(sugRes.incompleteList);
+                }else{
+                    System.out.println(sugRes.wrongList);
+                }
+
+
+            } else if (num == 3) {
+                System.out.println("automatically calculate suggestions");
+                System.out.println("User ID");
+                String userID = scanner.nextLine();
+
+                SuggestionResource sugRes= ckc.calcIndividualGraphSuggestions(userID);
+
+                System.out.println(" 1- Try something new 2- try again");
+                Integer option = scanner.nextInt();
+                while (option>2 || option<1){
+                    System.out.println(" 1- Try something new 2- try again");
+                    option = scanner.nextInt();
+                }
+                if(option==1){
+                    System.out.println(sugRes.incompleteList);
+                }else{
+                    System.out.println(sugRes.wrongList);
+                }
+
+
+            } else if (num == 4) {
+                System.out.println("view graph");
+
+                ckc.getCohortGraphsUrl();
+
+            } else {
+                System.out.println("create new graph ");
+
+                System.out.println("Concept ID");
+                String structure = scanner.nextLine();
+
+                System.out.println("Concept ID");
+                String resource = scanner.nextLine();
+
+                System.out.println("Concept ID");
+                String assessment = scanner.nextLine();
+
+                try {
+                    ckc.clearAndCreateCohortData(structure,resource,assessment);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+
+            System.out.println("1- continue 2- quit");
+            Integer con = scanner.nextInt();
+
+            while (num < 1 || num > 2) {
+                System.out.println("Out of bounds");
+                System.out.println("1- continue 2- quit");
+                con = scanner.nextInt();
+            }
+
+            contQuit=con;
+
+        }
+
     }
 }

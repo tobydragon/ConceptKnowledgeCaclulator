@@ -26,6 +26,9 @@ public class LearningObjectSuggester {
         for (String key : graph.getAllNodeIds()) {
             ConceptNode node = graph.findNodeById(key);
 
+
+//            System.out.println(node.getID() + " " + node.getKnowledgeEstimate());
+
             if (node.getKnowledgeEstimate() >= min && node.getKnowledgeEstimate() <= max) {
                 //if false, then the node isn't an ancestor or the compare node is high THEREFORE you can add it to the list
                 boolean anc = graph.canIgnoreNode(node);
@@ -39,10 +42,42 @@ public class LearningObjectSuggester {
     }
 
 
+    public static HashMap<String, List<LearningObjectSuggestion>> specificConceptSuggestionMap(Integer choice, ConceptGraph graph, String conceptID){
+        ConceptNode concept = graph.findNodeById(conceptID);
+
+        HashMap<String, List<LearningObjectSuggestion>> suggestedConceptNodeMap = new HashMap<>();
+
+        List<LearningObjectSuggestion> testList = new ArrayList<>();
+
+        HashMap<String, Integer> map = graph.buildLearningObjectSummaryList(concept.getID());
+        List<LearningObjectSuggestion> list = buildLearningObjectSuggestionList(map, graph.getLearningObjectMap(), concept.getID());
+        sortSuggestions(list);
+        for (int i = 0; i < list.size(); i++) {
+            //if it is incomplete
+            if (choice.equals(1)) {
+                if (list.get(i).getLevel().equals(LearningObjectSuggestion.Level.INCOMPLETE)) {
+                    //then add it
+                    testList.add(list.get(i));
+                }
+            } else {
+                if (list.get(i).getLevel().equals(LearningObjectSuggestion.Level.WRONG)) {
+                    //then add it
+                    testList.add(list.get(i));
+                }
+
+            }
+            suggestedConceptNodeMap.put(concept.getID(), testList);
+
+        }
+        return suggestedConceptNodeMap;
+
+    }
+
+
+
+
     /**
-     *goes through the graph and creates a map of ConceptNodes that are between 55%-75% and are not ancestors (unless the child node does better than 75%)
-     *then it sorts the list of LearningObjectSuggestions and takes the incomplete learningObjects. (The list is ordered by incomplete, wrong, and right and
-     *within each of those categories based on the highest importance value to lowest).
+     *sorts the list of LearningObjectSuggestions and takes the incomplete learningObjects. (The list is ordered by incomplete, wrong, and right and within each of those categories based on the highest importance value to lowest).
      *@param graph Concept graph
      *@param choice: 1= incomplete, 0 = wrong
      *@return the map of incomplete learningObjectSuggestions in order of highest importance value to lowest
@@ -54,7 +89,6 @@ public class LearningObjectSuggester {
 
         for (int x =0; x< suggestedConceptList.size(); x++) {
             ConceptNode concept = suggestedConceptList.get(x);
-
 
             List<LearningObjectSuggestion> testList = new ArrayList<>();
 

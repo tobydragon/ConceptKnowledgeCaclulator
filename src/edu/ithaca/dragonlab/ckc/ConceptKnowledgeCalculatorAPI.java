@@ -1,5 +1,8 @@
 package edu.ithaca.dragonlab.ckc;
 
+import edu.ithaca.dragonlab.ckc.conceptgraph.ConceptNode;
+import edu.ithaca.dragonlab.ckc.suggester.SuggestionResource;
+
 import java.io.IOException;
 import java.util.List;
 
@@ -27,24 +30,28 @@ public interface ConceptKnowledgeCalculatorAPI {
     String getCohortGraphsUrl();
 
 
-    //TODO: replace String return with whatever object holds suggestions
     /**
      * Calculates all suggestions for the individual graph, returns an object containing two ordered lists:
      * an ordered list of new resources to try
      * an ordered list of resources that have had unsuccessful assessments in the past
      * @return ???
      */
-    String calcIndividualGraphSuggestions(String userId);
+    SuggestionResource calcIndividualGraphSuggestions(String userId);
 
 
-    //TODO: replace String return with whatever object holds suggestions
     /**
      * Calculates suggestions specific to a certain concept for an individual graph, returns an object containing two ordered lists:
      * an ordered list of new resources to try
      * an ordered list of resources that have had unsuccessful assessments in the past
      * @return ???
      */
-    String calcIndividualConceptSuggestions(String userId, String conceptId);
+    SuggestionResource calcIndividualSpecificConceptSuggestions(String userId, String conceptId);
 
 
+    /**
+     * Calculates a list of conceptNode based on an individual graph , returns a the list of ConceptNodes
+     * @param userID
+     * @return
+     */
+    List<ConceptNode> calcIndividualConceptNodesSuggestions(String userID);
 }

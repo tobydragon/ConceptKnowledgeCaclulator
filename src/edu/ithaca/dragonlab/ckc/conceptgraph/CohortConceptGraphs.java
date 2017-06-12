@@ -25,9 +25,10 @@ public class CohortConceptGraphs {
 		averageGraph.calcDataImportance();
 		averageGraph.calcKnowledgeEstimates();
 		//averageGraph.calcPredictedScores();
-		
+
 		Map<String, List<LearningObjectResponse>> userIdToResponses = LearningObjectResponse.getUserResponseMap(summaries);
 		userToGraph = new HashMap<>();
+
 		
 		for(String user: userIdToResponses.keySet()){
 			ConceptGraph structureCopy = new ConceptGraph(structureGraph, user);

@@ -50,6 +50,53 @@ public class PracticalConceptGraphTest {
         }
     }
 
+
+    @Test
+    public void willExampleCohortGraphWithKnowledgeEstimates(){
+        ObjectMapper graphMapper = new ObjectMapper();
+
+        graphMapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
+        CSVReader csvReader = new CSVReader("test/testresources/basicRealisticExampleGradeBook2.csv");
+
+        try {
+            ConceptGraphRecord graphRecord = ConceptGraphRecord.buildFromJson("test/testresources/basicRealisticExampleConceptGraphOneStudent.json");
+
+            List<LearningObjectLinkRecord> LOLRlist = LearningObjectLinkRecord.buildListFromJson("test/testresources/basicRealisticExampleLOLRecordOneStudent.json");
+            ConceptGraph graph = new ConceptGraph(graphRecord, LOLRlist);
+
+            CohortConceptGraphs gcg = new CohortConceptGraphs(graph,csvReader.getManualGradedResponses());
+            graph.calcDataImportance();
+            graph.calcKnowledgeEstimates();
+
+
+            Assert.assertEquals("Intro CS", graph.findNodeById("Intro CS").getID());
+            Assert.assertEquals(7, graph.findNodeById("Boolean").getLearningObjectMap().size());
+            Assert.assertEquals(14,graph.getLearningObjectMap().size());
+
+            Assert.assertEquals(0.806, graph.findNodeById("Boolean").getKnowledgeEstimate(), DataUtil.OK_FLOAT_MARGIN);
+            Assert.assertEquals(0.783090, graph.findNodeById("Boolean Expressions").getKnowledgeEstimate(), DataUtil.OK_FLOAT_MARGIN);
+            Assert.assertEquals(0.746, graph.findNodeById("If Statement").getKnowledgeEstimate(), DataUtil.OK_FLOAT_MARGIN);
+
+            Assert.assertEquals(0.722, graph.findNodeById("While Loop").getKnowledgeEstimate(), DataUtil.OK_FLOAT_MARGIN);
+            Assert.assertEquals(0.85, graph.findNodeById("Counting").getKnowledgeEstimate(), DataUtil.OK_FLOAT_MARGIN);
+            Assert.assertEquals(0.7666, graph.findNodeById("For Loop").getKnowledgeEstimate(), DataUtil.OK_FLOAT_MARGIN);
+
+
+
+            ObjectMapper mapper = new ObjectMapper();
+            ConceptGraphRecord tree = TreeConverter.makeTreeCopy(graph).buildConceptGraphRecord();
+            //Object to JSON in file
+            mapper.writeValue(new File("test/testresources/practicalExamples/advancedRealisticExample.json"), tree);
+            //mapper.writeValue(new File("test/testresources/practicalExamples/groupConceptGraphAdvancedRealisticExample.json"), gcg.getAllNamedGraphs());
+
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+
+    }
+
+
+
     @Test
     public void advancedRealisticConceptGraphTest(){
         ObjectMapper graphMapper = new ObjectMapper();
@@ -71,6 +118,9 @@ public class PracticalConceptGraphTest {
             Assert.assertEquals("Intro CS", graph.findNodeById("Intro CS").getID());
             Assert.assertEquals(5, graph.findNodeById("Boolean").getLearningObjectMap().size());
             Assert.assertEquals(15,graph.getLearningObjectMap().size());
+
+
+
 
             ObjectMapper mapper = new ObjectMapper();
             ConceptGraphRecord tree = TreeConverter.makeTreeCopy(graph).buildConceptGraphRecord();

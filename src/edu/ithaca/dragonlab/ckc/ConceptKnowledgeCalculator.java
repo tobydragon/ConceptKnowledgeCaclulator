@@ -2,14 +2,19 @@ package edu.ithaca.dragonlab.ckc;
 
 import edu.ithaca.dragonlab.ckc.conceptgraph.CohortConceptGraphs;
 import edu.ithaca.dragonlab.ckc.conceptgraph.ConceptGraph;
+import edu.ithaca.dragonlab.ckc.conceptgraph.ConceptNode;
 import edu.ithaca.dragonlab.ckc.io.CSVReader;
 import edu.ithaca.dragonlab.ckc.io.CohortConceptGraphsRecord;
 import edu.ithaca.dragonlab.ckc.io.ConceptGraphRecord;
 import edu.ithaca.dragonlab.ckc.io.LearningObjectLinkRecord;
 import edu.ithaca.dragonlab.ckc.learningobject.LearningObjectResponse;
 import edu.ithaca.dragonlab.ckc.suggester.LearningObjectSuggester;
+import edu.ithaca.dragonlab.ckc.suggester.LearningObjectSuggestion;
+import edu.ithaca.dragonlab.ckc.suggester.SuggestionResource;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 /**
@@ -28,6 +33,7 @@ public class ConceptKnowledgeCalculator implements ConceptKnowledgeCalculatorAPI
 
     public ConceptKnowledgeCalculator(String structureFilename, String resourceFilename, String assessmentFilename) throws IOException{
         clearAndCreateCohortData(structureFilename, resourceFilename, assessmentFilename);
+
     }
 
     @Override
@@ -43,8 +49,10 @@ public class ConceptKnowledgeCalculator implements ConceptKnowledgeCalculatorAPI
         CSVReader csvReader = new CSVReader(assessmentFilename);
         List<LearningObjectResponse> assessments = csvReader.getManualGradedResponses();
 
+
         //create the average and individual graphs
         cohortConceptGraphs = new CohortConceptGraphs(graph, assessments);
+
 
         //output the json representing the tree form of the graph
         CohortConceptGraphsRecord toFile = cohortConceptGraphs.buildCohortConceptGraphsRecord();
@@ -58,22 +66,62 @@ public class ConceptKnowledgeCalculator implements ConceptKnowledgeCalculatorAPI
         return "To view graph, right-click index.html and choose \"open in Browser\" in ConceptKnowledgeCalculator/ckcvisualizer";
     }
 
+
+
+
     @Override
-    public String calcIndividualGraphSuggestions(String userId) {
+    public SuggestionResource calcIndividualGraphSuggestions(String userId) {
         if (cohortConceptGraphs != null) {
-            //TODO fix so that it returns new data type of two lists, rather than string, see interface
             ConceptGraph userGraph = cohortConceptGraphs.getUserGraph(userId);
-            String suggestions = LearningObjectSuggester.buildSuggestionMap(userGraph).toString();
-            return suggestions;
+
+            List<ConceptNode> concepts = LearningObjectSuggester.conceptsToWorkOn(userGraph);
+            SuggestionResource orderedLists =  new SuggestionResource(userGraph,concepts);
+            List<LearningObjectSuggestion> toTry = orderedLists.incompleteList;
+            List<LearningObjectSuggestion> tryAgain = orderedLists.wrongList;
+
+            return orderedLists;
         }
+
         else {
-            return "";
+            return new SuggestionResource(null, null);
         }
     }
 
+
     @Override
-    public String calcIndividualConceptSuggestions(String userId, String conceptId) {
-        //TODO
-        return null;
+    public SuggestionResource calcIndividualSpecificConceptSuggestions(String userId, String conceptId) {
+        if (cohortConceptGraphs != null) {
+            ConceptGraph userGraph = cohortConceptGraphs.getUserGraph(userId);
+
+            HashMap<String, List<LearningObjectSuggestion>> suggestionMap= LearningObjectSuggester.specificConceptSuggestionMap(1, userGraph, conceptId);
+
+            List<ConceptNode> concepts = new ArrayList<ConceptNode>();
+            SuggestionResource res =  new SuggestionResource(userGraph, concepts);
+
+            res.setSuggestionMap(suggestionMap);
+            List<LearningObjectSuggestion> incomTest = res.incompleteList;
+            List<LearningObjectSuggestion> wrongTest = res.wrongList;
+
+            return res;
+        }
+        else {
+            return new SuggestionResource(null, null);
+        }
+
     }
+
+
+    public List<ConceptNode> calcIndividualConceptNodesSuggestions(String userID){
+        if (cohortConceptGraphs != null) {
+            ConceptGraph userGraph = cohortConceptGraphs.getUserGraph(userID);
+
+            List<ConceptNode> suggestedConceptList = LearningObjectSuggester.conceptsToWorkOn(userGraph);
+
+            return suggestedConceptList;
+        }
+        else {
+            return new ArrayList<ConceptNode>();
+        }
+    }
+
 }
