@@ -9,9 +9,13 @@ import java.util.ArrayList;
 import edu.ithaca.dragonlab.ckc.learningobject.LearningObject;
 import edu.ithaca.dragonlab.ckc.learningobject.LearningObjectResponse;
 import edu.ithaca.dragonlab.ckc.learningobject.ManualGradedResponse;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 
 public class CSVReader {
+    Logger logger = LogManager.getLogger(this.getClass());
+
     String filename;
     BufferedReader csvBuffer = null;
     ArrayList<LearningObject> learningObjectList;
@@ -37,12 +41,12 @@ public class CSVReader {
             }
 
             boolean firstIteration = true;
-            double maxScore = 0;
             for(ArrayList<String> singleList: lineList){
-                int i = 2;
+
                 //The first list in the list of lists, is the Learning objects (questions)
                 //so we go through the first line and pull out all the learning objects and put them into the
                 //learning object list
+                int i = 2; //this is 2 because the first two columns are not assignments, so the first assingment is index 2
                 if(firstIteration){
                     firstIteration = false;
                     while(i<singleList.size()){
@@ -50,12 +54,22 @@ public class CSVReader {
                         //used to find the max score of a question (won't be affected if there are other brackets in the question title
                         int begin = question.lastIndexOf('[');
                         int end = question.lastIndexOf(']');
-                        String maxScoreStr = question.substring(begin + 1, end);
-                        maxScore = Double.parseDouble(maxScoreStr);
-                        question = question.substring(0, begin-1);
-                        LearningObject learningObject = new LearningObject(question);
-                        learningObject.setMaxPossibleKnowledgeEstimate(maxScore);
-                        this.learningObjectList.add(learningObject);
+
+                        //TODO: temp check to see what problem is... not a proper solution to bug #76
+                        if (begin >= 0 && end >= 0) {
+                            String maxScoreStr = question.substring(begin + 1, end);
+                            double maxScore = Double.parseDouble(maxScoreStr);
+                            question = question.substring(0, begin - 1);
+                            LearningObject learningObject = new LearningObject(question);
+                            learningObject.setMaxPossibleKnowledgeEstimate(maxScore);
+                            this.learningObjectList.add(learningObject);
+                        }
+                        else {
+                            logger.error("No max score found for string:"+question+"\t defaulting to 1, which is probably wrong");
+                            LearningObject learningObject = new LearningObject(question);
+                            learningObject.setMaxPossibleKnowledgeEstimate(1);
+                            this.learningObjectList.add(learningObject);
+                        }
                         i++;
                     }
                 } else {

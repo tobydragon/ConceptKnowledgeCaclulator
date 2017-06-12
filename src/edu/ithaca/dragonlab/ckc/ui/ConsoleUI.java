@@ -15,7 +15,8 @@ public class ConsoleUI {
             ckc = new ConceptKnowledgeCalculator(structureFilename, resourceFilename, assessmentFilename);
         }
         catch (Exception e){
-            System.out.println("Unable to load default files, please choose files manually.");
+            System.out.println("Unable to load default files, please choose files manually. Error follows:");
+            e.printStackTrace();
             ckc = new ConceptKnowledgeCalculator();
         }
         run();
