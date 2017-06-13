@@ -76,7 +76,10 @@ public class CSVReader {
                     //goes through and adds all the questions to their proper learning object, as well as adds them to
                     //the general list of manual graded responses
                     String stdID = singleList.get(0);
-                    while(i<singleList.size()){
+                    if (learningObjectList.size()+2 < singleList.size()){
+                        logger.warn("More data than learning objects on line for id:" + stdID);
+                    }
+                    while(i<learningObjectList.size()+2){
                         LearningObject currentLearningObject = this.learningObjectList.get(i - 2);
                         String qid = currentLearningObject.getId();
                         if(!("".equals(singleList.get(i)))) {
