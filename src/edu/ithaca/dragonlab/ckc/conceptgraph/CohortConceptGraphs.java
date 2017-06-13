@@ -19,9 +19,10 @@ public class CohortConceptGraphs {
 	 * @param summaries
 	 */
 	public CohortConceptGraphs(ConceptGraph structureGraph, List<LearningObjectResponse> summaries){
-		
+
 		averageGraph = new ConceptGraph(structureGraph, "Average Graph");
 		averageGraph.addLearningObjectResponses(summaries);
+
 		averageGraph.calcDataImportance();
 		averageGraph.calcKnowledgeEstimates();
 		//averageGraph.calcPredictedScores();
@@ -29,7 +30,6 @@ public class CohortConceptGraphs {
 		Map<String, List<LearningObjectResponse>> userIdToResponses = LearningObjectResponse.getUserResponseMap(summaries);
 		userToGraph = new HashMap<>();
 
-		
 		for(String user: userIdToResponses.keySet()){
 			ConceptGraph structureCopy = new ConceptGraph(structureGraph, user);
 			structureCopy.addLearningObjectResponses(userIdToResponses.get(user));
@@ -38,7 +38,9 @@ public class CohortConceptGraphs {
 			structureCopy.calcPredictedScores();
 			userToGraph.put(user, structureCopy);
 		}
-		calcDistanceFromAvg();
+//		calcDistanceFromAvg();
+
+
 	}
 	
 	public CohortConceptGraphs(String filename, ConceptGraph structureGraph, List<LearningObjectResponse> summaries){

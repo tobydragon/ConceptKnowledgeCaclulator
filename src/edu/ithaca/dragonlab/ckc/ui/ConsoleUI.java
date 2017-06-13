@@ -37,10 +37,10 @@ public class ConsoleUI {
 
         while(contQuit==1) {
 
-            System.out.println("What do you want to do? \n 1 - calculate a list of concept nodes to work on \n 2 - calculate learning object suggestions based on a specific concept \n 3 - automatically calculate suggestions");
+            System.out.println("What do you want to do? \n 1 - calculate a list of concept nodes to work on \n 2 - calculate learning object suggestions based on a specific concept \n 3 - automatically calculate suggestions \n 4 - View graph \n 5 - Create new graph ");
             Integer num = scanner.nextInt();
 
-            while (num < 1 || num > 3) {
+            while (num < 1 || num > 5) {
                 System.out.println("Out of bounds");
                 System.out.println("What do you want to do? \n 1 - calculate a list of concept nodes to work on \n 2 - calculate learning object suggestions based on a specific concept \n 3 - automatically calculate suggestions \n 4 - View graph \n 5 - Create new graph ");
                 num = scanner.nextInt();
@@ -77,7 +77,6 @@ public class ConsoleUI {
                     System.out.println(sugRes.wrongList);
                 }
 
-
             } else if (num == 3) {
                 System.out.println("automatically calculate suggestions");
                 System.out.println("User ID");
@@ -97,27 +96,26 @@ public class ConsoleUI {
                     System.out.println(sugRes.wrongList);
                 }
 
-
             } else if (num == 4) {
                 System.out.println("view graph");
 
                 ckc.getCohortGraphsUrl();
 
-            } else {
+            } else{
                 System.out.println("create new graph ");
 
-                System.out.println("Concept ID");
+                System.out.println("Structure");
                 String structure = scanner.nextLine();
 
-                System.out.println("Concept ID");
+                System.out.println("Resources");
                 String resource = scanner.nextLine();
 
-                System.out.println("Concept ID");
+                System.out.println("Assessment");
                 String assessment = scanner.nextLine();
 
                 try {
                     ckc.clearAndCreateCohortData(structure,resource,assessment);
-                } catch (IOException e) {
+                } catch (IOException e){
                     e.printStackTrace();
                 }
             }
@@ -125,15 +123,13 @@ public class ConsoleUI {
             System.out.println("1- continue 2- quit");
             Integer con = scanner.nextInt();
 
-            while (num < 1 || num > 2) {
+            while (num != 1 && num != 2) {
                 System.out.println("Out of bounds");
                 System.out.println("1- continue 2- quit");
                 con = scanner.nextInt();
             }
 
             contQuit=con;
-
         }
-
     }
 }

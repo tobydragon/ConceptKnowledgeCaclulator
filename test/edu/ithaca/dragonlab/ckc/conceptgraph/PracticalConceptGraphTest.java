@@ -65,23 +65,20 @@ public class PracticalConceptGraphTest {
             ConceptGraph graph = new ConceptGraph(graphRecord, LOLRlist);
 
             CohortConceptGraphs gcg = new CohortConceptGraphs(graph,csvReader.getManualGradedResponses());
-            graph.calcDataImportance();
-            graph.calcKnowledgeEstimates();
 
+//            ConceptGraph testGraph = gcg.getAvgGraph();
+            ConceptGraph testGraph = gcg.getUserGraph("bspinache1");
 
-            Assert.assertEquals("Intro CS", graph.findNodeById("Intro CS").getID());
-            Assert.assertEquals(7, graph.findNodeById("Boolean").getLearningObjectMap().size());
-            Assert.assertEquals(14,graph.getLearningObjectMap().size());
+            Assert.assertEquals("Intro CS", testGraph.findNodeById("Intro CS").getID());
+            Assert.assertEquals(7, testGraph.findNodeById("Boolean").getLearningObjectMap().size());
+            Assert.assertEquals(14,testGraph.getLearningObjectMap().size());
 
-            Assert.assertEquals(0.806, graph.findNodeById("Boolean").getKnowledgeEstimate(), DataUtil.OK_FLOAT_MARGIN);
-            Assert.assertEquals(0.783090, graph.findNodeById("Boolean Expressions").getKnowledgeEstimate(), DataUtil.OK_FLOAT_MARGIN);
-            Assert.assertEquals(0.746, graph.findNodeById("If Statement").getKnowledgeEstimate(), DataUtil.OK_FLOAT_MARGIN);
-
-            Assert.assertEquals(0.722, graph.findNodeById("While Loop").getKnowledgeEstimate(), DataUtil.OK_FLOAT_MARGIN);
-            Assert.assertEquals(0.85, graph.findNodeById("Counting").getKnowledgeEstimate(), DataUtil.OK_FLOAT_MARGIN);
-            Assert.assertEquals(0.7666, graph.findNodeById("For Loop").getKnowledgeEstimate(), DataUtil.OK_FLOAT_MARGIN);
-
-
+            Assert.assertEquals(0.806, testGraph.findNodeById("Boolean").getKnowledgeEstimate(), DataUtil.OK_FLOAT_MARGIN);
+            Assert.assertEquals(0.783090, testGraph.findNodeById("Boolean Expressions").getKnowledgeEstimate(), DataUtil.OK_FLOAT_MARGIN);
+            Assert.assertEquals(0.746, testGraph.findNodeById("If Statement").getKnowledgeEstimate(), DataUtil.OK_FLOAT_MARGIN);
+            Assert.assertEquals(0.722, testGraph.findNodeById("While Loop").getKnowledgeEstimate(), DataUtil.OK_FLOAT_MARGIN);
+            Assert.assertEquals(0.85, testGraph.findNodeById("Counting").getKnowledgeEstimate(), DataUtil.OK_FLOAT_MARGIN);
+            Assert.assertEquals(0.7666, testGraph.findNodeById("For Loop").getKnowledgeEstimate(), DataUtil.OK_FLOAT_MARGIN);
 
             ObjectMapper mapper = new ObjectMapper();
             ConceptGraphRecord tree = TreeConverter.makeTreeCopy(graph).buildConceptGraphRecord();

@@ -8,7 +8,7 @@ public class ConceptKnowledgeCalculatorMain {
         new ConsoleUI("test/testresources/basicRealisticExampleConceptGraphOneStudent.json",
                 "test/testresources/basicRealisticExampleLOLRecordOneStudent.json" ,
                 "test/testresources/basicRealisticExampleGradeBook2.csv");
-    }
 
+    }
 
 }
