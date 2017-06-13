@@ -93,14 +93,14 @@ public class ConceptGraphRecord {
 		
 		for(LinkRecord link : links){
 			linkString += "Parent: " + link.getParent() + "\n" + 
-					"Child: " + link.getChild() + "\n\n";
+					"Child: " + link.getChild() + "\n";
 		}
 		
 		for(ConceptRecord node : concepts){
 			nodeString += node.getId()+ "\n";
 		}
 		
-		combinedString = linkString + "\n\n\n" + nodeString;
+		combinedString = nodeString + "Links" + linkString;
 
 		return combinedString;
 	}

@@ -1,5 +1,6 @@
 package edu.ithaca.dragonlab.ckc.conceptgraph;
 
+import edu.ithaca.dragonlab.ckc.io.CohortConceptGraphsRecord;
 import edu.ithaca.dragonlab.ckc.io.ConceptGraphRecord;
 import edu.ithaca.dragonlab.ckc.learningobject.ExampleLearningObjectLinkRecordFactory;
 import edu.ithaca.dragonlab.ckc.learningobject.ExampleLearningObjectResponseFactory;
@@ -79,6 +80,15 @@ public class CohortConceptGraphsTest {
         Assert.assertEquals(-0.1875, user.findNodeById("B").getKnowledgeDistanceFromAvg(),DataUtil.OK_FLOAT_MARGIN);
         Assert.assertEquals(-0.5, user.findNodeById("C").getKnowledgeDistanceFromAvg(),DataUtil.OK_FLOAT_MARGIN);
 	}
+
+	@Test
+    public void buildCohortConceptTreeRecordTest(){
+        ConceptGraph graph = ExampleConceptGraphFactory.makeSimpleCompleteWithData();
+        CohortConceptGraphs group = new CohortConceptGraphs(graph, ExampleLearningObjectResponseFactory.makeSimpleResponses());
+
+        CohortConceptGraphsRecord record = group.buildCohortConceptTreeRecord();
+        System.out.println(record.getGraphRecords());
+    }
 }
 
 
