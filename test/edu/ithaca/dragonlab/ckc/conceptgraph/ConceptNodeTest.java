@@ -82,8 +82,6 @@ public class ConceptNodeTest {
         graph.findNodeById("C").buildLearningObjectSummaryList(testC);
         Assert.assertEquals(4, testC.size());
 //
-
-
     }
 
 
