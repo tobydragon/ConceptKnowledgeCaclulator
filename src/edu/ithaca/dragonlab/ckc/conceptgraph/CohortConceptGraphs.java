@@ -25,7 +25,7 @@ public class CohortConceptGraphs {
 
 		averageGraph.calcDataImportance();
 		averageGraph.calcKnowledgeEstimates();
-		//averageGraph.calcPredictedScores();
+//		averageGraph.calcPredictedScores();
 
 		Map<String, List<LearningObjectResponse>> userIdToResponses = LearningObjectResponse.getUserResponseMap(summaries);
 		userToGraph = new HashMap<>();

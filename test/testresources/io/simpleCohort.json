@@ -37,19 +37,19 @@
       "label" : "A",
       "knowledgeEstimate" : 0.4,
       "knowledgePrediction" : 0.0,
-      "knowledgeDistFromAvg" : -0.2153846153846154
+      "knowledgeDistFromAvg" : 0.0
     }, {
       "id" : "B",
       "label" : "B",
       "knowledgeEstimate" : 0.5,
       "knowledgePrediction" : 0.0,
-      "knowledgeDistFromAvg" : -0.1875
+      "knowledgeDistFromAvg" : 0.0
     }, {
       "id" : "C",
       "label" : "C",
       "knowledgeEstimate" : 0.25,
       "knowledgePrediction" : 0.0,
-      "knowledgeDistFromAvg" : -0.25
+      "knowledgeDistFromAvg" : 0.0
     } ],
     "links" : [ {
       "parent" : "B",
@@ -68,19 +68,19 @@
       "label" : "A",
       "knowledgeEstimate" : 1.0,
       "knowledgePrediction" : 0.0,
-      "knowledgeDistFromAvg" : 0.3846153846153846
+      "knowledgeDistFromAvg" : 0.0
     }, {
       "id" : "B",
       "label" : "B",
       "knowledgeEstimate" : 1.0,
       "knowledgePrediction" : 0.0,
-      "knowledgeDistFromAvg" : 0.3125
+      "knowledgeDistFromAvg" : 0.0
     }, {
       "id" : "C",
       "label" : "C",
       "knowledgeEstimate" : 1.0,
       "knowledgePrediction" : 0.0,
-      "knowledgeDistFromAvg" : 0.5
+      "knowledgeDistFromAvg" : 0.0
     } ],
     "links" : [ {
       "parent" : "B",
@@ -99,19 +99,19 @@
       "label" : "A",
       "knowledgeEstimate" : 0.3333333333333333,
       "knowledgePrediction" : 0.0,
-      "knowledgeDistFromAvg" : -0.2820512820512821
+      "knowledgeDistFromAvg" : 0.0
     }, {
       "id" : "B",
       "label" : "B",
       "knowledgeEstimate" : 0.5,
       "knowledgePrediction" : 0.0,
-      "knowledgeDistFromAvg" : -0.1875
+      "knowledgeDistFromAvg" : 0.0
     }, {
       "id" : "C",
       "label" : "C",
       "knowledgeEstimate" : 0.0,
       "knowledgePrediction" : 0.0,
-      "knowledgeDistFromAvg" : -0.5
+      "knowledgeDistFromAvg" : 0.0
     } ],
     "links" : [ {
       "parent" : "B",

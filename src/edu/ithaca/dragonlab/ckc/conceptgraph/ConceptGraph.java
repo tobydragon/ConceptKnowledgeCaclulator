@@ -237,9 +237,9 @@ public class ConceptGraph {
 	}
 
 	public void calcKnowledgeEstimates(){
-		calcDataImportance();
-		for(ConceptNode root : this.roots){
-			root.calcKnowledgeEstimate();
+        calcDataImportance();
+        for(ConceptNode root : this.roots){
+            root.calcKnowledgeEstimate();
 		}
 	}
 

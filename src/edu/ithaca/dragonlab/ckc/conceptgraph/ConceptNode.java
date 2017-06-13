@@ -145,20 +145,24 @@ public class ConceptNode {
         double currentConceptEstimate = 0;
 		for (LearningObject learningObject : learningObjectMap.values()){
 			currentConceptEstimate += learningObject.calcKnowledgeEstimate()*learningObject.getDataImportance();
-		}
+        }
 
-		//calculate estimate from children
+        //calculate estimate from children
 		for (ConceptNode child : children){
 			child.calcKnowledgeEstimate();
-			currentConceptEstimate +=   child.getKnowledgeEstimate()*child.getDataImportance();
+            currentConceptEstimate +=  child.getKnowledgeEstimate()*child.getDataImportance();
 		}
 
 		if (dataImportance > 0){
 			this.knowledgeEstimate = currentConceptEstimate / dataImportance;
-		} else {
+
+        } else {
 			//in this case, this node has no data and can't be estimated
 			this.knowledgeEstimate = 0;
 		}
+
+
+
 
 	}
 
