@@ -79,7 +79,11 @@ public class CSVReader {
                     if (learningObjectList.size()+2 < singleList.size()){
                         logger.warn("More data than learning objects on line for id:" + stdID);
                     }
-                    while(i<learningObjectList.size()+2){
+                    else if (learningObjectList.size()+2 > singleList.size()){
+                        logger.warn("More learning objects than data on line for id:" + stdID);
+                    }
+                    //need to make sure we don't go out of bounds on either list
+                    while(i< singleList.size() && i < learningObjectList.size()+2){
                         LearningObject currentLearningObject = this.learningObjectList.get(i - 2);
                         String qid = currentLearningObject.getId();
                         if(!("".equals(singleList.get(i)))) {
