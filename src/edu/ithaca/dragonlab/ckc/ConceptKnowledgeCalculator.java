@@ -75,14 +75,9 @@ public class ConceptKnowledgeCalculator implements ConceptKnowledgeCalculatorAPI
             ConceptGraph userGraph = cohortConceptGraphs.getUserGraph(userId);
 
             List<ConceptNode> concepts = LearningObjectSuggester.conceptsToWorkOn(userGraph);
-            SuggestionResource orderedLists =  new SuggestionResource(userGraph,concepts);
-            List<LearningObjectSuggestion> toTry = orderedLists.incompleteList;
-            List<LearningObjectSuggestion> tryAgain = orderedLists.wrongList;
+            return  new SuggestionResource(userGraph,concepts);
 
-            return orderedLists;
-        }
-
-        else {
+        } else {
             return new SuggestionResource(null, null);
         }
     }
@@ -96,15 +91,9 @@ public class ConceptKnowledgeCalculator implements ConceptKnowledgeCalculatorAPI
             HashMap<String, List<LearningObjectSuggestion>> suggestionMap= LearningObjectSuggester.specificConceptSuggestionMap(1, userGraph, conceptId);
 
             List<ConceptNode> concepts = new ArrayList<ConceptNode>();
-            SuggestionResource res =  new SuggestionResource(userGraph, concepts);
+            return  new SuggestionResource(userGraph, concepts);
 
-            res.setSuggestionMap(suggestionMap);
-            List<LearningObjectSuggestion> incomTest = res.incompleteList;
-            List<LearningObjectSuggestion> wrongTest = res.wrongList;
-
-            return res;
-        }
-        else {
+        } else {
             return new SuggestionResource(null, null);
         }
 
@@ -115,11 +104,9 @@ public class ConceptKnowledgeCalculator implements ConceptKnowledgeCalculatorAPI
         if (cohortConceptGraphs != null) {
             ConceptGraph userGraph = cohortConceptGraphs.getUserGraph(userID);
 
-            List<ConceptNode> suggestedConceptList = LearningObjectSuggester.conceptsToWorkOn(userGraph);
+            return LearningObjectSuggester.conceptsToWorkOn(userGraph);
 
-            return suggestedConceptList;
-        }
-        else {
+        } else {
             return new ArrayList<ConceptNode>();
         }
     }

@@ -121,15 +121,13 @@ public class ConsoleUI {
             }
 
             System.out.println("1- continue 2- quit");
-            Integer con = scanner.nextInt();
+            contQuit = scanner.nextInt();
 
-            while (num != 1 && num != 2) {
+            while (contQuit != 1 && contQuit != 2) {
                 System.out.println("Out of bounds");
                 System.out.println("1- continue 2- quit");
-                con = scanner.nextInt();
+                contQuit = scanner.nextInt();
             }
-
-            contQuit=con;
         }
     }
 }

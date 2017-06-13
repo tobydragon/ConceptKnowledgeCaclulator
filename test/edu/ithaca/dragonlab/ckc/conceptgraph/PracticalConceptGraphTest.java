@@ -52,7 +52,7 @@ public class PracticalConceptGraphTest {
 
 
     @Test
-    public void willExampleCohortGraphWithKnowledgeEstimates(){
+    public void willExampleCohortGraphWithKnowledgeEstimatesTest(){
         ObjectMapper graphMapper = new ObjectMapper();
 
         graphMapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
@@ -72,6 +72,7 @@ public class PracticalConceptGraphTest {
             Assert.assertEquals("Intro CS", testGraph.findNodeById("Intro CS").getID());
             Assert.assertEquals(7, testGraph.findNodeById("Boolean").getLearningObjectMap().size());
             Assert.assertEquals(14,testGraph.getLearningObjectMap().size());
+
 
             Assert.assertEquals(0.806, testGraph.findNodeById("Boolean").getKnowledgeEstimate(), DataUtil.OK_FLOAT_MARGIN);
             Assert.assertEquals(0.783090, testGraph.findNodeById("Boolean Expressions").getKnowledgeEstimate(), DataUtil.OK_FLOAT_MARGIN);
