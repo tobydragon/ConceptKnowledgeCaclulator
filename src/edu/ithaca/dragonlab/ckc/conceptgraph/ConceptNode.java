@@ -143,13 +143,11 @@ public class ConceptNode {
 	public void calcKnowledgeEstimate() {
 		//calculate estimate from learning objects directly connected to this node
         double currentConceptEstimate = 0;
-		for (LearningObject learningObject : learningObjectMap.values()){
-			currentConceptEstimate += learningObject.calcKnowledgeEstimate()*learningObject.getDataImportance();
-        }
 
         //calculate estimate from children
 		for (ConceptNode child : children){
 			child.calcKnowledgeEstimate();
+
             currentConceptEstimate +=  child.getKnowledgeEstimate()*child.getDataImportance();
 		}
 
@@ -160,9 +158,6 @@ public class ConceptNode {
 			//in this case, this node has no data and can't be estimated
 			this.knowledgeEstimate = 0;
 		}
-
-
-
 
 	}
 

@@ -244,7 +244,7 @@ public class ConceptGraph {
 	}
 
 	public void calcDataImportance(){
-		for(ConceptNode root : this.roots){
+        for(ConceptNode root : this.roots){
 			root.calcDataImportance();
 		}
 	}

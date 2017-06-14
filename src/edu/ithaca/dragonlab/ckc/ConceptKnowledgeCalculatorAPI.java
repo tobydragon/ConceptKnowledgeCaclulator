@@ -12,14 +12,22 @@ import java.util.List;
 public interface ConceptKnowledgeCalculatorAPI {
 
     /**
-     * Clears all previous data, saves a new graph to be used for the cohort with the structure given,
-     * Creates representations of the specified resources and links them to the existing structure graph (to be used for the entire cohort),
-     * Creates representations of individual (per user) and average assessments associated with resources
-     * and Calculates knowledge estimates for the cohort, meaning estimates for all nodes in the average graph and in all individual graphs
-     * @param structureFilename a json file specifying graph structure
-     * @param resourceFilename a json file listing the resources and their links to the concepts
-     * @param assessmentFilename a csv file containing rows of students and columns labeled with resourceIds
+     * Clears all previous data and saves the new graph
+     * @param structureFileName
+     * @throws IOException
      */
+    void clearAndCreateStructureData(String structureFileName) throws IOException;
+
+
+        /**
+         * Clears all previous data, saves a new graph to be used for the cohort with the structure given,
+         * Creates representations of the specified resources and links them to the existing structure graph (to be used for the entire cohort),
+         * Creates representations of individual (per user) and average assessments associated with resources
+         * and Calculates knowledge estimates for the cohort, meaning estimates for all nodes in the average graph and in all individual graphs
+         * @param structureFilename a json file specifying graph structure
+         * @param resourceFilename a json file listing the resources and their links to the concepts
+         * @param assessmentFilename a csv file containing rows of students and columns labeled with resourceIds
+         */
     void clearAndCreateCohortData(String structureFilename, String resourceFilename, String assessmentFilename) throws IOException;
 
 
@@ -54,4 +62,7 @@ public interface ConceptKnowledgeCalculatorAPI {
      * @return
      */
     List<ConceptNode> calcIndividualConceptNodesSuggestions(String userID);
+
+    ConceptKnowledgeCalculator.Mode getCurrentmode();
+
 }

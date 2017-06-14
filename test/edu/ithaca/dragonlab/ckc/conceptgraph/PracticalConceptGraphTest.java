@@ -66,11 +66,9 @@ public class PracticalConceptGraphTest {
 
             CohortConceptGraphs gcg = new CohortConceptGraphs(graph,csvReader.getManualGradedResponses());
 
-//            ConceptGraph aveGraph = gcg.getAvgGraph();
-            ConceptGraph testGraph = gcg.getUserGraph("bspinache1");
+            ConceptGraph testGraph = gcg.getAvgGraph();
+//            ConceptGraph testGraph = gcg.getUserGraph("bspinache1");
 
-
-            System.out.println(testGraph.findNodeById("Intro CS").getID());
 
             Assert.assertEquals("Intro CS", testGraph.findNodeById("Intro CS").getID());
             Assert.assertEquals(7, testGraph.findNodeById("Boolean").getLearningObjectMap().size());

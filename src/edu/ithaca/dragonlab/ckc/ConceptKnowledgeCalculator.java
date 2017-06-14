@@ -1,5 +1,6 @@
 package edu.ithaca.dragonlab.ckc;
 
+import com.sun.tools.internal.ws.wsdl.document.jaxws.Exception;
 import edu.ithaca.dragonlab.ckc.conceptgraph.CohortConceptGraphs;
 import edu.ithaca.dragonlab.ckc.conceptgraph.ConceptGraph;
 import edu.ithaca.dragonlab.ckc.conceptgraph.ConceptNode;
@@ -21,6 +22,13 @@ import java.util.List;
  * Created by tdragon on 6/8/17.
  */
 public class ConceptKnowledgeCalculator implements ConceptKnowledgeCalculatorAPI{
+    public enum Mode{
+        STRUCTUREGRAPH, COHORTGRAPH
+    }
+
+    public Mode currentMode = null;
+    private ConceptGraph structureGraph;
+
 
     private static final String OUTPUT_PATH = "out/";
 
@@ -29,11 +37,26 @@ public class ConceptKnowledgeCalculator implements ConceptKnowledgeCalculatorAPI
 
     public ConceptKnowledgeCalculator() {
         cohortConceptGraphs = null;
+        structureGraph = null;
+    }
+    public ConceptKnowledgeCalculator(String structureFileName) throws IOException{
+        clearAndCreateStructureData(structureFileName);
     }
 
     public ConceptKnowledgeCalculator(String structureFilename, String resourceFilename, String assessmentFilename) throws IOException{
         clearAndCreateCohortData(structureFilename, resourceFilename, assessmentFilename);
 
+    }
+
+
+
+    @Override
+    public void clearAndCreateStructureData(String structureFilename) throws IOException{
+        structureGraph= null;
+        ConceptGraphRecord structureRecord = ConceptGraphRecord.buildFromJson(structureFilename);
+
+        structureGraph = new ConceptGraph(structureRecord);
+        currentMode= Mode.STRUCTUREGRAPH;
     }
 
     @Override
@@ -52,6 +75,8 @@ public class ConceptKnowledgeCalculator implements ConceptKnowledgeCalculatorAPI
 
         //create the average and individual graphs
         cohortConceptGraphs = new CohortConceptGraphs(graph, assessments);
+        currentMode= Mode.COHORTGRAPH;
+
 
 
         //output the json representing the tree form of the graph
@@ -62,8 +87,10 @@ public class ConceptKnowledgeCalculator implements ConceptKnowledgeCalculatorAPI
 
     @Override
     public String getCohortGraphsUrl() {
-        //TODO: need to find a way to offer a URL
-        return "To view graph, right-click index.html and choose \"open in Browser\" in ConceptKnowledgeCalculator/ckcvisualizer";
+
+            //TODO: need to find a way to offer a URL
+            return "To view graph, right-click index.html and choose \"open in Browser\" in ConceptKnowledgeCalculator/ckcvisualizer";
+
     }
 
 
@@ -71,44 +98,66 @@ public class ConceptKnowledgeCalculator implements ConceptKnowledgeCalculatorAPI
 
     @Override
     public SuggestionResource calcIndividualGraphSuggestions(String userId) {
-        if (cohortConceptGraphs != null) {
-            ConceptGraph userGraph = cohortConceptGraphs.getUserGraph(userId);
+        if (currentMode== Mode.COHORTGRAPH) {
+            if (cohortConceptGraphs != null) {
+                ConceptGraph userGraph = cohortConceptGraphs.getUserGraph(userId);
+                List<ConceptNode> concepts = LearningObjectSuggester.conceptsToWorkOn(userGraph);
+                return new SuggestionResource(userGraph, concepts);
 
-            List<ConceptNode> concepts = LearningObjectSuggester.conceptsToWorkOn(userGraph);
-            return  new SuggestionResource(userGraph,concepts);
-
-        } else {
-            return new SuggestionResource(null, null);
+            } else {
+                return new SuggestionResource(null, null);
+            }
+        }else{
+            System.out.println("wrong mode");
+            return null;
         }
     }
 
 
     @Override
     public SuggestionResource calcIndividualSpecificConceptSuggestions(String userId, String conceptId) {
-        if (cohortConceptGraphs != null) {
-            ConceptGraph userGraph = cohortConceptGraphs.getUserGraph(userId);
+        if (currentMode== Mode.COHORTGRAPH) {
+            if (cohortConceptGraphs != null) {
+                ConceptGraph userGraph = cohortConceptGraphs.getUserGraph(userId);
 
-            HashMap<String, List<LearningObjectSuggestion>> suggestionMap= LearningObjectSuggester.specificConceptSuggestionMap(1, userGraph, conceptId);
+                HashMap<String, List<LearningObjectSuggestion>> suggestionMap = LearningObjectSuggester.specificConceptSuggestionMap(1, userGraph, conceptId);
 
-            List<ConceptNode> concepts = new ArrayList<ConceptNode>();
-            return  new SuggestionResource(userGraph, concepts);
+                List<ConceptNode> concepts = new ArrayList<ConceptNode>();
+                return new SuggestionResource(userGraph, concepts);
 
-        } else {
-            return new SuggestionResource(null, null);
+            } else {
+                return new SuggestionResource(null, null);
+            }
+        }else{
+            System.out.println("wrong mode");
+            return null;
         }
 
     }
 
 
+    @Override
     public List<ConceptNode> calcIndividualConceptNodesSuggestions(String userID){
-        if (cohortConceptGraphs != null) {
-            ConceptGraph userGraph = cohortConceptGraphs.getUserGraph(userID);
+        if(currentMode == Mode.COHORTGRAPH){
+            if (cohortConceptGraphs != null) {
+                ConceptGraph userGraph = cohortConceptGraphs.getUserGraph(userID);
 
-            return LearningObjectSuggester.conceptsToWorkOn(userGraph);
+                return LearningObjectSuggester.conceptsToWorkOn(userGraph);
 
-        } else {
-            return new ArrayList<ConceptNode>();
+            } else {
+                return new ArrayList<ConceptNode>();
+            }
+        }else{
+            System.out.println("wrong mode");
+            return null;
         }
     }
+
+    public Mode getCurrentmode(){
+        return currentMode;
+    }
+
+
+
 
 }
