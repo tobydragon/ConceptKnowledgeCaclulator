@@ -17,15 +17,13 @@ import static jdk.nashorn.internal.objects.ArrayBufferView.length;
 public class MatrixCreator {
 
     String id;
-    LearningObjectResponse[][] structure;
-    List<LearningObject> objList;
+    double[][] structure;
 
 
-    public MatrixCreator(String id){
+
+    public MatrixCreator(ArrayList<LearningObject> lo){
         this.id = id;
-        this.structure = structure;
-        this.objList = new ArrayList<>();
-
+        this.structure = createMatrix(lo);
 
     }
 
@@ -46,34 +44,36 @@ public class MatrixCreator {
          //}
 
 
-
-
-    public LearningObjectResponse[][] createMatrix(ConceptGraph graph){
+    public double[][] createMatrix(ConceptGraph graph){
         /** param: Collection<String> loidList
-        int loidLength = length(loidList);
-        LearningObject[] topRow = new LearningObject[loidLength];
-        Object[] topRow = loidList.toArray();
-        int maxResponses = 0;
-        for(int i = 0; i < loidLength; i++) {
+         int loidLength = length(loidList);
+         LearningObject[] topRow = new LearningObject[loidLength];
+         Object[] topRow = loidList.toArray();
+         int maxResponses = 0;
+         for(int i = 0; i < loidLength; i++) {
          */
 
         //list of learning objects for top row
         Map<String, LearningObject> loMap= graph.getLearningObjectMap();
-        for(Map.Entry<String, LearningObject> entry : loMap.entrySet()){
-            String key = entry.getKey();
-            LearningObject value = entry.getValue();
-            objList.add(value);
-        }
+        return createMatrix(loMap.values());
+    }
+
+
+
+    public double[][] createMatrix(Collection<LearningObject> learningObjects){
+        //for(LearningObject entry : learningObjects){
+          //  objList.add(entry);
+        //}
         //number of rows and columns needed check
-        int columns = length(objList);
+        int columns = learningObjects.size();
         int rows = 0;
-        for(LearningObject obj: objList){
+        for(LearningObject obj: learningObjects){
             List<LearningObjectResponse> responses = obj.getResponses();
-            if(length(responses) > rows){
-                rows = length(responses);
+            if(responses.size() > rows){
+                rows = responses.size();
             }
         }
-        structure = new LearningObjectResponse[columns][rows];
+        structure = new double[columns][rows];
 
 
 
@@ -81,14 +81,14 @@ public class MatrixCreator {
         int numOfIds = 0;
         int currentColumn = 0;
 
-        for(LearningObject obj: objList){
+        for(LearningObject obj: learningObjects){
             List<LearningObjectResponse> responses = obj.getResponses();
             //first column of LearningObjectResponses cannot compare to anything to keep userid in same row as any previous columns of LearningObjectResponses
             if(currentColumn == 0){
                 int currentRow = 0;
                 for(LearningObjectResponse ans: responses) {
                     if(ans != null) {
-                        structure[currentColumn][currentRow] = ans;
+                        structure[currentColumn][currentRow] = ans.calcKnowledgeEstimate();
                         userIdList[currentRow] = ans.getUserId();
                         numOfIds++;
                         currentRow++;
@@ -99,17 +99,21 @@ public class MatrixCreator {
 
                 //these columns must have response's userid matching across all rows
                 //and make a new row if it does not match with anything
+
+
+                //Remove breaks
+
                 for(LearningObjectResponse ans: responses){
                     for(int i = 0; i < numOfIds; i++){
                         //existing userid
                         if(ans.getUserId() == userIdList[i]){
-                            structure[currentColumn][i] = ans;
+                            structure[currentColumn][i] = ans.calcKnowledgeEstimate();
                             break;
                         }else{
                             //new userid -> new row
                             if(i == (numOfIds-1)){
                                 userIdList[numOfIds] = ans.getUserId();
-                                structure[currentColumn][numOfIds] = ans;
+                                structure[currentColumn][numOfIds] = ans.calcKnowledgeEstimate();
                                 numOfIds++;
                                 break;
                             }
@@ -118,10 +122,11 @@ public class MatrixCreator {
                 }
             }
         }
-
         return structure;
 
     }
+
+    public double[][] getStructure(){return this.structure;}
 
 
 
