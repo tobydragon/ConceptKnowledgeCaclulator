@@ -175,8 +175,6 @@ public class ConceptGraph {
         }
     }
 
-    //clearer name
-
     /**
      *Creates a boolean based off of if the node is an ancestor and if the children nodes have high estimates.
      *if the node isn't an ancestor OR the compare node is high, then false (and you can do add the conceptNode)

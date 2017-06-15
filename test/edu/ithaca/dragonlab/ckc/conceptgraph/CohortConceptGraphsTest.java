@@ -85,9 +85,9 @@ public class CohortConceptGraphsTest {
 	}
 
 
-	//Written because bug came up where a learningObject was missing a response
+	//Written because bug came up where a learningObject in graph's map was different than that in node's map
 	@Test
-    public void constructorIncludesAllResponses(){
+    public void onlyOneLearningObject(){
         try {
             CSVReader csvReader = new CSVReader("test/testresources/basicRealisticExampleGradeBook2.csv");
             ConceptGraph graph = new ConceptGraph(ConceptGraphRecord.buildFromJson("test/testresources/basicRealisticExampleConceptGraphOneStudent.json"),
@@ -96,7 +96,7 @@ public class CohortConceptGraphsTest {
             ConceptGraph testGraph = gcg.getAvgGraph();
 
             ConceptNode groupNode = testGraph.findNodeById("Boolean");
-            Assert.assertEquals(1, groupNode.getLearningObjectMap().get("Q9").getResponses().size(), DataUtil.OK_FLOAT_MARGIN);
+            Assert.assertSame(testGraph.getLearningObjectMap().get("Q9"), groupNode.getLearningObjectMap().get("Q9"));
         }
         catch (Exception e){
             e.printStackTrace();

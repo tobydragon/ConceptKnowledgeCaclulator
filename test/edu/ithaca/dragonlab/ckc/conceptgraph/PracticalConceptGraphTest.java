@@ -82,11 +82,11 @@ public class PracticalConceptGraphTest {
             Assert.assertEquals(0.85, testGraph.findNodeById("Counting").getKnowledgeEstimate(), DataUtil.OK_FLOAT_MARGIN);
             Assert.assertEquals(0.7666, testGraph.findNodeById("For Loop").getKnowledgeEstimate(), DataUtil.OK_FLOAT_MARGIN);
 
-            ObjectMapper mapper = new ObjectMapper();
-            ConceptGraphRecord tree = TreeConverter.makeTreeCopy(graph).buildConceptGraphRecord();
-            //Object to JSON in file
-            mapper.writeValue(new File("test/testresources/practicalExamples/advancedRealisticExample.json"), tree);
-            //mapper.writeValue(new File("test/testresources/practicalExamples/groupConceptGraphAdvancedRealisticExample.json"), gcg.getAllNamedGraphs());
+//            ObjectMapper mapper = new ObjectMapper();
+//            ConceptGraphRecord tree = TreeConverter.makeTreeCopy(graph).buildConceptGraphRecord();
+//            //Object to JSON in file
+//            mapper.writeValue(new File("test/testresources/practicalExamples/advancedRealisticExample.json"), tree);
+//            //mapper.writeValue(new File("test/testresources/practicalExamples/groupConceptGraphAdvancedRealisticExample.json"), gcg.getAllNamedGraphs());
 
         }catch (Exception e){
             e.printStackTrace();

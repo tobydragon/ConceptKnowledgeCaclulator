@@ -52,9 +52,15 @@ public class ConceptNode {
 
 		this.learningObjectMap = new HashMap<>();
 		for (Map.Entry<String, LearningObject> entry: other.getLearningObjectMap().entrySet()){
-			LearningObject newLearningObject = new LearningObject(entry.getValue());
+
+			//check the graphMap first to see if that learning object has already been created
+			LearningObject newLearningObject = graphLearningObjectMap.get(entry.getKey());
+			if (newLearningObject == null) {
+				//if not, create it and add it to the graphMap
+				newLearningObject = new LearningObject(entry.getValue());
+				graphLearningObjectMap.put(entry.getKey(), newLearningObject);
+			}
 			this.learningObjectMap.put(entry.getKey(), newLearningObject);
-			graphLearningObjectMap.put(entry.getKey(), newLearningObject);
 		}
 
 		this.children = new ArrayList<>();
