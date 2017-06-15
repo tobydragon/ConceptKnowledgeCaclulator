@@ -7,7 +7,6 @@ import edu.ithaca.dragonlab.ckc.io.CohortConceptGraphsRecord;
 import edu.ithaca.dragonlab.ckc.io.ConceptGraphRecord;
 import edu.ithaca.dragonlab.ckc.io.LearningObjectLinkRecord;
 import edu.ithaca.dragonlab.ckc.learningobject.LearningObjectResponse;
-import edu.ithaca.dragonlab.ckc.suggester.LearningObjectSuggester;
 
 import java.io.IOException;
 import java.util.List;
@@ -63,8 +62,8 @@ public class ConceptKnowledgeCalculator implements ConceptKnowledgeCalculatorAPI
         if (cohortConceptGraphs != null) {
             //TODO fix so that it returns new data type of two lists, rather than string, see interface
             ConceptGraph userGraph = cohortConceptGraphs.getUserGraph(userId);
-            String suggestions = LearningObjectSuggester.buildSuggestionMap(userGraph).toString();
-            return suggestions;
+
+            return "";
         }
         else {
             return "";
