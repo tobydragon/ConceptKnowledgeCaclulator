@@ -3,6 +3,7 @@ package edu.ithaca.dragonlab.ckc.conceptgraph;
 import edu.ithaca.dragonlab.ckc.io.*;
 import edu.ithaca.dragonlab.ckc.learningobject.LearningObject;
 import edu.ithaca.dragonlab.ckc.learningobject.LearningObjectResponse;
+import edu.ithaca.dragonlab.ckc.suggester.LearningObjectSuggester;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -174,25 +175,34 @@ public class ConceptGraph {
         }
     }
 
-    //TODO I think this should take two nodes, the one that is the ancestor and the one that is the descendant, not sure how it makes sense otherwise
-	//if false, then it is not an ancestor therefore it can be added to the list
-	public boolean ancestry(ConceptNode node) {
+    /**
+     *Creates a boolean based off of if the node is an ancestor and if the children nodes have high estimates.
+     *if the node isn't an ancestor OR the compare node is high, then false (and you can do add the conceptNode)
+     * therefore if the node is an ancestor and the child compare node has a low knowledgeEstimate, then true is flagged and you don't add the conceptNode
+     * if false, then it can be added to the list
+     * @param node
+     * @return boolean
+     */
+	public boolean canIgnoreNode(ConceptNode node) {
 		boolean isAnc = false;
 		for (String key : nodeMap.keySet()) {
 			ConceptNode compareNode = nodeMap.get(key);
 			boolean ances =  node.isAncestorOf(compareNode);
-			//This allows for if it does have an ancestor, but it has a high knowledge estimate, it wont be added to the suggestion list
-			if (ances && compareNode.getKnowledgeEstimate()<0.75){
-
-//                if (ances && node.getKnowledgeEstimate()<0.75){
-				isAnc=true;
+            if (ances && compareNode.getKnowledgeEstimate()<LearningObjectSuggester.max){
+                isAnc=true;
 				break;
 			}
 		}
 		return  isAnc;
 	}
 
-	//TODO This needs a javadoc comment, being explicti about what it does, and what the return data structure is (what it represents).
+
+
+    /**
+    *Finds where to start building the summaryList via the parameter and creates a empty hashmap to pass with it to buildLearningObjectSummaryList
+    *@param node name that is used to find a ConceptNode
+    *@return filled hashmap from other buildLearningobjectSummaryList.
+     */
 	public HashMap<String,Integer> buildLearningObjectSummaryList(String node) {
 
 		ConceptNode findNode = findNodeById(node);
@@ -225,14 +235,14 @@ public class ConceptGraph {
 	}
 
 	public void calcKnowledgeEstimates(){
-		calcDataImportance();
-		for(ConceptNode root : this.roots){
-			root.calcKnowledgeEstimate();
+        calcDataImportance();
+        for(ConceptNode root : this.roots){
+            root.calcKnowledgeEstimate();
 		}
 	}
 
 	public void calcDataImportance(){
-		for(ConceptNode root : this.roots){
+        for(ConceptNode root : this.roots){
 			root.calcDataImportance();
 		}
 	}

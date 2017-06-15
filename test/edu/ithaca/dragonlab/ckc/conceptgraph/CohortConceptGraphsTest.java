@@ -1,7 +1,9 @@
 package edu.ithaca.dragonlab.ckc.conceptgraph;
 
 import edu.ithaca.dragonlab.ckc.io.CohortConceptGraphsRecord;
+import edu.ithaca.dragonlab.ckc.io.CSVReader;
 import edu.ithaca.dragonlab.ckc.io.ConceptGraphRecord;
+import edu.ithaca.dragonlab.ckc.io.LearningObjectLinkRecord;
 import edu.ithaca.dragonlab.ckc.learningobject.ExampleLearningObjectLinkRecordFactory;
 import edu.ithaca.dragonlab.ckc.learningobject.ExampleLearningObjectResponseFactory;
 import edu.ithaca.dragonlab.ckc.util.DataUtil;
@@ -9,6 +11,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.junit.Assert;
 import org.junit.Test;
+
 
 public class CohortConceptGraphsTest {
 
@@ -82,12 +85,61 @@ public class CohortConceptGraphsTest {
 	}
 
 	@Test
-    public void buildCohortConceptTreeRecordTest(){
+    public void buildCohortConceptTreeRecordTest() {
         ConceptGraph graph = ExampleConceptGraphFactory.makeSimpleCompleteWithData();
         CohortConceptGraphs group = new CohortConceptGraphs(graph, ExampleLearningObjectResponseFactory.makeSimpleResponses());
 
         CohortConceptGraphsRecord record = group.buildCohortConceptTreeRecord();
         System.out.println(record.getGraphRecords());
+
+    }
+
+
+	//Written because bug came up where a learningObject in graph's map was different than that in node's map
+	@Test
+    public void onlyOneLearningObject(){
+        try {
+            CSVReader csvReader = new CSVReader("test/testresources/basicRealisticExampleGradeBook2.csv");
+            ConceptGraph graph = new ConceptGraph(ConceptGraphRecord.buildFromJson("test/testresources/basicRealisticExampleConceptGraphOneStudent.json"),
+                    LearningObjectLinkRecord.buildListFromJson("test/testresources/basicRealisticExampleLOLRecordOneStudent.json"));
+            CohortConceptGraphs gcg = new CohortConceptGraphs(graph,csvReader.getManualGradedResponses());
+            ConceptGraph testGraph = gcg.getAvgGraph();
+
+            ConceptNode groupNode = testGraph.findNodeById("Boolean");
+            Assert.assertSame(testGraph.getLearningObjectMap().get("Q9"), groupNode.getLearningObjectMap().get("Q9"));
+        }
+        catch (Exception e){
+            e.printStackTrace();
+            Assert.fail();
+        }
+
+    }
+	//checks for bug where the same data in a single graph and a cohort graph produced different results
+	@Test
+    public void calcKnowledgeEstimateSameInCohortAndConceptGraphsTest(){
+        try {
+            CSVReader csvReader = new CSVReader("test/testresources/basicRealisticExampleGradeBook2.csv");
+
+            ConceptGraph singleGraph = new ConceptGraph(ConceptGraphRecord.buildFromJson("test/testresources/basicRealisticExampleConceptGraphOneStudent.json"),
+                    LearningObjectLinkRecord.buildListFromJson("test/testresources/basicRealisticExampleLOLRecordOneStudent.json"),
+                    csvReader.getManualGradedResponses());
+            singleGraph.calcKnowledgeEstimates();
+
+            ConceptGraph graph = new ConceptGraph(ConceptGraphRecord.buildFromJson("test/testresources/basicRealisticExampleConceptGraphOneStudent.json"),
+                    LearningObjectLinkRecord.buildListFromJson("test/testresources/basicRealisticExampleLOLRecordOneStudent.json"));
+            CohortConceptGraphs gcg = new CohortConceptGraphs(graph,csvReader.getManualGradedResponses());
+            ConceptGraph testGraph = gcg.getAvgGraph();
+
+            ConceptNode singleNode = singleGraph.findNodeById("Boolean");
+            ConceptNode groupNode = testGraph.findNodeById("Boolean");
+            Assert.assertEquals(singleNode.getDataImportance(), groupNode.getDataImportance(), DataUtil.OK_FLOAT_MARGIN);
+            Assert.assertEquals(singleNode.getKnowledgeEstimate(), groupNode.getKnowledgeEstimate(), DataUtil.OK_FLOAT_MARGIN);
+
+        }
+        catch (Exception e){
+            e.printStackTrace();
+            Assert.fail();
+        }
     }
 }
 

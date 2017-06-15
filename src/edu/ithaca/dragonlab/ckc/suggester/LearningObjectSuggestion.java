@@ -6,6 +6,7 @@ package edu.ithaca.dragonlab.ckc.suggester;
 public class LearningObjectSuggestion {
     private String id;
     private int pathNum;
+    private String reasoning;
     private Level level;
 
     public enum Level{
@@ -18,15 +19,17 @@ public class LearningObjectSuggestion {
     public LearningObjectSuggestion() {
         this.id = null;
         this.pathNum= 0;
+        this.reasoning= null;
         this.level = Level.INCOMPLETE;
 
     }
 
-    public LearningObjectSuggestion(String id, int path, Level lev) {
+    public LearningObjectSuggestion(String id, int path, Level lev, String caused) {
         this();
         this.id = id;
         this.pathNum= path;
         this.level = lev;
+        this.reasoning= caused;
     }
 
 
@@ -54,6 +57,10 @@ public class LearningObjectSuggestion {
 
     public Level getLevel(){
         return level;
+    }
+
+    public String getReasoning(){
+        return reasoning;
     }
 
 
