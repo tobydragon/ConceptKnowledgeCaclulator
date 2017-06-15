@@ -31,8 +31,11 @@ public class ConceptKnowledgeCalculator implements ConceptKnowledgeCalculatorAPI
 
     private static final String OUTPUT_PATH = "out/";
 
+    //if user types in invalid input, the computer will create graph out of last valid input
     private String structureFileName;
-    private String lastWorkingStrucureName;
+    private String lastWorkingStructureName;
+    private String[] cohortGraph;
+    private String[] lastWorkingCohortGraph;
 
     private CohortConceptGraphs cohortConceptGraphs;
     private ConceptGraph structureGraph;
@@ -81,6 +84,11 @@ public class ConceptKnowledgeCalculator implements ConceptKnowledgeCalculatorAPI
         //create the average and individual graphs
         cohortConceptGraphs = new CohortConceptGraphs(graph, assessments);
         currentMode= Mode.COHORTGRAPH;
+        structureFileName = structureFilename;
+
+        cohortGraph[0]=structureFilename;
+        cohortGraph[1]=resourceFilename;
+        cohortGraph[2]=assessmentFilename;
 
 
 
@@ -175,14 +183,29 @@ public class ConceptKnowledgeCalculator implements ConceptKnowledgeCalculatorAPI
     }
 
     public void setLastWorkingStructureName(String fileName){
-        lastWorkingStrucureName = fileName;
-
+        lastWorkingStructureName = fileName;
     }
 
     public String getLastWorkingStructureName(){
-        return lastWorkingStrucureName;
+        return lastWorkingStructureName;
     }
 
+
+    public void setLastWorkingCohortGraph(String [] files){
+        lastWorkingCohortGraph = files;
+    }
+
+    public String[] getLastWorkingCohortGraph(){
+        return lastWorkingCohortGraph;
+    }
+
+    public void  setCohortGraph(String[] fileNames){
+        cohortGraph= fileNames;
+    }
+
+    public String[] getCohortGraph(){
+        return cohortGraph;
+    }
 
     //for testing purposes
 
@@ -193,5 +216,7 @@ public class ConceptKnowledgeCalculator implements ConceptKnowledgeCalculatorAPI
     public CohortConceptGraphs getCohortConceptGraphs(){
         return cohortConceptGraphs;
     }
+
+
 
 }

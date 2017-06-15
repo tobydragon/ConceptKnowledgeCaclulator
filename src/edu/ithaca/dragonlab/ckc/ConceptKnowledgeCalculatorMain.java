@@ -27,10 +27,8 @@ public class ConceptKnowledgeCalculatorMain {
             System.out.println("View: 1- Structure Graph  2- Cohort Graph");
             try{
                 num = scanner.nextInt();
-                System.out.println("Int " + num);
             }catch (InputMismatchException a){
                 System.out.println("Wrong input");
-                System.out.println( "wrong " +num);
                 scanner.next();
 
             }

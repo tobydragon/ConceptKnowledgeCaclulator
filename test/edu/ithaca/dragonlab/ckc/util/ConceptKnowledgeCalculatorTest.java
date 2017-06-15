@@ -87,9 +87,10 @@ public class ConceptKnowledgeCalculatorTest {
         } catch (IOException e) {
             System.out.println("Unable to load default files, please choose files manually.");
             ckc = new ConceptKnowledgeCalculator();
+
         }
 
-//
+
 //        List<ConceptNode> concepts = ckc.calcIndividualSpecificConceptSuggestions("bspinache1");
 //        System.out.println(concepts.size());
 //

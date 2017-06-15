@@ -63,16 +63,17 @@ public interface ConceptKnowledgeCalculatorAPI {
 
     /**
      * Calculates a list of conceptNode based on an individual graph , returns a the list of ConceptNodes
-     *
      * @param userID
      * @return
      */
     List<ConceptNode> calcIndividualConceptNodesSuggestions(String userID);
 
     ConceptKnowledgeCalculator.Mode getCurrentmode();
+
     void setCurrentMode(ConceptKnowledgeCalculator.Mode mode);
 
     String getStructureFileName();
+
     void setStructureFileName(String file);
 
     /**
@@ -83,6 +84,13 @@ public interface ConceptKnowledgeCalculatorAPI {
 
     String getLastWorkingStructureName();
 
+    void setLastWorkingCohortGraph(String [] files);
+
+    String[] getLastWorkingCohortGraph();
+
+    void  setCohortGraph(String[] fileNames);
+
+    String[] getCohortGraph();
 
     //just for testing
     ConceptGraph getStructureGraph();
