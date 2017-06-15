@@ -62,7 +62,8 @@ public class CohortConceptGraphs {
 
 	public CohortConceptGraphsRecord buildCohortConceptTreeRecord(){
 		List<ConceptGraphRecord> graphRecords = new ArrayList<>();
-		graphRecords.add(TreeConverter.makeTreeCopy(averageGraph).buildConceptGraphRecord());
+		ConceptGraph tree = TreeConverter.makeTreeCopy(averageGraph);
+		graphRecords.add(tree.buildConceptGraphRecord());
 		for (ConceptGraph graph : userToGraph.values()){
 			graphRecords.add(TreeConverter.makeTreeCopy(graph).buildConceptGraphRecord());
 		}
