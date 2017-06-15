@@ -141,8 +141,13 @@ public class ConceptNode {
 	 * @pre calcDataImportance must have already been called
 	 */
 	public void calcKnowledgeEstimate() {
+
 		//calculate estimate from learning objects directly connected to this node
         double currentConceptEstimate = 0;
+
+		for (LearningObject learningObject : learningObjectMap.values()){
+			currentConceptEstimate += learningObject.calcKnowledgeEstimate()*learningObject.getDataImportance();
+		}
 
         //calculate estimate from children
 		for (ConceptNode child : children){
