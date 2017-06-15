@@ -27,13 +27,16 @@ public class ConceptKnowledgeCalculator implements ConceptKnowledgeCalculatorAPI
     }
 
     public Mode currentMode = null;
-    private ConceptGraph structureGraph;
 
 
     private static final String OUTPUT_PATH = "out/";
 
+    private String structureFileName;
+    private String lastWorkingStrucureName;
 
     private CohortConceptGraphs cohortConceptGraphs;
+    private ConceptGraph structureGraph;
+
 
     public ConceptKnowledgeCalculator() {
         cohortConceptGraphs = null;
@@ -57,6 +60,8 @@ public class ConceptKnowledgeCalculator implements ConceptKnowledgeCalculatorAPI
 
         structureGraph = new ConceptGraph(structureRecord);
         currentMode= Mode.STRUCTUREGRAPH;
+        structureFileName = structureFilename;
+
     }
 
     @Override
@@ -157,7 +162,36 @@ public class ConceptKnowledgeCalculator implements ConceptKnowledgeCalculatorAPI
         return currentMode;
     }
 
+    public String getStructureFileName (){
+        return structureFileName;
+    }
+
+    public void setStructureFileName(String file){
+        structureFileName=file;
+    }
+
+    public void setCurrentMode(Mode mode){
+        currentMode = mode;
+    }
+
+    public void setLastWorkingStructureName(String fileName){
+        lastWorkingStrucureName = fileName;
+
+    }
+
+    public String getLastWorkingStructureName(){
+        return lastWorkingStrucureName;
+    }
 
 
+    //for testing purposes
+
+    public ConceptGraph getStructureGraph(){
+        return structureGraph;
+    }
+
+    public CohortConceptGraphs getCohortConceptGraphs(){
+        return cohortConceptGraphs;
+    }
 
 }

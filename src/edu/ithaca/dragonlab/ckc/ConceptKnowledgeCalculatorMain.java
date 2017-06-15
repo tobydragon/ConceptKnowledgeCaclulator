@@ -2,25 +2,46 @@ package edu.ithaca.dragonlab.ckc;
 
 import edu.ithaca.dragonlab.ckc.ui.ConsoleUI;
 
-import java.util.Scanner;
+import java.util.*;
 
 public class ConceptKnowledgeCalculatorMain {
 
     public static void main(String[] args) {
+
+
+
+
         Scanner scanner = new Scanner(System.in);
+        int num = -1;
+
         System.out.println("View: 1- Structure Graph  2- Cohort Graph");
-        Integer num = scanner.nextInt();
+        try{
+            num = scanner.nextInt();
+        }catch (InputMismatchException a){
+            System.out.println("Wrong input");
+        }
 
         while (num < 1 || num > 2) {
+            System.out.println(num);
             System.out.println("Out of bounds");
             System.out.println("View: 1- Structure Graph  2- Cohort Graph");
-            num = scanner.nextInt();
+            try{
+                num = scanner.nextInt();
+                System.out.println("Int " + num);
+            }catch (InputMismatchException a){
+                System.out.println("Wrong input");
+                System.out.println( "wrong " +num);
+                scanner.next();
+
+            }
+
         }
 
         if (num == 1) {
             new ConsoleUI("test/testresources/basicRealisticExampleConceptGraphOneStudent.json");
 
-        } else {
+        }
+        if (num ==2){
             new ConsoleUI("test/testresources/basicRealisticExampleConceptGraphOneStudent.json",
                     "test/testresources/basicRealisticExampleLOLRecordOneStudent.json",
                     "test/testresources/basicRealisticExampleGradeBook2.csv");

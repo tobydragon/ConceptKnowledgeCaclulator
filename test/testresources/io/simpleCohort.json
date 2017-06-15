@@ -4,19 +4,112 @@
     "concepts" : [ {
       "id" : "A",
       "label" : "A",
-      "knowledgeEstimate" : 0.6153846153846154,
+      "knowledgeEstimate" : 0.0,
       "knowledgePrediction" : 0.0,
       "knowledgeDistFromAvg" : 0.0
     }, {
       "id" : "B",
       "label" : "B",
-      "knowledgeEstimate" : 0.6875,
+      "knowledgeEstimate" : 0.0,
       "knowledgePrediction" : 0.0,
       "knowledgeDistFromAvg" : 0.0
     }, {
       "id" : "C",
       "label" : "C",
-      "knowledgeEstimate" : 0.5,
+      "knowledgeEstimate" : 0.0,
+      "knowledgePrediction" : 0.0,
+      "knowledgeDistFromAvg" : 0.0
+    } ],
+    "links" : [ {
+      "parent" : "B",
+      "child" : "C"
+    }, {
+      "parent" : "A",
+      "child" : "B"
+    }, {
+      "parent" : "A",
+      "child" : "C"
+    } ]
+  }, {
+    "name" : "student2",
+    "concepts" : [ {
+      "id" : "A",
+      "label" : "A",
+      "knowledgeEstimate" : 0.0,
+      "knowledgePrediction" : 0.0,
+      "knowledgeDistFromAvg" : 0.0
+    }, {
+      "id" : "B",
+      "label" : "B",
+      "knowledgeEstimate" : 0.0,
+      "knowledgePrediction" : 0.0,
+      "knowledgeDistFromAvg" : 0.0
+    }, {
+      "id" : "C",
+      "label" : "C",
+      "knowledgeEstimate" : 0.0,
+      "knowledgePrediction" : 0.0,
+      "knowledgeDistFromAvg" : 0.0
+    } ],
+    "links" : [ {
+      "parent" : "B",
+      "child" : "C"
+    }, {
+      "parent" : "A",
+      "child" : "B"
+    }, {
+      "parent" : "A",
+      "child" : "C"
+    } ]
+  }, {
+    "name" : "student1",
+    "concepts" : [ {
+      "id" : "A",
+      "label" : "A",
+      "knowledgeEstimate" : 0.0,
+      "knowledgePrediction" : 0.0,
+      "knowledgeDistFromAvg" : 0.0
+    }, {
+      "id" : "B",
+      "label" : "B",
+      "knowledgeEstimate" : 0.0,
+      "knowledgePrediction" : 0.0,
+      "knowledgeDistFromAvg" : 0.0
+    }, {
+      "id" : "C",
+      "label" : "C",
+      "knowledgeEstimate" : 0.0,
+      "knowledgePrediction" : 0.0,
+      "knowledgeDistFromAvg" : 0.0
+    } ],
+    "links" : [ {
+      "parent" : "B",
+      "child" : "C"
+    }, {
+      "parent" : "A",
+      "child" : "B"
+    }, {
+      "parent" : "A",
+      "child" : "C"
+    } ]
+  }, {
+    "name" : "student3",
+    "concepts" : [ {
+      "id" : "A",
+      "label" : "A",
+      "knowledgeEstimate" : 0.0,
+      "knowledgePrediction" : 0.0,
+      "knowledgeDistFromAvg" : 0.0
+    }, {
+      "id" : "B",
+      "label" : "B",
+      "knowledgeEstimate" : 0.0,
+      "knowledgePrediction" : 0.0,
+      "knowledgeDistFromAvg" : 0.0
+    }, {
+      "id" : "C",
+      "label" : "C",
+      "knowledgeEstimate" : 0.0,
       "knowledgePrediction" : 0.0,
       "knowledgeDistFromAvg" : 0.0
     } ],
