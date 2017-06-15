@@ -123,11 +123,7 @@ public class ExampleConceptGraphFactory {
 
 
      public static ConceptGraph willExampleConceptGraphTestOneStudent() {
-        ObjectMapper graphMapper = new ObjectMapper();
-
-        graphMapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
         CSVReader csvReader = new CSVReader("test/testresources/basicRealisticExampleGradeBook2.csv");
-
         try {
             ConceptGraphRecord graphRecord = ConceptGraphRecord.buildFromJson("test/testresources/basicRealisticExampleConceptGraphOneStudent.json");
             List<LearningObjectLinkRecord> LOLRlist = LearningObjectLinkRecord.buildListFromJson("test/testresources/basicRealisticExampleLOLRecordOneStudent.json");

@@ -23,7 +23,6 @@ public class CohortConceptGraphs {
 		averageGraph = new ConceptGraph(structureGraph, "Average Graph");
 		averageGraph.addLearningObjectResponses(summaries);
 
-		averageGraph.calcDataImportance();
 		averageGraph.calcKnowledgeEstimates();
 
 

@@ -1,3 +1,4 @@
+localresources/
 
 # Created by https://www.gitignore.io/api/intellij
 
@@ -59,3 +60,4 @@ fabric.properties
 
 .idea/kotlinc.xml
 .DS_Store
+.idea/inspectionProfiles/
