@@ -48,7 +48,7 @@ public class MatrixCreator {
 
 
 
-    public double[][] createMatrix(ConceptGraph graph){
+    public LearningObjectResponse[][] createMatrix(ConceptGraph graph){
         /** param: Collection<String> loidList
         int loidLength = length(loidList);
         LearningObject[] topRow = new LearningObject[loidLength];
@@ -75,14 +75,51 @@ public class MatrixCreator {
         }
         structure = new LearningObjectResponse[columns][rows];
 
+
+
+        String[] userIdList = new String[rows];
+        int numOfIds = 0;
+        int currentColumn = 0;
+
         for(LearningObject obj: objList){
             List<LearningObjectResponse> responses = obj.getResponses();
-            for(LearningObjectResponse ans: responses){
-                //Match up responses with LearningObjectID and userid to get correct cell
+            //first column of LearningObjectResponses cannot compare to anything to keep userid in same row as any previous columns of LearningObjectResponses
+            if(currentColumn == 0){
+                int currentRow = 0;
+                for(LearningObjectResponse ans: responses) {
+                    if(ans != null) {
+                        structure[currentColumn][currentRow] = ans;
+                        userIdList[currentRow] = ans.getUserId();
+                        numOfIds++;
+                        currentRow++;
+                    }
+                }
+                currentColumn++;
+            }else{
+
+                //these columns must have response's userid matching across all rows
+                //and make a new row if it does not match with anything
+                for(LearningObjectResponse ans: responses){
+                    for(int i = 0; i < numOfIds; i++){
+                        //existing userid
+                        if(ans.getUserId() == userIdList[i]){
+                            structure[currentColumn][i] = ans;
+                            break;
+                        }else{
+                            //new userid -> new row
+                            if(i == (numOfIds-1)){
+                                userIdList[numOfIds] = ans.getUserId();
+                                structure[currentColumn][numOfIds] = ans;
+                                numOfIds++;
+                                break;
+                            }
+                        }
+                    }
+                }
             }
         }
 
-
+        return structure;
 
     }
 
