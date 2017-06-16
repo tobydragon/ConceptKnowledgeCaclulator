@@ -1,8 +1,6 @@
 {
   "concepts": [{
-    "id": "Intro CS",
-    "label": "Intro CS"
-
+    "id": "Intro CS"
   }, {
     "id": "Loops",
     "label": "Loops"
