@@ -17,14 +17,14 @@ import java.util.List;
 /**
  * Created by bleblanc2 on 6/13/17.
  */
-public class MatrixCreatorTest {
+public class MatrixTest {
 
     @Test
     public void createMatrixTest(){
         String file = "test/testresources/SmallDataCSVExample.csv";
         CSVReader data = new CSVReader(file);
         ArrayList<LearningObject> gotoMatrix = data.getManualGradedLearningObjects();
-        MatrixCreator newMatrix = new MatrixCreator(gotoMatrix);
+        Matrix newMatrix = new Matrix(gotoMatrix);
         double[][] myMatrix = newMatrix.getStructure();
         double[] arr1 = new double[9];
         double[] arr2 = new double[9];
@@ -58,11 +58,14 @@ public class MatrixCreatorTest {
         double[] exArr2 = new double[]{0, 1, 0.85, 1, 0, 0.9, 1, 1, 1};
         double[] exArr3 = new double[]{1, 1, 0.98, 1, 0.975, 1, 1, 1, 1};
 
+        //Matrix Check
         Assert.assertArrayEquals(exArr1, arr1, 0);
         Assert.assertArrayEquals(exArr2, arr2, 0);
         Assert.assertArrayEquals(exArr3, arr3, 0);
 
-
+        //userIdList Check
+        String[] actualString = new String[]{"stu1", "stu2", "stu3"};
+        Assert.assertArrayEquals(actualString, newMatrix.getUserIdList());
     }
 
 }

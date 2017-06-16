@@ -14,15 +14,19 @@ import static jdk.nashorn.internal.objects.ArrayBufferView.length;
 /**
  * Created by bleblanc2 on 6/13/17.
  */
-public class MatrixCreator {
+public class Matrix {
 
     String id;
     double[][] structure;
+    ArrayList<LearningObject> objList;
+    String[] userIdList;
 
 
-    public MatrixCreator(ArrayList<LearningObject> lo){
+    public Matrix(ArrayList<LearningObject> lo){
         this.id = id;
         this.structure = createMatrix(lo);
+        this.objList = lo;
+        this.userIdList = userIdList;
 
     }
 
@@ -45,7 +49,7 @@ public class MatrixCreator {
         }
         structure = new double[columns][rows];
 
-        String[] userIdList = new String[rows];
+        this.userIdList = new String[rows];
         int numOfIds = 0;
         int currentColumn = 0;
         int currentRow = 0;
@@ -92,5 +96,9 @@ public class MatrixCreator {
     }
 
     public double[][] getStructure(){return this.structure;}
+
+    public String[] getUserIdList(){return this.userIdList;}
+
+    public ArrayList<LearningObject> getObjList(){return this.objList;}
 
 }
