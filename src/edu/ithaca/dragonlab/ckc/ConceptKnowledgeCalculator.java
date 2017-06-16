@@ -26,8 +26,9 @@ public class ConceptKnowledgeCalculator implements ConceptKnowledgeCalculatorAPI
         STRUCTUREGRAPH, COHORTGRAPH
     }
 
-    public Mode currentMode = null;
+    private Mode currentMode = null;
 
+    private boolean hasmultipleAssessmentFile = false;
 
     private static final String OUTPUT_PATH = "out/";
 
@@ -40,7 +41,6 @@ public class ConceptKnowledgeCalculator implements ConceptKnowledgeCalculatorAPI
     private ConceptGraph structureGraph;
 
     //to replace just the graph
-    private String structureFile;
     private  String resourceFile;
     private String assessmentFile;
 
@@ -81,12 +81,57 @@ public class ConceptKnowledgeCalculator implements ConceptKnowledgeCalculatorAPI
         //create the data to be used to create and populate the graph copies
         CSVReader csvReader = new CSVReader(assessmentFilename);
         List<LearningObjectResponse> assessments = csvReader.getManualGradedResponses();
+        //add more
 
 
         //create the average and individual graphs
         cohortConceptGraphs = new CohortConceptGraphs(graph, assessments);
+
+        //to use in console
         currentMode= Mode.COHORTGRAPH;
         structureFileName = structureFilename;
+        resourceFile=resourceFilename;
+        assessmentFile= assessmentFilename;
+
+
+        //output the json representing the tree form of the graph
+        CohortConceptGraphsRecord toFile = cohortConceptGraphs.buildCohortConceptTreeRecord();
+        String file = OUTPUT_PATH + "ckcCurrent.json";
+        toFile.writeToJson(file);
+    }
+
+
+    @Override
+    public void additionalLOR(String secondAssessmentFilename) throws IOException {
+        cohortConceptGraphs = null;
+
+        //create the graph structure to be copied for each user
+
+        ConceptGraphRecord structureRecord = ConceptGraphRecord.buildFromJson(structureFileName);
+        List<LearningObjectLinkRecord> linkRecord = LearningObjectLinkRecord.buildListFromJson(resourceFile);
+        ConceptGraph graph = new ConceptGraph(structureRecord, linkRecord);
+
+        //old assessment file name
+        String oldAssessmentFile = assessmentFile;
+        CSVReader csvR = new CSVReader(oldAssessmentFile);
+        List<LearningObjectResponse> firstLOR = csvR.getManualGradedResponses();
+
+        //new assessment file name
+        CSVReader csvReader = new CSVReader(secondAssessmentFilename);
+        List<LearningObjectResponse> assessments = csvReader.getManualGradedResponses();
+
+
+        List<LearningObjectResponse> combinedAssessments = new ArrayList<>();
+        combinedAssessments.addAll(firstLOR);
+        combinedAssessments.addAll(assessments);
+
+
+        //create the average and individual graphs
+        cohortConceptGraphs = new CohortConceptGraphs(graph, combinedAssessments);
+
+        //to use in console
+        currentMode= Mode.COHORTGRAPH;
+        hasmultipleAssessmentFile=true;
 
 
         //output the json representing the tree form of the graph
@@ -130,9 +175,10 @@ public class ConceptKnowledgeCalculator implements ConceptKnowledgeCalculatorAPI
             if (cohortConceptGraphs != null) {
                 ConceptGraph userGraph = cohortConceptGraphs.getUserGraph(userId);
 
-                HashMap<String, List<LearningObjectSuggestion>> suggestionMap = LearningObjectSuggester.specificConceptSuggestionMap(1, userGraph, conceptId);
-
+                ConceptNode node = userGraph.findNodeById(conceptId);
                 List<ConceptNode> concepts = new ArrayList<ConceptNode>();
+                concepts.add(node);
+
                 return new SuggestionResource(userGraph, concepts);
 
             } else {
@@ -163,16 +209,33 @@ public class ConceptKnowledgeCalculator implements ConceptKnowledgeCalculatorAPI
         }
     }
 
-    public Mode getCurrentmode(){
-        return currentMode;
+    public void setResourceFile(String file){
+        resourceFile = file;
     }
 
-    public String getStructureFileName (){
+    public String getResourceFile(){
+        return resourceFile;
+    }
+
+    public void setAssessmentFile(String file){
+        assessmentFile = file;
+    }
+
+    public String getAssessmentFile(){
+        return assessmentFile;
+    }
+
+    public String getStructureFileName() {
         return structureFileName;
     }
 
-    public void setStructureFileName(String file){
-        structureFileName=file;
+    public void setStructureFileName(String file) {
+        structureFileName= file;
+    }
+
+
+    public Mode getCurrentmode(){
+        return currentMode;
     }
 
     public void setCurrentMode(Mode mode){
@@ -187,6 +250,10 @@ public class ConceptKnowledgeCalculator implements ConceptKnowledgeCalculatorAPI
         return lastWorkingStructureName;
     }
 
+
+    public boolean gethasMultipleAssessment(){
+        return hasmultipleAssessmentFile;
+    }
 
     //for testing purposes
 

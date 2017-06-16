@@ -36,6 +36,14 @@ public interface ConceptKnowledgeCalculatorAPI {
 
 
     /**
+     * //TODO
+     * Takes
+     * @param assessmentFilename
+     * @throws IOException
+     */
+    void additionalLOR(String assessmentFilename) throws IOException;
+
+    /**
      * @return the URL where the current graphs can be seen
      */
     String getCohortGraphsUrl();
@@ -46,7 +54,7 @@ public interface ConceptKnowledgeCalculatorAPI {
      * an ordered list of new resources to try
      * an ordered list of resources that have had unsuccessful assessments in the past
      *
-     * @return ???
+     * @return SuggestionResource
      */
     SuggestionResource calcIndividualGraphSuggestions(String userId);
 
@@ -56,7 +64,7 @@ public interface ConceptKnowledgeCalculatorAPI {
      * an ordered list of new resources to try
      * an ordered list of resources that have had unsuccessful assessments in the past
      *
-     * @return ???
+     * @return Suggestion Resource
      */
     SuggestionResource calcIndividualSpecificConceptSuggestions(String userId, String conceptId);
 
@@ -64,7 +72,7 @@ public interface ConceptKnowledgeCalculatorAPI {
     /**
      * Calculates a list of conceptNode based on an individual graph , returns a the list of ConceptNodes
      * @param userID
-     * @return
+     * @return List of Concept Nodes
      */
     List<ConceptNode> calcIndividualConceptNodesSuggestions(String userID);
 
@@ -72,9 +80,19 @@ public interface ConceptKnowledgeCalculatorAPI {
 
     void setCurrentMode(ConceptKnowledgeCalculator.Mode mode);
 
+    void setResourceFile(String file);
+
+    String getResourceFile();
+
+    void setAssessmentFile(String file);
+
+    String getAssessmentFile();
+
     String getStructureFileName();
 
     void setStructureFileName(String file);
+
+    boolean gethasMultipleAssessment();
 
     /**
      * If the user gives a bad file name, the graph will be remade with the last known working file name

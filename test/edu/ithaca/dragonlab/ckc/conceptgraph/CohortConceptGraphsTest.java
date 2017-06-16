@@ -89,7 +89,6 @@ public class CohortConceptGraphsTest {
         CohortConceptGraphs group = new CohortConceptGraphs(graph, ExampleLearningObjectResponseFactory.makeSimpleResponses());
 
         CohortConceptGraphsRecord record = group.buildCohortConceptTreeRecord();
-        System.out.println(record.getGraphRecords());
 
     }
 
@@ -106,8 +105,7 @@ public class CohortConceptGraphsTest {
     private void matchingIdsForTreeCopies(ConceptGraph orig, ConceptGraphRecord treeCopy){
         Collection<ConceptRecord> treeCopyIds = treeCopy.getConcepts();
         Collection<String> origIds = orig.getAllNodeIds();
-        System.out.println(origIds);
-        System.out.println(treeCopyIds);
+
         for (String origId : origIds){
             if ( ! strIsSubstringOfSomeEntry(origId, treeCopyIds)){
                 Assert.fail("Tree copy does not contain any matching nodeIds for structure ID: " + origId +" - Not chekcing all may be missing more...");

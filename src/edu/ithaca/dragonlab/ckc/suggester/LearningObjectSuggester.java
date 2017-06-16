@@ -42,37 +42,6 @@ public class LearningObjectSuggester {
     }
 
 
-    public static HashMap<String, List<LearningObjectSuggestion>> specificConceptSuggestionMap(Integer choice, ConceptGraph graph, String conceptID){
-        ConceptNode concept = graph.findNodeById(conceptID);
-
-        HashMap<String, List<LearningObjectSuggestion>> suggestedConceptNodeMap = new HashMap<>();
-
-        List<LearningObjectSuggestion> testList = new ArrayList<>();
-
-        HashMap<String, Integer> map = graph.buildLearningObjectSummaryList(concept.getID());
-        List<LearningObjectSuggestion> list = buildLearningObjectSuggestionList(map, graph.getLearningObjectMap(), concept.getID());
-        sortSuggestions(list);
-        for (int i = 0; i < list.size(); i++) {
-            //if it is incomplete
-            if (choice.equals(1)) {
-                if (list.get(i).getLevel().equals(LearningObjectSuggestion.Level.INCOMPLETE)) {
-                    //then add it
-                    testList.add(list.get(i));
-                }
-            } else {
-                if (list.get(i).getLevel().equals(LearningObjectSuggestion.Level.WRONG)) {
-                    //then add it
-                    testList.add(list.get(i));
-                }
-
-            }
-            suggestedConceptNodeMap.put(concept.getID(), testList);
-
-        }
-        return suggestedConceptNodeMap;
-
-    }
-
 
 
 
