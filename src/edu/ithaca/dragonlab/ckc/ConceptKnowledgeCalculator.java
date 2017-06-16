@@ -34,7 +34,7 @@ public class ConceptKnowledgeCalculator implements ConceptKnowledgeCalculatorAPI
     //if user types in invalid input, the computer will create graph out of last valid input
     private String structureFileName;
     private String lastWorkingStructureName;
-    private String[] cohortGraph;
+    private String[] cohortGraphFiles;
     private String[] lastWorkingCohortGraph;
 
     private CohortConceptGraphs cohortConceptGraphs;
@@ -85,11 +85,6 @@ public class ConceptKnowledgeCalculator implements ConceptKnowledgeCalculatorAPI
         cohortConceptGraphs = new CohortConceptGraphs(graph, assessments);
         currentMode= Mode.COHORTGRAPH;
         structureFileName = structureFilename;
-
-        cohortGraph[0]=structureFilename;
-        cohortGraph[1]=resourceFilename;
-        cohortGraph[2]=assessmentFilename;
-
 
 
         //output the json representing the tree form of the graph
@@ -190,22 +185,6 @@ public class ConceptKnowledgeCalculator implements ConceptKnowledgeCalculatorAPI
         return lastWorkingStructureName;
     }
 
-
-    public void setLastWorkingCohortGraph(String [] files){
-        lastWorkingCohortGraph = files;
-    }
-
-    public String[] getLastWorkingCohortGraph(){
-        return lastWorkingCohortGraph;
-    }
-
-    public void  setCohortGraph(String[] fileNames){
-        cohortGraph= fileNames;
-    }
-
-    public String[] getCohortGraph(){
-        return cohortGraph;
-    }
 
     //for testing purposes
 

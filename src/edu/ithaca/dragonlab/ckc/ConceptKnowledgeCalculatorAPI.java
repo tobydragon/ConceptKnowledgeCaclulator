@@ -84,13 +84,6 @@ public interface ConceptKnowledgeCalculatorAPI {
 
     String getLastWorkingStructureName();
 
-    void setLastWorkingCohortGraph(String [] files);
-
-    String[] getLastWorkingCohortGraph();
-
-    void  setCohortGraph(String[] fileNames);
-
-    String[] getCohortGraph();
 
     //just for testing
     ConceptGraph getStructureGraph();

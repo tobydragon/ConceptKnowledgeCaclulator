@@ -46,9 +46,6 @@ public class ConsoleUI {
         boolean structFileNameValid = true;
         ckc.setLastWorkingStructureName(ckc.getStructureFileName());
 
-        boolean cohortFileValid= true;
-        ckc.setLastWorkingCohortGraph(ckc.getLastWorkingCohortGraph());
-
 
         int contQuit = 1;
         while (contQuit == 1) {
@@ -69,16 +66,15 @@ public class ConsoleUI {
 
                 if (num==1){
                     System.out.println("replace graph");
-                    System.out.println("old");
-                    System.out.println(ckc.getStructureGraph());
+
 
                     System.out.println("What file do you want to replace with?");
                     String file = scanner.nextLine();
 
                     try {
                         ckc.clearAndCreateStructureData(file);
-                        System.out.println("New");
-                        System.out.println(ckc.getStructureGraph());
+                        System.out.println("Process Completed");
+
 
                     } catch (Exception e) {
                         System.out.println("Cannot find the file");
@@ -86,6 +82,7 @@ public class ConsoleUI {
                         try {
                             ckc.clearAndCreateStructureData(ckc.getLastWorkingStructureName());
                             ckc.setStructureFileName(ckc.getLastWorkingStructureName());
+                            System.out.println("Last working files used");
                         } catch (IOException e1) {
                             e1.printStackTrace();
                             System.out.println("Error");
@@ -112,6 +109,8 @@ public class ConsoleUI {
                     try {
                         ckc.clearAndCreateCohortData(strucFile, LOfile, LORFile);
                         ckc.setCurrentMode(ConceptKnowledgeCalculator.Mode.COHORTGRAPH);
+                        System.out.println("Process Completed");
+
 
                     } catch (Exception e) {
                         System.out.println("Cannot find files");
@@ -123,12 +122,12 @@ public class ConsoleUI {
 
             } else {
 
-                System.out.println("What do you want to do? \n 1 - calculate a list of concept nodes to work on \n 2 - calculate learning object suggestions based on a specific concept \n 3 - automatically calculate suggestions \n 4 - View graph \n 5 - Create new graph \n 6 - View Structure");
+                System.out.println("What do you want to do? \n 1 - calculate a list of concept nodes to work on \n 2 - calculate learning object suggestions based on a specific concept \n 3 - automatically calculate suggestions \n 4 - View graph \n 5 - Create new graph \n 6 - Replace graph file \n 7 - View Structure");
                 Integer num = scanner.nextInt();
 
                 while (num < 1 || num > 6) {
                     System.out.println("Out of bounds");
-                    System.out.println("What do you want to do? \n 1 - calculate a list of concept nodes to work on \n 2 - calculate learning object suggestions based on a specific concept \n 3 - automatically calculate suggestions \n 4 - View graph \n 5 - Create new graph \n 6 - View Structure");
+                    System.out.println("What do you want to do? \n 1 - calculate a list of concept nodes to work on \n 2 - calculate learning object suggestions based on a specific concept \n 3 - automatically calculate suggestions \n 4 - View graph \n 5 - Create new graph \n 6 - Replace graph file \n 7 - View Structure");
                     num = scanner.nextInt();
                 }
 
@@ -194,7 +193,6 @@ public class ConsoleUI {
 
                 } else  if(num ==5){
                     System.out.println("create new cohort graphs");
-                    System.out.println(ckc.getCohortConceptGraphs());
 
                     System.out.println("Type concept graph path: ");
                     String structure = scanner.nextLine();
@@ -207,32 +205,15 @@ public class ConsoleUI {
 
                     try {
                         ckc.clearAndCreateCohortData(structure, resource, assessment);
+                        System.out.println("Process Completed");
                     } catch (Exception e) {
-//                        e.printStackTrace();
+                        e.printStackTrace();
                         System.out.println("Can't find files");
-                        cohortFileValid=false;
-                        try{
-                            System.out.println(ckc.getLastWorkingCohortGraph());
-                            String [] array = ckc.getLastWorkingCohortGraph();
-                            System.out.println("graph " + " "+array[0]);
-                            System.out.println("LOL " + " "+array[1]);
-                            System.out.println("LOR " + " "+array[2]);
 
-
-                            ckc.clearAndCreateCohortData(array[0],array[1],array[2]);
-                            ckc.setCohortGraph(ckc.getLastWorkingCohortGraph());
-
-                        }catch(Exception e1){
-//                            e1.printStackTrace();
-                            System.out.println("Error");
-                        }
                     }
 
-                    if (cohortFileValid){
-                        //make the array
-                        ckc.setLastWorkingCohortGraph(ckc.getCohortGraph());
-                    }
-                    cohortFileValid=true;
+                }else if(num ==6){
+
 
                 }else{
                     System.out.println("View Structure graph");
@@ -240,17 +221,17 @@ public class ConsoleUI {
                     try {
                         ckc.clearAndCreateStructureData(ckc.getStructureFileName());
                         ckc.setCurrentMode(ConceptKnowledgeCalculator.Mode.STRUCTUREGRAPH);
+                        System.out.println("Process Completed");
+
                     } catch (Exception e) {
                         e.printStackTrace();
                         System.out.println("Can't find file");
                     }
 
-
-
-
-
                 }
             }
+
+            //to repeat or break loop in graph mode or structure mode
                 System.out.println("1- continue 2- quit");
                 contQuit = scanner.nextInt();
 
@@ -261,7 +242,6 @@ public class ConsoleUI {
                 }
 
         }
-
 
 
     }
