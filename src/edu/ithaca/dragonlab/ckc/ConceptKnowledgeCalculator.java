@@ -34,12 +34,15 @@ public class ConceptKnowledgeCalculator implements ConceptKnowledgeCalculatorAPI
     //if user types in invalid input, the computer will create graph out of last valid input
     private String structureFileName;
     private String lastWorkingStructureName;
-    private String[] cohortGraphFiles;
-    private String[] lastWorkingCohortGraph;
 
+    //graphs
     private CohortConceptGraphs cohortConceptGraphs;
     private ConceptGraph structureGraph;
 
+    //to replace just the graph
+    private String structureFile;
+    private  String resourceFile;
+    private String assessmentFile;
 
     public ConceptKnowledgeCalculator() {
         cohortConceptGraphs = null;
@@ -53,7 +56,6 @@ public class ConceptKnowledgeCalculator implements ConceptKnowledgeCalculatorAPI
         clearAndCreateCohortData(structureFilename, resourceFilename, assessmentFilename);
 
     }
-
 
 
     @Override

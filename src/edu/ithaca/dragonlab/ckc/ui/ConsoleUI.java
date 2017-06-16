@@ -213,6 +213,10 @@ public class ConsoleUI {
                     }
 
                 }else if(num ==6){
+                    System.out.println("Replace Graph File");
+
+
+
 
 
                 }else{
