@@ -90,7 +90,7 @@ public class ConceptKnowledgeCalculator implements ConceptKnowledgeCalculatorAPI
 
 
         //output the json representing the tree form of the graph
-        CohortConceptGraphsRecord toFile = cohortConceptGraphs.buildCohortConceptGraphsRecord();
+        CohortConceptGraphsRecord toFile = cohortConceptGraphs.buildCohortConceptTreeRecord();
         String file = OUTPUT_PATH + "ckcCurrent.json";
         toFile.writeToJson(file);
     }

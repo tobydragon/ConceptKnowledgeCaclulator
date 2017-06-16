@@ -26,7 +26,12 @@ public class ConceptNode {
 	 */
 	public ConceptNode(ConceptRecord conceptRecord) {
 		this.id = conceptRecord.getId();
-		this.label = conceptRecord.getLabel();
+		if (conceptRecord.getLabel() != null && conceptRecord.getLabel() != "") {
+            this.label = conceptRecord.getLabel();
+        }
+        else {
+		    this.label = this.id;
+        }
 		knowledgePrediction = conceptRecord.getKnowledgePrediction();
 		knowledgeEstimate = conceptRecord.getKnowledgeEstimate();
 		knowledgeDistanceFromAvg = conceptRecord.getKnowledgeDistFromAvg();

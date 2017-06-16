@@ -21,18 +21,19 @@ public class ConsoleUI {
         try {
             ckc = new ConceptKnowledgeCalculator(structureFileName);
         } catch (Exception e) {
-            System.out.println("Unable to load default files, please choose files manually.");
+            System.out.println("Unable to load default files, please choose files manually. Error follows:");
+            e.printStackTrace();
             ckc = new ConceptKnowledgeCalculator();
         }
         run();
-
     }
 
     public ConsoleUI(String structureFilename, String resourceFilename, String assessmentFilename) {
         try {
             ckc = new ConceptKnowledgeCalculator(structureFilename, resourceFilename, assessmentFilename);
         } catch (Exception e) {
-            System.out.println("Unable to load default files, please choose files manually.");
+            System.out.println("Unable to load default files, please choose files manually. Error follows:");
+            e.printStackTrace();
             ckc = new ConceptKnowledgeCalculator();
         }
         run();

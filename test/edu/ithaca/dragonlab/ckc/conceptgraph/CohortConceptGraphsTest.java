@@ -1,8 +1,6 @@
 package edu.ithaca.dragonlab.ckc.conceptgraph;
 
-import edu.ithaca.dragonlab.ckc.io.CSVReader;
-import edu.ithaca.dragonlab.ckc.io.ConceptGraphRecord;
-import edu.ithaca.dragonlab.ckc.io.LearningObjectLinkRecord;
+import edu.ithaca.dragonlab.ckc.io.*;
 import edu.ithaca.dragonlab.ckc.learningobject.ExampleLearningObjectLinkRecordFactory;
 import edu.ithaca.dragonlab.ckc.learningobject.ExampleLearningObjectResponseFactory;
 import edu.ithaca.dragonlab.ckc.util.DataUtil;
@@ -11,7 +9,8 @@ import org.apache.logging.log4j.Logger;
 import org.junit.Assert;
 import org.junit.Test;
 
-import java.util.List;
+import java.io.IOException;
+import java.util.Collection;
 
 public class CohortConceptGraphsTest {
 
@@ -84,6 +83,57 @@ public class CohortConceptGraphsTest {
         Assert.assertEquals(-0.5, user.findNodeById("C").getKnowledgeDistanceFromAvg(),DataUtil.OK_FLOAT_MARGIN);
 	}
 
+	@Test
+    public void buildCohortConceptTreeRecordTest() {
+        ConceptGraph graph = ExampleConceptGraphFactory.makeSimpleCompleteWithData();
+        CohortConceptGraphs group = new CohortConceptGraphs(graph, ExampleLearningObjectResponseFactory.makeSimpleResponses());
+
+        CohortConceptGraphsRecord record = group.buildCohortConceptTreeRecord();
+        System.out.println(record.getGraphRecords());
+
+    }
+
+
+    private boolean strIsSubstringOfSomeEntry(String str, Collection<ConceptRecord> list){
+	    for (ConceptRecord toCheck : list){
+	        if (toCheck.getId().contains(str)){
+	            return true;
+            }
+        }
+        return false;
+    }
+
+    private void matchingIdsForTreeCopies(ConceptGraph orig, ConceptGraphRecord treeCopy){
+        Collection<ConceptRecord> treeCopyIds = treeCopy.getConcepts();
+        Collection<String> origIds = orig.getAllNodeIds();
+        System.out.println(origIds);
+        System.out.println(treeCopyIds);
+        for (String origId : origIds){
+            if ( ! strIsSubstringOfSomeEntry(origId, treeCopyIds)){
+                Assert.fail("Tree copy does not contain any matching nodeIds for structure ID: " + origId +" - Not chekcing all may be missing more...");
+            }
+        }
+    }
+
+    @Test
+    public void buildCohortConceptTreeRecordComplexTest() {
+        CSVReader csvReader = new CSVReader("test/testresources/basicRealisticExampleGradeBook2.csv");
+        try {
+            ConceptGraph  structure = new ConceptGraph(ConceptGraphRecord.buildFromJson("test/testresources/basicRealisticExampleConceptGraphOneStudent.json"),
+                    LearningObjectLinkRecord.buildListFromJson("test/testresources/basicRealisticExampleLOLRecordOneStudent.json" ));
+            CohortConceptGraphs group = new CohortConceptGraphs(structure, csvReader.getManualGradedResponses());
+
+            CohortConceptGraphsRecord record = group.buildCohortConceptTreeRecord();
+            matchingIdsForTreeCopies(group.getAvgGraph(), record.getGraphRecords().get(0));
+
+        } catch (IOException e) {
+            e.printStackTrace();
+            Assert.fail();
+        }
+
+
+    }
+
 
 	//Written because bug came up where a learningObject in graph's map was different than that in node's map
 	@Test
@@ -131,6 +181,8 @@ public class CohortConceptGraphsTest {
             Assert.fail();
         }
     }
+
+
 }
 
 

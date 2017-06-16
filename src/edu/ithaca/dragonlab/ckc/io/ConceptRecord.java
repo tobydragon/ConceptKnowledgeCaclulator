@@ -101,4 +101,8 @@ public class ConceptRecord {
             return false;
         }
     }
+
+    public String toString(){
+        return "ID: "+ getId() + "  Label: " + getLabel() + "  Est.: " + getKnowledgeEstimate();
+    }
 }

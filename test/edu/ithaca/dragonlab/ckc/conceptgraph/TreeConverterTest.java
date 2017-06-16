@@ -55,6 +55,7 @@ public class TreeConverterTest {
         Assert.assertEquals(expectedGraphLinkCount, graphLists.getLinks().size());
 
         ConceptGraphRecord treeLists = TreeConverter.makeTreeCopy(graphToTest).buildConceptGraphRecord();
+        //System.out.println(treeLists);
 
         Assert.assertEquals(expectedTreeNodeCount, treeLists.getConcepts().size());
         Assert.assertEquals(expectedTreeLinkCount, treeLists.getLinks().size());
