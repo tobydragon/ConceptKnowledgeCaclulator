@@ -29,24 +29,30 @@ public class MatrixCreatorTest {
         double[] arr1 = new double[9];
         double[] arr2 = new double[9];
         double[] arr3 = new double[9];
-        for(int i=0; i<9; i++) {
-            arr1[i]= myMatrix[i][0];
-            for(int j=0; i<9; j++){
-                System.out.println(arr1[j]);
-            }
-        }
-        for(int i=0; i<9; i++) {
-            arr2[i]= myMatrix[i][0];
-            for(int j=0; i<9; j++){
-                System.out.println(arr1[j]);
-            }
-        }
-        for(int i=0; i<9; i++) {
-            arr3[i]= myMatrix[i][0];
-            for(int j=0; i<9; j++){
-                System.out.println(arr1[j]);
-            }
-        }
+
+
+         for(int i = 0; i<9; i++) {
+         arr1[i]= myMatrix[i][0];
+
+         }
+         for(int j=0; j<9; j++){
+         //System.out.println(arr1[j]);
+         }
+
+         for(int i=0; i<9; i++) {
+         arr2[i]= myMatrix[i][1];
+         }
+         for(int j=0; j<9; j++){
+         //System.out.println(arr2[j]);
+         }
+
+         for(int i=0; i<9; i++) {
+         arr3[i]= myMatrix[i][2];
+         }
+         for(int j=0; j<9; j++){
+         //System.out.println(arr3[j]);
+         }
+
 
         double[] exArr1 = new double[]{1, 1, 0.815, 0.7, 0, 0, 1, 1, 1};
         double[] exArr2 = new double[]{0, 1, 0.85, 1, 0, 0.9, 1, 1, 1};
