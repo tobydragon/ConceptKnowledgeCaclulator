@@ -6,12 +6,10 @@ import edu.ithaca.dragonlab.ckc.ConceptKnowledgeCalculatorAPI;
 import edu.ithaca.dragonlab.ckc.conceptgraph.CohortConceptGraphs;
 import edu.ithaca.dragonlab.ckc.conceptgraph.ConceptGraph;
 import edu.ithaca.dragonlab.ckc.conceptgraph.ConceptNode;
-import edu.ithaca.dragonlab.ckc.conceptgraph.ExampleConceptGraphFactory;
 import edu.ithaca.dragonlab.ckc.learningobject.LearningObject;
 import edu.ithaca.dragonlab.ckc.learningobject.LearningObjectResponse;
 import edu.ithaca.dragonlab.ckc.suggester.LearningObjectSuggestion;
 import edu.ithaca.dragonlab.ckc.suggester.SuggestionResource;
-import edu.ithaca.dragonlab.ckc.ui.ConsoleUI;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.junit.Assert;
@@ -226,4 +224,66 @@ public class ConceptKnowledgeCalculatorTest {
         Assert.assertEquals(postMasterList1.get(16).getLearningObjectId(), "Q14");
         Assert.assertEquals(postMasterList1.get(17).getLearningObjectId(), "Q14");
     }
- }
+
+//    @Test
+//    public void addLOFileTest(){
+//        ConceptKnowledgeCalculatorAPI ckc = null;
+//        try {
+//            ckc = new ConceptKnowledgeCalculator("test/testresources/basicRealisticExampleConceptGraphOneStudent.json", "test/testresources/basicRealisticExampleLOLRecordOneStudent.json", "test/testresources/basicRealisticExampleGradeBook2.csv");
+//        } catch (IOException e) {
+//            System.out.println("Unable to load default files, please choose files manually.");
+//            ckc = new ConceptKnowledgeCalculator();
+//        }
+//
+//        List<LearningObject> originalMasterList = new ArrayList<>();
+//
+//        CohortConceptGraphs originalGraphs = ckc.getCohortConceptGraphs();
+//        ConceptGraph conGraph = originalGraphs.getAvgGraph();
+//        Map<String, LearningObject> origLearningMap =  conGraph.getLearningObjectMap();
+//
+//        Collection<LearningObject> origLearningObList = origLearningMap.values();
+//
+//        originalMasterList.addAll(origLearningObList);
+//
+//        Assert.assertEquals(originalMasterList.size(), 14);
+//        Assert.assertEquals(originalMasterList.get(0).getId(), "Q1");
+//        Assert.assertEquals(originalMasterList.get(1).getId(), "Q2");
+//        Assert.assertEquals(originalMasterList.get(2).getId(), "Q3");
+//        Assert.assertEquals(originalMasterList.get(3).getId(), "Q4");
+//        Assert.assertEquals(originalMasterList.get(4).getId(), "Q5");
+//        Assert.assertEquals(originalMasterList.get(5).getId(), "Q6");
+//        Assert.assertEquals(originalMasterList.get(6).getId(), "Q7");
+//        Assert.assertEquals(originalMasterList.get(7).getId(), "Q8");
+//        Assert.assertEquals(originalMasterList.get(8).getId(), "Q9");
+//        Assert.assertEquals(originalMasterList.get(9).getId(), "Q11");
+//        Assert.assertEquals(originalMasterList.get(10).getId(), "Q10");
+//        Assert.assertEquals(originalMasterList.get(11).getId(), "Q13");
+//        Assert.assertEquals(originalMasterList.get(12).getId(), "Q12");
+//        Assert.assertEquals(originalMasterList.get(13).getId(), "Q14");
+//
+//
+//
+//        try {
+//            ckc.addAnotherLO("test/testresources/simpleChangeNameLOL.json");
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//        }
+//
+//        List<LearningObject> postMasterList = new ArrayList<>();
+//
+//        CohortConceptGraphs postGraphs = ckc.getCohortConceptGraphs();
+//        ConceptGraph postCG = postGraphs.getAvgGraph();
+//        Map<String, LearningObject> postLOMap =  postCG.getLearningObjectMap();
+//
+//        Collection<LearningObject> postLOList = postLOMap.values();
+//        postMasterList.addAll(postLOList);
+//
+//        //20!
+//
+////        for (LearningObject lo: postLOList){
+////            System.out.println(lo.getId());
+////        }
+//
+//    }
+
+}

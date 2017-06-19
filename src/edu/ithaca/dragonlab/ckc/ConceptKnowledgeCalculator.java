@@ -1,5 +1,6 @@
 package edu.ithaca.dragonlab.ckc;
 
+import com.sun.org.glassfish.gmbal.ManagedObject;
 import com.sun.tools.internal.ws.wsdl.document.jaxws.Exception;
 import edu.ithaca.dragonlab.ckc.conceptgraph.CohortConceptGraphs;
 import edu.ithaca.dragonlab.ckc.conceptgraph.ConceptGraph;
@@ -16,6 +17,7 @@ import edu.ithaca.dragonlab.ckc.suggester.SuggestionResource;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.LinkedList;
 import java.util.List;
 
 /**
@@ -29,12 +31,16 @@ public class ConceptKnowledgeCalculator implements ConceptKnowledgeCalculatorAPI
     private Mode currentMode = null;
 
     private boolean hasmultipleAssessmentFile = false;
+    private boolean hasMultipleResourceFiles = false;
 
     private static final String OUTPUT_PATH = "out/";
 
     //if user types in invalid input, the computer will create graph out of last valid input
     private String structureFileName;
     private String lastWorkingStructureName;
+
+    private String [] previouslySavedCohortFiles;
+    private String [] saveCohortFiles;
 
     //graphs
     private CohortConceptGraphs cohortConceptGraphs;
@@ -93,6 +99,10 @@ public class ConceptKnowledgeCalculator implements ConceptKnowledgeCalculatorAPI
         resourceFile=resourceFilename;
         assessmentFile= assessmentFilename;
 
+        String[] test = new String[]{structureFilename, resourceFile, assessmentFile};
+        saveCohortFiles=test;
+
+
 
         //output the json representing the tree form of the graph
         CohortConceptGraphsRecord toFile = cohortConceptGraphs.buildCohortConceptTreeRecord();
@@ -100,6 +110,49 @@ public class ConceptKnowledgeCalculator implements ConceptKnowledgeCalculatorAPI
         toFile.writeToJson(file);
     }
 
+    @Override
+    public void addAnotherLO(String secondResourceFile) throws IOException{
+//        cohortConceptGraphs = null;
+//
+//        //create the graph structure to be copied for each user
+//        ConceptGraphRecord structureRecord = ConceptGraphRecord.buildFromJson(structureFileName);
+//
+//
+//        List<LearningObjectLinkRecord> firstResource = LearningObjectLinkRecord.buildListFromJson(resourceFile);
+//        List<LearningObjectLinkRecord> secondResource = LearningObjectLinkRecord.buildListFromJson(secondResourceFile);
+//        System.out.println("file1 " + firstResource.size());
+//        System.out.println("second " + secondResource.size());
+//
+//        List<LearningObjectLinkRecord> combinedResource = new LinkedList<>();
+//        combinedResource.addAll(firstResource);
+//        combinedResource.addAll(secondResource);
+//
+//
+//        System.out.println("size " + combinedResource.size());
+//
+//        ConceptGraph graph = new ConceptGraph(structureRecord, combinedResource);
+//
+//        //create the data to be used to create and populate the graph copies
+//        CSVReader csvReader = new CSVReader(assessmentFile);
+//        List<LearningObjectResponse> assessments = csvReader.getManualGradedResponses();
+//        //add more
+//
+//
+//        //create the average and individual graphs
+//        cohortConceptGraphs = new CohortConceptGraphs(graph, assessments);
+//
+//        //to use in console
+//        currentMode= Mode.COHORTGRAPH;
+//        hasMultipleResourceFiles=true;
+//
+//
+//        //output the json representing the tree form of the graph
+//        CohortConceptGraphsRecord toFile = cohortConceptGraphs.buildCohortConceptTreeRecord();
+//        String file = OUTPUT_PATH + "ckcCurrent.json";
+//        toFile.writeToJson(file);
+
+
+    }
 
     @Override
     public void additionalLOR(String secondAssessmentFilename) throws IOException {
@@ -254,6 +307,23 @@ public class ConceptKnowledgeCalculator implements ConceptKnowledgeCalculatorAPI
     public boolean gethasMultipleAssessment(){
         return hasmultipleAssessmentFile;
     }
+
+    public String [] getPreviouslySavedCohortFile(){
+        return previouslySavedCohortFiles;
+    }
+
+    public void setPreviouslySavedCohortFiles(String [] files){
+        previouslySavedCohortFiles = files;
+    }
+
+    public String [] getSavedCohortFile(){
+        return saveCohortFiles;
+    }
+
+    public void setSavedCohortFiles(String [] files){
+        saveCohortFiles = files;
+    }
+
 
     //for testing purposes
 

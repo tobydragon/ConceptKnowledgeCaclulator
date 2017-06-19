@@ -1,7 +1,5 @@
 package edu.ithaca.dragonlab.ckc.suggester;
 
-import com.sun.org.apache.xalan.internal.xsltc.dom.MultiValuedNodeHeapIterator;
-import com.sun.org.apache.xpath.internal.SourceTree;
 import edu.ithaca.dragonlab.ckc.conceptgraph.ConceptGraph;
 import edu.ithaca.dragonlab.ckc.conceptgraph.ConceptNode;
 import edu.ithaca.dragonlab.ckc.learningobject.LearningObject;
@@ -114,6 +112,20 @@ public class SuggestionResource {
         this.suggestionMap= sug;
     }
 
+
+    public String toString(int choice){
+        List<LearningObjectSuggestion> list;
+        if (choice==0){
+            list = incompleteList;
+        }else{
+            list = wrongList;
+        }
+        String st = "";
+        for (LearningObjectSuggestion los: list){
+            st += los.toString();
+        }
+        return st;
+    }
 
 
 }

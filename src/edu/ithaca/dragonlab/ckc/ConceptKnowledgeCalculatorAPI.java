@@ -36,8 +36,7 @@ public interface ConceptKnowledgeCalculatorAPI {
 
 
     /**
-     * //TODO
-     * Takes
+     * creates two lists of the learning object responses with the old file and the new file and combines them into one to use in the cohort graphs
      * @param assessmentFilename
      * @throws IOException
      */
@@ -94,6 +93,9 @@ public interface ConceptKnowledgeCalculatorAPI {
 
     boolean gethasMultipleAssessment();
 
+
+    void addAnotherLO(String secondResourceFile) throws IOException;
+
     /**
      * If the user gives a bad file name, the graph will be remade with the last known working file name
      * @param fileName
@@ -102,10 +104,19 @@ public interface ConceptKnowledgeCalculatorAPI {
 
     String getLastWorkingStructureName();
 
+    String [] getPreviouslySavedCohortFile();
+
+    void setPreviouslySavedCohortFiles(String [] files);
+
+    String [] getSavedCohortFile();
+
+    void setSavedCohortFiles(String [] files);
+
 
     //just for testing
     ConceptGraph getStructureGraph();
     CohortConceptGraphs getCohortConceptGraphs();
+
 
 
 }
