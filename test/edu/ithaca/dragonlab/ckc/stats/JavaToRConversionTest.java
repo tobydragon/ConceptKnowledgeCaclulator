@@ -24,8 +24,11 @@ public class JavaToRConversionTest {
         CSVReader data = new CSVReader(file);
         ArrayList<LearningObject> gotoMatrix = data.getManualGradedLearningObjects();
         Matrix newMatrix = new Matrix(gotoMatrix);
-        RCode mycode = JavaToRConversion.JavaToR(newMatrix);
-        mycode.addRCode("classAvg <- mean(matrix[, 3])");
+        double[][] struct = newMatrix.getStructure();
+        ArrayList<LearningObject> objList = newMatrix.getObjList();
+        String[] user = newMatrix.getUserIdList();
+        RCode mycode = JavaToRConversion.JavaToR(struct, objList, user);
+        mycode.addRCode("classAvg <- mean(final[, 3])");
 
 
         RCaller rCaller;

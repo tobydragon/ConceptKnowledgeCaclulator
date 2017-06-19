@@ -1,7 +1,9 @@
 package edu.ithaca.dragonlab.ckc.conceptgraph;
 
+import com.github.rcaller.rstuff.RCode;
 import edu.ithaca.dragonlab.ckc.learningobject.LearningObject;
 import edu.ithaca.dragonlab.ckc.learningobject.LearningObjectResponse;
+import stats.JavaToRConversion;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -20,6 +22,7 @@ public class Matrix {
     double[][] structure;
     ArrayList<LearningObject> objList;
     String[] userIdList;
+    RCode rMatrix;
 
 
     public Matrix(ArrayList<LearningObject> lo){
@@ -27,6 +30,7 @@ public class Matrix {
         this.structure = createMatrix(lo);
         this.objList = lo;
         this.userIdList = userIdList;
+        this.rMatrix = createRMatrix();
 
     }
 
@@ -95,10 +99,17 @@ public class Matrix {
         return structure;
     }
 
+    public RCode createRMatrix(){
+        RCode rMatrix = JavaToRConversion.JavaToR(structure, objList, userIdList);
+        return rMatrix;
+    }
+
+
     public double[][] getStructure(){return this.structure;}
 
     public String[] getUserIdList(){return this.userIdList;}
 
     public ArrayList<LearningObject> getObjList(){return this.objList;}
 
+    public RCode getrMatrix() {return rMatrix;}
 }
