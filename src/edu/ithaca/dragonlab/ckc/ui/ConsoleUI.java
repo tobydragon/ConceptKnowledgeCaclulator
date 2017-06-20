@@ -75,12 +75,12 @@ public class ConsoleUI {
 
             } else {
 
-                System.out.println("What do you want to do? \n 1 - calculate a list of concept nodes to work on \n 2 - calculate learning object suggestions based on a specific concept \n 3 - automatically calculate suggestions \n 4 - View graph \n 5 - Create new graph \n 6 - Replace graph file \n 7 - Add another assessment file \n 8 - Add another LO file \n 9 - View Structure Graph");
+                System.out.println("What do you want to do? \n 1 - calculate a list of concept nodes to work on \n 2 - calculate learning object suggestions based on a specific concept \n 3 - automatically calculate suggestions \n 4 - View graph \n 5 - Create new graph \n 6 - Replace graph file \n 7 - Add another assessment file \n 8 - Add another LO file \n 9 - Get Average Concept Grade \n 10 - View Structure Graph");
                 Integer num = scanner.nextInt();
 
-                while (num < 1 || num > 9) {
+                while (num < 1 || num > 10) {
                     System.out.println("Out of bounds");
-                    System.out.println("What do you want to do? \n 1 - calculate a list of concept nodes to work on \n 2 - calculate learning object suggestions based on a specific concept \n 3 - automatically calculate suggestions \n 4 - View graph \n 5 - Create new graph \n 6 - Replace graph file \n 7 - Add another assessment file \n 8 - Add another LO file \n 9 - View Structure Graph");
+                    System.out.println("What do you want to do? \n 1 - calculate a list of concept nodes to work on \n 2 - calculate learning object suggestions based on a specific concept \n 3 - automatically calculate suggestions \n 4 - View graph \n 5 - Create new graph \n 6 - Replace graph file \n 7 - Add another assessment file \n 8 - Add another LO file \n 9 - Get Average Concept Grade \n 10 - View Structure Graph");
                     num = scanner.nextInt();
                 }
 
@@ -112,7 +112,10 @@ public class ConsoleUI {
                 } else if (num ==8) {
                     addLOFile(scanner);
 
-                }else{
+                }else if(num ==9){
+//                    conceptAverage(scanner);
+
+                } else {
                     switchToStructuremode();
 
                 }
@@ -134,6 +137,7 @@ public class ConsoleUI {
 
 
     }
+
 
 
     public void replaceGraph(Scanner scanner, boolean structFileNameValid){
@@ -194,11 +198,12 @@ public class ConsoleUI {
         System.out.println("User ID");
         String userID = scanner.nextLine();
 
-        List<ConceptNode> suggestedConceptNodeList = ckc.calcIndividualConceptNodesSuggestions(userID);
+
+        List<String> suggestedConceptNodeList = ckc.calcIndividualConceptNodesSuggestions(userID);
 
         String st = "";
-        for(ConceptNode node: suggestedConceptNodeList){
-            st+= node.getID()+ "\n";
+        for(String node: suggestedConceptNodeList){
+            st+= node+ "\n";
         }
 
         System.out.println(st);
@@ -291,8 +296,7 @@ public class ConsoleUI {
     public void replaceGraphFile(Scanner scanner){
         System.out.println("Replace Graph File");
 
-        System.out.println("Current " + ckc.getStructureFileName() + " \n" + ckc.getCohortConceptGraphs());
-        //replace graph file and leave the others
+
 
         System.out.println("Type Graph Path ");
         String graph = scanner.nextLine();

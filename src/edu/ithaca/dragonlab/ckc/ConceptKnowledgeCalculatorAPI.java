@@ -2,7 +2,6 @@ package edu.ithaca.dragonlab.ckc;
 
 import edu.ithaca.dragonlab.ckc.conceptgraph.CohortConceptGraphs;
 import edu.ithaca.dragonlab.ckc.conceptgraph.ConceptGraph;
-import edu.ithaca.dragonlab.ckc.conceptgraph.ConceptNode;
 import edu.ithaca.dragonlab.ckc.suggester.SuggestionResource;
 
 import java.io.IOException;
@@ -73,7 +72,9 @@ public interface ConceptKnowledgeCalculatorAPI {
      * @param userID
      * @return List of Concept Nodes
      */
-    List<ConceptNode> calcIndividualConceptNodesSuggestions(String userID);
+    List<String> calcIndividualConceptNodesSuggestions(String userID);
+
+//    double getConceptAverage(String learningObject);
 
     ConceptKnowledgeCalculator.Mode getCurrentmode();
 

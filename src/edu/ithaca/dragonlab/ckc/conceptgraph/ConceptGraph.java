@@ -71,6 +71,12 @@ public class ConceptGraph {
         this.roots = rootsIn;
     }
 
+    public ConceptGraph(){
+        this.name = " ";
+        learningObjectMap = new HashMap<>();
+        nodeMap= new HashMap<>();
+        this.roots= new LinkedList<>();
+    }
 
     /**
      * Initializes a graph structure only (no learningObjects)
@@ -188,7 +194,7 @@ public class ConceptGraph {
 		for (String key : nodeMap.keySet()) {
 			ConceptNode compareNode = nodeMap.get(key);
 			boolean ances =  node.isAncestorOf(compareNode);
-            if (ances && compareNode.getKnowledgeEstimate()<LearningObjectSuggester.max){
+            if (ances && compareNode.getKnowledgeEstimate()<LearningObjectSuggester.MAX){
                 isAnc=true;
 				break;
 			}

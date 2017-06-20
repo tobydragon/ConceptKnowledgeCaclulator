@@ -26,6 +26,11 @@ public class SuggestionResource {
 
     }
 
+    public SuggestionResource(){
+        this.incompleteList= new ArrayList<LearningObjectSuggestion>();
+        this.wrongList= new ArrayList<LearningObjectSuggestion>();
+        this.suggestionMap= new HashMap<>();
+    }
 
 
     /**
@@ -33,7 +38,7 @@ public class SuggestionResource {
      *@param suggestionMap - suggested Concept Nodes and a list of LearningObjectSuggestions
      *@return a list of strings of ordered names
      */
-    public List<String> sortHighToLow(HashMap<String, List<LearningObjectSuggestion>> suggestionMap){
+    public static List<String> sortHighToLow(HashMap<String, List<LearningObjectSuggestion>> suggestionMap){
         List<String> workingList = new ArrayList<>();
         List<String> orderedNames = new ArrayList<>();
 

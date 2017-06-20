@@ -9,12 +9,10 @@ import edu.ithaca.dragonlab.ckc.io.ConceptGraphRecord;
 import edu.ithaca.dragonlab.ckc.io.LearningObjectLinkRecord;
 import edu.ithaca.dragonlab.ckc.learningobject.LearningObjectResponse;
 import edu.ithaca.dragonlab.ckc.suggester.LearningObjectSuggester;
-import edu.ithaca.dragonlab.ckc.suggester.LearningObjectSuggestion;
 import edu.ithaca.dragonlab.ckc.suggester.SuggestionResource;
 
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -51,6 +49,7 @@ public class ConceptKnowledgeCalculator implements ConceptKnowledgeCalculatorAPI
     public ConceptKnowledgeCalculator() {
         cohortConceptGraphs = null;
         structureGraph = null;
+
     }
     public ConceptKnowledgeCalculator(String structureFileName) throws IOException{
         clearAndCreateStructureData(structureFileName);
@@ -199,60 +198,99 @@ public class ConceptKnowledgeCalculator implements ConceptKnowledgeCalculatorAPI
 
     @Override
     public SuggestionResource calcIndividualGraphSuggestions(String userId) {
-        if (currentMode== Mode.COHORTGRAPH) {
+        try{
             if (cohortConceptGraphs != null) {
                 ConceptGraph userGraph = cohortConceptGraphs.getUserGraph(userId);
                 List<ConceptNode> concepts = LearningObjectSuggester.conceptsToWorkOn(userGraph);
                 return new SuggestionResource(userGraph, concepts);
 
             } else {
-                return new SuggestionResource(null, null);
+                return new SuggestionResource();
             }
-        }else{
-            System.out.println("wrong mode");
-            return null;
-        }
-    }
 
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+
+        return null;
+    }
 
     @Override
     public SuggestionResource calcIndividualSpecificConceptSuggestions(String userId, String conceptId) {
-        if (currentMode== Mode.COHORTGRAPH) {
+        try{
             if (cohortConceptGraphs != null) {
-                ConceptGraph userGraph = cohortConceptGraphs.getUserGraph(userId);
+                ConceptGraph userGraph;
+                try {
+                    userGraph = cohortConceptGraphs.getUserGraph(userId);
+                }catch(Exception e) {
+                    e.printStackTrace();
+//                    System.out.println("Can't find user");
+                    userGraph= new ConceptGraph();
+                }
 
-                ConceptNode node = userGraph.findNodeById(conceptId);
+                ConceptNode node;
+                try {
+                    node = userGraph.findNodeById(conceptId);
+                }catch(Exception e) {
+                    e.printStackTrace();
+//                    System.out.println("Can't find the concept");
+                    node = new ConceptNode();
+                }
+
                 List<ConceptNode> concepts = new ArrayList<ConceptNode>();
                 concepts.add(node);
 
                 return new SuggestionResource(userGraph, concepts);
 
+
+
             } else {
-                return new SuggestionResource(null, null);
+                return new SuggestionResource();
             }
-        }else{
-            System.out.println("wrong mode");
-            return null;
+
+        }catch (Exception e){
+            e.printStackTrace();
         }
 
+        return new SuggestionResource();
     }
 
 
     @Override
-    public List<ConceptNode> calcIndividualConceptNodesSuggestions(String userID){
-        if(currentMode == Mode.COHORTGRAPH){
+    public List<String> calcIndividualConceptNodesSuggestions(String userID){
+        try{
             if (cohortConceptGraphs != null) {
-                ConceptGraph userGraph = cohortConceptGraphs.getUserGraph(userID);
+                ConceptGraph userGraph;
+                try {
+                    userGraph = cohortConceptGraphs.getUserGraph(userID);
 
-                return LearningObjectSuggester.conceptsToWorkOn(userGraph);
+                }catch (Exception e){
+                    e.printStackTrace();
+                    userGraph= new ConceptGraph();
+//                    System.out.println("Can't find that user");
+                }
+
+                if(userGraph!=null) {
+                    List<ConceptNode> nodeList = LearningObjectSuggester.conceptsToWorkOn(userGraph);
+
+                    List<String> suggestedConceptIDList = new ArrayList<>();
+                    for (ConceptNode node : nodeList) {
+                        suggestedConceptIDList.add(node.getID());
+                    }
+
+                    return suggestedConceptIDList;
+                }else{
+                    return new ArrayList<>();
+                }
 
             } else {
-                return new ArrayList<ConceptNode>();
+                return new ArrayList<>();
             }
-        }else{
-            System.out.println("wrong mode");
-            return null;
+
+        }catch (Exception e){
+            e.printStackTrace();
         }
+        return new ArrayList<>();
     }
 
     public void setResourceFile(String file){

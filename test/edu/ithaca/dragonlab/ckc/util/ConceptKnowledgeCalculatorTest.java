@@ -86,15 +86,30 @@ public class ConceptKnowledgeCalculatorTest {
                 ckc = new ConceptKnowledgeCalculator();
         }
 
-        List<ConceptNode> concepts = ckc.calcIndividualConceptNodesSuggestions("bspinache1");
+        List<String> concepts = ckc.calcIndividualConceptNodesSuggestions("bspinache1");
 
 
         Assert.assertEquals(concepts.size(), 2);
-        Assert.assertEquals(concepts.get(0).getID(), "If Statement");
-        Assert.assertEquals(concepts.get(1).getID(), "While Loop");
+        Assert.assertEquals(concepts.get(0), "If Statement");
+        Assert.assertEquals(concepts.get(1), "While Loop");
 
     }
 
+    @Test
+    public void calcIndividualConceptNodesSuggestionsBadInputTest(){
+        ConceptKnowledgeCalculatorAPI ckc = null;
+        try {
+            ckc = new ConceptKnowledgeCalculator("test/testresources/basicRealisticExampleConceptGraphOneStudent.json", "test/testresources/basicRealisticExampleLOLRecordOneStudent.json", "test/testresources/basicRealisticExampleGradeBook2.csv");
+        } catch (IOException e) {
+            System.out.println("Unable to load default files, please choose files manually.");
+            ckc = new ConceptKnowledgeCalculator();
+        }
+
+        List<String> concepts =ckc.calcIndividualConceptNodesSuggestions("baduser");
+        Assert.assertEquals(concepts, new ArrayList<>());
+
+
+    }
 
 
 
@@ -299,5 +314,7 @@ public class ConceptKnowledgeCalculatorTest {
         Assert.assertEquals(postMasterList.get(18).getId(), "Q14");
 
     }
+
+
 
 }
