@@ -1,93 +1,93 @@
 [
   {"learningObject":"resource1",
     "conceptIds":[
-      "A"
+      "For Loop"
     ],
     "dataImportance": "1"
   },
   {"learningObject":"Q1",
   "conceptIds":[
-    "A"
+    "For Loop"
   ],
   "dataImportance": "1"
   },
   {"learningObject":"Q2",
   "conceptIds":[
-    "B"
+    "For Loop"
   ],
   "dataImportance": "1"
   },
   {"learningObject":"resource2",
   "conceptIds":[
-    "B"
+    "For Loop"
   ],
   "dataImportance": "1"
   },
-  {"learningObject":"resource4",
+  {"learningObject":"resource3",
   "conceptIds":[
-    "C"
+    "For Loop"
   ],
   "dataImportance": "1"
   },
   {"learningObject":"Q5",
   "conceptIds":[
-    "C"
+    "For Loop"
   ],
   "dataImportance": "1"
   },
-  {"learningObject":"recourse5",
+  {"learningObject":"resource4",
     "conceptIds":[
-      "D"
+      "For Loop"
     ],
     "dataImportance": "1"
   },
   {"learningObject":"Q7",
     "conceptIds":[
-      "D"
+      "For Loop"
     ],
     "dataImportance": "1"
   },
   {"learningObject":"Q8",
     "conceptIds":[
-      "E"
+      "For Loop"
     ],
     "dataImportance": "1"
   },{"learningObject":"Q9",
     "conceptIds":[
-      "E"
+      "For Loop"
     ],
     "dataImportance": "1"
   },
   {"learningObject":"Q10",
     "conceptIds":[
-      "F"
+      "For Loop"
     ],
     "dataImportance": "1"
   },
-  {"learningObject": "resource6",
+  {"learningObject": "resource5",
     "conceptIds": [
-    "F"
+    "For Loop"
   ],
     "dataImportance": "1"
   },
   {
     "learningObject": "Q12",
     "conceptIds": [
-      "G"
+      "For Loop"
     ],
     "dataImportance": "1"
   },
   {
     "learningObject": "Q13",
     "conceptIds": [
-      "G"
+      "For Loop"
     ],
     "dataImportance": "1"
   },
   {
     "learningObject": "Q14",
     "conceptIds": [
-      "Counting"
+      "For Loop"
     ],
     "dataImportance": "1"
   }

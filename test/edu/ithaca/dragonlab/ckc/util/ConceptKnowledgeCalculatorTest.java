@@ -225,65 +225,79 @@ public class ConceptKnowledgeCalculatorTest {
         Assert.assertEquals(postMasterList1.get(17).getLearningObjectId(), "Q14");
     }
 
-//    @Test
-//    public void addLOFileTest(){
-//        ConceptKnowledgeCalculatorAPI ckc = null;
-//        try {
-//            ckc = new ConceptKnowledgeCalculator("test/testresources/basicRealisticExampleConceptGraphOneStudent.json", "test/testresources/basicRealisticExampleLOLRecordOneStudent.json", "test/testresources/basicRealisticExampleGradeBook2.csv");
-//        } catch (IOException e) {
-//            System.out.println("Unable to load default files, please choose files manually.");
-//            ckc = new ConceptKnowledgeCalculator();
-//        }
-//
-//        List<LearningObject> originalMasterList = new ArrayList<>();
-//
-//        CohortConceptGraphs originalGraphs = ckc.getCohortConceptGraphs();
-//        ConceptGraph conGraph = originalGraphs.getAvgGraph();
-//        Map<String, LearningObject> origLearningMap =  conGraph.getLearningObjectMap();
-//
-//        Collection<LearningObject> origLearningObList = origLearningMap.values();
-//
-//        originalMasterList.addAll(origLearningObList);
-//
-//        Assert.assertEquals(originalMasterList.size(), 14);
-//        Assert.assertEquals(originalMasterList.get(0).getId(), "Q1");
-//        Assert.assertEquals(originalMasterList.get(1).getId(), "Q2");
-//        Assert.assertEquals(originalMasterList.get(2).getId(), "Q3");
-//        Assert.assertEquals(originalMasterList.get(3).getId(), "Q4");
-//        Assert.assertEquals(originalMasterList.get(4).getId(), "Q5");
-//        Assert.assertEquals(originalMasterList.get(5).getId(), "Q6");
-//        Assert.assertEquals(originalMasterList.get(6).getId(), "Q7");
-//        Assert.assertEquals(originalMasterList.get(7).getId(), "Q8");
-//        Assert.assertEquals(originalMasterList.get(8).getId(), "Q9");
-//        Assert.assertEquals(originalMasterList.get(9).getId(), "Q11");
-//        Assert.assertEquals(originalMasterList.get(10).getId(), "Q10");
-//        Assert.assertEquals(originalMasterList.get(11).getId(), "Q13");
-//        Assert.assertEquals(originalMasterList.get(12).getId(), "Q12");
-//        Assert.assertEquals(originalMasterList.get(13).getId(), "Q14");
-//
-//
-//
-//        try {
-//            ckc.addAnotherLO("test/testresources/simpleChangeNameLOL.json");
-//        } catch (IOException e) {
-//            e.printStackTrace();
-//        }
-//
-//        List<LearningObject> postMasterList = new ArrayList<>();
-//
-//        CohortConceptGraphs postGraphs = ckc.getCohortConceptGraphs();
-//        ConceptGraph postCG = postGraphs.getAvgGraph();
-//        Map<String, LearningObject> postLOMap =  postCG.getLearningObjectMap();
-//
-//        Collection<LearningObject> postLOList = postLOMap.values();
-//        postMasterList.addAll(postLOList);
-//
-//        //20!
-//
-////        for (LearningObject lo: postLOList){
-////            System.out.println(lo.getId());
-////        }
-//
-//    }
+    @Test
+    public void addLOFileTest(){
+        ConceptKnowledgeCalculatorAPI ckc = null;
+        try {
+            ckc = new ConceptKnowledgeCalculator("test/testresources/basicRealisticExampleConceptGraphOneStudent.json", "test/testresources/basicRealisticExampleLOLRecordOneStudent.json", "test/testresources/basicRealisticExampleGradeBook2.csv");
+        } catch (IOException e) {
+            System.out.println("Unable to load default files, please choose files manually.");
+            ckc = new ConceptKnowledgeCalculator();
+        }
+
+        List<LearningObject> originalMasterList = new ArrayList<>();
+
+        CohortConceptGraphs originalGraphs = ckc.getCohortConceptGraphs();
+        ConceptGraph conGraph = originalGraphs.getAvgGraph();
+        Map<String, LearningObject> origLearningMap =  conGraph.getLearningObjectMap();
+
+        Collection<LearningObject> origLearningObList = origLearningMap.values();
+
+        originalMasterList.addAll(origLearningObList);
+
+        Assert.assertEquals(originalMasterList.size(), 14);
+        Assert.assertEquals(originalMasterList.get(0).getId(), "Q1");
+        Assert.assertEquals(originalMasterList.get(1).getId(), "Q2");
+        Assert.assertEquals(originalMasterList.get(2).getId(), "Q3");
+        Assert.assertEquals(originalMasterList.get(3).getId(), "Q4");
+        Assert.assertEquals(originalMasterList.get(4).getId(), "Q5");
+        Assert.assertEquals(originalMasterList.get(5).getId(), "Q6");
+        Assert.assertEquals(originalMasterList.get(6).getId(), "Q7");
+        Assert.assertEquals(originalMasterList.get(7).getId(), "Q8");
+        Assert.assertEquals(originalMasterList.get(8).getId(), "Q9");
+        Assert.assertEquals(originalMasterList.get(9).getId(), "Q11");
+        Assert.assertEquals(originalMasterList.get(10).getId(), "Q10");
+        Assert.assertEquals(originalMasterList.get(11).getId(), "Q13");
+        Assert.assertEquals(originalMasterList.get(12).getId(), "Q12");
+        Assert.assertEquals(originalMasterList.get(13).getId(), "Q14");
+
+
+
+        try {
+            ckc.addAnotherLO("test/testresources/simpleChangeNameLOL.json");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        List<LearningObject> postMasterList = new ArrayList<>();
+
+        CohortConceptGraphs postGraphs = ckc.getCohortConceptGraphs();
+        ConceptGraph postCG = postGraphs.getAvgGraph();
+        Map<String, LearningObject> postLOMap =  postCG.getLearningObjectMap();
+        Collection<LearningObject> postLOList = postLOMap.values();
+        postMasterList.addAll(postLOList);
+
+        Assert.assertEquals(postMasterList.size(), 19);
+        Assert.assertEquals(postMasterList.get(0).getId(), "Q1");
+        Assert.assertEquals(postMasterList.get(1).getId(), "Q2");
+        Assert.assertEquals(postMasterList.get(2).getId(), "Q3");
+        Assert.assertEquals(postMasterList.get(3).getId(), "Q4");
+        Assert.assertEquals(postMasterList.get(4).getId(), "Q5");
+        Assert.assertEquals(postMasterList.get(5).getId(), "Q6");
+        Assert.assertEquals(postMasterList.get(6).getId(), "Q7");
+        Assert.assertEquals(postMasterList.get(7).getId(), "Q8");
+        Assert.assertEquals(postMasterList.get(8).getId(), "Q9");
+        Assert.assertEquals(postMasterList.get(9).getId(), "resource2");
+        Assert.assertEquals(postMasterList.get(10).getId(), "resource3");
+        Assert.assertEquals(postMasterList.get(11).getId(), "resource4");
+        Assert.assertEquals(postMasterList.get(12).getId(), "resource5");
+        Assert.assertEquals(postMasterList.get(13).getId(), "resource1");
+        Assert.assertEquals(postMasterList.get(14).getId(), "Q11");
+        Assert.assertEquals(postMasterList.get(15).getId(), "Q10");
+        Assert.assertEquals(postMasterList.get(16).getId(), "Q13");
+        Assert.assertEquals(postMasterList.get(17).getId(), "Q12");
+        Assert.assertEquals(postMasterList.get(18).getId(), "Q14");
+
+    }
 
 }

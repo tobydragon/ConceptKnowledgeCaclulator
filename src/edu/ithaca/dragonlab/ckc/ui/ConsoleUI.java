@@ -349,19 +349,18 @@ public class ConsoleUI {
 
     private void addLOFile(Scanner scanner) {
         System.out.println("Add another Learning Object File");
-//        System.out.println("Type file path (root to file)");
-//        String file = scanner.nextLine();
-//
-//        try{
-//            ckc.addAnotherLO(file);
-//        }catch (Exception e){
-//            e.printStackTrace();
-//            System.out.println("can't find file");
-//        }
+        System.out.println("Type file path (root to file)");
+        String file = scanner.nextLine();
+
+        try{
+            ckc.addAnotherLO(file);
+            System.out.println("Process Completed");
+        }catch (Exception e){
+            e.printStackTrace();
+            System.out.println("Can't find file");
+        }
 
     }
-
-
 
 
 }

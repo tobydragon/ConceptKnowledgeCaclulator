@@ -93,7 +93,13 @@ public interface ConceptKnowledgeCalculatorAPI {
 
     boolean gethasMultipleAssessment();
 
-
+    /**
+     * adds another file of LearningObjects to the graph.
+     * will only add learning objects that are associated with concepts already in the graph
+     * will only add learning objects that are not already in the graph (aka no repeats)
+     * @param secondResourceFile
+     * @throws IOException
+     */
     void addAnotherLO(String secondResourceFile) throws IOException;
 
     /**

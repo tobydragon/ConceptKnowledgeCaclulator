@@ -1,7 +1,5 @@
 package edu.ithaca.dragonlab.ckc;
 
-import com.sun.org.glassfish.gmbal.ManagedObject;
-import com.sun.tools.internal.ws.wsdl.document.jaxws.Exception;
 import edu.ithaca.dragonlab.ckc.conceptgraph.CohortConceptGraphs;
 import edu.ithaca.dragonlab.ckc.conceptgraph.ConceptGraph;
 import edu.ithaca.dragonlab.ckc.conceptgraph.ConceptNode;
@@ -112,44 +110,39 @@ public class ConceptKnowledgeCalculator implements ConceptKnowledgeCalculatorAPI
 
     @Override
     public void addAnotherLO(String secondResourceFile) throws IOException{
-//        cohortConceptGraphs = null;
-//
-//        //create the graph structure to be copied for each user
-//        ConceptGraphRecord structureRecord = ConceptGraphRecord.buildFromJson(structureFileName);
-//
-//
-//        List<LearningObjectLinkRecord> firstResource = LearningObjectLinkRecord.buildListFromJson(resourceFile);
-//        List<LearningObjectLinkRecord> secondResource = LearningObjectLinkRecord.buildListFromJson(secondResourceFile);
-//        System.out.println("file1 " + firstResource.size());
-//        System.out.println("second " + secondResource.size());
-//
-//        List<LearningObjectLinkRecord> combinedResource = new LinkedList<>();
-//        combinedResource.addAll(firstResource);
-//        combinedResource.addAll(secondResource);
-//
-//
-//        System.out.println("size " + combinedResource.size());
-//
-//        ConceptGraph graph = new ConceptGraph(structureRecord, combinedResource);
-//
-//        //create the data to be used to create and populate the graph copies
-//        CSVReader csvReader = new CSVReader(assessmentFile);
-//        List<LearningObjectResponse> assessments = csvReader.getManualGradedResponses();
-//        //add more
-//
-//
-//        //create the average and individual graphs
-//        cohortConceptGraphs = new CohortConceptGraphs(graph, assessments);
-//
-//        //to use in console
-//        currentMode= Mode.COHORTGRAPH;
-//        hasMultipleResourceFiles=true;
-//
-//
-//        //output the json representing the tree form of the graph
-//        CohortConceptGraphsRecord toFile = cohortConceptGraphs.buildCohortConceptTreeRecord();
-//        String file = OUTPUT_PATH + "ckcCurrent.json";
-//        toFile.writeToJson(file);
+        cohortConceptGraphs = null;
+
+        //create the graph structure to be copied for each user
+        ConceptGraphRecord structureRecord = ConceptGraphRecord.buildFromJson(structureFileName);
+
+
+        List<LearningObjectLinkRecord> firstResource = LearningObjectLinkRecord.buildListFromJson(resourceFile);
+        List<LearningObjectLinkRecord> secondResource = LearningObjectLinkRecord.buildListFromJson(secondResourceFile);
+
+        List<LearningObjectLinkRecord> combinedResource = new LinkedList<>();
+        combinedResource.addAll(firstResource);
+        combinedResource.addAll(secondResource);
+
+        ConceptGraph graph = new ConceptGraph(structureRecord, combinedResource);
+
+        //create the data to be used to create and populate the graph copies
+        CSVReader csvReader = new CSVReader(assessmentFile);
+        List<LearningObjectResponse> assessments = csvReader.getManualGradedResponses();
+        //add more
+
+
+        //create the average and individual graphs
+        cohortConceptGraphs = new CohortConceptGraphs(graph, assessments);
+
+        //to use in console
+        currentMode= Mode.COHORTGRAPH;
+        hasMultipleResourceFiles=true;
+
+
+        //output the json representing the tree form of the graph
+        CohortConceptGraphsRecord toFile = cohortConceptGraphs.buildCohortConceptTreeRecord();
+        String file = OUTPUT_PATH + "ckcCurrent.json";
+        toFile.writeToJson(file);
 
 
     }
