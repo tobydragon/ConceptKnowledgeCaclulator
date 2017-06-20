@@ -1,6 +1,6 @@
 package edu.ithaca.dragonlab.ckc.conceptgraph;
 
-import edu.ithaca.dragonlab.ckc.io.ConceptGraphRecord;
+import edu.ithaca.dragonlab.ckc.io.*;
 import edu.ithaca.dragonlab.ckc.learningobject.ExampleLearningObjectLinkRecordFactory;
 import edu.ithaca.dragonlab.ckc.learningobject.ExampleLearningObjectResponseFactory;
 import edu.ithaca.dragonlab.ckc.util.DataUtil;
@@ -8,6 +8,9 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.junit.Assert;
 import org.junit.Test;
+
+import java.io.IOException;
+import java.util.Collection;
 
 public class CohortConceptGraphsTest {
 
@@ -79,6 +82,105 @@ public class CohortConceptGraphsTest {
         Assert.assertEquals(-0.1875, user.findNodeById("B").getKnowledgeDistanceFromAvg(),DataUtil.OK_FLOAT_MARGIN);
         Assert.assertEquals(-0.5, user.findNodeById("C").getKnowledgeDistanceFromAvg(),DataUtil.OK_FLOAT_MARGIN);
 	}
+
+	@Test
+    public void buildCohortConceptTreeRecordTest() {
+        ConceptGraph graph = ExampleConceptGraphFactory.makeSimpleCompleteWithData();
+        CohortConceptGraphs group = new CohortConceptGraphs(graph, ExampleLearningObjectResponseFactory.makeSimpleResponses());
+
+        CohortConceptGraphsRecord record = group.buildCohortConceptTreeRecord();
+
+    }
+
+
+    private boolean strIsSubstringOfSomeEntry(String str, Collection<ConceptRecord> list){
+	    for (ConceptRecord toCheck : list){
+	        if (toCheck.getId().contains(str)){
+	            return true;
+            }
+        }
+        return false;
+    }
+
+    private void matchingIdsForTreeCopies(ConceptGraph orig, ConceptGraphRecord treeCopy){
+        Collection<ConceptRecord> treeCopyIds = treeCopy.getConcepts();
+        Collection<String> origIds = orig.getAllNodeIds();
+
+        for (String origId : origIds){
+            if ( ! strIsSubstringOfSomeEntry(origId, treeCopyIds)){
+                Assert.fail("Tree copy does not contain any matching nodeIds for structure ID: " + origId +" - Not chekcing all may be missing more...");
+            }
+        }
+    }
+
+    @Test
+    public void buildCohortConceptTreeRecordComplexTest() {
+        CSVReader csvReader = new CSVReader("test/testresources/basicRealisticExampleGradeBook2.csv");
+        try {
+            ConceptGraph  structure = new ConceptGraph(ConceptGraphRecord.buildFromJson("test/testresources/basicRealisticExampleConceptGraphOneStudent.json"),
+                    LearningObjectLinkRecord.buildListFromJson("test/testresources/basicRealisticExampleLOLRecordOneStudent.json" ));
+            CohortConceptGraphs group = new CohortConceptGraphs(structure, csvReader.getManualGradedResponses());
+
+            CohortConceptGraphsRecord record = group.buildCohortConceptTreeRecord();
+            matchingIdsForTreeCopies(group.getAvgGraph(), record.getGraphRecords().get(0));
+
+        } catch (IOException e) {
+            e.printStackTrace();
+            Assert.fail();
+        }
+
+
+    }
+
+
+	//Written because bug came up where a learningObject in graph's map was different than that in node's map
+	@Test
+    public void onlyOneLearningObject(){
+        try {
+            CSVReader csvReader = new CSVReader("test/testresources/basicRealisticExampleGradeBook2.csv");
+            ConceptGraph graph = new ConceptGraph(ConceptGraphRecord.buildFromJson("test/testresources/basicRealisticExampleConceptGraphOneStudent.json"),
+                    LearningObjectLinkRecord.buildListFromJson("test/testresources/basicRealisticExampleLOLRecordOneStudent.json"));
+            CohortConceptGraphs gcg = new CohortConceptGraphs(graph,csvReader.getManualGradedResponses());
+            ConceptGraph testGraph = gcg.getAvgGraph();
+
+            ConceptNode groupNode = testGraph.findNodeById("Boolean");
+            Assert.assertSame(testGraph.getLearningObjectMap().get("Q9"), groupNode.getLearningObjectMap().get("Q9"));
+        }
+        catch (Exception e){
+            e.printStackTrace();
+            Assert.fail();
+        }
+
+    }
+	//checks for bug where the same data in a single graph and a cohort graph produced different results
+	@Test
+    public void calcKnowledgeEstimateSameInCohortAndConceptGraphsTest(){
+        try {
+            CSVReader csvReader = new CSVReader("test/testresources/basicRealisticExampleGradeBook2.csv");
+
+            ConceptGraph singleGraph = new ConceptGraph(ConceptGraphRecord.buildFromJson("test/testresources/basicRealisticExampleConceptGraphOneStudent.json"),
+                    LearningObjectLinkRecord.buildListFromJson("test/testresources/basicRealisticExampleLOLRecordOneStudent.json"),
+                    csvReader.getManualGradedResponses());
+            singleGraph.calcKnowledgeEstimates();
+
+            ConceptGraph graph = new ConceptGraph(ConceptGraphRecord.buildFromJson("test/testresources/basicRealisticExampleConceptGraphOneStudent.json"),
+                    LearningObjectLinkRecord.buildListFromJson("test/testresources/basicRealisticExampleLOLRecordOneStudent.json"));
+            CohortConceptGraphs gcg = new CohortConceptGraphs(graph,csvReader.getManualGradedResponses());
+            ConceptGraph testGraph = gcg.getAvgGraph();
+
+            ConceptNode singleNode = singleGraph.findNodeById("Boolean");
+            ConceptNode groupNode = testGraph.findNodeById("Boolean");
+            Assert.assertEquals(singleNode.getDataImportance(), groupNode.getDataImportance(), DataUtil.OK_FLOAT_MARGIN);
+            Assert.assertEquals(singleNode.getKnowledgeEstimate(), groupNode.getKnowledgeEstimate(), DataUtil.OK_FLOAT_MARGIN);
+
+        }
+        catch (Exception e){
+            e.printStackTrace();
+            Assert.fail();
+        }
+    }
+
+
 }
 
 

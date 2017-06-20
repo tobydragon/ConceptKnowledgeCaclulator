@@ -19,16 +19,18 @@ public class CohortConceptGraphs {
 	 * @param summaries
 	 */
 	public CohortConceptGraphs(ConceptGraph structureGraph, List<LearningObjectResponse> summaries){
-		
+
 		averageGraph = new ConceptGraph(structureGraph, "Average Graph");
 		averageGraph.addLearningObjectResponses(summaries);
-		averageGraph.calcDataImportance();
+
 		averageGraph.calcKnowledgeEstimates();
-		//averageGraph.calcPredictedScores();
-		
+
+
+//		averageGraph.calcPredictedScores();
+
 		Map<String, List<LearningObjectResponse>> userIdToResponses = LearningObjectResponse.getUserResponseMap(summaries);
 		userToGraph = new HashMap<>();
-		
+
 		for(String user: userIdToResponses.keySet()){
 			ConceptGraph structureCopy = new ConceptGraph(structureGraph, user);
 			structureCopy.addLearningObjectResponses(userIdToResponses.get(user));
@@ -38,6 +40,7 @@ public class CohortConceptGraphs {
 			userToGraph.put(user, structureCopy);
 		}
 		calcDistanceFromAvg();
+
 	}
 	
 	public CohortConceptGraphs(String filename, ConceptGraph structureGraph, List<LearningObjectResponse> summaries){
@@ -62,7 +65,8 @@ public class CohortConceptGraphs {
 
 	public CohortConceptGraphsRecord buildCohortConceptTreeRecord(){
 		List<ConceptGraphRecord> graphRecords = new ArrayList<>();
-		graphRecords.add(TreeConverter.makeTreeCopy(averageGraph).buildConceptGraphRecord());
+		ConceptGraph tree = TreeConverter.makeTreeCopy(averageGraph);
+		graphRecords.add(tree.buildConceptGraphRecord());
 		for (ConceptGraph graph : userToGraph.values()){
 			graphRecords.add(TreeConverter.makeTreeCopy(graph).buildConceptGraphRecord());
 		}
@@ -80,5 +84,6 @@ public class CohortConceptGraphs {
 	public ConceptGraph getAvgGraph() {
 		return averageGraph;
 	}
+
 
 }

@@ -1,72 +1,70 @@
 [
+  {"learningObject":"resource1",
+    "conceptIds":[
+      "For Loop"
+    ],
+    "dataImportance": "1"
+  },
   {"learningObject":"Q1",
   "conceptIds":[
-    "If Statement"
+    "For Loop"
   ],
   "dataImportance": "1"
   },
   {"learningObject":"Q2",
   "conceptIds":[
-    "If Statement"
-  ],
-  "dataImportance": "1"
-  },
-  {"learningObject":"Q3",
-  "conceptIds":[
-    "If Statement",
     "For Loop"
   ],
   "dataImportance": "1"
   },
-  {"learningObject":"Q4",
+  {"learningObject":"resource2",
   "conceptIds":[
-    "Boolean Expressions",
-    "Boolean"
+    "For Loop"
+  ],
+  "dataImportance": "1"
+  },
+  {"learningObject":"resource3",
+  "conceptIds":[
+    "For Loop"
   ],
   "dataImportance": "1"
   },
   {"learningObject":"Q5",
   "conceptIds":[
-    "Boolean Expressions",
-    "Boolean"
+    "For Loop"
   ],
   "dataImportance": "1"
   },
-  {"learningObject":"Q6",
+  {"learningObject":"resource4",
     "conceptIds":[
-      "Boolean"
+      "For Loop"
     ],
     "dataImportance": "1"
   },
   {"learningObject":"Q7",
     "conceptIds":[
-      "Boolean"
+      "For Loop"
     ],
     "dataImportance": "1"
   },
   {"learningObject":"Q8",
     "conceptIds":[
-      "Boolean"
+      "For Loop"
     ],
     "dataImportance": "1"
   },{"learningObject":"Q9",
     "conceptIds":[
-      "While Loop",
-      "Boolean Expressions",
-      "Boolean"
+      "For Loop"
     ],
     "dataImportance": "1"
   },
   {"learningObject":"Q10",
     "conceptIds":[
-      "While Loop",
-      "If Statement",
-      "Boolean Expressions",
-      "Boolean"
+      "For Loop"
     ],
     "dataImportance": "1"
   },
-  {"learningObject": "Q11",
+  {"learningObject": "resource5",
     "conceptIds": [
     "For Loop"
   ],
@@ -75,21 +73,21 @@
   {
     "learningObject": "Q12",
     "conceptIds": [
-      "Counting"
+      "For Loop"
     ],
     "dataImportance": "1"
   },
   {
     "learningObject": "Q13",
     "conceptIds": [
-      "Counting"
+      "For Loop"
     ],
     "dataImportance": "1"
   },
   {
     "learningObject": "Q14",
     "conceptIds": [
-      "Counting"
+      "For Loop"
     ],
     "dataImportance": "1"
   }

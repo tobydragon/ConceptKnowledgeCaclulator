@@ -16,7 +16,7 @@ public class TreeConverter {
 
     //TODO: There are some major issues here in that it does not copy any info about learningObjects, or create new nodeMaps or learningObjectMaps
     //Currently, it is only used as an output, in which case this should be moved to io and make records not Graphs...
-    //Otherwise, if full graphs are needed, we need to create leanrngOjects as well as ConceptNodes, and create the maps of both whil we create.
+    //Otherwise, if full graphs are needed, we need to create learningObjects as well as ConceptNodes, and create the maps of both while we create.
     public static ConceptGraph makeTreeCopy(ConceptGraph graphToCopy){
         List<ConceptNode> newRoots = new ArrayList<>();
         HashMap<String, List<String>> initMultCopies = new HashMap<String, List<String>>();
@@ -25,6 +25,7 @@ public class TreeConverter {
         }
         return new ConceptGraph(newRoots, graphToCopy.getName());
     }
+
 
     public static ConceptNode makeTreeNodeCopy(ConceptNode nodeToMakeTreeCopyOf, HashMap<String, List<String>> labelToListOfIds){
         ConceptNode nodeCopy;
