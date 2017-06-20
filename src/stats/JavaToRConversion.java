@@ -17,11 +17,10 @@ public class JavaToRConversion {
         double[][] aMatrix = loMatrix.getStructure();
         String[] users = loMatrix.getUserIdList();
         ArrayList<LearningObject> learningObjects = loMatrix.getObjList();
-         */
         int objLength = learningObjects.size();
 
         //object list into string array
-        /**
+
         int i = 0;
         for(LearningObject obj: learningObjects){
             objStr[i] = obj.toString();
@@ -30,15 +29,21 @@ public class JavaToRConversion {
 */
 
         RCode code = RCode.create();
-        code.addDoubleMatrix("matrix", aMatrix);
-        //code.addStringArray("headers", objStr);
-        //code.addStringArray("users", users);
+        code.addDoubleMatrix("data", aMatrix);
+
+        /**
+        code.addStringArray("headers", objStr);
+        code.addStringArray("users", users);
         int userlength = users.length;
         int objlength = objLength;
         code.addInt("usercount", userlength);
         code.addInt("objcount", objlength);
-        code.addRCode("final <- (t(matrix))");
-        code.addRCode("provideDimnames(final)");
+        */
+
+
+        //These lines change the Java structure into the correct format for R
+        code.addRCode("matrix <- (t(data))");
+        code.addRCode("provideDimnames(matrix)");
 
         return code;
 

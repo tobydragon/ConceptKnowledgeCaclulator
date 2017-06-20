@@ -28,7 +28,7 @@ public class JavaToRConversionTest {
         ArrayList<LearningObject> objList = newMatrix.getObjList();
         String[] user = newMatrix.getUserIdList();
         RCode mycode = JavaToRConversion.JavaToR(struct, objList, user);
-        mycode.addRCode("classAvg <- mean(final[, 3])");
+        mycode.addRCode("classAvg <- mean(matrix[, 3])");
 
 
         RCaller rCaller;

@@ -25,7 +25,7 @@ public class BasicRFunctions {
         RCode code = loMatrix.getrMatrix();
         loIndex++;
         code.addInt("loIndex", loIndex);
-        code.addRCode("classAvg <- mean(final[, loIndex])");
+        code.addRCode("classAvg <- mean(matrix[, loIndex])");
         rCaller.setRCode(code);
         rCaller.runAndReturnResult("classAvg");
         double[] results = rCaller.getParser().getAsDoubleArray("classAvg");
@@ -48,7 +48,7 @@ public class BasicRFunctions {
         RCode code = loMatrix.getrMatrix();
         stuIndex++;
         code.addInt("stuIndex", stuIndex);
-        code.addRCode("stuAvg <- mean(final[stuIndex, ])");
+        code.addRCode("stuAvg <- mean(matrix[stuIndex, ])");
         rCaller.setRCode(code);
         rCaller.runAndReturnResult("stuAvg");
         double[] results = rCaller.getParser().getAsDoubleArray("stuAvg");
