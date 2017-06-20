@@ -67,6 +67,15 @@ public interface ConceptKnowledgeCalculatorAPI {
      */
     SuggestionResource calcIndividualSpecificConceptSuggestions(String userId, String conceptId);
 
+    /**
+     * Calculates average knowledgeEstimates of a LearningObject across all students
+     * @param learningObject matrix, Learningobject
+     * @return average knowledgeEstimates for given LearningObject
+     */
+
+    double getLearningObjectAvg(String learningObject);
+
+
 
     /**
      * Calculates a list of conceptNode based on an individual graph , returns a the list of ConceptNodes

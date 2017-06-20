@@ -20,7 +20,7 @@ public class Matrix {
 
     String id;
     double[][] structure;
-    ArrayList<LearningObject> objList;
+    public List<LearningObject> objList;
     String[] userIdList;
     RCode rMatrix;
 
@@ -104,12 +104,18 @@ public class Matrix {
         return rMatrix;
     }
 
+    public int getloIndex(LearningObject lo){
+        int loIndex = -1;
+        loIndex = objList.indexOf(lo);
+        return loIndex;
+    }
+
 
     public double[][] getStructure(){return this.structure;}
 
     public String[] getUserIdList(){return this.userIdList;}
 
-    public ArrayList<LearningObject> getObjList(){return this.objList;}
+    public List<LearningObject> getObjList(){return this.objList;}
 
     public RCode getrMatrix() {return rMatrix;}
 }

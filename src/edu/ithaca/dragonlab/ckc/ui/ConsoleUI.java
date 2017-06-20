@@ -75,12 +75,12 @@ public class ConsoleUI {
 
             } else {
 
-                System.out.println("What do you want to do? \n 1 - calculate a list of concept nodes to work on \n 2 - calculate learning object suggestions based on a specific concept \n 3 - automatically calculate suggestions \n 4 - View graph \n 5 - Create new graph \n 6 - Replace graph file \n 7 - Add another assessment file \n 8 - Add another LO file \n 9 - View Structure Graph");
+                System.out.println("What do you want to do? \n 1 - calculate a list of concept nodes to work on \n 2 - calculate learning object suggestions based on a specific concept \n 3 - automatically calculate suggestions \n 4 - View graph \n 5 - Create new graph \n 6 - Replace graph file \n 7 - Add another assessment file \n 8 - Add another LO file \n 9 - Get Learning Object Average \n 10 - View Structure Graph");
                 Integer num = scanner.nextInt();
 
-                while (num < 1 || num > 9) {
+                while (num < 1 || num > 10) {
                     System.out.println("Out of bounds");
-                    System.out.println("What do you want to do? \n 1 - calculate a list of concept nodes to work on \n 2 - calculate learning object suggestions based on a specific concept \n 3 - automatically calculate suggestions \n 4 - View graph \n 5 - Create new graph \n 6 - Replace graph file \n 7 - Add another assessment file \n 8 - Add another LO file \n 9 - View Structure Graph");
+                    System.out.println("What do you want to do? \n 1 - calculate a list of concept nodes to work on \n 2 - calculate learning object suggestions based on a specific concept \n 3 - automatically calculate suggestions \n 4 - View graph \n 5 - Create new graph \n 6 - Replace graph file \n 7 - Add another assessment file \n 8 - Add another LO file \n 9 - Get Learning Object Average \n 10 - View Structure Graph");
                     num = scanner.nextInt();
                 }
 
@@ -112,6 +112,8 @@ public class ConsoleUI {
                 } else if (num ==8) {
                     addLOFile(scanner);
 
+                }else if (num ==9) {
+                    resourceAverage(scanner);
                 }else{
                     switchToStructuremode();
 
@@ -132,6 +134,15 @@ public class ConsoleUI {
 
         }
 
+
+    }
+
+    public void resourceAverage(Scanner scanner){
+        System.out.println("Get average learning object Grade");
+
+        System.out.println("What learning object do you want to calculate?");
+        String conceptNode = scanner.nextLine();
+        System.out.println("The average is: " + ckc.getLearningObjectAvg(conceptNode));
 
     }
 

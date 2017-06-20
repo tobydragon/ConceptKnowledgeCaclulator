@@ -6,13 +6,14 @@ import edu.ithaca.dragonlab.ckc.conceptgraph.Matrix;
 import edu.ithaca.dragonlab.ckc.learningobject.LearningObject;
 
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by bleblanc2 on 6/16/17.
  */
 public class JavaToRConversion {
 
-    public static RCode JavaToR(double[][] aMatrix, ArrayList<LearningObject> learningObjects, String[] users){
+    public static RCode JavaToR(double[][] aMatrix, List<LearningObject> learningObjects, String[] users){
         /**
         double[][] aMatrix = loMatrix.getStructure();
         String[] users = loMatrix.getUserIdList();

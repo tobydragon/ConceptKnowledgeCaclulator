@@ -10,6 +10,7 @@ import org.junit.Test;
 import stats.JavaToRConversion;
 
 import java.util.ArrayList;
+import java.util.List;
 
 
 /**
@@ -25,7 +26,7 @@ public class JavaToRConversionTest {
         ArrayList<LearningObject> gotoMatrix = data.getManualGradedLearningObjects();
         Matrix newMatrix = new Matrix(gotoMatrix);
         double[][] struct = newMatrix.getStructure();
-        ArrayList<LearningObject> objList = newMatrix.getObjList();
+        List<LearningObject> objList = newMatrix.getObjList();
         String[] user = newMatrix.getUserIdList();
         RCode mycode = JavaToRConversion.JavaToR(struct, objList, user);
         mycode.addRCode("classAvg <- mean(matrix[, 3])");
