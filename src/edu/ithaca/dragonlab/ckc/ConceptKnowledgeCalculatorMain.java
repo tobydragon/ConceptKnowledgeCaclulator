@@ -34,15 +34,18 @@ public class ConceptKnowledgeCalculatorMain {
 //
 //        }
 
+
+
+
         if (num == 1) {
-            new ConsoleUI("test/testresources/basicRealisticExampleConceptGraphOneStudent.json");
-        }
+        new ConsoleUI("test/testresources/basicRealisticExampleConceptGraphOneStudent.json");
+    }
         if (num ==2){
             new ConsoleUI("test/testresources/basicRealisticExampleConceptGraphOneStudent.json",
                     "test/testresources/basicRealisticExampleLOLRecordOneStudent.json",
                     "test/testresources/basicRealisticExampleGradeBook2.csv");
 
         }
-    }
+}
 
 }

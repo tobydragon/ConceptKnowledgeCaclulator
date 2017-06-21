@@ -40,11 +40,14 @@ public class ConsoleUI {
 
 
     public void run(){
-        System.out.println("Current graphs:\t" + ckc.getCohortGraphsUrl());
+
+        if(ckc.getCohortConceptGraphs()!=null || ckc.getStructureGraph()!= null) {
+            System.out.println("Current graphs:\t" + ckc.getCohortGraphsUrl());
+        }
+
 
         Scanner scanner = new Scanner(System.in);
         ckc.setLastWorkingStructureName(ckc.getStructureFileName());
-
 
         ckc.setPreviouslySavedCohortFiles(ckc.getSavedCohortFile());
 
@@ -280,8 +283,8 @@ public class ConsoleUI {
             System.out.println("Can't find files");
             cohortFilesValid=false;
             try{
-                String [] test =ckc.getPreviouslySavedCohortFile();
-                ckc.clearAndCreateCohortData(test[0],test[1],test[2]);
+                List<String> fileList =ckc.getPreviouslySavedCohortFile();
+                ckc.clearAndCreateCohortData(fileList.get(0),fileList.get(1), fileList.get(2));
                 System.out.println("Last Working Files Used");
             }catch (IOException e1){
                 e1.printStackTrace();
@@ -302,7 +305,11 @@ public class ConsoleUI {
         String graph = scanner.nextLine();
 
         if(ckc.gethasMultipleAssessment()){
-            System.out.println("You're using more than one assessment file. Using only the original assessment File ");
+            System.out.println("You're using more than one assessment file. Using only the original assessment file ");
+        }
+
+        if(ckc.getHasMultipleResource()){
+            System.out.println("You're using more than one resource file. Using only the original resource file");
         }
 
         try {

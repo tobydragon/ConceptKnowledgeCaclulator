@@ -96,7 +96,7 @@ public class ConceptKnowledgeCalculatorTest {
     }
 
     @Test
-    public void calcIndividualConceptNodesSuggestionsBadInputTest(){
+    public void calcIndividualConceptNodesSuggestionsBadInputTest() {
         ConceptKnowledgeCalculatorAPI ckc = null;
         try {
             ckc = new ConceptKnowledgeCalculator("test/testresources/basicRealisticExampleConceptGraphOneStudent.json", "test/testresources/basicRealisticExampleLOLRecordOneStudent.json", "test/testresources/basicRealisticExampleGradeBook2.csv");
@@ -105,14 +105,11 @@ public class ConceptKnowledgeCalculatorTest {
             ckc = new ConceptKnowledgeCalculator();
         }
 
-        List<String> concepts =ckc.calcIndividualConceptNodesSuggestions("baduser");
+        List<String> concepts = ckc.calcIndividualConceptNodesSuggestions("baduser");
         Assert.assertEquals(concepts, new ArrayList<>());
 
 
     }
-
-
-
 
     @Test
     public void  calcIndividualGraphSuggestionsTest(){
