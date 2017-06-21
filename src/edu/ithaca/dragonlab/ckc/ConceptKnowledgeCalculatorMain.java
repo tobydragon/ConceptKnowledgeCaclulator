@@ -35,8 +35,6 @@ public class ConceptKnowledgeCalculatorMain {
 //        }
 
 
-
-
         if (num == 1) {
         new ConsoleUI("test/testresources/basicRealisticExampleConceptGraphOneStudent.json");
     }
