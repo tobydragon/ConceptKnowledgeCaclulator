@@ -142,7 +142,15 @@ public class ConsoleUI {
 
         System.out.println("What learning object do you want to calculate?");
         String conceptNode = scanner.nextLine();
-        System.out.println("The average is: " + ckc.getLearningObjectAvg(conceptNode));
+
+        try{
+            double result = ckc.getLearningObjectAvg(conceptNode);
+            System.out.println("The average is: " + result);
+        }catch(NullPointerException e){
+            System.out.println("Error: Learning Object not found2");
+        }
+
+        //System.out.println("The average is: " + ckc.getLearningObjectAvg(conceptNode));
 
     }
 

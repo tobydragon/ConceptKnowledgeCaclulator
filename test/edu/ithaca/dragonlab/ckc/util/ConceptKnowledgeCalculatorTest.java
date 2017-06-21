@@ -313,4 +313,7 @@ public class ConceptKnowledgeCalculatorTest {
         Assert.assertEquals(0.75, ckc.getLearningObjectAvg("Q14"), 0);
     }
 
+    @Test
+    public void getUserListTest() {
+    }
 }
