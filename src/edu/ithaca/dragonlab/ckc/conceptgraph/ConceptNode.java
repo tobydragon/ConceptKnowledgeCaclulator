@@ -26,7 +26,12 @@ public class ConceptNode {
 	 */
 	public ConceptNode(ConceptRecord conceptRecord) {
 		this.id = conceptRecord.getId();
-		this.label = conceptRecord.getLabel();
+		if (conceptRecord.getLabel() != null && conceptRecord.getLabel() != "") {
+            this.label = conceptRecord.getLabel();
+        }
+        else {
+		    this.label = this.id;
+        }
 		knowledgePrediction = conceptRecord.getKnowledgePrediction();
 		knowledgeEstimate = conceptRecord.getKnowledgeEstimate();
 		knowledgeDistanceFromAvg = conceptRecord.getKnowledgeDistFromAvg();
@@ -52,9 +57,15 @@ public class ConceptNode {
 
 		this.learningObjectMap = new HashMap<>();
 		for (Map.Entry<String, LearningObject> entry: other.getLearningObjectMap().entrySet()){
-			LearningObject newLearningObject = new LearningObject(entry.getValue());
+
+			//check the graphMap first to see if that learning object has already been created
+			LearningObject newLearningObject = graphLearningObjectMap.get(entry.getKey());
+			if (newLearningObject == null) {
+				//if not, create it and add it to the graphMap
+				newLearningObject = new LearningObject(entry.getValue());
+				graphLearningObjectMap.put(entry.getKey(), newLearningObject);
+			}
 			this.learningObjectMap.put(entry.getKey(), newLearningObject);
-			graphLearningObjectMap.put(entry.getKey(), newLearningObject);
 		}
 
 		this.children = new ArrayList<>();
@@ -70,6 +81,18 @@ public class ConceptNode {
 				this.addChild(newChild);
 			}
 		}
+	}
+
+	public ConceptNode(){
+		this.id="";
+		this.label="";
+		knowledgeEstimate=0;
+		knowledgePrediction=0;
+		knowledgeDistanceFromAvg=0;
+		dataImportance=0;
+		learningObjectMap = new HashMap<>();
+		children= new LinkedList<>();
+
 	}
 
 	/**
@@ -141,21 +164,25 @@ public class ConceptNode {
 	 * @pre calcDataImportance must have already been called
 	 */
 	public void calcKnowledgeEstimate() {
+
 		//calculate estimate from learning objects directly connected to this node
         double currentConceptEstimate = 0;
+
 		for (LearningObject learningObject : learningObjectMap.values()){
 			currentConceptEstimate += learningObject.calcKnowledgeEstimate()*learningObject.getDataImportance();
 		}
 
-		//calculate estimate from children
+        //calculate estimate from children
 		for (ConceptNode child : children){
 			child.calcKnowledgeEstimate();
-			currentConceptEstimate +=   child.getKnowledgeEstimate()*child.getDataImportance();
+
+            currentConceptEstimate +=  child.getKnowledgeEstimate()*child.getDataImportance();
 		}
 
 		if (dataImportance > 0){
 			this.knowledgeEstimate = currentConceptEstimate / dataImportance;
-		} else {
+
+        } else {
 			//in this case, this node has no data and can't be estimated
 			this.knowledgeEstimate = 0;
 		}

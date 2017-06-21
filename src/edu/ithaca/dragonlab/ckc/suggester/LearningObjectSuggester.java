@@ -11,9 +11,10 @@ import java.util.*;
  * Created by home on 5/19/17.
  */
 public class LearningObjectSuggester {
-    public static double max = .75;
-    public static double min = .55;
-    public static double wrongMax = .59;
+
+    public static double MAX= .75;
+    public static double MIN = .55;
+    public static double WRONGMAX = .59;
 
 
     /**
@@ -26,7 +27,9 @@ public class LearningObjectSuggester {
         for (String key : graph.getAllNodeIds()) {
             ConceptNode node = graph.findNodeById(key);
 
-            if (node.getKnowledgeEstimate() >= min && node.getKnowledgeEstimate() <= max) {
+//            System.out.println(node.getID() + " " + node.getKnowledgeEstimate());
+
+            if (node.getKnowledgeEstimate() >= MIN && node.getKnowledgeEstimate() <= MAX) {
                 //if false, then the node isn't an ancestor or the compare node is high THEREFORE you can add it to the list
                 boolean anc = graph.canIgnoreNode(node);
                 if (!anc) {
@@ -40,9 +43,7 @@ public class LearningObjectSuggester {
 
 
     /**
-     *goes through the graph and creates a map of ConceptNodes that are between 55%-75% and are not ancestors (unless the child node does better than 75%)
-     *then it sorts the list of LearningObjectSuggestions and takes the incomplete learningObjects. (The list is ordered by incomplete, wrong, and right and
-     *within each of those categories based on the highest importance value to lowest).
+     *sorts the list of LearningObjectSuggestions and takes the incomplete learningObjects. (The list is ordered by incomplete, wrong, and right and within each of those categories based on the highest importance value to lowest).
      *@param graph Concept graph
      *@param choice: 1= incomplete, 0 = wrong
      *@return the map of incomplete learningObjectSuggestions in order of highest importance value to lowest
@@ -54,7 +55,6 @@ public class LearningObjectSuggester {
 
         for (int x =0; x< suggestedConceptList.size(); x++) {
             ConceptNode concept = suggestedConceptList.get(x);
-
 
             List<LearningObjectSuggestion> testList = new ArrayList<>();
 
@@ -113,7 +113,7 @@ public class LearningObjectSuggester {
                 myList.add(suggestionNode);
 
             }else{
-                if(estimate> 0 && estimate<= wrongMax){
+                if(estimate> 0 && estimate<= WRONGMAX){
                     level = LearningObjectSuggestion.Level.WRONG;
                 }else{
                     level = LearningObjectSuggestion.Level.RIGHT;
@@ -122,7 +122,6 @@ public class LearningObjectSuggester {
                 myList.add(suggestionNode);
 
             }
-
 
         }
         return myList;

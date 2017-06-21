@@ -123,11 +123,7 @@ public class ExampleConceptGraphFactory {
 
 
      public static ConceptGraph willExampleConceptGraphTestOneStudent() {
-        ObjectMapper graphMapper = new ObjectMapper();
-
-        graphMapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
         CSVReader csvReader = new CSVReader("test/testresources/basicRealisticExampleGradeBook2.csv");
-
         try {
             ConceptGraphRecord graphRecord = ConceptGraphRecord.buildFromJson("test/testresources/basicRealisticExampleConceptGraphOneStudent.json");
             List<LearningObjectLinkRecord> LOLRlist = LearningObjectLinkRecord.buildListFromJson("test/testresources/basicRealisticExampleLOLRecordOneStudent.json");
@@ -135,6 +131,7 @@ public class ExampleConceptGraphFactory {
             ConceptGraph graph = new ConceptGraph(graphRecord, LOLRlist, csvReader.getManualGradedResponses());
             graph.calcKnowledgeEstimates();
             //System.out.println(graph.toString());
+
             return graph;
 
         }catch (Exception e){
@@ -144,31 +141,6 @@ public class ExampleConceptGraphFactory {
         return null;
 
     }
-
-
-//    public static ConceptGraph mediumStructure() {
-//        ObjectMapper graphMapper = new ObjectMapper();
-//
-//        graphMapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
-//        CSVReader csvReader = new CSVReader("test/testresources/mediumGraphTestGradeBook.csv");
-//
-//        try {
-//            ConceptGraphRecord graphRecord = ConceptGraphRecord.buildFromJson("test/testresources/mediumGraphTestConceptNodes.json");
-//            List<LearningObjectLinkRecord> LOLRlist = JsonImportExport.LOLRFromRecords("test/testresources/mediumGraphTestLOL.json");
-//
-//            ConceptGraph graph = new ConceptGraph(graphRecord, LOLRlist, csvReader.getManualGradedResponses());
-//            graph.calcKnowledgeEstimates();
-//            //System.out.println(graph.toString());
-//            return graph;
-//
-//        }catch (Exception e){
-//            e.printStackTrace();
-//        }
-//
-//        return null;
-//
-//    }
-
 
     public static ConceptGraph simpleTestGraphTest() {
         ObjectMapper graphMapper = new ObjectMapper();

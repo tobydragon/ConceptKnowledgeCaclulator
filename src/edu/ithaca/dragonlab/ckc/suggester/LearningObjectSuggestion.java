@@ -7,6 +7,7 @@ public class LearningObjectSuggestion {
     private String id;
     private int pathNum;
     private String causedConcept;
+    private String reasoning;
     private Level level;
 
     public enum Level{
@@ -19,7 +20,7 @@ public class LearningObjectSuggestion {
     public LearningObjectSuggestion() {
         this.id = null;
         this.pathNum= 0;
-        this.causedConcept= null;
+        this.reasoning= null;
         this.level = Level.INCOMPLETE;
 
     }
@@ -29,7 +30,7 @@ public class LearningObjectSuggestion {
         this.id = id;
         this.pathNum= path;
         this.level = lev;
-        this.causedConcept= caused;
+        this.reasoning= caused;
     }
 
 
@@ -59,13 +60,12 @@ public class LearningObjectSuggestion {
         return level;
     }
 
-    public String getCausedConcept(){
-        return causedConcept;
+    public String getReasoning(){
+        return reasoning;
     }
 
-
     public String toString(){
-            return id + " " + level + " "+ pathNum;
+            return "Resource: " +id + "\t Concept it relates to: " + reasoning + "\t Importance: "+ pathNum + "\n";
     }
 
 

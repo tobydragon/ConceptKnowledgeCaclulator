@@ -71,6 +71,12 @@ public class ConceptGraph {
         this.roots = rootsIn;
     }
 
+    public ConceptGraph(){
+        this.name = " ";
+        learningObjectMap = new HashMap<>();
+        nodeMap= new HashMap<>();
+        this.roots= new LinkedList<>();
+    }
 
     /**
      * Initializes a graph structure only (no learningObjects)
@@ -175,8 +181,6 @@ public class ConceptGraph {
         }
     }
 
-    //clearer name
-
     /**
      *Creates a boolean based off of if the node is an ancestor and if the children nodes have high estimates.
      *if the node isn't an ancestor OR the compare node is high, then false (and you can do add the conceptNode)
@@ -190,7 +194,7 @@ public class ConceptGraph {
 		for (String key : nodeMap.keySet()) {
 			ConceptNode compareNode = nodeMap.get(key);
 			boolean ances =  node.isAncestorOf(compareNode);
-            if (ances && compareNode.getKnowledgeEstimate()<LearningObjectSuggester.max){
+            if (ances && compareNode.getKnowledgeEstimate()<LearningObjectSuggester.MAX){
                 isAnc=true;
 				break;
 			}
@@ -237,14 +241,14 @@ public class ConceptGraph {
 	}
 
 	public void calcKnowledgeEstimates(){
-		calcDataImportance();
-		for(ConceptNode root : this.roots){
-			root.calcKnowledgeEstimate();
+        calcDataImportance();
+        for(ConceptNode root : this.roots){
+            root.calcKnowledgeEstimate();
 		}
 	}
 
 	public void calcDataImportance(){
-		for(ConceptNode root : this.roots){
+        for(ConceptNode root : this.roots){
 			root.calcDataImportance();
 		}
 	}
