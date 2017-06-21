@@ -229,7 +229,6 @@ public class ConceptGraphTest {
 
         ConceptGraph orig = ExampleConceptGraphFactory.willExampleConceptGraphTestOneStudent();
 
-
         Assert.assertEquals(0.806, orig.findNodeById("Boolean").getKnowledgeEstimate(), DataUtil.OK_FLOAT_MARGIN);
         Assert.assertEquals(0.783090, orig.findNodeById("Boolean Expressions").getKnowledgeEstimate(), DataUtil.OK_FLOAT_MARGIN);
         Assert.assertEquals(0.746, orig.findNodeById("If Statement").getKnowledgeEstimate(), DataUtil.OK_FLOAT_MARGIN);
@@ -239,8 +238,6 @@ public class ConceptGraphTest {
         Assert.assertEquals(0.7666, orig.findNodeById("For Loop").getKnowledgeEstimate(), DataUtil.OK_FLOAT_MARGIN);
 
     }
-
-
 
 }
 

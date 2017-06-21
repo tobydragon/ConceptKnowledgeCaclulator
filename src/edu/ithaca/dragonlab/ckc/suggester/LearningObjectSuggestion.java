@@ -6,6 +6,7 @@ package edu.ithaca.dragonlab.ckc.suggester;
 public class LearningObjectSuggestion {
     private String id;
     private int pathNum;
+    private String causedConcept;
     private String reasoning;
     private Level level;
 
@@ -62,7 +63,6 @@ public class LearningObjectSuggestion {
     public String getReasoning(){
         return reasoning;
     }
-
 
     public String toString(){
             return "Resource: " +id + "\t Concept it relates to: " + reasoning + "\t Importance: "+ pathNum + "\n";

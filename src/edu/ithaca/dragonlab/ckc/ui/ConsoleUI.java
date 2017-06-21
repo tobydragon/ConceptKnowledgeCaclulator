@@ -40,11 +40,14 @@ public class ConsoleUI {
 
 
     public void run(){
-        System.out.println("Current graphs:\t" + ckc.getCohortGraphsUrl());
+
+        if(ckc.getCohortConceptGraphs()!=null || ckc.getStructureGraph()!= null) {
+            System.out.println("Current graphs:\t" + ckc.getCohortGraphsUrl());
+        }
+
 
         Scanner scanner = new Scanner(System.in);
         ckc.setLastWorkingStructureName(ckc.getStructureFileName());
-
 
         ckc.setPreviouslySavedCohortFiles(ckc.getSavedCohortFile());
 
@@ -88,49 +91,46 @@ public class ConsoleUI {
 
                 if (num == 1) {
                     createLearningObjectList(scanner);
-
-                } else if (num == 2) {
-
+                }
+                else if (num == 2) {
                     specificLearningObjectSuggestion( scanner);
-
-                } else if (num == 3) {
-
+                }
+                else if (num == 3) {
                     graphSuggestions(scanner);
-
-                } else if (num == 4) {
+                }
+                else if (num == 4) {
                     viewgraph();
-
-                } else  if(num ==5){
+                }
+                else  if(num ==5){
                     createNewCohortGraph(scanner, true );
-
-                }else if(num ==6){
+                }
+                else if(num ==6){
                     replaceGraphFile(scanner);
-
-                }else if(num ==7){
+                }
+                else if(num ==7){
                     additionalLOR(scanner);
-
-                } else if (num ==8) {
+                }
+                else if (num ==8) {
                     addLOFile(scanner);
 
-                }else if (num ==9) {
+                }
+                else if (num ==9) {
                     resourceAverage(scanner);
-                }else{
+                }
+                else{
                     switchToStructuremode();
-
                 }
             }
 
             //to repeat or break loop in graph mode or structure mode
+            System.out.println("1- continue 2- quit");
+            contQuit = scanner.nextInt();
+
+            while (contQuit != 1 && contQuit != 2) {
+                System.out.println("Out of bounds");
                 System.out.println("1- continue 2- quit");
                 contQuit = scanner.nextInt();
-
-
-
-                while (contQuit != 1 && contQuit != 2) {
-                    System.out.println("Out of bounds");
-                    System.out.println("1- continue 2- quit");
-                    contQuit = scanner.nextInt();
-                }
+            }
 
         }
 
@@ -153,6 +153,7 @@ public class ConsoleUI {
         //System.out.println("The average is: " + ckc.getLearningObjectAvg(conceptNode));
 
     }
+
 
 
     public void replaceGraph(Scanner scanner, boolean structFileNameValid){
@@ -213,11 +214,12 @@ public class ConsoleUI {
         System.out.println("User ID");
         String userID = scanner.nextLine();
 
-        List<ConceptNode> suggestedConceptNodeList = ckc.calcIndividualConceptNodesSuggestions(userID);
+
+        List<String> suggestedConceptNodeList = ckc.calcIndividualConceptNodesSuggestions(userID);
 
         String st = "";
-        for(ConceptNode node: suggestedConceptNodeList){
-            st+= node.getID()+ "\n";
+        for(String node: suggestedConceptNodeList){
+            st+= node+ "\n";
         }
 
         System.out.println(st);
@@ -294,8 +296,8 @@ public class ConsoleUI {
             System.out.println("Can't find files");
             cohortFilesValid=false;
             try{
-                String [] test =ckc.getPreviouslySavedCohortFile();
-                ckc.clearAndCreateCohortData(test[0],test[1],test[2]);
+                List<String> fileList =ckc.getPreviouslySavedCohortFile();
+                ckc.clearAndCreateCohortData(fileList.get(0),fileList.get(1), fileList.get(2));
                 System.out.println("Last Working Files Used");
             }catch (IOException e1){
                 e1.printStackTrace();
@@ -310,14 +312,17 @@ public class ConsoleUI {
     public void replaceGraphFile(Scanner scanner){
         System.out.println("Replace Graph File");
 
-        System.out.println("Current " + ckc.getStructureFileName() + " \n" + ckc.getCohortConceptGraphs());
-        //replace graph file and leave the others
+
 
         System.out.println("Type Graph Path ");
         String graph = scanner.nextLine();
 
         if(ckc.gethasMultipleAssessment()){
-            System.out.println("You're using more than one assessment file. Using only the original assessment File ");
+            System.out.println("You're using more than one assessment file. Using only the original assessment file ");
+        }
+
+        if(ckc.getHasMultipleResource()){
+            System.out.println("You're using more than one resource file. Using only the original resource file");
         }
 
         try {

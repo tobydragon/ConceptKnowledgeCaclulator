@@ -11,9 +11,10 @@ import java.util.*;
  * Created by home on 5/19/17.
  */
 public class LearningObjectSuggester {
-    public static double max = .75;
-    public static double min = .55;
-    public static double wrongMax = .59;
+
+    public static double MAX= .75;
+    public static double MIN = .55;
+    public static double WRONGMAX = .59;
 
 
     /**
@@ -26,10 +27,9 @@ public class LearningObjectSuggester {
         for (String key : graph.getAllNodeIds()) {
             ConceptNode node = graph.findNodeById(key);
 
-
 //            System.out.println(node.getID() + " " + node.getKnowledgeEstimate());
 
-            if (node.getKnowledgeEstimate() >= min && node.getKnowledgeEstimate() <= max) {
+            if (node.getKnowledgeEstimate() >= MIN && node.getKnowledgeEstimate() <= MAX) {
                 //if false, then the node isn't an ancestor or the compare node is high THEREFORE you can add it to the list
                 boolean anc = graph.canIgnoreNode(node);
                 if (!anc) {
@@ -40,9 +40,6 @@ public class LearningObjectSuggester {
 
         return suggestedConceptList;
     }
-
-
-
 
 
     /**
@@ -116,7 +113,7 @@ public class LearningObjectSuggester {
                 myList.add(suggestionNode);
 
             }else{
-                if(estimate> 0 && estimate<= wrongMax){
+                if(estimate> 0 && estimate<= WRONGMAX){
                     level = LearningObjectSuggestion.Level.WRONG;
                 }else{
                     level = LearningObjectSuggestion.Level.RIGHT;
@@ -125,7 +122,6 @@ public class LearningObjectSuggester {
                 myList.add(suggestionNode);
 
             }
-
 
         }
         return myList;

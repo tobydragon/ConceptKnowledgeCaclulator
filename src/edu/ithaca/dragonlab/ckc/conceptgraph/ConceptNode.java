@@ -83,6 +83,18 @@ public class ConceptNode {
 		}
 	}
 
+	public ConceptNode(){
+		this.id="";
+		this.label="";
+		knowledgeEstimate=0;
+		knowledgePrediction=0;
+		knowledgeDistanceFromAvg=0;
+		dataImportance=0;
+		learningObjectMap = new HashMap<>();
+		children= new LinkedList<>();
+
+	}
+
 	/**
      *fills up a hashmap with the LearningObjects IDs and the amount of ways to get to the learning object from the root (which is how importance is measured)
      *@param learningObjectSummary map>
