@@ -86,7 +86,12 @@ public class ConceptKnowledgeCalculatorTest {
                 ckc = new ConceptKnowledgeCalculator();
         }
 
-        List<String> concepts = ckc.calcIndividualConceptNodesSuggestions("bspinache1");
+        List<String> concepts = null;
+        try {
+            concepts = ckc.calcIndividualConceptNodesSuggestions("bspinache1");
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
 
 
         Assert.assertEquals(concepts.size(), 2);
@@ -105,9 +110,13 @@ public class ConceptKnowledgeCalculatorTest {
             ckc = new ConceptKnowledgeCalculator();
         }
 
-        List<String> concepts = ckc.calcIndividualConceptNodesSuggestions("baduser");
+        List<String> concepts = null;
+        try {
+            concepts = ckc.calcIndividualConceptNodesSuggestions("baduser");
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
         Assert.assertEquals(concepts, new ArrayList<>());
-
 
     }
 
@@ -121,7 +130,12 @@ public class ConceptKnowledgeCalculatorTest {
             ckc = new ConceptKnowledgeCalculator();
         }
 
-        SuggestionResource res = ckc.calcIndividualGraphSuggestions("bspinache1");
+        SuggestionResource res = null;
+        try {
+            res = ckc.calcIndividualGraphSuggestions("bspinache1");
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
         List<LearningObjectSuggestion> incomTest = res.incompleteList;
         List<LearningObjectSuggestion> wrongTest = res.wrongList;
 
@@ -152,15 +166,18 @@ public class ConceptKnowledgeCalculatorTest {
 
         }
 
-        SuggestionResource resource = ckc.calcIndividualSpecificConceptSuggestions("bspinache1", "If Statement");
+        SuggestionResource resource = null;
+        try {
+            resource = ckc.calcIndividualSpecificConceptSuggestions("bspinache1", "If Statement");
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
         Assert.assertEquals(resource.incompleteList.get(0).getId(),"Q10" );
         Assert.assertEquals(resource.incompleteList.get(1).getId(),"Q3" );
         Assert.assertEquals(resource.incompleteList.get(2).getId(),"Q6" );
 
         Assert.assertEquals(resource.wrongList.get(0).getId(),"Q9" );
         Assert.assertEquals(resource.wrongList.get(1).getId(),"Q1" );
-
-
 
     }
 

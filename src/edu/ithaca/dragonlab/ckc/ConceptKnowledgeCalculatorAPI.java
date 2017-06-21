@@ -72,7 +72,7 @@ public interface ConceptKnowledgeCalculatorAPI {
      *
      * @return SuggestionResource
      */
-    SuggestionResource calcIndividualGraphSuggestions(String userId);
+    SuggestionResource calcIndividualGraphSuggestions(String userId) throws Exception;
 
 
     /**
@@ -82,7 +82,7 @@ public interface ConceptKnowledgeCalculatorAPI {
      *
      * @return Suggestion Resource
      */
-    SuggestionResource calcIndividualSpecificConceptSuggestions(String userId, String conceptId);
+    SuggestionResource calcIndividualSpecificConceptSuggestions(String userId, String conceptId) throws Exception;
 
 
     /**
@@ -90,7 +90,7 @@ public interface ConceptKnowledgeCalculatorAPI {
      * @param userID
      * @return List of Concept Nodes
      */
-    List<String> calcIndividualConceptNodesSuggestions(String userID);
+    List<String> calcIndividualConceptNodesSuggestions(String userID) throws Exception;
 
 
     void setCurrentMode(ConceptKnowledgeCalculator.Mode mode);

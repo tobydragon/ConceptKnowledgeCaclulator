@@ -197,98 +197,75 @@ public class ConceptKnowledgeCalculator implements ConceptKnowledgeCalculatorAPI
 
     }
 
-
     @Override
-    public SuggestionResource calcIndividualGraphSuggestions(String userId) {
-        try{
-            if (cohortConceptGraphs != null) {
-                ConceptGraph userGraph = cohortConceptGraphs.getUserGraph(userId);
-                List<ConceptNode> concepts = LearningObjectSuggester.conceptsToWorkOn(userGraph);
-                return new SuggestionResource(userGraph, concepts);
+    public SuggestionResource calcIndividualGraphSuggestions(String userId) throws Exception {
 
-            } else {
-                return new SuggestionResource();
-            }
+        if (cohortConceptGraphs != null) {
+                ConceptGraph userGraph;
+                userGraph = cohortConceptGraphs.getUserGraph(userId);
+                if (userGraph!=null){
+                    List<ConceptNode> concepts;
+                    concepts = LearningObjectSuggester.conceptsToWorkOn(userGraph);
+                    return new SuggestionResource(userGraph, concepts);
 
-        }catch (Exception e){
-            e.printStackTrace();
+                }else {
+                    throw new Exception("Invalid User ID");
+                }
+
+        } else {
+            return new SuggestionResource();
         }
-
-        return null;
     }
 
     @Override
-    public SuggestionResource calcIndividualSpecificConceptSuggestions(String userId, String conceptId) {
-        try{
+    public SuggestionResource calcIndividualSpecificConceptSuggestions(String userId, String conceptId) throws Exception {
             if (cohortConceptGraphs != null) {
                 ConceptGraph userGraph;
-                try {
-                    userGraph = cohortConceptGraphs.getUserGraph(userId);
-                }catch(Exception e) {
-                    e.printStackTrace();
-                    userGraph= new ConceptGraph();
-                }
-
-                ConceptNode node;
-                try {
+                userGraph = cohortConceptGraphs.getUserGraph(userId);
+                if(userGraph!=null){
+                    ConceptNode node;
                     node = userGraph.findNodeById(conceptId);
-                }catch(Exception e) {
-                    e.printStackTrace();
-                    node = new ConceptNode();
+                    if(node!= null){
+                        List<ConceptNode> concepts = new ArrayList<ConceptNode>();
+                        concepts.add(node);
+
+                        return new SuggestionResource(userGraph, concepts);
+
+                    }else{
+                        throw new Exception("Invalid Concept");
+                    }
+                }else{
+                    throw new Exception("Invalid User ID");
                 }
-
-                List<ConceptNode> concepts = new ArrayList<ConceptNode>();
-                concepts.add(node);
-
-                return new SuggestionResource(userGraph, concepts);
-
             } else {
                 return new SuggestionResource();
             }
-
-        }catch (Exception e){
-            e.printStackTrace();
-        }
-
-        return new SuggestionResource();
     }
 
 
     @Override
-    public List<String> calcIndividualConceptNodesSuggestions(String userID){
-        try{
-            if (cohortConceptGraphs != null) {
-                ConceptGraph userGraph;
-                try {
-                    userGraph = cohortConceptGraphs.getUserGraph(userID);
+    public List<String> calcIndividualConceptNodesSuggestions(String userID) throws Exception{
+        if (cohortConceptGraphs != null) {
+            ConceptGraph userGraph;
+            userGraph = cohortConceptGraphs.getUserGraph(userID);
 
-                }catch (Exception e){
-                    e.printStackTrace();
-                    userGraph= new ConceptGraph();
+            if(userGraph!=null) {
+                List<ConceptNode> nodeList = LearningObjectSuggester.conceptsToWorkOn(userGraph);
+                List<String> suggestedConceptIDList = new ArrayList<>();
+                for (ConceptNode node : nodeList) {
+                    suggestedConceptIDList.add(node.getID());
                 }
 
-                if(userGraph!=null) {
-                    List<ConceptNode> nodeList = LearningObjectSuggester.conceptsToWorkOn(userGraph);
-
-                    List<String> suggestedConceptIDList = new ArrayList<>();
-                    for (ConceptNode node : nodeList) {
-                        suggestedConceptIDList.add(node.getID());
-                    }
-
-                    return suggestedConceptIDList;
-                }else{
-                    return new ArrayList<>();
-                }
-
-            } else {
-                return new ArrayList<>();
+                return suggestedConceptIDList;
+            }else{
+                throw new Exception("Invalid User ID");
             }
 
-        }catch (Exception e){
-            e.printStackTrace();
+        } else {
+            return new ArrayList<>();
         }
-        return new ArrayList<>();
     }
+
 
     public void setResourceFile(String file){
         resourceFile = file;
