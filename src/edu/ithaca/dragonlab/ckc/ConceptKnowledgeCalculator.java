@@ -3,19 +3,19 @@ package edu.ithaca.dragonlab.ckc;
 import edu.ithaca.dragonlab.ckc.conceptgraph.CohortConceptGraphs;
 import edu.ithaca.dragonlab.ckc.conceptgraph.ConceptGraph;
 import edu.ithaca.dragonlab.ckc.conceptgraph.ConceptNode;
+import edu.ithaca.dragonlab.ckc.conceptgraph.KnowledgeEstimateMatrix;
 import edu.ithaca.dragonlab.ckc.io.CSVReader;
 import edu.ithaca.dragonlab.ckc.io.CohortConceptGraphsRecord;
 import edu.ithaca.dragonlab.ckc.io.ConceptGraphRecord;
 import edu.ithaca.dragonlab.ckc.io.LearningObjectLinkRecord;
+import edu.ithaca.dragonlab.ckc.learningobject.LearningObject;
 import edu.ithaca.dragonlab.ckc.learningobject.LearningObjectResponse;
 import edu.ithaca.dragonlab.ckc.suggester.LearningObjectSuggester;
 import edu.ithaca.dragonlab.ckc.suggester.SuggestionResource;
+import stats.BasicRFunctions;
 
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.LinkedList;
-import java.util.List;
+import java.util.*;
 
 /**
  * Created by tdragon on 6/8/17.
@@ -286,6 +286,26 @@ public class ConceptKnowledgeCalculator implements ConceptKnowledgeCalculatorAPI
             e.printStackTrace();
         }
         return new ArrayList<>();
+    }
+
+    public double getLearningObjectAvg(String learningObject){
+        ConceptGraph graph = cohortConceptGraphs.getAvgGraph();
+        Map<String, LearningObject> loMap = graph.getLearningObjectMap();
+        Collection<LearningObject> objList = loMap.values();
+        ArrayList<LearningObject> list;
+        if (objList instanceof List)
+        {
+            list = (ArrayList<LearningObject>) objList;
+        }
+        else
+        {
+            list = new ArrayList<LearningObject>(objList);
+        }
+        KnowledgeEstimateMatrix myMatrix = new KnowledgeEstimateMatrix(list);
+        LearningObject concept = loMap.get(learningObject);
+        double result = BasicRFunctions.LearningObjectAvg(myMatrix, concept);
+
+        return result;
     }
 
     public void setResourceFile(String file){

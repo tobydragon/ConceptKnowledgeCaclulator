@@ -1,4 +1,4 @@
-package edu.ithaca.dragonlab.ckc.util;
+package edu.ithaca.dragonlab.ckc;
 
 import edu.ithaca.dragonlab.ckc.ConceptKnowledgeCalculator;
 
@@ -312,6 +312,17 @@ public class ConceptKnowledgeCalculatorTest {
 
     }
 
-
+    @Test
+    public void getConceptAvgTest(){
+        ConceptKnowledgeCalculatorAPI ckc = null;
+        try {
+            ckc = new ConceptKnowledgeCalculator("test/testresources/basicRealisticExampleConceptGraphOneStudent.json", "test/testresources/basicRealisticExampleLOLRecordOneStudent.json", "test/testresources/basicRealisticExampleGradeBook2.csv");
+        } catch (IOException e) {
+            System.out.println("Unable to load default files, please choose files manually.");
+            ckc = new ConceptKnowledgeCalculator();
+        }
+        Assert.assertEquals(1, ckc.getLearningObjectAvg("Q4"), 0);
+        Assert.assertEquals(0.75, ckc.getLearningObjectAvg("Q14"), 0);
+    }
 
 }
