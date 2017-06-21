@@ -92,7 +92,9 @@ public interface ConceptKnowledgeCalculatorAPI {
 
     double getLearningObjectAvg(String learningObject);
 
-    List<String> getUserIdList(CohortConceptGraphs graph);
+    List<String> getUserIdList();
+
+    double getStudentAvg(String user);
 
 
 

@@ -21,6 +21,8 @@ import java.util.Collection;
 import java.util.List;
 import java.util.Map;
 
+import static edu.ithaca.dragonlab.ckc.util.DataUtil.OK_FLOAT_MARGIN;
+
 /**
  * Created by Mia Kimmich Mitchell on 6/9/2017.
  */
@@ -318,8 +320,7 @@ public class ConceptKnowledgeCalculatorTest {
         try {
             ckc = new ConceptKnowledgeCalculator("test/testresources/basicRealisticExampleConceptGraphOneStudent.json", "test/testresources/basicRealisticExampleLOLRecordOneStudent.json", "test/testresources/basicRealisticExampleGradeBook2.csv");
         } catch (IOException e) {
-            System.out.println("Unable to load default files, please choose files manually.");
-            ckc = new ConceptKnowledgeCalculator();
+            Assert.fail("Unable to load default files");
         }
         Assert.assertEquals(1, ckc.getLearningObjectAvg("Q4"), 0);
         Assert.assertEquals(0.75, ckc.getLearningObjectAvg("Q14"), 0);
@@ -327,5 +328,25 @@ public class ConceptKnowledgeCalculatorTest {
 
     @Test
     public void getUserListTest() {
+        ConceptKnowledgeCalculatorAPI ckc = null;
+        try {
+            ckc = new ConceptKnowledgeCalculator("test/testresources/basicRealisticExampleConceptGraphOneStudent.json", "test/testresources/basicRealisticExampleLOLRecordOneStudent.json", "test/testresources/basicRealisticExampleGradeBook2.csv");
+        } catch (IOException e) {
+            Assert.fail("Unable to load default files");
+        }
+        List<String> actualList = new ArrayList<>();
+        actualList.add("bspinache1");
+        Assert.assertEquals(actualList, ckc.getUserIdList());
+    }
+
+    @Test
+    public void getStudentAvgTest(){
+        ConceptKnowledgeCalculatorAPI ckc = null;
+        try {
+            ckc = new ConceptKnowledgeCalculator("test/testresources/basicRealisticExampleConceptGraphOneStudent.json", "test/testresources/basicRealisticExampleLOLRecordOneStudent.json", "test/testresources/basicRealisticExampleGradeBook2.csv");
+        } catch (IOException e) {
+            Assert.fail("Unable to load default files");
+        }
+        Assert.assertEquals(0.75333, ckc.getStudentAvg("bspinache1"), OK_FLOAT_MARGIN);
     }
 }

@@ -12,6 +12,7 @@ import edu.ithaca.dragonlab.ckc.learningobject.LearningObject;
 import edu.ithaca.dragonlab.ckc.learningobject.LearningObjectResponse;
 import edu.ithaca.dragonlab.ckc.suggester.LearningObjectSuggester;
 import edu.ithaca.dragonlab.ckc.suggester.SuggestionResource;
+import org.apache.commons.lang.ObjectUtils;
 import stats.BasicRFunctions;
 
 import java.io.IOException;
@@ -289,12 +290,13 @@ public class ConceptKnowledgeCalculator implements ConceptKnowledgeCalculatorAPI
     }
 
     //TODO: Alphabetize userList
-    public List<String> getUserIdList(CohortConceptGraphs graph){
-        Map<String, ConceptGraph> userMap = graph.getUserToGraph();
+    public List<String> getUserIdList(){
+        Map<String, ConceptGraph> userMap = cohortConceptGraphs.getUserToGraph();
         List<String> userList = new ArrayList<String>(userMap.keySet());
 
         return userList;
     }
+
 
     public double getLearningObjectAvg(String learningObject)throws NullPointerException{
         ConceptGraph graph = cohortConceptGraphs.getAvgGraph();
@@ -308,6 +310,20 @@ public class ConceptKnowledgeCalculator implements ConceptKnowledgeCalculatorAPI
             return result;
         }else{
         throw new NullPointerException();
+        }
+    }
+
+    public double getStudentAvg(String user)throws NullPointerException{
+        ConceptGraph graph = cohortConceptGraphs.getAvgGraph();
+        Map<String, LearningObject> loMap = graph.getLearningObjectMap();
+        List<LearningObject> objList = new ArrayList<LearningObject>(loMap.values());
+        KnowledgeEstimateMatrix myMatrix = new KnowledgeEstimateMatrix(objList);
+        List<String> userIdList = myMatrix.getUserIdList();
+
+        if(userIdList.contains(user)) {
+            return BasicRFunctions.StudentKnowledgeEstAvg(myMatrix, user);
+        }else{
+            throw new NullPointerException();
         }
     }
 
