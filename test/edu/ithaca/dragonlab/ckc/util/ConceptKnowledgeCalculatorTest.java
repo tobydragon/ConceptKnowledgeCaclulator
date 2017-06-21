@@ -1,5 +1,6 @@
 package edu.ithaca.dragonlab.ckc.util;
 
+import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import edu.ithaca.dragonlab.ckc.ConceptKnowledgeCalculator;
 
 import edu.ithaca.dragonlab.ckc.ConceptKnowledgeCalculatorAPI;
@@ -34,8 +35,8 @@ public class ConceptKnowledgeCalculatorTest {
         try {
             ckc = new ConceptKnowledgeCalculator("test/testresources/basicRealisticExampleConceptGraphOneStudent.json", "test/testresources/basicRealisticExampleLOLRecordOneStudent.json", "test/testresources/basicRealisticExampleGradeBook2.csv");
         } catch (IOException e) {
-            System.out.println("Unable to load default files, please choose files manually.");
-            ckc = new ConceptKnowledgeCalculator();
+            Assert.fail("Unable to load default files. Test unable to run");
+
         }
         Assert.assertEquals(ckc.getCurrentmode(), ConceptKnowledgeCalculator.Mode.COHORTGRAPH);
 
@@ -49,8 +50,8 @@ public class ConceptKnowledgeCalculatorTest {
         try {
             ckc = new ConceptKnowledgeCalculator("test/testresources/basicRealisticExampleConceptGraphOneStudent.json", "test/testresources/basicRealisticExampleLOLRecordOneStudent.json", "test/testresources/basicRealisticExampleGradeBook2.csv");
         } catch (IOException e) {
-            System.out.println("Unable to load default files, please choose files manually.");
-            ckc = new ConceptKnowledgeCalculator();
+            Assert.fail("Unable to load default files. Test unable to run");
+
         }
 
         Assert.assertEquals(ckc.getStructureFileName(),"test/testresources/basicRealisticExampleConceptGraphOneStudent.json" );
@@ -82,8 +83,8 @@ public class ConceptKnowledgeCalculatorTest {
         try {
             ckc = new ConceptKnowledgeCalculator("test/testresources/basicRealisticExampleConceptGraphOneStudent.json", "test/testresources/basicRealisticExampleLOLRecordOneStudent.json", "test/testresources/basicRealisticExampleGradeBook2.csv");
         } catch (IOException e) {
-                System.out.println("Unable to load default files, please choose files manually.");
-                ckc = new ConceptKnowledgeCalculator();
+            Assert.fail("Unable to load default files. Test unable to run");
+
         }
 
         List<String> concepts = null;
@@ -100,23 +101,16 @@ public class ConceptKnowledgeCalculatorTest {
 
     }
 
-    @Test
-    public void calcIndividualConceptNodesSuggestionsBadInputTest() {
+    @Test(expected = Exception.class)
+    public void calcIndividualConceptNodesSuggestionsBadInputTest() throws Exception {
         ConceptKnowledgeCalculatorAPI ckc = null;
         try {
             ckc = new ConceptKnowledgeCalculator("test/testresources/basicRealisticExampleConceptGraphOneStudent.json", "test/testresources/basicRealisticExampleLOLRecordOneStudent.json", "test/testresources/basicRealisticExampleGradeBook2.csv");
         } catch (IOException e) {
-            System.out.println("Unable to load default files, please choose files manually.");
-            ckc = new ConceptKnowledgeCalculator();
+            Assert.fail("Unable to load default files. Test unable to run");
         }
 
-        List<String> concepts = null;
-        try {
-            concepts = ckc.calcIndividualConceptNodesSuggestions("baduser");
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        Assert.assertEquals(concepts, new ArrayList<>());
+        ckc.calcIndividualConceptNodesSuggestions("baduser");
 
     }
 
@@ -126,15 +120,15 @@ public class ConceptKnowledgeCalculatorTest {
         try {
             ckc = new ConceptKnowledgeCalculator("test/testresources/basicRealisticExampleConceptGraphOneStudent.json", "test/testresources/basicRealisticExampleLOLRecordOneStudent.json", "test/testresources/basicRealisticExampleGradeBook2.csv");
         } catch (IOException e) {
-            System.out.println("Unable to load default files, please choose files manually.");
-            ckc = new ConceptKnowledgeCalculator();
+            Assert.fail("Unable to load default files. Test unable to run");
+;
         }
 
         SuggestionResource res = null;
         try {
             res = ckc.calcIndividualGraphSuggestions("bspinache1");
         } catch (Exception e) {
-            e.printStackTrace();
+            Assert.fail("Unable to find user");
         }
         List<LearningObjectSuggestion> incomTest = res.incompleteList;
         List<LearningObjectSuggestion> wrongTest = res.wrongList;
@@ -161,8 +155,8 @@ public class ConceptKnowledgeCalculatorTest {
         try {
             ckc = new ConceptKnowledgeCalculator("test/testresources/basicRealisticExampleConceptGraphOneStudent.json", "test/testresources/basicRealisticExampleLOLRecordOneStudent.json", "test/testresources/basicRealisticExampleGradeBook2.csv");
         } catch (IOException e) {
-            System.out.println("Unable to load default files, please choose files manually.");
-            ckc = new ConceptKnowledgeCalculator();
+            Assert.fail("Unable to load default files. Test unable to run");
+
 
         }
 
@@ -187,8 +181,8 @@ public class ConceptKnowledgeCalculatorTest {
         try {
             ckc = new ConceptKnowledgeCalculator("test/testresources/basicRealisticExampleConceptGraphOneStudent.json", "test/testresources/basicRealisticExampleLOLRecordOneStudent.json", "test/testresources/basicRealisticExampleGradeBook2.csv");
         } catch (IOException e) {
-            System.out.println("Unable to load default files, please choose files manually.");
-            ckc = new ConceptKnowledgeCalculator();
+            Assert.fail("Unable to load default files. Test unable to run");
+
         }
 
         List<LearningObjectResponse> originalMasterList = new ArrayList<>();
@@ -260,8 +254,8 @@ public class ConceptKnowledgeCalculatorTest {
         try {
             ckc = new ConceptKnowledgeCalculator("test/testresources/basicRealisticExampleConceptGraphOneStudent.json", "test/testresources/basicRealisticExampleLOLRecordOneStudent.json", "test/testresources/basicRealisticExampleGradeBook2.csv");
         } catch (IOException e) {
-            System.out.println("Unable to load default files, please choose files manually.");
-            ckc = new ConceptKnowledgeCalculator();
+            Assert.fail("Unable to load default files. Test unable to run");
+
         }
 
         List<LearningObject> originalMasterList = new ArrayList<>();
