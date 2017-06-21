@@ -84,7 +84,6 @@ public class ConceptKnowledgeCalculatorTest {
             ckc = new ConceptKnowledgeCalculator("test/testresources/basicRealisticExampleConceptGraphOneStudent.json", "test/testresources/basicRealisticExampleLOLRecordOneStudent.json", "test/testresources/basicRealisticExampleGradeBook2.csv");
         } catch (IOException e) {
             Assert.fail("Unable to load default files. Test unable to run");
-
         }
 
         List<String> concepts = null;
@@ -114,37 +113,59 @@ public class ConceptKnowledgeCalculatorTest {
 
     }
 
+//    @Test
+//    public void  calcIndividualGraphSuggestionsTest(){
+//        ConceptKnowledgeCalculatorAPI ckc = null;
+//        try {
+//            ckc = new ConceptKnowledgeCalculator("test/testresources/basicRealisticExampleConceptGraphOneStudent.json", "test/testresources/basicRealisticExampleLOLRecordOneStudent.json", "test/testresources/basicRealisticExampleGradeBook2.csv");
+//        } catch (IOException e) {
+//            Assert.fail("Unable to load default files. Test unable to run");
+//;
+//        }
+//
+//        SuggestionResource res = null;
+//        try {
+//            res = ckc.calcIndividualGraphSuggestions("bspinache1");
+//        } catch (Exception e) {
+//            Assert.fail("Unable to find user");
+//        }
+//        List<LearningObjectSuggestion> incomTest = res.incompleteList;
+//        List<LearningObjectSuggestion> wrongTest = res.wrongList;
+//
+//
+//        Assert.assertEquals(incomTest.size(),5);
+//        Assert.assertEquals(incomTest.get(0).getId(),"Q10");
+//        Assert.assertEquals(incomTest.get(1).getId(),"Q10");
+//        Assert.assertEquals(incomTest.get(2).getId(),"Q3");
+//        Assert.assertEquals(incomTest.get(3).getId(),"Q6");
+//        Assert.assertEquals(incomTest.get(4).getId(),"Q6");
+//
+//        Assert.assertEquals(wrongTest.size(),3);
+//        Assert.assertEquals(wrongTest.get(0).getId(), "Q9");
+//        Assert.assertEquals(wrongTest.get(1).getId(), "Q9");
+//        Assert.assertEquals(wrongTest.get(2).getId(), "Q1");
+//
+//    }
+
+
+
     @Test
-    public void  calcIndividualGraphSuggestionsTest(){
-        ConceptKnowledgeCalculatorAPI ckc = null;
+    public void  calcIndividualGraphSuggestionsWIthEmptyListTest() throws Exception {
+            ConceptKnowledgeCalculatorAPI ckc = null;
         try {
-            ckc = new ConceptKnowledgeCalculator("test/testresources/basicRealisticExampleConceptGraphOneStudent.json", "test/testresources/basicRealisticExampleLOLRecordOneStudent.json", "test/testresources/basicRealisticExampleGradeBook2.csv");
+            ckc = new ConceptKnowledgeCalculator("resources/comp220/comp220Graph.json","resources/comp220/comp220Resources.json", "localresources/comp220ExampleDataPortion.csv");
+
         } catch (IOException e) {
             Assert.fail("Unable to load default files. Test unable to run");
-;
         }
 
-        SuggestionResource res = null;
-        try {
-            res = ckc.calcIndividualGraphSuggestions("bspinache1");
-        } catch (Exception e) {
-            Assert.fail("Unable to find user");
-        }
+        SuggestionResource res = ckc.calcIndividualGraphSuggestions("s17");
+
         List<LearningObjectSuggestion> incomTest = res.incompleteList;
         List<LearningObjectSuggestion> wrongTest = res.wrongList;
 
-
-        Assert.assertEquals(incomTest.size(),5);
-        Assert.assertEquals(incomTest.get(0).getId(),"Q10");
-        Assert.assertEquals(incomTest.get(1).getId(),"Q10");
-        Assert.assertEquals(incomTest.get(2).getId(),"Q3");
-        Assert.assertEquals(incomTest.get(3).getId(),"Q6");
-        Assert.assertEquals(incomTest.get(4).getId(),"Q6");
-
-        Assert.assertEquals(wrongTest.size(),3);
-        Assert.assertEquals(wrongTest.get(0).getId(), "Q9");
-        Assert.assertEquals(wrongTest.get(1).getId(), "Q9");
-        Assert.assertEquals(wrongTest.get(2).getId(), "Q1");
+        Assert.assertEquals(incomTest,new ArrayList<>());
+        Assert.assertEquals(wrongTest.get(0).getId(), "Lab 5: Comparing Searches");
 
     }
 
@@ -329,8 +350,7 @@ public class ConceptKnowledgeCalculatorTest {
         try {
             ckc = new ConceptKnowledgeCalculator("test/testresources/basicRealisticExampleConceptGraphOneStudent.json", "test/testresources/basicRealisticExampleLOLRecordOneStudent.json", "test/testresources/basicRealisticExampleGradeBook2.csv");
         } catch (IOException e) {
-            System.out.println("Unable to load default files, please choose files manually.");
-            ckc = new ConceptKnowledgeCalculator();
+            Assert.fail("Unable to load default files, please choose files manually.");
         }
         Assert.assertEquals(1, ckc.getLearningObjectAvg("Q4"), 0);
         Assert.assertEquals(0.75, ckc.getLearningObjectAvg("Q14"), 0);

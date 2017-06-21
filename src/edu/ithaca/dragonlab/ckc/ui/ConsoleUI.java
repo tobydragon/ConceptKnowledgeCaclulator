@@ -40,13 +40,16 @@ public class ConsoleUI {
 
 
     public void run(){
+        Scanner scanner = new Scanner(System.in);
+
+        if(ckc.getCohortConceptGraphs()==null && ckc.getStructureGraph()==null){
+            createNewCohortGraph(scanner,true);
+        }
 
         if(ckc.getCohortConceptGraphs()!=null || ckc.getStructureGraph()!= null) {
             System.out.println("Current graphs:\t" + ckc.getCohortGraphsUrl());
         }
 
-
-        Scanner scanner = new Scanner(System.in);
         ckc.setLastWorkingStructureName(ckc.getStructureFileName());
 
         ckc.setPreviouslySavedCohortFiles(ckc.getSavedCohortFile());
@@ -264,7 +267,6 @@ public class ConsoleUI {
             }
             if (option == 1) {
                 System.out.println(sugRes.toString(0));
-
             } else {
                 System.out.println(sugRes.toString(1));
             }
@@ -278,8 +280,7 @@ public class ConsoleUI {
     public void viewgraph(){
         System.out.println("view graph");
 
-        ckc.getCohortGraphsUrl();
-
+        System.out.println(ckc.getCohortGraphsUrl());
     }
 
     public void createNewCohortGraph(Scanner scanner, Boolean cohortFilesValid){

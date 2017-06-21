@@ -205,6 +205,8 @@ public class ConceptKnowledgeCalculator implements ConceptKnowledgeCalculatorAPI
                 if (userGraph!=null){
                     List<ConceptNode> concepts;
                     concepts = LearningObjectSuggester.conceptsToWorkOn(userGraph);
+
+
                     return new SuggestionResource(userGraph, concepts);
 
                 }else {
@@ -259,7 +261,6 @@ public class ConceptKnowledgeCalculator implements ConceptKnowledgeCalculatorAPI
             }else{
                 throw new Exception("Invalid User ID");
             }
-
         } else {
             return new ArrayList<>();
         }
