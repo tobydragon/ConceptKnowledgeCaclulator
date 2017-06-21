@@ -1,0 +1,94 @@
+[
+  {"learningObject":"resource1",
+    "conceptIds":[
+      "For Loop"
+    ],
+    "dataImportance": "1"
+  },
+  {"learningObject":"Q1",
+  "conceptIds":[
+    "For Loop"
+  ],
+  "dataImportance": "1"
+  },
+  {"learningObject":"Q2",
+  "conceptIds":[
+    "For Loop"
+  ],
+  "dataImportance": "1"
+  },
+  {"learningObject":"resource2",
+  "conceptIds":[
+    "For Loop"
+  ],
+  "dataImportance": "1"
+  },
+  {"learningObject":"resource3",
+  "conceptIds":[
+    "For Loop"
+  ],
+  "dataImportance": "1"
+  },
+  {"learningObject":"Q5",
+  "conceptIds":[
+    "For Loop"
+  ],
+  "dataImportance": "1"
+  },
+  {"learningObject":"resource4",
+    "conceptIds":[
+      "For Loop"
+    ],
+    "dataImportance": "1"
+  },
+  {"learningObject":"Q7",
+    "conceptIds":[
+      "For Loop"
+    ],
+    "dataImportance": "1"
+  },
+  {"learningObject":"Q8",
+    "conceptIds":[
+      "For Loop"
+    ],
+    "dataImportance": "1"
+  },{"learningObject":"Q9",
+    "conceptIds":[
+      "For Loop"
+    ],
+    "dataImportance": "1"
+  },
+  {"learningObject":"Q10",
+    "conceptIds":[
+      "For Loop"
+    ],
+    "dataImportance": "1"
+  },
+  {"learningObject": "resource5",
+    "conceptIds": [
+    "For Loop"
+  ],
+    "dataImportance": "1"
+  },
+  {
+    "learningObject": "Q12",
+    "conceptIds": [
+      "For Loop"
+    ],
+    "dataImportance": "1"
+  },
+  {
+    "learningObject": "Q13",
+    "conceptIds": [
+      "For Loop"
+    ],
+    "dataImportance": "1"
+  },
+  {
+    "learningObject": "Q14",
+    "conceptIds": [
+      "For Loop"
+    ],
+    "dataImportance": "1"
+  }
+]

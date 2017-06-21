@@ -26,7 +26,12 @@ public class ConceptNode {
 	 */
 	public ConceptNode(ConceptRecord conceptRecord) {
 		this.id = conceptRecord.getId();
-		this.label = conceptRecord.getLabel();
+		if (conceptRecord.getLabel() != null && conceptRecord.getLabel() != "") {
+            this.label = conceptRecord.getLabel();
+        }
+        else {
+		    this.label = this.id;
+        }
 		knowledgePrediction = conceptRecord.getKnowledgePrediction();
 		knowledgeEstimate = conceptRecord.getKnowledgeEstimate();
 		knowledgeDistanceFromAvg = conceptRecord.getKnowledgeDistFromAvg();
@@ -52,14 +57,20 @@ public class ConceptNode {
 
 		this.learningObjectMap = new HashMap<>();
 		for (Map.Entry<String, LearningObject> entry: other.getLearningObjectMap().entrySet()){
-			LearningObject newLearningObject = new LearningObject(entry.getValue());
+
+			//check the graphMap first to see if that learning object has already been created
+			LearningObject newLearningObject = graphLearningObjectMap.get(entry.getKey());
+			if (newLearningObject == null) {
+				//if not, create it and add it to the graphMap
+				newLearningObject = new LearningObject(entry.getValue());
+				graphLearningObjectMap.put(entry.getKey(), newLearningObject);
+			}
 			this.learningObjectMap.put(entry.getKey(), newLearningObject);
-			graphLearningObjectMap.put(entry.getKey(), newLearningObject);
 		}
 
 		this.children = new ArrayList<>();
 		for (ConceptNode otherChild : other.children){
-			//if this node has already been copied (due to graph structure), just link it in new graph structure
+			//if this node has already been copied (due to graph studentKnowledgeEstimates), just link it in new graph studentKnowledgeEstimates
 			ConceptNode alreadyCopiedNode = graphNodeMap.get(otherChild.getID());
 			if (alreadyCopiedNode != null){
 				this.addChild(alreadyCopiedNode);
@@ -72,7 +83,22 @@ public class ConceptNode {
 		}
 	}
 
-	//TODO javadoc
+	public ConceptNode(){
+		this.id="";
+		this.label="";
+		knowledgeEstimate=0;
+		knowledgePrediction=0;
+		knowledgeDistanceFromAvg=0;
+		dataImportance=0;
+		learningObjectMap = new HashMap<>();
+		children= new LinkedList<>();
+
+	}
+
+	/**
+     *fills up a hashmap with the LearningObjects IDs and the amount of ways to get to the learning object from the root (which is how importance is measured)
+     *@param learningObjectSummary map>
+     */
 	public void buildLearningObjectSummaryList(HashMap <String, Integer> learningObjectSummary){
 
 		//add the current questions.
@@ -98,7 +124,11 @@ public class ConceptNode {
 		}
 	}
 
-	//TODO javadoc
+    /**
+    checks to see if the called on ConceptNode is a parents (grandparent, ect.) to the parameter
+    @param possibleDescendent node
+    @returns true of the called node is in the lineage of the parameter
+     */
 	public boolean isAncestorOf(ConceptNode possibleDescendent){
         boolean isAncestor =false;
         if (this.children.contains(possibleDescendent)){
@@ -134,21 +164,25 @@ public class ConceptNode {
 	 * @pre calcDataImportance must have already been called
 	 */
 	public void calcKnowledgeEstimate() {
+
 		//calculate estimate from learning objects directly connected to this node
         double currentConceptEstimate = 0;
+
 		for (LearningObject learningObject : learningObjectMap.values()){
 			currentConceptEstimate += learningObject.calcKnowledgeEstimate()*learningObject.getDataImportance();
 		}
 
-		//calculate estimate from children
+        //calculate estimate from children
 		for (ConceptNode child : children){
 			child.calcKnowledgeEstimate();
-			currentConceptEstimate +=   child.getKnowledgeEstimate()*child.getDataImportance();
+
+            currentConceptEstimate +=  child.getKnowledgeEstimate()*child.getDataImportance();
 		}
 
 		if (dataImportance > 0){
 			this.knowledgeEstimate = currentConceptEstimate / dataImportance;
-		} else {
+
+        } else {
 			//in this case, this node has no data and can't be estimated
 			this.knowledgeEstimate = 0;
 		}

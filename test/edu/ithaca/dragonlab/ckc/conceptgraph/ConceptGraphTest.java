@@ -226,6 +226,7 @@ public class ConceptGraphTest {
 
     @Test
     public void calcKnowledgeEstimateMoreComplexTest() {
+
         ConceptGraph orig = ExampleConceptGraphFactory.willExampleConceptGraphTestOneStudent();
 
         Assert.assertEquals(0.806, orig.findNodeById("Boolean").getKnowledgeEstimate(), DataUtil.OK_FLOAT_MARGIN);

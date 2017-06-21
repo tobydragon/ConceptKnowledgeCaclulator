@@ -14,19 +14,19 @@ public class learningObjectSuggestionTest {
     public void getTest(){
 
 
-        LearningObjectSuggestion test1= new LearningObjectSuggestion("A", 2, LearningObjectSuggestion.Level.INCOMPLETE);
+        LearningObjectSuggestion test1= new LearningObjectSuggestion("A", 2, LearningObjectSuggestion.Level.INCOMPLETE, "Intro to CS");
 
         Assert.assertEquals("A", test1.getId() );
         Assert.assertEquals(2, test1.getPathNum() );
         Assert.assertEquals(LearningObjectSuggestion.Level.INCOMPLETE, test1.getLevel() );
-
+        Assert.assertEquals("Intro to CS", test1.getReasoning());
 
     }
 
     @Test
     public void setTest(){
 
-        LearningObjectSuggestion test2= new LearningObjectSuggestion("A", 2, LearningObjectSuggestion.Level.INCOMPLETE);
+        LearningObjectSuggestion test2= new LearningObjectSuggestion("A", 2, LearningObjectSuggestion.Level.INCOMPLETE, "Intro to CS");
 
         test2.setId("W");
         Assert.assertEquals("W", test2.getId() );
