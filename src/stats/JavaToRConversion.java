@@ -1,11 +1,8 @@
 package stats;
 
 import com.github.rcaller.rstuff.*;
-import com.github.rcaller.util.Globals;
-import edu.ithaca.dragonlab.ckc.conceptgraph.Matrix;
 import edu.ithaca.dragonlab.ckc.learningobject.LearningObject;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -15,7 +12,7 @@ public class JavaToRConversion {
 
     public static RCode JavaToR(double[][] aMatrix, List<LearningObject> learningObjects, String[] users){
         /**
-        double[][] aMatrix = loMatrix.getStructure();
+        double[][] aMatrix = loMatrix.getStudentKnowledgeEstimates();
         String[] users = loMatrix.getUserIdList();
         ArrayList<LearningObject> learningObjects = loMatrix.getObjList();
         int objLength = learningObjects.size();

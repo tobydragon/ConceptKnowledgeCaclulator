@@ -70,7 +70,7 @@ public class ConceptNode {
 
 		this.children = new ArrayList<>();
 		for (ConceptNode otherChild : other.children){
-			//if this node has already been copied (due to graph structure), just link it in new graph structure
+			//if this node has already been copied (due to graph studentKnowledgeEstimates), just link it in new graph studentKnowledgeEstimates
 			ConceptNode alreadyCopiedNode = graphNodeMap.get(otherChild.getID());
 			if (alreadyCopiedNode != null){
 				this.addChild(alreadyCopiedNode);

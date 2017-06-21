@@ -3,7 +3,7 @@ package edu.ithaca.dragonlab.ckc;
 import edu.ithaca.dragonlab.ckc.conceptgraph.CohortConceptGraphs;
 import edu.ithaca.dragonlab.ckc.conceptgraph.ConceptGraph;
 import edu.ithaca.dragonlab.ckc.conceptgraph.ConceptNode;
-import edu.ithaca.dragonlab.ckc.conceptgraph.Matrix;
+import edu.ithaca.dragonlab.ckc.conceptgraph.KnowledgeEstimateMatrix;
 import edu.ithaca.dragonlab.ckc.io.CSVReader;
 import edu.ithaca.dragonlab.ckc.io.CohortConceptGraphsRecord;
 import edu.ithaca.dragonlab.ckc.io.ConceptGraphRecord;
@@ -11,7 +11,6 @@ import edu.ithaca.dragonlab.ckc.io.LearningObjectLinkRecord;
 import edu.ithaca.dragonlab.ckc.learningobject.LearningObject;
 import edu.ithaca.dragonlab.ckc.learningobject.LearningObjectResponse;
 import edu.ithaca.dragonlab.ckc.suggester.LearningObjectSuggester;
-import edu.ithaca.dragonlab.ckc.suggester.LearningObjectSuggestion;
 import edu.ithaca.dragonlab.ckc.suggester.SuggestionResource;
 import stats.BasicRFunctions;
 
@@ -268,7 +267,7 @@ public class ConceptKnowledgeCalculator implements ConceptKnowledgeCalculatorAPI
         {
             list = new ArrayList<LearningObject>(objList);
         }
-        Matrix myMatrix = new Matrix(list);
+        KnowledgeEstimateMatrix myMatrix = new KnowledgeEstimateMatrix(list);
         LearningObject concept = loMap.get(learningObject);
         double result = BasicRFunctions.LearningObjectAvg(myMatrix, concept);
 

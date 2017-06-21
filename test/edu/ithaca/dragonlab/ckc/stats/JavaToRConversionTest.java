@@ -2,7 +2,7 @@ package edu.ithaca.dragonlab.ckc.stats;
 
 import com.github.rcaller.rstuff.*;
 import com.github.rcaller.util.Globals;
-import edu.ithaca.dragonlab.ckc.conceptgraph.Matrix;
+import edu.ithaca.dragonlab.ckc.conceptgraph.KnowledgeEstimateMatrix;
 import edu.ithaca.dragonlab.ckc.io.CSVReader;
 import edu.ithaca.dragonlab.ckc.learningobject.LearningObject;
 import org.junit.Assert;
@@ -24,8 +24,8 @@ public class JavaToRConversionTest {
         String file = "test/testresources/SmallDataCSVExample.csv";
         CSVReader data = new CSVReader(file);
         ArrayList<LearningObject> gotoMatrix = data.getManualGradedLearningObjects();
-        Matrix newMatrix = new Matrix(gotoMatrix);
-        double[][] struct = newMatrix.getStructure();
+        KnowledgeEstimateMatrix newMatrix = new KnowledgeEstimateMatrix(gotoMatrix);
+        double[][] struct = newMatrix.getStudentKnowledgeEstimates();
         List<LearningObject> objList = newMatrix.getObjList();
         String[] user = newMatrix.getUserIdList();
         RCode mycode = JavaToRConversion.JavaToR(struct, objList, user);

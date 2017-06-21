@@ -5,39 +5,30 @@ import edu.ithaca.dragonlab.ckc.learningobject.LearningObject;
 import edu.ithaca.dragonlab.ckc.learningobject.LearningObjectResponse;
 import stats.JavaToRConversion;
 
-import java.io.File;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 import java.util.Map;
 
-import static jdk.nashorn.internal.objects.ArrayBufferView.length;
-
 /**
  * Created by bleblanc2 on 6/13/17.
  */
-public class Matrix {
+public class KnowledgeEstimateMatrix {
 
     String id;
-    double[][] structure;
+    double[][] studentKnowledgeEstimates;
     public List<LearningObject> objList;
     String[] userIdList;
     RCode rMatrix;
 
 
-    public Matrix(ArrayList<LearningObject> lo){
+    public KnowledgeEstimateMatrix(ArrayList<LearningObject> lo){
         this.id = id;
-        this.structure = createMatrix(lo);
+        this.studentKnowledgeEstimates = createMatrix(lo);
         this.objList = lo;
         this.userIdList = userIdList;
         this.rMatrix = createRMatrix();
 
-    }
-
-
-    public double[][] createMatrix(ConceptGraph graph){
-        Map<String, LearningObject> loMap= graph.getLearningObjectMap();
-        return createMatrix(loMap.values());
     }
 
 
@@ -51,7 +42,7 @@ public class Matrix {
                 rows = responses.size();
             }
         }
-        structure = new double[columns][rows];
+        double[][] newMatrix = new double[columns][rows];
 
         this.userIdList = new String[rows];
         int numOfIds = 0;
@@ -63,7 +54,7 @@ public class Matrix {
             //first column of LearningObjectResponses cannot compare to anything to keep userid in same row as any previous columns of LearningObjectResponses
             if (currentColumn == 0) {
                 for (LearningObjectResponse ans : responses) {
-                        structure[currentColumn][currentRow] = ans.calcKnowledgeEstimate();
+                        newMatrix[currentColumn][currentRow] = ans.calcKnowledgeEstimate();
                         userIdList[currentRow] = ans.getUserId();
                         numOfIds++;
                         currentRow++;
@@ -80,13 +71,13 @@ public class Matrix {
                     for (int i = 0; i < numOfIds; i++) {
                         //if the current userId matches a userId in the list, place it at the same row as the userIdList index
                         if (ans.getUserId() == userIdList[i]) {
-                            structure[currentColumn][i] = ans.calcKnowledgeEstimate();
+                            newMatrix[currentColumn][i] = ans.calcKnowledgeEstimate();
                             isPlaced = true;
                         } else {
                             //if all userIds in the list have been looked through and the response is still not placed, place the id in the list and the value into new row
                             if ((i == numOfIds - 1) && (isPlaced == false)) {
                                 userIdList[numOfIds] = ans.getUserId();
-                                structure[currentColumn][numOfIds] = ans.calcKnowledgeEstimate();
+                                newMatrix[currentColumn][numOfIds] = ans.calcKnowledgeEstimate();
                                 numOfIds++;
 
                             }
@@ -96,11 +87,11 @@ public class Matrix {
             }
             currentColumn++;
         }
-        return structure;
+        return newMatrix;
     }
 
     public RCode createRMatrix(){
-        RCode rMatrix = JavaToRConversion.JavaToR(structure, objList, userIdList);
+        RCode rMatrix = JavaToRConversion.JavaToR(studentKnowledgeEstimates, objList, userIdList);
         return rMatrix;
     }
 
@@ -111,7 +102,7 @@ public class Matrix {
     }
 
 
-    public double[][] getStructure(){return this.structure;}
+    public double[][] getStudentKnowledgeEstimates(){return this.studentKnowledgeEstimates;}
 
     public String[] getUserIdList(){return this.userIdList;}
 

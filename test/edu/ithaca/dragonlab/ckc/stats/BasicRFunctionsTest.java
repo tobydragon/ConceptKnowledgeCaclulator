@@ -1,14 +1,5 @@
 package edu.ithaca.dragonlab.ckc.stats;
 
-import edu.ithaca.dragonlab.ckc.conceptgraph.Matrix;
-import edu.ithaca.dragonlab.ckc.io.CSVReader;
-import edu.ithaca.dragonlab.ckc.learningobject.LearningObject;
-import org.junit.Assert;
-import org.junit.Test;
-import stats.BasicRFunctions;
-
-import java.util.ArrayList;
-
 /**
  * Created by bleblanc2 on 6/19/17.
  */
@@ -20,7 +11,7 @@ public class BasicRFunctionsTest {
         String file = "test/testresources/SmallDataCSVExample.csv";
         CSVReader data = new CSVReader(file);
         ArrayList<LearningObject> gotoMatrix = data.getManualGradedLearningObjects();
-        Matrix newMatrix = new Matrix(gotoMatrix);
+        KnowledgeEstimateMatrix newMatrix = new KnowledgeEstimateMatrix(gotoMatrix);
         double avg = BasicRFunctions.LearningObjectAvg(newMatrix, 2);
         Assert.assertEquals(0.88166, avg, 0.001);
         avg = BasicRFunctions.LearningObjectAvg(newMatrix, 0);
@@ -34,7 +25,7 @@ public class BasicRFunctionsTest {
         String file = "test/testresources/SmallDataCSVExample.csv";
         CSVReader data = new CSVReader(file);
         ArrayList<LearningObject> gotoMatrix = data.getManualGradedLearningObjects();
-        Matrix newMatrix = new Matrix(gotoMatrix);
+        KnowledgeEstimateMatrix newMatrix = new KnowledgeEstimateMatrix(gotoMatrix);
         double avg = BasicRFunctions.StudentKnowledgeEstAvg(newMatrix, 0);
         Assert.assertEquals(.724, avg, 0.001);
         avg = BasicRFunctions.StudentKnowledgeEstAvg(newMatrix, 1);

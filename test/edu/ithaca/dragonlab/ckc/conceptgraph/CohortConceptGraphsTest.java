@@ -108,7 +108,7 @@ public class CohortConceptGraphsTest {
 
         for (String origId : origIds){
             if ( ! strIsSubstringOfSomeEntry(origId, treeCopyIds)){
-                Assert.fail("Tree copy does not contain any matching nodeIds for structure ID: " + origId +" - Not chekcing all may be missing more...");
+                Assert.fail("Tree copy does not contain any matching nodeIds for studentKnowledgeEstimates ID: " + origId +" - Not chekcing all may be missing more...");
             }
         }
     }

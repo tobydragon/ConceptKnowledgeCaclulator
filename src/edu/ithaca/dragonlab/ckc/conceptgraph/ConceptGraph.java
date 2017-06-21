@@ -73,9 +73,9 @@ public class ConceptGraph {
 
 
     /**
-     * Initializes a graph structure only (no learningObjects)
+     * Initializes a graph studentKnowledgeEstimates only (no learningObjects)
      * @param graphRecord
-     * @post sets, roots and nodeMap, completely overwrite any previous graph structure
+     * @post sets, roots and nodeMap, completely overwrite any previous graph studentKnowledgeEstimates
      */
     private void buildStructureFromGraphRecord(ConceptGraphRecord graphRecord){
         this.roots = new ArrayList<>();

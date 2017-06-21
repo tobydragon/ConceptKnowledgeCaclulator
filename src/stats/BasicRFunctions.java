@@ -2,7 +2,7 @@ package stats;
 
 import com.github.rcaller.rstuff.*;
 import com.github.rcaller.util.Globals;
-import edu.ithaca.dragonlab.ckc.conceptgraph.Matrix;
+import edu.ithaca.dragonlab.ckc.conceptgraph.KnowledgeEstimateMatrix;
 import edu.ithaca.dragonlab.ckc.learningobject.LearningObject;
 
 /**
@@ -12,7 +12,7 @@ import edu.ithaca.dragonlab.ckc.learningobject.LearningObject;
 public class BasicRFunctions {
 
 
-    public static double LearningObjectAvg(Matrix loMatrix, LearningObject lo){
+    public static double LearningObjectAvg(KnowledgeEstimateMatrix loMatrix, LearningObject lo){
         RCaller rCaller = RCallerVariable();
 
         int loIndex = loMatrix.getloIndex(lo);
@@ -28,7 +28,7 @@ public class BasicRFunctions {
 
     }
 
-    public static double StudentKnowledgeEstAvg(Matrix loMatrix, LearningObject lo){
+    public static double StudentKnowledgeEstAvg(KnowledgeEstimateMatrix loMatrix, LearningObject lo){
         RCaller rCaller = RCallerVariable();
 
         int stuIndex = loMatrix.getloIndex(lo);
