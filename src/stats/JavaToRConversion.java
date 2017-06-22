@@ -10,7 +10,7 @@ import java.util.List;
  */
 public class JavaToRConversion {
 
-    public static RCode JavaToR(double[][] aMatrix, List<LearningObject> learningObjects, String[] users){
+    public static RCode JavaToR(double[][] aMatrix){
         /**
         double[][] aMatrix = loMatrix.getStudentKnowledgeEstimates();
         String[] users = loMatrix.getUserIdList();

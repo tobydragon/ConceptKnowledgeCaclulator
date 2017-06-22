@@ -85,5 +85,7 @@ public class CohortConceptGraphs {
 		return averageGraph;
 	}
 
+	public Map<String, ConceptGraph> getUserToGraph() { return userToGraph; }
+
 
 }
