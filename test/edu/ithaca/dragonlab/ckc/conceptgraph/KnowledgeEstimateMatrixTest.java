@@ -6,6 +6,8 @@ import org.junit.Assert;
 import org.junit.Test;
 
 import java.util.ArrayList;
+import java.util.LinkedList;
+import java.util.List;
 
 /**
  * Created by bleblanc2 on 6/13/17.
@@ -57,8 +59,11 @@ public class KnowledgeEstimateMatrixTest {
         Assert.assertArrayEquals(exArr3, arr3, 0);
 
         //userIdList Check
-        String[] actualString = new String[]{"stu1", "stu2", "stu3"};
-        Assert.assertArrayEquals(actualString, newMatrix.getUserIdList());
+        List<String> actualString = new LinkedList<String>();
+        actualString.add("stu1");
+        actualString.add("stu2");
+        actualString.add("stu3");
+        Assert.assertEquals(actualString, newMatrix.getUserIdList());
     }
 
 }

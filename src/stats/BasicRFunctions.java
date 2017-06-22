@@ -5,6 +5,8 @@ import com.github.rcaller.util.Globals;
 import edu.ithaca.dragonlab.ckc.conceptgraph.KnowledgeEstimateMatrix;
 import edu.ithaca.dragonlab.ckc.learningobject.LearningObject;
 
+import java.util.List;
+
 /**
  * Created by bleblanc2 on 6/14/17.
  */
@@ -28,13 +30,19 @@ public class BasicRFunctions {
 
     }
 
-    public static double StudentKnowledgeEstAvg(KnowledgeEstimateMatrix loMatrix, LearningObject lo){
+    public static double StudentKnowledgeEstAvg(KnowledgeEstimateMatrix loMatrix, String user){
         RCaller rCaller = RCallerVariable();
 
-        int stuIndex = loMatrix.getloIndex(lo);
+
+        List<String> userIdList = loMatrix.getUserIdList();
+
+        int stuIndex = userIdList.indexOf(user);
         RCode code = loMatrix.getrMatrix();
         stuIndex++;
         code.addInt("stuIndex", stuIndex);
+        //code.addRCode("flippedMatrix <- t(matrix)");
+        //code.addRCode("stuAvg <- mean(matrix[stuIndex, 1:14], na.rm=TRUE)");
+        //code.addRCode("stuAvg <- mean(newData)");
         code.addRCode("stuAvg <- mean(matrix[stuIndex, ])");
         rCaller.setRCode(code);
         rCaller.runAndReturnResult("stuAvg");

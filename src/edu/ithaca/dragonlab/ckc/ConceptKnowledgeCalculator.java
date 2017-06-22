@@ -12,6 +12,7 @@ import edu.ithaca.dragonlab.ckc.learningobject.LearningObject;
 import edu.ithaca.dragonlab.ckc.learningobject.LearningObjectResponse;
 import edu.ithaca.dragonlab.ckc.suggester.LearningObjectSuggester;
 import edu.ithaca.dragonlab.ckc.suggester.SuggestionResource;
+import org.apache.commons.lang.ObjectUtils;
 import stats.BasicRFunctions;
 
 import java.io.IOException;
@@ -267,24 +268,43 @@ public class ConceptKnowledgeCalculator implements ConceptKnowledgeCalculatorAPI
     }
 
 
-    public double getLearningObjectAvg(String learningObject){
+
+    public List<String> getUserIdList(){
+        Map<String, ConceptGraph> userMap = cohortConceptGraphs.getUserToGraph();
+        List<String> userList = new ArrayList<String>(userMap.keySet());
+        java.util.Collections.sort(userList);
+
+        return userList;
+    }
+
+
+    public double getLearningObjectAvg(String learningObject)throws NullPointerException{
         ConceptGraph graph = cohortConceptGraphs.getAvgGraph();
         Map<String, LearningObject> loMap = graph.getLearningObjectMap();
-        Collection<LearningObject> objList = loMap.values();
-        ArrayList<LearningObject> list;
-        if (objList instanceof List)
-        {
-            list = (ArrayList<LearningObject>) objList;
-        }
-        else
-        {
-            list = new ArrayList<LearningObject>(objList);
-        }
-        KnowledgeEstimateMatrix myMatrix = new KnowledgeEstimateMatrix(list);
+        List<LearningObject> objList = new ArrayList<LearningObject>(loMap.values());
+        KnowledgeEstimateMatrix myMatrix = new KnowledgeEstimateMatrix(objList);
         LearningObject concept = loMap.get(learningObject);
-        double result = BasicRFunctions.LearningObjectAvg(myMatrix, concept);
 
-        return result;
+        if(concept != null) {
+            double result = BasicRFunctions.LearningObjectAvg(myMatrix, concept);
+            return result;
+        }else{
+        throw new NullPointerException();
+        }
+    }
+
+    public double getStudentAvg(String user)throws NullPointerException{
+        ConceptGraph graph = cohortConceptGraphs.getAvgGraph();
+        Map<String, LearningObject> loMap = graph.getLearningObjectMap();
+        List<LearningObject> objList = new ArrayList<LearningObject>(loMap.values());
+        KnowledgeEstimateMatrix myMatrix = new KnowledgeEstimateMatrix(objList);
+        List<String> userIdList = myMatrix.getUserIdList();
+
+        if(userIdList.contains(user)) {
+            return BasicRFunctions.StudentKnowledgeEstAvg(myMatrix, user);
+        }else{
+            throw new NullPointerException();
+        }
     }
 
 

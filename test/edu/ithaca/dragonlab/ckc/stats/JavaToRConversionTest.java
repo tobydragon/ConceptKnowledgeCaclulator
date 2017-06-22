@@ -27,8 +27,8 @@ public class JavaToRConversionTest {
         KnowledgeEstimateMatrix newMatrix = new KnowledgeEstimateMatrix(gotoMatrix);
         double[][] struct = newMatrix.getStudentKnowledgeEstimates();
         List<LearningObject> objList = newMatrix.getObjList();
-        String[] user = newMatrix.getUserIdList();
-        RCode mycode = JavaToRConversion.JavaToR(struct, objList, user);
+        List<String> user = newMatrix.getUserIdList();
+        RCode mycode = JavaToRConversion.JavaToR(struct);
         mycode.addRCode("classAvg <- mean(matrix[, 3])");
 
 
