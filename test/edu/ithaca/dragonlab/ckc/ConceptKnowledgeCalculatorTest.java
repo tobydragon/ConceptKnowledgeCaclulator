@@ -102,39 +102,39 @@ public class ConceptKnowledgeCalculatorTest {
 
     }
 
-//    @Test
-//    public void  calcIndividualGraphSuggestionsTest(){
-//        ConceptKnowledgeCalculatorAPI ckc = null;
-//        try {
-//            ckc = new ConceptKnowledgeCalculator("test/testresources/basicRealisticExampleConceptGraphOneStudent.json", "test/testresources/basicRealisticExampleLOLRecordOneStudent.json", "test/testresources/basicRealisticExampleGradeBook2.csv");
-//        } catch (IOException e) {
-//            Assert.fail("Unable to load default files. Test unable to run");
-//;
-//        }
-//
-//        SuggestionResource res = null;
-//        try {
-//            res = ckc.calcIndividualGraphSuggestions("bspinache1");
-//        } catch (Exception e) {
-//            Assert.fail("Unable to find user");
-//        }
-//        List<LearningObjectSuggestion> incomTest = res.incompleteList;
-//        List<LearningObjectSuggestion> wrongTest = res.wrongList;
-//
-//
-//        Assert.assertEquals(incomTest.size(),5);
-//        Assert.assertEquals(incomTest.get(0).getId(),"Q10");
-//        Assert.assertEquals(incomTest.get(1).getId(),"Q10");
-//        Assert.assertEquals(incomTest.get(2).getId(),"Q3");
-//        Assert.assertEquals(incomTest.get(3).getId(),"Q6");
-//        Assert.assertEquals(incomTest.get(4).getId(),"Q6");
-//
-//        Assert.assertEquals(wrongTest.size(),3);
-//        Assert.assertEquals(wrongTest.get(0).getId(), "Q9");
-//        Assert.assertEquals(wrongTest.get(1).getId(), "Q9");
-//        Assert.assertEquals(wrongTest.get(2).getId(), "Q1");
-//
-//    }
+    @Test
+    public void  calcIndividualGraphSuggestionsTest(){
+        ConceptKnowledgeCalculatorAPI ckc = null;
+        try {
+            ckc = new ConceptKnowledgeCalculator("test/testresources/basicRealisticExampleConceptGraphOneStudent.json", "test/testresources/basicRealisticExampleLOLRecordOneStudent.json", "test/testresources/basicRealisticExampleGradeBook2.csv");
+        } catch (IOException e) {
+            Assert.fail("Unable to load default files. Test unable to run");
+;
+        }
+
+        SuggestionResource res = null;
+        try {
+            res = ckc.calcIndividualGraphSuggestions("bspinache1");
+        } catch (Exception e) {
+            Assert.fail("Unable to find user");
+        }
+        List<LearningObjectSuggestion> incomTest = res.incompleteList;
+        List<LearningObjectSuggestion> wrongTest = res.wrongList;
+
+
+        Assert.assertEquals(incomTest.size(),5);
+        Assert.assertEquals(incomTest.get(0).getId(),"Q10");
+        Assert.assertEquals(incomTest.get(1).getId(),"Q10");
+        Assert.assertEquals(incomTest.get(2).getId(),"Q3");
+        Assert.assertEquals(incomTest.get(3).getId(),"Q6");
+        Assert.assertEquals(incomTest.get(4).getId(),"Q6");
+
+        Assert.assertEquals(wrongTest.size(),3);
+        Assert.assertEquals(wrongTest.get(0).getId(), "Q9");
+        Assert.assertEquals(wrongTest.get(1).getId(), "Q9");
+        Assert.assertEquals(wrongTest.get(2).getId(), "Q1");
+
+    }
 
 
 
