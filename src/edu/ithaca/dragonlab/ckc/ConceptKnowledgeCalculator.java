@@ -289,10 +289,11 @@ public class ConceptKnowledgeCalculator implements ConceptKnowledgeCalculatorAPI
         return new ArrayList<>();
     }
 
-    //TODO: Alphabetize userList
+
     public List<String> getUserIdList(){
         Map<String, ConceptGraph> userMap = cohortConceptGraphs.getUserToGraph();
         List<String> userList = new ArrayList<String>(userMap.keySet());
+        java.util.Collections.sort(userList);
 
         return userList;
     }

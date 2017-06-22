@@ -347,6 +347,6 @@ public class ConceptKnowledgeCalculatorTest {
         } catch (IOException e) {
             Assert.fail("Unable to load default files");
         }
-        Assert.assertEquals(0.75333, ckc.getStudentAvg("bspinache1"), OK_FLOAT_MARGIN);
+        Assert.assertEquals(0.538, ckc.getStudentAvg("bspinache1"), OK_FLOAT_MARGIN);
     }
 }

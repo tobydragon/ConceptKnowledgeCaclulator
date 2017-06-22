@@ -78,12 +78,12 @@ public class ConsoleUI {
 
             } else {
 
-                System.out.println("What do you want to do? \n 1 - calculate a list of concept nodes to work on \n 2 - calculate learning object suggestions based on a specific concept \n 3 - automatically calculate suggestions \n 4 - View graph \n 5 - Create new graph \n 6 - Replace graph file \n 7 - Add another assessment file \n 8 - Add another LO file \n 9 - Get Learning Object Average \n 10 - View Structure Graph");
+                System.out.println("What do you want to do? \n 1 - calculate a list of concept nodes to work on \n 2 - calculate learning object suggestions based on a specific concept \n 3 - automatically calculate suggestions \n 4 - View graph \n 5 - View users \n 6 - Create new graph \n 7 - Replace graph file \n 8 - Add another assessment file \n 9 - Add another LO file \n 10 - Get Learning Object Average \n 11 - Get a user's average grade \n 12 - View Structure Graph");
                 Integer num = scanner.nextInt();
 
-                while (num < 1 || num > 10) {
+                while (num < 1 || num > 12) {
                     System.out.println("Out of bounds");
-                    System.out.println("What do you want to do? \n 1 - calculate a list of concept nodes to work on \n 2 - calculate learning object suggestions based on a specific concept \n 3 - automatically calculate suggestions \n 4 - View graph \n 5 - Create new graph \n 6 - Replace graph file \n 7 - Add another assessment file \n 8 - Add another LO file \n 9 - Get Learning Object Average \n 10 - View Structure Graph");
+                    System.out.println("What do you want to do? \n 1 - calculate a list of concept nodes to work on \n 2 - calculate learning object suggestions based on a specific concept \n 3 - automatically calculate suggestions \n 4 - View graph \n 5 - View users \n 6 - Create new graph \n 7 - Replace graph file \n 8 - Add another assessment file \n 9 - Add another LO file \n 10 - Get Learning Object Average \n Get a user's average grade \n 12 - View Structure Graph");
                     num = scanner.nextInt();
                 }
 
@@ -101,21 +101,26 @@ public class ConsoleUI {
                 else if (num == 4) {
                     viewgraph();
                 }
-                else  if(num ==5){
+                else if(num == 5){
+                    viewUsers();
+                }
+                else  if(num ==6){
                     createNewCohortGraph(scanner, true );
                 }
-                else if(num ==6){
+                else if(num ==7){
                     replaceGraphFile(scanner);
                 }
-                else if(num ==7){
+                else if(num ==8){
                     additionalLOR(scanner);
                 }
-                else if (num ==8) {
-                    addLOFile(scanner);
-
-                }
                 else if (num ==9) {
+                    addLOFile(scanner);
+                }
+                else if (num ==10) {
                     resourceAverage(scanner);
+                }
+                else if(num == 11){
+                    studentAverage(scanner);
                 }
                 else{
                     switchToStructuremode();
@@ -147,11 +152,24 @@ public class ConsoleUI {
             double result = ckc.getLearningObjectAvg(conceptNode);
             System.out.println("The average is: " + result);
         }catch(NullPointerException e){
-            System.out.println("Error: Learning Object not found2");
+            System.out.println("Error: Learning Object not found");
         }
 
         //System.out.println("The average is: " + ckc.getLearningObjectAvg(conceptNode));
 
+    }
+
+    public void studentAverage(Scanner scanner){
+        System.out.println("Get user's average grade");
+        System.out.println("Which user would you like to calculate an average for?");
+        String user = scanner.nextLine();
+
+        try{
+            double result = ckc.getStudentAvg(user);
+            System.out.println("The average is: " + result);
+        }catch(NullPointerException e){
+            System.out.println("Error: User not found");
+        }
     }
 
 
@@ -274,6 +292,10 @@ public class ConsoleUI {
 
         ckc.getCohortGraphsUrl();
 
+    }
+
+    public void viewUsers(){
+        System.out.println("List of users: \n" + ckc.getUserIdList().toString().replace("[", "").replace("]",""));
     }
 
     public void createNewCohortGraph(Scanner scanner, Boolean cohortFilesValid){
