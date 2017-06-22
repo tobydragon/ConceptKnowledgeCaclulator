@@ -59,17 +59,6 @@ public class ConceptKnowledgeCalculatorTest {
         Assert.assertEquals(ckc.getStructureFileName(), "test/testresources/mediumGraphTestConceptNodes.json");
 
 
-        Assert.assertEquals(ckc.getResourceFile(),"test/testresources/basicRealisticExampleLOLRecordOneStudent.json" );
-        ckc.setResourceFile("test/testresources/mediumGraphLOL.json");
-        Assert.assertEquals(ckc.getResourceFile(), "test/testresources/mediumGraphLOL.json");
-
-
-
-        Assert.assertEquals(ckc.getAssessmentFile(),"test/testresources/basicRealisticExampleGradeBook2.csv" );
-        ckc.setAssessmentFile("test/testresources/mediumGraphTestGradeBook.csv");
-        Assert.assertEquals(ckc.getAssessmentFile(), "test/testresources/mediumGraphTestGradeBook.csv");
-
-
     }
 
 

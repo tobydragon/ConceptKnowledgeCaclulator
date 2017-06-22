@@ -250,7 +250,6 @@ public class ConsoleUI {
             e.printStackTrace();
         }
 
-
     }
 
     public void graphSuggestions(Scanner scanner){

@@ -288,16 +288,9 @@ public class ConceptKnowledgeCalculator implements ConceptKnowledgeCalculatorAPI
     }
 
 
-    public void setResourceFile(String file){
-        resourceFile = file;
-    }
 
     public String getResourceFile(){
         return resourceFile;
-    }
-
-    public void setAssessmentFile(String file){
-        assessmentFile = file;
     }
 
     public String getAssessmentFile(){
@@ -351,6 +344,10 @@ public class ConceptKnowledgeCalculator implements ConceptKnowledgeCalculatorAPI
         return saveCohortFiles;
     }
 
+    public CohortConceptGraphs getCohortConceptGraphs(){
+        return cohortConceptGraphs;
+    }
+
 
     //for testing purposes
 
@@ -358,9 +355,6 @@ public class ConceptKnowledgeCalculator implements ConceptKnowledgeCalculatorAPI
         return structureGraph;
     }
 
-    public CohortConceptGraphs getCohortConceptGraphs(){
-        return cohortConceptGraphs;
-    }
 
 
 

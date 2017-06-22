@@ -108,11 +108,7 @@ public interface ConceptKnowledgeCalculatorAPI {
     ConceptKnowledgeCalculator.Mode getCurrentmode();
 
 
-    void setResourceFile(String file);
-
     String getResourceFile();
-
-    void setAssessmentFile(String file);
 
     String getAssessmentFile();
 

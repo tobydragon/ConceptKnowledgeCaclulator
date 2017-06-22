@@ -124,9 +124,6 @@ public class SuggestionResource {
         }
     }
 
-    public void setSuggestionMap(HashMap<String, List<LearningObjectSuggestion>> sug){
-        this.suggestionMap= sug;
-    }
 
 
     public String toString(int choice){
