@@ -12,6 +12,9 @@ import java.util.Map;
 
 /**
  * Created by bleblanc2 on 6/13/17.
+ * Creates an object that holds 2D array of doubles that store student knowledge estimates,
+ * a list of learning objects and users that make up these estimate values, and a matrix
+ * of this 2D array that is usable in R
  */
 public class KnowledgeEstimateMatrix {
 
