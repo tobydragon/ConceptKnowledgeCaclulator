@@ -42,27 +42,39 @@ public class SuggestionResource {
         List<String> workingList = new ArrayList<>();
         List<String> orderedNames = new ArrayList<>();
 
-        for (String name: suggestionMap.keySet()) {
-            workingList.add(name);
-        }
+        workingList.addAll(suggestionMap.keySet());
+
 
         int maxPathNum =0;
         while (workingList.size()!=0) {
             String save= "";
+            String nameWithNoList = "";
 
             for (int x = 0; x < workingList.size(); x++) {
                 String name = workingList.get(x);
 
-                if (suggestionMap.get(name).get(0).getPathNum() > maxPathNum) {
+                if(suggestionMap.get(name).size()!=0) {
 
-                    maxPathNum = suggestionMap.get(name).get(0).getPathNum();
-                    save = name;
+                    if (suggestionMap.get(name).get(0).getPathNum() > maxPathNum) {
+
+                        maxPathNum = suggestionMap.get(name).get(0).getPathNum();
+                        save = name;
+                    }
+                }else{
+                    nameWithNoList=name;
                 }
+
             }
+            //add the ones that don't have lists attached
 
             if (workingList.contains(save)) {
                 workingList.remove(save);
                 orderedNames.add(save);
+            }
+
+            if (workingList.contains(nameWithNoList)){
+                workingList.remove(nameWithNoList);
+                orderedNames.add(nameWithNoList);
             }
             maxPathNum=0;
         }
@@ -112,9 +124,6 @@ public class SuggestionResource {
         }
     }
 
-    public void setSuggestionMap(HashMap<String, List<LearningObjectSuggestion>> sug){
-        this.suggestionMap= sug;
-    }
 
 
     public String toString(int choice){

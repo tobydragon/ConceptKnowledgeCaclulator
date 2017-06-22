@@ -72,7 +72,7 @@ public interface ConceptKnowledgeCalculatorAPI {
      *
      * @return SuggestionResource
      */
-    SuggestionResource calcIndividualGraphSuggestions(String userId);
+    SuggestionResource calcIndividualGraphSuggestions(String userId) throws Exception;
 
 
     /**
@@ -82,7 +82,7 @@ public interface ConceptKnowledgeCalculatorAPI {
      *
      * @return Suggestion Resource
      */
-    SuggestionResource calcIndividualSpecificConceptSuggestions(String userId, String conceptId);
+    SuggestionResource calcIndividualSpecificConceptSuggestions(String userId, String conceptId) throws Exception;
 
     /**
      * Calculates average knowledgeEstimates of a LearningObject across all students
@@ -99,7 +99,7 @@ public interface ConceptKnowledgeCalculatorAPI {
      * @param userID
      * @return List of Concept Nodes
      */
-    List<String> calcIndividualConceptNodesSuggestions(String userID);
+    List<String> calcIndividualConceptNodesSuggestions(String userID) throws Exception;
 
 
     void setCurrentMode(ConceptKnowledgeCalculator.Mode mode);
@@ -108,11 +108,7 @@ public interface ConceptKnowledgeCalculatorAPI {
     ConceptKnowledgeCalculator.Mode getCurrentmode();
 
 
-    void setResourceFile(String file);
-
     String getResourceFile();
-
-    void setAssessmentFile(String file);
 
     String getAssessmentFile();
 

@@ -40,13 +40,16 @@ public class ConsoleUI {
 
 
     public void run(){
+        Scanner scanner = new Scanner(System.in);
+
+        if(ckc.getCohortConceptGraphs()==null && ckc.getStructureGraph()==null){
+            createNewCohortGraph(scanner,true);
+        }
 
         if(ckc.getCohortConceptGraphs()!=null || ckc.getStructureGraph()!= null) {
             System.out.println("Current graphs:\t" + ckc.getCohortGraphsUrl());
         }
 
-
-        Scanner scanner = new Scanner(System.in);
         ckc.setLastWorkingStructureName(ckc.getStructureFileName());
 
         ckc.setPreviouslySavedCohortFiles(ckc.getSavedCohortFile());
@@ -206,15 +209,19 @@ public class ConsoleUI {
         System.out.println("User ID");
         String userID = scanner.nextLine();
 
+        try {
+            List<String> suggestedConceptNodeList = ckc.calcIndividualConceptNodesSuggestions(userID);
 
-        List<String> suggestedConceptNodeList = ckc.calcIndividualConceptNodesSuggestions(userID);
+            String st = "";
+            for(String node: suggestedConceptNodeList){
+                st+= node+ "\n";
+            }
 
-        String st = "";
-        for(String node: suggestedConceptNodeList){
-            st+= node+ "\n";
+            System.out.println(st);
+
+        } catch (Exception e) {
+            e.printStackTrace();
         }
-
-        System.out.println(st);
 
     }
 
@@ -225,47 +232,54 @@ public class ConsoleUI {
 
         System.out.println("Concept ID");
         String conceptID = scanner.nextLine();
-        SuggestionResource sugRes = ckc.calcIndividualSpecificConceptSuggestions(userID, conceptID);
-
-        System.out.println(" 1- Try something new 2- try something again");
-        Integer option = scanner.nextInt();
-        while (option > 2 || option < 1) {
+        SuggestionResource sugRes;
+        try {
+            sugRes = ckc.calcIndividualSpecificConceptSuggestions(userID, conceptID);
             System.out.println(" 1- Try something new 2- try something again");
-            option = scanner.nextInt();
+            Integer option = scanner.nextInt();
+            while (option > 2 || option < 1) {
+                System.out.println(" 1- Try something new 2- try something again");
+                option = scanner.nextInt();
+            }
+            if (option == 1) {
+                System.out.println(sugRes.toString(0));
+            } else {
+                System.out.println(sugRes.toString(1));
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
         }
-        if (option == 1) {
-            System.out.println(sugRes.toString(0));
-        } else {
-            System.out.println(sugRes.toString(1));
-        }
+
     }
 
     public void graphSuggestions(Scanner scanner){
         System.out.println("automatically calculate suggestions");
         System.out.println("User ID");
         String userID = scanner.nextLine();
-
-        SuggestionResource sugRes = ckc.calcIndividualGraphSuggestions(userID);
-
-        System.out.println(" 1- Try something new 2- try something again");
-        Integer option = scanner.nextInt();
-        while (option > 2 || option < 1) {
+        try {
+            SuggestionResource sugRes = ckc.calcIndividualGraphSuggestions(userID);
             System.out.println(" 1- Try something new 2- try something again");
-            option = scanner.nextInt();
+            Integer option = scanner.nextInt();
+            while (option > 2 || option < 1) {
+                System.out.println(" 1- Try something new 2- try something again");
+                option = scanner.nextInt();
+            }
+            if (option == 1) {
+                System.out.println(sugRes.toString(0));
+            } else {
+                System.out.println(sugRes.toString(1));
+            }
+        }catch (Exception e){
+            e.printStackTrace();
         }
-        if (option == 1) {
-            System.out.println(sugRes.toString(0));
 
-        } else {
-            System.out.println(sugRes.toString(1));
-        }
     }
+
 
     public void viewgraph(){
         System.out.println("view graph");
 
-        ckc.getCohortGraphsUrl();
-
+        System.out.println(ckc.getCohortGraphsUrl());
     }
 
     public void createNewCohortGraph(Scanner scanner, Boolean cohortFilesValid){
