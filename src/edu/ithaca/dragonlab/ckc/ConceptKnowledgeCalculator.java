@@ -204,7 +204,9 @@ public class ConceptKnowledgeCalculator implements ConceptKnowledgeCalculatorAPI
                 userGraph = cohortConceptGraphs.getUserGraph(userId);
                 if (userGraph!=null){
                     List<ConceptNode> concepts;
+
                     concepts = LearningObjectSuggester.conceptsToWorkOn(userGraph);
+                    System.out.println(concepts);
 
 
                     return new SuggestionResource(userGraph, concepts);

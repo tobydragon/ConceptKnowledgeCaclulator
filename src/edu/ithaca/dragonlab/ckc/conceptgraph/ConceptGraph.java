@@ -194,12 +194,15 @@ public class ConceptGraph {
 		for (String key : nodeMap.keySet()) {
 			ConceptNode compareNode = nodeMap.get(key);
 			boolean ances =  node.isAncestorOf(compareNode);
+//            System.out.println(key + " ances to "+ compareNode.getID() + " " +ances);
             if (ances && compareNode.getKnowledgeEstimate()<LearningObjectSuggester.MAX){
                 isAnc=true;
 				break;
 			}
-		}
-		return  isAnc;
+        }
+
+//        System.out.println(isAnc);
+        return  isAnc;
 	}
 
 

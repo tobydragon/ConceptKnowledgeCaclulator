@@ -1,16 +1,17 @@
 package edu.ithaca.dragonlab.ckc.suggester;
 
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
-import edu.ithaca.dragonlab.ckc.conceptgraph.ConceptGraph;
-import edu.ithaca.dragonlab.ckc.conceptgraph.ConceptNode;
-import edu.ithaca.dragonlab.ckc.conceptgraph.ExampleConceptGraphFactory;
-import edu.ithaca.dragonlab.ckc.conceptgraph.ExampleConceptGraphRecordFactory;
+import edu.ithaca.dragonlab.ckc.conceptgraph.*;
+import edu.ithaca.dragonlab.ckc.io.CSVReader;
+import edu.ithaca.dragonlab.ckc.io.ConceptGraphRecord;
 import edu.ithaca.dragonlab.ckc.io.LearningObjectLinkRecord;
 import edu.ithaca.dragonlab.ckc.learningobject.ExampleLearningObjectLinkRecordFactory;
 import edu.ithaca.dragonlab.ckc.learningobject.ExampleLearningObjectResponseFactory;
+import edu.ithaca.dragonlab.ckc.learningobject.LearningObjectResponse;
 import org.junit.Assert;
 import org.junit.Test;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
@@ -71,6 +72,36 @@ public class LearningObjectSuggesterTest {
         Assert.assertEquals(concepts.get(1).getID(), "While Loop");
 
     }
+
+    @Test
+    public void RealDataConceptsTOWorkOn() throws IOException {
+
+        CohortConceptGraphs cohortConceptGraphs = null;
+
+        //create the graph structure to be copied for each user
+        ConceptGraphRecord structureRecord = ConceptGraphRecord.buildFromJson("resources/comp220/comp220Graph.json");
+        List<LearningObjectLinkRecord> linkRecord = LearningObjectLinkRecord.buildListFromJson("resources/comp220/comp220Resources.json");
+        ConceptGraph graph = new ConceptGraph(structureRecord, linkRecord);
+
+        //create the data to be used to create and populate the graph copies
+        CSVReader csvReader = new CSVReader("localresources/comp220ExampleDataPortion.csv");
+        List<LearningObjectResponse> assessments = csvReader.getManualGradedResponses();
+
+        //create the average and individual graphs
+        cohortConceptGraphs = new CohortConceptGraphs(graph, assessments);
+
+        ConceptGraph userGraph = cohortConceptGraphs.getUserGraph("s13");
+
+        List<ConceptNode> concepts = LearningObjectSuggester.conceptsToWorkOn(userGraph);
+        System.out.println(concepts);
+
+
+
+        Assert.assertEquals(1,-1);
+
+    }
+
+
 
     @Test
     public void buildSuggestionMapSimpleTest() {

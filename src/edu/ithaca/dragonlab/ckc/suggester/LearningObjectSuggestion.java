@@ -6,7 +6,6 @@ package edu.ithaca.dragonlab.ckc.suggester;
 public class LearningObjectSuggestion {
     private String id;
     private int pathNum;
-    private String causedConcept;
     private String reasoning;
     private Level level;
 
