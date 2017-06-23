@@ -36,11 +36,14 @@ public class KnowledgeEstimateMatrix {
 
 
     /**
-     *
+     * Creates a 2D array from a list of LearningObjects and their responses held within the objects.
+     * The columns are sorted by LearningObjects. The rows are sorted by the userId held within the responses.
+     * A userIdList is also created to track the userIds to the correct row.
      * @param learningObjects collection of learningObjects
      * @return a 2D Array of learningObjectResponses based on the list of learningObjects
      * @post a list of users created that holds the index of the row each user should be placed in
      */
+
     public double[][] createMatrix(Collection<LearningObject> learningObjects){
         //number of rows and columns needed check
         int columns = learningObjects.size();
@@ -101,6 +104,7 @@ public class KnowledgeEstimateMatrix {
 
 
     /**
+     * Calls a function that uses the 2D Array to make base RCode for R functions
      * @pre called from constructor
      * @return RCode holding a R-readable version of the studentKnowledgeEstimates matrix
      */
@@ -110,6 +114,7 @@ public class KnowledgeEstimateMatrix {
     }
 
     /**
+     * Uses a learningObject to find which column in the array to search
      * @param lo learningObject
      * @return the index of the learningObject
      */

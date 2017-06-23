@@ -89,11 +89,20 @@ public interface ConceptKnowledgeCalculatorAPI {
      * @param learningObject matrix, Learningobject
      * @return average knowledgeEstimates for given LearningObject
      */
-
     double getLearningObjectAvg(String learningObject);
 
+    /**
+     * Collects a list of students from the current graph.
+     * @pre a user selects to view a list of all users within the graph
+     * @return list of userIds
+     */
     List<String> getUserIdList();
 
+    /**
+     * Calculates a student's average knowledgeEstimates across all LearningObjects
+     * @param user
+     * @return the average of knowledgeEstimates
+     */
     double getStudentAvg(String user);
 
 
