@@ -35,6 +35,12 @@ public class KnowledgeEstimateMatrix {
     }
 
 
+    /**
+     *
+     * @param learningObjects collection of learningObjects
+     * @return a 2D Array of learningObjectResponses based on the list of learningObjects
+     * @post a list of users created that holds the index of the row each user should be placed in
+     */
     public double[][] createMatrix(Collection<LearningObject> learningObjects){
         //number of rows and columns needed check
         int columns = learningObjects.size();
@@ -93,11 +99,20 @@ public class KnowledgeEstimateMatrix {
         return newMatrix;
     }
 
+
+    /**
+     * @pre called from constructor
+     * @return RCode holding a R-readable version of the studentKnowledgeEstimates matrix
+     */
     public RCode createRMatrix(){
         RCode rMatrix = JavaToRConversion.JavaToR(studentKnowledgeEstimates);
         return rMatrix;
     }
 
+    /**
+     * @param lo learningObject
+     * @return the index of the learningObject
+     */
     public int getloIndex(LearningObject lo){
         int loIndex = -1;
         loIndex = objList.indexOf(lo);
