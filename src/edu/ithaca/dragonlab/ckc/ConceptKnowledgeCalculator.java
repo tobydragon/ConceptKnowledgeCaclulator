@@ -3,7 +3,7 @@ package edu.ithaca.dragonlab.ckc;
 import edu.ithaca.dragonlab.ckc.conceptgraph.CohortConceptGraphs;
 import edu.ithaca.dragonlab.ckc.conceptgraph.ConceptGraph;
 import edu.ithaca.dragonlab.ckc.conceptgraph.ConceptNode;
-//import edu.ithaca.dragonlab.ckc.conceptgraph.KnowledgeEstimateMatrix;
+import edu.ithaca.dragonlab.ckc.conceptgraph.KnowledgeEstimateMatrix;
 import edu.ithaca.dragonlab.ckc.io.CSVReader;
 import edu.ithaca.dragonlab.ckc.io.CohortConceptGraphsRecord;
 import edu.ithaca.dragonlab.ckc.io.ConceptGraphRecord;
@@ -12,7 +12,7 @@ import edu.ithaca.dragonlab.ckc.learningobject.LearningObject;
 import edu.ithaca.dragonlab.ckc.learningobject.LearningObjectResponse;
 import edu.ithaca.dragonlab.ckc.suggester.LearningObjectSuggester;
 import edu.ithaca.dragonlab.ckc.suggester.SuggestionResource;
-//import stats.BasicRFunctions;
+import stats.BasicRFunctions;
 
 import java.io.IOException;
 import java.util.*;
@@ -248,11 +248,11 @@ public class ConceptKnowledgeCalculator implements ConceptKnowledgeCalculatorAPI
         {
             list = new ArrayList<LearningObject>(objList);
         }
-//        KnowledgeEstimateMatrix myMatrix = new KnowledgeEstimateMatrix(list);
-//        LearningObject concept = loMap.get(learningObject);
-//        double result = BasicRFunctions.LearningObjectAvg(myMatrix, concept);
-//
-//        return result;
+        KnowledgeEstimateMatrix myMatrix = new KnowledgeEstimateMatrix(list);
+        LearningObject concept = loMap.get(learningObject);
+        double result = BasicRFunctions.LearningObjectAvg(myMatrix, concept);
+
+        return result;
 
         return 0;
     }
