@@ -2,8 +2,6 @@ package edu.ithaca.dragonlab.ckc.ui;
 
 import edu.ithaca.dragonlab.ckc.ConceptKnowledgeCalculator;
 import edu.ithaca.dragonlab.ckc.ConceptKnowledgeCalculatorAPI;
-import edu.ithaca.dragonlab.ckc.conceptgraph.ConceptNode;
-import edu.ithaca.dragonlab.ckc.suggester.LearningObjectSuggestion;
 import edu.ithaca.dragonlab.ckc.suggester.SuggestionResource;
 
 import java.io.IOException;
@@ -43,20 +41,20 @@ public class ConsoleUI {
         Scanner scanner = new Scanner(System.in);
 
         if(ckc.getCohortConceptGraphs()==null && ckc.getStructureGraph()==null){
-            createNewCohortGraph(scanner,true);
+            createNewCohortGraph(scanner);
         }
 
         if(ckc.getCohortConceptGraphs()!=null || ckc.getStructureGraph()!= null) {
-            System.out.println("Current graphs:\t" + ckc.getCohortGraphsUrl());
+            try {
+                System.out.println("Current graphs:\t" + ckc.getCohortGraphsUrl());
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
         }
-
-//        ckc.setLastWorkingStructureName(ckc.getStructureFileNames());
-//
-//        ckc.setPreviouslySavedCohortFiles(ckc.getSavedCohortFile());
 
         int contQuit = 1;
         while (contQuit == 1) {
-            ConceptKnowledgeCalculator.Mode mode = ckc.getCurrentmode();
+            ConceptKnowledgeCalculator.Mode mode = ckc.getCurrentMode();
 
             if (mode == ConceptKnowledgeCalculator.Mode.STRUCTUREGRAPH) {
 
@@ -72,7 +70,7 @@ public class ConsoleUI {
                 scanner.nextLine();
 
                 if (num==1){
-                    replaceGraph(scanner, true);
+                    replaceGraph(scanner);
 
                 }else{
                     addLOAndLOR(scanner);
@@ -81,12 +79,12 @@ public class ConsoleUI {
 
             } else {
 
-                System.out.println("What do you want to do? \n 1 - calculate a list of concept nodes to work on \n 2 - calculate learning object suggestions based on a specific concept \n 3 - automatically calculate suggestions \n 4 - View graph \n 5 - Create new graph \n 6 - Replace graph file \n 7 - Add another assessment file \n 8 - Add another LO file \n 9 - Get Learning Object Average \n 10 - View Structure Graph");
+                System.out.println("What do you want to do? \n 1 - calculate a list of concept nodes to work on \n 2 - calculate learning object suggestions based on a specific concept \n 3 - automatically calculate suggestions \n 4 - View graph \n 5 - Create new graph \n 6 - Replace graph file \n 7 - Add another assessment file \n 8 - Remove assessment file \n 9 - Replace resource file file \n 10 - Get Learning Object Average \n 11 - View Structure Graph");
                 Integer num = scanner.nextInt();
 
                 while (num < 1 || num > 10) {
                     System.out.println("Out of bounds");
-                    System.out.println("What do you want to do? \n 1 - calculate a list of concept nodes to work on \n 2 - calculate learning object suggestions based on a specific concept \n 3 - automatically calculate suggestions \n 4 - View graph \n 5 - Create new graph \n 6 - Replace graph file \n 7 - Add another assessment file \n 8 - Add another LO file \n 9 - Get Learning Object Average \n 10 - View Structure Graph");
+                    System.out.println("What do you want to do? \n 1 - calculate a list of concept nodes to work on \n 2 - calculate learning object suggestions based on a specific concept \n 3 - automatically calculate suggestions \n 4 - View graph \n 5 - Create new graph \n 6 - Replace graph file \n 7 - Add another assessment file \n 8 - Remove assessment file \n 9 - Replace resource file file \n 10 - Get Learning Object Average \n 11 - View Structure Graph");
                     num = scanner.nextInt();
                 }
 
@@ -105,7 +103,7 @@ public class ConsoleUI {
                     viewgraph();
                 }
                 else  if(num ==5){
-                    createNewCohortGraph(scanner, true );
+                    createNewCohortGraph(scanner );
                 }
                 else if(num ==6){
                     replaceGraphFile(scanner);
@@ -114,13 +112,12 @@ public class ConsoleUI {
                     additionalLOR(scanner);
                 }
                 else if (num ==8) {
-                    addLOFile(scanner);
-
-                }
-                else if (num ==9) {
+                    removeLORFile(scanner);
+                }else if(num ==9){
+                    replaceLOFile(scanner);
+                }else if(num==10){
                     resourceAverage(scanner);
-                }
-                else{
+                }else{
                     switchToStructuremode();
                 }
             }
@@ -145,13 +142,17 @@ public class ConsoleUI {
 
         System.out.println("What learning object do you want to calculate?");
         String conceptNode = scanner.nextLine();
-        System.out.println("The average is: " + ckc.getLearningObjectAvg(conceptNode));
+        try {
+            System.out.println("The average is: " + ckc.getLearningObjectAvg(conceptNode));
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
 
     }
 
 
 
-    public void replaceGraph(Scanner scanner, boolean structFileNameValid){
+    public void replaceGraph(Scanner scanner){
         System.out.println("replace graph");
 
         System.out.println("What file do you want to replace with?");
@@ -166,20 +167,7 @@ public class ConsoleUI {
 
         } catch (Exception e) {
             System.out.println("Cannot find the file");
-            structFileNameValid=false;
-//            try {
-//                ckc.clearAndCreateStructureData(ckc.getLastWorkingStructureName());
-//                ckc.setStructureFileName(ckc.getLastWorkingStructureName());
-//                System.out.println("Last working files used");
-//            } catch (IOException e1) {
-//                e1.printStackTrace();
-//                System.out.println("Error");
-//            }
         }
-
-//        if(structFileNameValid){
-//            ckc.setLastWorkingStructureName(ckc.getStructureFileName());
-//        }
     }
 
 
@@ -201,7 +189,6 @@ public class ConsoleUI {
             LOR.add(LORFile);
 
             ckc.clearAndCreateCohortData(strucFile, LO, LOR);
-//            ckc.setCurrentMode(ConceptKnowledgeCalculator.Mode.COHORTGRAPH);
             System.out.println("Process Completed");
 
         } catch (Exception e) {
@@ -286,10 +273,14 @@ public class ConsoleUI {
     public void viewgraph(){
         System.out.println("view graph");
 
-        System.out.println(ckc.getCohortGraphsUrl());
+        try {
+            System.out.println(ckc.getCohortGraphsUrl());
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
-    public void createNewCohortGraph(Scanner scanner, Boolean cohortFilesValid){
+    public void createNewCohortGraph(Scanner scanner){
         System.out.println("create new cohort graphs");
 
         System.out.println("Type concept graph path: ");
@@ -313,25 +304,11 @@ public class ConsoleUI {
         } catch (Exception e) {
             e.printStackTrace();
             System.out.println("Can't find files");
-            cohortFilesValid=false;
-//            try{
-//                List<String> fileList =ckc.getPreviouslySavedCohortFile();
-//                ckc.clearAndCreateCohortData(fileList.get(0),fileList.get(1), fileList.get(2));
-//                System.out.println("Last Working Files Used");
-//            }catch (IOException e1){
-//                e1.printStackTrace();
-//            }
         }
-
-//        if(cohortFilesValid){
-//            ckc.setPreviouslySavedCohortFiles(ckc.getSavedCohortFile());
-//        }
     }
 
     public void replaceGraphFile(Scanner scanner){
         System.out.println("Replace Graph File");
-
-
 
         System.out.println("Type Graph Path ");
         String graph = scanner.nextLine();
@@ -344,10 +321,36 @@ public class ConsoleUI {
             e.printStackTrace();
             System.out.println("Can't find files");
 
-
         }
     }
 
+
+
+
+    public void removeLORFile(Scanner scanner){
+        System.out.println("Remove a assignment file");
+
+        System.out.println("Type path to file you want to remove: ");
+        String assignment = scanner.nextLine();
+        try {
+            ckc.removeLORFile(assignment);
+            if(ckc.getAssessmentFiles().size()==0){
+                System.out.println("You don't have any assessment files. Make sure to add one");
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void replaceLOFile(Scanner scanner){
+        System.out.println("Replace LO file");
+
+        System.out.println("Type resource file you want to reaplce with: ");
+        String resource = scanner.nextLine();
+
+
+
+    }
 
 
     public void switchToStructuremode(){
@@ -355,7 +358,6 @@ public class ConsoleUI {
 
         try {
             ckc.clearAndCreateStructureData(ckc.getStructureFileNames());
-//            ckc.setCurrentMode(ConceptKnowledgeCalculator.Mode.STRUCTUREGRAPH);
             System.out.println("Process Completed");
 
         } catch (Exception e) {
@@ -375,22 +377,6 @@ public class ConsoleUI {
             ckc.additionalLOR(LOR);
             System.out.println("Process Completed");
         } catch (Exception e) {
-            e.printStackTrace();
-            System.out.println("Can't find file");
-        }
-
-    }
-
-
-    private void addLOFile(Scanner scanner) {
-        System.out.println("Add another Learning Object File");
-        System.out.println("Type file path (root to file)");
-        String file = scanner.nextLine();
-
-        try{
-            ckc.addAnotherLO(file);
-            System.out.println("Process Completed");
-        }catch (Exception e){
             e.printStackTrace();
             System.out.println("Can't find file");
         }

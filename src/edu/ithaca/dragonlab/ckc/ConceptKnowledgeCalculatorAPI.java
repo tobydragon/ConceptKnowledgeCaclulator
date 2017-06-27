@@ -32,10 +32,12 @@ public interface ConceptKnowledgeCalculatorAPI {
      */
     void clearAndCreateCohortData(List<String> structureFilename, List<String> resourceFilename, List<String> assessmentFilename) throws IOException;
 
+    void replaceLOFile(String resourceFile) throws Exception;
+
     /**
      * @return the URL where the current graphs can be seen
      */
-    String getCohortGraphsUrl();
+    String getCohortGraphsUrl() throws Exception;
 
 
     /**
@@ -43,7 +45,7 @@ public interface ConceptKnowledgeCalculatorAPI {
      * @param assessmentFilename
      * @throws IOException
      */
-    void additionalLOR(String assessmentFilename) throws IOException;
+    void additionalLOR(String assessmentFilename) throws Exception;
 
 
 
@@ -54,8 +56,11 @@ public interface ConceptKnowledgeCalculatorAPI {
      * @param secondResourceFile
      * @throws IOException
      */
-    void addAnotherLO(String secondResourceFile) throws IOException;
+    void addAnotherLO(String secondResourceFile) throws Exception;
 
+
+
+    void removeLORFile(String assessmentFile) throws Exception;
 
 
     /**
@@ -83,7 +88,7 @@ public interface ConceptKnowledgeCalculatorAPI {
      * @return average knowledgeEstimates for given LearningObject
      */
 
-    double getLearningObjectAvg(String learningObject);
+    double getLearningObjectAvg(String learningObject) throws Exception;
 
 
 
@@ -95,10 +100,7 @@ public interface ConceptKnowledgeCalculatorAPI {
     List<String> calcIndividualConceptNodesSuggestions(String userID) throws Exception;
 
 
-    void setCurrentMode(ConceptKnowledgeCalculator.Mode mode);
-
-
-    ConceptKnowledgeCalculator.Mode getCurrentmode();
+    ConceptKnowledgeCalculator.Mode getCurrentMode();
 
 
     List<String> getResourceFiles();

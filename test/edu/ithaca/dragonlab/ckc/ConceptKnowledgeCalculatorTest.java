@@ -29,45 +29,31 @@ public class ConceptKnowledgeCalculatorTest {
 
     static Logger logger = LogManager.getLogger(ConceptKnowledgeCalculator.class);
 
-//    @Test
-//    public void getAndSetModeTest(){
-//        ConceptKnowledgeCalculatorAPI ckc = null;
-//        try {
-//            ckc = new ConceptKnowledgeCalculator("test/testresources/basicRealisticExampleConceptGraphOneStudent.json", "test/testresources/basicRealisticExampleLOLRecordOneStudent.json", "test/testresources/basicRealisticExampleGradeBook2.csv");
-//        } catch (IOException e) {
-//            Assert.fail("Unable to load default files. Test unable to run");
-//
-//        }
-//        Assert.assertEquals(ckc.getCurrentmode(), ConceptKnowledgeCalculator.Mode.COHORTGRAPH);
-//
-//        ckc.setCurrentMode(ConceptKnowledgeCalculator.Mode.STRUCTUREGRAPH);
-//        Assert.assertEquals(ckc.getCurrentmode(), ConceptKnowledgeCalculator.Mode.STRUCTUREGRAPH);
-//    }
-//
-//    @Test
-//    public void getAndSetCohortData(){
-//        ConceptKnowledgeCalculatorAPI ckc = null;
-//        try {
-//            ckc = new ConceptKnowledgeCalculator("test/testresources/basicRealisticExampleConceptGraphOneStudent.json", "test/testresources/basicRealisticExampleLOLRecordOneStudent.json", "test/testresources/basicRealisticExampleGradeBook2.csv");
-//        } catch (IOException e) {
-//            Assert.fail("Unable to load default files. Test unable to run");
-//
-//        }
-//
-//        Assert.assertEquals(ckc.getStructureFileNames().get(0),"test/testresources/basicRealisticExampleConceptGraphOneStudent.json" );
-//        List<String> structureTest = new ArrayList<>();
-//        structureTest.add("test/testresources/mediumGraphTestConceptNodes.json");
-//        ckc.setStructureFiles(structureTest);
-//        Assert.assertEquals(ckc.getStructureFiles().get(0), "test/testresources/mediumGraphTestConceptNodes.json");
-//    }
-//
+    @Test
+    public void getModeTest(){
+        ConceptKnowledgeCalculatorAPI ckc = null;
+        try {
+            ckc = new ConceptKnowledgeCalculator("test/testresources/basicRealisticExampleConceptGraphOneStudent.json", "test/testresources/basicRealisticExampleLOLRecordOneStudent.json", "test/testresources/basicRealisticExampleGradeBook2.csv");
+        } catch (IOException e) {
+            Assert.fail("Unable to load default files. Test unable to run");
+        }
+        Assert.assertEquals(ckc.getCurrentMode(), ConceptKnowledgeCalculator.Mode.COHORTGRAPH);
+    }
 
-
+    @Test
+    public void getCohortData(){
+        ConceptKnowledgeCalculatorAPI ckc = null;
+        try {
+            ckc = new ConceptKnowledgeCalculator("test/testresources/basicRealisticExampleConceptGraphOneStudent.json", "test/testresources/basicRealisticExampleLOLRecordOneStudent.json", "test/testresources/basicRealisticExampleGradeBook2.csv");
+        } catch (IOException e) {
+            Assert.fail("Unable to load default files. Test unable to run");
+        }
+        Assert.assertEquals(ckc.getStructureFileNames().get(0),"test/testresources/basicRealisticExampleConceptGraphOneStudent.json" );
+    }
 
 
     @Test
     public void calcIndividualConceptNodesSuggestionsTest(){
-
         ConceptKnowledgeCalculatorAPI ckc = null;
         try {
             ckc = new ConceptKnowledgeCalculator("test/testresources/basicRealisticExampleConceptGraphOneStudent.json", "test/testresources/basicRealisticExampleLOLRecordOneStudent.json", "test/testresources/basicRealisticExampleGradeBook2.csv");
@@ -82,11 +68,9 @@ public class ConceptKnowledgeCalculatorTest {
             e.printStackTrace();
         }
 
-
         Assert.assertEquals(concepts.size(), 2);
         Assert.assertEquals(concepts.get(0), "If Statement");
         Assert.assertEquals(concepts.get(1), "While Loop");
-
     }
 
     @Test(expected = Exception.class)
@@ -248,7 +232,7 @@ public class ConceptKnowledgeCalculatorTest {
 
         try {
             ckc.additionalLOR("test/testresources/mediumGraphTestGradeBook.csv");
-        } catch (IOException e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
 
@@ -288,7 +272,7 @@ public class ConceptKnowledgeCalculatorTest {
 
         try {
             ckc.additionalLOR("test/testresources/simpleGraphTest.csv");
-        } catch (IOException e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
 
@@ -322,6 +306,67 @@ public class ConceptKnowledgeCalculatorTest {
         Assert.assertEquals(postMasterList2.get(20).getLearningObjectId(), "Q11");
         Assert.assertEquals(postMasterList2.get(22).getLearningObjectId(), "Q14");
 
+    }
+
+
+    @Test
+    public void removeLORFileTest(){
+        ConceptKnowledgeCalculatorAPI ckc = null;
+        try {
+            ckc = new ConceptKnowledgeCalculator("test/testresources/basicRealisticExampleConceptGraphOneStudent.json", "test/testresources/basicRealisticExampleLOLRecordOneStudent.json", "test/testresources/basicRealisticExampleGradeBook2.csv");
+            List<String> test = new ArrayList<>();
+            test.add("test/testresources/basicRealisticExampleGradeBook2.csv");
+            Assert.assertEquals(ckc.getAssessmentFiles(),test);
+        } catch (IOException e) {
+            Assert.fail("Unable to load default files. Test unable to run");
+        }
+
+
+        try {
+            ckc.removeLORFile("test/testresources/basicRealisticExampleGradeBook2.csv");
+            List<String> test1 = new ArrayList<>();
+            Assert.assertEquals(ckc.getAssessmentFiles(),test1);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+
+    @Test(expected = Exception.class)
+    public void removeEmptyLORList() throws Exception{
+        ConceptKnowledgeCalculatorAPI ckc = null;
+        try {
+            ckc = new ConceptKnowledgeCalculator("test/testresources/basicRealisticExampleConceptGraphOneStudent.json", "test/testresources/basicRealisticExampleLOLRecordOneStudent.json", "test/testresources/basicRealisticExampleGradeBook2.csv");
+        } catch (Exception e) {
+            Assert.fail("Unable to load default files. Test unable to run");
+        }
+        try {
+            ckc.removeLORFile("test/testresources/basicRealisticExampleGradeBook2.csv");
+            ckc.removeLORFile("test/remove");
+
+        } catch (IOException e) {
+            Assert.fail("There are negative files");
+        }
+    }
+
+    @Test
+    public void replaceLOFile (){
+        ConceptKnowledgeCalculatorAPI ckc = null;
+        try {
+            ckc = new ConceptKnowledgeCalculator("test/testresources/basicRealisticExampleConceptGraphOneStudent.json", "test/testresources/basicRealisticExampleLOLRecordOneStudent.json", "test/testresources/basicRealisticExampleGradeBook2.csv");
+            List<String> test = new ArrayList<>();
+            test.add("test/testresources/basicRealisticExampleLOLRecordOneStudent.json");
+            Assert.assertEquals(ckc.getResourceFiles(),test);
+            ckc.replaceLOFile("test/testresources/simpleChangeNameLOL.json");
+
+            test.clear();
+            test.add("test/testresources/simpleChangeNameLOL.json");
+
+            Assert.assertEquals(ckc.getResourceFiles(), test);
+
+        } catch (Exception e) {
+            Assert.fail("Unable to load default files. Test unable to run");
+        }
     }
 
     @Test
@@ -364,7 +409,7 @@ public class ConceptKnowledgeCalculatorTest {
 
         try {
             ckc.addAnotherLO("test/testresources/simpleChangeNameLOL.json");
-        } catch (IOException e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
 
@@ -407,8 +452,16 @@ public class ConceptKnowledgeCalculatorTest {
         } catch (IOException e) {
             Assert.fail("Unable to load default files, please choose files manually.");
         }
-        Assert.assertEquals(1, ckc.getLearningObjectAvg("Q4"), 0);
-        Assert.assertEquals(0.75, ckc.getLearningObjectAvg("Q14"), 0);
+        try {
+            Assert.assertEquals(1, ckc.getLearningObjectAvg("Q4"), 0);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        try {
+            Assert.assertEquals(0.75, ckc.getLearningObjectAvg("Q14"), 0);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
 }
