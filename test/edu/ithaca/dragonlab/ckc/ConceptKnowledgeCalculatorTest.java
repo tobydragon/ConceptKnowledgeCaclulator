@@ -29,38 +29,38 @@ public class ConceptKnowledgeCalculatorTest {
 
     static Logger logger = LogManager.getLogger(ConceptKnowledgeCalculator.class);
 
-    @Test
-    public void getAndSetModeTest(){
-        ConceptKnowledgeCalculatorAPI ckc = null;
-        try {
-            ckc = new ConceptKnowledgeCalculator("test/testresources/basicRealisticExampleConceptGraphOneStudent.json", "test/testresources/basicRealisticExampleLOLRecordOneStudent.json", "test/testresources/basicRealisticExampleGradeBook2.csv");
-        } catch (IOException e) {
-            Assert.fail("Unable to load default files. Test unable to run");
-
-        }
-        Assert.assertEquals(ckc.getCurrentmode(), ConceptKnowledgeCalculator.Mode.COHORTGRAPH);
-
-        ckc.setCurrentMode(ConceptKnowledgeCalculator.Mode.STRUCTUREGRAPH);
-        Assert.assertEquals(ckc.getCurrentmode(), ConceptKnowledgeCalculator.Mode.STRUCTUREGRAPH);
-    }
-
-    @Test
-    public void getAndSetCohortData(){
-        ConceptKnowledgeCalculatorAPI ckc = null;
-        try {
-            ckc = new ConceptKnowledgeCalculator("test/testresources/basicRealisticExampleConceptGraphOneStudent.json", "test/testresources/basicRealisticExampleLOLRecordOneStudent.json", "test/testresources/basicRealisticExampleGradeBook2.csv");
-        } catch (IOException e) {
-            Assert.fail("Unable to load default files. Test unable to run");
-
-        }
-
-        Assert.assertEquals(ckc.getStructureFileNames().get(0),"test/testresources/basicRealisticExampleConceptGraphOneStudent.json" );
-        List<String> structureTest = new ArrayList<>();
-        structureTest.add("test/testresources/mediumGraphTestConceptNodes.json");
-        ckc.setStructureFiles(structureTest);
-        Assert.assertEquals(ckc.getStructureFiles().get(0), "test/testresources/mediumGraphTestConceptNodes.json");
-    }
-
+//    @Test
+//    public void getAndSetModeTest(){
+//        ConceptKnowledgeCalculatorAPI ckc = null;
+//        try {
+//            ckc = new ConceptKnowledgeCalculator("test/testresources/basicRealisticExampleConceptGraphOneStudent.json", "test/testresources/basicRealisticExampleLOLRecordOneStudent.json", "test/testresources/basicRealisticExampleGradeBook2.csv");
+//        } catch (IOException e) {
+//            Assert.fail("Unable to load default files. Test unable to run");
+//
+//        }
+//        Assert.assertEquals(ckc.getCurrentmode(), ConceptKnowledgeCalculator.Mode.COHORTGRAPH);
+//
+//        ckc.setCurrentMode(ConceptKnowledgeCalculator.Mode.STRUCTUREGRAPH);
+//        Assert.assertEquals(ckc.getCurrentmode(), ConceptKnowledgeCalculator.Mode.STRUCTUREGRAPH);
+//    }
+//
+//    @Test
+//    public void getAndSetCohortData(){
+//        ConceptKnowledgeCalculatorAPI ckc = null;
+//        try {
+//            ckc = new ConceptKnowledgeCalculator("test/testresources/basicRealisticExampleConceptGraphOneStudent.json", "test/testresources/basicRealisticExampleLOLRecordOneStudent.json", "test/testresources/basicRealisticExampleGradeBook2.csv");
+//        } catch (IOException e) {
+//            Assert.fail("Unable to load default files. Test unable to run");
+//
+//        }
+//
+//        Assert.assertEquals(ckc.getStructureFileNames().get(0),"test/testresources/basicRealisticExampleConceptGraphOneStudent.json" );
+//        List<String> structureTest = new ArrayList<>();
+//        structureTest.add("test/testresources/mediumGraphTestConceptNodes.json");
+//        ckc.setStructureFiles(structureTest);
+//        Assert.assertEquals(ckc.getStructureFiles().get(0), "test/testresources/mediumGraphTestConceptNodes.json");
+//    }
+//
 
 
 
@@ -233,6 +233,7 @@ public class ConceptKnowledgeCalculatorTest {
             originalMasterList.addAll(origLOR);
         }
 
+
         Assert.assertEquals(originalMasterList.size(), 10);
         Assert.assertEquals(originalMasterList.get(0).getLearningObjectId(), "Q1");
         Assert.assertEquals(originalMasterList.get(1).getLearningObjectId(), "Q2");
@@ -264,11 +265,6 @@ public class ConceptKnowledgeCalculatorTest {
             postMasterList1.addAll(postLOR);
         }
 
-
-        for ( LearningObjectResponse no: postMasterList1){
-            System.out.println(no.getLearningObjectId());
-
-        }
         Assert.assertEquals(postMasterList1.size(), 18);
         Assert.assertEquals(originalMasterList.get(0).getLearningObjectId(), "Q1");
         Assert.assertEquals(postMasterList1.get(1).getLearningObjectId(), "Q2");
@@ -288,6 +284,44 @@ public class ConceptKnowledgeCalculatorTest {
         Assert.assertEquals(postMasterList1.get(15).getLearningObjectId(), "Q12");
         Assert.assertEquals(postMasterList1.get(16).getLearningObjectId(), "Q14");
         Assert.assertEquals(postMasterList1.get(17).getLearningObjectId(), "Q14");
+
+
+        try {
+            ckc.additionalLOR("test/testresources/simpleGraphTest.csv");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        List<LearningObjectResponse> postMasterList2 = new ArrayList<>();
+
+        CohortConceptGraphs postGraphs2 = ckc.getCohortConceptGraphs();
+        ConceptGraph postCG2 = postGraphs2.getAvgGraph();
+        Map<String, LearningObject> postLOMap2 =  postCG2.getLearningObjectMap();
+
+        Collection<LearningObject> postLOList2 = postLOMap2.values();
+        for (LearningObject postlearningObject2: postLOList2){
+            List<LearningObjectResponse> postLOR2 = postlearningObject2.getResponses();
+            postMasterList2.addAll(postLOR2);
+        }
+
+
+        Assert.assertEquals(postMasterList2.size(), 24);
+        Assert.assertEquals(postMasterList2.get(0).getLearningObjectId(), "Q1");
+        Assert.assertEquals(postMasterList2.get(1).getLearningObjectId(), "Q1");
+        Assert.assertEquals(postMasterList2.get(2).getLearningObjectId(), "Q2");
+        Assert.assertEquals(postMasterList2.get(3).getLearningObjectId(), "Q2");
+        Assert.assertEquals(postMasterList2.get(4).getLearningObjectId(), "Q3");
+        Assert.assertEquals(postMasterList2.get(5).getLearningObjectId(), "Q3");
+        Assert.assertEquals(postMasterList2.get(6).getLearningObjectId(), "Q4");
+        Assert.assertEquals(postMasterList2.get(8).getLearningObjectId(), "Q4");
+        Assert.assertEquals(postMasterList2.get(10).getLearningObjectId(), "Q5");
+        Assert.assertEquals(postMasterList2.get(12).getLearningObjectId(), "Q6");
+        Assert.assertEquals(postMasterList2.get(14).getLearningObjectId(), "Q7");
+        Assert.assertEquals(postMasterList2.get(16).getLearningObjectId(), "Q8");
+        Assert.assertEquals(postMasterList2.get(18).getLearningObjectId(), "Q9");
+        Assert.assertEquals(postMasterList2.get(20).getLearningObjectId(), "Q11");
+        Assert.assertEquals(postMasterList2.get(22).getLearningObjectId(), "Q14");
+
     }
 
     @Test

@@ -39,8 +39,6 @@ public interface ConceptKnowledgeCalculatorAPI {
 
 
     /**
-     * can only hold two file names
-     * IF addANotherLO is called the additional LO file will be ignored
      * creates two lists of the learning object responses with the old file and the new file and combines them into one to use in the cohort graph
      * @param assessmentFilename
      * @throws IOException
@@ -50,8 +48,6 @@ public interface ConceptKnowledgeCalculatorAPI {
 
 
     /**
-     * can only hold two file names
-     * IF additionalLOR is called, the additional LOR file will be ignored
      * adds another file of LearningObjects to the graph.
      * will only add learning objects that are associated with concepts already in the graph
      * will only add learning objects that are not already in the graph (aka no repeats)
@@ -111,22 +107,6 @@ public interface ConceptKnowledgeCalculatorAPI {
 
     List<String> getStructureFileNames();
 
-    void setStructureFiles(List<String> file);
-
-    /**
-     * If the user gives a bad file name, the graph will be remade with the last known working file name
-     * @param fileName
-     */
-    void setLastWorkingStructureName(List<String> fileName);
-
-    List<String> getLastWorkingStructureName();
-
-
-    List<List<String>> getPreviouslySavedCohortFile();
-
-    void setPreviouslySavedCohortFiles(List<String> files);
-
-    List<List<String>> getSavedCohortFile();
 
     List<String> getStructureFiles();
 

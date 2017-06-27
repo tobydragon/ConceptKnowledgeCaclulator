@@ -201,7 +201,7 @@ public class ConsoleUI {
             LOR.add(LORFile);
 
             ckc.clearAndCreateCohortData(strucFile, LO, LOR);
-            ckc.setCurrentMode(ConceptKnowledgeCalculator.Mode.COHORTGRAPH);
+//            ckc.setCurrentMode(ConceptKnowledgeCalculator.Mode.COHORTGRAPH);
             System.out.println("Process Completed");
 
         } catch (Exception e) {
@@ -355,7 +355,7 @@ public class ConsoleUI {
 
         try {
             ckc.clearAndCreateStructureData(ckc.getStructureFileNames());
-            ckc.setCurrentMode(ConceptKnowledgeCalculator.Mode.STRUCTUREGRAPH);
+//            ckc.setCurrentMode(ConceptKnowledgeCalculator.Mode.STRUCTUREGRAPH);
             System.out.println("Process Completed");
 
         } catch (Exception e) {
