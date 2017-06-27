@@ -5,7 +5,6 @@ import edu.ithaca.dragonlab.ckc.conceptgraph.ConceptGraph;
 import edu.ithaca.dragonlab.ckc.suggester.SuggestionResource;
 
 import java.io.IOException;
-import java.util.LinkedList;
 import java.util.List;
 
 /**
@@ -16,11 +15,10 @@ public interface ConceptKnowledgeCalculatorAPI {
     /**
      * Clears all previous data and saves the new graph
      *
-     * @param structureFileName
+     * @param structureFilename
      * @throws IOException
      */
-    void clearAndCreateStructureData(String structureFileName) throws IOException;
-
+    void clearAndCreateStructureData(List<String> structureFilename) throws IOException;
 
     /**
      * Clears all previous data, saves a new graph to be used for the cohort with the structure given,
@@ -32,8 +30,7 @@ public interface ConceptKnowledgeCalculatorAPI {
      * @param resourceFilename   a json file listing the resources and their links to the concepts
      * @param assessmentFilename a csv file containing rows of students and columns labeled with resourceIds
      */
-    void clearAndCreateCohortData(String structureFilename, String resourceFilename, String assessmentFilename) throws IOException;
-
+    void clearAndCreateCohortData(List<String> structureFilename, List<String> resourceFilename, List<String> assessmentFilename) throws IOException;
 
     /**
      * @return the URL where the current graphs can be seen
@@ -108,31 +105,30 @@ public interface ConceptKnowledgeCalculatorAPI {
     ConceptKnowledgeCalculator.Mode getCurrentmode();
 
 
-    String getResourceFile();
+    List<String> getResourceFiles();
 
-    String getAssessmentFile();
+    List<String> getAssessmentFiles();
 
-    String getStructureFileName();
+    List<String> getStructureFileNames();
 
-    void setStructureFileName(String file);
-
-    boolean gethasMultipleAssessment();
-    boolean getHasMultipleResource();
+    void setStructureFiles(List<String> file);
 
     /**
      * If the user gives a bad file name, the graph will be remade with the last known working file name
      * @param fileName
      */
-    void setLastWorkingStructureName(String fileName);
+    void setLastWorkingStructureName(List<String> fileName);
 
-    String getLastWorkingStructureName();
+    List<String> getLastWorkingStructureName();
 
 
-    List<String> getPreviouslySavedCohortFile();
+    List<List<String>> getPreviouslySavedCohortFile();
 
     void setPreviouslySavedCohortFiles(List<String> files);
 
-    List<String> getSavedCohortFile();
+    List<List<String>> getSavedCohortFile();
+
+    List<String> getStructureFiles();
 
 
     //just for testing

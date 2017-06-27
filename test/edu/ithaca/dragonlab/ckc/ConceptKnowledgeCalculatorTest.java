@@ -54,11 +54,11 @@ public class ConceptKnowledgeCalculatorTest {
 
         }
 
-        Assert.assertEquals(ckc.getStructureFileName(),"test/testresources/basicRealisticExampleConceptGraphOneStudent.json" );
-        ckc.setStructureFileName("test/testresources/mediumGraphTestConceptNodes.json");
-        Assert.assertEquals(ckc.getStructureFileName(), "test/testresources/mediumGraphTestConceptNodes.json");
-
-
+        Assert.assertEquals(ckc.getStructureFileNames().get(0),"test/testresources/basicRealisticExampleConceptGraphOneStudent.json" );
+        List<String> structureTest = new ArrayList<>();
+        structureTest.add("test/testresources/mediumGraphTestConceptNodes.json");
+        ckc.setStructureFiles(structureTest);
+        Assert.assertEquals(ckc.getStructureFiles().get(0), "test/testresources/mediumGraphTestConceptNodes.json");
     }
 
 
@@ -257,12 +257,18 @@ public class ConceptKnowledgeCalculatorTest {
         ConceptGraph postCG = postGraphs.getAvgGraph();
         Map<String, LearningObject> postLOMap =  postCG.getLearningObjectMap();
 
+
         Collection<LearningObject> postLOList = postLOMap.values();
         for (LearningObject postlearningObject: postLOList){
             List<LearningObjectResponse> postLOR = postlearningObject.getResponses();
             postMasterList1.addAll(postLOR);
         }
 
+
+        for ( LearningObjectResponse no: postMasterList1){
+            System.out.println(no.getLearningObjectId());
+
+        }
         Assert.assertEquals(postMasterList1.size(), 18);
         Assert.assertEquals(originalMasterList.get(0).getLearningObjectId(), "Q1");
         Assert.assertEquals(postMasterList1.get(1).getLearningObjectId(), "Q2");

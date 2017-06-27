@@ -50,9 +50,9 @@ public class ConsoleUI {
             System.out.println("Current graphs:\t" + ckc.getCohortGraphsUrl());
         }
 
-        ckc.setLastWorkingStructureName(ckc.getStructureFileName());
-
-        ckc.setPreviouslySavedCohortFiles(ckc.getSavedCohortFile());
+//        ckc.setLastWorkingStructureName(ckc.getStructureFileNames());
+//
+//        ckc.setPreviouslySavedCohortFiles(ckc.getSavedCohortFile());
 
         int contQuit = 1;
         while (contQuit == 1) {
@@ -158,26 +158,28 @@ public class ConsoleUI {
         String file = scanner.nextLine();
 
         try {
-            ckc.clearAndCreateStructureData(file);
+            List<String> graphFile = new ArrayList<>();
+            graphFile.add(file);
+            ckc.clearAndCreateStructureData(graphFile);
             System.out.println("Process Completed");
 
 
         } catch (Exception e) {
             System.out.println("Cannot find the file");
             structFileNameValid=false;
-            try {
-                ckc.clearAndCreateStructureData(ckc.getLastWorkingStructureName());
-                ckc.setStructureFileName(ckc.getLastWorkingStructureName());
-                System.out.println("Last working files used");
-            } catch (IOException e1) {
-                e1.printStackTrace();
-                System.out.println("Error");
-            }
+//            try {
+//                ckc.clearAndCreateStructureData(ckc.getLastWorkingStructureName());
+//                ckc.setStructureFileName(ckc.getLastWorkingStructureName());
+//                System.out.println("Last working files used");
+//            } catch (IOException e1) {
+//                e1.printStackTrace();
+//                System.out.println("Error");
+//            }
         }
 
-        if(structFileNameValid){
-            ckc.setLastWorkingStructureName(ckc.getStructureFileName());
-        }
+//        if(structFileNameValid){
+//            ckc.setLastWorkingStructureName(ckc.getStructureFileName());
+//        }
     }
 
 
@@ -190,10 +192,15 @@ public class ConsoleUI {
         System.out.println("Type learning Object Resources File (starting from root)");
         String LORFile = scanner.nextLine();
 
-        String strucFile = ckc.getStructureFileName();
+        List<String> strucFile = ckc.getStructureFiles();
 
         try {
-            ckc.clearAndCreateCohortData(strucFile, LOfile, LORFile);
+            List<String> LO = new ArrayList<>();
+            List<String> LOR = new ArrayList<>();
+            LO.add(LOfile);
+            LOR.add(LORFile);
+
+            ckc.clearAndCreateCohortData(strucFile, LO, LOR);
             ckc.setCurrentMode(ConceptKnowledgeCalculator.Mode.COHORTGRAPH);
             System.out.println("Process Completed");
 
@@ -295,24 +302,30 @@ public class ConsoleUI {
         String assessment = scanner.nextLine();
 
         try {
-            ckc.clearAndCreateCohortData(structure, resource, assessment);
+            List<String> struc = new ArrayList<>();
+            List<String> res = new ArrayList<>();
+            List<String> assess = new ArrayList<>();
+            struc.add(structure);
+            res.add(resource);
+            assess.add(assessment);
+            ckc.clearAndCreateCohortData(struc, res, assess);
             System.out.println("Process Completed");
         } catch (Exception e) {
             e.printStackTrace();
             System.out.println("Can't find files");
             cohortFilesValid=false;
-            try{
-                List<String> fileList =ckc.getPreviouslySavedCohortFile();
-                ckc.clearAndCreateCohortData(fileList.get(0),fileList.get(1), fileList.get(2));
-                System.out.println("Last Working Files Used");
-            }catch (IOException e1){
-                e1.printStackTrace();
-            }
+//            try{
+//                List<String> fileList =ckc.getPreviouslySavedCohortFile();
+//                ckc.clearAndCreateCohortData(fileList.get(0),fileList.get(1), fileList.get(2));
+//                System.out.println("Last Working Files Used");
+//            }catch (IOException e1){
+//                e1.printStackTrace();
+//            }
         }
 
-        if(cohortFilesValid){
-            ckc.setPreviouslySavedCohortFiles(ckc.getSavedCohortFile());
-        }
+//        if(cohortFilesValid){
+//            ckc.setPreviouslySavedCohortFiles(ckc.getSavedCohortFile());
+//        }
     }
 
     public void replaceGraphFile(Scanner scanner){
@@ -322,18 +335,10 @@ public class ConsoleUI {
 
         System.out.println("Type Graph Path ");
         String graph = scanner.nextLine();
-
-        if(ckc.gethasMultipleAssessment()){
-            System.out.println("You're using more than one assessment file. Using only the original assessment file ");
-        }
-
-        if(ckc.getHasMultipleResource()){
-            System.out.println("You're using more than one resource file. Using only the original resource file");
-        }
-
         try {
-            ckc.clearAndCreateCohortData(graph, ckc.getResourceFile(), ckc.getAssessmentFile());
-            ckc.setStructureFileName(graph);
+            List<String> struc = new ArrayList<>();
+            struc.add(graph);
+            ckc.clearAndCreateCohortData(struc, ckc.getResourceFiles(), ckc.getAssessmentFiles());
             System.out.println("Process Completed");
         } catch (Exception e) {
             e.printStackTrace();
@@ -349,7 +354,7 @@ public class ConsoleUI {
         System.out.println("View Structure graph");
 
         try {
-            ckc.clearAndCreateStructureData(ckc.getStructureFileName());
+            ckc.clearAndCreateStructureData(ckc.getStructureFileNames());
             ckc.setCurrentMode(ConceptKnowledgeCalculator.Mode.STRUCTUREGRAPH);
             System.out.println("Process Completed");
 
