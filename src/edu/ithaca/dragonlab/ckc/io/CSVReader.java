@@ -5,6 +5,7 @@ package edu.ithaca.dragonlab.ckc.io;
  */
 import java.io.*;
 import java.util.ArrayList;
+import java.util.List;
 
 import edu.ithaca.dragonlab.ckc.learningobject.LearningObject;
 import edu.ithaca.dragonlab.ckc.learningobject.LearningObjectResponse;
@@ -49,6 +50,8 @@ public class CSVReader {
                 int i = 2; //this is 2 because the first two columns are not assignments, so the first assingment is index 2
                 if(firstIteration){
                     firstIteration = false;
+                    loLister(singleList, i);
+                    /**
                     while(i<singleList.size()){
                         String question = singleList.get(i);
                         //used to find the max score of a question (won't be affected if there are other brackets in the question title
@@ -72,35 +75,98 @@ public class CSVReader {
                         }
                         i++;
                     }
+                     */
                 } else {
-                    //goes through and adds all the questions to their proper learning object, as well as adds them to
-                    //the general list of manual graded responses
-                    String stdID = singleList.get(0);
-                    if (learningObjectList.size()+2 < singleList.size()){
-                        logger.warn("More data than learning objects on line for id:" + stdID);
-                    }
-                    else if (learningObjectList.size()+2 > singleList.size()){
-                        logger.warn("More learning objects than data on line for id:" + stdID);
-                    }
-                    //need to make sure we don't go out of bounds on either list
-                    while(i< singleList.size() && i < learningObjectList.size()+2){
-                        LearningObject currentLearningObject = this.learningObjectList.get(i - 2);
-                        String qid = currentLearningObject.getId();
-                        if(!("".equals(singleList.get(i)))) {
-                            ManualGradedResponse response = new ManualGradedResponse(qid, currentLearningObject.getMaxPossibleKnowledgeEstimate(), Double.parseDouble(singleList.get(i)), stdID);
-                            currentLearningObject.addResponse(response);
-                            this.manualGradedResponseList.add(response);
+                    try {
+                        lorLister(singleList, i);
+                        //goes through and adds all the questions to their proper learning object, as well as adds them to
+                        //the general list of manual graded responses
+                        /*
+                        String stdID = singleList.get(0);
+                        if (learningObjectList.size() + 2 < singleList.size()) {
+                            logger.warn("More data than learning objects on line for id:" + stdID);
+                        } else if (learningObjectList.size() + 2 > singleList.size()) {
+                            logger.warn("More learning objects than data on line for id:" + stdID);
+                        }
+                        //need to make sure we don't go out of bounds on either list
+                        while (i < singleList.size() && i < learningObjectList.size() + 2) {
+                            LearningObject currentLearningObject = this.learningObjectList.get(i - 2);
+                            String qid = currentLearningObject.getId();
+                            if (!("".equals(singleList.get(i)))) {
+                                ManualGradedResponse response = new ManualGradedResponse(qid, currentLearningObject.getMaxPossibleKnowledgeEstimate(), Double.parseDouble(singleList.get(i)), stdID);
+                                if(response != null) {
+                                    currentLearningObject.addResponse(response);
+                                    this.manualGradedResponseList.add(response);
+                                }else{
+                                    throw new NullPointerException();
+                                }
+                            }
+
+                            i++;
                         }
 
-                        i++;
+*/
+                    }catch (NullPointerException e) {
+                        System.out.println("No Responses added to LearningObject");
                     }
-
                 }
             }
         } catch (IOException e) {
             e.printStackTrace();
         }
 
+    }
+
+    public int loLister(ArrayList<String> singleList, int i) {
+        while(i<singleList.size()){
+            String question = singleList.get(i);
+            //used to find the max score of a question (won't be affected if there are other brackets in the question title
+            int begin = question.lastIndexOf('[');
+            int end = question.lastIndexOf(']');
+
+            //TODO: temp check to see what problem is... not a proper solution to bug #76
+            if (begin >= 0 && end >= 0) {
+                String maxScoreStr = question.substring(begin + 1, end);
+                double maxScore = Double.parseDouble(maxScoreStr);
+                question = question.substring(0, begin - 1);
+                LearningObject learningObject = new LearningObject(question);
+                learningObject.setMaxPossibleKnowledgeEstimate(maxScore);
+                this.learningObjectList.add(learningObject);
+            }
+            else {
+                logger.error("No max score found for string:"+question+"\t defaulting to 1, which is probably wrong");
+                LearningObject learningObject = new LearningObject(question);
+                learningObject.setMaxPossibleKnowledgeEstimate(1);
+                this.learningObjectList.add(learningObject);
+            }
+            i++;
+        }
+        return i;
+    }
+
+    public void lorLister(ArrayList<String> singleList, int i)throws NullPointerException{
+        String stdID = singleList.get(0);
+        if (learningObjectList.size() + 2 < singleList.size()) {
+            logger.warn("More data than learning objects on line for id:" + stdID);
+        } else if (learningObjectList.size() + 2 > singleList.size()) {
+            logger.warn("More learning objects than data on line for id:" + stdID);
+        }
+        //need to make sure we don't go out of bounds on either list
+        while (i < singleList.size() && i < learningObjectList.size() + 2) {
+            LearningObject currentLearningObject = this.learningObjectList.get(i - 2);
+            String qid = currentLearningObject.getId();
+            if (!("".equals(singleList.get(i)))) {
+                ManualGradedResponse response = new ManualGradedResponse(qid, currentLearningObject.getMaxPossibleKnowledgeEstimate(), Double.parseDouble(singleList.get(i)), stdID);
+                if(response != null) {
+                    currentLearningObject.addResponse(response);
+                    this.manualGradedResponseList.add(response);
+                }else{
+                    throw new NullPointerException();
+                }
+            }
+
+            i++;
+        }
     }
 
     public ArrayList<LearningObjectResponse> getManualGradedResponses(){

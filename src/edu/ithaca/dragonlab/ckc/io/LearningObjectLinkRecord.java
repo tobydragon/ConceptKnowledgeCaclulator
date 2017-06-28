@@ -9,6 +9,7 @@ import edu.ithaca.dragonlab.ckc.learningobject.LearningObject;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 /**
@@ -30,6 +31,7 @@ public class LearningObjectLinkRecord {
         this.dataImportance = dataImportance;
     }
 
+
     public LearningObjectLinkRecord(){
         learningObject = "";
         conceptIds = new ArrayList<>();
@@ -42,6 +44,7 @@ public class LearningObjectLinkRecord {
         List<LearningObjectLinkRecord> LORLList = mapper.readValue(new File(fullFileName), new TypeReference<List<LearningObjectLinkRecord>>(){});
         return LORLList;
     }
+
 
     public String getLearningObject(){ return this.learningObject; }
     public List<String> getConceptIds(){ return this.conceptIds; }
