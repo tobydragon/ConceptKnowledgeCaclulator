@@ -278,12 +278,11 @@ public class ConceptKnowledgeCalculator implements ConceptKnowledgeCalculatorAPI
             } else {
                 list = new ArrayList<LearningObject>(objList);
             }
-//        KnowledgeEstimateMatrix myMatrix = new KnowledgeEstimateMatrix(list);
-//        LearningObject concept = loMap.get(learningObject);
-//        double result = BasicRFunctions.LearningObjectAvg(myMatrix, concept);
-//
-//        return result;
-            return 0;
+        KnowledgeEstimateMatrix myMatrix = new KnowledgeEstimateMatrix(list);
+        LearningObject concept = loMap.get(learningObject);
+        double result = BasicRFunctions.LearningObjectAvg(myMatrix, concept);
+
+        return result;
         }else{
             throw new Exception("Wrong Mode");
         }

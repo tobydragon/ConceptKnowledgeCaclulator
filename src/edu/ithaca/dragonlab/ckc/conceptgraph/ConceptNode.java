@@ -130,7 +130,7 @@ public class ConceptNode {
     @returns true of the called node is in the lineage of the parameter
      */
 	public boolean isAncestorOf(ConceptNode possibleDescendent){
-        boolean isAncestor =false;
+		boolean isAncestor =false;
         if (this.children.contains(possibleDescendent)){
             isAncestor = true;
         }else {

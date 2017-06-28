@@ -6,6 +6,7 @@ import edu.ithaca.dragonlab.ckc.learningobject.LearningObjectResponse;
 import edu.ithaca.dragonlab.ckc.suggester.LearningObjectSuggester;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.junit.Assert;
 
 import java.util.*;
 import java.util.List;
@@ -181,30 +182,72 @@ public class ConceptGraph {
         }
     }
 
-    /**
-     *Creates a boolean based off of if the node is an ancestor and if the children nodes have high estimates.
-     *if the node isn't an ancestor OR the compare node is high, then false (and you can do add the conceptNode)
-     * therefore if the node is an ancestor and the child compare node has a low knowledgeEstimate, then true is flagged and you don't add the conceptNode
-     * if false, then it can be added to the list
-     * @param node
-     * @return boolean
-     */
-	public boolean canIgnoreNode(ConceptNode node) {
-		boolean isAnc = false;
-		for (String key : nodeMap.keySet()) {
-			ConceptNode compareNode = nodeMap.get(key);
-			boolean ances =  node.isAncestorOf(compareNode);
+//    /**
+//     *Creates a boolean based off of if the node is an ancestor and if the children nodes have high estimates.
+//     *if the node isn't an ancestor OR the compare node is high, then false (and you can do add the conceptNode)
+//     * therefore if the node is an ancestor and the child compare node has a low knowledgeEstimate, then true is flagged and you don't add the conceptNode
+//     * if false, then it can be added to the list
+//     * @param node
+//     * @return boolean
+//     */
+//	public boolean canIgnoreNode(ConceptNode node) {
+//		boolean isAnc = false;
+//		for (String key : nodeMap.keySet()) {
+//			ConceptNode compareNode = nodeMap.get(key);
+//			boolean ances =  node.isAncestorOf(compareNode);
 //            System.out.println(key + " ances to "+ compareNode.getID() + " " +ances);
-            if (ances && compareNode.getKnowledgeEstimate()<LearningObjectSuggester.MAX){
-                isAnc=true;
-				break;
-			}
+//            if (ances && compareNode.getKnowledgeEstimate()<LearningObjectSuggester.MAX){
+//                isAnc=true;
+//				break;
+//			}
+//        }
+////        System.out.println(isAnc);
+//        return  isAnc;
+//	}
+
+//    public boolean canAddNode(ConceptNode node) {
+//        boolean isAnc = false;
+//        boolean canAd = false;
+//
+//        for (String key : nodeMap.keySet()) {
+//
+//            ConceptNode compareNode = nodeMap.get(key);
+//
+//            boolean ances =  node.isAncestorOf(compareNode);
+//            if(ances){
+//                isAnc=true;
+//            }
+//
+//            if(!isAnc&& node.getKnowledgeEstimate()<LearningObjectSuggester.MAX ){
+////            if (!ances && compareNode.getKnowledgeEstimate()>LearningObjectSuggester.MAX){
+//
+//                canAd=true;
+//                break;
+//            }
+//        }
+//        return  canAd;
+//    }
+
+    public static void updateSuggestionList (ConceptNode node, List<ConceptNode> suggestedList){
+        //exclude nodes that are ancestors of the node already in the suggestion list
+        //when we suggest a descendant. remove any ancestors of that node from the list.
+
+        boolean actual=false;
+        boolean nodeIsAnc = false;
+        List<ConceptNode> decedentList= new ArrayList<>();
+        for(ConceptNode ancNode: suggestedList){
+            if (node.isAncestorOf(ancNode)){
+                nodeIsAnc=true;
+                actual=true;
+                decedentList.add(ancNode);
+            }
         }
 
-//        System.out.println(isAnc);
-        return  isAnc;
-	}
-
+        if(!actual){
+            suggestedList.removeAll(decedentList);
+            suggestedList.add(node);
+        }
+    }
 
 
     /**

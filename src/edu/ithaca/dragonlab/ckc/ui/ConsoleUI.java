@@ -66,7 +66,6 @@ public class ConsoleUI {
                     System.out.println("What do you want to do? \n 1- replace graph \n 2- add Learning Object and Learning Object Resources");
                     num = scanner.nextInt();
                 }
-
                 scanner.nextLine();
 
                 if (num==1){
@@ -75,7 +74,6 @@ public class ConsoleUI {
                 }else{
                     addLOAndLOR(scanner);
                 }
-
 
             } else {
 
@@ -87,7 +85,6 @@ public class ConsoleUI {
                     System.out.println("What do you want to do? \n 1 - calculate a list of concept nodes to work on \n 2 - calculate learning object suggestions based on a specific concept \n 3 - automatically calculate suggestions \n 4 - View graph \n 5 - Create new graph \n 6 - Replace graph file \n 7 - Add another assessment file \n 8 - Remove assessment file \n 9 - Replace resource file file \n 10 - Get Learning Object Average \n 11 - View Structure Graph");
                     num = scanner.nextInt();
                 }
-
                 scanner.nextLine();
 
                 if (num == 1) {
@@ -113,10 +110,13 @@ public class ConsoleUI {
                 }
                 else if (num ==8) {
                     removeLORFile(scanner);
+
                 }else if(num ==9){
                     replaceLOFile(scanner);
+
                 }else if(num==10){
                     resourceAverage(scanner);
+
                 }else{
                     switchToStructuremode();
                 }
@@ -131,25 +131,9 @@ public class ConsoleUI {
                 System.out.println("1- continue 2- quit");
                 contQuit = scanner.nextInt();
             }
-
         }
-
-
     }
-
-    public void resourceAverage(Scanner scanner){
-        System.out.println("Get average learning object Grade");
-
-        System.out.println("What learning object do you want to calculate?");
-        String conceptNode = scanner.nextLine();
-        try {
-            System.out.println("The average is: " + ckc.getLearningObjectAvg(conceptNode));
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-
-    }
-
+//structure graph
 
 
     public void replaceGraph(Scanner scanner){
@@ -164,12 +148,10 @@ public class ConsoleUI {
             ckc.clearAndCreateStructureData(graphFile);
             System.out.println("Process Completed");
 
-
         } catch (Exception e) {
             System.out.println("Cannot find the file");
         }
     }
-
 
     public void addLOAndLOR(Scanner scanner){
         System.out.println("add LO and LOR");
@@ -193,11 +175,11 @@ public class ConsoleUI {
 
         } catch (Exception e) {
             System.out.println("Cannot find files");
-
         }
-
     }
 
+
+//cohort graph
     public void createLearningObjectList(Scanner scanner){
         System.out.println("calculate a list of concept nodes to work ");
         System.out.println("User ID");
@@ -210,14 +192,12 @@ public class ConsoleUI {
             for(String node: suggestedConceptNodeList){
                 st+= node+ "\n";
             }
-
             System.out.println(st);
-
         } catch (Exception e) {
             e.printStackTrace();
         }
-
     }
+
 
     public void specificLearningObjectSuggestion(Scanner scanner){
         System.out.println("calculate learning object suggestions based on a specific concept");
@@ -243,8 +223,8 @@ public class ConsoleUI {
         } catch (Exception e) {
             e.printStackTrace();
         }
-
     }
+
 
     public void graphSuggestions(Scanner scanner){
         System.out.println("automatically calculate suggestions");
@@ -266,7 +246,6 @@ public class ConsoleUI {
         }catch (Exception e){
             e.printStackTrace();
         }
-
     }
 
 
@@ -279,6 +258,7 @@ public class ConsoleUI {
             e.printStackTrace();
         }
     }
+
 
     public void createNewCohortGraph(Scanner scanner){
         System.out.println("create new cohort graphs");
@@ -307,6 +287,7 @@ public class ConsoleUI {
         }
     }
 
+
     public void replaceGraphFile(Scanner scanner){
         System.out.println("Replace Graph File");
 
@@ -326,6 +307,20 @@ public class ConsoleUI {
 
 
 
+    public void additionalLOR(Scanner scanner){
+        System.out.println("Add another LOR to existing graph ");
+
+        System.out.println("Type LOR path (from root)");
+        String LOR = scanner.nextLine();
+
+        try {
+            ckc.additionalLOR(LOR);
+            System.out.println("Process Completed");
+        } catch (Exception e) {
+            e.printStackTrace();
+            System.out.println("Can't find file");
+        }
+    }
 
     public void removeLORFile(Scanner scanner){
         System.out.println("Remove a assignment file");
@@ -342,14 +337,33 @@ public class ConsoleUI {
         }
     }
 
+
+
     public void replaceLOFile(Scanner scanner){
         System.out.println("Replace LO file");
 
         System.out.println("Type resource file you want to reaplce with: ");
         String resource = scanner.nextLine();
 
+        try {
+            ckc.replaceLOFile(resource);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+    }
 
 
+    public void resourceAverage(Scanner scanner){
+        System.out.println("Get average learning object Grade");
+
+        System.out.println("What learning object do you want to calculate?");
+        String conceptNode = scanner.nextLine();
+        try {
+            System.out.println("The average is: " + ckc.getLearningObjectAvg(conceptNode));
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
 
@@ -364,23 +378,6 @@ public class ConsoleUI {
             e.printStackTrace();
             System.out.println("Can't find file");
         }
-
-    }
-
-    public void additionalLOR(Scanner scanner){
-        System.out.println("Add another LOR to existing graph ");
-
-        System.out.println("Type LOR path (from root)");
-        String LOR = scanner.nextLine();
-
-        try {
-            ckc.additionalLOR(LOR);
-            System.out.println("Process Completed");
-        } catch (Exception e) {
-            e.printStackTrace();
-            System.out.println("Can't find file");
-        }
-
     }
 
 

@@ -93,7 +93,11 @@ public class LearningObjectSuggesterTest {
         ConceptGraph userGraph = cohortConceptGraphs.getUserGraph("s13");
 
         List<ConceptNode> concepts = LearningObjectSuggester.conceptsToWorkOn(userGraph);
-        System.out.println(concepts);
+
+        System.out.println("\n");
+        for(ConceptNode node : concepts){
+            System.out.println(node.getID());
+        }
 
 
 
