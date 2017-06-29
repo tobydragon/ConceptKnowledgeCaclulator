@@ -473,6 +473,7 @@ public class ConceptKnowledgeCalculatorTest {
             List<String> getTest = new ArrayList<>();
 
 
+            //the constructor starts out as a cohort concept graph and there should only be one file in each of the lists of files. The structure graph should be null, because we're not on that mode
             getTest.add("test/testresources/basicRealisticExampleConceptGraphOneStudent.json");
             Assert.assertEquals(ckc.getStructureFiles(),getTest );
             getTest.clear();
@@ -482,8 +483,10 @@ public class ConceptKnowledgeCalculatorTest {
             getTest.add("test/testresources/basicRealisticExampleGradeBook2.csv");
             Assert.assertEquals(ckc.getAssessmentFiles(), getTest);
             Assert.assertEquals(ckc.getStructureGraph(), null);
+            Assert.assertNotEquals(ckc.getCohortConceptGraphs(), null);
             getTest.clear();
 
+            //now in structure mode. Because of this cohort concept graph should be null as well as all the extra data (LO and LOR files). Structure graph should not be null now because we are in that mode.
             ckc.switchToStructure();
             Assert.assertEquals(ckc.getCurrentMode(), ConceptKnowledgeCalculator.Mode.STRUCTUREGRAPH);
             Assert.assertEquals(ckc.getCohortConceptGraphs(), null);
@@ -491,6 +494,10 @@ public class ConceptKnowledgeCalculatorTest {
             Assert.assertEquals(ckc.getStructureFiles(), getTest);
             Assert.assertEquals(ckc.getResourceFiles(), new ArrayList<>());
             Assert.assertEquals(ckc.getAssessmentFiles(), new ArrayList<>());
+            Assert.assertNotEquals(ckc.getStructureGraph(), null);
+            Assert.assertEquals(ckc.getCohortConceptGraphs(), null);
+
+
 
 
 

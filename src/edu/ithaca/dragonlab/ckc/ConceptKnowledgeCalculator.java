@@ -72,7 +72,6 @@ public class ConceptKnowledgeCalculator implements ConceptKnowledgeCalculatorAPI
         ConceptGraphRecord structureRecord = ConceptGraphRecord.buildFromJson(structureFiles.get(0));
         structureGraph = new ConceptGraph(structureRecord);
 
-
     }
 
     @Override
@@ -121,7 +120,6 @@ public class ConceptKnowledgeCalculator implements ConceptKnowledgeCalculatorAPI
             clearAndCreateStructureData(structureFiles);
             resourceFiles.clear();
             assessmentFiles.clear();
-            structureGraph = null;
             currentMode = Mode.STRUCTUREGRAPH;
             cohortConceptGraphs=null;
         }else{
