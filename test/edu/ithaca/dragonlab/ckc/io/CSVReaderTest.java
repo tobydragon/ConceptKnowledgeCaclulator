@@ -53,5 +53,7 @@ public class CSVReaderTest {
         String file = "test/testresources/SmallDataCSVExample.csv";
         CSVReader readfile = new CSVReader(file);
 
+        System.out.println(readfile.getManualGradedLearningObjects());
+
     }
 }

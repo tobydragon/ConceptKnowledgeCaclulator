@@ -4,13 +4,14 @@ import com.fasterxml.jackson.core.JsonGenerationException;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.SerializationFeature;
+import edu.ithaca.dragonlab.ckc.conceptgraph.CohortConceptGraphs;
+import edu.ithaca.dragonlab.ckc.conceptgraph.ConceptGraph;
 import edu.ithaca.dragonlab.ckc.learningobject.LearningObject;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
+import java.util.*;
 
 /**
  * Created by willsuchanek on 4/10/17.
@@ -19,23 +20,33 @@ public class LearningObjectLinkRecord {
     private String learningObject;
     private List<String> conceptIds;
     private double dataImportance;
+    private double maxPossibleKnowledgeEstimate;
 
     public LearningObjectLinkRecord(String learningObject, List<String> conceptIds){
         this.learningObject = learningObject;
         this.conceptIds = conceptIds;
         this.dataImportance = 1;
+        this.maxPossibleKnowledgeEstimate = 100;
     }
 
     public LearningObjectLinkRecord(String learningObject, List<String> conceptIds, double dataImportance){
         this(learningObject,conceptIds);
         this.dataImportance = dataImportance;
+        this.maxPossibleKnowledgeEstimate = 100;
     }
 
+    public LearningObjectLinkRecord(String learningObject){
+        this.learningObject = learningObject;
+        conceptIds = new ArrayList<>();
+        this.dataImportance = 1;
+        this.maxPossibleKnowledgeEstimate = 100;
+    }
 
     public LearningObjectLinkRecord(){
         learningObject = "";
         conceptIds = new ArrayList<>();
         this.dataImportance = 1;
+        this.maxPossibleKnowledgeEstimate = 100;
     }
 
     public static List<LearningObjectLinkRecord> buildListFromJson(String fullFileName) throws IOException {
@@ -45,6 +56,37 @@ public class LearningObjectLinkRecord {
         return LORLList;
     }
 
+    public static List<LearningObjectLinkRecord> createLearningObjectLinkRecords(Collection<LearningObject> learningObjects){
+        List<LearningObjectLinkRecord> lolrList = new ArrayList<LearningObjectLinkRecord>();
+        for(LearningObject learningObject: learningObjects){
+            lolrList.add( new LearningObjectLinkRecord(learningObject.toString()));
+        }
+        return lolrList;
+    }
+
+    public static void lolrToJSON(List<LearningObjectLinkRecord> lolrList)throws IOException{
+        ObjectMapper mapper = new ObjectMapper();
+        mapper.enable(SerializationFeature.INDENT_OUTPUT);
+        CohortConceptGraphsRecord graph = new CohortConceptGraphsRecord();
+        List<ConceptGraphRecord> list = graph.getGraphRecords();
+
+        //TODO: file naming should probably be outside of this function and passed in
+        System.out.println("Name file: \n");
+        Scanner scanner = new Scanner(System.in);
+        String filename = scanner.nextLine();
+        mapper.writeValue(new File(filename), lolrList);
+    }
+
+    public void setMatchingKnowledgeEstimates(Collection<LearningObject> learningObjects, Map<String, LearningObject> loMap){
+        List<LearningObject> loList= new ArrayList<LearningObject>(loMap.values());
+        for(LearningObject fromList: learningObjects){
+            for(LearningObject toList: loList){
+                if(fromList == toList){
+                    toList.setMaxPossibleKnowledgeEstimate(fromList.getMaxPossibleKnowledgeEstimate());
+                }
+            }
+        }
+    }
 
     public String getLearningObject(){ return this.learningObject; }
     public List<String> getConceptIds(){ return this.conceptIds; }
@@ -52,6 +94,7 @@ public class LearningObjectLinkRecord {
     public void setLearningObject(String lo){this.learningObject = lo;}
     public void setConceptIds(List<String> conceptIds){this.conceptIds=conceptIds;}
     public void setDataImportance(double dataImportance){this.dataImportance=dataImportance;}
+    public void setMaxPossibleKnowledgeEstimate(double maxPossibleKnowledgeEstimate) {this.maxPossibleKnowledgeEstimate = maxPossibleKnowledgeEstimate;}
 
     public void addConceptId(String conceptId){
         this.conceptIds.add(conceptId);

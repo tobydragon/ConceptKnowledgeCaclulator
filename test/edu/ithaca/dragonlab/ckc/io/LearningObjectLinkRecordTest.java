@@ -2,6 +2,7 @@ package edu.ithaca.dragonlab.ckc.io;
 
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import edu.ithaca.dragonlab.ckc.learningobject.LearningObject;
 import edu.ithaca.dragonlab.ckc.util.DataUtil;
 import org.junit.Assert;
 import org.junit.Test;
@@ -9,7 +10,10 @@ import org.junit.Test;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
+
+import static edu.ithaca.dragonlab.ckc.io.LearningObjectLinkRecord.createLearningObjectLinkRecords;
 
 /**
  * Created by willsuchanek on 4/10/17.
@@ -88,5 +92,19 @@ public class LearningObjectLinkRecordTest {
             e.printStackTrace();
             Assert.fail();
         }
+    }
+
+    @Test
+    public void createLearningObjectLinkRecordsTest(){
+        CSVReader test = new CSVReader("test/testresources/SmallDataCSVExample.csv");
+        Collection<LearningObject> list = test.getManualGradedLearningObjects();
+        List<LearningObject> list2 = test.getManualGradedLearningObjects();
+        List<LearningObjectLinkRecord> lolrList = LearningObjectLinkRecord.createLearningObjectLinkRecords(list);
+        List<String> resultString = new ArrayList<String>();
+        for(LearningObjectLinkRecord lolr: lolrList){
+            resultString.add(lolr.getLearningObject());
+        }
+
+        Assert.assertEquals(list2.toString(), resultString.toString());
     }
 }
