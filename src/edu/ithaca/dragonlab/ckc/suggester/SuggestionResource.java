@@ -22,8 +22,6 @@ public class SuggestionResource {
         this.suggestionMap=null;
         completeList(graph, 0, concepts );
         completeList(graph,1, concepts);
-
-
     }
 
     public SuggestionResource(){

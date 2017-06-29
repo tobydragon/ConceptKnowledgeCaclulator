@@ -94,18 +94,34 @@ public class LearningObjectSuggesterTest {
 
         List<ConceptNode> concepts = LearningObjectSuggester.conceptsToWorkOn(userGraph);
 
-        System.out.println("\n");
-        for(ConceptNode node : concepts){
-            System.out.println(node.getID());
-        }
-
-
-
-        Assert.assertEquals(1,-1);
+        Assert.assertEquals(concepts.get(0).getID(), "Pointers");
 
     }
 
 
+    @Test
+    public void RealDataConceptsTOWorkOnZeroSugg() throws IOException {
+
+        CohortConceptGraphs cohortConceptGraphs = null;
+
+        //create the graph structure to be copied for each user
+        ConceptGraphRecord structureRecord = ConceptGraphRecord.buildFromJson("resources/comp220/comp220Graph.json");
+        List<LearningObjectLinkRecord> linkRecord = LearningObjectLinkRecord.buildListFromJson("resources/comp220/comp220Resources.json");
+        ConceptGraph graph = new ConceptGraph(structureRecord, linkRecord);
+
+        //create the data to be used to create and populate the graph copies
+        CSVReader csvReader = new CSVReader("localresources/comp220ExampleDataPortion.csv");
+        List<LearningObjectResponse> assessments = csvReader.getManualGradedResponses();
+
+        //create the average and individual graphs
+        cohortConceptGraphs = new CohortConceptGraphs(graph, assessments);
+
+        ConceptGraph userGraph = cohortConceptGraphs.getUserGraph("s11");
+
+        List<ConceptNode> concepts = LearningObjectSuggester.conceptsToWorkOn(userGraph);
+
+        Assert.assertEquals(concepts.size(), 0);
+    }
 
     @Test
     public void buildSuggestionMapSimpleTest() {

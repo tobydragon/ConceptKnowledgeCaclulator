@@ -19,7 +19,7 @@ public class LearningObjectSuggester {
 
 
     /**
-     * Creates a list of ConceptNodes that are between the knowledge range and are not ancestors with children with high knowledgeEstimates
+     * Creates a list of ConceptNodes that are between the knowledge range and are not ancestors
      * @param graph
      * @return
      */
@@ -28,17 +28,9 @@ public class LearningObjectSuggester {
 
         for (String key : graph.getAllNodeIds()) {
             ConceptNode node = graph.findNodeById(key);
-//            System.out.println("Node " + node.getID() + " "+ node.getKnowledgeEstimate());
 
             if (node.getKnowledgeEstimate() >= MIN && node.getKnowledgeEstimate() <= MAX) {
-                //if false, then the node isn't an ancestor or the compare node is high THEREFORE you can add it to the list
-
                 graph.updateSuggestionList(node, suggestedConceptList);
-
-//                boolean anc = graph.canAddNode(node);
-//                if (anc) {
-//                    suggestedConceptList.add(node);
-//                }
             }
         }
         return suggestedConceptList;

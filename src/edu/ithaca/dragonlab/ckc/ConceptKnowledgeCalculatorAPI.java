@@ -3,7 +3,6 @@ package edu.ithaca.dragonlab.ckc;
 import edu.ithaca.dragonlab.ckc.conceptgraph.CohortConceptGraphs;
 import edu.ithaca.dragonlab.ckc.conceptgraph.ConceptGraph;
 import edu.ithaca.dragonlab.ckc.suggester.SuggestionResource;
-
 import java.io.IOException;
 import java.util.List;
 
@@ -31,6 +30,16 @@ public interface ConceptKnowledgeCalculatorAPI {
      * @param assessmentFilename a csv file containing rows of students and columns labeled with resourceIds
      */
     void clearAndCreateCohortData(List<String> structureFilename, List<String> resourceFilename, List<String> assessmentFilename) throws IOException;
+
+
+
+    void addLORAndLO(String LO, String LOR) throws  Exception;
+
+    void replaceGraph(String graph) throws Exception;
+
+    void switchToStructure() throws Exception;
+
+
 
     void replaceLOFile(String resourceFile) throws Exception;
 
@@ -102,13 +111,9 @@ public interface ConceptKnowledgeCalculatorAPI {
 
     ConceptKnowledgeCalculator.Mode getCurrentMode();
 
-
     List<String> getResourceFiles();
 
     List<String> getAssessmentFiles();
-
-    List<String> getStructureFileNames();
-
 
     List<String> getStructureFiles();
 

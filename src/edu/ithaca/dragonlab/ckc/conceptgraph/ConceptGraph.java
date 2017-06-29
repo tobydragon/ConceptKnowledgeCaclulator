@@ -182,69 +182,33 @@ public class ConceptGraph {
         }
     }
 
-//    /**
-//     *Creates a boolean based off of if the node is an ancestor and if the children nodes have high estimates.
-//     *if the node isn't an ancestor OR the compare node is high, then false (and you can do add the conceptNode)
-//     * therefore if the node is an ancestor and the child compare node has a low knowledgeEstimate, then true is flagged and you don't add the conceptNode
-//     * if false, then it can be added to the list
-//     * @param node
-//     * @return boolean
-//     */
-//	public boolean canIgnoreNode(ConceptNode node) {
-//		boolean isAnc = false;
-//		for (String key : nodeMap.keySet()) {
-//			ConceptNode compareNode = nodeMap.get(key);
-//			boolean ances =  node.isAncestorOf(compareNode);
-//            System.out.println(key + " ances to "+ compareNode.getID() + " " +ances);
-//            if (ances && compareNode.getKnowledgeEstimate()<LearningObjectSuggester.MAX){
-//                isAnc=true;
-//				break;
-//			}
-//        }
-////        System.out.println(isAnc);
-//        return  isAnc;
-//	}
 
-//    public boolean canAddNode(ConceptNode node) {
-//        boolean isAnc = false;
-//        boolean canAd = false;
-//
-//        for (String key : nodeMap.keySet()) {
-//
-//            ConceptNode compareNode = nodeMap.get(key);
-//
-//            boolean ances =  node.isAncestorOf(compareNode);
-//            if(ances){
-//                isAnc=true;
-//            }
-//
-//            if(!isAnc&& node.getKnowledgeEstimate()<LearningObjectSuggester.MAX ){
-////            if (!ances && compareNode.getKnowledgeEstimate()>LearningObjectSuggester.MAX){
-//
-//                canAd=true;
-//                break;
-//            }
-//        }
-//        return  canAd;
-//    }
-
+    /**
+     * updates a list of the suggested concept node list so that there are ancestors of nodes already in the list.
+     * You need to iterate nodes to add and then call this function.
+     * @param node
+     * @param suggestedList
+     */
     public static void updateSuggestionList (ConceptNode node, List<ConceptNode> suggestedList){
         //exclude nodes that are ancestors of the node already in the suggestion list
         //when we suggest a descendant. remove any ancestors of that node from the list.
 
-        boolean actual=false;
         boolean nodeIsAnc = false;
-        List<ConceptNode> decedentList= new ArrayList<>();
+        List<ConceptNode> ancesList= new ArrayList<>();
         for(ConceptNode ancNode: suggestedList){
             if (node.isAncestorOf(ancNode)){
                 nodeIsAnc=true;
-                actual=true;
-                decedentList.add(ancNode);
+                break;
             }
         }
 
-        if(!actual){
-            suggestedList.removeAll(decedentList);
+        if(!nodeIsAnc) { //if the node is a descendant
+            for (ConceptNode trackNode : suggestedList) {
+                if (trackNode.isAncestorOf(node)) {
+                    ancesList.add(trackNode);
+                }
+            }
+            suggestedList.removeAll(ancesList);
             suggestedList.add(node);
         }
     }

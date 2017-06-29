@@ -72,9 +72,8 @@ public class ConceptKnowledgeCalculator implements ConceptKnowledgeCalculatorAPI
 
         structureFiles.add(structureFilename.get(0));
         ConceptGraphRecord structureRecord = ConceptGraphRecord.buildFromJson(structureFiles.get(0));
-
         structureGraph = new ConceptGraph(structureRecord);
-        currentMode= Mode.STRUCTUREGRAPH;
+
 
     }
 
@@ -111,8 +110,6 @@ public class ConceptKnowledgeCalculator implements ConceptKnowledgeCalculatorAPI
         //create the average and individual graphs
         cohortConceptGraphs = new CohortConceptGraphs(graph, assessments);
 
-        //to use in console
-        currentMode= Mode.COHORTGRAPH;
 
         //output the json representing the tree form of the graph
         CohortConceptGraphsRecord toFile = cohortConceptGraphs.buildCohortConceptTreeRecord();
@@ -121,38 +118,95 @@ public class ConceptKnowledgeCalculator implements ConceptKnowledgeCalculatorAPI
     }
 
     @Override
+    public void switchToStructure() throws Exception {
+        if (currentMode == Mode.COHORTGRAPH){
+            clearAndCreateStructureData(structureFiles);
+            resourceFiles.clear();
+            assessmentFiles.clear();
+            structureGraph = null;
+            currentMode = Mode.STRUCTUREGRAPH;
+        }else{
+            throw new Exception("Wrong mode");
+        }
+    }
+
+    @Override
+    public void replaceGraph(String graph) throws Exception{
+
+        List<String>  structure = new ArrayList<>();
+        structure.add(graph);
+        clearAndCreateCohortData(structure,resourceFiles,assessmentFiles);
+
+    }
+
+    @Override
+    public void addLORAndLO(String LO, String LOR) throws  Exception{
+        if(currentMode == Mode.STRUCTUREGRAPH) {
+            resourceFiles.add(LO);
+            assessmentFiles.add(LOR);
+            structureGraph=null;
+            clearAndCreateCohortData(structureFiles, resourceFiles, assessmentFiles);
+            currentMode = Mode.COHORTGRAPH;
+        }else{
+            throw new Exception("Wrong mode");
+        }
+    }
+
+    @Override
     public void addAnotherLO(String secondResourceFile) throws Exception {
-        if(currentMode==Mode.STRUCTUREGRAPH || currentMode==Mode.STRUCTUREGRAPHWITHASSESSMENT|| currentMode==Mode.STRUCTUREGRAPHWITHRESOURCE || currentMode==Mode.COHORTGRAPH) {
+
+        if(currentMode== Mode.STRUCTUREGRAPH || currentMode== Mode.STRUCTUREGRAPHWITHRESOURCE){
+                resourceFiles.add(secondResourceFile);
+                currentMode=Mode.STRUCTUREGRAPHWITHRESOURCE;
+
+        }else if(currentMode== Mode.COHORTGRAPH || currentMode == Mode.STRUCTUREGRAPHWITHASSESSMENT){
             resourceFiles.add(secondResourceFile);
             clearAndCreateCohortData(structureFiles, resourceFiles, assessmentFiles);
         }else{
             throw new Exception("Wrong mode");
         }
+
     }
 
     @Override
     public void additionalLOR(String secondAssessmentFilename) throws Exception {
-        if(currentMode==Mode.COHORTGRAPH || currentMode==Mode.STRUCTUREGRAPHWITHRESOURCE || currentMode == Mode.STRUCTUREGRAPHWITHASSESSMENT) {
+        if(currentMode==Mode.COHORTGRAPH) {
             assessmentFiles.add(secondAssessmentFilename);
             clearAndCreateCohortData(structureFiles, resourceFiles, assessmentFiles);
+
+        } else if(currentMode==Mode.STRUCTUREGRAPHWITHRESOURCE ){
+            assessmentFiles.add(secondAssessmentFilename);
+            clearAndCreateCohortData(structureFiles, resourceFiles,assessmentFiles);
+            currentMode = Mode.COHORTGRAPH;
+
+        } else if(currentMode == Mode.STRUCTUREGRAPHWITHASSESSMENT ){
+            assessmentFiles.add(secondAssessmentFilename);
+
+        }else if(currentMode== Mode.STRUCTUREGRAPH){
+            assessmentFiles.add(secondAssessmentFilename);
+            currentMode= Mode.STRUCTUREGRAPHWITHASSESSMENT;
+
         }else{
             throw new Exception("Wrong mode");
+
         }
     }
 
     @Override
     public void removeLORFile(String assessmentFile) throws Exception {
-        if(currentMode==Mode.COHORTGRAPH || currentMode== Mode.STRUCTUREGRAPHWITHASSESSMENT){
-            if (assessmentFiles.size()<1){
-                throw new Exception("You don't have any files to remove");
-            }else {
+        if(assessmentFiles.size()<1){
+            throw new Exception("You don't have any files");
+
+        }else {
+            if (currentMode == Mode.COHORTGRAPH) {
                 assessmentFiles.remove(assessmentFile);
                 clearAndCreateCohortData(structureFiles, resourceFiles, assessmentFiles);
-            }
-        }else{
-            throw new Exception("Wrong mode");
-        }
 
+            }else if(currentMode == Mode.STRUCTUREGRAPHWITHASSESSMENT){
+                assessmentFiles.remove(assessmentFile);
+
+            }
+        }
     }
 
     @Override
@@ -160,8 +214,20 @@ public class ConceptKnowledgeCalculator implements ConceptKnowledgeCalculatorAPI
         if(currentMode==Mode.STRUCTUREGRAPHWITHRESOURCE || currentMode==Mode.COHORTGRAPH){
             resourceFiles.clear();
             resourceFiles.add(resourceFile);
-
             clearAndCreateCohortData(structureFiles,resourceFiles,assessmentFiles);
+
+        }else if(currentMode==Mode.STRUCTUREGRAPH){
+            resourceFiles.clear();
+            resourceFiles.add(resourceFile);
+            clearAndCreateStructureData(structureFiles);
+            currentMode=Mode.STRUCTUREGRAPHWITHRESOURCE;
+
+        } else if(currentMode==Mode.STRUCTUREGRAPHWITHASSESSMENT){
+            resourceFiles.clear();
+            resourceFiles.add(resourceFile);
+            clearAndCreateCohortData(structureFiles,resourceFiles,assessmentFiles);
+            currentMode=Mode.COHORTGRAPH;
+
         }else{
             throw new Exception("Wrong mode");
         }
@@ -173,14 +239,18 @@ public class ConceptKnowledgeCalculator implements ConceptKnowledgeCalculatorAPI
             //depends on which mode
             //TODO: need to find a way to offer a URL
             return "To view graph, right-click index.html and choose \"open in Browser\" in ConceptKnowledgeCalculator/ckcvisualizer";
+
         }else if(currentMode==Mode.STRUCTUREGRAPHWITHASSESSMENT){
             return "To view graph, right-click index.html and choose \"open in Browser\" in ConceptKnowledgeCalculator/ckcvisualizer";
+
         }else if(currentMode==Mode.STRUCTUREGRAPH){
             return "To view graph, right-click index.html and choose \"open in Browser\" in ConceptKnowledgeCalculator/ckcvisualizer";
+
         }else if(currentMode==Mode.STRUCTUREGRAPHWITHRESOURCE){
             return "To view graph, right-click index.html and choose \"open in Browser\" in ConceptKnowledgeCalculator/ckcvisualizer";
+
         }else{
-            throw new Exception("Wrong mdoe");
+            throw new Exception("Wrong mode");
         }
     }
 
@@ -194,8 +264,6 @@ public class ConceptKnowledgeCalculator implements ConceptKnowledgeCalculatorAPI
                     List<ConceptNode> concepts;
 
                     concepts = LearningObjectSuggester.conceptsToWorkOn(userGraph);
-                    System.out.println(concepts);
-
 
                     return new SuggestionResource(userGraph, concepts);
 
@@ -289,20 +357,8 @@ public class ConceptKnowledgeCalculator implements ConceptKnowledgeCalculatorAPI
     }
 
 
-    public List<String> getStructureFiles(){
-        return structureFiles;
-    }
-
-    public List<String> getResourceFiles(){
-        return resourceFiles;
-    }
-
     public List<String> getAssessmentFiles(){
         return assessmentFiles;
-    }
-
-    public List<String> getStructureFileNames() {
-        return structureFiles;
     }
 
     public Mode getCurrentMode(){
@@ -315,6 +371,16 @@ public class ConceptKnowledgeCalculator implements ConceptKnowledgeCalculatorAPI
 
     public ConceptGraph getStructureGraph(){
         return structureGraph;
+    }
+
+
+    //testing purposes
+    public List<String> getStructureFiles(){
+        return structureFiles;
+    }
+
+    public List<String> getResourceFiles(){
+        return resourceFiles;
     }
 
 }
