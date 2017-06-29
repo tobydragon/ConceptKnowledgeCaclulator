@@ -1,5 +1,6 @@
 package edu.ithaca.dragonlab.ckc;
 
+import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import edu.ithaca.dragonlab.ckc.conceptgraph.CohortConceptGraphs;
 import edu.ithaca.dragonlab.ckc.conceptgraph.ConceptGraph;
 import edu.ithaca.dragonlab.ckc.learningobject.LearningObject;
@@ -459,6 +460,43 @@ public class ConceptKnowledgeCalculatorTest {
             Assert.assertEquals(0.75, ckc.getLearningObjectAvg("Q14"), 0);
         } catch (Exception e) {
             e.printStackTrace();
+        }
+    }
+
+    @Test
+    public void modeTest(){
+
+        ConceptKnowledgeCalculatorAPI ckc = null;
+        try {
+            ckc = new ConceptKnowledgeCalculator("test/testresources/basicRealisticExampleConceptGraphOneStudent.json", "test/testresources/basicRealisticExampleLOLRecordOneStudent.json", "test/testresources/basicRealisticExampleGradeBook2.csv");
+            Assert.assertEquals(ckc.getCurrentMode(), ConceptKnowledgeCalculator.Mode.COHORTGRAPH);
+            List<String> getTest = new ArrayList<>();
+
+
+            getTest.add("test/testresources/basicRealisticExampleConceptGraphOneStudent.json");
+            Assert.assertEquals(ckc.getStructureFiles(),getTest );
+            getTest.clear();
+            getTest.add( "test/testresources/basicRealisticExampleLOLRecordOneStudent.json");
+            Assert.assertEquals(ckc.getResourceFiles(), getTest);
+            getTest.clear();
+            getTest.add("test/testresources/basicRealisticExampleGradeBook2.csv");
+            Assert.assertEquals(ckc.getAssessmentFiles(), getTest);
+            Assert.assertEquals(ckc.getStructureGraph(), null);
+            getTest.clear();
+
+            ckc.switchToStructure();
+            Assert.assertEquals(ckc.getCurrentMode(), ConceptKnowledgeCalculator.Mode.STRUCTUREGRAPH);
+            Assert.assertEquals(ckc.getCohortConceptGraphs(), null);
+            getTest.add("test/testresources/basicRealisticExampleConceptGraphOneStudent.json");
+            Assert.assertEquals(ckc.getStructureFiles(), getTest);
+            Assert.assertEquals(ckc.getResourceFiles(), new ArrayList<>());
+            Assert.assertEquals(ckc.getAssessmentFiles(), new ArrayList<>());
+
+
+
+        } catch (Exception e) {
+            Assert.fail("Unable to load default files. Test unable to run");
+
         }
     }
 

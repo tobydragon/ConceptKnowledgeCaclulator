@@ -1,6 +1,5 @@
 package edu.ithaca.dragonlab.ckc;
 
-import com.sun.org.apache.xpath.internal.operations.Mod;
 import edu.ithaca.dragonlab.ckc.conceptgraph.CohortConceptGraphs;
 import edu.ithaca.dragonlab.ckc.conceptgraph.ConceptGraph;
 import edu.ithaca.dragonlab.ckc.conceptgraph.ConceptNode;
@@ -70,7 +69,6 @@ public class ConceptKnowledgeCalculator implements ConceptKnowledgeCalculatorAPI
     public void clearAndCreateStructureData(List<String> structureFilename) throws IOException{
         structureGraph= null;
 
-        structureFiles.add(structureFilename.get(0));
         ConceptGraphRecord structureRecord = ConceptGraphRecord.buildFromJson(structureFiles.get(0));
         structureGraph = new ConceptGraph(structureRecord);
 
@@ -125,6 +123,7 @@ public class ConceptKnowledgeCalculator implements ConceptKnowledgeCalculatorAPI
             assessmentFiles.clear();
             structureGraph = null;
             currentMode = Mode.STRUCTUREGRAPH;
+            cohortConceptGraphs=null;
         }else{
             throw new Exception("Wrong mode");
         }
@@ -145,8 +144,13 @@ public class ConceptKnowledgeCalculator implements ConceptKnowledgeCalculatorAPI
             resourceFiles.add(LO);
             assessmentFiles.add(LOR);
             structureGraph=null;
-            clearAndCreateCohortData(structureFiles, resourceFiles, assessmentFiles);
-            currentMode = Mode.COHORTGRAPH;
+            try{
+                clearAndCreateCohortData(structureFiles, resourceFiles, assessmentFiles);
+                currentMode = Mode.COHORTGRAPH;
+
+            }catch (Exception e){
+                e.printStackTrace();
+            }
         }else{
             throw new Exception("Wrong mode");
         }
@@ -176,15 +180,23 @@ public class ConceptKnowledgeCalculator implements ConceptKnowledgeCalculatorAPI
 
         } else if(currentMode==Mode.STRUCTUREGRAPHWITHRESOURCE ){
             assessmentFiles.add(secondAssessmentFilename);
-            clearAndCreateCohortData(structureFiles, resourceFiles,assessmentFiles);
-            currentMode = Mode.COHORTGRAPH;
+            try {
+                clearAndCreateCohortData(structureFiles, resourceFiles, assessmentFiles);
+                currentMode = Mode.COHORTGRAPH;
+            }catch (Exception e){
+                e.printStackTrace();
+            }
 
         } else if(currentMode == Mode.STRUCTUREGRAPHWITHASSESSMENT ){
             assessmentFiles.add(secondAssessmentFilename);
 
         }else if(currentMode== Mode.STRUCTUREGRAPH){
-            assessmentFiles.add(secondAssessmentFilename);
-            currentMode= Mode.STRUCTUREGRAPHWITHASSESSMENT;
+            try {
+                assessmentFiles.add(secondAssessmentFilename);
+                currentMode = Mode.STRUCTUREGRAPHWITHASSESSMENT;
+            }catch (Exception e){
+                e.printStackTrace();
+            }
 
         }else{
             throw new Exception("Wrong mode");
@@ -217,16 +229,24 @@ public class ConceptKnowledgeCalculator implements ConceptKnowledgeCalculatorAPI
             clearAndCreateCohortData(structureFiles,resourceFiles,assessmentFiles);
 
         }else if(currentMode==Mode.STRUCTUREGRAPH){
-            resourceFiles.clear();
-            resourceFiles.add(resourceFile);
-            clearAndCreateStructureData(structureFiles);
-            currentMode=Mode.STRUCTUREGRAPHWITHRESOURCE;
+            try {
+                resourceFiles.clear();
+                resourceFiles.add(resourceFile);
+                clearAndCreateStructureData(structureFiles);
+                currentMode = Mode.STRUCTUREGRAPHWITHRESOURCE;
+            }catch (Exception e){
+                e.printStackTrace();
+            }
 
         } else if(currentMode==Mode.STRUCTUREGRAPHWITHASSESSMENT){
-            resourceFiles.clear();
-            resourceFiles.add(resourceFile);
-            clearAndCreateCohortData(structureFiles,resourceFiles,assessmentFiles);
-            currentMode=Mode.COHORTGRAPH;
+            try {
+                resourceFiles.clear();
+                resourceFiles.add(resourceFile);
+                clearAndCreateCohortData(structureFiles, resourceFiles, assessmentFiles);
+                currentMode = Mode.COHORTGRAPH;
+            }catch (Exception e){
+                e.printStackTrace();
+            }
 
         }else{
             throw new Exception("Wrong mode");
