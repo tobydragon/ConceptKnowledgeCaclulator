@@ -26,27 +26,27 @@ public class LearningObjectLinkRecord {
         this.learningObject = learningObject;
         this.conceptIds = conceptIds;
         this.dataImportance = 1;
-        this.maxPossibleKnowledgeEstimate = 100;
+        this.maxPossibleKnowledgeEstimate = maxPossibleKnowledgeEstimate;
     }
 
     public LearningObjectLinkRecord(String learningObject, List<String> conceptIds, double dataImportance){
         this(learningObject,conceptIds);
         this.dataImportance = dataImportance;
-        this.maxPossibleKnowledgeEstimate = 100;
+        this.maxPossibleKnowledgeEstimate = maxPossibleKnowledgeEstimate;
     }
 
-    public LearningObjectLinkRecord(String learningObject){
+    public LearningObjectLinkRecord(String learningObject, double maxPossibleKnowledgeEstimate){
         this.learningObject = learningObject;
         conceptIds = new ArrayList<>();
         this.dataImportance = 1;
-        this.maxPossibleKnowledgeEstimate = 100;
+        this.maxPossibleKnowledgeEstimate = maxPossibleKnowledgeEstimate;
     }
 
     public LearningObjectLinkRecord(){
         learningObject = "";
         conceptIds = new ArrayList<>();
         this.dataImportance = 1;
-        this.maxPossibleKnowledgeEstimate = 100;
+        this.maxPossibleKnowledgeEstimate = maxPossibleKnowledgeEstimate;
     }
 
     public static List<LearningObjectLinkRecord> buildListFromJson(String fullFileName) throws IOException {
@@ -56,10 +56,10 @@ public class LearningObjectLinkRecord {
         return LORLList;
     }
 
-    public static List<LearningObjectLinkRecord> createLearningObjectLinkRecords(Collection<LearningObject> learningObjects){
+    public static List<LearningObjectLinkRecord> createLearningObjectLinkRecords(Collection<LearningObject> learningObjects, double maxPossibleKnowledgeEstimate){
         List<LearningObjectLinkRecord> lolrList = new ArrayList<LearningObjectLinkRecord>();
         for(LearningObject learningObject: learningObjects){
-            lolrList.add( new LearningObjectLinkRecord(learningObject.toString()));
+            lolrList.add( new LearningObjectLinkRecord(learningObject.toString(), maxPossibleKnowledgeEstimate));
         }
         return lolrList;
     }

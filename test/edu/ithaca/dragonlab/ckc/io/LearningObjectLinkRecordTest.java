@@ -99,7 +99,7 @@ public class LearningObjectLinkRecordTest {
         CSVReader test = new CSVReader("test/testresources/SmallDataCSVExample.csv");
         Collection<LearningObject> list = test.getManualGradedLearningObjects();
         List<LearningObject> list2 = test.getManualGradedLearningObjects();
-        List<LearningObjectLinkRecord> lolrList = LearningObjectLinkRecord.createLearningObjectLinkRecords(list);
+        List<LearningObjectLinkRecord> lolrList = LearningObjectLinkRecord.createLearningObjectLinkRecords(list, 1);
         List<String> resultString = new ArrayList<String>();
         for(LearningObjectLinkRecord lolr: lolrList){
             resultString.add(lolr.getLearningObject());
