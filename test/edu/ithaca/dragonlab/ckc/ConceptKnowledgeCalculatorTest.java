@@ -104,8 +104,11 @@ public class ConceptKnowledgeCalculatorTest {
             Assert.assertEquals(incomTest.size(),5);
             Assert.assertEquals(incomTest.get(0).getId(),"Q10");
 
-            Assert.assertEquals(wrongTest.size(),3);
+            Assert.assertEquals(wrongTest.size(),4);
             Assert.assertEquals(wrongTest.get(0).getId(), "Q9");
+            Assert.assertEquals(wrongTest.get(1).getId(), "Q9");
+            Assert.assertEquals(wrongTest.get(2).getId(), "Q1");
+            Assert.assertEquals(wrongTest.get(3).getId(), "Q2");
         } catch (Exception e) {
             Assert.fail("Unable to find user");
         }
@@ -134,8 +137,9 @@ public class ConceptKnowledgeCalculatorTest {
             Assert.assertEquals(incomTest.size(), 0);
             Assert.assertEquals(incomTest, new ArrayList<>());
 
-            Assert.assertEquals(wrongTest.size(), 1);
+            Assert.assertEquals(wrongTest.size(), 2);
             Assert.assertEquals(wrongTest.get(0).getId(), "Lab 4: Recursion");
+            Assert.assertEquals(wrongTest.get(1).getId(), "Lab 2: Array Library");
 
 
         } catch (Exception e) {
@@ -143,6 +147,48 @@ public class ConceptKnowledgeCalculatorTest {
         }
 
     }
+
+
+
+    @Test
+    public void  realDataCalcIndividualGraphSuggestionsTest2(){
+        ConceptKnowledgeCalculatorAPI ckc = null;
+        try {
+            ckc =new ConceptKnowledgeCalculator("resources/comp220/comp220Graph.json",
+                    "resources/comp220/comp220Resources.json",
+                    "localresources/comp220ExampleDataPortion.csv");
+
+        } catch (IOException e) {
+            Assert.fail("Unable to load default files. Test unable to run");
+        }
+
+        SuggestionResource res = null;
+        try {
+
+            res = ckc.calcIndividualGraphSuggestions("s10");
+
+            List<LearningObjectSuggestion> incomTest = res.incompleteList;
+            List<LearningObjectSuggestion> wrongTest = res.wrongList;
+
+            Assert.assertEquals(incomTest.size(), 0);
+            Assert.assertEquals(incomTest, new ArrayList<>());
+
+            Assert.assertEquals(wrongTest.size(), 6);
+            Assert.assertEquals(wrongTest.get(0).getId(), "Lab 4: Recursion");
+            Assert.assertEquals(wrongTest.get(1).getId(), "Lab 8: Comparing Arrays and Linked Lists");
+            Assert.assertEquals(wrongTest.get(2).getId(), "Lab 4: Recursion");
+            Assert.assertEquals(wrongTest.get(3).getId(), "Lab 2: Array Library");
+            Assert.assertEquals(wrongTest.get(4).getId(), "Lab 7: Linked List");
+            Assert.assertEquals(wrongTest.get(5).getId(), "Lab 3: Comparing Array Library Efficiency");
+
+
+        } catch (Exception e) {
+            Assert.fail("Unable to find user");
+        }
+
+    }
+
+
 
     @Test
     public void  calcIndividualGraphSuggestionsWIthEmptyListTest() throws Exception {
@@ -155,7 +201,11 @@ public class ConceptKnowledgeCalculatorTest {
             List<LearningObjectSuggestion> wrongTest = res.wrongList;
 
             Assert.assertEquals(incomTest,new ArrayList<>());
-            Assert.assertEquals(wrongTest.get(0).getId(), "Lab 5: Comparing Searches");
+
+            Assert.assertEquals(wrongTest.get(0).getId(), "Lab 6: ArrayList and Testing");
+            Assert.assertEquals(wrongTest.get(1).getId(), "Lab 4: Recursion");
+            Assert.assertEquals(wrongTest.get(2).getId(), "Lab 7: Linked List");
+            Assert.assertEquals(wrongTest.get(3).getId(), "Lab 5: Comparing Searches");
         } catch (IOException e) {
             Assert.fail("Unable to load default files. Test unable to run");
         }

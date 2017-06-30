@@ -55,10 +55,12 @@ public class LearningObjectSuggesterTest {
         Assert.assertEquals(incomTest.get(3).getId(),"Q6");
         Assert.assertEquals(incomTest.get(4).getId(),"Q6");
 
-        Assert.assertEquals(wrongTest.size(),3);
+        Assert.assertEquals(wrongTest.size(),4);
         Assert.assertEquals(wrongTest.get(0).getId(), "Q9");
         Assert.assertEquals(wrongTest.get(1).getId(), "Q9");
         Assert.assertEquals(wrongTest.get(2).getId(), "Q1");
+        Assert.assertEquals(wrongTest.get(3).getId(), "Q2");
+
     }
 
     @Test
@@ -180,11 +182,12 @@ public class LearningObjectSuggesterTest {
         List<LearningObjectSuggestion> suggestedList = LearningObjectSuggester.buildLearningObjectSuggestionList(learningSummaryFromA, orig.getLearningObjectMap(),"A");
 
 
+
         //this is ordered based on "level"
         List<LearningObjectSuggestion> suggestListTest = new ArrayList<>();
-        suggestListTest.add(new LearningObjectSuggestion("Q3", 2, LearningObjectSuggestion.Level.RIGHT,"A") );
         suggestListTest.add(new LearningObjectSuggestion("Q1", 1, LearningObjectSuggestion.Level.RIGHT, "A") );
         suggestListTest.add(new LearningObjectSuggestion("Q2", 1, LearningObjectSuggestion.Level.RIGHT, "A") );
+        suggestListTest.add(new LearningObjectSuggestion("Q3", 2, LearningObjectSuggestion.Level.WRONG,"A") );
         suggestListTest.add(new LearningObjectSuggestion("Q4", 2, LearningObjectSuggestion.Level.WRONG, "A") );
         suggestListTest.add(new LearningObjectSuggestion("Q5", 2, LearningObjectSuggestion.Level.WRONG, "A") );
         suggestListTest.add(new LearningObjectSuggestion("Q6", 2, LearningObjectSuggestion.Level.WRONG, "A") );

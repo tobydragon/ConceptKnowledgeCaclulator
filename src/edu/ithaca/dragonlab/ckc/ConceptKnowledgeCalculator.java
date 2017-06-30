@@ -343,6 +343,7 @@ public class ConceptKnowledgeCalculator implements ConceptKnowledgeCalculatorAPI
 
                 if (userGraph != null) {
                     List<ConceptNode> nodeList = LearningObjectSuggester.conceptsToWorkOn(userGraph);
+
                     List<String> suggestedConceptIDList = new ArrayList<>();
                     for (ConceptNode node : nodeList) {
                         suggestedConceptIDList.add(node.getID());

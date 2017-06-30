@@ -15,7 +15,6 @@ public class LearningObjectSuggester {
 
     public static double MAX= .75;
     public static double MIN = .55;
-    public static double WRONGMAX = .59;
 
 
     /**
@@ -47,7 +46,6 @@ public class LearningObjectSuggester {
 
         HashMap<String, List<LearningObjectSuggestion>> suggestedConceptNodeMap = new HashMap<>();
 
-
         for (int x =0; x< suggestedConceptList.size(); x++) {
             ConceptNode concept = suggestedConceptList.get(x);
 
@@ -55,7 +53,9 @@ public class LearningObjectSuggester {
 
             HashMap<String, Integer> map = graph.buildLearningObjectSummaryList(concept.getID());
             List<LearningObjectSuggestion> list = buildLearningObjectSuggestionList(map, graph.getLearningObjectMap(), concept.getID());
+
             sortSuggestions(list);
+
             for (int i = 0; i < list.size(); i++) {
                 //if it is incomplete
                 if (choice.equals(1)) {
@@ -66,12 +66,14 @@ public class LearningObjectSuggester {
                 } else {
                     if (list.get(i).getLevel().equals(LearningObjectSuggestion.Level.WRONG)) {
                         //then add it
+
                         testList.add(list.get(i));
                     }
                 }
 
             }
             suggestedConceptNodeMap.put(concept.getID(), testList);
+
 
         }
 
@@ -108,7 +110,8 @@ public class LearningObjectSuggester {
                 myList.add(suggestionNode);
 
             }else{
-                if(estimate> 0 && estimate<= WRONGMAX){
+
+                if(estimate> 0 && estimate<= MAX){
                     level = LearningObjectSuggestion.Level.WRONG;
                 }else{
                     level = LearningObjectSuggestion.Level.RIGHT;

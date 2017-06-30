@@ -19,7 +19,7 @@ public class SuggestionResource {
     public SuggestionResource(ConceptGraph graph, List<ConceptNode> concepts){
         this.incompleteList= new ArrayList<LearningObjectSuggestion>();
         this.wrongList= new ArrayList<LearningObjectSuggestion>();
-        this.suggestionMap=null;
+        this.suggestionMap=new HashMap<>();
         completeList(graph, 0, concepts );
         completeList(graph,1, concepts);
     }
@@ -93,7 +93,6 @@ public class SuggestionResource {
 //            //wrong
             suggestionMap = LearningObjectSuggester.buildSuggestionMap(concepts,0,graph);
         }
-
 
         int max = 0;
         for (List<LearningObjectSuggestion> lists : suggestionMap.values()) {
