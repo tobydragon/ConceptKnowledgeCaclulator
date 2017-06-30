@@ -67,7 +67,8 @@ public class ConceptKnowledgeCalculator implements ConceptKnowledgeCalculatorAPI
 
     @Override
     public void clearAndCreateStructureData(List<String> structureFilename) throws IOException{
-        structureGraph= null;
+        structureGraph = null;
+        cohortConceptGraphs=null;
 
         ConceptGraphRecord structureRecord = ConceptGraphRecord.buildFromJson(structureFiles.get(0));
         structureGraph = new ConceptGraph(structureRecord);
@@ -77,6 +78,7 @@ public class ConceptKnowledgeCalculator implements ConceptKnowledgeCalculatorAPI
     @Override
     public void clearAndCreateCohortData(List<String> structureFilename, List<String> resourceFilename, List<String> assessmentFilename) throws IOException {
         cohortConceptGraphs = null;
+        structureGraph = null;
 
         //to change the structure file, clear the old list and add the new one.
         if (structureFilename.size()!=0 &&!structureFiles.contains(structureFilename.get(0))) {
@@ -141,7 +143,6 @@ public class ConceptKnowledgeCalculator implements ConceptKnowledgeCalculatorAPI
         if(currentMode == Mode.STRUCTUREGRAPH) {
             resourceFiles.add(LO);
             assessmentFiles.add(LOR);
-            structureGraph=null;
             try{
                 clearAndCreateCohortData(structureFiles, resourceFiles, assessmentFiles);
                 currentMode = Mode.COHORTGRAPH;
@@ -162,8 +163,13 @@ public class ConceptKnowledgeCalculator implements ConceptKnowledgeCalculatorAPI
                 currentMode=Mode.STRUCTUREGRAPHWITHRESOURCE;
 
         }else if(currentMode== Mode.COHORTGRAPH || currentMode == Mode.STRUCTUREGRAPHWITHASSESSMENT){
-            resourceFiles.add(secondResourceFile);
-            clearAndCreateCohortData(structureFiles, resourceFiles, assessmentFiles);
+            try {
+                resourceFiles.add(secondResourceFile);
+                clearAndCreateCohortData(structureFiles, resourceFiles, assessmentFiles);
+                currentMode= Mode.COHORTGRAPH;
+            }catch (Exception e){
+                e.printStackTrace();
+            }
         }else{
             throw new Exception("Wrong mode");
         }

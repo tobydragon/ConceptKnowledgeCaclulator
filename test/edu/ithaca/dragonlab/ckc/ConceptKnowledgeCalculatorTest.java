@@ -468,37 +468,151 @@ public class ConceptKnowledgeCalculatorTest {
 
         ConceptKnowledgeCalculatorAPI ckc = null;
         try {
-            ckc = new ConceptKnowledgeCalculator("test/testresources/basicRealisticExampleConceptGraphOneStudent.json", "test/testresources/basicRealisticExampleLOLRecordOneStudent.json", "test/testresources/basicRealisticExampleGradeBook2.csv");
-            Assert.assertEquals(ckc.getCurrentMode(), ConceptKnowledgeCalculator.Mode.COHORTGRAPH);
             List<String> getTest = new ArrayList<>();
 
+            //COHORT MODE
+            ckc = new ConceptKnowledgeCalculator("test/testresources/basicRealisticExampleConceptGraphOneStudent.json", "test/testresources/basicRealisticExampleLOLRecordOneStudent.json", "test/testresources/basicRealisticExampleGradeBook2.csv");
 
+            Assert.assertEquals(ckc.getCurrentMode(), ConceptKnowledgeCalculator.Mode.COHORTGRAPH);
             //the constructor starts out as a cohort concept graph and there should only be one file in each of the lists of files. The structure graph should be null, because we're not on that mode
             getTest.add("test/testresources/basicRealisticExampleConceptGraphOneStudent.json");
             Assert.assertEquals(ckc.getStructureFiles(),getTest );
             getTest.clear();
+
             getTest.add( "test/testresources/basicRealisticExampleLOLRecordOneStudent.json");
             Assert.assertEquals(ckc.getResourceFiles(), getTest);
             getTest.clear();
+
             getTest.add("test/testresources/basicRealisticExampleGradeBook2.csv");
             Assert.assertEquals(ckc.getAssessmentFiles(), getTest);
+
             Assert.assertEquals(ckc.getStructureGraph(), null);
             Assert.assertNotEquals(ckc.getCohortConceptGraphs(), null);
             getTest.clear();
 
+
+            //STRUCTURE MODE
             //now in structure mode. Because of this cohort concept graph should be null as well as all the extra data (LO and LOR files). Structure graph should not be null now because we are in that mode.
+            //it should hold on to blank resource and assessment files. The structure file should have one file in it.
             ckc.switchToStructure();
             Assert.assertEquals(ckc.getCurrentMode(), ConceptKnowledgeCalculator.Mode.STRUCTUREGRAPH);
+
             Assert.assertEquals(ckc.getCohortConceptGraphs(), null);
+
             getTest.add("test/testresources/basicRealisticExampleConceptGraphOneStudent.json");
             Assert.assertEquals(ckc.getStructureFiles(), getTest);
+
             Assert.assertEquals(ckc.getResourceFiles(), new ArrayList<>());
+            Assert.assertEquals(ckc.getAssessmentFiles(), new ArrayList<>());
+
+            Assert.assertNotEquals(ckc.getStructureGraph(), null);
+            Assert.assertEquals(ckc.getCohortConceptGraphs(), null);
+            getTest.clear();
+
+
+            //STRUCTURE MODE WITH ASSESSMENT
+            //switched to structure mode with assessment. This should still have a structure graph, but then also hold on to the files. Because additional LOR was called from structure graph mode, the assessment file should not be filled with the one file.
+            ckc.additionalLOR("test/testresources/mediumGraphTestGradeBook.csv");
+            Assert.assertEquals(ckc.getCurrentMode(), ConceptKnowledgeCalculator.Mode.STRUCTUREGRAPHWITHASSESSMENT);
+
+            getTest.add("test/testresources/basicRealisticExampleConceptGraphOneStudent.json");
+            Assert.assertEquals(ckc.getStructureFiles(), getTest);
+            getTest.clear();
+
+            Assert.assertEquals(ckc.getResourceFiles(), new ArrayList<>());
+
+            getTest.add("test/testresources/mediumGraphTestGradeBook.csv");
+            Assert.assertEquals(ckc.getAssessmentFiles(), getTest);
+
+            Assert.assertNotEquals(ckc.getStructureGraph(), null);
+            Assert.assertEquals(ckc.getCohortConceptGraphs(), null);
+            getTest.clear();
+
+
+            //CONCEPT GRAPH MODE
+            //switched back into concept graph mode because now the three lists of files are filled up with at least one file.
+            //all of the previous files should be stored in structure files, resource files, and assessment files
+            ckc.addAnotherLO("test/testresources/simpleGraphTestLearningObjects.json");
+            Assert.assertEquals(ckc.getCurrentMode(), ConceptKnowledgeCalculator.Mode.COHORTGRAPH);
+            getTest.add("test/testresources/basicRealisticExampleConceptGraphOneStudent.json");
+            Assert.assertEquals(ckc.getStructureFiles(), getTest);
+            getTest.clear();
+
+            getTest.add("test/testresources/simpleGraphTestLearningObjects.json");
+            Assert.assertEquals(ckc.getResourceFiles(), getTest);
+            getTest.clear();
+
+            getTest.add("test/testresources/mediumGraphTestGradeBook.csv");
+            Assert.assertEquals(ckc.getAssessmentFiles(),getTest);
+            getTest.clear();
+
+            Assert.assertEquals(ckc.getStructureGraph(), null);
+            Assert.assertNotEquals(ckc.getCohortConceptGraphs(), null);
+
+
+
+
+            //STRUCTURE GRAPH WITH RESOURCE
+            //to test more, going from cohort graph to structure graph.
+            // changing from structure graph to structure graph with resources. Cohort graph should be null and strucuture graph shouldn't be. The structure file should have one file in it and resource file list should have one in it. The assessment file should be empty
+            ckc.switchToStructure();
+
+            ckc.addAnotherLO("test/testresources/simpleGraphTestLearningObjects.json");
+            Assert.assertEquals(ckc.getCurrentMode(), ConceptKnowledgeCalculator.Mode.STRUCTUREGRAPHWITHRESOURCE);
+            getTest.add("test/testresources/basicRealisticExampleConceptGraphOneStudent.json");
+            Assert.assertEquals(ckc.getStructureFiles(), getTest);
+            getTest.clear();
+
+            getTest.add("test/testresources/simpleGraphTestLearningObjects.json");
+            Assert.assertEquals(ckc.getResourceFiles(),  getTest);
+            getTest.clear();
+
             Assert.assertEquals(ckc.getAssessmentFiles(), new ArrayList<>());
             Assert.assertNotEquals(ckc.getStructureGraph(), null);
             Assert.assertEquals(ckc.getCohortConceptGraphs(), null);
 
 
+            //COHORT GRAPH
+            //this is switching from structure graph mode with resources to cohort graph mode. All the lists of files should have at least one file in them and structure graph should equal null;
+            ckc.additionalLOR("test/testresources/simpleGraphTest.csv");
+            Assert.assertEquals(ckc.getCurrentMode(), ConceptKnowledgeCalculator.Mode.COHORTGRAPH);
 
+            getTest.add("test/testresources/basicRealisticExampleConceptGraphOneStudent.json");
+            Assert.assertEquals(ckc.getStructureFiles(), getTest);
+            getTest.clear();
+
+            getTest.add("test/testresources/simpleGraphTestLearningObjects.json");
+            Assert.assertEquals(ckc.getResourceFiles(),  getTest);
+            getTest.clear();
+
+            getTest.add("test/testresources/simpleGraphTest.csv");
+            Assert.assertEquals(ckc.getAssessmentFiles(),getTest);
+            getTest.clear();
+
+            Assert.assertEquals(ckc.getStructureGraph(), null);
+            Assert.assertNotEquals(ckc.getCohortConceptGraphs(), null);
+
+
+
+            //STRUCTURE GRAPH WITH RESOURCE
+            //to further testing, going back to structure more
+            //to switch from structure graph with resource, adding LOR makes all the file lists have at least one file in them, thus a cohort graph can be made. Structure graph should not equal null and all file lists should have one file in them
+            ckc.switchToStructure();
+
+            ckc.addLORAndLO("test/testresources/simpleGraphTestLearningObjects.json", "test/testresources/simpleGraphTest.csv" );
+            getTest.add("test/testresources/basicRealisticExampleConceptGraphOneStudent.json");
+            Assert.assertEquals(ckc.getStructureFiles(), getTest);
+            getTest.clear();
+
+            getTest.add("test/testresources/simpleGraphTestLearningObjects.json");
+            Assert.assertEquals(ckc.getResourceFiles(), getTest);
+            getTest.clear();
+
+            getTest.add("test/testresources/simpleGraphTest.csv" );
+            Assert.assertEquals(ckc.getAssessmentFiles(), getTest);
+
+            Assert.assertEquals(ckc.getStructureGraph(), null);
+            Assert.assertNotEquals(ckc.getCohortConceptGraphs(), null);
 
 
         } catch (Exception e) {
