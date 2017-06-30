@@ -18,15 +18,15 @@ public class KnowledgeEstimateMatrix {
     String id;
     double[][] studentKnowledgeEstimates;
     public List<LearningObject> objList;
-    String[] userIdList;
+    List<String> userIdList;
     RCode rMatrix;
 
 
-    public KnowledgeEstimateMatrix(ArrayList<LearningObject> lo){
+    public KnowledgeEstimateMatrix(List<LearningObject> lo){
         this.id = id;
-        this.studentKnowledgeEstimates = createMatrix(lo);
         this.objList = lo;
-        this.userIdList = userIdList;
+        this.userIdList = new ArrayList<String>();
+        this.studentKnowledgeEstimates = createMatrix(lo);
         this.rMatrix = createRMatrix();
 
     }
@@ -44,7 +44,6 @@ public class KnowledgeEstimateMatrix {
         }
         double[][] newMatrix = new double[columns][rows];
 
-        this.userIdList = new String[rows];
         int numOfIds = 0;
         int currentColumn = 0;
         int currentRow = 0;
@@ -55,7 +54,7 @@ public class KnowledgeEstimateMatrix {
             if (currentColumn == 0) {
                 for (LearningObjectResponse ans : responses) {
                         newMatrix[currentColumn][currentRow] = ans.calcKnowledgeEstimate();
-                        userIdList[currentRow] = ans.getUserId();
+                        userIdList.add(ans.getUserId());
                         numOfIds++;
                         currentRow++;
                 }
@@ -68,20 +67,21 @@ public class KnowledgeEstimateMatrix {
                 for (LearningObjectResponse ans : responses) {
                     boolean isPlaced = false;
                     //cycle through each index of the userIdList
-                    for (int i = 0; i < numOfIds; i++) {
+                    for (String user: userIdList){
                         //if the current userId matches a userId in the list, place it at the same row as the userIdList index
-                        if (ans.getUserId() == userIdList[i]) {
-                            newMatrix[currentColumn][i] = ans.calcKnowledgeEstimate();
+                        if (ans.getUserId() == user) {
+                            newMatrix[currentColumn][userIdList.indexOf(user)] = ans.calcKnowledgeEstimate();
                             isPlaced = true;
-                        } else {
-                            //if all userIds in the list have been looked through and the response is still not placed, place the id in the list and the value into new row
-                            if ((i == numOfIds - 1) && (isPlaced == false)) {
-                                userIdList[numOfIds] = ans.getUserId();
-                                newMatrix[currentColumn][numOfIds] = ans.calcKnowledgeEstimate();
-                                numOfIds++;
-
-                            }
                         }
+
+                    }
+                    //if all userIds in the list have been looked through and the response is still not placed, place the id in the list and the value into new row
+
+                    if ((isPlaced == false)) {
+                        userIdList.add(ans.getUserId());
+                        newMatrix[currentColumn][numOfIds] = ans.calcKnowledgeEstimate();
+                        numOfIds++;
+
                     }
                 }
             }
@@ -91,7 +91,7 @@ public class KnowledgeEstimateMatrix {
     }
 
     public RCode createRMatrix(){
-        RCode rMatrix = JavaToRConversion.JavaToR(studentKnowledgeEstimates, objList, userIdList);
+        RCode rMatrix = JavaToRConversion.JavaToR(studentKnowledgeEstimates);
         return rMatrix;
     }
 
@@ -104,7 +104,7 @@ public class KnowledgeEstimateMatrix {
 
     public double[][] getStudentKnowledgeEstimates(){return this.studentKnowledgeEstimates;}
 
-    public String[] getUserIdList(){return this.userIdList;}
+    public List<String> getUserIdList(){return this.userIdList;}
 
     public List<LearningObject> getObjList(){return this.objList;}
 

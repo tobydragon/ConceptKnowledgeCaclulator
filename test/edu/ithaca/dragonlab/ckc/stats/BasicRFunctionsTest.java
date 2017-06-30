@@ -1,5 +1,14 @@
 package edu.ithaca.dragonlab.ckc.stats;
 
+import edu.ithaca.dragonlab.ckc.conceptgraph.KnowledgeEstimateMatrix;
+import edu.ithaca.dragonlab.ckc.learningobject.LearningObject;
+import org.junit.Test;
+import org.junit.Assert;
+import edu.ithaca.dragonlab.ckc.io.CSVReader;
+import stats.BasicRFunctions;
+
+import java.util.ArrayList;
+
 /**
  * Created by bleblanc2 on 6/19/17.
  */

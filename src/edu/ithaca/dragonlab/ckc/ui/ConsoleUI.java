@@ -95,7 +95,7 @@ public class ConsoleUI {
                     System.out.println("What do you want to do? \n 1 - replace graph \n 2 - replace Learning Object file \n 3 - add LOR file (switch to cohort mode) \n 4 - view graph ");
                     num = scanner.nextInt();
                 }
-//                scanner.nextLine();
+                scanner.nextLine();
 
                 if (num==1){
                     replaceGraph(scanner);
@@ -142,12 +142,12 @@ public class ConsoleUI {
 
             }else{
 
-                System.out.println("What do you want to do? \n 1 - calculate a list of concept nodes to work on \n 2 - calculate learning object suggestions based on a specific concept \n 3 - automatically calculate suggestions \n 4 - View graph \n 5 - Create new graph \n 6 - Replace graph file \n 7 - Add another assessment file \n 8 - Remove assessment file \n 9 - Replace resource file file \n 10 - Get Learning Object Average \n 11 - View Structure Graph (switch to structure mode)");
+                System.out.println("What do you want to do? \n 1 - calculate a list of concept nodes to work on \n 2 - calculate learning object suggestions based on a specific concept \n 3 - automatically calculate suggestions \n 4 - View graph \n 5 - Create new graph \n 6 - Replace graph file \n 7 - Add another assessment file \n 8 - Remove assessment file \n 9 - Replace resource file file \n 10 - Get Learning Object Average \n 11 Get Student Average \n 12 - View Structure Graph (switch to structure mode)");
                 Integer num = scanner.nextInt();
 
-                while (num < 1 || num > 11) {
+                while (num < 1 || num > 12) {
                     System.out.println("Out of bounds");
-                    System.out.println("What do you want to do? \n 1 - calculate a list of concept nodes to work on \n 2 - calculate learning object suggestions based on a specific concept \n 3 - automatically calculate suggestions \n 4 - View graph \n 5 - Create new graph \n 6 - Replace graph file \n 7 - Add another assessment file \n 8 - Remove assessment file \n 9 - Replace resource file file \n 10 - Get Learning Object Average \n 11 - View Structure Graph (switch to structure mode)");
+                    System.out.println("What do you want to do? \n 1 - calculate a list of concept nodes to work on \n 2 - calculate learning object suggestions based on a specific concept \n 3 - automatically calculate suggestions \n 4 - View graph \n 5 - Create new graph \n 6 - Replace graph file \n 7 - Add another assessment file \n 8 - Remove assessment file \n 9 - Replace resource file file \n 10 - Get Learning Object Average \n 11 Get Student Average \n 12 - View Structure Graph (switch to structure mode)");
                     num = scanner.nextInt();
                 }
                 scanner.nextLine();
@@ -181,6 +181,9 @@ public class ConsoleUI {
 
                 }else if(num==10){
                     resourceAverage(scanner);
+
+                }else if(num ==11){
+                    studentAverage(scanner);
 
                 }else{
                     switchToStructuremode();
@@ -234,7 +237,8 @@ public class ConsoleUI {
     }
 
 
-//cohort graph
+
+
     public void createLearningObjectList(Scanner scanner){
         System.out.println("calculate a list of concept nodes to work ");
         System.out.println("User ID");
@@ -363,7 +367,6 @@ public class ConsoleUI {
         System.out.println("Add another LOR to existing graph ");
 
         System.out.println("Type LOR path (from root)");
-        scanner.nextLine();
         String LOR = scanner.nextLine();
 
         try {
@@ -416,6 +419,19 @@ public class ConsoleUI {
             System.out.println("The average is: " + ckc.getLearningObjectAvg(conceptNode));
         } catch (Exception e) {
             e.printStackTrace();
+        }
+    }
+
+    public void studentAverage(Scanner scanner){
+        System.out.println("Get user's average grade");
+        System.out.println("Which user would you like to calculate an average for?");
+        String user = scanner.nextLine();
+
+        try{
+            double result = ckc.getStudentAvg(user);
+            System.out.println("The average is: " + result);
+        }catch(NullPointerException e){
+            System.out.println("Error: User not found");
         }
     }
 

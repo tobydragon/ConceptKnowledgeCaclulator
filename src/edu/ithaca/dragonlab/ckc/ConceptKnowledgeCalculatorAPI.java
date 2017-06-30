@@ -99,6 +99,10 @@ public interface ConceptKnowledgeCalculatorAPI {
 
     double getLearningObjectAvg(String learningObject) throws Exception;
 
+    List<String> getUserIdList();
+
+    double getStudentAvg(String user);
+
 
 
     /**
