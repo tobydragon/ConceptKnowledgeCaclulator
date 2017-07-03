@@ -1,8 +1,6 @@
 <html>
 <head>
     <link rel="stylesheet" type="text/css" href="style2.css">
-    <!-- Load the file of functions that have to do with creating the org chart -->
-    <script type="text/javascript" src="org.js"></script>
 </head>
 <body>
     
@@ -26,20 +24,11 @@
     <!-- Load the google charts loader JS, and the google ajax libraries -->
     <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>    
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
-    
-    <!-- Load the JS file that reads in the JSON file and parses it to the data that is usable by the org functions -->
-    <script src="GraphReader.js"></script>
-    <script>
-        var acc = document.getElementsByClassName("accordion");
-        var i;
 
-        for (i = 0; i < acc.length; i++) {
-            acc[i].onclick = function(){
-                this.classList.toggle("active");
-                this.nextElementSibling.classList.toggle("show");
-            }
-        }
-    </script>
+    <!-- Local Imports -->
+    <script type="text/javascript" src="org.js"></script>
+    <script type="text/javascript" src="GraphFunctions.js"></script>
     
-    
+    <!-- File that starts execution -->
+    <script src="CohortGraph.js"></script>
 </html>

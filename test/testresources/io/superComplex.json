@@ -5,37 +5,43 @@
     "label" : "A",
     "knowledgeEstimate" : 0.0,
     "knowledgePrediction" : 0.0,
-    "knowledgeDistFromAvg" : 0.0
+    "knowledgeDistFromAvg" : 0.0,
+    "dataImportance" : 0.0
   }, {
     "id" : "B",
     "label" : "B",
     "knowledgeEstimate" : 0.0,
     "knowledgePrediction" : 0.0,
-    "knowledgeDistFromAvg" : 0.0
+    "knowledgeDistFromAvg" : 0.0,
+    "dataImportance" : 0.0
   }, {
     "id" : "C",
     "label" : "C",
     "knowledgeEstimate" : 0.0,
     "knowledgePrediction" : 0.0,
-    "knowledgeDistFromAvg" : 0.0
+    "knowledgeDistFromAvg" : 0.0,
+    "dataImportance" : 0.0
   }, {
     "id" : "D",
     "label" : "D",
     "knowledgeEstimate" : 0.0,
     "knowledgePrediction" : 0.0,
-    "knowledgeDistFromAvg" : 0.0
+    "knowledgeDistFromAvg" : 0.0,
+    "dataImportance" : 0.0
   }, {
     "id" : "E",
     "label" : "E",
     "knowledgeEstimate" : 0.0,
     "knowledgePrediction" : 0.0,
-    "knowledgeDistFromAvg" : 0.0
+    "knowledgeDistFromAvg" : 0.0,
+    "dataImportance" : 0.0
   }, {
     "id" : "F",
     "label" : "F",
     "knowledgeEstimate" : 0.0,
     "knowledgePrediction" : 0.0,
-    "knowledgeDistFromAvg" : 0.0
+    "knowledgeDistFromAvg" : 0.0,
+    "dataImportance" : 0.0
   } ],
   "links" : [ {
     "parent" : "A",
