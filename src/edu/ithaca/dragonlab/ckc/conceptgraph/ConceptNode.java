@@ -32,12 +32,13 @@ public class ConceptNode {
         else {
 		    this.label = this.id;
         }
-		knowledgePrediction = conceptRecord.getKnowledgePrediction();
-		knowledgeEstimate = conceptRecord.getKnowledgeEstimate();
-		knowledgeDistanceFromAvg = conceptRecord.getKnowledgeDistFromAvg();
+        this.knowledgePrediction = conceptRecord.getKnowledgePrediction();
+        this.knowledgeEstimate = conceptRecord.getKnowledgeEstimate();
+		this.knowledgeDistanceFromAvg = conceptRecord.getKnowledgeDistFromAvg();
+		this.dataImportance = conceptRecord.getDataImportance();
 
-		children = new ArrayList<>();
-		learningObjectMap = new HashMap<>();
+        this.children = new ArrayList<>();
+        this.learningObjectMap = new HashMap<>();
 	}
 
 	/**
@@ -52,6 +53,7 @@ public class ConceptNode {
 		this.knowledgeEstimate = other.knowledgeEstimate;
 		this.knowledgePrediction = other.knowledgePrediction;
 		this.knowledgeDistanceFromAvg = other.knowledgeDistanceFromAvg;
+		this.dataImportance = other.dataImportance;
 
 		//Complicated because it is a graph, so it should only recurse when a child hasn't already been created, which we can only tell from graphNodeMap
 

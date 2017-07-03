@@ -15,6 +15,7 @@ public class ConceptRecord {
     private double knowledgeEstimate;
     private double knowledgePrediction;
     private double knowledgeDistFromAvg;
+    private double dataImportance;
 
     public ConceptRecord() {
         this.id = null;
@@ -22,6 +23,7 @@ public class ConceptRecord {
         this.knowledgeEstimate = 0;
         this.knowledgePrediction = 0;
         this.knowledgeDistFromAvg = 0;
+        this.dataImportance = 0;
 
     }
 
@@ -31,6 +33,7 @@ public class ConceptRecord {
         this.knowledgeEstimate = conceptToRecord.getKnowledgeEstimate();
         this.knowledgePrediction = 0;
         this.knowledgeDistFromAvg = conceptToRecord.getKnowledgeDistanceFromAvg();
+        this.dataImportance = conceptToRecord.getDataImportance();
     }
 
     public ConceptRecord(ConceptNode conceptToRecord) {
@@ -43,6 +46,7 @@ public class ConceptRecord {
         this.knowledgeEstimate = 0;
         this.knowledgePrediction = 0;
         this.knowledgeDistFromAvg = 0;
+        this.dataImportance = 0;
     }
 
     public String getId() {
@@ -65,6 +69,8 @@ public class ConceptRecord {
         return knowledgeDistFromAvg;
     }
 
+    public double getDataImportance(){ return dataImportance; }
+
     public void setId(String id) {
         this.id = id;
     }
@@ -85,6 +91,10 @@ public class ConceptRecord {
         this.knowledgeDistFromAvg = knowledgeDistFromAvg;
     }
 
+    public void setDataImportance(double dataImportance){
+        this.dataImportance = dataImportance;
+    }
+
     public boolean equals(Object other){
         if(other == null){
             return false;
@@ -94,8 +104,9 @@ public class ConceptRecord {
         }
         ConceptRecord otherNode = (ConceptRecord) other;
         if(this.id.equals(otherNode.id) && DataUtil.equalsDoubles(this.knowledgeEstimate, otherNode.knowledgeEstimate)
-                && DataUtil.equalsDoubles(this.knowledgeEstimate, otherNode.knowledgeEstimate)
-                && DataUtil.equalsDoubles(this.knowledgeEstimate, otherNode.knowledgeEstimate)){
+                && DataUtil.equalsDoubles(this.knowledgePrediction, otherNode.knowledgePrediction)
+                && DataUtil.equalsDoubles(this.knowledgeDistFromAvg, otherNode.knowledgeDistFromAvg)
+                && DataUtil.equalsDoubles(this.dataImportance, otherNode.dataImportance)){
             return true;
         } else {
             return false;
