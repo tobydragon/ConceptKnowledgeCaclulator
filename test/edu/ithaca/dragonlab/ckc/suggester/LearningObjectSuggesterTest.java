@@ -86,7 +86,7 @@ public class LearningObjectSuggesterTest {
         ConceptGraph graph = new ConceptGraph(structureRecord, linkRecord);
 
         //create the data to be used to create and populate the graph copies
-        CSVReader csvReader = new CSVReader("localresources/comp220ExampleDataPortion.csv");
+        CSVReader csvReader = new CSVReader("localresources/comp220/comp220ExampleDataPortion.csv");
         List<LearningObjectResponse> assessments = csvReader.getManualGradedResponses();
 
         //create the average and individual graphs
@@ -112,7 +112,7 @@ public class LearningObjectSuggesterTest {
         ConceptGraph graph = new ConceptGraph(structureRecord, linkRecord);
 
         //create the data to be used to create and populate the graph copies
-        CSVReader csvReader = new CSVReader("localresources/comp220ExampleDataPortion.csv");
+        CSVReader csvReader = new CSVReader("localresources/comp220/comp220ExampleDataPortion.csv");
         List<LearningObjectResponse> assessments = csvReader.getManualGradedResponses();
 
         //create the average and individual graphs

@@ -48,7 +48,7 @@ public class ConceptKnowledgeCalculatorMain {
         if (num ==2){
             new ConsoleUI("resources/comp220/comp220Graph.json",
                     "resources/comp220/comp220Resources.json",
-                    "localresources/comp220ExampleDataPortion.csv");
+                    "localresources/comp220/comp220ExampleDataPortion.csv");
 
         }
 }
