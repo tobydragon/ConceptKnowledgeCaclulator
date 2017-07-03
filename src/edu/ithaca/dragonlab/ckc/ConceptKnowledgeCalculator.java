@@ -28,85 +28,88 @@ public class ConceptKnowledgeCalculator implements ConceptKnowledgeCalculatorAPI
     private CohortConceptGraphs cohortConceptGraphs;
     private ConceptGraph structureGraph;
 
-
     public enum Mode{
-        STRUCTUREGRAPH, COHORTGRAPH
+        STRUCTUREGRAPH, COHORTGRAPH, STRUCTUREGRAPHWITHRESOURCE, STRUCTUREGRAPHWITHASSESSMENT
     }
 
-    private Mode currentMode = null;
+    private Mode currentMode;
 
-    //if user types in invalid input, the computer will create graph out of last valid input
-    private String structureFileName;
-    private String lastWorkingStructureName;
+    //is only one file for structure and one for resource files.
+    private List<String> structureFiles;
+    private List<String> resourceFiles;
 
-    //saved in order of : structure file name, resource file name, assessment file name
-    private List<String> previouslySavedCohortFiles;
-    private List<String> saveCohortFiles;
-
-
-    //to replace just the graph
-    private String assessmentFile;
-    private  String resourceFile;
-
-    private boolean hasmultipleAssessmentFile;
-    private boolean hasMultipleResourceFiles;
+    //there is allowed multiple files for the assessment files
+    private List<String> assessmentFiles;
 
     public ConceptKnowledgeCalculator() {
         cohortConceptGraphs = null;
         structureGraph = null;
-
+        currentMode= null;
+        structureFiles = new ArrayList<>();
+        resourceFiles = new ArrayList<>();
+        assessmentFiles = new ArrayList<>();
     }
 
     public ConceptKnowledgeCalculator(String structureFileName) throws IOException{
-        clearAndCreateStructureData(structureFileName);
+        this();
+        structureFiles.add(structureFileName);
+        currentMode= Mode.STRUCTUREGRAPH;
+        clearAndCreateStructureData(new ArrayList<>());
     }
 
     public ConceptKnowledgeCalculator(String structureFilename, String resourceFilename, String assessmentFilename) throws IOException{
-        clearAndCreateCohortData(structureFilename, resourceFilename, assessmentFilename);
-
+        this();
+        structureFiles.add(structureFilename);
+        resourceFiles.add(resourceFilename);
+        assessmentFiles.add(assessmentFilename);
+        currentMode= Mode.COHORTGRAPH;
+        clearAndCreateCohortData(new ArrayList<>(), new ArrayList<>(), new ArrayList<>());
     }
 
     @Override
-    public void clearAndCreateStructureData(String structureFilename) throws IOException{
-        structureGraph= null;
-        ConceptGraphRecord structureRecord = ConceptGraphRecord.buildFromJson(structureFilename);
+    public void clearAndCreateStructureData(List<String> structureFilename) throws IOException{
+        structureGraph = null;
+        cohortConceptGraphs=null;
 
+        ConceptGraphRecord structureRecord = ConceptGraphRecord.buildFromJson(structureFiles.get(0));
         structureGraph = new ConceptGraph(structureRecord);
-        currentMode= Mode.STRUCTUREGRAPH;
-        structureFileName = structureFilename;
-        hasmultipleAssessmentFile = false;
-        hasMultipleResourceFiles = false;
 
     }
 
     @Override
-    public void clearAndCreateCohortData(String structureFilename, String resourceFilename, String assessmentFilename) throws IOException {
+    public void clearAndCreateCohortData(List<String> structureFilename, List<String> resourceFilename, List<String> assessmentFilename) throws IOException {
         cohortConceptGraphs = null;
+        structureGraph = null;
+
+        //to change the structure file, clear the old list and add the new one.
+        if (structureFilename.size()!=0 &&!structureFiles.contains(structureFilename.get(0))) {
+            structureFiles.clear();
+            structureFiles.add(structureFilename.get(0));
+        }
 
         //create the graph structure to be copied for each user
-        ConceptGraphRecord structureRecord = ConceptGraphRecord.buildFromJson(structureFilename);
-        List<LearningObjectLinkRecord> linkRecord = LearningObjectLinkRecord.buildListFromJson(resourceFilename);
+        ConceptGraphRecord structureRecord = ConceptGraphRecord.buildFromJson(structureFiles.get(0));
+
+        List<LearningObjectLinkRecord> linkRecord = new ArrayList<>();
+        for (String rFiles : resourceFiles){
+            List<LearningObjectLinkRecord> temp = LearningObjectLinkRecord.buildListFromJson(rFiles);
+            linkRecord.addAll(temp);
+        }
+
         ConceptGraph graph = new ConceptGraph(structureRecord, linkRecord);
 
         //create the data to be used to create and populate the graph copies
-        CSVReader csvReader = new CSVReader(assessmentFilename);
-        List<LearningObjectResponse> assessments = csvReader.getManualGradedResponses();
+        List<LearningObjectResponse> assessments = new ArrayList<>();
+
+        for (String aname: assessmentFiles){
+            CSVReader csvReader = new CSVReader(aname);
+            List<LearningObjectResponse> temp = csvReader.getManualGradedResponses();
+            assessments.addAll(temp);
+        }
 
         //create the average and individual graphs
         cohortConceptGraphs = new CohortConceptGraphs(graph, assessments);
 
-        //to use in console
-        currentMode= Mode.COHORTGRAPH;
-        structureFileName = structureFilename;
-        resourceFile=resourceFilename;
-        assessmentFile= assessmentFilename;
-        hasmultipleAssessmentFile = false;
-        hasMultipleResourceFiles = false;
-
-
-        List<String> files = new ArrayList<>();
-        files.addAll(Arrays.asList(structureFilename,resourceFilename,assessmentFilename));
-        saveCohortFiles = files;
 
         //output the json representing the tree form of the graph
         CohortConceptGraphsRecord toFile = cohortConceptGraphs.buildCohortConceptTreeRecord();
@@ -115,158 +118,248 @@ public class ConceptKnowledgeCalculator implements ConceptKnowledgeCalculatorAPI
     }
 
     @Override
-    public void addAnotherLO(String secondResourceFile) throws IOException{
-        cohortConceptGraphs = null;
-
-        //create the graph structure to be copied for each user
-        ConceptGraphRecord structureRecord = ConceptGraphRecord.buildFromJson(structureFileName);
-
-
-        List<LearningObjectLinkRecord> firstResource = LearningObjectLinkRecord.buildListFromJson(resourceFile);
-        List<LearningObjectLinkRecord> secondResource = LearningObjectLinkRecord.buildListFromJson(secondResourceFile);
-
-        //the list of the combined learning objects
-        List<LearningObjectLinkRecord> combinedResource = new LinkedList<>();
-        combinedResource.addAll(firstResource);
-        combinedResource.addAll(secondResource);
-
-        ConceptGraph graph = new ConceptGraph(structureRecord, combinedResource);
-
-        //create the data to be used to create and populate the graph copies
-        CSVReader csvReader = new CSVReader(assessmentFile);
-        List<LearningObjectResponse> assessments = csvReader.getManualGradedResponses();
-
-        //create the average and individual graphs
-        cohortConceptGraphs = new CohortConceptGraphs(graph, assessments);
-
-        //to use in console
-        currentMode= Mode.COHORTGRAPH;
-        hasMultipleResourceFiles=true;
-
-
-        //output the json representing the tree form of the graph
-        CohortConceptGraphsRecord toFile = cohortConceptGraphs.buildCohortConceptTreeRecord();
-        String file = OUTPUT_PATH + "ckcCurrent.json";
-        toFile.writeToJson(file);
+    public void switchToStructure() throws Exception {
+        if (currentMode == Mode.COHORTGRAPH){
+            clearAndCreateStructureData(structureFiles);
+            resourceFiles.clear();
+            assessmentFiles.clear();
+            currentMode = Mode.STRUCTUREGRAPH;
+            cohortConceptGraphs=null;
+        }else{
+            throw new Exception("Wrong mode");
+        }
     }
 
     @Override
-    public void additionalLOR(String secondAssessmentFilename) throws IOException {
-        cohortConceptGraphs = null;
+    public void replaceGraph(String graph) throws Exception{
 
-        //create the graph structure to be copied for each user
+        List<String>  structure = new ArrayList<>();
+        structure.add(graph);
+        clearAndCreateCohortData(structure,resourceFiles,assessmentFiles);
 
-        ConceptGraphRecord structureRecord = ConceptGraphRecord.buildFromJson(structureFileName);
-        List<LearningObjectLinkRecord> linkRecord = LearningObjectLinkRecord.buildListFromJson(resourceFile);
-        ConceptGraph graph = new ConceptGraph(structureRecord, linkRecord);
-
-        //old assessment file name
-        String oldAssessmentFile = assessmentFile;
-        CSVReader csvR = new CSVReader(oldAssessmentFile);
-        List<LearningObjectResponse> firstLOR = csvR.getManualGradedResponses();
-
-        //new assessment file name
-        CSVReader csvReader = new CSVReader(secondAssessmentFilename);
-        List<LearningObjectResponse> assessments = csvReader.getManualGradedResponses();
-
-        //combined assignment list
-        List<LearningObjectResponse> combinedAssessments = new ArrayList<>();
-        combinedAssessments.addAll(firstLOR);
-        combinedAssessments.addAll(assessments);
-
-        //create the average and individual graphs
-        cohortConceptGraphs = new CohortConceptGraphs(graph, combinedAssessments);
-
-        //to use in console
-        currentMode= Mode.COHORTGRAPH;
-        hasmultipleAssessmentFile=true;
-
-
-        //output the json representing the tree form of the graph
-        CohortConceptGraphsRecord toFile = cohortConceptGraphs.buildCohortConceptTreeRecord();
-        String file = OUTPUT_PATH + "ckcCurrent.json";
-        toFile.writeToJson(file);
     }
 
     @Override
-    public String getCohortGraphsUrl() {
+    public void addLORAndLO(String LO, String LOR) throws  Exception{
+        if(currentMode == Mode.STRUCTUREGRAPH) {
+            resourceFiles.add(LO);
+            assessmentFiles.add(LOR);
+            try{
+                clearAndCreateCohortData(structureFiles, resourceFiles, assessmentFiles);
+                currentMode = Mode.COHORTGRAPH;
 
-        //depends on which mode
+            }catch (Exception e){
+                e.printStackTrace();
+            }
+        }else{
+            throw new Exception("Wrong mode");
+        }
+    }
+
+    @Override
+    public void addAnotherLO(String secondResourceFile) throws Exception {
+
+        if(currentMode== Mode.STRUCTUREGRAPH || currentMode== Mode.STRUCTUREGRAPHWITHRESOURCE){
+                resourceFiles.add(secondResourceFile);
+                currentMode=Mode.STRUCTUREGRAPHWITHRESOURCE;
+
+        }else if(currentMode== Mode.COHORTGRAPH || currentMode == Mode.STRUCTUREGRAPHWITHASSESSMENT){
+            try {
+                resourceFiles.add(secondResourceFile);
+                clearAndCreateCohortData(structureFiles, resourceFiles, assessmentFiles);
+                currentMode= Mode.COHORTGRAPH;
+            }catch (Exception e){
+                e.printStackTrace();
+            }
+        }else{
+            throw new Exception("Wrong mode");
+        }
+
+    }
+
+    @Override
+    public void additionalLOR(String secondAssessmentFilename) throws Exception {
+        if(currentMode==Mode.COHORTGRAPH) {
+            assessmentFiles.add(secondAssessmentFilename);
+            clearAndCreateCohortData(structureFiles, resourceFiles, assessmentFiles);
+
+        } else if(currentMode==Mode.STRUCTUREGRAPHWITHRESOURCE ){
+            assessmentFiles.add(secondAssessmentFilename);
+            try {
+                clearAndCreateCohortData(structureFiles, resourceFiles, assessmentFiles);
+                currentMode = Mode.COHORTGRAPH;
+            }catch (Exception e){
+                e.printStackTrace();
+            }
+
+        } else if(currentMode == Mode.STRUCTUREGRAPHWITHASSESSMENT ){
+            assessmentFiles.add(secondAssessmentFilename);
+
+        }else if(currentMode== Mode.STRUCTUREGRAPH){
+            try {
+                assessmentFiles.add(secondAssessmentFilename);
+                currentMode = Mode.STRUCTUREGRAPHWITHASSESSMENT;
+            }catch (Exception e){
+                e.printStackTrace();
+            }
+
+        }else{
+            throw new Exception("Wrong mode");
+
+        }
+    }
+
+    @Override
+    public void removeLORFile(String assessmentFile) throws Exception {
+        if(assessmentFiles.size()<1){
+            throw new Exception("You don't have any files");
+
+        }else {
+            if (currentMode == Mode.COHORTGRAPH) {
+                assessmentFiles.remove(assessmentFile);
+                clearAndCreateCohortData(structureFiles, resourceFiles, assessmentFiles);
+
+            }else if(currentMode == Mode.STRUCTUREGRAPHWITHASSESSMENT){
+                assessmentFiles.remove(assessmentFile);
+
+            }
+        }
+    }
+
+    @Override
+    public void replaceLOFile(String resourceFile) throws Exception {
+        if(currentMode==Mode.STRUCTUREGRAPHWITHRESOURCE || currentMode==Mode.COHORTGRAPH){
+            resourceFiles.clear();
+            resourceFiles.add(resourceFile);
+            clearAndCreateCohortData(structureFiles,resourceFiles,assessmentFiles);
+
+        }else if(currentMode==Mode.STRUCTUREGRAPH){
+            try {
+                resourceFiles.clear();
+                resourceFiles.add(resourceFile);
+                clearAndCreateStructureData(structureFiles);
+                currentMode = Mode.STRUCTUREGRAPHWITHRESOURCE;
+            }catch (Exception e){
+                e.printStackTrace();
+            }
+
+        } else if(currentMode==Mode.STRUCTUREGRAPHWITHASSESSMENT){
+            try {
+                resourceFiles.clear();
+                resourceFiles.add(resourceFile);
+                clearAndCreateCohortData(structureFiles, resourceFiles, assessmentFiles);
+                currentMode = Mode.COHORTGRAPH;
+            }catch (Exception e){
+                e.printStackTrace();
+            }
+
+        }else{
+            throw new Exception("Wrong mode");
+        }
+    }
+
+    @Override
+    public String getCohortGraphsUrl() throws Exception {
+        if(currentMode==Mode.COHORTGRAPH){
+            //depends on which mode
             //TODO: need to find a way to offer a URL
             return "To view graph, right-click index.html and choose \"open in Browser\" in ConceptKnowledgeCalculator/ckcvisualizer";
 
+        }else if(currentMode==Mode.STRUCTUREGRAPHWITHASSESSMENT){
+            return "To view graph, right-click index.html and choose \"open in Browser\" in ConceptKnowledgeCalculator/ckcvisualizer";
+
+        }else if(currentMode==Mode.STRUCTUREGRAPH){
+            return "To view graph, right-click index.html and choose \"open in Browser\" in ConceptKnowledgeCalculator/ckcvisualizer";
+
+        }else if(currentMode==Mode.STRUCTUREGRAPHWITHRESOURCE){
+            return "To view graph, right-click index.html and choose \"open in Browser\" in ConceptKnowledgeCalculator/ckcvisualizer";
+
+        }else{
+            throw new Exception("Wrong mode");
+        }
     }
 
     @Override
     public SuggestionResource calcIndividualGraphSuggestions(String userId) throws Exception {
-
-        if (cohortConceptGraphs != null) {
+        if(currentMode==Mode.COHORTGRAPH) {
+            if (cohortConceptGraphs != null) {
                 ConceptGraph userGraph;
                 userGraph = cohortConceptGraphs.getUserGraph(userId);
-                if (userGraph!=null){
+                if (userGraph != null) {
                     List<ConceptNode> concepts;
-                    concepts = LearningObjectSuggester.conceptsToWorkOn(userGraph);
 
+                    concepts = LearningObjectSuggester.conceptsToWorkOn(userGraph);
 
                     return new SuggestionResource(userGraph, concepts);
 
-                }else {
+                } else {
                     throw new Exception("Invalid User ID");
                 }
 
-        } else {
-            return new SuggestionResource();
+            } else {
+                return new SuggestionResource();
+            }
+        }else{
+            throw new Exception("Wrong mode");
         }
     }
 
     @Override
     public SuggestionResource calcIndividualSpecificConceptSuggestions(String userId, String conceptId) throws Exception {
+        if(currentMode==Mode.COHORTGRAPH) {
             if (cohortConceptGraphs != null) {
                 ConceptGraph userGraph;
                 userGraph = cohortConceptGraphs.getUserGraph(userId);
-                if(userGraph!=null){
+                if (userGraph != null) {
                     ConceptNode node;
                     node = userGraph.findNodeById(conceptId);
-                    if(node!= null){
+                    if (node != null) {
                         List<ConceptNode> concepts = new ArrayList<ConceptNode>();
                         concepts.add(node);
 
                         return new SuggestionResource(userGraph, concepts);
 
-                    }else{
+                    } else {
                         throw new Exception("Invalid Concept");
                     }
-                }else{
+                } else {
                     throw new Exception("Invalid User ID");
                 }
             } else {
                 return new SuggestionResource();
             }
+        }else{
+            throw new Exception("Wrong mode");
+        }
     }
 
 
     @Override
     public List<String> calcIndividualConceptNodesSuggestions(String userID) throws Exception{
-        if (cohortConceptGraphs != null) {
-            ConceptGraph userGraph;
-            userGraph = cohortConceptGraphs.getUserGraph(userID);
+        if(currentMode==Mode.COHORTGRAPH) {
+            if (cohortConceptGraphs != null) {
+                ConceptGraph userGraph;
+                userGraph = cohortConceptGraphs.getUserGraph(userID);
 
-            if(userGraph!=null) {
-                List<ConceptNode> nodeList = LearningObjectSuggester.conceptsToWorkOn(userGraph);
-                List<String> suggestedConceptIDList = new ArrayList<>();
-                for (ConceptNode node : nodeList) {
-                    suggestedConceptIDList.add(node.getID());
+                if (userGraph != null) {
+                    List<ConceptNode> nodeList = LearningObjectSuggester.conceptsToWorkOn(userGraph);
+
+                    List<String> suggestedConceptIDList = new ArrayList<>();
+                    for (ConceptNode node : nodeList) {
+                        suggestedConceptIDList.add(node.getID());
+                    }
+
+                    return suggestedConceptIDList;
+                } else {
+                    throw new Exception("Invalid User ID");
                 }
-
-                return suggestedConceptIDList;
-            }else{
-                throw new Exception("Invalid User ID");
+            } else {
+                return new ArrayList<>();
             }
-        } else {
-            return new ArrayList<>();
+        }else{
+            throw new Exception("Wrong Mode");
         }
     }
-
 
 
     public List<String> getUserIdList(){
@@ -277,20 +370,26 @@ public class ConceptKnowledgeCalculator implements ConceptKnowledgeCalculatorAPI
         return userList;
     }
 
+    public double getLearningObjectAvg(String learningObject) throws Exception {
+        if(currentMode==Mode.COHORTGRAPH) {
+            ConceptGraph graph = cohortConceptGraphs.getAvgGraph();
+            Map<String, LearningObject> loMap = graph.getLearningObjectMap();
+            Collection<LearningObject> objList = loMap.values();
+            ArrayList<LearningObject> list;
+            list = new ArrayList<LearningObject>(objList);
+            KnowledgeEstimateMatrix myMatrix = new KnowledgeEstimateMatrix(list);
+            LearningObject concept = loMap.get(learningObject);
 
-    public double getLearningObjectAvg(String learningObject)throws NullPointerException{
-        ConceptGraph graph = cohortConceptGraphs.getAvgGraph();
-        Map<String, LearningObject> loMap = graph.getLearningObjectMap();
-        List<LearningObject> objList = new ArrayList<LearningObject>(loMap.values());
-        KnowledgeEstimateMatrix myMatrix = new KnowledgeEstimateMatrix(objList);
-        LearningObject concept = loMap.get(learningObject);
-
-        if(concept != null) {
-            double result = BasicRFunctions.LearningObjectAvg(myMatrix, concept);
-            return result;
-        }else{
-        throw new NullPointerException();
+            if (concept != null) {
+                double result = BasicRFunctions.LearningObjectAvg(myMatrix, concept);
+                return result;
+            } else {
+                throw new NullPointerException();
+            }
+        }else {
+            throw new Exception("Wrong Mode");
         }
+
     }
 
     public double getStudentAvg(String user)throws NullPointerException{
@@ -308,74 +407,30 @@ public class ConceptKnowledgeCalculator implements ConceptKnowledgeCalculatorAPI
     }
 
 
-
-    public String getResourceFile(){
-        return resourceFile;
+    public List<String> getAssessmentFiles(){
+        return assessmentFiles;
     }
 
-    public String getAssessmentFile(){
-        return assessmentFile;
-    }
-
-    public String getStructureFileName() {
-        return structureFileName;
-    }
-
-    public void setStructureFileName(String file) {
-        structureFileName= file;
-    }
-
-
-    public Mode getCurrentmode(){
+    public Mode getCurrentMode(){
         return currentMode;
-    }
-
-    public void setCurrentMode(Mode mode){
-        currentMode = mode;
-    }
-
-    public void setLastWorkingStructureName(String fileName){
-        lastWorkingStructureName = fileName;
-    }
-
-    public String getLastWorkingStructureName(){
-        return lastWorkingStructureName;
-    }
-
-
-    public boolean gethasMultipleAssessment(){
-        return hasmultipleAssessmentFile;
-    }
-
-    public boolean getHasMultipleResource(){
-        return hasMultipleResourceFiles;
-    }
-
-
-    public  List<String>  getPreviouslySavedCohortFile(){
-        return previouslySavedCohortFiles;
-    }
-
-    public void setPreviouslySavedCohortFiles(List<String> files){
-        previouslySavedCohortFiles = files;
-    }
-
-    public List<String> getSavedCohortFile(){
-        return saveCohortFiles;
     }
 
     public CohortConceptGraphs getCohortConceptGraphs(){
         return cohortConceptGraphs;
     }
 
-
-    //for testing purposes
-
     public ConceptGraph getStructureGraph(){
         return structureGraph;
     }
 
 
+    //testing purposes
+    public List<String> getStructureFiles(){
+        return structureFiles;
+    }
 
+    public List<String> getResourceFiles(){
+        return resourceFiles;
+    }
 
 }

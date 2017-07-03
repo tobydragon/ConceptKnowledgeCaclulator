@@ -4,6 +4,7 @@ import edu.ithaca.dragonlab.ckc.conceptgraph.ConceptGraph;
 import edu.ithaca.dragonlab.ckc.conceptgraph.ConceptNode;
 import edu.ithaca.dragonlab.ckc.learningobject.LearningObject;
 import edu.ithaca.dragonlab.ckc.learningobject.LearningObjectResponse;
+import sun.jvm.hotspot.utilities.Assert;
 
 import java.util.*;
 
@@ -14,30 +15,23 @@ public class LearningObjectSuggester {
 
     public static double MAX= .75;
     public static double MIN = .55;
-    public static double WRONGMAX = .59;
 
 
     /**
-     * Creates a list of ConceptNodes that are between the knowledge range and are not ancestors with children with high knowledgeEstimates
+     * Creates a list of ConceptNodes that are between the knowledge range and are not ancestors
      * @param graph
      * @return
      */
     public static List<ConceptNode> conceptsToWorkOn(ConceptGraph graph){
         List<ConceptNode> suggestedConceptList = new ArrayList<ConceptNode>();
+
         for (String key : graph.getAllNodeIds()) {
             ConceptNode node = graph.findNodeById(key);
 
-//            System.out.println(node.getID() + " " + node.getKnowledgeEstimate());
-
             if (node.getKnowledgeEstimate() >= MIN && node.getKnowledgeEstimate() <= MAX) {
-                //if false, then the node isn't an ancestor or the compare node is high THEREFORE you can add it to the list
-                boolean anc = graph.canIgnoreNode(node);
-                if (!anc) {
-                    suggestedConceptList.add(node);
-                }
+                graph.updateSuggestionList(node, suggestedConceptList);
             }
         }
-
         return suggestedConceptList;
     }
 
@@ -52,7 +46,6 @@ public class LearningObjectSuggester {
 
         HashMap<String, List<LearningObjectSuggestion>> suggestedConceptNodeMap = new HashMap<>();
 
-
         for (int x =0; x< suggestedConceptList.size(); x++) {
             ConceptNode concept = suggestedConceptList.get(x);
 
@@ -60,7 +53,9 @@ public class LearningObjectSuggester {
 
             HashMap<String, Integer> map = graph.buildLearningObjectSummaryList(concept.getID());
             List<LearningObjectSuggestion> list = buildLearningObjectSuggestionList(map, graph.getLearningObjectMap(), concept.getID());
+
             sortSuggestions(list);
+
             for (int i = 0; i < list.size(); i++) {
                 //if it is incomplete
                 if (choice.equals(1)) {
@@ -71,12 +66,14 @@ public class LearningObjectSuggester {
                 } else {
                     if (list.get(i).getLevel().equals(LearningObjectSuggestion.Level.WRONG)) {
                         //then add it
+
                         testList.add(list.get(i));
                     }
                 }
 
             }
             suggestedConceptNodeMap.put(concept.getID(), testList);
+
 
         }
 
@@ -113,7 +110,8 @@ public class LearningObjectSuggester {
                 myList.add(suggestionNode);
 
             }else{
-                if(estimate> 0 && estimate<= WRONGMAX){
+
+                if(estimate> 0 && estimate<= MAX){
                     level = LearningObjectSuggestion.Level.WRONG;
                 }else{
                     level = LearningObjectSuggestion.Level.RIGHT;

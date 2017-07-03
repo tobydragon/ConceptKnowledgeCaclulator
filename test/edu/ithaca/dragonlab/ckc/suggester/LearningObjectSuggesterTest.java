@@ -1,16 +1,17 @@
 package edu.ithaca.dragonlab.ckc.suggester;
 
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
-import edu.ithaca.dragonlab.ckc.conceptgraph.ConceptGraph;
-import edu.ithaca.dragonlab.ckc.conceptgraph.ConceptNode;
-import edu.ithaca.dragonlab.ckc.conceptgraph.ExampleConceptGraphFactory;
-import edu.ithaca.dragonlab.ckc.conceptgraph.ExampleConceptGraphRecordFactory;
+import edu.ithaca.dragonlab.ckc.conceptgraph.*;
+import edu.ithaca.dragonlab.ckc.io.CSVReader;
+import edu.ithaca.dragonlab.ckc.io.ConceptGraphRecord;
 import edu.ithaca.dragonlab.ckc.io.LearningObjectLinkRecord;
 import edu.ithaca.dragonlab.ckc.learningobject.ExampleLearningObjectLinkRecordFactory;
 import edu.ithaca.dragonlab.ckc.learningobject.ExampleLearningObjectResponseFactory;
+import edu.ithaca.dragonlab.ckc.learningobject.LearningObjectResponse;
 import org.junit.Assert;
 import org.junit.Test;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
@@ -54,10 +55,12 @@ public class LearningObjectSuggesterTest {
         Assert.assertEquals(incomTest.get(3).getId(),"Q6");
         Assert.assertEquals(incomTest.get(4).getId(),"Q6");
 
-        Assert.assertEquals(wrongTest.size(),3);
+        Assert.assertEquals(wrongTest.size(),4);
         Assert.assertEquals(wrongTest.get(0).getId(), "Q9");
         Assert.assertEquals(wrongTest.get(1).getId(), "Q9");
         Assert.assertEquals(wrongTest.get(2).getId(), "Q1");
+        Assert.assertEquals(wrongTest.get(3).getId(), "Q2");
+
     }
 
     @Test
@@ -70,6 +73,56 @@ public class LearningObjectSuggesterTest {
         Assert.assertEquals(concepts.get(0).getID(), "If Statement");
         Assert.assertEquals(concepts.get(1).getID(), "While Loop");
 
+    }
+
+    @Test
+    public void RealDataConceptsTOWorkOn() throws IOException {
+
+        CohortConceptGraphs cohortConceptGraphs = null;
+
+        //create the graph structure to be copied for each user
+        ConceptGraphRecord structureRecord = ConceptGraphRecord.buildFromJson("resources/comp220/comp220Graph.json");
+        List<LearningObjectLinkRecord> linkRecord = LearningObjectLinkRecord.buildListFromJson("resources/comp220/comp220Resources.json");
+        ConceptGraph graph = new ConceptGraph(structureRecord, linkRecord);
+
+        //create the data to be used to create and populate the graph copies
+        CSVReader csvReader = new CSVReader("localresources/comp220/comp220ExampleDataPortion.csv");
+        List<LearningObjectResponse> assessments = csvReader.getManualGradedResponses();
+
+        //create the average and individual graphs
+        cohortConceptGraphs = new CohortConceptGraphs(graph, assessments);
+
+        ConceptGraph userGraph = cohortConceptGraphs.getUserGraph("s13");
+
+        List<ConceptNode> concepts = LearningObjectSuggester.conceptsToWorkOn(userGraph);
+
+        Assert.assertEquals(concepts.get(0).getID(), "Pointers");
+
+    }
+
+
+    @Test
+    public void RealDataConceptsTOWorkOnZeroSugg() throws IOException {
+
+        CohortConceptGraphs cohortConceptGraphs = null;
+
+        //create the graph structure to be copied for each user
+        ConceptGraphRecord structureRecord = ConceptGraphRecord.buildFromJson("resources/comp220/comp220Graph.json");
+        List<LearningObjectLinkRecord> linkRecord = LearningObjectLinkRecord.buildListFromJson("resources/comp220/comp220Resources.json");
+        ConceptGraph graph = new ConceptGraph(structureRecord, linkRecord);
+
+        //create the data to be used to create and populate the graph copies
+        CSVReader csvReader = new CSVReader("localresources/comp220/comp220ExampleDataPortion.csv");
+        List<LearningObjectResponse> assessments = csvReader.getManualGradedResponses();
+
+        //create the average and individual graphs
+        cohortConceptGraphs = new CohortConceptGraphs(graph, assessments);
+
+        ConceptGraph userGraph = cohortConceptGraphs.getUserGraph("s11");
+
+        List<ConceptNode> concepts = LearningObjectSuggester.conceptsToWorkOn(userGraph);
+
+        Assert.assertEquals(concepts.size(), 0);
     }
 
     @Test
@@ -129,11 +182,12 @@ public class LearningObjectSuggesterTest {
         List<LearningObjectSuggestion> suggestedList = LearningObjectSuggester.buildLearningObjectSuggestionList(learningSummaryFromA, orig.getLearningObjectMap(),"A");
 
 
+
         //this is ordered based on "level"
         List<LearningObjectSuggestion> suggestListTest = new ArrayList<>();
-        suggestListTest.add(new LearningObjectSuggestion("Q3", 2, LearningObjectSuggestion.Level.RIGHT,"A") );
         suggestListTest.add(new LearningObjectSuggestion("Q1", 1, LearningObjectSuggestion.Level.RIGHT, "A") );
         suggestListTest.add(new LearningObjectSuggestion("Q2", 1, LearningObjectSuggestion.Level.RIGHT, "A") );
+        suggestListTest.add(new LearningObjectSuggestion("Q3", 2, LearningObjectSuggestion.Level.WRONG,"A") );
         suggestListTest.add(new LearningObjectSuggestion("Q4", 2, LearningObjectSuggestion.Level.WRONG, "A") );
         suggestListTest.add(new LearningObjectSuggestion("Q5", 2, LearningObjectSuggestion.Level.WRONG, "A") );
         suggestListTest.add(new LearningObjectSuggestion("Q6", 2, LearningObjectSuggestion.Level.WRONG, "A") );
