@@ -255,13 +255,13 @@ public class ConceptKnowledgeCalculator implements ConceptKnowledgeCalculatorAPI
             CohortConceptGraphsRecord toFile = cohortConceptGraphs.buildCohortConceptTreeRecord();
             String file = OUTPUT_PATH + "cohortTreesCurrent.json";
             toFile.writeToJson(file);
-            return "To view graph, right-click index.html and choose \"open in Browser\" in ConceptKnowledgeCalculator/ckcvisualizer";
+            return "To view graph, right-click CohortGraph.html and choose \"open in Browser\" in ConceptKnowledgeCalculator/ckcvisualizer";
 
         }else if(currentMode==Mode.STRUCTUREGRAPH || currentMode==Mode.STRUCTUREGRAPHWITHASSESSMENT || currentMode==Mode.STRUCTUREGRAPHWITHRESOURCE){
             ConceptGraphRecord toFile = TreeConverter.makeTreeCopy(structureGraph).buildConceptGraphRecord();
             String file = OUTPUT_PATH + "structureTreeCurrent.json";
             toFile.writeToJson(file);
-            return "To view graph, right-click index.html and choose \"open in Browser\" in ConceptKnowledgeCalculator/ckcvisualizer";
+            return "To view graph, right-click StructureGraph.html and choose \"open in Browser\" in ConceptKnowledgeCalculator/ckcvisualizer";
         }else{
             throw new Exception("Wrong mode");
         }
