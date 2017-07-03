@@ -1,9 +1,6 @@
 package edu.ithaca.dragonlab.ckc;
 
-import edu.ithaca.dragonlab.ckc.conceptgraph.CohortConceptGraphs;
-import edu.ithaca.dragonlab.ckc.conceptgraph.ConceptGraph;
-import edu.ithaca.dragonlab.ckc.conceptgraph.ConceptNode;
-import edu.ithaca.dragonlab.ckc.conceptgraph.KnowledgeEstimateMatrix;
+import edu.ithaca.dragonlab.ckc.conceptgraph.*;
 import edu.ithaca.dragonlab.ckc.io.CSVReader;
 import edu.ithaca.dragonlab.ckc.io.CohortConceptGraphsRecord;
 import edu.ithaca.dragonlab.ckc.io.ConceptGraphRecord;
@@ -109,12 +106,6 @@ public class ConceptKnowledgeCalculator implements ConceptKnowledgeCalculatorAPI
 
         //create the average and individual graphs
         cohortConceptGraphs = new CohortConceptGraphs(graph, assessments);
-
-
-        //output the json representing the tree form of the graph
-        CohortConceptGraphsRecord toFile = cohortConceptGraphs.buildCohortConceptTreeRecord();
-        String file = OUTPUT_PATH + "ckcCurrent.json";
-        toFile.writeToJson(file);
     }
 
     @Override
@@ -261,19 +252,16 @@ public class ConceptKnowledgeCalculator implements ConceptKnowledgeCalculatorAPI
     @Override
     public String getCohortGraphsUrl() throws Exception {
         if(currentMode==Mode.COHORTGRAPH){
-            //depends on which mode
-            //TODO: need to find a way to offer a URL
+            CohortConceptGraphsRecord toFile = cohortConceptGraphs.buildCohortConceptTreeRecord();
+            String file = OUTPUT_PATH + "cohortTreesCurrent.json";
+            toFile.writeToJson(file);
             return "To view graph, right-click index.html and choose \"open in Browser\" in ConceptKnowledgeCalculator/ckcvisualizer";
 
-        }else if(currentMode==Mode.STRUCTUREGRAPHWITHASSESSMENT){
+        }else if(currentMode==Mode.STRUCTUREGRAPH || currentMode==Mode.STRUCTUREGRAPHWITHASSESSMENT || currentMode==Mode.STRUCTUREGRAPHWITHRESOURCE){
+            ConceptGraphRecord toFile = TreeConverter.makeTreeCopy(structureGraph).buildConceptGraphRecord();
+            String file = OUTPUT_PATH + "structureTreeCurrent.json";
+            toFile.writeToJson(file);
             return "To view graph, right-click index.html and choose \"open in Browser\" in ConceptKnowledgeCalculator/ckcvisualizer";
-
-        }else if(currentMode==Mode.STRUCTUREGRAPH){
-            return "To view graph, right-click index.html and choose \"open in Browser\" in ConceptKnowledgeCalculator/ckcvisualizer";
-
-        }else if(currentMode==Mode.STRUCTUREGRAPHWITHRESOURCE){
-            return "To view graph, right-click index.html and choose \"open in Browser\" in ConceptKnowledgeCalculator/ckcvisualizer";
-
         }else{
             throw new Exception("Wrong mode");
         }
