@@ -1,5 +1,6 @@
 package edu.ithaca.dragonlab.ckc.io;
 import java.util.ArrayList;
+import java.util.List;
 
 import edu.ithaca.dragonlab.ckc.learningobject.LearningObject;
 import edu.ithaca.dragonlab.ckc.learningobject.LearningObjectResponse;
@@ -15,8 +16,8 @@ public class CSVReaderTest {
     public void createQuestionsTest(){
         String file = "test/testresources/io/DataCSVExample.csv";
         CSVReader readfile = new CSVReader(file);
-        ArrayList<LearningObjectResponse> manualGradedResponseList = readfile.getManualGradedResponses();
-        ArrayList<LearningObject> manualGradedLearningObjectList = readfile.getManualGradedLearningObjects();
+        List<LearningObjectResponse> manualGradedResponseList = readfile.getManualGradedResponses();
+        List<LearningObject> manualGradedLearningObjectList = readfile.getManualGradedLearningObjects();
 
         //Testing for first entry in the CSV
         Assert.assertEquals(25 * 9, manualGradedResponseList.size());

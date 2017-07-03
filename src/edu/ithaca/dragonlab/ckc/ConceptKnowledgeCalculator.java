@@ -360,7 +360,11 @@ public class ConceptKnowledgeCalculator implements ConceptKnowledgeCalculatorAPI
             throw new Exception("Wrong Mode");
         }
     }
-
+/**
+    public void csvToResource(List<String> csvfiles){
+        CSVReader.loLister()
+    }
+*/
 
     public List<String> getUserIdList(){
         Map<String, ConceptGraph> userMap = cohortConceptGraphs.getUserToGraph();

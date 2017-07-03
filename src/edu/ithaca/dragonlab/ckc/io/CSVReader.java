@@ -13,14 +13,16 @@ import edu.ithaca.dragonlab.ckc.learningobject.ManualGradedResponse;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import static edu.ithaca.dragonlab.ckc.io.CSVReader.loLister;
+
 
 public class CSVReader {
     Logger logger = LogManager.getLogger(this.getClass());
 
     String filename;
     BufferedReader csvBuffer = null;
-    ArrayList<LearningObject> learningObjectList;
-    ArrayList<LearningObjectResponse> manualGradedResponseList;
+    List<LearningObject> learningObjectList;
+    List<LearningObjectResponse> manualGradedResponseList;
 
     /**
      * This function is passed a filename of a gradebook directly exported from Sakai's built in gradebook.
@@ -50,7 +52,7 @@ public class CSVReader {
                 int i = 2; //this is 2 because the first two columns are not assignments, so the first assingment is index 2
                 if(firstIteration){
                     firstIteration = false;
-                    loLister(singleList, i);
+                    this.learningObjectList = loLister(singleList, i, logger);
                     /**
                     while(i<singleList.size()){
                         String question = singleList.get(i);
@@ -78,7 +80,7 @@ public class CSVReader {
                      */
                 } else {
                     try {
-                        lorLister(singleList, i);
+                        lorLister(singleList, i, logger);
                         //goes through and adds all the questions to their proper learning object, as well as adds them to
                         //the general list of manual graded responses
                         /*
@@ -117,12 +119,14 @@ public class CSVReader {
 
     }
 
-    public int loLister(ArrayList<String> singleList, int i) {
+    public static List<LearningObject> loLister(ArrayList<String> singleList, int i, Logger logger) {
+        List<LearningObject> loList = new ArrayList<LearningObject>();
         while(i<singleList.size()){
             String question = singleList.get(i);
             //used to find the max score of a question (won't be affected if there are other brackets in the question title
             int begin = question.lastIndexOf('[');
             int end = question.lastIndexOf(']');
+
 
             //TODO: temp check to see what problem is... not a proper solution to bug #76
             if (begin >= 0 && end >= 0) {
@@ -131,20 +135,20 @@ public class CSVReader {
                 question = question.substring(0, begin - 1);
                 LearningObject learningObject = new LearningObject(question);
                 learningObject.setMaxPossibleKnowledgeEstimate(maxScore);
-                this.learningObjectList.add(learningObject);
+                loList.add(learningObject);
             }
             else {
                 logger.error("No max score found for string:"+question+"\t defaulting to 1, which is probably wrong");
                 LearningObject learningObject = new LearningObject(question);
                 learningObject.setMaxPossibleKnowledgeEstimate(1);
-                this.learningObjectList.add(learningObject);
+                loList.add(learningObject);
             }
             i++;
         }
-        return i;
+        return loList;
     }
 
-    public void lorLister(ArrayList<String> singleList, int i)throws NullPointerException{
+    public void lorLister(ArrayList<String> singleList, int i, Logger logger)throws NullPointerException{
         String stdID = singleList.get(0);
         if (learningObjectList.size() + 2 < singleList.size()) {
             logger.warn("More data than learning objects on line for id:" + stdID);
@@ -169,13 +173,9 @@ public class CSVReader {
         }
     }
 
-    public ArrayList<LearningObjectResponse> getManualGradedResponses(){
-        return this.manualGradedResponseList;
-    }
+    public List<LearningObjectResponse> getManualGradedResponses(){return this.manualGradedResponseList;}
 
-    public ArrayList<LearningObject> getManualGradedLearningObjects(){
-        return this.learningObjectList;
-    }
+    public List<LearningObject> getManualGradedLearningObjects(){return this.learningObjectList;}
 
     private static ArrayList<String> lineToList(String line) {
         ArrayList<String> returnlist = new ArrayList<String>();
