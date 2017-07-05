@@ -348,11 +348,23 @@ public class ConceptKnowledgeCalculator implements ConceptKnowledgeCalculatorAPI
             throw new Exception("Wrong Mode");
         }
     }
-/**
-    public void csvToResource(List<String> csvfiles){
-        CSVReader.loLister()
+
+    public void csvToResource(List<String> csvfiles) throws Exception{
+        if(currentMode==Mode.STRUCTUREGRAPH) {
+            List<LearningObject> fullLoList = new ArrayList<LearningObject>();
+            fullLoList = CSVReader.fullLoLister(csvfiles);
+            List<LearningObjectLinkRecord> lolrList = LearningObjectLinkRecord.createLearningObjectLinkRecords(fullLoList, 10);
+            try {
+                LearningObjectLinkRecord.lolrToJSON(lolrList);
+                System.out.println("Written to JSON");
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }else{
+            throw new Exception("Wrong Mode");
+        }
     }
-*/
+
 
     public List<String> getUserIdList(){
         Map<String, ConceptGraph> userMap = cohortConceptGraphs.getUserToGraph();

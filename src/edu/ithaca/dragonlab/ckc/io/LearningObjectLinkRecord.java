@@ -11,6 +11,11 @@ import edu.ithaca.dragonlab.ckc.learningobject.LearningObject;
 
 import java.io.File;
 import java.io.IOException;
+import java.io.PrintWriter;
+import java.nio.charset.Charset;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.*;
 
 /**
@@ -75,6 +80,17 @@ public class LearningObjectLinkRecord {
         Scanner scanner = new Scanner(System.in);
         String filename = scanner.nextLine();
         mapper.writeValue(new File(filename), lolrList);
+    }
+
+    public static Path lolrToTxt(LearningObjectLinkRecord learningObjectLinkRecord){
+        List<String> conceptIds = learningObjectLinkRecord.getConceptIds();
+        Path file = Paths.get("the-file-name.txt");
+        try {
+                Files.write(file, conceptIds, Charset.forName("UTF-8"));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return file;
     }
 
     public void setMatchingKnowledgeEstimates(Collection<LearningObject> learningObjects, Map<String, LearningObject> loMap){

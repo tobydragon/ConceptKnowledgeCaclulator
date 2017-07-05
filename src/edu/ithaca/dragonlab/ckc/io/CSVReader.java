@@ -52,7 +52,7 @@ public class CSVReader {
                 int i = 2; //this is 2 because the first two columns are not assignments, so the first assingment is index 2
                 if(firstIteration){
                     firstIteration = false;
-                    this.learningObjectList = loLister(singleList, i, logger);
+                    this.learningObjectList = loLister(singleList);
                     /**
                     while(i<singleList.size()){
                         String question = singleList.get(i);
@@ -119,7 +119,24 @@ public class CSVReader {
 
     }
 
-    public static List<LearningObject> loLister(ArrayList<String> singleList, int i, Logger logger) {
+    public static ArrayList<ArrayList<String>> staticLineToList(String filename){
+        ArrayList<ArrayList<String>> lineList = new ArrayList<ArrayList<String>>();
+        try {
+            String line;
+            BufferedReader csvBuffer = new BufferedReader(new FileReader(filename));
+            //Takes the file being read in and calls a function to convert each line into a list split at
+            //every comma, then pust all the lists returned into a list of lists lineList[line][item in line]
+            while ((line = csvBuffer.readLine()) != null) {
+                lineList.add(lineToList(line));
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return lineList;
+    }
+
+    public static List<LearningObject> loLister(ArrayList<String> singleList) {
+        int i = 2;
         List<LearningObject> loList = new ArrayList<LearningObject>();
         while(i<singleList.size()){
             String question = singleList.get(i);
@@ -138,7 +155,7 @@ public class CSVReader {
                 loList.add(learningObject);
             }
             else {
-                logger.error("No max score found for string:"+question+"\t defaulting to 1, which is probably wrong");
+                //logger.error("No max score found for string:"+question+"\t defaulting to 1, which is probably wrong");
                 LearningObject learningObject = new LearningObject(question);
                 learningObject.setMaxPossibleKnowledgeEstimate(1);
                 loList.add(learningObject);
@@ -146,6 +163,23 @@ public class CSVReader {
             i++;
         }
         return loList;
+    }
+
+    public static List<LearningObject> fullLoLister(List<String> csvfiles){
+        List<LearningObject> fullLoList = new ArrayList<LearningObject>();
+
+        //Each csvfile has their LOs searched
+        for(String file: csvfiles){
+            ArrayList<ArrayList<String>> lineList = CSVReader.staticLineToList(file);
+            List<LearningObject> loList = new ArrayList<LearningObject>();
+            loList = CSVReader.loLister(lineList.get(0));
+
+            //adding current csvfile's LOs to the full list of LOs
+            for(LearningObject learningObject: loList) {
+                fullLoList.add(learningObject);
+            }
+        }
+        return fullLoList;
     }
 
     public void lorLister(ArrayList<String> singleList, int i, Logger logger)throws NullPointerException{

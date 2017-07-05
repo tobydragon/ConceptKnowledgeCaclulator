@@ -12,6 +12,7 @@ public class ManualGradedResponse extends LearningObjectResponse {
 
     public ManualGradedResponse(String learningObjectId, double max, double studentScore, String userId){
         super(userId,learningObjectId,studentScore/max);
+
         this.maxPossibleScore = max;
         this.studentScore = studentScore;
     }

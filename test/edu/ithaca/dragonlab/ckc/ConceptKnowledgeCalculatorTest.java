@@ -697,4 +697,22 @@ public class ConceptKnowledgeCalculatorTest {
         }
         Assert.assertEquals(0.538, ckc.getStudentAvg("bspinache1"), OK_FLOAT_MARGIN);
     }
+    /**
+    @Test
+    public void csvToResourceTest(){
+        ConceptKnowledgeCalculatorAPI ckc = null;
+        List<String> csvfiles = new ArrayList<String>();
+        try {
+            ckc = new ConceptKnowledgeCalculator();
+        } catch (IOException e) {
+            Assert.fail("Unable to load default files");
+        }
+        csvfiles.add("DataCSVExample.csv");
+        try{
+        ckc.csvToResource(csvfiles);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+    */
 }

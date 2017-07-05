@@ -107,4 +107,9 @@ public class LearningObjectLinkRecordTest {
 
         Assert.assertEquals(list2.toString(), resultString.toString());
     }
+
+    @Test
+    public void lolrToTextTest(){
+
+    }
 }

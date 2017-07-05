@@ -5,10 +5,12 @@ import edu.ithaca.dragonlab.ckc.learningobject.LearningObject;
 import edu.ithaca.dragonlab.ckc.learningobject.LearningObjectResponse;
 import stats.JavaToRConversion;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 import java.util.Map;
+
 
 /**
  * Created by bleblanc2 on 6/13/17.
@@ -31,7 +33,6 @@ public class KnowledgeEstimateMatrix {
         this.userIdList = new ArrayList<String>();
         this.studentKnowledgeEstimates = createMatrix(lo);
         this.rMatrix = createRMatrix();
-
     }
 
 
@@ -109,6 +110,7 @@ public class KnowledgeEstimateMatrix {
      * @return RCode holding a R-readable version of the studentKnowledgeEstimates matrix
      */
     public RCode createRMatrix(){
+
         RCode rMatrix = JavaToRConversion.JavaToR(studentKnowledgeEstimates);
         return rMatrix;
     }

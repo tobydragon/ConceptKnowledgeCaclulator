@@ -71,6 +71,8 @@ public interface ConceptKnowledgeCalculatorAPI {
 
     void removeLORFile(String assessmentFile) throws Exception;
 
+    void csvToResource(List<String> csvfiles) throws Exception;
+
 
     /**
      * Calculates all suggestions for the individual graph, returns an object containing two ordered lists:
