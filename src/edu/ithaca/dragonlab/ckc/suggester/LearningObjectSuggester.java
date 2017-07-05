@@ -55,7 +55,6 @@ public class LearningObjectSuggester {
             List<LearningObjectSuggestion> list = buildLearningObjectSuggestionList(map, graph.getLearningObjectMap(), concept.getID());
 
             sortSuggestions(list);
-
             for (int i = 0; i < list.size(); i++) {
                 //if it is incomplete
                 if (choice.equals(1)) {
@@ -122,6 +121,7 @@ public class LearningObjectSuggester {
             }
 
         }
+
         return myList;
     }
 }

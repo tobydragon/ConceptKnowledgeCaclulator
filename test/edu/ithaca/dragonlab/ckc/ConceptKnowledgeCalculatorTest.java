@@ -103,7 +103,10 @@ public class ConceptKnowledgeCalculatorTest {
 
             Assert.assertEquals(incomTest.size(),5);
             Assert.assertEquals(incomTest.get(0).getId(),"Q10");
-
+            Assert.assertEquals(incomTest.get(1).getId(),"Q10");
+            Assert.assertEquals(incomTest.get(2).getId(),"Q3");
+            Assert.assertEquals(incomTest.get(3).getId(),"Q6");
+            Assert.assertEquals(incomTest.get(4).getId(),"Q6");
             Assert.assertEquals(wrongTest.size(),4);
             Assert.assertEquals(wrongTest.get(0).getId(), "Q9");
             Assert.assertEquals(wrongTest.get(1).getId(), "Q9");

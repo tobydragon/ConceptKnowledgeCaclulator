@@ -60,5 +60,8 @@
   },{
     "parent": "For Loop",
     "child": "Counting"
+  }, {
+    "parent": "Intro CS",
+    "child": "Counting"
   }]
 }
