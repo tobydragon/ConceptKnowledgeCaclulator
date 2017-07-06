@@ -17,7 +17,7 @@ public class BasicRFunctionsTest {
 /**
     @Test
     public void LearningObjectAvgTest(){
-        String file = "test/testresources/SmallDataCSVExample.csv";
+        String file = "test/testresources/partialComplexRealitsticAssessment.csv";
         CSVReader data = new CSVReader(file);
         ArrayList<LearningObject> gotoMatrix = data.getManualGradedLearningObjects();
         KnowledgeEstimateMatrix newMatrix = new KnowledgeEstimateMatrix(gotoMatrix);
@@ -31,7 +31,7 @@ public class BasicRFunctionsTest {
 
     @Test
     public void studentKnowledgeEstAvgTest(){
-        String file = "test/testresources/SmallDataCSVExample.csv";
+        String file = "test/testresources/partialComplexRealitsticAssessment.csv";
         CSVReader data = new CSVReader(file);
         ArrayList<LearningObject> gotoMatrix = data.getManualGradedLearningObjects();
         KnowledgeEstimateMatrix newMatrix = new KnowledgeEstimateMatrix(gotoMatrix);

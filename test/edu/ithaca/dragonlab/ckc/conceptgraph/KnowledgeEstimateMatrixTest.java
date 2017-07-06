@@ -16,7 +16,7 @@ public class KnowledgeEstimateMatrixTest {
 
     @Test
     public void createMatrixTest(){
-        String file = "test/testresources/SmallDataCSVExample.csv";
+        String file = "test/testresources/ManuallyCreated/partialComplexRealitsticAssessment.csv";
         CSVReader data = new CSVReader(file);
         ArrayList<LearningObject> gotoMatrix = data.getManualGradedLearningObjects();
         KnowledgeEstimateMatrix newMatrix = new KnowledgeEstimateMatrix(gotoMatrix);

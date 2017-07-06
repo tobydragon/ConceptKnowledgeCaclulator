@@ -13,7 +13,7 @@ import edu.ithaca.dragonlab.ckc.learningobject.ManualGradedResponse;
 public class CSVReaderTest {
     @Test
     public void createQuestionsTest(){
-        String file = "test/testresources/io/DataCSVExample.csv";
+        String file = "test/testresources/ManuallyCreated/complexRealisticAssessment.csv";
         CSVReader readfile = new CSVReader(file);
         ArrayList<LearningObjectResponse> manualGradedResponseList = readfile.getManualGradedResponses();
         ArrayList<LearningObject> manualGradedLearningObjectList = readfile.getManualGradedLearningObjects();

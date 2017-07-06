@@ -61,3 +61,5 @@ fabric.properties
 .idea/kotlinc.xml
 .DS_Store
 .idea/inspectionProfiles/
+/test/testresources/io/
+/test/testresources/practicalExamples/SystemCreated/
