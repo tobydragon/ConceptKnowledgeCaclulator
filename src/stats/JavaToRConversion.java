@@ -52,6 +52,7 @@ public class JavaToRConversion {
         //These lines change the Java structure into the correct format for R
         code.addRCode("matrix <- (t(data))");
         code.addRCode("provideDimnames(matrix)");
+        //code.addRCode("matrix[matrix==-1] <- NA");
 
         return code;
 

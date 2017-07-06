@@ -29,6 +29,7 @@ function writeMenu(){
     //creates a list of button objects. The button click calls makeChart and passes the argument of the student's name
     //and a term "reg" or "avg" to tell whether the graph should display actualcomp or distfromavg
     var newCode = "<button class='accordion'>Section 1</button><div class='panel'><ul style='list-style: none;'>";
+
     newCode += "<li><button type='button' onclick='findAndMakeChart(&quot;" + names[0] + "&quot;,&quot;reg&quot;)'>" + names[0] + "</button>";
     for(var i = 1; i < names.length; i++){
         newCode += "<li><button type='button' onclick='findAndMakeChart(&quot;" + names[i] + "&quot;,&quot;reg&quot;)'>" + names[i] + "</button>";

@@ -108,6 +108,90 @@ function makeColorsList2(dataList){
 }
 
 
+function bucketColorList(dataList){
+
+    var colorsList = [];
+    var max = findMax(dataList);
+    var min = findMax(dataList);
+
+    //this is where you assign the color for the highest score
+    var maxColor = new NodeColor(0,0,255);
+    //this is where you assign the color for the lowest score
+    var minColor = new NodeColor(255,0,0);
+
+    for(var i = 0; i < dataList.length; i++){
+        if(dataList[i][2] >= 0){
+            min = 0;
+            max = 1
+            //maxColor = new NodeColor(0,200,0);
+            //minColor = new NodeColor(0,0,180);
+            var scorePer = calcScorePerc(max, min, dataList[i][2]);
+
+            //assigns new values to each color channel based on how the score is compared to the max and min.
+            if(scorePer >= 85){
+                //Green
+                var currNodeColor = new NodeColor(0, 150, 0);
+            }else if(scorePer >= 75) {
+                //Yellow
+                var currNodeColor = new NodeColor(220, 220, 0);
+            }else if(scorePer >= 65){
+                //Orange
+                var currNodeColor = new NodeColor(230, 110, 0);
+            }else{
+                //Red
+                var currNodeColor = new NodeColor(230, 0, 0);
+            }
+            colorsList.push("#"+RGBToHex(currNodeColor));
+        }else{
+            min = -1;
+            max = 0
+            maxColor = new NodeColor(0,0,180);
+            minColor = new NodeColor(255,0,0);
+            var scorePer = calcScorePerc(max, min, dataList[i][2]);
+
+            //assigns new values to each color channel based on how the score is compared to the max and min.
+            if(scorePer >= 85){
+                //Green
+                var currNodeColor = new NodeColor(0, 150, 0);
+            }else if(scorePer >= 75) {
+                //Yellow
+                var currNodeColor = new NodeColor(220, 220, 0);
+            }else if(scorePer >= 65){
+                //Orange
+                var currNodeColor = new NodeColor(230, 110, 0);
+            }else{
+                //Red
+                var currNodeColor = new NodeColor(230, 0, 0);
+            }
+            colorsList.push("#"+RGBToHex(currNodeColor));
+        }
+
+    }
+
+    return colorsList;
+
+/**
+    for(var i = 0; i < dataList.length; i++){
+        var scorePer = calcScorePerc(max, min, dataList[i][2]);
+
+        if(scorePer >= .85){
+            var currNodeColor = new NodeColor(0, 255, 0);
+        }else if(scorePer >= .75) {
+            var currNodeColor = new NodeColor(200, 200, 0);
+        }else if(scorePer >= .65){
+            var currNodeColor = new NodeColor(255, 100, 0);
+        }else{
+            var currNodeColor = new NodeColor(255, 0, 0);
+        }
+        colorsList.push("#"+RGBToHex(currNodeColor));
+    }
+
+    return colorsList;
+*/
+
+}
+
+
 //returns numbber between 0-255 
 //takes the maximum value of the color channel, the minimum value of the color channel, and the score percentage
 //(where the score falls proportionally between the max and the min)
@@ -162,7 +246,7 @@ function drawOrgChart(dataInput){
       function drawChart() {
           
         //create the list of colors that corresponde to each node
-        var colorList = makeColorsList(dataInput);
+        var colorList = bucketColorList(dataInput);
           
         //create a data table
         var data = new google.visualization.DataTable();
