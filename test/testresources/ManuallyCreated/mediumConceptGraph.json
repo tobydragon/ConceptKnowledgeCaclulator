@@ -1,32 +1,25 @@
 {
   "concepts": [{
 
-    "id": "A",
-    "label": "A"
+    "id": "A"
 
   } , {
-    "id": "B",
-    "label": "B"
+    "id": "B"
 
   } , {
-    "id": "C",
-    "label":"C"
+    "id": "C"
 
   } , {
-    "id": "D",
-    "label":"D"
+    "id": "D"
 
   } , {
-    "id": "E",
-    "label":"E"
+    "id": "E"
 
   } , {
-    "id": "F",
-    "label":"F"
+    "id": "F"
 
   } , {
-    "id": "G",
-    "label":"G"
+    "id": "G"
 
   }],
   "links": [ {

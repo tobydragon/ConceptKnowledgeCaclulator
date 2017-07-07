@@ -2,35 +2,27 @@
   "concepts": [{
     "id": "Intro CS"
   }, {
-    "id": "Loops",
-    "label": "Loops"
+    "id": "Loops"
 
   } , {
-    "id": "For Loop",
-    "label": "For Loop"
+    "id": "For Loop"
 
   } , {
-    "id": "While Loop",
-    "label":"While Loop"
+    "id": "While Loop"
 
   } , {
-    "id": "Counting",
-    "label": "Counting"
+    "id": "Counting"
   } , {
-    "id": "Boolean Expressions",
-    "label":"Boolean Expressions"
+    "id": "Boolean Expressions"
 
   }, {
-    "id": "Boolean",
-    "label":"Boolean"
+    "id": "Boolean"
 
   },  {
-    "id": "Control",
-    "label":"Control"
+    "id": "Control"
 
   }, {
-    "id": "If Statement",
-    "label":"If Statement"
+    "id": "If Statement"
 
   }],
   "links": [{

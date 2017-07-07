@@ -1,19 +1,15 @@
 {
   "concepts": [{
-    "id": "Intro CS",
-    "label": "Intro CS"
+    "id": "Intro CS"
 
   }, {
-    "id": "A",
-    "label": "A"
+    "id": "A"
 
   } , {
-    "id": "B",
-    "label": "B"
+    "id": "B"
 
   } , {
-    "id": "C",
-    "label":"C"
+    "id": "C"
 
   }],
   "links": [{

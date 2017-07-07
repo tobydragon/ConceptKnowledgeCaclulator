@@ -36,7 +36,6 @@ public class ConceptGraphRecordTest {
         catch(Exception e){
             e.printStackTrace();
         }
-
     }
 
 }
