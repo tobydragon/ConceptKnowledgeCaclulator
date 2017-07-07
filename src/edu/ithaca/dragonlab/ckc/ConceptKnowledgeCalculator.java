@@ -351,49 +351,22 @@ public class ConceptKnowledgeCalculator implements ConceptKnowledgeCalculatorAPI
         }
     }
 
-    public void csvToResource() throws Exception{
+    public String csvToResource() throws Exception {
         if(currentMode==Mode.STRUCTUREGRAPH) {
-            List<LearningObject> fullLoList = new ArrayList<LearningObject>();
-            fullLoList = CSVReader.fullLoLister(assessmentFiles);
-            List<LearningObjectLinkRecord> lolrList = LearningObjectLinkRecord.createLearningObjectLinkRecords(fullLoList, 10);
-            String file = OUTPUT_PATH + "resourcesWithoutConceptConnections.json";
-
-            try {
-                LearningObjectLinkRecord.lolrToJSON(lolrList, file);
-                currentMode = Mode.STRUCTUREGRAPHWITHASSESSMENT;
-                //System.out.println("Written to JSON");
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        }else{
+            return csvToResource(assessmentFiles, OUTPUT_PATH + "resourcesWithoutConceptConnections.json");
+        }
+        else {
             throw new Exception("Wrong Mode");
         }
     }
 
-    public String csvToResourceIntesting() throws Exception{
-        if(currentMode==Mode.STRUCTUREGRAPH) {
+    public static String csvToResource(List<String> assessmentFiles, String destinationFilepath) throws Exception{
             List<LearningObject> fullLoList = new ArrayList<LearningObject>();
             fullLoList = CSVReader.fullLoLister(assessmentFiles);
             List<LearningObjectLinkRecord> lolrList = LearningObjectLinkRecord.createLearningObjectLinkRecords(fullLoList, 10);
-            String file = "test/testresources/io/resourcesWithoutConceptConnections.json";
-
-            try {
-                LearningObjectLinkRecord.lolrToJSON(lolrList, file);
-                currentMode = Mode.STRUCTUREGRAPHWITHASSESSMENT;
-                //System.out.println("Written to JSON");
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-            return file;
-        }else{
-            throw new Exception("Wrong Mode");
-        }
-
-
+            LearningObjectLinkRecord.lolrToJSON(lolrList, destinationFilepath);
+            return "Your file has been written to :"+ destinationFilepath;
     }
-
-
-
 
     public List<String> getUserIdList(){
         Map<String, ConceptGraph> userMap = cohortConceptGraphs.getUserToGraph();

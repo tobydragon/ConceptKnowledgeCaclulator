@@ -6,6 +6,7 @@ import edu.ithaca.dragonlab.ckc.conceptgraph.ConceptGraph;
 import edu.ithaca.dragonlab.ckc.io.CohortConceptGraphsRecord;
 import edu.ithaca.dragonlab.ckc.io.ConceptGraphRecord;
 import edu.ithaca.dragonlab.ckc.io.ConceptRecord;
+import edu.ithaca.dragonlab.ckc.io.LearningObjectLinkRecord;
 import edu.ithaca.dragonlab.ckc.learningobject.LearningObject;
 import edu.ithaca.dragonlab.ckc.learningobject.LearningObjectResponse;
 import edu.ithaca.dragonlab.ckc.suggester.LearningObjectSuggestion;
@@ -701,34 +702,20 @@ public class ConceptKnowledgeCalculatorTest {
         }
         Assert.assertEquals(0.538, ckc.getStudentAvg("bspinache1"), OK_FLOAT_MARGIN);
     }
-/**
+
     @Test
     public void csvToResourceTest(){
         try {
-            ConceptKnowledgeCalculatorAPI ckc = null;
-            try {
-                ckc = new ConceptKnowledgeCalculator("test/testresources/basicRealisticExampleConceptGraphOneStudent.json");
-            } catch (IOException e) {
-                Assert.fail("Unable to load default files");
-            }
-            /**
-            try {
-                //ckc.csvToResourceIntesting();
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
+            String testFilepath = "test/testresources/io/mediumGraphLearnObjectLinkRecordsCreationTest.json";
 
+            List<String> csvFiles = new ArrayList<>();
+            csvFiles.add("test/testresources/mediumGraphTestGradeBook.csv");
+            ConceptKnowledgeCalculator.csvToResource(csvFiles, testFilepath);
 
-            String testfile = ckc.csvToResourceIntesting();
-            //CohortConceptGraphsRecord fromFile = CohortConceptGraphsRecord.buildFromJson("test/testresources/io/resourcesWithoutConceptConnections.json");
-
-            Assert.assertEquals(testfile, "test/testresources/io/resourcesWithoutConceptConnections.json");
-
-
-            CohortConceptGraphsRecord graphrecord = CohortConceptGraphsRecord.buildFromJson(testfile);
-            List<ConceptGraphRecord> conceptgraph= graphrecord.getGraphRecords();
-            List<ConceptRecord> concepts = conceptgraph.get(0).getConcepts();
-            Assert.assertEquals("Intro CS", concepts.get(0));
+            List<LearningObjectLinkRecord> recordsFromFile = LearningObjectLinkRecord.buildListFromJson(testFilepath);
+            Assert.assertNotNull(recordsFromFile);
+            //TODO:test that these LOLRecords are good compared to the input csv file, they just won't have any concepts in their lists
+            //Assert.assertEquals("Intro CS", concepts.get(0));
 
         }catch (Exception e){
             e.printStackTrace();
@@ -738,6 +725,6 @@ public class ConceptKnowledgeCalculatorTest {
 
 
     }
-    */
+
 
 }
