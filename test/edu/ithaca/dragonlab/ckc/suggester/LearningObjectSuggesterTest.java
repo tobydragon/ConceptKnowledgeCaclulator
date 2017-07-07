@@ -206,4 +206,24 @@ public class LearningObjectSuggesterTest {
         }
 
     }
+
+    @Test
+    public void research1Test(){
+
+        CSVReader csvReader = new CSVReader("test/testresources/ManuallyCreated/basicRealisticAssessment.csv");
+        try {
+            ConceptGraphRecord graphRecord = ConceptGraphRecord.buildFromJson("test/testresources/ManuallyCreated/research1ConceptGraph.json");
+            List<LearningObjectLinkRecord> LOLRlist = LearningObjectLinkRecord.buildListFromJson("test/testresources/ManuallyCreated/basicRealisticResource.json");
+
+            ConceptGraph graph = new ConceptGraph(graphRecord, LOLRlist, csvReader.getManualGradedResponses());
+            graph.calcKnowledgeEstimates();
+
+//             graph;
+
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+
+
+    }
 }
