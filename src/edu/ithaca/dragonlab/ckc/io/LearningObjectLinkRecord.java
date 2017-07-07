@@ -69,22 +69,20 @@ public class LearningObjectLinkRecord {
         return lolrList;
     }
 
-    public static void lolrToJSON(List<LearningObjectLinkRecord> lolrList)throws IOException{
+    public static void lolrToJSON(List<LearningObjectLinkRecord> lolrList, String filename)throws IOException{
         ObjectMapper mapper = new ObjectMapper();
         mapper.enable(SerializationFeature.INDENT_OUTPUT);
         CohortConceptGraphsRecord graph = new CohortConceptGraphsRecord();
-        List<ConceptGraphRecord> list = graph.getGraphRecords();
-
-        //TODO: file naming should probably be outside of this function and passed in
-        System.out.println("Name file: \n");
-        Scanner scanner = new Scanner(System.in);
-        String filename = scanner.nextLine();
+        //List<ConceptGraphRecord> list = graph.getGraphRecords();
         mapper.writeValue(new File(filename), lolrList);
+
     }
 
-    public static Path lolrToTxt(LearningObjectLinkRecord learningObjectLinkRecord){
+
+/**
+    public static Path lolrToTxt(LearningObjectLinkRecord learningObjectLinkRecord, String filename){
         List<String> conceptIds = learningObjectLinkRecord.getConceptIds();
-        Path file = Paths.get("the-file-name.txt");
+        Path file = Paths.get(filename);
         try {
                 Files.write(file, conceptIds, Charset.forName("UTF-8"));
         } catch (IOException e) {
@@ -92,6 +90,7 @@ public class LearningObjectLinkRecord {
         }
         return file;
     }
+ */
 
     public void setMatchingKnowledgeEstimates(Collection<LearningObject> learningObjects, Map<String, LearningObject> loMap){
         List<LearningObject> loList= new ArrayList<LearningObject>(loMap.values());

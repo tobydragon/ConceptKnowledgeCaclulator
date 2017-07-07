@@ -203,7 +203,7 @@ public class CSVReader {
                 }
             /**
             }else{
-                ManualGradedResponse response = new ManualGradedResponse(qid, currentLearningObject.getMaxPossibleKnowledgeEstimate(), -1, stdID);
+                ManualGradedResponse response = new ManualGradedResponse(qid, 1, -1, stdID);
                 if(response != null) {
                     currentLearningObject.addResponse(response);
                     this.manualGradedResponseList.add(response);

@@ -9,6 +9,7 @@ import org.junit.Test;
 
 import java.io.File;
 import java.io.IOException;
+import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
@@ -96,7 +97,7 @@ public class LearningObjectLinkRecordTest {
 
     @Test
     public void createLearningObjectLinkRecordsTest(){
-        CSVReader test = new CSVReader("test/testresources/SmallDataCSVExample.csv");
+        CSVReader test = new CSVReader("test/testresources/io/DataCSVExample.csv");
         Collection<LearningObject> list = test.getManualGradedLearningObjects();
         List<LearningObject> list2 = test.getManualGradedLearningObjects();
         List<LearningObjectLinkRecord> lolrList = LearningObjectLinkRecord.createLearningObjectLinkRecords(list, 1);
@@ -108,8 +109,18 @@ public class LearningObjectLinkRecordTest {
         Assert.assertEquals(list2.toString(), resultString.toString());
     }
 
+
+    /**
     @Test
     public void lolrToTextTest(){
+        String testfile = "test/testresources/io/DataCSVExample.csv";
+        CSVReader test = new CSVReader(testfile);
+        Collection<LearningObject> list = test.getManualGradedLearningObjects();
+        List<LearningObject> list2 = test.getManualGradedLearningObjects();
+        List<LearningObjectLinkRecord> lolrList = LearningObjectLinkRecord.createLearningObjectLinkRecords(list, 1);
+        Path txtfile = LearningObjectLinkRecord.lolrToTxt(lolrList.get(0), "test.txt");
+
 
     }
+    */
 }

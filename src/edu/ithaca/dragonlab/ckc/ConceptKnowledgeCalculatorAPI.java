@@ -71,7 +71,9 @@ public interface ConceptKnowledgeCalculatorAPI {
 
     void removeLORFile(String assessmentFile) throws Exception;
 
-    void csvToResource(List<String> csvfiles) throws Exception;
+    void csvToResource() throws Exception;
+
+    String csvToResourceIntesting() throws Exception;
 
 
     /**

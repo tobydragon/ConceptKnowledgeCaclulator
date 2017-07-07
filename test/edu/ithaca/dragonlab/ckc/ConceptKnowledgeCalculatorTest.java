@@ -3,6 +3,9 @@ package edu.ithaca.dragonlab.ckc;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import edu.ithaca.dragonlab.ckc.conceptgraph.CohortConceptGraphs;
 import edu.ithaca.dragonlab.ckc.conceptgraph.ConceptGraph;
+import edu.ithaca.dragonlab.ckc.io.CohortConceptGraphsRecord;
+import edu.ithaca.dragonlab.ckc.io.ConceptGraphRecord;
+import edu.ithaca.dragonlab.ckc.io.ConceptRecord;
 import edu.ithaca.dragonlab.ckc.learningobject.LearningObject;
 import edu.ithaca.dragonlab.ckc.learningobject.LearningObjectResponse;
 import edu.ithaca.dragonlab.ckc.suggester.LearningObjectSuggestion;
@@ -18,6 +21,7 @@ import java.util.List;
 import java.util.Map;
 
 import static edu.ithaca.dragonlab.ckc.util.DataUtil.OK_FLOAT_MARGIN;
+import static org.hamcrest.CoreMatchers.is;
 
 /**
  * Created by Mia Kimmich Mitchell on 6/9/2017.
@@ -697,22 +701,43 @@ public class ConceptKnowledgeCalculatorTest {
         }
         Assert.assertEquals(0.538, ckc.getStudentAvg("bspinache1"), OK_FLOAT_MARGIN);
     }
-    /**
+/**
     @Test
     public void csvToResourceTest(){
-        ConceptKnowledgeCalculatorAPI ckc = null;
-        List<String> csvfiles = new ArrayList<String>();
         try {
-            ckc = new ConceptKnowledgeCalculator();
-        } catch (IOException e) {
-            Assert.fail("Unable to load default files");
-        }
-        csvfiles.add("DataCSVExample.csv");
-        try{
-        ckc.csvToResource(csvfiles);
-        } catch (IOException e) {
+            ConceptKnowledgeCalculatorAPI ckc = null;
+            try {
+                ckc = new ConceptKnowledgeCalculator("test/testresources/basicRealisticExampleConceptGraphOneStudent.json");
+            } catch (IOException e) {
+                Assert.fail("Unable to load default files");
+            }
+            /**
+            try {
+                //ckc.csvToResourceIntesting();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+
+
+            String testfile = ckc.csvToResourceIntesting();
+            //CohortConceptGraphsRecord fromFile = CohortConceptGraphsRecord.buildFromJson("test/testresources/io/resourcesWithoutConceptConnections.json");
+
+            Assert.assertEquals(testfile, "test/testresources/io/resourcesWithoutConceptConnections.json");
+
+
+            CohortConceptGraphsRecord graphrecord = CohortConceptGraphsRecord.buildFromJson(testfile);
+            List<ConceptGraphRecord> conceptgraph= graphrecord.getGraphRecords();
+            List<ConceptRecord> concepts = conceptgraph.get(0).getConcepts();
+            Assert.assertEquals("Intro CS", concepts.get(0));
+
+        }catch (Exception e){
             e.printStackTrace();
+            Assert.fail("File(s) not found");
+
         }
+
+
     }
     */
+
 }
