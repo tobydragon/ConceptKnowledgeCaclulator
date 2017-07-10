@@ -21,16 +21,16 @@ public class PracticalConceptGraphTest {
         ObjectMapper graphMapper = new ObjectMapper();
 
         graphMapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
-        CSVReader csvReader = new CSVReader(TEST_DIR+"basicRealisticExampleGradeBook.csv");
+        CSVReader csvReader = new CSVReader(TEST_DIR+"basicRealisticAssessment.csv");
 
         try {
-            ConceptGraphRecord graphRecord = ConceptGraphRecord.buildFromJson(TEST_DIR+"realisticExampleConceptGraph.json");
+            ConceptGraphRecord graphRecord = ConceptGraphRecord.buildFromJson(TEST_DIR+"mediumRealisticConceptGraph.json");
 
-            List<LearningObjectLinkRecord> LOLRlist = LearningObjectLinkRecord.buildListFromJson(TEST_DIR + "realisticExampleLOLRecord.json");
+            List<LearningObjectLinkRecord> LOLRlist = LearningObjectLinkRecord.buildListFromJson(TEST_DIR + "mediumRealisticResource.json");
             ConceptGraph graph = new ConceptGraph(graphRecord, LOLRlist, csvReader.getManualGradedResponses());
 
             ObjectMapper mapper = new ObjectMapper();
-            mapper.writeValue(new File("test/testresources/practicalExamples/blankRealisticExample.json"), TreeConverter.makeTreeCopy(graph).buildConceptGraphRecord());
+            mapper.writeValue(new File("test/testresources/practicalExamples/SystemCreated/blankRealisticExample.json"), TreeConverter.makeTreeCopy(graph).buildConceptGraphRecord());
 
             graph.calcDataImportance();
             graph.calcKnowledgeEstimates();
@@ -42,7 +42,7 @@ public class PracticalConceptGraphTest {
             ConceptGraphRecord tree = TreeConverter.makeTreeCopy(graph).buildConceptGraphRecord();
             //Object to JSON in file
             mapper = new ObjectMapper();
-            mapper.writeValue(new File("test/testresources/practicalExamples/basicRealisticExample.json"), tree);
+            mapper.writeValue(new File("test/testresources/practicalExamples/SystemCreated/basicRealisticExample.json"), tree);
 
 
         }catch (Exception e){
@@ -52,22 +52,21 @@ public class PracticalConceptGraphTest {
 
 
     @Test
-    public void willExampleCohortGraphWithKnowledgeEstimatesTest(){
+    public void basicRealisticTest(){
         ObjectMapper graphMapper = new ObjectMapper();
 
         graphMapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
-        CSVReader csvReader = new CSVReader("test/testresources/basicRealisticExampleGradeBook2.csv");
+        CSVReader csvReader = new CSVReader("test/testresources/ManuallyCreated/basicRealisticAssessment.csv");
 
         try {
-            ConceptGraphRecord graphRecord = ConceptGraphRecord.buildFromJson("test/testresources/basicRealisticExampleConceptGraphOneStudent.json");
+            ConceptGraphRecord graphRecord = ConceptGraphRecord.buildFromJson("test/testresources/ManuallyCreated/basicRealisticConceptGraph.json");
 
-            List<LearningObjectLinkRecord> LOLRlist = LearningObjectLinkRecord.buildListFromJson("test/testresources/basicRealisticExampleLOLRecordOneStudent.json");
+            List<LearningObjectLinkRecord> LOLRlist = LearningObjectLinkRecord.buildListFromJson("test/testresources/ManuallyCreated/basicRealisticResource.json");
             ConceptGraph graph = new ConceptGraph(graphRecord, LOLRlist);
 
             CohortConceptGraphs gcg = new CohortConceptGraphs(graph,csvReader.getManualGradedResponses());
 
             ConceptGraph testGraph = gcg.getAvgGraph();
-//            ConceptGraph testGraph = gcg.getUserGraph("bspinache1");
 
 
             Assert.assertEquals("Intro CS", testGraph.findNodeById("Intro CS").getID());
@@ -82,11 +81,6 @@ public class PracticalConceptGraphTest {
             Assert.assertEquals(0.85, testGraph.findNodeById("Counting").getKnowledgeEstimate(), DataUtil.OK_FLOAT_MARGIN);
             Assert.assertEquals(0.7666, testGraph.findNodeById("For Loop").getKnowledgeEstimate(), DataUtil.OK_FLOAT_MARGIN);
 
-//            ObjectMapper mapper = new ObjectMapper();
-//            ConceptGraphRecord tree = TreeConverter.makeTreeCopy(graph).buildConceptGraphRecord();
-//            //Object to JSON in file
-//            mapper.writeValue(new File("test/testresources/practicalExamples/advancedRealisticExample.json"), tree);
-//            //mapper.writeValue(new File("test/testresources/practicalExamples/groupConceptGraphAdvancedRealisticExample.json"), gcg.getAllNamedGraphs());
 
         }catch (Exception e){
             e.printStackTrace();
@@ -101,12 +95,12 @@ public class PracticalConceptGraphTest {
         ObjectMapper graphMapper = new ObjectMapper();
 
         graphMapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
-        CSVReader csvReader = new CSVReader(TEST_DIR+"advancedRealisticExampleGradeBook.csv");
+        CSVReader csvReader = new CSVReader(TEST_DIR+"advancedRealisticAssessment.csv");
 
         try {
-            ConceptGraphRecord graphRecord = ConceptGraphRecord.buildFromJson(TEST_DIR+"realisticExampleConceptGraph.json");
+            ConceptGraphRecord graphRecord = ConceptGraphRecord.buildFromJson(TEST_DIR+"mediumRealisticConceptGraph.json");
 
-            List<LearningObjectLinkRecord> LOLRlist = LearningObjectLinkRecord.buildListFromJson(TEST_DIR + "realisticExampleLOLRecord.json");
+            List<LearningObjectLinkRecord> LOLRlist = LearningObjectLinkRecord.buildListFromJson(TEST_DIR + "mediumRealisticResource.json");
             ConceptGraph graph = new ConceptGraph(graphRecord, LOLRlist);
 
             CohortConceptGraphs gcg = new CohortConceptGraphs(graph,csvReader.getManualGradedResponses());
@@ -124,8 +118,7 @@ public class PracticalConceptGraphTest {
             ObjectMapper mapper = new ObjectMapper();
             ConceptGraphRecord tree = TreeConverter.makeTreeCopy(graph).buildConceptGraphRecord();
             //Object to JSON in file
-            mapper.writeValue(new File("test/testresources/practicalExamples/advancedRealisticExample.json"), tree);
-            //mapper.writeValue(new File("test/testresources/practicalExamples/groupConceptGraphAdvancedRealisticExample.json"), gcg.getAllNamedGraphs());
+            mapper.writeValue(new File("test/testresources/practicalExamples/SystemCreated/advancedRealisticExample.json"), tree);
 
         }catch (Exception e){
             e.printStackTrace();
@@ -138,17 +131,12 @@ public class PracticalConceptGraphTest {
         ObjectMapper graphMapper = new ObjectMapper();
 
         graphMapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
-        CSVReader csvReader = new CSVReader(TEST_DIR+"SingleStudentRealisticExampleGradeBook.csv");
+        CSVReader csvReader = new CSVReader(TEST_DIR+"singleStudentRealisticAssessment.csv");
 
         try {
-            /*
-            ConceptGraphRecord graphRecord = ConceptGraphRecord.buildFromJson(TEST_DIR+"realisticExampleConceptGraph.json");
 
-            List<LearningObjectLinkRecord> LOLRlist = LearningObjectLinkRecord.buildListFromJson(TEST_DIR+"realisticExampleLOLRecord.json");
-            ConceptGraph graph = new ConceptGraph(graphRecord,csvReader.getManualGradedLearningObjects(), LOLRlist);
-            */
-            ConceptGraphRecord graphRecord = ConceptGraphRecord.buildFromJson(TEST_DIR+"realisticExampleConceptGraph.json");
-            List<LearningObjectLinkRecord> LOLRlist = LearningObjectLinkRecord.buildListFromJson(TEST_DIR+"realisticExampleLOLRecord.json");
+            ConceptGraphRecord graphRecord = ConceptGraphRecord.buildFromJson(TEST_DIR+"mediumRealisticConceptGraph.json");
+            List<LearningObjectLinkRecord> LOLRlist = LearningObjectLinkRecord.buildListFromJson(TEST_DIR+"mediumRealisticResource.json");
             ConceptGraph graph = new ConceptGraph(graphRecord, LOLRlist, csvReader.getManualGradedResponses());
             graph.calcDataImportance();
             graph.calcKnowledgeEstimates();
@@ -166,7 +154,7 @@ public class PracticalConceptGraphTest {
             ConceptGraphRecord tree = TreeConverter.makeTreeCopy(graph).buildConceptGraphRecord();
             ObjectMapper mapper = new ObjectMapper();
             //Object to JSON in file
-            mapper.writeValue(new File("test/testresources/practicalExamples/singleStudentRealisticExample.json"), tree);
+            mapper.writeValue(new File("test/testresources/practicalExamples/SystemCreated/singleStudentRealisticExample.json"), tree);
         }catch (Exception e){
             e.printStackTrace();
         }

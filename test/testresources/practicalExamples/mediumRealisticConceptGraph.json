@@ -1,49 +1,36 @@
 {
   "concepts": [{
-    "id": "Intro CS",
-    "label": "Intro CS"
-
+    "id": "Intro CS"
   }, {
-    "id": "Loops",
-    "label": "Loops"
+    "id": "Loops"
 
   } , {
-    "id": "For Loop",
-    "label": "For Loop"
+    "id": "For Loop"
 
   } , {
-    "id": "While Loop",
-    "label":"While Loop"
+    "id": "While Loop"
 
   } ,{
-    "id": "Boolean Expressions",
-    "label":"Boolean Expressions"
+    "id": "Boolean Expressions"
 
   }, {
-    "id": "Boolean",
-    "label":"Boolean"
+    "id": "Boolean"
 
   }, {
-    "id": "Operators",
-    "label":"Operators"
+    "id": "Operators"
 
   },  {
-    "id": "Control",
-    "label":"Control"
+    "id": "Control"
 
   }, {
-    "id": "If Statement",
-    "label":"If Statement"
+    "id": "If Statement"
 
   },{
-    "id": "Sequence Types",
-    "label":"Sequence Types"
+    "id": "Sequence Types"
   },{
-    "id": "List",
-    "label":"List"
+    "id": "List"
   },{
-    "id": "String",
-    "label":"String"
+    "id": "String"
   }],
   "links": [{
     "parent": "Intro CS",

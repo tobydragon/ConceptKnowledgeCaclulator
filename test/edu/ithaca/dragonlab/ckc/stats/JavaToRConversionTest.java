@@ -22,10 +22,12 @@ public class JavaToRConversionTest {
     @Test
 
     public void matrixTransfer(){
-        /**
-        String file = "test/testresources/io/DataCSVExample.csv";
+
+
+
+        String file = "test/testresources/ManuallyCreated/partialComplexRealitsticAssessment.csv";
         CSVReader data = new CSVReader(file);
-        ArrayList<LearningObject> gotoMatrix = data.getManualGradedLearningObjects();
+        List<LearningObject> gotoMatrix = data.getManualGradedLearningObjects();
         KnowledgeEstimateMatrix newMatrix = new KnowledgeEstimateMatrix(gotoMatrix);
         double[][] struct = newMatrix.getStudentKnowledgeEstimates();
         List<LearningObject> objList = newMatrix.getObjList();
@@ -47,7 +49,7 @@ public class JavaToRConversionTest {
         double[] results = rCaller.getParser().getAsDoubleArray("classAvg");
         double actual = results[0];
         Assert.assertEquals(0.88166, actual, 0.001);
-*/
+
     }
 
 

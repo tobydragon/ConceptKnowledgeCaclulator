@@ -105,15 +105,15 @@ public class ExampleConceptGraphRecordFactory {
     }
 
     public static void main(String[] args){
-        //write all examples to file
-        try {
-            makeSimple().writeToJson("test/testresources/simpleStructureGraph.json");
-            makeMedium().writeToJson("test/testresources/mediumStructureGraph.json");
-            makeComplex().writeToJson("test/testresources/complexStructureGraph.json");
-            makeSuperComplex().writeToJson("test/testresources/superComplexStructureGraph.json");
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+//        //write all examples to file
+//        try {
+//            makeSimple().writeToJson("test/testresources/systemwritten/simpleStructureGraph.json");
+//            makeMedium().writeToJson("test/testresources/systemwritten/mediumStructureGraph.json");
+//            makeComplex().writeToJson("test/testresources/systemwritten/complexStructureGraph.json");
+//            makeSuperComplex().writeToJson("test/testresources/systemwritten/superComplexStructureGraph.json");
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//        }
     }
 
 }

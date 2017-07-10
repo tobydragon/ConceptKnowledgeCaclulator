@@ -1,0 +1,156 @@
+[
+  {"learningObject":"Counting in binary to 10",
+  "conceptIds":[
+    "Counting"
+  ],
+  "dataImportance": "1"
+  },
+  {"learningObject":"What’s an algorithm?",
+  "conceptIds":[
+    "Algorithms"
+  ],
+  "dataImportance": "1"
+  },
+  {"learningObject":"What’s a function?",
+  "conceptIds":[
+    "Functions"
+  ],
+  "dataImportance": "1"
+  },
+  {"learningObject":"What’s the purpose of a function?",
+  "conceptIds":[
+    "Functions"
+  ],
+  "dataImportance": "1"
+  },
+  {"learningObject":"What are the parameters in the function?",
+  "conceptIds":[
+    "Parameters"
+  ],
+  "dataImportance": "0"
+  },
+  {"learningObject":"What data types can be passed as a parameter?",
+    "conceptIds":[
+      "Parameters",
+      "Values and Data Types"
+    ],
+    "dataImportance": "1"
+  },
+  {"learningObject":"Overwrite each element in the list with it’s double value using two functions.",
+    "conceptIds":[
+      "Lists",
+      "Parameters"
+    ],
+    "dataImportance": "1"
+  },
+  {"learningObject":"What is a side effect?",
+    "conceptIds":[
+      "Lists",
+      "Parameters"
+    ],
+    "dataImportance": "1"
+  },{"learningObject":"What is the proper for loop diction?",
+    "conceptIds":[
+      "For Loops"
+    ],
+    "dataImportance": "1"
+  },
+  {"learningObject":"What are the three things you need for a for loop",
+    "conceptIds":[
+      "For Loops"
+    ],
+    "dataImportance": "1"
+  },
+  {"learningObject": "What are the differences and similarities between for loops and while loops?",
+    "conceptIds": [
+    "For Loop",
+      "While Loops"
+  ],
+    "dataImportance": "1"
+  },
+  {
+    "learningObject": "How are while loops and booleans related?",
+    "conceptIds": [
+      "While Loops",
+      "Booleans"
+    ],
+    "dataImportance": "0"
+  },
+  {
+    "learningObject": "What is the proper while loop diction?",
+    "conceptIds": [
+      "While Loops"
+    ],
+    "dataImportance": "1"
+  },
+  {
+    "learningObject": "What are the things you need for a while loop?",
+    "conceptIds": [
+      "While Loops"
+    ],
+    "dataImportance": "1"
+  },
+  {
+    "learningObject": "What is a statement?",
+    "conceptIds": [
+      "Expressions and Statements"
+    ],
+    "dataImportance": "1"
+  },
+  {
+    "learningObject": "What are some of the statements we have already seen?",
+    "conceptIds": [
+      "Expressions and Statements"
+    ],
+    "dataImportance": "0"
+  },
+  {
+    "learningObject": "What is 5%7?",
+    "conceptIds": [
+      "Expressions and Statements"
+    ],
+    "dataImportance": "0"
+  },
+  {
+    "learningObject": "What is an assignment statement?",
+    "conceptIds": [
+      "Variables"
+    ],
+    "dataImportance": "0"
+  },
+  {
+    "learningObject": "Write the following in camel case",
+    "conceptIds": [
+      "Variables"
+    ],
+    "dataImportance": "1"
+  },
+  {
+    "learningObject": "What are the important rules for variable names?",
+    "conceptIds": [
+      "Variables"
+    ],
+    "dataImportance": "1"
+  },
+  {
+    "learningObject": "What makes up a dictionary?",
+    "conceptIds": [
+      "Dictionaries"
+    ],
+    "dataImportance": "0"
+  },
+  {
+    "learningObject": "What a key-value pair?",
+    "conceptIds": [
+      "Dictionaries"
+    ],
+    "dataImportance": "0"
+  },
+  {
+    "learningObject": "Are strings mutable?",
+    "conceptIds": [
+      "Strings"
+    ],
+    "dataImportance": "1"
+  }
+]

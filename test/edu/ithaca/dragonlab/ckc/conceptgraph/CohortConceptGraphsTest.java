@@ -115,10 +115,10 @@ public class CohortConceptGraphsTest {
 
     @Test
     public void buildCohortConceptTreeRecordComplexTest() {
-        CSVReader csvReader = new CSVReader("test/testresources/basicRealisticExampleGradeBook2.csv");
+        CSVReader csvReader = new CSVReader("test/testresources/ManuallyCreated/basicRealisticAssessment.csv");
         try {
-            ConceptGraph  structure = new ConceptGraph(ConceptGraphRecord.buildFromJson("test/testresources/basicRealisticExampleConceptGraphOneStudent.json"),
-                    LearningObjectLinkRecord.buildListFromJson("test/testresources/basicRealisticExampleLOLRecordOneStudent.json" ));
+            ConceptGraph  structure = new ConceptGraph(ConceptGraphRecord.buildFromJson("test/testresources/ManuallyCreated/basicRealisticConceptGraph.json"),
+                    LearningObjectLinkRecord.buildListFromJson("test/testresources/ManuallyCreated/basicRealisticResource.json" ));
             CohortConceptGraphs group = new CohortConceptGraphs(structure, csvReader.getManualGradedResponses());
 
             CohortConceptGraphsRecord record = group.buildCohortConceptTreeRecord();
@@ -137,9 +137,9 @@ public class CohortConceptGraphsTest {
 	@Test
     public void onlyOneLearningObject(){
         try {
-            CSVReader csvReader = new CSVReader("test/testresources/basicRealisticExampleGradeBook2.csv");
-            ConceptGraph graph = new ConceptGraph(ConceptGraphRecord.buildFromJson("test/testresources/basicRealisticExampleConceptGraphOneStudent.json"),
-                    LearningObjectLinkRecord.buildListFromJson("test/testresources/basicRealisticExampleLOLRecordOneStudent.json"));
+            CSVReader csvReader = new CSVReader("test/testresources/ManuallyCreated/basicRealisticAssessment.csv");
+            ConceptGraph graph = new ConceptGraph(ConceptGraphRecord.buildFromJson("test/testresources/ManuallyCreated/basicRealisticConceptGraph.json"),
+                    LearningObjectLinkRecord.buildListFromJson("test/testresources/ManuallyCreated/basicRealisticResource.json"));
             CohortConceptGraphs gcg = new CohortConceptGraphs(graph,csvReader.getManualGradedResponses());
             ConceptGraph testGraph = gcg.getAvgGraph();
 
@@ -156,15 +156,15 @@ public class CohortConceptGraphsTest {
 	@Test
     public void calcKnowledgeEstimateSameInCohortAndConceptGraphsTest(){
         try {
-            CSVReader csvReader = new CSVReader("test/testresources/basicRealisticExampleGradeBook2.csv");
+            CSVReader csvReader = new CSVReader("test/testresources/ManuallyCreated/basicRealisticAssessment.csv");
 
-            ConceptGraph singleGraph = new ConceptGraph(ConceptGraphRecord.buildFromJson("test/testresources/basicRealisticExampleConceptGraphOneStudent.json"),
-                    LearningObjectLinkRecord.buildListFromJson("test/testresources/basicRealisticExampleLOLRecordOneStudent.json"),
+            ConceptGraph singleGraph = new ConceptGraph(ConceptGraphRecord.buildFromJson("test/testresources/ManuallyCreated/basicRealisticConceptGraph.json"),
+                    LearningObjectLinkRecord.buildListFromJson("test/testresources/ManuallyCreated/basicRealisticResource.json"),
                     csvReader.getManualGradedResponses());
             singleGraph.calcKnowledgeEstimates();
 
-            ConceptGraph graph = new ConceptGraph(ConceptGraphRecord.buildFromJson("test/testresources/basicRealisticExampleConceptGraphOneStudent.json"),
-                    LearningObjectLinkRecord.buildListFromJson("test/testresources/basicRealisticExampleLOLRecordOneStudent.json"));
+            ConceptGraph graph = new ConceptGraph(ConceptGraphRecord.buildFromJson("test/testresources/ManuallyCreated/basicRealisticConceptGraph.json"),
+                    LearningObjectLinkRecord.buildListFromJson("test/testresources/ManuallyCreated/basicRealisticResource.json"));
             CohortConceptGraphs gcg = new CohortConceptGraphs(graph,csvReader.getManualGradedResponses());
             ConceptGraph testGraph = gcg.getAvgGraph();
 

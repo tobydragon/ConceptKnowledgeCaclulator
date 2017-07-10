@@ -44,13 +44,6 @@ public class ConsoleUI {
             createNewCohortGraph(scanner);
         }
 
-        if(ckc.getCohortConceptGraphs()!=null || ckc.getStructureGraph()!= null) {
-            try {
-                System.out.println("Current graphs:\t" + ckc.getCohortGraphsUrl());
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-        }
 
         int contQuit = 1;
         while (contQuit == 1) {

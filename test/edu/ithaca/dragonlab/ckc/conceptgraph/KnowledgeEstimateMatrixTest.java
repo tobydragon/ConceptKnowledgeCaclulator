@@ -6,6 +6,7 @@ import org.junit.Assert;
 import org.junit.Test;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -16,10 +17,13 @@ public class KnowledgeEstimateMatrixTest {
 
     @Test
     public void createMatrixTest(){
-        /**
-        String file = "test/testresources/io/DataCSVExample.csv";
+
+        //String file = "test/testresources/io/DataCSVExample.csv";
+
+        String file = "test/testresources/ManuallyCreated/partialComplexRealitsticAssessment.csv";
+
         CSVReader data = new CSVReader(file);
-        ArrayList<LearningObject> gotoMatrix = data.getManualGradedLearningObjects();
+        List<LearningObject> gotoMatrix = data.getManualGradedLearningObjects();
         KnowledgeEstimateMatrix newMatrix = new KnowledgeEstimateMatrix(gotoMatrix);
         double[][] myMatrix = newMatrix.getStudentKnowledgeEstimates();
         double[] arr1 = new double[9];
@@ -51,8 +55,11 @@ public class KnowledgeEstimateMatrixTest {
 
 
         double[] exArr1 = new double[]{1, 1, 0.815, 0.7, 0, 0, 1, 1, 1};
-        double[] exArr2 = new double[]{0, 1, 0.85, 1, 0, 0.9, 1, 1, 1};
+        double[] exArr2 = new double[]{1, 1, 0.85, 1, 0, 0.9, 1, 1, 1};
         double[] exArr3 = new double[]{1, 1, 0.98, 1, 0.975, 1, 1, 1, 1};
+
+
+        //System.out.println(Arrays.toString(exArr2) +"---" + Arrays.toString(arr2));
 
         //KnowledgeEstimateMatrix Check
         Assert.assertArrayEquals(exArr1, arr1, 0);
@@ -65,7 +72,7 @@ public class KnowledgeEstimateMatrixTest {
         actualString.add("stu2");
         actualString.add("stu3");
         Assert.assertEquals(actualString, newMatrix.getUserIdList());
-         */
+
     }
 
 }

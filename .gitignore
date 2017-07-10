@@ -61,3 +61,7 @@ fabric.properties
 .idea/kotlinc.xml
 .DS_Store
 .idea/inspectionProfiles/
+
+# these are testing files that are created through runing the tests
+/test/testresources/io/
+/test/testresources/practicalExamples/SystemCreated/

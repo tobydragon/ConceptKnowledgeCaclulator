@@ -123,10 +123,10 @@ public class ExampleConceptGraphFactory {
 
 
      public static ConceptGraph willExampleConceptGraphTestOneStudent() {
-        CSVReader csvReader = new CSVReader("test/testresources/basicRealisticExampleGradeBook2.csv");
+        CSVReader csvReader = new CSVReader("test/testresources/ManuallyCreated/basicRealisticAssessment.csv");
         try {
-            ConceptGraphRecord graphRecord = ConceptGraphRecord.buildFromJson("test/testresources/basicRealisticExampleConceptGraphOneStudent.json");
-            List<LearningObjectLinkRecord> LOLRlist = LearningObjectLinkRecord.buildListFromJson("test/testresources/basicRealisticExampleLOLRecordOneStudent.json");
+            ConceptGraphRecord graphRecord = ConceptGraphRecord.buildFromJson("test/testresources/ManuallyCreated/basicRealisticConceptGraph.json");
+            List<LearningObjectLinkRecord> LOLRlist = LearningObjectLinkRecord.buildListFromJson("test/testresources/ManuallyCreated/basicRealisticResource.json");
 
             ConceptGraph graph = new ConceptGraph(graphRecord, LOLRlist, csvReader.getManualGradedResponses());
             graph.calcKnowledgeEstimates();
@@ -146,11 +146,11 @@ public class ExampleConceptGraphFactory {
         ObjectMapper graphMapper = new ObjectMapper();
 
         graphMapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
-        CSVReader csvReader = new CSVReader("test/testresources/simpleGraphTest.csv");
+        CSVReader csvReader = new CSVReader("test/testresources/ManuallyCreated/simpleAssessment.csv");
 
         try {
-            ConceptGraphRecord graphRecord = ConceptGraphRecord.buildFromJson("test/testresources/simpleGraphTestConceptNodes.json");
-            List<LearningObjectLinkRecord> LOLRlist = LearningObjectLinkRecord.buildListFromJson("test/testresources/simpleGraphTestLearningObjects.json");
+            ConceptGraphRecord graphRecord = ConceptGraphRecord.buildFromJson("test/testresources/ManuallyCreated/simpleConceptGraph.json");
+            List<LearningObjectLinkRecord> LOLRlist = LearningObjectLinkRecord.buildListFromJson("test/testresources/ManuallyCreated/simpleResource.json");
              ConceptGraph graph = new ConceptGraph(graphRecord, LOLRlist, csvReader.getManualGradedResponses());
 
             graph.calcKnowledgeEstimates();
@@ -169,7 +169,7 @@ public class ExampleConceptGraphFactory {
 
     public static ConceptGraph mediumTestGraphTest() {
         try {
-            return new ConceptGraph(ConceptGraphRecord.buildFromJson("test/testresources/mediumGraphTestConceptNodes.json"));
+            return new ConceptGraph(ConceptGraphRecord.buildFromJson("test/testresources/ManuallyCreated/mediumConceptGraph.json"));
         } catch (Exception e) {
             e.printStackTrace();
         }

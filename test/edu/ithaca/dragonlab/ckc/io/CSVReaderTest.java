@@ -14,7 +14,7 @@ import edu.ithaca.dragonlab.ckc.learningobject.ManualGradedResponse;
 public class CSVReaderTest {
     @Test
     public void createQuestionsTest(){
-        String file = "test/testresources/io/DataCSVExample.csv";
+        String file = "test/testresources/ManuallyCreated/complexRealisticAssessment.csv";
         CSVReader readfile = new CSVReader(file);
         List<LearningObjectResponse> manualGradedResponseList = readfile.getManualGradedResponses();
         List<LearningObject> manualGradedLearningObjectList = readfile.getManualGradedLearningObjects();
@@ -52,7 +52,7 @@ public class CSVReaderTest {
 
     @Test
     public void loListerTest(){
-        String file = "test/testresources/SmallDataCSVExample.csv";
+        String file = "test/testresources/ManuallyCreated/partialComplexRealitsticAssessment.csv";
         CSVReader readfile = new CSVReader(file);
 
         System.out.println(readfile.getManualGradedLearningObjects());
