@@ -4,7 +4,7 @@ import edu.ithaca.dragonlab.ckc.conceptgraph.ConceptGraph;
 import edu.ithaca.dragonlab.ckc.conceptgraph.ConceptNode;
 import edu.ithaca.dragonlab.ckc.learningobject.LearningObject;
 import edu.ithaca.dragonlab.ckc.learningobject.LearningObjectResponse;
-import sun.jvm.hotspot.utilities.Assert;
+//import sun.jvm.hotspot.utilities.Assert;
 
 import java.util.*;
 
