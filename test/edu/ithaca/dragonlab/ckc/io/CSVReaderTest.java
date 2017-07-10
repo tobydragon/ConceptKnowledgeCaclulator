@@ -50,12 +50,4 @@ public class CSVReaderTest {
         //Assert.assertEquals(manualGradedResponseList.get(0).getMaxPossibleScore(),manualGradedLearningObjectList.get(0).getResponses().get(0).getMaxPossibleScore(),0);
     }
 
-    @Test
-    public void loListerTest(){
-        String file = "test/testresources/ManuallyCreated/partialComplexRealitsticAssessment.csv";
-        CSVReader readfile = new CSVReader(file);
-
-        System.out.println(readfile.getManualGradedLearningObjects());
-
-    }
 }
