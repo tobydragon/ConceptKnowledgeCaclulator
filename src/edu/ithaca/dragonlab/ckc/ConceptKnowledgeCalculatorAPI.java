@@ -71,7 +71,13 @@ public interface ConceptKnowledgeCalculatorAPI {
 
     void removeLORFile(String assessmentFile) throws Exception;
 
-    public String csvToResource() throws Exception;
+
+    /**
+     * Uses csvfile(s) to write a JSON file and allows Structure with assessments
+     * @return String that tells the user where the JSON file is being written to
+     * @throws Exception
+     */
+    String csvToResource() throws Exception;
 
     /**
      * Calculates all suggestions for the individual graph, returns an object containing two ordered lists:

@@ -84,6 +84,7 @@ public class LearningObjectLinkRecord {
     }
 
 
+    //TODO: Create a text file of conceptIDs. One Concept per line
 /**
     public static Path lolrToTxt(LearningObjectLinkRecord learningObjectLinkRecord, String filename){
         List<String> conceptIds = learningObjectLinkRecord.getConceptIds();

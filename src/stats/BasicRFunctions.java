@@ -55,9 +55,6 @@ public class BasicRFunctions {
         RCode code = loMatrix.getrMatrix();
         stuIndex++;
         code.addInt("stuIndex", stuIndex);
-        //code.addRCode("flippedMatrix <- t(matrix)");
-        //code.addRCode("stuAvg <- mean(matrix[stuIndex, 1:14], na.rm=TRUE)");
-        //code.addRCode("stuAvg <- mean(newData)");
         code.addRCode("stuAvg <- mean(matrix[stuIndex, ])");
         rCaller.setRCode(code);
         rCaller.runAndReturnResult("stuAvg");
@@ -70,20 +67,15 @@ public class BasicRFunctions {
      * Must be called at the start of every function that uses RCaller methods in
      * order to properly run RCaller methods. The if statement checks whether the machine
      * running the function is Windows or Mac and sets up RCaller accordingly.
-     * @pre called at some point before RCode is set and returned
-     * @return an RCaller that works on whichever machine is running
+     * @return an RCaller that works on whichever machine is running to use RCaller methods
      */
 
     public static RCaller RCallerVariable(){
-        RCaller rCaller;
         if(Globals.isWindows() == false) {
             RCallerOptions options = RCallerOptions.create("/usr/local/Cellar/r/3.4.0_1/bin/Rscript", Globals.R_current, FailurePolicy.RETRY_5, Long.MAX_VALUE, 100, RProcessStartUpOptions.create());
-            rCaller = RCaller.create(options);
+            return RCaller.create(options);
         }else {
-            rCaller  = RCaller.create();
+            return RCaller.create();
         }
-        return rCaller;
     }
-
-
 }

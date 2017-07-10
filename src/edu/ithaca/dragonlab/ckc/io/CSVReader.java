@@ -17,7 +17,7 @@ import static edu.ithaca.dragonlab.ckc.io.CSVReader.loLister;
 
 
 public class CSVReader {
-    Logger logger = LogManager.getLogger(this.getClass());
+    static Logger logger = LogManager.getLogger(CSVReader.class);
 
     String filename;
     BufferedReader csvBuffer = null;
@@ -53,10 +53,9 @@ public class CSVReader {
                 if(firstIteration){
                     firstIteration = false;
                     this.learningObjectList = loLister(singleList);
-
                 } else {
                     try {
-                        lorLister(singleList, i, logger);
+                        lorLister(singleList, i);
                         //goes through and adds all the questions to their proper learning object, as well as adds them to
                         //the general list of manual graded responses
 
@@ -146,7 +145,14 @@ public class CSVReader {
         return fullLoList;
     }
 
-    public void lorLister(ArrayList<String> singleList, int i, Logger logger)throws NullPointerException{
+
+    /**
+     *
+     * @param singleList a list with each line in the csv file holding LORs
+     * @param i used to keep track of which index in the list of LORs the function is currently on
+     * @throws NullPointerException if the ManualGradedResponse is null
+     */
+    public void lorLister(ArrayList<String> singleList, int i)throws NullPointerException{
         String stdID = singleList.get(0);
         if (learningObjectList.size() + 2 < singleList.size()) {
             logger.warn("More data than learning objects on line for id:" + stdID);
@@ -165,18 +171,7 @@ public class CSVReader {
                 }else{
                     throw new NullPointerException();
                 }
-            /**
-            }else{
-                ManualGradedResponse response = new ManualGradedResponse(qid, 1, -1, stdID);
-                if(response != null) {
-                    currentLearningObject.addResponse(response);
-                    this.manualGradedResponseList.add(response);
-                }else{
-                    throw new NullPointerException();
-                }
-             */
             }
-
             i++;
         }
     }

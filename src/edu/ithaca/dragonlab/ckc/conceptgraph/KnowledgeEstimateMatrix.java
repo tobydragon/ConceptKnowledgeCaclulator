@@ -32,17 +32,18 @@ public class KnowledgeEstimateMatrix {
         this.objList = lo;
         this.userIdList = new ArrayList<String>();
         this.studentKnowledgeEstimates = createMatrix(lo);
-        this.rMatrix = createRMatrix();
+        this.rMatrix = createRMatrix(studentKnowledgeEstimates);
     }
 
 
     /**
+     * Helper function for constructor
      * Creates a 2D array from a list of LearningObjects and their responses held within the objects.
      * The columns are sorted by LearningObjects. The rows are sorted by the userId held within the responses.
      * A userIdList is also created to track the userIds to the correct row.
      * @param learningObjects collection of learningObjects
      * @return a 2D Array of learningObjectResponses based on the list of learningObjects
-     * @post a list of users created that holds the index of the row each user should be placed in
+     * @post userListId is changed to add each new user found within the LORs
      */
 
     public double[][] createMatrix(Collection<LearningObject> learningObjects){
@@ -109,7 +110,9 @@ public class KnowledgeEstimateMatrix {
      * @pre called from constructor
      * @return RCode holding a R-readable version of the studentKnowledgeEstimates matrix
      */
-    public RCode createRMatrix(){
+
+    //TODO: look into putting into constructor
+    public RCode createRMatrix(double[][] studentKnowledgeEstimates){
 
         RCode rMatrix = JavaToRConversion.JavaToR(studentKnowledgeEstimates);
         return rMatrix;

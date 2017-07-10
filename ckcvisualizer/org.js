@@ -128,6 +128,7 @@ function bucketColorList(dataList){
             var scorePer = calcScorePerc(max, min, dataList[i][2]);
 
             //assigns new values to each color channel based on how the score is compared to the max and min.
+
             if(scorePer >= 85){
                 //Green
                 var currNodeColor = new NodeColor(0, 150, 0);
@@ -153,10 +154,10 @@ function bucketColorList(dataList){
             if(scorePer >= 85){
                 //Green
                 var currNodeColor = new NodeColor(0, 150, 0);
-            }else if(scorePer >= 75) {
+            }else if(scorePer >= 73) {
                 //Yellow
                 var currNodeColor = new NodeColor(220, 220, 0);
-            }else if(scorePer >= 65){
+            }else if(scorePer >= 60){
                 //Orange
                 var currNodeColor = new NodeColor(230, 110, 0);
             }else{
@@ -246,6 +247,7 @@ function drawOrgChart(dataInput){
       function drawChart() {
           
         //create the list of colors that corresponde to each node
+        //The line below calls whatever function will be used to decide the coloring of nodes
         var colorList = bucketColorList(dataInput);
           
         //create a data table
