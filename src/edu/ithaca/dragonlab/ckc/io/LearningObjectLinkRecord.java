@@ -61,10 +61,17 @@ public class LearningObjectLinkRecord {
         return LORLList;
     }
 
+
+    /**
+     * takes a collection of LearningObjects and uses a max possible knowledge estimate to create a list of LOLRs
+     * @param learningObjects
+     * @param maxPossibleKnowledgeEstimate
+     * @return a list of LOLRs
+     */
     public static List<LearningObjectLinkRecord> createLearningObjectLinkRecords(Collection<LearningObject> learningObjects, double maxPossibleKnowledgeEstimate){
         List<LearningObjectLinkRecord> lolrList = new ArrayList<LearningObjectLinkRecord>();
         for(LearningObject learningObject: learningObjects){
-            lolrList.add( new LearningObjectLinkRecord(learningObject.toString(), maxPossibleKnowledgeEstimate));
+            lolrList.add( new LearningObjectLinkRecord(learningObject.getId(), maxPossibleKnowledgeEstimate));
         }
         return lolrList;
     }
@@ -72,8 +79,6 @@ public class LearningObjectLinkRecord {
     public static void lolrToJSON(List<LearningObjectLinkRecord> lolrList, String filename)throws IOException{
         ObjectMapper mapper = new ObjectMapper();
         mapper.enable(SerializationFeature.INDENT_OUTPUT);
-        CohortConceptGraphsRecord graph = new CohortConceptGraphsRecord();
-        //List<ConceptGraphRecord> list = graph.getGraphRecords();
         mapper.writeValue(new File(filename), lolrList);
 
     }

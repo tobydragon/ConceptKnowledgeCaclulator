@@ -53,61 +53,13 @@ public class CSVReader {
                 if(firstIteration){
                     firstIteration = false;
                     this.learningObjectList = loLister(singleList);
-                    /**
-                    while(i<singleList.size()){
-                        String question = singleList.get(i);
-                        //used to find the max score of a question (won't be affected if there are other brackets in the question title
-                        int begin = question.lastIndexOf('[');
-                        int end = question.lastIndexOf(']');
 
-                        //TODO: temp check to see what problem is... not a proper solution to bug #76
-                        if (begin >= 0 && end >= 0) {
-                            String maxScoreStr = question.substring(begin + 1, end);
-                            double maxScore = Double.parseDouble(maxScoreStr);
-                            question = question.substring(0, begin - 1);
-                            LearningObject learningObject = new LearningObject(question);
-                            learningObject.setMaxPossibleKnowledgeEstimate(maxScore);
-                            this.learningObjectList.add(learningObject);
-                        }
-                        else {
-                            logger.error("No max score found for string:"+question+"\t defaulting to 1, which is probably wrong");
-                            LearningObject learningObject = new LearningObject(question);
-                            learningObject.setMaxPossibleKnowledgeEstimate(1);
-                            this.learningObjectList.add(learningObject);
-                        }
-                        i++;
-                    }
-                     */
                 } else {
                     try {
                         lorLister(singleList, i, logger);
                         //goes through and adds all the questions to their proper learning object, as well as adds them to
                         //the general list of manual graded responses
-                        /*
-                        String stdID = singleList.get(0);
-                        if (learningObjectList.size() + 2 < singleList.size()) {
-                            logger.warn("More data than learning objects on line for id:" + stdID);
-                        } else if (learningObjectList.size() + 2 > singleList.size()) {
-                            logger.warn("More learning objects than data on line for id:" + stdID);
-                        }
-                        //need to make sure we don't go out of bounds on either list
-                        while (i < singleList.size() && i < learningObjectList.size() + 2) {
-                            LearningObject currentLearningObject = this.learningObjectList.get(i - 2);
-                            String qid = currentLearningObject.getId();
-                            if (!("".equals(singleList.get(i)))) {
-                                ManualGradedResponse response = new ManualGradedResponse(qid, currentLearningObject.getMaxPossibleKnowledgeEstimate(), Double.parseDouble(singleList.get(i)), stdID);
-                                if(response != null) {
-                                    currentLearningObject.addResponse(response);
-                                    this.manualGradedResponseList.add(response);
-                                }else{
-                                    throw new NullPointerException();
-                                }
-                            }
 
-                            i++;
-                        }
-
-*/
                     }catch (NullPointerException e) {
                         System.out.println("No Responses added to LearningObject");
                     }
@@ -135,6 +87,12 @@ public class CSVReader {
         return lineList;
     }
 
+
+    /**
+     * returns a list of LearningObjects from a string created from a csv file
+     * @param singleList one line of text from a csv file
+     * @return LearningObject list
+     */
     public static List<LearningObject> loLister(ArrayList<String> singleList) {
         int i = 2;
         List<LearningObject> loList = new ArrayList<LearningObject>();
@@ -165,6 +123,12 @@ public class CSVReader {
         return loList;
     }
 
+
+    /**
+     * takes a list of csv files and creates a single list of LearningObjects from all files
+     * @param csvfiles
+     * @return a list of all LearningObjects across all files
+     */
     public static List<LearningObject> fullLoLister(List<String> csvfiles){
         List<LearningObject> fullLoList = new ArrayList<LearningObject>();
 

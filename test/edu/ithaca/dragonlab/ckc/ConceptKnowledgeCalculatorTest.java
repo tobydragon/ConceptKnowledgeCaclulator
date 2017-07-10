@@ -715,7 +715,10 @@ public class ConceptKnowledgeCalculatorTest {
             List<LearningObjectLinkRecord> recordsFromFile = LearningObjectLinkRecord.buildListFromJson(testFilepath);
             Assert.assertNotNull(recordsFromFile);
             //TODO:test that these LOLRecords are good compared to the input csv file, they just won't have any concepts in their lists
-            //Assert.assertEquals("Intro CS", concepts.get(0));
+            LearningObjectLinkRecord currRec = recordsFromFile.get(0);
+            Assert.assertEquals("Q1", currRec.getLearningObject());
+            LearningObjectLinkRecord nextRec = recordsFromFile.get(13);
+            Assert.assertEquals("Q14", nextRec.getLearningObject());
 
         }catch (Exception e){
             e.printStackTrace();

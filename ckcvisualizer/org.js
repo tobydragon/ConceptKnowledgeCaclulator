@@ -131,10 +131,10 @@ function bucketColorList(dataList){
             if(scorePer >= 85){
                 //Green
                 var currNodeColor = new NodeColor(0, 150, 0);
-            }else if(scorePer >= 75) {
+            }else if(scorePer >= 73) {
                 //Yellow
                 var currNodeColor = new NodeColor(220, 220, 0);
-            }else if(scorePer >= 65){
+            }else if(scorePer >= 60){
                 //Orange
                 var currNodeColor = new NodeColor(230, 110, 0);
             }else{

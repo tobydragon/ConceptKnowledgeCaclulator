@@ -106,7 +106,11 @@ public class LearningObjectLinkRecordTest {
             resultString.add(lolr.getLearningObject());
         }
 
-        Assert.assertEquals(list2.toString(), resultString.toString());
+        List<String> list2string = new ArrayList<String>();
+        for(LearningObject lo: list2){
+            list2string.add(lo.getId());
+        }
+        Assert.assertEquals(list2string.toString(), resultString.toString());
     }
 
 
