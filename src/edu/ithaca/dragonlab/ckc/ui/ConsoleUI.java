@@ -106,6 +106,7 @@ public class ConsoleUI {
 
             } else if(mode == ConceptKnowledgeCalculator.Mode.STRUCTUREGRAPHWITHASSESSMENT){
 
+                System.out.println("What do you want to do? \n 1 - replace graph \n 2 - add LOR file  \n 3 - remove LOR file \n 4 - generate LO file  \n 5 - add LO file (switch to cohort mode) \n 6 - view graph ");
                 Integer num = scanner.nextInt();
 
                 while (num < 1 || num > 6) {
