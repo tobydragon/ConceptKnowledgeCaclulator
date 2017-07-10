@@ -204,7 +204,6 @@ public class LearningObjectSuggesterTest {
             Assert.assertEquals(suggestedList.get(i).getReasoning(), suggestListTest.get(i).getReasoning());
 
         }
-
     }
 
     @Test
