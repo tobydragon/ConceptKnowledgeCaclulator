@@ -5,10 +5,12 @@ import edu.ithaca.dragonlab.ckc.learningobject.LearningObject;
 import edu.ithaca.dragonlab.ckc.learningobject.LearningObjectResponse;
 import stats.JavaToRConversion;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 import java.util.Map;
+
 
 /**
  * Created by bleblanc2 on 6/13/17.
@@ -30,17 +32,20 @@ public class KnowledgeEstimateMatrix {
         this.objList = lo;
         this.userIdList = new ArrayList<String>();
         this.studentKnowledgeEstimates = createMatrix(lo);
-        this.rMatrix = createRMatrix();
-
+        this.rMatrix = createRMatrix(studentKnowledgeEstimates);
     }
 
 
     /**
-     *
+     * Helper function for constructor
+     * Creates a 2D array from a list of LearningObjects and their responses held within the objects.
+     * The columns are sorted by LearningObjects. The rows are sorted by the userId held within the responses.
+     * A userIdList is also created to track the userIds to the correct row.
      * @param learningObjects collection of learningObjects
      * @return a 2D Array of learningObjectResponses based on the list of learningObjects
-     * @post a list of users created that holds the index of the row each user should be placed in
+     * @post userListId is changed to add each new user found within the LORs
      */
+
     public double[][] createMatrix(Collection<LearningObject> learningObjects){
         //number of rows and columns needed check
         int columns = learningObjects.size();
@@ -101,15 +106,20 @@ public class KnowledgeEstimateMatrix {
 
 
     /**
+     * Calls a function that uses the 2D Array to make base RCode for R functions
      * @pre called from constructor
      * @return RCode holding a R-readable version of the studentKnowledgeEstimates matrix
      */
-    public RCode createRMatrix(){
+
+    //TODO: look into putting into constructor
+    public RCode createRMatrix(double[][] studentKnowledgeEstimates){
+
         RCode rMatrix = JavaToRConversion.JavaToR(studentKnowledgeEstimates);
         return rMatrix;
     }
 
     /**
+     * Uses a learningObject to find which column in the array to search
      * @param lo learningObject
      * @return the index of the learningObject
      */

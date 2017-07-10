@@ -73,6 +73,13 @@ public interface ConceptKnowledgeCalculatorAPI {
 
 
     /**
+     * Uses csvfile(s) to write a JSON file and allows Structure with assessments
+     * @return String that tells the user where the JSON file is being written to
+     * @throws Exception
+     */
+    String csvToResource() throws Exception;
+
+    /**
      * Calculates all suggestions for the individual graph, returns an object containing two ordered lists:
      * an ordered list of new resources to try
      * an ordered list of resources that have had unsuccessful assessments in the past
@@ -97,10 +104,21 @@ public interface ConceptKnowledgeCalculatorAPI {
      * @return average knowledgeEstimates for given LearningObject
      */
 
+
     double getLearningObjectAvg(String learningObject) throws Exception;
 
+    /**
+     * Collects a list of students from the current graph.
+     * @pre a user selects to view a list of all users within the graph
+     * @return list of userIds
+     */
     List<String> getUserIdList();
 
+    /**
+     * Calculates a student's average knowledgeEstimates across all LearningObjects
+     * @param user
+     * @return the average of knowledgeEstimates
+     */
     double getStudentAvg(String user);
 
 

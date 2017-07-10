@@ -24,6 +24,7 @@ public class CohortConceptGraphsRecord {
         mapper.writeValue(new File(filename), this);
     }
 
+
     public static CohortConceptGraphsRecord buildFromJson(String filename) throws IOException{
         ObjectMapper mapper = new ObjectMapper();
         mapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);

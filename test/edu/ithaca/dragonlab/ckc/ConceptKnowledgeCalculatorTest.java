@@ -3,6 +3,10 @@ package edu.ithaca.dragonlab.ckc;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import edu.ithaca.dragonlab.ckc.conceptgraph.CohortConceptGraphs;
 import edu.ithaca.dragonlab.ckc.conceptgraph.ConceptGraph;
+import edu.ithaca.dragonlab.ckc.io.CohortConceptGraphsRecord;
+import edu.ithaca.dragonlab.ckc.io.ConceptGraphRecord;
+import edu.ithaca.dragonlab.ckc.io.ConceptRecord;
+import edu.ithaca.dragonlab.ckc.io.LearningObjectLinkRecord;
 import edu.ithaca.dragonlab.ckc.learningobject.LearningObject;
 import edu.ithaca.dragonlab.ckc.learningobject.LearningObjectResponse;
 import edu.ithaca.dragonlab.ckc.suggester.LearningObjectSuggestion;
@@ -18,6 +22,7 @@ import java.util.List;
 import java.util.Map;
 
 import static edu.ithaca.dragonlab.ckc.util.DataUtil.OK_FLOAT_MARGIN;
+import static org.hamcrest.CoreMatchers.is;
 
 /**
  * Created by Mia Kimmich Mitchell on 6/9/2017.
@@ -700,4 +705,32 @@ public class ConceptKnowledgeCalculatorTest {
         }
         Assert.assertEquals(0.538, ckc.getStudentAvg("bspinache1"), OK_FLOAT_MARGIN);
     }
+
+    @Test
+    public void csvToResourceTest(){
+        try {
+            String testFilepath = "test/testresources/io/mediumGraphLearnObjectLinkRecordsCreationTest.json";
+
+            List<String> csvFiles = new ArrayList<>();
+            csvFiles.add("test/testresources/ManuallyCreated/mediumAssessment.csv");
+            ConceptKnowledgeCalculator.csvToResource(csvFiles, testFilepath);
+
+            List<LearningObjectLinkRecord> recordsFromFile = LearningObjectLinkRecord.buildListFromJson(testFilepath);
+            Assert.assertNotNull(recordsFromFile);
+            //TODO:test that these LOLRecords are good compared to the input csv file, they just won't have any concepts in their lists
+            LearningObjectLinkRecord currRec = recordsFromFile.get(0);
+            Assert.assertEquals("Q1", currRec.getLearningObject());
+            LearningObjectLinkRecord nextRec = recordsFromFile.get(13);
+            Assert.assertEquals("Q14", nextRec.getLearningObject());
+
+        }catch (Exception e){
+            e.printStackTrace();
+            Assert.fail("File(s) not found");
+
+        }
+
+
+    }
+
+
 }

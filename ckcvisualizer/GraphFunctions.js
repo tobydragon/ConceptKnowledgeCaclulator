@@ -4,6 +4,7 @@ function RootNode(idIn, knowledgeEstimateIn, knowledgeDistFromAvgIn){
     this.id = idIn;
     this.knowledgeEstimate = knowledgeEstimateIn;
     this.knowledgeDistFromAvg = knowledgeDistFromAvgIn;
+
 }
 
 //takes the name of the student whose org chart should be drawn

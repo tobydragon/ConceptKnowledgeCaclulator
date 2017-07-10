@@ -63,6 +63,8 @@ public class ConceptKnowledgeCalculator implements ConceptKnowledgeCalculatorAPI
         clearAndCreateCohortData(new ArrayList<>(), new ArrayList<>(), new ArrayList<>());
     }
 
+
+
     @Override
     public void clearAndCreateStructureData(List<String> structureFilename) throws IOException{
         structureGraph = null;
@@ -349,6 +351,22 @@ public class ConceptKnowledgeCalculator implements ConceptKnowledgeCalculatorAPI
         }
     }
 
+    public String csvToResource() throws Exception {
+        if(currentMode==Mode.STRUCTUREGRAPH) {
+            return csvToResource(assessmentFiles, OUTPUT_PATH + "resourcesWithoutConceptConnections.json");
+        }
+        else {
+            throw new Exception("Wrong Mode");
+        }
+    }
+
+    public static String csvToResource(List<String> assessmentFiles, String destinationFilepath) throws Exception{
+            List<LearningObject> fullLoList = new ArrayList<LearningObject>();
+            fullLoList = CSVReader.fullLoLister(assessmentFiles);
+            List<LearningObjectLinkRecord> lolrList = LearningObjectLinkRecord.createLearningObjectLinkRecords(fullLoList, 10);
+            LearningObjectLinkRecord.lolrToJSON(lolrList, destinationFilepath);
+            return "Your file has been written to :"+ destinationFilepath;
+    }
 
     public List<String> getUserIdList(){
         Map<String, ConceptGraph> userMap = cohortConceptGraphs.getUserToGraph();

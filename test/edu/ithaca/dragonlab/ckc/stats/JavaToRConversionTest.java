@@ -20,10 +20,14 @@ import java.util.List;
 public class JavaToRConversionTest {
 
     @Test
+
     public void matrixTransfer(){
+
+
+
         String file = "test/testresources/ManuallyCreated/partialComplexRealitsticAssessment.csv";
         CSVReader data = new CSVReader(file);
-        ArrayList<LearningObject> gotoMatrix = data.getManualGradedLearningObjects();
+        List<LearningObject> gotoMatrix = data.getManualGradedLearningObjects();
         KnowledgeEstimateMatrix newMatrix = new KnowledgeEstimateMatrix(gotoMatrix);
         double[][] struct = newMatrix.getStudentKnowledgeEstimates();
         List<LearningObject> objList = newMatrix.getObjList();
@@ -47,5 +51,6 @@ public class JavaToRConversionTest {
         Assert.assertEquals(0.88166, actual, 0.001);
 
     }
+
 
 }

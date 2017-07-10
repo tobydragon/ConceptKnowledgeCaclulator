@@ -1,5 +1,6 @@
 package edu.ithaca.dragonlab.ckc.io;
 import java.util.ArrayList;
+import java.util.List;
 
 import edu.ithaca.dragonlab.ckc.learningobject.LearningObject;
 import edu.ithaca.dragonlab.ckc.learningobject.LearningObjectResponse;
@@ -15,8 +16,9 @@ public class CSVReaderTest {
     public void createQuestionsTest(){
         String file = "test/testresources/ManuallyCreated/complexRealisticAssessment.csv";
         CSVReader readfile = new CSVReader(file);
-        ArrayList<LearningObjectResponse> manualGradedResponseList = readfile.getManualGradedResponses();
-        ArrayList<LearningObject> manualGradedLearningObjectList = readfile.getManualGradedLearningObjects();
+        List<LearningObjectResponse> manualGradedResponseList = readfile.getManualGradedResponses();
+        List<LearningObject> manualGradedLearningObjectList = readfile.getManualGradedLearningObjects();
+
 
         //Testing for first entry in the CSV
         Assert.assertEquals(25 * 9, manualGradedResponseList.size());
@@ -46,5 +48,14 @@ public class CSVReaderTest {
         //Can't access these but they are tested above
         //Assert.assertEquals(manualGradedResponseList.get(0).getNonNormalizedScore(),manualGradedLearningObjectList.get(0).getResponses().get(0).getNonNormalizedScore(),0);
         //Assert.assertEquals(manualGradedResponseList.get(0).getMaxPossibleScore(),manualGradedLearningObjectList.get(0).getResponses().get(0).getMaxPossibleScore(),0);
+    }
+
+    @Test
+    public void loListerTest(){
+        String file = "test/testresources/ManuallyCreated/partialComplexRealitsticAssessment.csv";
+        CSVReader readfile = new CSVReader(file);
+
+        System.out.println(readfile.getManualGradedLearningObjects());
+
     }
 }

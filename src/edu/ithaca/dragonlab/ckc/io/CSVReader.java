@@ -5,6 +5,7 @@ package edu.ithaca.dragonlab.ckc.io;
  */
 import java.io.*;
 import java.util.ArrayList;
+import java.util.List;
 
 import edu.ithaca.dragonlab.ckc.learningobject.LearningObject;
 import edu.ithaca.dragonlab.ckc.learningobject.LearningObjectResponse;
@@ -12,14 +13,16 @@ import edu.ithaca.dragonlab.ckc.learningobject.ManualGradedResponse;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import static edu.ithaca.dragonlab.ckc.io.CSVReader.loLister;
+
 
 public class CSVReader {
-    Logger logger = LogManager.getLogger(this.getClass());
+    static Logger logger = LogManager.getLogger(CSVReader.class);
 
     String filename;
     BufferedReader csvBuffer = null;
-    ArrayList<LearningObject> learningObjectList;
-    ArrayList<LearningObjectResponse> manualGradedResponseList;
+    List<LearningObject> learningObjectList;
+    List<LearningObjectResponse> manualGradedResponseList;
 
     /**
      * This function is passed a filename of a gradebook directly exported from Sakai's built in gradebook.
@@ -49,52 +52,16 @@ public class CSVReader {
                 int i = 2; //this is 2 because the first two columns are not assignments, so the first assingment is index 2
                 if(firstIteration){
                     firstIteration = false;
-                    while(i<singleList.size()){
-                        String question = singleList.get(i);
-                        //used to find the max score of a question (won't be affected if there are other brackets in the question title
-                        int begin = question.lastIndexOf('[');
-                        int end = question.lastIndexOf(']');
-
-                        //TODO: temp check to see what problem is... not a proper solution to bug #76
-                        if (begin >= 0 && end >= 0) {
-                            String maxScoreStr = question.substring(begin + 1, end);
-                            double maxScore = Double.parseDouble(maxScoreStr);
-                            question = question.substring(0, begin - 1);
-                            LearningObject learningObject = new LearningObject(question);
-                            learningObject.setMaxPossibleKnowledgeEstimate(maxScore);
-                            this.learningObjectList.add(learningObject);
-                        }
-                        else {
-                            logger.error("No max score found for string:"+question+"\t defaulting to 1, which is probably wrong");
-                            LearningObject learningObject = new LearningObject(question);
-                            learningObject.setMaxPossibleKnowledgeEstimate(1);
-                            this.learningObjectList.add(learningObject);
-                        }
-                        i++;
-                    }
+                    this.learningObjectList = loLister(singleList);
                 } else {
-                    //goes through and adds all the questions to their proper learning object, as well as adds them to
-                    //the general list of manual graded responses
-                    String stdID = singleList.get(0);
-                    if (learningObjectList.size()+2 < singleList.size()){
-                        logger.warn("More data than learning objects on line for id:" + stdID);
-                    }
-                    else if (learningObjectList.size()+2 > singleList.size()){
-                        logger.warn("More learning objects than data on line for id:" + stdID);
-                    }
-                    //need to make sure we don't go out of bounds on either list
-                    while(i< singleList.size() && i < learningObjectList.size()+2){
-                        LearningObject currentLearningObject = this.learningObjectList.get(i - 2);
-                        String qid = currentLearningObject.getId();
-                        if(!("".equals(singleList.get(i)))) {
-                            ManualGradedResponse response = new ManualGradedResponse(qid, currentLearningObject.getMaxPossibleKnowledgeEstimate(), Double.parseDouble(singleList.get(i)), stdID);
-                            currentLearningObject.addResponse(response);
-                            this.manualGradedResponseList.add(response);
-                        }
+                    try {
+                        lorLister(singleList, i);
+                        //goes through and adds all the questions to their proper learning object, as well as adds them to
+                        //the general list of manual graded responses
 
-                        i++;
+                    }catch (NullPointerException e) {
+                        System.out.println("No Responses added to LearningObject");
                     }
-
                 }
             }
         } catch (IOException e) {
@@ -103,13 +70,115 @@ public class CSVReader {
 
     }
 
-    public ArrayList<LearningObjectResponse> getManualGradedResponses(){
-        return this.manualGradedResponseList;
+    public static ArrayList<ArrayList<String>> staticLineToList(String filename){
+        ArrayList<ArrayList<String>> lineList = new ArrayList<ArrayList<String>>();
+        try {
+            String line;
+            BufferedReader csvBuffer = new BufferedReader(new FileReader(filename));
+            //Takes the file being read in and calls a function to convert each line into a list split at
+            //every comma, then pust all the lists returned into a list of lists lineList[line][item in line]
+            while ((line = csvBuffer.readLine()) != null) {
+                lineList.add(lineToList(line));
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return lineList;
     }
 
-    public ArrayList<LearningObject> getManualGradedLearningObjects(){
-        return this.learningObjectList;
+
+    /**
+     * returns a list of LearningObjects from a string created from a csv file
+     * @param singleList one line of text from a csv file
+     * @return LearningObject list
+     */
+    public static List<LearningObject> loLister(ArrayList<String> singleList) {
+        int i = 2;
+        List<LearningObject> loList = new ArrayList<LearningObject>();
+        while(i<singleList.size()){
+            String question = singleList.get(i);
+            //used to find the max score of a question (won't be affected if there are other brackets in the question title
+            int begin = question.lastIndexOf('[');
+            int end = question.lastIndexOf(']');
+
+
+            //TODO: temp check to see what problem is... not a proper solution to bug #76
+            if (begin >= 0 && end >= 0) {
+                String maxScoreStr = question.substring(begin + 1, end);
+                double maxScore = Double.parseDouble(maxScoreStr);
+                question = question.substring(0, begin - 1);
+                LearningObject learningObject = new LearningObject(question);
+                learningObject.setMaxPossibleKnowledgeEstimate(maxScore);
+                loList.add(learningObject);
+            }
+            else {
+                //logger.error("No max score found for string:"+question+"\t defaulting to 1, which is probably wrong");
+                LearningObject learningObject = new LearningObject(question);
+                learningObject.setMaxPossibleKnowledgeEstimate(1);
+                loList.add(learningObject);
+            }
+            i++;
+        }
+        return loList;
     }
+
+
+    /**
+     * takes a list of csv files and creates a single list of LearningObjects from all files
+     * @param csvfiles
+     * @return a list of all LearningObjects across all files
+     */
+    public static List<LearningObject> fullLoLister(List<String> csvfiles){
+        List<LearningObject> fullLoList = new ArrayList<LearningObject>();
+
+        //Each csvfile has their LOs searched
+        for(String file: csvfiles){
+            ArrayList<ArrayList<String>> lineList = CSVReader.staticLineToList(file);
+            List<LearningObject> loList = new ArrayList<LearningObject>();
+            loList = CSVReader.loLister(lineList.get(0));
+
+            //adding current csvfile's LOs to the full list of LOs
+            for(LearningObject learningObject: loList) {
+                fullLoList.add(learningObject);
+            }
+        }
+        return fullLoList;
+    }
+
+
+    /**
+     *
+     * @param singleList a list with each line in the csv file holding LORs
+     * @param i used to keep track of which index in the list of LORs the function is currently on
+     * @throws NullPointerException if the ManualGradedResponse is null
+     */
+    public void lorLister(ArrayList<String> singleList, int i)throws NullPointerException{
+        String stdID = singleList.get(0);
+        if (learningObjectList.size() + 2 < singleList.size()) {
+            logger.warn("More data than learning objects on line for id:" + stdID);
+        } else if (learningObjectList.size() + 2 > singleList.size()) {
+            logger.warn("More learning objects than data on line for id:" + stdID);
+        }
+        //need to make sure we don't go out of bounds on either list
+        while (i < singleList.size() && i < learningObjectList.size() + 2) {
+            LearningObject currentLearningObject = this.learningObjectList.get(i - 2);
+            String qid = currentLearningObject.getId();
+            if (!("".equals(singleList.get(i)))) {
+                ManualGradedResponse response = new ManualGradedResponse(qid, currentLearningObject.getMaxPossibleKnowledgeEstimate(), Double.parseDouble(singleList.get(i)), stdID);
+                if(response != null) {
+                    currentLearningObject.addResponse(response);
+                    this.manualGradedResponseList.add(response);
+                }else{
+                    throw new NullPointerException();
+                }
+            }
+            i++;
+        }
+    }
+
+    public List<LearningObjectResponse> getManualGradedResponses(){return this.manualGradedResponseList;}
+
+    public List<LearningObject> getManualGradedLearningObjects(){return this.learningObjectList;}
 
     private static ArrayList<String> lineToList(String line) {
         ArrayList<String> returnlist = new ArrayList<String>();
