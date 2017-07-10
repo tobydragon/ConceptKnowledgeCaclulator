@@ -4,7 +4,6 @@ import edu.ithaca.dragonlab.ckc.conceptgraph.ConceptGraph;
 import edu.ithaca.dragonlab.ckc.conceptgraph.ConceptNode;
 import edu.ithaca.dragonlab.ckc.learningobject.LearningObject;
 import edu.ithaca.dragonlab.ckc.learningobject.LearningObjectResponse;
-import sun.jvm.hotspot.utilities.Assert;
 
 import java.util.*;
 
@@ -55,7 +54,6 @@ public class LearningObjectSuggester {
             List<LearningObjectSuggestion> list = buildLearningObjectSuggestionList(map, graph.getLearningObjectMap(), concept.getID());
 
             sortSuggestions(list);
-
             for (int i = 0; i < list.size(); i++) {
                 //if it is incomplete
                 if (choice.equals(1)) {
@@ -122,6 +120,7 @@ public class LearningObjectSuggester {
             }
 
         }
+
         return myList;
     }
 }

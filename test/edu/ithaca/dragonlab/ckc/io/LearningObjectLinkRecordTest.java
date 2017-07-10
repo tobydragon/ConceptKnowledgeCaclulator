@@ -47,7 +47,7 @@ public class LearningObjectLinkRecordTest {
 
         ObjectMapper mapper = new ObjectMapper();
         try {
-            mapper.writeValue(new File("test/testresources/recordToJson.json"), loObject);
+            mapper.writeValue(new File("test/testresources/io/recordToJson.json"), loObject);
         }catch (Exception e){
             e.printStackTrace();
         }
@@ -56,7 +56,7 @@ public class LearningObjectLinkRecordTest {
         mapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
 
         try {
-            LearningObjectLinkRecord  record = mapper.readValue(new File("test/testresources/recordToJson.json"), LearningObjectLinkRecord.class);
+            LearningObjectLinkRecord  record = mapper.readValue(new File("test/testresources/io/recordToJson.json"), LearningObjectLinkRecord.class);
 
             Assert.assertEquals("id 1", record.getLearningObject());
             Assert.assertEquals(2, record.getConceptIds().size());
@@ -74,15 +74,15 @@ public class LearningObjectLinkRecordTest {
             mapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
 
 
-            List<LearningObjectLinkRecord> list = LearningObjectLinkRecord.buildListFromJson("test/testresources/recordsSimple.json");
+            List<LearningObjectLinkRecord> list = LearningObjectLinkRecord.buildListFromJson("test/testresources/ManuallyCreated/simpleResource.json");
 
-            Assert.assertEquals(3, list.size());
-            Assert.assertEquals("A", list.get(0).getLearningObject());
-            Assert.assertEquals(3, list.get(0).getConceptIds().size());
-            Assert.assertEquals("Q5", list.get(2).getConceptIds().get(0));
-            Assert.assertEquals(2, list.get(0).getDataImportance(), DataUtil.OK_FLOAT_MARGIN);
+            Assert.assertEquals(6, list.size());
+            Assert.assertEquals("Q1", list.get(0).getLearningObject());
+            Assert.assertEquals(1, list.get(0).getConceptIds().size());
+            Assert.assertEquals("C", list.get(2).getConceptIds().get(0));
+            Assert.assertEquals(1, list.get(0).getDataImportance(), DataUtil.OK_FLOAT_MARGIN);
             Assert.assertEquals(1, list.get(1).getDataImportance(), DataUtil.OK_FLOAT_MARGIN);
-            Assert.assertEquals(.2, list.get(2).getDataImportance(), DataUtil.OK_FLOAT_MARGIN);
+            Assert.assertEquals(.3, list.get(2).getDataImportance(), DataUtil.OK_FLOAT_MARGIN);
         }
         catch(Exception e){
             e.printStackTrace();

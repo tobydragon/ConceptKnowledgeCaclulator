@@ -94,6 +94,7 @@ public class SuggestionResource {
             suggestionMap = LearningObjectSuggester.buildSuggestionMap(concepts,0,graph);
         }
 
+
         int max = 0;
         for (List<LearningObjectSuggestion> lists : suggestionMap.values()) {
             max += lists.size();
@@ -101,7 +102,6 @@ public class SuggestionResource {
         if (max != 0) {
 
             List<String> suggestionOrder = sortHighToLow(suggestionMap);
-
             int itr = 0;
             while (itr < max) {
                 for (int i = 0; i < suggestionOrder.size(); i++) {
