@@ -104,38 +104,39 @@ public class ConsoleUI {
                     viewgraph();
                 }
 
-            } else if(mode == ConceptKnowledgeCalculator.Mode.STRUCTUREGRAPHWITHASSESSMENT){
+            } else if(mode == ConceptKnowledgeCalculator.Mode.STRUCTUREGRAPHWITHASSESSMENT) {
 
-                System.out.println("What do you want to do? \n 1 - replace graph \n 2 - add LOR file  \n 3 - remove LOR file \n 4 - generate LO file  \n 5 - add LO file (switch to cohort mode) \n 6 - view graph ");
+                System.out.println("What do you want to do? \n 1 - replace graph \n 2 - add LOR file  \n 3 - remove LOR file \n 4 - generate LO file  \n 5 - add LO file (switch to cohort mode) \n 6 - view graph \n 7 - Create resource file");
                 Integer num = scanner.nextInt();
 
-                while (num < 1 || num > 6) {
+                while (num < 1 || num > 7) {
                     System.out.println("Out of bounds");
-                    System.out.println("What do you want to do? \n 1 - replace graph \n 2 - add LOR file  \n 3 - remove LOR file \n 4 - generate LO file  \n 5 - add LO file (switch to cohort mode) \n 6 - view graph ");
+                    System.out.println("What do you want to do? \n 1 - replace graph \n 2 - add LOR file  \n 3 - remove LOR file \n 4 - generate LO file  \n 5 - add LO file (switch to cohort mode) \n 6 - view graph \n 7 - Create resource file");
                     num = scanner.nextInt();
                 }
                 scanner.nextLine();
 
-                if (num==1){
+                if (num == 1) {
                     replaceGraph(scanner);
 
-                } else if(num==2){
+                } else if (num == 2) {
                     additionalLOR(scanner);
 
-                }else if(num==3){
+                } else if (num == 3) {
                     removeLORFile(scanner);
 
-                }else if(num ==4){
+                } else if (num == 4) {
 
-                }else if(num ==5) {
+                } else if (num == 5) {
                     replaceLOFile(scanner);
 
-                }else{
+                } else if (num == 6) {
                     viewgraph();
+                } else {
+                    createResourceFile();
                 }
 
             }else{
-
                 System.out.println("What do you want to do? \n 1 - calculate a list of concept nodes to work on \n 2 - calculate learning object suggestions based on a specific concept \n 3 - automatically calculate suggestions \n 4 - View graph \n 5 - Create new graph \n 6 - Replace graph file \n 7 - Add another assessment file \n 8 - Remove assessment file \n 9 - Replace resource file file \n 10 - Get Learning Object Average \n 11 Get Student Average \n 12 - View Structure Graph (switch to structure mode)");
                 Integer num = scanner.nextInt();
 
@@ -401,6 +402,16 @@ public class ConsoleUI {
             e.printStackTrace();
         }
 
+    }
+
+    public void createResourceFile(){
+        System.out.println("Creating resources file...");
+        try {
+            String confirmation = ckc.csvToResource();
+            System.out.println(confirmation);
+        }catch (Exception e){
+            System.out.println("Error occurred - could not create file");
+        }
     }
 
 

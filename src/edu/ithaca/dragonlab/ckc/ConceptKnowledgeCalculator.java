@@ -384,7 +384,7 @@ public class ConceptKnowledgeCalculator implements ConceptKnowledgeCalculatorAPI
     }
 
     public String csvToResource() throws Exception {
-        if(currentMode==Mode.STRUCTUREGRAPH) {
+        if(currentMode==Mode.STRUCTUREGRAPHWITHASSESSMENT) {
             return csvToResource(assessmentFiles, OUTPUT_PATH + "resourcesWithoutConceptConnections.json");
         }
         else {
