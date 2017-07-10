@@ -30,7 +30,7 @@
     "id": "Nested Conditionals"
 
   }, {
-    "id": "Expressions, Statements, and Operands"
+    "id": "Expressions and Statements"
 
   }, {
     "id": "Values and Data Types"
@@ -86,7 +86,7 @@
     "child": "While Loops"
   },{
     "parent": "Loops",
-    "child": "Expressions, Statements, and Operations"
+    "child": "Expressions and Statements"
   },{
     "parent": "Intro to CS",
     "child": "Counting"
@@ -94,7 +94,7 @@
     "parent": "Counting",
     "child": "Loops"
   }, {
-    "parent": "Expressions, Statements, and Operations",
+    "parent": "Expressions and Statements",
     "child": "Variables"
   }, {
     "parent": "Variables",

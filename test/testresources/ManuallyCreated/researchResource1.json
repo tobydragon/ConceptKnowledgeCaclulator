@@ -27,7 +27,7 @@
   "conceptIds":[
     "Parameters"
   ],
-  "dataImportance": "1"
+  "dataImportance": "0"
   },
   {"learningObject":"What data types can be passed as a parameter?",
     "conceptIds":[
@@ -61,7 +61,7 @@
     ],
     "dataImportance": "1"
   },
-  {"learningObject": "What’s are the differences and similarities between for loops and while loops",
+  {"learningObject": "What are the differences and similarities between for loops and while loops?",
     "conceptIds": [
     "For Loop",
       "While Loops"
@@ -74,7 +74,7 @@
       "While Loops",
       "Booleans"
     ],
-    "dataImportance": "1"
+    "dataImportance": "0"
   },
   {
     "learningObject": "What is the proper while loop diction?",
@@ -93,30 +93,30 @@
   {
     "learningObject": "What is a statement?",
     "conceptIds": [
-      "Expressions, Statements, and Operands"
+      "Expressions and Statements"
     ],
     "dataImportance": "1"
   },
   {
     "learningObject": "What are some of the statements we have already seen?",
     "conceptIds": [
-      "Expressions, Statements, and Operands"
+      "Expressions and Statements"
     ],
-    "dataImportance": "1"
+    "dataImportance": "0"
   },
   {
-    "learningObject": "What is 5%7? ",
+    "learningObject": "What is 5%7?",
     "conceptIds": [
-      "Expressions, Statements, and Operands"
+      "Expressions and Statements"
     ],
-    "dataImportance": "1"
+    "dataImportance": "0"
   },
   {
     "learningObject": "What is an assignment statement?",
     "conceptIds": [
       "Variables"
     ],
-    "dataImportance": "1"
+    "dataImportance": "0"
   },
   {
     "learningObject": "Write the following in camel case",
@@ -137,14 +137,14 @@
     "conceptIds": [
       "Dictionaries"
     ],
-    "dataImportance": "1"
+    "dataImportance": "0"
   },
   {
     "learningObject": "What a key-value pair?",
     "conceptIds": [
       "Dictionaries"
     ],
-    "dataImportance": "1"
+    "dataImportance": "0"
   },
   {
     "learningObject": "Are strings mutable?",

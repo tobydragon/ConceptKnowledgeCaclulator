@@ -210,20 +210,68 @@ public class LearningObjectSuggesterTest {
     @Test
     public void research1Test(){
 
-        CSVReader csvReader = new CSVReader("test/testresources/ManuallyCreated/basicRealisticAssessment.csv");
+        CSVReader csvReader = new CSVReader("test/testresources/ManuallyCreated/researchAssessment1.csv");
         try {
             ConceptGraphRecord graphRecord = ConceptGraphRecord.buildFromJson("test/testresources/ManuallyCreated/researchConceptGraph.json");
-            List<LearningObjectLinkRecord> LOLRlist = LearningObjectLinkRecord.buildListFromJson("test/testresources/ManuallyCreated/basicRealisticResource.json");
+            List<LearningObjectLinkRecord> LOLRlist = LearningObjectLinkRecord.buildListFromJson("test/testresources/ManuallyCreated/researchResource1.json");
 
             ConceptGraph graph = new ConceptGraph(graphRecord, LOLRlist, csvReader.getManualGradedResponses());
             graph.calcKnowledgeEstimates();
 
-//             graph;
+            List<ConceptNode> concepts = LearningObjectSuggester.conceptsToWorkOn(graph);
+            SuggestionResource res =  new SuggestionResource(graph, concepts);
+
+            List<LearningObjectSuggestion> incomTest = res.incompleteList;
+            List<LearningObjectSuggestion>  wrongTest = res.wrongList;
+
+            Assert.assertEquals(incomTest.get(0).getId(), "How are while loops and booleans related?");
+            Assert.assertEquals(incomTest.get(1).getId(), "What are the important rules for variable names?");
+            Assert.assertEquals(incomTest.get(2).getId(), "What are the things you need for a while loop?");
+            Assert.assertEquals(incomTest.get(3).getId(), "What is an assignment statement?");
+            Assert.assertEquals(incomTest.get(4).getId(), "What is 5%7?");
+            Assert.assertEquals(incomTest.get(5).getId(), "Write the following in camel case");
+            Assert.assertEquals(incomTest.get(6).getId(), "What are some of the statements we have already seen?");
+
+
+            Assert.assertEquals(wrongTest.get(0).getId(), "What are the differences and similarities between for loops and while loops?");
+            Assert.assertEquals(wrongTest.get(1).getId(), "What is a statement?");
+            Assert.assertEquals(wrongTest.get(2).getId(), "What is the proper while loop diction?");
+
 
         }catch (Exception e){
             e.printStackTrace();
         }
 
 
+
+        CSVReader csvReader2 = new CSVReader("test/testresources/ManuallyCreated/researchAssessment2.csv");
+        try {
+            ConceptGraphRecord graphRecord2 = ConceptGraphRecord.buildFromJson("test/testresources/ManuallyCreated/researchConceptGraph.json");
+            List<LearningObjectLinkRecord> LOLRlist2 = LearningObjectLinkRecord.buildListFromJson("test/testresources/ManuallyCreated/researchResource2.json");
+
+            ConceptGraph graph2 = new ConceptGraph(graphRecord2, LOLRlist2, csvReader2.getManualGradedResponses());
+            graph2.calcKnowledgeEstimates();
+
+            List<ConceptNode> concepts2 = LearningObjectSuggester.conceptsToWorkOn(graph2);
+            SuggestionResource res2 =  new SuggestionResource(graph2, concepts2);
+
+            List<LearningObjectSuggestion> incomTest2 = res2.incompleteList;
+            List<LearningObjectSuggestion>  wrongTest2 = res2.wrongList;
+
+            Assert.assertEquals(incomTest2.get(0).getId(), "When do you want to cause a side effect?");
+
+            Assert.assertEquals(wrongTest2.get(0).getId(), "What is printed then the following statements execute?");
+            Assert.assertEquals(wrongTest2.get(1).getId(), "How many parameters can you have?");
+            Assert.assertEquals(wrongTest2.get(2).getId(), "What is an assignment token?");
+            Assert.assertEquals(wrongTest2.get(3).getId(), "When do you want to allow side effects?");
+            Assert.assertEquals(wrongTest2.get(4).getId(), "What is a reference diagram?");
+
+
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+
     }
+
+
 }
