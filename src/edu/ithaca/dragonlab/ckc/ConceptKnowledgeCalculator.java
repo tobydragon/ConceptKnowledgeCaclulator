@@ -9,7 +9,6 @@ import edu.ithaca.dragonlab.ckc.learningobject.LearningObject;
 import edu.ithaca.dragonlab.ckc.learningobject.LearningObjectResponse;
 import edu.ithaca.dragonlab.ckc.suggester.LearningObjectSuggester;
 import edu.ithaca.dragonlab.ckc.suggester.SuggestionResource;
-import org.apache.commons.lang.ObjectUtils;
 import stats.BasicRFunctions;
 
 import java.io.IOException;
@@ -394,7 +393,7 @@ public class ConceptKnowledgeCalculator implements ConceptKnowledgeCalculatorAPI
 
     public static String csvToResource(List<String> assessmentFiles, String destinationFilepath) throws Exception{
             List<LearningObject> fullLoList = new ArrayList<LearningObject>();
-            fullLoList = CSVReader.fullLoLister(assessmentFiles);
+            fullLoList = CSVReader.learningObjectsFromCSVList(assessmentFiles);
             List<LearningObjectLinkRecord> lolrList = LearningObjectLinkRecord.createLearningObjectLinkRecords(fullLoList, 10);
             LearningObjectLinkRecord.lolrToJSON(lolrList, destinationFilepath);
             return "Your file has been written to :"+ destinationFilepath;

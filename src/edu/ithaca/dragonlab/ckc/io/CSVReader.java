@@ -13,8 +13,6 @@ import edu.ithaca.dragonlab.ckc.learningobject.ManualGradedResponse;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import static edu.ithaca.dragonlab.ckc.io.CSVReader.loLister;
-
 
 public class CSVReader {
     static Logger logger = LogManager.getLogger(CSVReader.class);
@@ -52,7 +50,7 @@ public class CSVReader {
                 int i = 2; //this is 2 because the first two columns are not assignments, so the first assingment is index 2
                 if(firstIteration){
                     firstIteration = false;
-                    this.learningObjectList = loLister(singleList);
+                    this.learningObjectList = learningObjectsFromList(singleList);
                 } else {
                     try {
                         lorLister(singleList, i);
@@ -92,7 +90,7 @@ public class CSVReader {
      * @param singleList one line of text from a csv file
      * @return LearningObject list
      */
-    public static List<LearningObject> loLister(ArrayList<String> singleList) {
+    private static List<LearningObject> learningObjectsFromList(List<String> singleList) {
         int i = 2;
         List<LearningObject> loList = new ArrayList<LearningObject>();
         while(i<singleList.size()){
@@ -128,14 +126,14 @@ public class CSVReader {
      * @param csvfiles
      * @return a list of all LearningObjects across all files
      */
-    public static List<LearningObject> fullLoLister(List<String> csvfiles){
+    public static List<LearningObject> learningObjectsFromCSVList(List<String> csvfiles){
         List<LearningObject> fullLoList = new ArrayList<LearningObject>();
 
         //Each csvfile has their LOs searched
         for(String file: csvfiles){
             ArrayList<ArrayList<String>> lineList = CSVReader.staticLineToList(file);
             List<LearningObject> loList = new ArrayList<LearningObject>();
-            loList = CSVReader.loLister(lineList.get(0));
+            loList = CSVReader.learningObjectsFromList(lineList.get(0));
 
             //adding current csvfile's LOs to the full list of LOs
             for(LearningObject learningObject: loList) {
