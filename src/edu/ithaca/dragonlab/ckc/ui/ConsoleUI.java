@@ -296,9 +296,17 @@ public class ConsoleUI {
                 option = scanner.nextInt();
             }
             if (option == 1) {
-                System.out.println(sugRes.toString(0));
+                if(sugRes.incompleteList.size()==0){
+                    System.out.println("There are no incomplete resources to work on");
+                }else {
+                    System.out.println(sugRes.toString(0));
+                }
             } else {
-                System.out.println(sugRes.toString(1));
+                if(sugRes.wrongList.size()==0){
+                    System.out.println("There are no wrong resources to work on");
+                }else{
+                    System.out.println(sugRes.toString(1));
+                }
             }
         }catch (Exception e){
             e.printStackTrace();
