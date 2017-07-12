@@ -58,7 +58,7 @@
     "For Loop",
     "While Loops"
   ],
-    "dataImportance": "1"
+    "dataImportance": "0"
   },
   {
     "learningObject": "Describe how while loops can depend on booleans",
@@ -87,7 +87,7 @@
     "conceptIds": [
       "Expressions and Statements"
     ],
-    "dataImportance": "1"
+    "dataImportance": "0"
   },
   {
     "learningObject": "What are some of the statements we have already seen?",
@@ -115,7 +115,7 @@
     "conceptIds": [
       "Expressions and Statements"
     ],
-    "dataImportance": "1"
+    "dataImportance": "0"
   },
   {
     "learningObject": "What is an assignment token?",
@@ -157,7 +157,7 @@
     "conceptIds": [
       "Dictionaries"
     ],
-    "dataImportance": "1"
+    "dataImportance": "0"
   },
   {
     "learningObject": "Is a dictionary ordered?",

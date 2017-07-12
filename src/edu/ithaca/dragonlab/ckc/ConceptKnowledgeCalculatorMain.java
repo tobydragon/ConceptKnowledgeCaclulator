@@ -12,13 +12,18 @@ public class ConceptKnowledgeCalculatorMain {
         if (startMode == ConceptKnowledgeCalculator.Mode.STRUCTUREGRAPH) {
             new ConsoleUI("resources/comp220/comp220Graph.json");
         } else if (startMode == ConceptKnowledgeCalculator.Mode.COHORTGRAPH) {
-            new ConsoleUI("test/testresources/ManuallyCreated/basicRealisticConceptGraph.json",
-                    "test/testresources/ManuallyCreated/basicRealisticResource.json",
-                    "test/testresources/ManuallyCreated/basicRealisticAssessment.csv");
+//            new ConsoleUI("test/testresources/ManuallyCreated/basicRealisticConceptGraph.json",
+//                    "test/testresources/ManuallyCreated/basicRealisticResource.json",
+//                    "test/testresources/ManuallyCreated/basicRealisticAssessment.csv");
 
-//            new ConsoleUI("resources/comp220/comp220Graph.json",
-//                    "resources/comp220/comp220Resources.json",
-//                    "localresources/comp220/comp220ExampleDataPortion.csv");
+
+//                        new ConsoleUI("test/testresources/ManuallyCreated/researchConceptGraph.json",
+//                    "test/testresources/ManuallyCreated/researchResource1.json",
+//                    "test/testresources/ManuallyCreated/researchAssessment1.csv");
+
+            new ConsoleUI("resources/comp220/comp220Graph.json",
+                    "resources/comp220/comp220Resources.json",
+                    "localresources/comp220/comp220ExampleDataPortion.csv");
         } else {
             throw new RuntimeException("Unrecognized starting mode, program cannot execute");
         }

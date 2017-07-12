@@ -31,6 +31,7 @@ public class LearningObjectSuggester {
                 graph.updateSuggestionList(node, suggestedConceptList);
             }
         }
+
         return suggestedConceptList;
     }
 
@@ -109,7 +110,7 @@ public class LearningObjectSuggester {
 
             }else{
 
-                if(estimate> 0 && estimate<= MAX){
+                if(estimate>= 0 && estimate<= MAX){
                     level = LearningObjectSuggestion.Level.WRONG;
                 }else{
                     level = LearningObjectSuggestion.Level.RIGHT;

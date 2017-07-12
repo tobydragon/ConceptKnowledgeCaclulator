@@ -9,6 +9,7 @@ import edu.ithaca.dragonlab.ckc.io.ConceptRecord;
 import edu.ithaca.dragonlab.ckc.io.LearningObjectLinkRecord;
 import edu.ithaca.dragonlab.ckc.learningobject.LearningObject;
 import edu.ithaca.dragonlab.ckc.learningobject.LearningObjectResponse;
+import edu.ithaca.dragonlab.ckc.suggester.LearningObjectSuggester;
 import edu.ithaca.dragonlab.ckc.suggester.LearningObjectSuggestion;
 import edu.ithaca.dragonlab.ckc.suggester.SuggestionResource;
 import org.apache.logging.log4j.LogManager;
@@ -731,6 +732,74 @@ public class ConceptKnowledgeCalculatorTest {
 
 
     }
+
+
+    @Test
+    public void research1test() throws Exception {
+
+        ConceptKnowledgeCalculatorAPI ckc = null;
+        try {
+            List<String> getTest = new ArrayList<>();
+
+            //COHORT MODE
+            ckc = new ConceptKnowledgeCalculator("test/testresources/ManuallyCreated/researchConceptGraph.json", "test/testresources/ManuallyCreated/researchResource1.json", "test/testresources/ManuallyCreated/researchAssessment1.csv");
+
+            ckc.getCohortGraphsUrl();
+
+            SuggestionResource sug = ckc.calcIndividualGraphSuggestions("s1");
+
+            List<LearningObjectSuggestion> wrongTest = sug.wrongList;
+            List<LearningObjectSuggestion> incomTest = sug.incompleteList;
+
+            Assert.assertEquals(incomTest.size(), 2);
+            Assert.assertEquals(incomTest.get(0).getId(), "How are while loops and booleans related?");
+            Assert.assertEquals(incomTest.get(1).getId(), "What are the things you need for a while loop?");
+
+            Assert.assertEquals(wrongTest.size(), 3);
+            Assert.assertEquals(wrongTest.get(0).getId(), "What are the differences and similarities between for loops and while loops?");
+            Assert.assertEquals(wrongTest.get(1).getId(), "Are strings mutable?");
+            Assert.assertEquals(wrongTest.get(2).getId(), "What is the proper while loop diction?");
+
+        } catch (IOException e) {
+            Assert.fail("Unable to load default files");
+        }
+
+                }
+
+
+
+    @Test
+    public void research2test() throws Exception {
+        ConceptKnowledgeCalculatorAPI ckc = null;
+
+        try {
+            ckc = new ConceptKnowledgeCalculator("test/testresources/ManuallyCreated/researchConceptGraph.json", "test/testresources/ManuallyCreated/researchResource2.json", "test/testresources/ManuallyCreated/researchAssessment2.csv");
+
+            SuggestionResource sug2 = ckc.calcIndividualGraphSuggestions("s2") ;
+
+            List<LearningObjectSuggestion> wrongTest2 = sug2.wrongList;
+            List<LearningObjectSuggestion> incomTest2 = sug2.incompleteList;
+
+
+            ckc.getCohortGraphsUrl();
+
+
+            Assert.assertEquals(incomTest2.size(), 1);
+            Assert.assertEquals(incomTest2.get(0).getId(), "What are values are accessed by?");
+
+            Assert.assertEquals(wrongTest2.size(), 3);
+            Assert.assertEquals(wrongTest2.get(0).getId(), "Write a function that will calculate if the substring 'the' is in any user input");
+            Assert.assertEquals(wrongTest2.get(1).getId(), "Write a function that will calculate if the substring 'the' is in any user input");
+            Assert.assertEquals(wrongTest2.get(2).getId(), "When do you want to allow side effects?");
+
+
+
+
+        }catch (IOException e){
+            Assert.fail("unable to load files");
+        }
+    }
+
 
 
 }
