@@ -138,12 +138,12 @@ public class ConsoleUI {
                 }
 
             }else{
-                System.out.println("What do you want to do? \n 1 - calculate a list of concept nodes to work on \n 2 - calculate learning object suggestions based on a specific concept \n 3 - automatically calculate suggestions \n 4 - View graph \n 5 - Create new graph \n 6 - Replace graph file \n 7 - Add another assessment file \n 8 - Remove assessment file \n 9 - Replace resource file \n 10 - Get Learning Object Average \n 11 Get Student Average \n 12 - View Structure Graph (switch to structure mode) \n 13 - quit");
+                System.out.println("What do you want to do? \n 1 - calculate a list of concept nodes to work on \n 2 - calculate resources suggestions based on a specific concept \n 3 - automatically calculate suggestions \n 4 - View graph \n 5 - Create new graph \n 6 - Replace graph file \n 7 - Add another assessment file \n 8 - Remove assessment file \n 9 - Replace resource file \n 10 - Get Learning Object Average \n 11 Get Student Average \n 12 - View Structure Graph (switch to structure mode) \n 13 - quit");
                 Integer num = scanner.nextInt();
 
                 while (num < 1 || num > 13) {
                     System.out.println("Out of bounds");
-                    System.out.println("What do you want to do? \n 1 - calculate a list of concept nodes to work on \n 2 - calculate learning object suggestions based on a specific concept \n 3 - automatically calculate suggestions \n 4 - View graph \n 5 - Create new graph \n 6 - Replace graph file \n 7 - Add another assessment file \n 8 - Remove assessment file \n 9 - Replace resource file \n 10 - Get Learning Object Average \n 11 Get Student Average \n 12 - View Structure Graph (switch to structure mode) \n 13 - quit");
+                    System.out.println("What do you want to do? \n 1 - calculate a list of concept nodes to work on \n 2 - calculate resource suggestions based on a specific concept \n 3 - automatically calculate suggestions \n 4 - View graph \n 5 - Create new graph \n 6 - Replace graph file \n 7 - Add another assessment file \n 8 - Remove assessment file \n 9 - Replace resource file \n 10 - Get Learning Object Average \n 11 Get Student Average \n 12 - View Structure Graph (switch to structure mode) \n 13 - quit");
                     num = scanner.nextInt();
                 }
                 scanner.nextLine();
@@ -229,7 +229,7 @@ public class ConsoleUI {
 
 
     public void createLearningObjectList(Scanner scanner){
-        System.out.println("calculate a list of concept nodes to work ");
+        System.out.println("calculate a list of concept nodes to work on ");
         System.out.println("User ID");
         String userID = scanner.nextLine();
 
@@ -242,13 +242,13 @@ public class ConsoleUI {
             }
             System.out.println(st);
         } catch (Exception e) {
-            e.printStackTrace();
+            System.out.println(e);
         }
     }
 
 
     public void specificLearningObjectSuggestion(Scanner scanner){
-        System.out.println("calculate learning object suggestions based on a specific concept");
+        System.out.println("calculate resource suggestions based on a specific concept");
         System.out.println("User ID");
         String userID = scanner.nextLine();
 
@@ -278,7 +278,7 @@ public class ConsoleUI {
                 }
             }
         } catch (Exception e) {
-            e.printStackTrace();
+            System.out.println(e);
         }
     }
 
@@ -309,7 +309,7 @@ public class ConsoleUI {
                 }
             }
         }catch (Exception e){
-            e.printStackTrace();
+            System.out.println(e);
         }
     }
 
@@ -344,6 +344,12 @@ public class ConsoleUI {
             struc.add(structure);
             res.add(resource);
             assess.add(assessment);
+
+            System.out.println("struct " + struc);
+            System.out.println("res " + res);
+            System.out.println("acess " + assess);
+
+
             ckc.clearAndCreateCohortData(struc, res, assess);
             System.out.println("Process Completed");
         } catch (Exception e) {

@@ -88,6 +88,7 @@ public class ConceptKnowledgeCalculator implements ConceptKnowledgeCalculatorAPI
         //create the graph structure to be copied for each user
         ConceptGraphRecord structureRecord = ConceptGraphRecord.buildFromJson(structureFiles.get(0));
 
+
         List<LearningObjectLinkRecord> linkRecord = new ArrayList<>();
         for (String rFiles : resourceFiles){
             List<LearningObjectLinkRecord> temp = LearningObjectLinkRecord.buildListFromJson(rFiles);
@@ -104,6 +105,9 @@ public class ConceptKnowledgeCalculator implements ConceptKnowledgeCalculatorAPI
             List<LearningObjectResponse> temp = csvReader.getManualGradedResponses();
             assessments.addAll(temp);
         }
+        System.out.println("GRAPH FOLDER " + structureFiles);
+        System.out.println("RESOURCE FILDER "+ resourceFiles );
+        System.out.println(" assessment folder " + assessmentFiles);
 
         //create the average and individual graphs
         cohortConceptGraphs = new CohortConceptGraphs(graph, assessments);
