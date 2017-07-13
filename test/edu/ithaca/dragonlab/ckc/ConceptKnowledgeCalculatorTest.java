@@ -69,9 +69,11 @@ public class ConceptKnowledgeCalculatorTest {
         try {
             concepts = ckc.calcIndividualConceptNodesSuggestions("bspinache1");
 
-            Assert.assertEquals(concepts.size(), 2);
+            Assert.assertEquals(concepts.size(), 3);
             Assert.assertEquals(concepts.get(0), "If Statement");
             Assert.assertEquals(concepts.get(1), "While Loop");
+            Assert.assertEquals(concepts.get(2), "Counting");
+
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -107,17 +109,20 @@ public class ConceptKnowledgeCalculatorTest {
             List<LearningObjectSuggestion> incomTest = res.incompleteList;
             List<LearningObjectSuggestion> wrongTest = res.wrongList;
 
-            Assert.assertEquals(incomTest.size(),5);
+            Assert.assertEquals(incomTest.size(),6);
             Assert.assertEquals(incomTest.get(0).getId(),"Q10");
             Assert.assertEquals(incomTest.get(1).getId(),"Q10");
-            Assert.assertEquals(incomTest.get(2).getId(),"Q3");
-            Assert.assertEquals(incomTest.get(3).getId(),"Q6");
+            Assert.assertEquals(incomTest.get(2).getId(),"Q13");
+            Assert.assertEquals(incomTest.get(3).getId(),"Q3");
             Assert.assertEquals(incomTest.get(4).getId(),"Q6");
-            Assert.assertEquals(wrongTest.size(),4);
+            Assert.assertEquals(incomTest.get(5).getId(),"Q6");
+            Assert.assertEquals(wrongTest.size(),6);
             Assert.assertEquals(wrongTest.get(0).getId(), "Q9");
             Assert.assertEquals(wrongTest.get(1).getId(), "Q9");
-            Assert.assertEquals(wrongTest.get(2).getId(), "Q1");
-            Assert.assertEquals(wrongTest.get(3).getId(), "Q2");
+            Assert.assertEquals(wrongTest.get(2).getId(), "Q15");
+            Assert.assertEquals(wrongTest.get(3).getId(), "Q1");
+            Assert.assertEquals(wrongTest.get(4).getId(), "Q14");
+            Assert.assertEquals(wrongTest.get(5).getId(), "Q2");
         } catch (Exception e) {
             Assert.fail("Unable to find user");
         }
@@ -270,7 +275,8 @@ public class ConceptKnowledgeCalculatorTest {
             }
 
 
-            Assert.assertEquals(originalMasterList.size(), 10);
+
+            Assert.assertEquals(originalMasterList.size(), 11);
             Assert.assertEquals(originalMasterList.get(0).getLearningObjectId(), "Q1");
             Assert.assertEquals(originalMasterList.get(1).getLearningObjectId(), "Q2");
             Assert.assertEquals(originalMasterList.get(2).getLearningObjectId(), "Q4");
@@ -280,7 +286,9 @@ public class ConceptKnowledgeCalculatorTest {
             Assert.assertEquals(originalMasterList.get(6).getLearningObjectId(), "Q9");
             Assert.assertEquals(originalMasterList.get(7).getLearningObjectId(), "Q11");
             Assert.assertEquals(originalMasterList.get(8).getLearningObjectId(), "Q12");
-            Assert.assertEquals(originalMasterList.get(9).getLearningObjectId(), "Q14");
+            Assert.assertEquals(originalMasterList.get(9).getLearningObjectId(), "Q15");
+            Assert.assertEquals(originalMasterList.get(10).getLearningObjectId(), "Q14");
+
 
         } catch (IOException e) {
             Assert.fail("Unable to load default files. Test unable to run");
@@ -304,7 +312,8 @@ public class ConceptKnowledgeCalculatorTest {
                 postMasterList1.addAll(postLOR);
             }
 
-            Assert.assertEquals(postMasterList1.size(), 18);
+
+            Assert.assertEquals(postMasterList1.size(), 19);
             Assert.assertEquals(postMasterList1.get(0).getLearningObjectId(), "Q1");
             Assert.assertEquals(postMasterList1.get(1).getLearningObjectId(), "Q2");
             Assert.assertEquals(postMasterList1.get(2).getLearningObjectId(), "Q3");
@@ -321,8 +330,9 @@ public class ConceptKnowledgeCalculatorTest {
             Assert.assertEquals(postMasterList1.get(13).getLearningObjectId(), "Q11");
             Assert.assertEquals(postMasterList1.get(14).getLearningObjectId(), "Q11");
             Assert.assertEquals(postMasterList1.get(15).getLearningObjectId(), "Q12");
-            Assert.assertEquals(postMasterList1.get(16).getLearningObjectId(), "Q14");
+            Assert.assertEquals(postMasterList1.get(16).getLearningObjectId(), "Q15");
             Assert.assertEquals(postMasterList1.get(17).getLearningObjectId(), "Q14");
+            Assert.assertEquals(postMasterList1.get(18).getLearningObjectId(), "Q14");
 
         } catch (Exception e) {
             e.printStackTrace();
@@ -344,8 +354,7 @@ public class ConceptKnowledgeCalculatorTest {
                 postMasterList2.addAll(postLOR2);
             }
 
-
-            Assert.assertEquals(postMasterList2.size(), 24);
+            Assert.assertEquals(postMasterList2.size(), 25);
             Assert.assertEquals(postMasterList2.get(0).getLearningObjectId(), "Q1");
             Assert.assertEquals(postMasterList2.get(1).getLearningObjectId(), "Q1");
             Assert.assertEquals(postMasterList2.get(2).getLearningObjectId(), "Q2");
@@ -360,7 +369,12 @@ public class ConceptKnowledgeCalculatorTest {
             Assert.assertEquals(postMasterList2.get(16).getLearningObjectId(), "Q8");
             Assert.assertEquals(postMasterList2.get(18).getLearningObjectId(), "Q9");
             Assert.assertEquals(postMasterList2.get(20).getLearningObjectId(), "Q11");
-            Assert.assertEquals(postMasterList2.get(22).getLearningObjectId(), "Q14");
+            Assert.assertEquals(postMasterList2.get(22).getLearningObjectId(), "Q15");
+            Assert.assertEquals(postMasterList2.get(23).getLearningObjectId(), "Q14");
+            Assert.assertEquals(postMasterList2.get(24).getLearningObjectId(), "Q14");
+
+
+
 
         } catch (Exception e) {
             e.printStackTrace();
@@ -446,7 +460,9 @@ public class ConceptKnowledgeCalculatorTest {
 
             originalMasterList.addAll(origLearningObList);
 
-            Assert.assertEquals(originalMasterList.size(), 14);
+
+
+            Assert.assertEquals(originalMasterList.size(), 15);
             Assert.assertEquals(originalMasterList.get(0).getId(), "Q1");
             Assert.assertEquals(originalMasterList.get(1).getId(), "Q2");
             Assert.assertEquals(originalMasterList.get(2).getId(), "Q3");
@@ -460,7 +476,8 @@ public class ConceptKnowledgeCalculatorTest {
             Assert.assertEquals(originalMasterList.get(10).getId(), "Q10");
             Assert.assertEquals(originalMasterList.get(11).getId(), "Q13");
             Assert.assertEquals(originalMasterList.get(12).getId(), "Q12");
-            Assert.assertEquals(originalMasterList.get(13).getId(), "Q14");
+            Assert.assertEquals(originalMasterList.get(13).getId(), "Q15");
+            Assert.assertEquals(originalMasterList.get(14).getId(), "Q14");
         } catch (IOException e) {
             Assert.fail("Unable to load default files. Test unable to run");
 
@@ -479,7 +496,7 @@ public class ConceptKnowledgeCalculatorTest {
             Collection<LearningObject> postLOList = postLOMap.values();
             postMasterList.addAll(postLOList);
 
-            Assert.assertEquals(postMasterList.size(), 19);
+            Assert.assertEquals(postMasterList.size(), 20);
             Assert.assertEquals(postMasterList.get(0).getId(), "Q1");
             Assert.assertEquals(postMasterList.get(1).getId(), "Q2");
             Assert.assertEquals(postMasterList.get(2).getId(), "Q3");
@@ -498,7 +515,9 @@ public class ConceptKnowledgeCalculatorTest {
             Assert.assertEquals(postMasterList.get(15).getId(), "Q10");
             Assert.assertEquals(postMasterList.get(16).getId(), "Q13");
             Assert.assertEquals(postMasterList.get(17).getId(), "Q12");
-            Assert.assertEquals(postMasterList.get(18).getId(), "Q14");
+            Assert.assertEquals(postMasterList.get(18).getId(), "Q15");
+            Assert.assertEquals(postMasterList.get(19).getId(), "Q14");
+
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -704,7 +723,7 @@ public class ConceptKnowledgeCalculatorTest {
         } catch (IOException e) {
             Assert.fail("Unable to load default files");
         }
-        Assert.assertEquals(0.538, ckc.getStudentAvg("bspinache1"), OK_FLOAT_MARGIN);
+        Assert.assertEquals(0.502, ckc.getStudentAvg("bspinache1"), OK_FLOAT_MARGIN);
     }
 
     @Test

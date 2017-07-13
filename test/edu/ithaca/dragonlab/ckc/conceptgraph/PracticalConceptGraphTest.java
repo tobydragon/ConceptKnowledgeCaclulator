@@ -71,15 +71,15 @@ public class PracticalConceptGraphTest {
 
             Assert.assertEquals("Intro CS", testGraph.findNodeById("Intro CS").getID());
             Assert.assertEquals(7, testGraph.findNodeById("Boolean").getLearningObjectMap().size());
-            Assert.assertEquals(14,testGraph.getLearningObjectMap().size());
+            Assert.assertEquals(15,testGraph.getLearningObjectMap().size());
 
 
             Assert.assertEquals(0.806, testGraph.findNodeById("Boolean").getKnowledgeEstimate(), DataUtil.OK_FLOAT_MARGIN);
             Assert.assertEquals(0.783090, testGraph.findNodeById("Boolean Expressions").getKnowledgeEstimate(), DataUtil.OK_FLOAT_MARGIN);
             Assert.assertEquals(0.746, testGraph.findNodeById("If Statement").getKnowledgeEstimate(), DataUtil.OK_FLOAT_MARGIN);
             Assert.assertEquals(0.722, testGraph.findNodeById("While Loop").getKnowledgeEstimate(), DataUtil.OK_FLOAT_MARGIN);
-            Assert.assertEquals(0.85, testGraph.findNodeById("Counting").getKnowledgeEstimate(), DataUtil.OK_FLOAT_MARGIN);
-            Assert.assertEquals(0.7666, testGraph.findNodeById("For Loop").getKnowledgeEstimate(), DataUtil.OK_FLOAT_MARGIN);
+            Assert.assertEquals(0.566, testGraph.findNodeById("Counting").getKnowledgeEstimate(), DataUtil.OK_FLOAT_MARGIN);
+            Assert.assertEquals(0.575, testGraph.findNodeById("For Loop").getKnowledgeEstimate(), DataUtil.OK_FLOAT_MARGIN);
 
 
         }catch (Exception e){
