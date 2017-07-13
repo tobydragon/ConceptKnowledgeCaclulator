@@ -199,9 +199,7 @@ public class ConsoleUI {
         String file = scanner.nextLine();
 
         try {
-            List<String> graphFile = new ArrayList<>();
-            graphFile.add(file);
-            ckc.clearAndCreateStructureData(graphFile);
+            ckc.setupStructureData(file);
             System.out.println("Process Completed");
 
         } catch (Exception e) {
@@ -338,24 +336,13 @@ public class ConsoleUI {
         String assessment = scanner.nextLine();
 
         try {
-            List<String> struc = new ArrayList<>();
-            List<String> res = new ArrayList<>();
-            List<String> assess = new ArrayList<>();
-            struc.add(structure);
-            res.add(resource);
-            assess.add(assessment);
-
-            System.out.println("struct " + struc);
-            System.out.println("res " + res);
-            System.out.println("acess " + assess);
-
-
-            ckc.clearAndCreateCohortData(struc, res, assess);
+            ckc.setupClearandCreateCohort(structure,resource,assessment);
             System.out.println("Process Completed");
         } catch (Exception e) {
-            e.printStackTrace();
             System.out.println("Can't find files");
         }
+
+
     }
 
 
@@ -368,8 +355,7 @@ public class ConsoleUI {
             ckc.replaceGraph(graph);
             System.out.println("Process Completed");
         } catch (Exception e) {
-            e.printStackTrace();
-            System.out.println("Can't find files");
+            System.out.println("Can't find file");
 
         }
     }
@@ -385,7 +371,6 @@ public class ConsoleUI {
             ckc.additionalLOR(LOR);
             System.out.println("Process Completed");
         } catch (Exception e) {
-            e.printStackTrace();
             System.out.println("Can't find file");
         }
     }
@@ -406,7 +391,7 @@ public class ConsoleUI {
                 }
             }
         } catch (Exception e) {
-            e.printStackTrace();
+            System.out.println("File can't be found");
         }
     }
 
@@ -423,7 +408,7 @@ public class ConsoleUI {
             System.out.println("Process Completed");
 
         } catch (Exception e) {
-            e.printStackTrace();
+            System.out.println("File can't be found");
         }
 
     }
@@ -447,7 +432,7 @@ public class ConsoleUI {
         try {
             System.out.println("The average is: " + ckc.getLearningObjectAvg(conceptNode));
         } catch (Exception e) {
-            e.printStackTrace();
+            System.out.println("Can't find " + conceptNode);
         }
     }
 
@@ -460,7 +445,7 @@ public class ConsoleUI {
             double result = ckc.getStudentAvg(user);
             System.out.println("The average is: " + result);
         }catch(NullPointerException e){
-            System.out.println("Error: User not found");
+            System.out.println("Cannot find " + user);
         }
     }
 

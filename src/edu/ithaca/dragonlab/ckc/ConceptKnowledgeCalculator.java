@@ -75,6 +75,20 @@ public class ConceptKnowledgeCalculator implements ConceptKnowledgeCalculatorAPI
     }
 
     @Override
+    public void setupStructureData(String struct) throws Exception {
+        ConceptGraphRecord conceptGraph = ConceptGraphRecord.buildFromJson(struct);
+        if(conceptGraph.getConcepts().size()>0){
+            structureFiles.clear();
+            structureFiles.add(struct);
+
+            clearAndCreateStructureData(structureFiles);
+        }else{
+            throw new Exception("Structure file invalid");
+        }
+
+    }
+
+    @Override
     public void clearAndCreateCohortData(List<String> structureFilename, List<String> resourceFilename, List<String> assessmentFilename) throws IOException {
         cohortConceptGraphs = null;
         structureGraph = null;
@@ -85,14 +99,20 @@ public class ConceptKnowledgeCalculator implements ConceptKnowledgeCalculatorAPI
             structureFiles.add(structureFilename.get(0));
         }
 
+
+        if(resourceFilename.size()!=0 && !resourceFiles.contains(resourceFilename.get(0))){
+            resourceFiles.add(resourceFilename.get(0));
+        }
         //create the graph structure to be copied for each user
         ConceptGraphRecord structureRecord = ConceptGraphRecord.buildFromJson(structureFiles.get(0));
-
-
         List<LearningObjectLinkRecord> linkRecord = new ArrayList<>();
         for (String rFiles : resourceFiles){
             List<LearningObjectLinkRecord> temp = LearningObjectLinkRecord.buildListFromJson(rFiles);
             linkRecord.addAll(temp);
+        }
+
+        if(assessmentFilename.size()!=0 && !assessmentFiles.contains(assessmentFilename.get(0))){
+            assessmentFiles.add(assessmentFilename.get(0));
         }
 
         ConceptGraph graph = new ConceptGraph(structureRecord, linkRecord);
@@ -105,9 +125,6 @@ public class ConceptKnowledgeCalculator implements ConceptKnowledgeCalculatorAPI
             List<LearningObjectResponse> temp = csvReader.getManualGradedResponses();
             assessments.addAll(temp);
         }
-        System.out.println("GRAPH FOLDER " + structureFiles);
-        System.out.println("RESOURCE FILDER "+ resourceFiles );
-        System.out.println(" assessment folder " + assessmentFiles);
 
         //create the average and individual graphs
         cohortConceptGraphs = new CohortConceptGraphs(graph, assessments);
@@ -123,6 +140,59 @@ public class ConceptKnowledgeCalculator implements ConceptKnowledgeCalculatorAPI
             cohortConceptGraphs=null;
         }else{
             throw new Exception("Wrong mode");
+        }
+    }
+
+    @Override
+    public boolean assessmentIsValid(String name){
+        CSVReader csvReader = new CSVReader(name);
+        if (csvReader.getManualGradedResponses().size()>0){
+            return true;
+        }else{
+            return false;
+        }
+
+    }
+
+    @Override
+    public void setupClearandCreateCohort(String struct, String res, String assess) throws Exception {
+        List<String> sList = new ArrayList<>();
+        List<String> rList = new ArrayList<>();
+        List<String> aList = new ArrayList<>();
+
+        boolean sbool;
+        boolean rbool;
+        boolean abool;
+
+        ConceptGraphRecord conceptGraph = ConceptGraphRecord.buildFromJson(struct);
+        if(conceptGraph.getConcepts().size()>0){
+            sbool=true;
+        }else{
+            throw new Exception("Structure file invalid");
+        }
+
+        List<LearningObjectLinkRecord> temp = LearningObjectLinkRecord.buildListFromJson(res);
+        if(temp.size()>0){
+            rbool=true;
+        }else{
+            throw new Exception("Resource file invalid");
+        }
+
+        if(assessmentIsValid(assess)){
+            abool=true;
+        }else{
+            throw new Exception("Assessment file invalid");
+        }
+
+        if(sbool && rbool && abool){
+            structureFiles.clear();
+            sList.add(struct);
+            resourceFiles.clear();
+            rList.add(res);
+            assessmentFiles.clear();
+            aList.add(assess);
+            clearAndCreateCohortData(sList, rList, aList);
+
         }
     }
 
@@ -213,17 +283,7 @@ public class ConceptKnowledgeCalculator implements ConceptKnowledgeCalculatorAPI
         }
     }
 
-    @Override
-    public boolean assessmentIsValid(String name){
-         CSVReader csvReader = new CSVReader(name);
 
-         if (csvReader.getManualGradedResponses().size()>0){
-             return true;
-         }else{
-             return false;
-         }
-
-    }
 
     @Override
     public void removeLORFile(String assessmentFile) throws Exception {
@@ -231,13 +291,19 @@ public class ConceptKnowledgeCalculator implements ConceptKnowledgeCalculatorAPI
             throw new Exception("You don't have any files");
 
         }else {
-            if (currentMode == Mode.COHORTGRAPH) {
-                assessmentFiles.remove(assessmentFile);
-                clearAndCreateCohortData(structureFiles, resourceFiles, assessmentFiles);
+            if(!assessmentFiles.contains(assessmentFile)){
+                throw new Exception("Can't find file");
 
-            }else if(currentMode == Mode.STRUCTUREGRAPHWITHASSESSMENT){
-                assessmentFiles.remove(assessmentFile);
+            }else {
 
+                if (currentMode == Mode.COHORTGRAPH) {
+                    assessmentFiles.remove(assessmentFile);
+                    clearAndCreateCohortData(structureFiles, resourceFiles, assessmentFiles);
+
+                } else if (currentMode == Mode.STRUCTUREGRAPHWITHASSESSMENT) {
+                    assessmentFiles.remove(assessmentFile);
+
+                }
             }
         }
     }
@@ -253,7 +319,7 @@ public class ConceptKnowledgeCalculator implements ConceptKnowledgeCalculatorAPI
                 resourceFiles.add(resourceFile);
                 clearAndCreateCohortData(structureFiles, resourceFiles, assessmentFiles);
             }catch (Exception e){
-                e.printStackTrace();
+                throw new Exception("Can't find file");
             }
         }else if(currentMode==Mode.STRUCTUREGRAPH){
             try {
@@ -264,7 +330,8 @@ public class ConceptKnowledgeCalculator implements ConceptKnowledgeCalculatorAPI
                 clearAndCreateStructureData(structureFiles);
                 currentMode = Mode.STRUCTUREGRAPHWITHRESOURCE;
             }catch (Exception e){
-                e.printStackTrace();
+                throw new Exception("Can't find file");
+
             }
 
         } else if(currentMode==Mode.STRUCTUREGRAPHWITHASSESSMENT){
@@ -276,7 +343,8 @@ public class ConceptKnowledgeCalculator implements ConceptKnowledgeCalculatorAPI
                 clearAndCreateCohortData(structureFiles, resourceFiles, assessmentFiles);
                 currentMode = Mode.COHORTGRAPH;
             }catch (Exception e){
-                e.printStackTrace();
+                throw new Exception("Can't find file");
+
             }
 
         }else{

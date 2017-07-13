@@ -39,7 +39,7 @@ public interface ConceptKnowledgeCalculatorAPI {
 
     void switchToStructure() throws Exception;
 
-
+    void setupStructureData(String struct) throws IOException, Exception;
 
     void replaceLOFile(String resourceFile) throws Exception;
 
@@ -130,6 +130,14 @@ public interface ConceptKnowledgeCalculatorAPI {
      */
     List<String> calcIndividualConceptNodesSuggestions(String userID) throws Exception;
 
+    /**
+     * when you want to remove all of the old data and set up new data
+     * @param struct
+     * @param res
+     * @param assess
+     * @throws IOException
+     */
+    void setupClearandCreateCohort(String struct, String res, String assess) throws Exception;
 
     ConceptKnowledgeCalculator.Mode getCurrentMode();
 
