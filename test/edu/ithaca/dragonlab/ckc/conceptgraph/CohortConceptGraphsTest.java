@@ -115,8 +115,8 @@ public class CohortConceptGraphsTest {
 
     @Test
     public void buildCohortConceptTreeRecordComplexTest() {
+        try{
         CSVReader csvReader = new CSVReader("test/testresources/ManuallyCreated/basicRealisticAssessment.csv");
-        try {
             ConceptGraph  structure = new ConceptGraph(ConceptGraphRecord.buildFromJson("test/testresources/ManuallyCreated/basicRealisticConceptGraph.json"),
                     LearningObjectLinkRecord.buildListFromJson("test/testresources/ManuallyCreated/basicRealisticResource.json" ));
             CohortConceptGraphs group = new CohortConceptGraphs(structure, csvReader.getManualGradedResponses());

@@ -97,20 +97,25 @@ public class LearningObjectLinkRecordTest {
 
     @Test
     public void createLearningObjectLinkRecordsTest(){
-        CSVReader test = new CSVReader("test/testresources/ManuallyCreated/complexRealisticAssessment.csv");
-        Collection<LearningObject> list = test.getManualGradedLearningObjects();
-        List<LearningObject> list2 = test.getManualGradedLearningObjects();
-        List<LearningObjectLinkRecord> lolrList = LearningObjectLinkRecord.createLearningObjectLinkRecords(list, 1);
-        List<String> resultString = new ArrayList<String>();
-        for(LearningObjectLinkRecord lolr: lolrList){
-            resultString.add(lolr.getLearningObject());
-        }
+        try {
+            CSVReader test = new CSVReader("test/testresources/ManuallyCreated/complexRealisticAssessment.csv");
+            Collection<LearningObject> list = test.getManualGradedLearningObjects();
+            List<LearningObject> list2 = test.getManualGradedLearningObjects();
+            List<LearningObjectLinkRecord> lolrList = LearningObjectLinkRecord.createLearningObjectLinkRecords(list, 1);
+            List<String> resultString = new ArrayList<String>();
+            for (LearningObjectLinkRecord lolr : lolrList) {
+                resultString.add(lolr.getLearningObject());
+            }
 
-        List<String> list2string = new ArrayList<String>();
-        for(LearningObject lo: list2){
-            list2string.add(lo.getId());
+            List<String> list2string = new ArrayList<String>();
+            for (LearningObject lo : list2) {
+                list2string.add(lo.getId());
+            }
+            Assert.assertEquals(list2string.toString(), resultString.toString());
+        }catch (IOException e){
+            e.printStackTrace();
+            Assert.fail();
         }
-        Assert.assertEquals(list2string.toString(), resultString.toString());
     }
 
 

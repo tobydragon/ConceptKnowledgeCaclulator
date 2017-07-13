@@ -208,9 +208,9 @@ public class LearningObjectSuggesterTest {
 
     @Test
     public void research1Test(){
-
+        try{
         CSVReader csvReader = new CSVReader("test/testresources/ManuallyCreated/researchAssessment1.csv");
-        try {
+
             ConceptGraphRecord graphRecord = ConceptGraphRecord.buildFromJson("test/testresources/ManuallyCreated/researchConceptGraph.json");
             List<LearningObjectLinkRecord> LOLRlist = LearningObjectLinkRecord.buildListFromJson("test/testresources/ManuallyCreated/researchResource1.json");
 
@@ -238,13 +238,13 @@ public class LearningObjectSuggesterTest {
 
 
         }catch (Exception e){
-            e.printStackTrace();
+            Assert.fail();
         }
 
 
-
+        try{
         CSVReader csvReader2 = new CSVReader("test/testresources/ManuallyCreated/researchAssessment2.csv");
-        try {
+
             ConceptGraphRecord graphRecord2 = ConceptGraphRecord.buildFromJson("test/testresources/ManuallyCreated/researchConceptGraph.json");
             List<LearningObjectLinkRecord> LOLRlist2 = LearningObjectLinkRecord.buildListFromJson("test/testresources/ManuallyCreated/researchResource2.json");
 
@@ -267,7 +267,7 @@ public class LearningObjectSuggesterTest {
 
 
         }catch (Exception e){
-            e.printStackTrace();
+            Assert.fail();
         }
 
     }

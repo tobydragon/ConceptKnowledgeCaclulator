@@ -13,7 +13,7 @@ import java.util.List;
  * Created by bleblanc2 on 6/14/17.
  */
 
-public class BasicRFunctions {
+public class RFunctions {
 
 
     /**
@@ -61,6 +61,40 @@ public class BasicRFunctions {
         double[] results = rCaller.getParser().getAsDoubleArray("stuAvg");
         double actual = results[0];
         return actual;
+    }
+
+
+
+    public static int findFactorCount(KnowledgeEstimateMatrix loMatrix){
+        RCaller rCaller = RCallerVariable();
+
+        RCode code = loMatrix.getrMatrix();
+        int numOfFactors = 0;
+        code.addInt("numOfFactors", numOfFactors);
+
+        code.addRCode("numeric_columns <- sapply(matrix, mode) == 'numeric'");
+        code.addRCode("matrix[numeric_columns] <-  round(matrix[numeric_columns], 1)");
+
+        code.addRCode("columnCount <- ncol(matrix)");
+        code.addRCode("if(columnCount %% 2 == 0){" +
+                "upperlimit <- (columnCount/2) - 1" +
+                "}else{" +
+                "upperlimit <- (columnCount/2) - 0.5" +
+                "}");
+
+        code.addRCode("vector = c()");
+        code.addRCode("for(i in 1:upperlimit){" +
+                "vector[i] <- factanal(matrix, i, method = 'mle')$PVAL" +
+                "}");
+        code.addRCode("for(i in 1:upperlimit){" +
+                "if(vector[i] < .05){" +
+                "numOfFactors <- i" +
+                "}" +
+                "}");
+        rCaller.setRCode(code);
+        rCaller.runAndReturnResult("numOfFactors");
+        int[] result = rCaller.getParser().getAsIntArray("numOfFactors");
+        return result[0];
     }
 
     /**

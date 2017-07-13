@@ -9,7 +9,7 @@ import edu.ithaca.dragonlab.ckc.learningobject.LearningObject;
 import edu.ithaca.dragonlab.ckc.learningobject.LearningObjectResponse;
 import edu.ithaca.dragonlab.ckc.suggester.LearningObjectSuggester;
 import edu.ithaca.dragonlab.ckc.suggester.SuggestionResource;
-import stats.BasicRFunctions;
+import stats.RFunctions;
 
 import java.io.IOException;
 import java.util.*;
@@ -210,14 +210,14 @@ public class ConceptKnowledgeCalculator implements ConceptKnowledgeCalculatorAPI
     }
 
     @Override
-    public boolean assessmentIsValid(String name){
-         CSVReader csvReader = new CSVReader(name);
+    public boolean assessmentIsValid(String name)throws IOException{
+            CSVReader csvReader = new CSVReader(name);
 
-         if (csvReader.getManualGradedResponses().size()>0){
-             return true;
-         }else{
-             return false;
-         }
+            if (csvReader.getManualGradedResponses().size() > 0) {
+                return true;
+            } else {
+                return false;
+            }
 
     }
 
@@ -418,7 +418,7 @@ public class ConceptKnowledgeCalculator implements ConceptKnowledgeCalculatorAPI
             LearningObject concept = loMap.get(learningObject);
 
             if (concept != null) {
-                double result = BasicRFunctions.LearningObjectAvg(myMatrix, concept);
+                double result = RFunctions.LearningObjectAvg(myMatrix, concept);
                 return result;
             } else {
                 throw new NullPointerException();
@@ -437,7 +437,7 @@ public class ConceptKnowledgeCalculator implements ConceptKnowledgeCalculatorAPI
         List<String> userIdList = myMatrix.getUserIdList();
 
         if(userIdList.contains(user)) {
-            return BasicRFunctions.StudentKnowledgeEstAvg(myMatrix, user);
+            return RFunctions.StudentKnowledgeEstAvg(myMatrix, user);
         }else{
             throw new NullPointerException();
         }

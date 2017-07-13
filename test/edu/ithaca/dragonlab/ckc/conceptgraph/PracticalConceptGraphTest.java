@@ -21,9 +21,10 @@ public class PracticalConceptGraphTest {
         ObjectMapper graphMapper = new ObjectMapper();
 
         graphMapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
+        try{
         CSVReader csvReader = new CSVReader(TEST_DIR+"basicRealisticAssessment.csv");
 
-        try {
+
             ConceptGraphRecord graphRecord = ConceptGraphRecord.buildFromJson(TEST_DIR+"mediumRealisticConceptGraph.json");
 
             List<LearningObjectLinkRecord> LOLRlist = LearningObjectLinkRecord.buildListFromJson(TEST_DIR + "mediumRealisticResource.json");
@@ -56,9 +57,10 @@ public class PracticalConceptGraphTest {
         ObjectMapper graphMapper = new ObjectMapper();
 
         graphMapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
+        try{
         CSVReader csvReader = new CSVReader("test/testresources/ManuallyCreated/basicRealisticAssessment.csv");
 
-        try {
+
             ConceptGraphRecord graphRecord = ConceptGraphRecord.buildFromJson("test/testresources/ManuallyCreated/basicRealisticConceptGraph.json");
 
             List<LearningObjectLinkRecord> LOLRlist = LearningObjectLinkRecord.buildListFromJson("test/testresources/ManuallyCreated/basicRealisticResource.json");
@@ -95,9 +97,10 @@ public class PracticalConceptGraphTest {
         ObjectMapper graphMapper = new ObjectMapper();
 
         graphMapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
+        try{
         CSVReader csvReader = new CSVReader(TEST_DIR+"advancedRealisticAssessment.csv");
 
-        try {
+
             ConceptGraphRecord graphRecord = ConceptGraphRecord.buildFromJson(TEST_DIR+"mediumRealisticConceptGraph.json");
 
             List<LearningObjectLinkRecord> LOLRlist = LearningObjectLinkRecord.buildListFromJson(TEST_DIR + "mediumRealisticResource.json");
@@ -131,9 +134,8 @@ public class PracticalConceptGraphTest {
         ObjectMapper graphMapper = new ObjectMapper();
 
         graphMapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
+        try{
         CSVReader csvReader = new CSVReader(TEST_DIR+"singleStudentRealisticAssessment.csv");
-
-        try {
 
             ConceptGraphRecord graphRecord = ConceptGraphRecord.buildFromJson(TEST_DIR+"mediumRealisticConceptGraph.json");
             List<LearningObjectLinkRecord> LOLRlist = LearningObjectLinkRecord.buildListFromJson(TEST_DIR+"mediumRealisticResource.json");

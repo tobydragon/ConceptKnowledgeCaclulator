@@ -140,7 +140,7 @@ public interface ConceptKnowledgeCalculatorAPI {
     List<String> getStructureFiles();
 
 
-    boolean assessmentIsValid(String name);
+    boolean assessmentIsValid(String name)throws IOException;
 
     ConceptGraph getStructureGraph();
     CohortConceptGraphs getCohortConceptGraphs();
