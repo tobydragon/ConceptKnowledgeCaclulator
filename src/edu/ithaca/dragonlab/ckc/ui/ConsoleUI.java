@@ -164,7 +164,7 @@ public class ConsoleUI {
                     createNewCohortGraph(scanner );
                 }
                 else if(num ==6){
-                    replaceGraphFile(scanner);
+                    replaceCohortGraphFile(scanner);
                 }
                 else if(num ==7){
                     additionalLOR(scanner);
@@ -346,13 +346,13 @@ public class ConsoleUI {
     }
 
 
-    public void replaceGraphFile(Scanner scanner){
+    public void replaceCohortGraphFile(Scanner scanner){
         System.out.println("Replace Graph File");
 
         System.out.println("Type Graph Path ");
         String graph = scanner.nextLine();
         try {
-            ckc.replaceGraph(graph);
+            ckc.replaceCohortGraph(graph);
             System.out.println("Process Completed");
         } catch (Exception e) {
             System.out.println("Can't find file");

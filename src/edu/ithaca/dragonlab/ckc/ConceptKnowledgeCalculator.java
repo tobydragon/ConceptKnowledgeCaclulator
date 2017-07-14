@@ -69,6 +69,11 @@ public class ConceptKnowledgeCalculator implements ConceptKnowledgeCalculatorAPI
         structureGraph = null;
         cohortConceptGraphs=null;
 
+        if (structureFilename.size()!=0 &&!structureFiles.contains(structureFilename.get(0))) {
+            structureFiles.clear();
+            structureFiles.add(structureFilename.get(0));
+        }
+
         ConceptGraphRecord structureRecord = ConceptGraphRecord.buildFromJson(structureFiles.get(0));
         structureGraph = new ConceptGraph(structureRecord);
 
@@ -171,6 +176,7 @@ public class ConceptKnowledgeCalculator implements ConceptKnowledgeCalculatorAPI
             throw new Exception("Structure file invalid");
         }
 
+
         List<LearningObjectLinkRecord> temp = LearningObjectLinkRecord.buildListFromJson(res);
         if(temp.size()>0){
             rbool=true;
@@ -197,12 +203,16 @@ public class ConceptKnowledgeCalculator implements ConceptKnowledgeCalculatorAPI
     }
 
     @Override
-    public void replaceGraph(String graph) throws Exception{
+    public void replaceCohortGraph(String graph) throws Exception{
+        ConceptGraphRecord conceptGraph = ConceptGraphRecord.buildFromJson(graph);
+        if(conceptGraph.getConcepts().size()>0){
+            List<String>  structure = new ArrayList<>();
+            structure.add(graph);
 
-        List<String>  structure = new ArrayList<>();
-        structure.add(graph);
-        clearAndCreateCohortData(structure,resourceFiles,assessmentFiles);
-
+            clearAndCreateCohortData(structure,resourceFiles,assessmentFiles);
+        }else{
+            throw new Exception("Structure file invalid");
+        }
     }
 
     @Override

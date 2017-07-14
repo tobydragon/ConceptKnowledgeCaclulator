@@ -80,6 +80,90 @@ public class ConceptKnowledgeCalculatorTest {
 
     }
 
+
+
+    @Test
+    public void clearandCreateStructureGraphTest() {
+        ConceptKnowledgeCalculatorAPI ckc = null;
+        try {
+            ckc = new ConceptKnowledgeCalculator("test/testresources/ManuallyCreated/basicRealisticConceptGraph.json", "test/testresources/ManuallyCreated/basicRealisticResource.json", "test/testresources/ManuallyCreated/basicRealisticAssessment.csv");
+
+            ckc.switchToStructure();
+            List<String> struct = new ArrayList<>();
+            struct.add("test/testresources/ManuallyCreated/researchConceptGraph.json");
+
+            ckc.clearAndCreateStructureData(struct);
+
+            Assert.assertEquals(ckc.getStructureFiles().get(0),"test/testresources/ManuallyCreated/researchConceptGraph.json" );
+
+            Assert.assertEquals(ckc.getResourceFiles().size(),0);
+            Assert.assertEquals(ckc.getAssessmentFiles().size(), 0);
+
+            ckc.setupStructureData("test/testresources/ManuallyCreated/simpleConceptGraph.json");
+            Assert.assertEquals(ckc.getStructureFiles().get(0),"test/testresources/ManuallyCreated/simpleConceptGraph.json" );
+
+            Assert.assertEquals(ckc.getResourceFiles().size(),0);
+            Assert.assertEquals(ckc.getAssessmentFiles().size(), 0);
+
+
+        } catch (Exception e) {
+            Assert.fail("Unable to load default files. Test unable to run");
+        }
+
+
+    }
+
+    @Test
+    public void clearandCreateCohortGraphTest() {
+        ConceptKnowledgeCalculatorAPI ckc = null;
+        try {
+            ckc = new ConceptKnowledgeCalculator("test/testresources/ManuallyCreated/basicRealisticConceptGraph.json", "test/testresources/ManuallyCreated/basicRealisticResource.json", "test/testresources/ManuallyCreated/basicRealisticAssessment.csv");
+
+            List<String> struct = new ArrayList<>();
+            struct.add("test/testresources/ManuallyCreated/researchConceptGraph.json");
+            List<String> res = new ArrayList<>();
+            res.add("test/testresources/ManuallyCreated/researchResource1.json");
+            List<String> assess = new ArrayList<>();
+            assess.add("test/testresources/ManuallyCreated/researchAssessment1.csv");
+
+            ckc.clearAndCreateCohortData(struct,res,assess );
+
+            Assert.assertEquals(ckc.getStructureFiles().get(0),"test/testresources/ManuallyCreated/researchConceptGraph.json" );
+
+            Assert.assertEquals(ckc.getResourceFiles().get(0),"test/testresources/ManuallyCreated/basicRealisticResource.json" );
+            Assert.assertEquals(ckc.getResourceFiles().get(1),"test/testresources/ManuallyCreated/researchResource1.json" );
+            Assert.assertEquals(ckc.getAssessmentFiles().get(0), "test/testresources/ManuallyCreated/basicRealisticAssessment.csv");
+            Assert.assertEquals(ckc.getAssessmentFiles().get(1), "test/testresources/ManuallyCreated/researchAssessment1.csv");
+
+
+        } catch (Exception e) {
+            Assert.fail("Unable to load default files. Test unable to run");
+        }
+
+
+    }
+
+
+    @Test
+    public void setupCohortGraphTest() {
+        ConceptKnowledgeCalculatorAPI ckc = null;
+        try {
+            ckc = new ConceptKnowledgeCalculator("test/testresources/ManuallyCreated/basicRealisticConceptGraph.json", "test/testresources/ManuallyCreated/basicRealisticResource.json", "test/testresources/ManuallyCreated/basicRealisticAssessment.csv");
+
+            ckc.setupClearandCreateCohort("test/testresources/ManuallyCreated/researchConceptGraph.json", "test/testresources/ManuallyCreated/researchResource1.json","test/testresources/ManuallyCreated/researchAssessment1.csv" );
+
+            Assert.assertEquals(ckc.getStructureFiles().get(0),"test/testresources/ManuallyCreated/researchConceptGraph.json" );
+            Assert.assertEquals(ckc.getResourceFiles().get(0),"test/testresources/ManuallyCreated/researchResource1.json" );
+            Assert.assertEquals(ckc.getAssessmentFiles().get(0), "test/testresources/ManuallyCreated/researchAssessment1.csv");
+
+        } catch (Exception e) {
+            Assert.fail("Unable to load default files. Test unable to run");
+        }
+
+
+    }
+
+
     @Test(expected = Exception.class)
     public void calcIndividualConceptNodesSuggestionsBadInputTest() throws Exception {
         ConceptKnowledgeCalculatorAPI ckc = null;
@@ -382,7 +466,6 @@ public class ConceptKnowledgeCalculatorTest {
 
 
     }
-
 
     @Test
     public void removeLORFileTest(){

@@ -35,11 +35,11 @@ public interface ConceptKnowledgeCalculatorAPI {
 
     void addLORAndLO(String LO, String LOR) throws  Exception;
 
-    void replaceGraph(String graph) throws Exception;
+    void replaceCohortGraph(String graph) throws Exception;
 
     void switchToStructure() throws Exception;
 
-    void setupStructureData(String struct) throws IOException, Exception;
+    void setupStructureData(String struct) throws Exception;
 
     void replaceLOFile(String resourceFile) throws Exception;
 
