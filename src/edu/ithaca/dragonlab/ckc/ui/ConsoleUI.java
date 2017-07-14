@@ -137,13 +137,14 @@ public class ConsoleUI {
                     contQuit=0;
                 }
 
+                //COHORTGRAPH MODE
             }else{
-                System.out.println("What do you want to do? \n 1 - calculate a list of concept nodes to work on \n 2 - calculate resources suggestions based on a specific concept \n 3 - automatically calculate suggestions \n 4 - View graph \n 5 - Create new graph \n 6 - Replace graph file \n 7 - Add another assessment file \n 8 - Remove assessment file \n 9 - Replace resource file \n 10 - Get Learning Object Average \n 11 Get Student Average \n 12 - View Structure Graph (switch to structure mode) \n 13 - quit");
+                System.out.println("What do you want to do? \n 1 - calculate a list of concept nodes to work on \n 2 - calculate resources suggestions based on a specific concept \n 3 - automatically calculate suggestions \n 4 - View graph \n 5 - Create new graph \n 6 - Replace graph file \n 7 - Add another assessment file \n 8 - Remove assessment file \n 9 - Replace resource file \n 10 - View list of users \n 11 - Get Learning Object Average \n 12 Get Student Average \n 13 - View Structure Graph (switch to structure mode) \n 14 - quit");
                 Integer num = scanner.nextInt();
 
-                while (num < 1 || num > 13) {
+                while (num < 1 || num > 14) {
                     System.out.println("Out of bounds");
-                    System.out.println("What do you want to do? \n 1 - calculate a list of concept nodes to work on \n 2 - calculate resource suggestions based on a specific concept \n 3 - automatically calculate suggestions \n 4 - View graph \n 5 - Create new graph \n 6 - Replace graph file \n 7 - Add another assessment file \n 8 - Remove assessment file \n 9 - Replace resource file \n 10 - Get Learning Object Average \n 11 Get Student Average \n 12 - View Structure Graph (switch to structure mode) \n 13 - quit");
+                    System.out.println("What do you want to do? \n 1 - calculate a list of concept nodes to work on \n 2 - calculate resource suggestions based on a specific concept \n 3 - automatically calculate suggestions \n 4 - View graph \n 5 - Create new graph \n 6 - Replace graph file \n 7 - Add another assessment file \n 8 - Remove assessment file \n 9 - Replace resource file \n 10 - View list of users \n 11 - Get Learning Object Average \n 12 Get Student Average \n 13 - View Structure Graph (switch to structure mode) \n 14 - quit");
                     num = scanner.nextInt();
                 }
                 scanner.nextLine();
@@ -172,16 +173,19 @@ public class ConsoleUI {
                 else if (num ==8) {
                     removeLORFile(scanner);
 
-                }else if(num ==9){
+                }else if(num ==9) {
                     replaceResourceFile(scanner);
 
-                }else if(num==10){
+                }else if(num ==10){
+                    getUserList();
+
+                }else if(num==11){
                     resourceAverage(scanner);
 
-                }else if(num ==11){
+                }else if(num ==12){
                     studentAverage(scanner);
 
-                }else if (num == 12){
+                }else if (num == 13){
                     switchToStructuremode();
                 }else{
                     contQuit=0;
@@ -433,6 +437,15 @@ public class ConsoleUI {
             System.out.println("The average is: " + ckc.getLearningObjectAvg(conceptNode));
         } catch (Exception e) {
             System.out.println("Can't find " + conceptNode);
+        }
+    }
+
+    public void getUserList(){
+        try {
+            List<String> userlist = ckc.getUserIdList();
+            System.out.println("User List: " + userlist);
+        }catch (Exception e){
+            System.out.println("No list");
         }
     }
 

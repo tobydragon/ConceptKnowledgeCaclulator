@@ -112,7 +112,7 @@ public interface ConceptKnowledgeCalculatorAPI {
      * @pre a user selects to view a list of all users within the graph
      * @return list of userIds
      */
-    List<String> getUserIdList();
+    List<String> getUserIdList() throws Exception;
 
     /**
      * Calculates a student's average knowledgeEstimates across all LearningObjects

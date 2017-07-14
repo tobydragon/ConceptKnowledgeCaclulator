@@ -795,7 +795,13 @@ public class ConceptKnowledgeCalculatorTest {
         }
         List<String> actualList = new ArrayList<>();
         actualList.add("bspinache1");
-        Assert.assertEquals(actualList, ckc.getUserIdList());
+        try {
+            Assert.assertEquals(actualList, ckc.getUserIdList());
+        }catch (Exception e){
+            Assert.fail();
+        }
+
+
     }
 
     @Test

@@ -481,12 +481,16 @@ public class ConceptKnowledgeCalculator implements ConceptKnowledgeCalculatorAPI
             return "Your file has been written to :"+ destinationFilepath;
     }
 
-    public List<String> getUserIdList(){
-        Map<String, ConceptGraph> userMap = cohortConceptGraphs.getUserToGraph();
-        List<String> userList = new ArrayList<String>(userMap.keySet());
-        java.util.Collections.sort(userList);
+    public List<String> getUserIdList()throws Exception{
+        if(currentMode == Mode.COHORTGRAPH) {
+            Map<String, ConceptGraph> userMap = cohortConceptGraphs.getUserToGraph();
+            List<String> userList = new ArrayList<String>(userMap.keySet());
+            java.util.Collections.sort(userList);
 
-        return userList;
+            return userList;
+        }else{
+            throw new Exception("Wrong Mode");
+        }
     }
 
     public double getLearningObjectAvg(String learningObject) throws Exception {
