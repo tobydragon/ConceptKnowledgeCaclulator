@@ -65,35 +65,45 @@ public class RFunctions {
 
 
 
-    public static int findFactorCount(KnowledgeEstimateMatrix loMatrix){
+    public static double findFactorCount(KnowledgeEstimateMatrix loMatrix){
         RCaller rCaller = RCallerVariable();
 
         RCode code = loMatrix.getrMatrix();
         int numOfFactors = 0;
-        code.addInt("numOfFactors", numOfFactors);
 
-        code.addRCode("numeric_columns <- sapply(matrix, mode) == 'numeric'");
-        code.addRCode("matrix[numeric_columns] <-  round(matrix[numeric_columns], 1)");
+        code.addInt("numOfFactors", numOfFactors);
+        code.addRCode("columnCount <- ncol(matrix)");
+
+        //delete any columns that have no variance in data
+        code.addRCode("for(i in columnCount:1){" +
+                "if(data[1,i] == mean(matrix[,i])){" +
+                "matrix <- matrix[,-c(i)]" +
+                "}" +
+                "}");
 
         code.addRCode("columnCount <- ncol(matrix)");
+
+        //sets a limit on how high R will go to find the factor amount based on how many columns exist
         code.addRCode("if(columnCount %% 2 == 0){" +
                 "upperlimit <- (columnCount/2) - 1" +
                 "}else{" +
                 "upperlimit <- (columnCount/2) - 0.5" +
                 "}");
 
+        //put all p-values of the factor analysis into a list
+        //run through the list and take the factor number with the first p-value above .05
         code.addRCode("vector = c()");
         code.addRCode("for(i in 1:upperlimit){" +
                 "vector[i] <- factanal(matrix, i, method = 'mle')$PVAL" +
                 "}");
         code.addRCode("for(i in 1:upperlimit){" +
                 "if(vector[i] < .05){" +
-                "numOfFactors <- i" +
+                "numOfFactors <- i + 1" +
                 "}" +
                 "}");
         rCaller.setRCode(code);
         rCaller.runAndReturnResult("numOfFactors");
-        int[] result = rCaller.getParser().getAsIntArray("numOfFactors");
+        double[] result = rCaller.getParser().getAsDoubleArray("numOfFactors");
         return result[0];
     }
 

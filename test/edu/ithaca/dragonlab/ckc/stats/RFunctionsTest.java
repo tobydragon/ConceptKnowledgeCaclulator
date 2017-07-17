@@ -46,16 +46,21 @@ public class RFunctionsTest {
 
 
 //TODO: needs to be finished
-/**
+
     @Test
     public void findFactorCountTest(){
-        CSVReader data = new CSVReader("test/testresources/ManuallyCreated/complexRealisticAssessment.csv");
-        List<LearningObject> gotoMatrix = data.getManualGradedLearningObjects();
-        KnowledgeEstimateMatrix newMatrix = new KnowledgeEstimateMatrix(gotoMatrix);
-        int factorCount = RFunctions.findFactorCount(newMatrix);
-        Assert.assertEquals(0, factorCount, 0);
+        try {
+            CSVReader data = new CSVReader("test/testresources/ManuallyCreated/complexRealisticAssessment.csv");
+            List<LearningObject> gotoMatrix = data.getManualGradedLearningObjects();
+            KnowledgeEstimateMatrix newMatrix = new KnowledgeEstimateMatrix(gotoMatrix);
+            double factorCount = RFunctions.findFactorCount(newMatrix);
+            Assert.assertEquals(2, factorCount, 0);
+        }catch (Exception e){
+            e.printStackTrace();
+            Assert.fail();
+        }
     }
-*/
+
 
 
 

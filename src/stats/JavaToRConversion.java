@@ -21,6 +21,8 @@ public class JavaToRConversion {
      * @return RCode of a 2D array in the same format as the
      */
     public static RCode JavaToR(double[][] aMatrix){
+
+        //Commented portions may be used for naming columns and rows
         /**
         double[][] aMatrix = loMatrix.getStudentKnowledgeEstimates();
         String[] users = loMatrix.getUserIdList();
@@ -38,6 +40,8 @@ public class JavaToRConversion {
 
         RCode code = RCode.create();
         code.addDoubleMatrix("data", aMatrix);
+
+
 
         /**
         code.addStringArray("headers", objStr);
