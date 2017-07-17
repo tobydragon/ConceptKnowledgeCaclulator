@@ -786,6 +786,20 @@ public class ConceptKnowledgeCalculatorTest {
     }
 
     @Test
+    public void noDataMode(){
+        ConceptKnowledgeCalculatorAPI ckc = null;
+        try {
+            ckc = new ConceptKnowledgeCalculator("test.json", "test.json", "test.csv");
+            Assert.assertNotEquals(ckc.getCurrentMode(), ConceptKnowledgeCalculator.Mode.NODATA);
+
+        } catch (IOException e) {
+            ckc = new ConceptKnowledgeCalculator();
+            Assert.assertEquals(ckc.getCurrentMode(), ConceptKnowledgeCalculator.Mode.NODATA);
+        }
+    }
+
+
+    @Test
     public void getUserListTest() {
         ConceptKnowledgeCalculatorAPI ckc = null;
         try {

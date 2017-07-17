@@ -25,7 +25,7 @@ public class ConceptKnowledgeCalculator implements ConceptKnowledgeCalculatorAPI
     private ConceptGraph structureGraph;
 
     public enum Mode{
-        STRUCTUREGRAPH, COHORTGRAPH, STRUCTUREGRAPHWITHRESOURCE, STRUCTUREGRAPHWITHASSESSMENT
+        STRUCTUREGRAPH, COHORTGRAPH, STRUCTUREGRAPHWITHRESOURCE, STRUCTUREGRAPHWITHASSESSMENT, NODATA
     }
 
     private Mode currentMode;
@@ -44,6 +44,7 @@ public class ConceptKnowledgeCalculator implements ConceptKnowledgeCalculatorAPI
         structureFiles = new ArrayList<>();
         resourceFiles = new ArrayList<>();
         assessmentFiles = new ArrayList<>();
+        currentMode = Mode.NODATA;
     }
 
     public ConceptKnowledgeCalculator(String structureFileName) throws IOException{
@@ -133,6 +134,7 @@ public class ConceptKnowledgeCalculator implements ConceptKnowledgeCalculatorAPI
 
         //create the average and individual graphs
         cohortConceptGraphs = new CohortConceptGraphs(graph, assessments);
+        currentMode=Mode.COHORTGRAPH;
     }
 
     @Override
@@ -538,15 +540,6 @@ public class ConceptKnowledgeCalculator implements ConceptKnowledgeCalculatorAPI
         return currentMode;
     }
 
-    public CohortConceptGraphs getCohortConceptGraphs(){
-        return cohortConceptGraphs;
-    }
-
-    public ConceptGraph getStructureGraph(){
-        return structureGraph;
-    }
-
-
     //testing purposes
     public List<String> getStructureFiles(){
         return structureFiles;
@@ -554,6 +547,14 @@ public class ConceptKnowledgeCalculator implements ConceptKnowledgeCalculatorAPI
 
     public List<String> getResourceFiles(){
         return resourceFiles;
+    }
+
+    public CohortConceptGraphs getCohortConceptGraphs(){
+        return cohortConceptGraphs;
+    }
+
+    public ConceptGraph getStructureGraph(){
+        return structureGraph;
     }
 
 }

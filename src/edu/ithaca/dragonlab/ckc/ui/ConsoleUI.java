@@ -39,29 +39,49 @@ public class ConsoleUI {
     public void run(){
         Scanner scanner = new Scanner(System.in);
 
-        if(ckc.getCohortConceptGraphs()==null && ckc.getStructureGraph()==null){
-            createNewCohortGraph(scanner);
-        }
-
         int contQuit = 1;
         while (contQuit == 1) {
             ConceptKnowledgeCalculator.Mode mode = ckc.getCurrentMode();
             System.out.println("Current Mode: "+ ckc.getCurrentMode());
 
-            if (mode == ConceptKnowledgeCalculator.Mode.STRUCTUREGRAPH) {
+            if(mode == ConceptKnowledgeCalculator.Mode.NODATA){
+                System.out.println("What do you want to do? \n 1 - Switch to Cohort Graph Mode \n 2 - Switch to Structure Graph Mode \n 3 - quit");
+                Integer num = scanner.nextInt();
 
-                System.out.println("What do you want to do? \n 1 - replace graph  \n 2 - View Graph \n 3 - add resource file (switch to Structure Graph with Resource mode) \n 4 - add assessment file (switch to Structure Graph with Assessment mode) \n 5 - quit");
+                while (num < 1 || num > 3) {
+                    System.out.println("Out of bounds");
+                    System.out.println("What do you want to do? \n 1 - Switch to Cohort Graph Mode \n 2 - Switch to Structure Graph Mode \n 3 - quit");
+
+                    num = scanner.nextInt();
+                }
+
+                if(num==1){
+                    createNewCohortGraph(scanner );
+
+                }else if(num ==2){
+                    editStructureGraph(scanner);
+
+                }else{
+                    contQuit=0;
+
+                }
+
+
+
+            } else if (mode == ConceptKnowledgeCalculator.Mode.STRUCTUREGRAPH) {
+
+                System.out.println("What do you want to do? \n 1 - edit graph  \n 2 - View Graph \n 3 - add resource file (switch to Structure Graph with Resource mode) \n 4 - add assessment file (switch to Structure Graph with Assessment mode) \n 5 - quit");
                 Integer num = scanner.nextInt();
 
                 while (num < 1 || num > 5) {
                     System.out.println("Out of bounds");
-                    System.out.println("What do you want to do? \n 1 - replace graph  \n 2 - View Graph \n 3 - add resource file (switch to Structure Graph with Resource mode) \n 4 - add assessment file (switch to Structure Graph with Assessment mode) \n 5 - quit");
+                    System.out.println("What do you want to do? \n 1 - edit graph  \n 2 - View Graph \n 3 - add resource file (switch to Structure Graph with Resource mode) \n 4 - add assessment file (switch to Structure Graph with Assessment mode) \n 5 - quit");
                     num = scanner.nextInt();
                 }
                 scanner.nextLine();
 
                 if (num==1){
-                    replaceGraph(scanner);
+                    editStructureGraph(scanner);
 
                 }else if(num ==2){
                     viewgraph();
@@ -78,18 +98,18 @@ public class ConsoleUI {
 
             } else if(mode == ConceptKnowledgeCalculator.Mode.STRUCTUREGRAPHWITHRESOURCE){
 
-                System.out.println("What do you want to do? \n 1 - replace graph \n 2 - replace resource file \n 3 - add assessment file (switch to cohort mode) \n 4 - view graph \n 5 - quit ");
+                System.out.println("What do you want to do? \n 1 - edit graph \n 2 - replace resource file \n 3 - add assessment file (switch to cohort mode) \n 4 - view graph \n 5 - quit ");
                 Integer num = scanner.nextInt();
 
                 while (num < 1 || num > 5) {
                     System.out.println("Out of bounds");
-                    System.out.println("What do you want to do? \n 1 - replace graph \n 2 - replace resource file \n 3 - add assessment file (switch to cohort mode) \n 4 - view graph \n 5 - quit ");
+                    System.out.println("What do you want to do? \n 1 - edit graph \n 2 - replace resource file \n 3 - add assessment file (switch to cohort mode) \n 4 - view graph \n 5 - quit ");
                     num = scanner.nextInt();
                 }
                 scanner.nextLine();
 
                 if (num==1){
-                    replaceGraph(scanner);
+                    editStructureGraph(scanner);
 
                 } else if(num==2){
                     replaceResourceFile(scanner);
@@ -106,18 +126,18 @@ public class ConsoleUI {
 
             } else if(mode == ConceptKnowledgeCalculator.Mode.STRUCTUREGRAPHWITHASSESSMENT) {
 
-                System.out.println("What do you want to do? \n 1 - replace graph \n 2 - add assessment file  \n 3 - remove assessment file \n 4 - create resource file  \n 5 - add resource file (switch to cohort mode) \n 6 - view graph \n 7 - quit");
+                System.out.println("What do you want to do? \n 1 - edit graph \n 2 - add assessment file  \n 3 - remove assessment file \n 4 - create resource file  \n 5 - add resource file (switch to cohort mode) \n 6 - view graph \n 7 - quit");
                 Integer num = scanner.nextInt();
 
                 while (num < 1 || num > 7) {
                     System.out.println("Out of bounds");
-                    System.out.println("What do you want to do? \n 1 - replace graph \n 2 - add assessment file  \n 3 - remove assessment file \n 4 - create resource file  \n 5 - add resource file (switch to cohort mode) \n 6 - view graph \n 7 - quit");
+                    System.out.println("What do you want to do? \n 1 - edit graph \n 2 - add assessment file  \n 3 - remove assessment file \n 4 - create resource file  \n 5 - add resource file (switch to cohort mode) \n 6 - view graph \n 7 - quit");
                     num = scanner.nextInt();
                 }
                 scanner.nextLine();
 
                 if (num == 1) {
-                    replaceGraph(scanner);
+                    editStructureGraph(scanner);
 
                 } else if (num == 2) {
                     additionalLOR(scanner);
@@ -196,8 +216,8 @@ public class ConsoleUI {
     }
 
 
-    public void replaceGraph(Scanner scanner){
-        System.out.println("replace graph");
+    public void editStructureGraph(Scanner scanner){
+        System.out.println("Edit structure graph");
 
         System.out.println("What file do you want to replace with?");
         String file = scanner.nextLine();

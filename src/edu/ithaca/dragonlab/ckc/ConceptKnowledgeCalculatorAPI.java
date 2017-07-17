@@ -150,6 +150,7 @@ public interface ConceptKnowledgeCalculatorAPI {
 
     boolean assessmentIsValid(String name);
 
+    //testing purposes
     ConceptGraph getStructureGraph();
     CohortConceptGraphs getCohortConceptGraphs();
 
