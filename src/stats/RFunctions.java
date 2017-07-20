@@ -65,7 +65,7 @@ public class RFunctions {
 
 
 
-    public static double findFactorCount(KnowledgeEstimateMatrix loMatrix){
+    public static int getColumnCount(KnowledgeEstimateMatrix loMatrix){
         RCaller rCaller = RCallerVariable();
 
         RCode code = loMatrix.getrMatrix();
@@ -82,6 +82,21 @@ public class RFunctions {
                 "}");
 
         code.addRCode("columnCount <- ncol(matrix)");
+        rCaller.setRCode(code);
+        rCaller.runAndReturnResult("columnCount");
+        int[] result = rCaller.getParser().getAsIntArray("columnCount");
+        return result[0];
+    }
+
+    public static int findFactorCount(KnowledgeEstimateMatrix loMatrix){
+        RCaller rCaller = RCallerVariable();
+
+        RCode code = loMatrix.getrMatrix();
+        int numOfFactors = 0;
+
+        code.addInt("numOfFactors", numOfFactors);
+        int columnCount = getColumnCount(loMatrix);
+        code.addInt("columnCount", columnCount);
 
         //sets a limit on how high R will go to find the factor amount based on how many columns exist
         code.addRCode("if(columnCount %% 2 == 0){" +
@@ -103,9 +118,68 @@ public class RFunctions {
                 "}");
         rCaller.setRCode(code);
         rCaller.runAndReturnResult("numOfFactors");
-        double[] result = rCaller.getParser().getAsDoubleArray("numOfFactors");
+        int[] result = rCaller.getParser().getAsIntArray("numOfFactors");
         return result[0];
     }
+
+    public static double[][] getFactorMatrix(KnowledgeEstimateMatrix loMatrix){
+        int numOfFactors = findFactorCount(loMatrix);
+        RCaller rCaller = RCallerVariable();
+        RCode code = loMatrix.getrMatrix();
+        code.addInt("numOfFactors", numOfFactors);
+        code.addRCode("matrixOfLoadings <- factanal(matrix, factors = numOfFactors, method = 'mle')");
+
+        rCaller.getRCallerOptions();
+        code.addRCode("factorsMatrix <- matrixOfLoadings$loadings");
+        //code.addRCode("factorsMatrix <- t(factorsMatrix)");
+        rCaller.setRCode(code);
+        rCaller.runAndReturnResult("factorsMatrix");
+        double[][] result = rCaller.getParser().getAsDoubleMatrix("factorsMatrix");
+
+        double oldArray[] = new double[result.length*result[0].length];
+        for(int i = 0; i < result.length; i++) {
+            double[] row = result[i];
+            for(int j = 0; j < row.length; j++) {
+                double number = result[i][j];
+                oldArray[i*row.length+j] = number;
+            }
+        }
+        int columnCount = getColumnCount(loMatrix);
+        double newMatrix[][] = new double[(oldArray.length)/columnCount][columnCount];
+        int oldArrayIterator = 0;
+        for(int rowIterator = 0; rowIterator < (oldArray.length/columnCount); rowIterator++){
+            for(int columnIterator = 0; columnIterator < columnCount; columnIterator++){
+                newMatrix[rowIterator][columnIterator] = oldArray[oldArrayIterator];
+                oldArrayIterator++;
+            }
+        }
+
+        //newMatrix[][]
+
+
+
+        printingFactor(newMatrix);
+        return newMatrix;
+    }
+
+        //these 2 functions just print the matrix of the factors
+        public static void printRow(double[] row) {
+            for (double i : row) {
+                System.out.print(i);
+                System.out.print("\t");
+            }
+            System.out.println();
+        }
+
+        public static void printingFactor(double[][] factorMatrix) {
+        int factorNum = 0;
+            for(double[] row : factorMatrix) {
+                factorNum++;
+                System.out.println("Factor " + factorNum + ": ");
+                printRow(row);
+            }
+        }
+
 
     /**
      * Must be called at the start of every function that uses RCaller methods in
