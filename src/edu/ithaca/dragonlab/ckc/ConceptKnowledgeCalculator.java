@@ -220,8 +220,19 @@ public class ConceptKnowledgeCalculator implements ConceptKnowledgeCalculatorAPI
     @Override
     public     void addResourceAndAssessment(String resource, String assignment) throws  Exception{
         if(currentMode == Mode.STRUCTUREGRAPH) {
-            resourceFiles.add(resource);
-            assessmentFiles.add(assignment);
+            List<LearningObjectLinkRecord> temp = LearningObjectLinkRecord.buildListFromJson(resource);
+            if(temp.size()>0){
+                if(assessmentIsValid(assignment)){
+                    resourceFiles.add(resource);
+                    assessmentFiles.add(assignment);
+                }else{
+                    throw new Exception("Assessment file invalid");
+                }
+            }else{
+                throw new Exception("Resource file invalid");
+            }
+
+
             try{
                 clearAndCreateCohortData(structureFiles, resourceFiles, assessmentFiles);
                 currentMode = Mode.COHORTGRAPH;
@@ -238,14 +249,26 @@ public class ConceptKnowledgeCalculator implements ConceptKnowledgeCalculatorAPI
     public void addResource(String secondResourceFile) throws Exception {
 
         if(currentMode== Mode.STRUCTUREGRAPH || currentMode== Mode.STRUCTUREGRAPHWITHRESOURCE){
+            List<LearningObjectLinkRecord> temp = LearningObjectLinkRecord.buildListFromJson(secondResourceFile);
+            if(temp.size()>0){
                 resourceFiles.add(secondResourceFile);
                 currentMode=Mode.STRUCTUREGRAPHWITHRESOURCE;
+            }else{
+                throw new Exception("Resource file invalid");
+            }
+
 
         }else if(currentMode== Mode.COHORTGRAPH || currentMode == Mode.STRUCTUREGRAPHWITHASSESSMENT){
             try {
-                resourceFiles.add(secondResourceFile);
-                clearAndCreateCohortData(structureFiles, resourceFiles, assessmentFiles);
-                currentMode= Mode.COHORTGRAPH;
+                List<LearningObjectLinkRecord> temp = LearningObjectLinkRecord.buildListFromJson(secondResourceFile);
+                if(temp.size()>0){
+                    resourceFiles.add(secondResourceFile);
+                    clearAndCreateCohortData(structureFiles, resourceFiles, assessmentFiles);
+                    currentMode= Mode.COHORTGRAPH;
+                }else{
+                    throw new Exception("Resource file invalid");
+                }
+
             }catch (Exception e){
                 e.printStackTrace();
             }
