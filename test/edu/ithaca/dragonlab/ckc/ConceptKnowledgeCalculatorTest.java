@@ -341,7 +341,7 @@ public class ConceptKnowledgeCalculatorTest {
     }
 
     @Test
-    public void additionalLORTest(){
+    public void addAssignmentTest(){
         ConceptKnowledgeCalculatorAPI ckc = null;
         try {
             ckc = new ConceptKnowledgeCalculator("test/testresources/ManuallyCreated/basicRealisticConceptGraph.json", "test/testresources/ManuallyCreated/basicRealisticResource.json", "test/testresources/ManuallyCreated/basicRealisticAssessment.csv");
@@ -382,7 +382,7 @@ public class ConceptKnowledgeCalculatorTest {
 
 
         try {
-            ckc.additionalLOR("test/testresources/ManuallyCreated/mediumAssessment.csv");
+            ckc.addAssignment("test/testresources/ManuallyCreated/mediumAssessment.csv");
             List<LearningObjectResponse> postMasterList1 = new ArrayList<>();
 
             CohortConceptGraphs postGraphs = ckc.getCohortConceptGraphs();
@@ -425,7 +425,7 @@ public class ConceptKnowledgeCalculatorTest {
 
 
         try {
-            ckc.additionalLOR("test/testresources/ManuallyCreated/simpleAssessment.csv");
+            ckc.addAssignment("test/testresources/ManuallyCreated/simpleAssessment.csv");
             List<LearningObjectResponse> postMasterList2 = new ArrayList<>();
 
             CohortConceptGraphs postGraphs2 = ckc.getCohortConceptGraphs();
@@ -481,7 +481,7 @@ public class ConceptKnowledgeCalculatorTest {
 
 
         try {
-            ckc.removeLORFile("test/testresources/ManuallyCreated/basicRealisticAssessment.csv");
+            ckc.removeAssessmentFile("test/testresources/ManuallyCreated/basicRealisticAssessment.csv");
             List<String> test1 = new ArrayList<>();
             Assert.assertEquals(ckc.getAssessmentFiles(),test1);
         } catch (Exception e) {
@@ -499,8 +499,8 @@ public class ConceptKnowledgeCalculatorTest {
             Assert.fail("Unable to load default files. Test unable to run");
         }
         try {
-            ckc.removeLORFile("test/testresources/ManuallyCreated/basicRealisticAssessment.csv");
-            ckc.removeLORFile("test/remove");
+            ckc.removeAssessmentFile("test/testresources/ManuallyCreated/basicRealisticAssessment.csv");
+            ckc.removeAssessmentFile("test/remove");
 
         } catch (IOException e) {
             Assert.fail("There are negative files");
@@ -515,7 +515,7 @@ public class ConceptKnowledgeCalculatorTest {
             List<String> test = new ArrayList<>();
             test.add("test/testresources/ManuallyCreated/basicRealisticResource.json");
             Assert.assertEquals(ckc.getResourceFiles(),test);
-            ckc.replaceLOFile("test/testresources/ManuallyCreated/simpleChangeNameLOL.json");
+            ckc.replaceResourceFile("test/testresources/ManuallyCreated/simpleChangeNameLOL.json");
 
             test.clear();
             test.add("test/testresources/ManuallyCreated/simpleChangeNameLOL.json");
@@ -570,7 +570,7 @@ public class ConceptKnowledgeCalculatorTest {
 
 
         try {
-            ckc.addAnotherLO("test/testresources/ManuallyCreated/simpleChangeNameLOL.json");
+            ckc.addResource("test/testresources/ManuallyCreated/simpleChangeNameLOL.json");
             List<LearningObject> postMasterList = new ArrayList<>();
 
             CohortConceptGraphs postGraphs = ckc.getCohortConceptGraphs();
@@ -676,7 +676,7 @@ public class ConceptKnowledgeCalculatorTest {
 
             //STRUCTURE MODE WITH ASSESSMENT
             //switched to structure mode with assessment. This should still have a structure graph, but then also hold on to the files. Because additional LOR was called from structure graph mode, the assessment file should not be filled with the one file.
-            ckc.additionalLOR("test/testresources/ManuallyCreated/mediumAssessment.csv");
+            ckc.addAssignment("test/testresources/ManuallyCreated/mediumAssessment.csv");
             Assert.assertEquals(ckc.getCurrentMode(), ConceptKnowledgeCalculator.Mode.STRUCTUREGRAPHWITHASSESSMENT);
 
             getTest.add("test/testresources/ManuallyCreated/basicRealisticConceptGraph.json");
@@ -696,7 +696,7 @@ public class ConceptKnowledgeCalculatorTest {
             //CONCEPT GRAPH MODE
             //switched back into concept graph mode because now the three lists of files are filled up with at least one file.
             //all of the previous files should be stored in structure files, resource files, and assessment files
-            ckc.addAnotherLO("test/testresources/ManuallyCreated/simpleResource.json");
+            ckc.addResource("test/testresources/ManuallyCreated/simpleResource.json");
             Assert.assertEquals(ckc.getCurrentMode(), ConceptKnowledgeCalculator.Mode.COHORTGRAPH);
             getTest.add("test/testresources/ManuallyCreated/basicRealisticConceptGraph.json");
             Assert.assertEquals(ckc.getStructureFiles(), getTest);
@@ -721,7 +721,7 @@ public class ConceptKnowledgeCalculatorTest {
             // changing from structure graph to structure graph with resources. Cohort graph should be null and strucuture graph shouldn't be. The structure file should have one file in it and resource file list should have one in it. The assessment file should be empty
             ckc.switchToStructure();
 
-            ckc.addAnotherLO("test/testresources/ManuallyCreated/simpleResource.json");
+            ckc.addResource("test/testresources/ManuallyCreated/simpleResource.json");
             Assert.assertEquals(ckc.getCurrentMode(), ConceptKnowledgeCalculator.Mode.STRUCTUREGRAPHWITHRESOURCE);
             getTest.add("test/testresources/ManuallyCreated/basicRealisticConceptGraph.json");
             Assert.assertEquals(ckc.getStructureFiles(), getTest);
@@ -738,7 +738,7 @@ public class ConceptKnowledgeCalculatorTest {
 
             //COHORT GRAPH
             //this is switching from structure graph mode with resources to cohort graph mode. All the lists of files should have at least one file in them and structure graph should equal null;
-            ckc.additionalLOR("test/testresources/ManuallyCreated/simpleAssessment.csv");
+            ckc.addAssignment("test/testresources/ManuallyCreated/simpleAssessment.csv");
             Assert.assertEquals(ckc.getCurrentMode(), ConceptKnowledgeCalculator.Mode.COHORTGRAPH);
 
             getTest.add("test/testresources/ManuallyCreated/basicRealisticConceptGraph.json");
@@ -763,7 +763,7 @@ public class ConceptKnowledgeCalculatorTest {
             //to switch from structure graph with resource, adding LOR makes all the file lists have at least one file in them, thus a cohort graph can be made. Structure graph should not equal null and all file lists should have one file in them
             ckc.switchToStructure();
 
-            ckc.addLORAndLO("test/testresources/ManuallyCreated/simpleResource.json", "test/testresources/ManuallyCreated/simpleAssessment.csv" );
+            ckc.addResourceAndAssessment("test/testresources/ManuallyCreated/simpleResource.json", "test/testresources/ManuallyCreated/simpleAssessment.csv" );
             getTest.add("test/testresources/ManuallyCreated/basicRealisticConceptGraph.json");
             Assert.assertEquals(ckc.getStructureFiles(), getTest);
             getTest.clear();

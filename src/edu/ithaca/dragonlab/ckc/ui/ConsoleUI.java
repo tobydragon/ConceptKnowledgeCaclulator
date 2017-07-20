@@ -90,7 +90,7 @@ public class ConsoleUI {
                     replaceResourceFile(scanner);
 
                 }else if(num==4) {
-                    additionalLOR(scanner);
+                    addAssignment(scanner);
 
                 }else{
                     contQuit = 0;
@@ -115,7 +115,7 @@ public class ConsoleUI {
                     replaceResourceFile(scanner);
 
                 }else if(num==3){
-                    additionalLOR(scanner);
+                    addAssignment(scanner);
 
                 }else if(num ==4){
                     viewgraph();
@@ -140,10 +140,10 @@ public class ConsoleUI {
                     editStructureGraph(scanner);
 
                 } else if (num == 2) {
-                    additionalLOR(scanner);
+                    addAssignment(scanner);
 
                 } else if (num == 3) {
-                    removeLORFile(scanner);
+                    removeAssessment(scanner);
 
                 } else if (num == 4) {
                     createResourceFile();
@@ -188,10 +188,10 @@ public class ConsoleUI {
                     replaceCohortGraphFile(scanner);
                 }
                 else if(num ==7){
-                    additionalLOR(scanner);
+                    addAssignment(scanner);
                 }
                 else if (num ==8) {
-                    removeLORFile(scanner);
+                    removeAssessment(scanner);
 
                 }else if(num ==9) {
                     replaceResourceFile(scanner);
@@ -231,23 +231,21 @@ public class ConsoleUI {
         }
     }
 
-    public void addLOAndLOR(Scanner scanner){
-        System.out.println("add LO and LOR");
+    public void addResourceAndAssignment(Scanner scanner){
+        System.out.println("add Resource and Assignment files");
 
         System.out.println("Type Resource File (starting from root)");
-        String LOfile = scanner.nextLine();
+        String resource = scanner.nextLine();
 
         System.out.println("Type Assessment File (starting from root)");
-        String LORFile = scanner.nextLine();
+        String assignment = scanner.nextLine();
 
         try {
-            ckc.addLORAndLO(LOfile, LORFile);
+            ckc.addResourceAndAssessment(resource, assignment);
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
-
-
 
 
     public void createLearningObjectList(Scanner scanner){
@@ -385,50 +383,65 @@ public class ConsoleUI {
     }
 
 
-    public void additionalLOR(Scanner scanner){
-        System.out.println("Add another assesment file to existing graph ");
+    public void addAssignment(Scanner scanner){
+        if(ckc.getCurrentMode()== ConceptKnowledgeCalculator.Mode.COHORTGRAPH|| ckc.getCurrentMode()== ConceptKnowledgeCalculator.Mode.STRUCTUREGRAPHWITHASSESSMENT) {
+            System.out.println("Add another assesment file to existing graph ");
+            System.out.println("Current Assignment Files: " + ckc.currentAssignments().toString().replace("[", "").replace("]", ""));
+        }else if(ckc.getCurrentMode()== ConceptKnowledgeCalculator.Mode.STRUCTUREGRAPH|| ckc.getCurrentMode()== ConceptKnowledgeCalculator.Mode.STRUCTUREGRAPHWITHRESOURCE){
+            System.out.println("Add a assessment file");
+        }
 
         System.out.println("Type assessment path (from root)");
-        String LOR = scanner.nextLine();
+        String assessment = scanner.nextLine();
 
         try {
-            ckc.additionalLOR(LOR);
+            ckc.addAssignment(assessment);
             System.out.println("Process Completed");
         } catch (Exception e) {
             System.out.println("Can't find file");
         }
     }
 
-    public void removeLORFile(Scanner scanner){
+    public void removeAssessment(Scanner scanner){
         System.out.println("Remove a assignment file");
+        if(ckc.currentAssignments().size()<1){
+            System.out.println("You Don't have any files");
+        }else{
+            System.out.println("Current Assignment Files: " + ckc.currentAssignments().toString().replace("[", "").replace("]", ""));
 
-        System.out.println("Type path to file you want to remove: ");
-        String assignment = scanner.nextLine();
-        try {
-            if(ckc.getAssessmentFiles().size()==0){
-                System.out.println("You don't have any assessment files. Make sure to add one");
-            }else {
-                ckc.removeLORFile(assignment);
-                System.out.println("Process Completed");
-                if(ckc.getAssessmentFiles().size()==0){
-                    System.out.println("You now don't have any assessment files. Make sure to add one");
+            System.out.println("Type path to file you want to remove: ");
+            String assignment = scanner.nextLine();
+            try {
+                if (ckc.currentAssignments().size()<1) {
+                    System.out.println("You don't have any assessment files. Make sure to add one");
+                } else {
+                    ckc.removeAssessmentFile(assignment);
+                    System.out.println("Process Completed");
+                    if (ckc.currentAssignments().size()<1) {
+                        System.out.println("You now don't have any assessment files. Make sure to add one");
+                    }
                 }
+            } catch (Exception e) {
+                System.out.println("File can't be found");
             }
-        } catch (Exception e) {
-            System.out.println("File can't be found");
         }
     }
 
 
-
     public void replaceResourceFile(Scanner scanner){
-        System.out.println("Replace resource file");
+        if(ckc.getCurrentMode()== ConceptKnowledgeCalculator.Mode.COHORTGRAPH || ckc.getCurrentMode()== ConceptKnowledgeCalculator.Mode.STRUCTUREGRAPHWITHRESOURCE) {
+            System.out.println("Replace resource file");
+            System.out.println("Current Resource File: " +ckc.currentResource().toString().replace("[","").replace("]", ""));
+
+        }else if (ckc.getCurrentMode()== ConceptKnowledgeCalculator.Mode.STRUCTUREGRAPH || ckc.getCurrentMode()== ConceptKnowledgeCalculator.Mode.STRUCTUREGRAPHWITHASSESSMENT){
+            System.out.println("Add resource file");
+        }
 
         System.out.println("Type resource file you want to use: ");
         String resource = scanner.nextLine();
 
         try {
-            ckc.replaceLOFile(resource);
+            ckc.replaceResourceFile(resource);
             System.out.println("Process Completed");
 
         } catch (Exception e) {

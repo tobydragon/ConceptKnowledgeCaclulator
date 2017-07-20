@@ -33,7 +33,7 @@ public interface ConceptKnowledgeCalculatorAPI {
 
 
 
-    void addLORAndLO(String LO, String LOR) throws  Exception;
+    void addResourceAndAssessment(String resource, String assignment) throws  Exception;
 
     void replaceCohortGraph(String graph) throws Exception;
 
@@ -41,7 +41,7 @@ public interface ConceptKnowledgeCalculatorAPI {
 
     void setupStructureData(String struct) throws Exception;
 
-    void replaceLOFile(String resourceFile) throws Exception;
+    void replaceResourceFile (String resourceFile) throws Exception;
 
     /**
      * @return the URL where the current graphs can be seen
@@ -54,7 +54,7 @@ public interface ConceptKnowledgeCalculatorAPI {
      * @param assessmentFilename
      * @throws IOException
      */
-    void additionalLOR(String assessmentFilename) throws Exception;
+    void addAssignment(String assessmentFilename) throws Exception;
 
 
 
@@ -65,11 +65,11 @@ public interface ConceptKnowledgeCalculatorAPI {
      * @param secondResourceFile
      * @throws IOException
      */
-    void addAnotherLO(String secondResourceFile) throws Exception;
+    void addResource(String secondResourceFile) throws Exception;
 
 
 
-    void removeLORFile(String assessmentFile) throws Exception;
+    void removeAssessmentFile(String assessmentFile) throws Exception;
 
 
     /**
@@ -146,6 +146,9 @@ public interface ConceptKnowledgeCalculatorAPI {
     List<String> getAssessmentFiles();
 
     List<String> getStructureFiles();
+
+    List<String> currentAssignments();
+    List<String> currentResource();
 
 
     boolean assessmentIsValid(String name);

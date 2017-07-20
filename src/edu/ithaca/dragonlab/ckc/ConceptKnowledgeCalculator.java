@@ -218,10 +218,10 @@ public class ConceptKnowledgeCalculator implements ConceptKnowledgeCalculatorAPI
     }
 
     @Override
-    public void addLORAndLO(String LO, String LOR) throws  Exception{
+    public     void addResourceAndAssessment(String resource, String assignment) throws  Exception{
         if(currentMode == Mode.STRUCTUREGRAPH) {
-            resourceFiles.add(LO);
-            assessmentFiles.add(LOR);
+            resourceFiles.add(resource);
+            assessmentFiles.add(assignment);
             try{
                 clearAndCreateCohortData(structureFiles, resourceFiles, assessmentFiles);
                 currentMode = Mode.COHORTGRAPH;
@@ -235,7 +235,7 @@ public class ConceptKnowledgeCalculator implements ConceptKnowledgeCalculatorAPI
     }
 
     @Override
-    public void addAnotherLO(String secondResourceFile) throws Exception {
+    public void addResource(String secondResourceFile) throws Exception {
 
         if(currentMode== Mode.STRUCTUREGRAPH || currentMode== Mode.STRUCTUREGRAPHWITHRESOURCE){
                 resourceFiles.add(secondResourceFile);
@@ -256,7 +256,7 @@ public class ConceptKnowledgeCalculator implements ConceptKnowledgeCalculatorAPI
     }
 
     @Override
-    public void additionalLOR(String secondAssessmentFilename) throws Exception {
+    public void addAssignment(String secondAssessmentFilename) throws Exception {
         if(currentMode==Mode.COHORTGRAPH) {
             if(assessmentIsValid(secondAssessmentFilename)){
                 assessmentFiles.add(secondAssessmentFilename);
@@ -298,7 +298,7 @@ public class ConceptKnowledgeCalculator implements ConceptKnowledgeCalculatorAPI
 
 
     @Override
-    public void removeLORFile(String assessmentFile) throws Exception {
+    public void removeAssessmentFile(String assessmentFile) throws Exception {
         if(assessmentFiles.size()<1){
             throw new Exception("You don't have any files");
 
@@ -321,7 +321,7 @@ public class ConceptKnowledgeCalculator implements ConceptKnowledgeCalculatorAPI
     }
 
     @Override
-    public void replaceLOFile(String resourceFile) throws Exception {
+    public void replaceResourceFile(String resourceFile) throws Exception {
         if(currentMode==Mode.STRUCTUREGRAPHWITHRESOURCE || currentMode==Mode.COHORTGRAPH){
 
             try {
@@ -364,6 +364,18 @@ public class ConceptKnowledgeCalculator implements ConceptKnowledgeCalculatorAPI
         }
     }
 
+
+    @Override
+    public List<String> currentAssignments(){
+        List<String> temp = getAssessmentFiles();
+        return temp;
+    }
+
+    @Override
+    public List<String> currentResource(){
+        List<String> temp = getResourceFiles();
+        return temp;
+    }
 
 
     @Override
