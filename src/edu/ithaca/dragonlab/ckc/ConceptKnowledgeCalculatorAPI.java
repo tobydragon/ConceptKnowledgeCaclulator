@@ -39,8 +39,6 @@ public interface ConceptKnowledgeCalculatorAPI {
 
     void switchToStructure() throws Exception;
 
-    void setupStructureData(String struct) throws Exception;
-
     void replaceResourceFile (String resourceFile) throws Exception;
 
     /**

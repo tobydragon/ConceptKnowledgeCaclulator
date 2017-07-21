@@ -98,7 +98,9 @@ public class ConceptKnowledgeCalculatorTest {
             Assert.assertEquals(ckc.getResourceFiles().size(),0);
             Assert.assertEquals(ckc.getAssessmentFiles().size(), 0);
 
-            ckc.setupStructureData("test/testresources/ManuallyCreated/simpleConceptGraph.json");
+            struct.clear();
+            struct.add("test/testresources/ManuallyCreated/simpleConceptGraph.json");
+            ckc.clearAndCreateStructureData(struct);
             Assert.assertEquals(ckc.getStructureFiles().get(0),"test/testresources/ManuallyCreated/simpleConceptGraph.json" );
 
             Assert.assertEquals(ckc.getResourceFiles().size(),0);

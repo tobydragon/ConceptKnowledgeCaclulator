@@ -49,9 +49,9 @@ public class ConceptKnowledgeCalculator implements ConceptKnowledgeCalculatorAPI
 
     public ConceptKnowledgeCalculator(String structureFileName) throws IOException{
         this();
-        structureFiles.add(structureFileName);
-        currentMode= Mode.STRUCTUREGRAPH;
-        clearAndCreateStructureData(new ArrayList<>());
+        List<String> struct = new ArrayList<String>();
+        struct.add(structureFileName);
+        clearAndCreateStructureData(struct);
     }
 
     public ConceptKnowledgeCalculator(String structureFilename, String resourceFilename, String assessmentFilename) throws IOException{
@@ -64,36 +64,23 @@ public class ConceptKnowledgeCalculator implements ConceptKnowledgeCalculatorAPI
     }
 
 
-
     @Override
     public void clearAndCreateStructureData(List<String> structureFilename) throws IOException{
+
         structureGraph = null;
         cohortConceptGraphs=null;
+        structureFiles.clear();
+        resourceFiles.clear();
+        assessmentFiles.clear();
 
-        if (structureFilename.size()!=0 &&!structureFiles.contains(structureFilename.get(0))) {
-            structureFiles.clear();
-            structureFiles.add(structureFilename.get(0));
-        }
+        structureFiles.add(structureFilename.get(0));
 
         ConceptGraphRecord structureRecord = ConceptGraphRecord.buildFromJson(structureFiles.get(0));
         structureGraph = new ConceptGraph(structureRecord);
+        currentMode=Mode.STRUCTUREGRAPH;
 
     }
 
-    @Override
-    public void setupStructureData(String struct) throws Exception {
-        ConceptGraphRecord conceptGraph = ConceptGraphRecord.buildFromJson(struct);
-        if(conceptGraph.getConcepts().size()>0){
-            structureFiles.clear();
-            structureFiles.add(struct);
-
-            clearAndCreateStructureData(structureFiles);
-            currentMode=Mode.STRUCTUREGRAPH;
-        }else{
-            throw new Exception("Structure file invalid");
-        }
-
-    }
 
     @Override
     public void clearAndCreateCohortData(List<String> structureFilename, List<String> resourceFilename, List<String> assessmentFilename) throws IOException {
@@ -141,11 +128,10 @@ public class ConceptKnowledgeCalculator implements ConceptKnowledgeCalculatorAPI
     @Override
     public void switchToStructure() throws Exception {
         if (currentMode == Mode.COHORTGRAPH){
-            clearAndCreateStructureData(structureFiles);
-            resourceFiles.clear();
-            assessmentFiles.clear();
-            currentMode = Mode.STRUCTUREGRAPH;
-            cohortConceptGraphs=null;
+            List<String> structList = new ArrayList<>();
+            structList.addAll(getStructureFiles());
+
+            clearAndCreateStructureData(structList);
         }else{
             throw new Exception("Wrong mode");
         }
@@ -348,7 +334,7 @@ public class ConceptKnowledgeCalculator implements ConceptKnowledgeCalculatorAPI
 
     @Override
     public void replaceResourceFile(String resourceFile) throws Exception {
-        if(currentMode==Mode.STRUCTUREGRAPHWITHRESOURCE || currentMode==Mode.COHORTGRAPH){
+        if( currentMode==Mode.COHORTGRAPH || currentMode==Mode.STRUCTUREGRAPHWITHASSESSMENT){
 
             try {
                 List<LearningObjectLinkRecord> temp = LearningObjectLinkRecord.buildListFromJson(resourceFile);
@@ -359,32 +345,25 @@ public class ConceptKnowledgeCalculator implements ConceptKnowledgeCalculatorAPI
             }catch (Exception e){
                 throw new Exception("Can't find file");
             }
-        }else if(currentMode==Mode.STRUCTUREGRAPH){
+        }else if(currentMode==Mode.STRUCTUREGRAPH || currentMode== Mode.STRUCTUREGRAPHWITHRESOURCE){
             try {
                 List<LearningObjectLinkRecord> temp = LearningObjectLinkRecord.buildListFromJson(resourceFile);
 
-                resourceFiles.clear();
-                resourceFiles.add(resourceFile);
-                clearAndCreateStructureData(structureFiles);
+                List<String> resourceTemp = new ArrayList<>();
+                resourceTemp.addAll(resourceFiles);
+                resourceTemp.add(resourceFile);
+
+                List<String> strucTemp = new ArrayList<>();
+                strucTemp.addAll(structureFiles);
+                clearAndCreateStructureData(strucTemp);
+                resourceFiles.addAll(resourceTemp);
+
                 currentMode = Mode.STRUCTUREGRAPHWITHRESOURCE;
+
             }catch (Exception e){
                 throw new Exception("Can't find file");
 
             }
-
-        } else if(currentMode==Mode.STRUCTUREGRAPHWITHASSESSMENT){
-            try {
-                List<LearningObjectLinkRecord> temp = LearningObjectLinkRecord.buildListFromJson(resourceFile);
-
-                resourceFiles.clear();
-                resourceFiles.add(resourceFile);
-                clearAndCreateCohortData(structureFiles, resourceFiles, assessmentFiles);
-                currentMode = Mode.COHORTGRAPH;
-            }catch (Exception e){
-                throw new Exception("Can't find file");
-
-            }
-
         }else{
             throw new Exception("Wrong mode");
         }
