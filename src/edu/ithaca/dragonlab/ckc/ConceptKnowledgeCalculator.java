@@ -88,6 +88,7 @@ public class ConceptKnowledgeCalculator implements ConceptKnowledgeCalculatorAPI
             structureFiles.add(struct);
 
             clearAndCreateStructureData(structureFiles);
+            currentMode=Mode.STRUCTUREGRAPH;
         }else{
             throw new Exception("Structure file invalid");
         }
@@ -200,6 +201,8 @@ public class ConceptKnowledgeCalculator implements ConceptKnowledgeCalculatorAPI
             assessmentFiles.clear();
             aList.add(assess);
             clearAndCreateCohortData(sList, rList, aList);
+
+            currentMode= Mode.COHORTGRAPH;
 
         }
     }

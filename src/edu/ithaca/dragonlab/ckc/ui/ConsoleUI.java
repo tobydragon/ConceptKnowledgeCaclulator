@@ -18,7 +18,7 @@ public class ConsoleUI {
             ckc = new ConceptKnowledgeCalculator(structureFileName);
         } catch (Exception e) {
             System.out.println("Unable to load default files, please choose files manually. Error follows:");
-            e.printStackTrace();
+//            e.printStackTrace();
             ckc = new ConceptKnowledgeCalculator();
         }
         run();
@@ -29,7 +29,7 @@ public class ConsoleUI {
             ckc = new ConceptKnowledgeCalculator(structureFilename, resourceFilename, assessmentFilename);
         } catch (Exception e) {
             System.out.println("Unable to load default files, please choose files manually. Error follows:");
-            e.printStackTrace();
+//            e.printStackTrace();
             ckc = new ConceptKnowledgeCalculator();
         }
         run();
@@ -54,6 +54,8 @@ public class ConsoleUI {
 
                     num = scanner.nextInt();
                 }
+                scanner.nextLine();
+
 
                 if(num==1){
                     createNewCohortGraph(scanner );

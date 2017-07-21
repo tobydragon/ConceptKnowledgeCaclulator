@@ -69,10 +69,9 @@ public class ConceptKnowledgeCalculatorTest {
         try {
             concepts = ckc.calcIndividualConceptNodesSuggestions("bspinache1");
 
-            Assert.assertEquals(concepts.size(), 3);
-            Assert.assertEquals(concepts.get(0), "If Statement");
-            Assert.assertEquals(concepts.get(1), "While Loop");
-            Assert.assertEquals(concepts.get(2), "Counting");
+            Assert.assertEquals(concepts.size(), 1);
+            Assert.assertEquals(concepts.get(0), "Boolean");
+
 
         } catch (Exception e) {
             e.printStackTrace();
@@ -193,20 +192,14 @@ public class ConceptKnowledgeCalculatorTest {
             List<LearningObjectSuggestion> incomTest = res.incompleteList;
             List<LearningObjectSuggestion> wrongTest = res.wrongList;
 
-            Assert.assertEquals(incomTest.size(),6);
+            Assert.assertEquals(incomTest.size(),2);
             Assert.assertEquals(incomTest.get(0).getId(),"Q10");
-            Assert.assertEquals(incomTest.get(1).getId(),"Q10");
-            Assert.assertEquals(incomTest.get(2).getId(),"Q13");
-            Assert.assertEquals(incomTest.get(3).getId(),"Q3");
-            Assert.assertEquals(incomTest.get(4).getId(),"Q6");
-            Assert.assertEquals(incomTest.get(5).getId(),"Q6");
-            Assert.assertEquals(wrongTest.size(),6);
-            Assert.assertEquals(wrongTest.get(0).getId(), "Q9");
+            Assert.assertEquals(incomTest.get(1).getId(),"Q6");
+
+            Assert.assertEquals(wrongTest.size(),2);
+            Assert.assertEquals(wrongTest.get(0).getId(), "Q7");
             Assert.assertEquals(wrongTest.get(1).getId(), "Q9");
-            Assert.assertEquals(wrongTest.get(2).getId(), "Q15");
-            Assert.assertEquals(wrongTest.get(3).getId(), "Q1");
-            Assert.assertEquals(wrongTest.get(4).getId(), "Q14");
-            Assert.assertEquals(wrongTest.get(5).getId(), "Q2");
+
         } catch (Exception e) {
             Assert.fail("Unable to find user");
         }
@@ -235,9 +228,10 @@ public class ConceptKnowledgeCalculatorTest {
             Assert.assertEquals(incomTest.size(), 0);
             Assert.assertEquals(incomTest, new ArrayList<>());
 
-            Assert.assertEquals(wrongTest.size(), 2);
+            Assert.assertEquals(wrongTest.size(), 3);
             Assert.assertEquals(wrongTest.get(0).getId(), "Lab 4: Recursion");
             Assert.assertEquals(wrongTest.get(1).getId(), "Lab 2: Array Library");
+            Assert.assertEquals(wrongTest.get(2).getId(), "Lab 3: Comparing Array Library Efficiency");
 
 
         } catch (Exception e) {
@@ -271,13 +265,14 @@ public class ConceptKnowledgeCalculatorTest {
             Assert.assertEquals(incomTest.size(), 0);
             Assert.assertEquals(incomTest, new ArrayList<>());
 
-            Assert.assertEquals(wrongTest.size(), 6);
+            Assert.assertEquals(wrongTest.size(), 7);
             Assert.assertEquals(wrongTest.get(0).getId(), "Lab 4: Recursion");
             Assert.assertEquals(wrongTest.get(1).getId(), "Lab 8: Comparing Arrays and Linked Lists");
             Assert.assertEquals(wrongTest.get(2).getId(), "Lab 4: Recursion");
             Assert.assertEquals(wrongTest.get(3).getId(), "Lab 2: Array Library");
             Assert.assertEquals(wrongTest.get(4).getId(), "Lab 7: Linked List");
-            Assert.assertEquals(wrongTest.get(5).getId(), "Lab 3: Comparing Array Library Efficiency");
+            Assert.assertEquals(wrongTest.get(5).getId(), "Lab 5: Comparing Searches");
+            Assert.assertEquals(wrongTest.get(6).getId(), "Lab 3: Comparing Array Library Efficiency");
 
 
         } catch (Exception e) {
@@ -300,10 +295,12 @@ public class ConceptKnowledgeCalculatorTest {
 
             Assert.assertEquals(incomTest,new ArrayList<>());
 
-            Assert.assertEquals(wrongTest.get(0).getId(), "Lab 6: ArrayList and Testing");
-            Assert.assertEquals(wrongTest.get(1).getId(), "Lab 4: Recursion");
-            Assert.assertEquals(wrongTest.get(2).getId(), "Lab 7: Linked List");
-            Assert.assertEquals(wrongTest.get(3).getId(), "Lab 5: Comparing Searches");
+            Assert.assertEquals(wrongTest.get(0).getId(), "Lab 4: Recursion");
+            Assert.assertEquals(wrongTest.get(1).getId(), "Lab 8: Comparing Arrays and Linked Lists");
+            Assert.assertEquals(wrongTest.get(2).getId(), "Lab 4: Recursion");
+            Assert.assertEquals(wrongTest.get(3).getId(), "Lab 6: ArrayList and Testing");
+            Assert.assertEquals(wrongTest.get(4).getId(), "Lab 5: Comparing Searches");
+            Assert.assertEquals(wrongTest.get(5).getId(), "Lab 7: Linked List");
         } catch (IOException e) {
             Assert.fail("Unable to load default files. Test unable to run");
         }
@@ -877,10 +874,12 @@ public class ConceptKnowledgeCalculatorTest {
             Assert.assertEquals(incomTest.get(0).getId(), "How are while loops and booleans related?");
             Assert.assertEquals(incomTest.get(1).getId(), "What are the things you need for a while loop?");
 
-            Assert.assertEquals(wrongTest.size(), 3);
+            Assert.assertEquals(wrongTest.size(), 4);
             Assert.assertEquals(wrongTest.get(0).getId(), "What are the differences and similarities between for loops and while loops?");
-            Assert.assertEquals(wrongTest.get(1).getId(), "Are strings mutable?");
-            Assert.assertEquals(wrongTest.get(2).getId(), "What is the proper while loop diction?");
+            Assert.assertEquals(wrongTest.get(1).getId(), "What is the proper for loop diction?");
+            Assert.assertEquals(wrongTest.get(2).getId(), "Are strings mutable?");
+            Assert.assertEquals(wrongTest.get(3).getId(), "What is the proper while loop diction?");
+
 
         } catch (IOException e) {
             Assert.fail("Unable to load default files");
@@ -909,10 +908,12 @@ public class ConceptKnowledgeCalculatorTest {
             Assert.assertEquals(incomTest2.size(), 1);
             Assert.assertEquals(incomTest2.get(0).getId(), "What are values are accessed by?");
 
-            Assert.assertEquals(wrongTest2.size(), 3);
-            Assert.assertEquals(wrongTest2.get(0).getId(), "Write a function that will calculate if the substring 'the' is in any user input");
+            Assert.assertEquals(wrongTest2.size(), 5);
+            Assert.assertEquals(wrongTest2.get(0).getId(), "What’s a value");
             Assert.assertEquals(wrongTest2.get(1).getId(), "Write a function that will calculate if the substring 'the' is in any user input");
-            Assert.assertEquals(wrongTest2.get(2).getId(), "When do you want to allow side effects?");
+            Assert.assertEquals(wrongTest2.get(2).getId(), "Is a dictionary ordered?");
+            Assert.assertEquals(wrongTest2.get(3).getId(), "When do you want to allow side effects?");
+            Assert.assertEquals(wrongTest2.get(4).getId(), "Write a function that will calculate if the substring 'the' is in any user input");
 
 
 

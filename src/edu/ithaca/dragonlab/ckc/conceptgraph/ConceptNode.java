@@ -114,10 +114,9 @@ public class ConceptNode {
                 learningObjectSummary.put(label.getId() ,learningObjectSummary.get(label.getId())+1);
 
 			}else{
-                learningObjectSummary.put(label.getId() ,1);
+                learningObjectSummary.put(label.getId(), 1);
 
 			}
-
 		}
 		//go to each of the children and call on child so that the child node's learning objects will be added.
 		for(ConceptNode child: children){

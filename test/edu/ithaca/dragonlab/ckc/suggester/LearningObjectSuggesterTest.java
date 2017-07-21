@@ -31,9 +31,10 @@ public class LearningObjectSuggesterTest {
         List<LearningObjectSuggestion> incomTest = res.incompleteList;
         List<LearningObjectSuggestion> wrongTest = res.wrongList;
 
-        Assert.assertEquals(wrongTest.size(),2);
-        Assert.assertEquals(wrongTest.get(0).getId(), "Q4");
-        Assert.assertEquals(wrongTest.get(1).getId(), "Q5");
+        Assert.assertEquals(wrongTest.size(),3);
+        Assert.assertEquals(wrongTest.get(0).getId(), "Q3");
+        Assert.assertEquals(wrongTest.get(1).getId(), "Q4");
+        Assert.assertEquals(wrongTest.get(2).getId(), "Q5");
 
         Assert.assertEquals(incomTest.size(),0);
     }
@@ -47,21 +48,15 @@ public class LearningObjectSuggesterTest {
 
         List<LearningObjectSuggestion> incomTest = res.incompleteList;
         List<LearningObjectSuggestion> wrongTest = res.wrongList;
-        Assert.assertEquals(incomTest.size(),6);
+        Assert.assertEquals(incomTest.size(),2);
         Assert.assertEquals(incomTest.get(0).getId(),"Q10");
-        Assert.assertEquals(incomTest.get(1).getId(),"Q10");
-        Assert.assertEquals(incomTest.get(2).getId(),"Q13");
-        Assert.assertEquals(incomTest.get(3).getId(),"Q3");
-        Assert.assertEquals(incomTest.get(4).getId(),"Q6");
-        Assert.assertEquals(incomTest.get(5).getId(),"Q6");
+        Assert.assertEquals(incomTest.get(1).getId(),"Q6");
 
-        Assert.assertEquals(wrongTest.size(),6);
-        Assert.assertEquals(wrongTest.get(0).getId(), "Q9");
+
+        Assert.assertEquals(wrongTest.size(),2);
+        Assert.assertEquals(wrongTest.get(0).getId(), "Q7");
         Assert.assertEquals(wrongTest.get(1).getId(), "Q9");
-        Assert.assertEquals(wrongTest.get(2).getId(), "Q15");
-        Assert.assertEquals(wrongTest.get(3).getId(), "Q1");
-        Assert.assertEquals(wrongTest.get(4).getId(), "Q14");
-        Assert.assertEquals(wrongTest.get(5).getId(), "Q2");
+
 
     }
 
@@ -71,11 +66,8 @@ public class LearningObjectSuggesterTest {
 
         List<ConceptNode> concepts = LearningObjectSuggester.conceptsToWorkOn(orig);
 
-        Assert.assertEquals(concepts.size(), 3);
-        Assert.assertEquals(concepts.get(0).getID(), "If Statement");
-        Assert.assertEquals(concepts.get(1).getID(), "While Loop");
-        Assert.assertEquals(concepts.get(2).getID(), "Counting");
-
+        Assert.assertEquals(concepts.size(), 1);
+        Assert.assertEquals(concepts.get(0).getID(), "Boolean");
 
     }
 
@@ -151,14 +143,9 @@ public class LearningObjectSuggesterTest {
         List<ConceptNode> concepts = LearningObjectSuggester.conceptsToWorkOn(orig);
         HashMap<String, List<LearningObjectSuggestion>> objectSuggestionMap = LearningObjectSuggester.buildSuggestionMap(concepts,1,orig);
 
-        Assert.assertEquals(3, objectSuggestionMap.size());
-        Assert.assertEquals(objectSuggestionMap.get("If Statement").get(1).getId(), "Q3");
-        Assert.assertEquals(objectSuggestionMap.get("If Statement").get(0).getId(), "Q10");
-        Assert.assertEquals(objectSuggestionMap.get("If Statement").get(2).getId(), "Q6");
-        Assert.assertEquals(objectSuggestionMap.get("While Loop").get(0).getId(), "Q10");
-        Assert.assertEquals(objectSuggestionMap.get("While Loop").get(1).getId(), "Q6");
-        Assert.assertEquals(objectSuggestionMap.get("Counting").get(0).getId(), "Q13");
-
+        Assert.assertEquals(1, objectSuggestionMap.size());
+        Assert.assertEquals(objectSuggestionMap.get("Boolean").get(0).getId(), "Q10");
+        Assert.assertEquals(objectSuggestionMap.get("Boolean").get(1).getId(), "Q6");
     }
 
     @Test
