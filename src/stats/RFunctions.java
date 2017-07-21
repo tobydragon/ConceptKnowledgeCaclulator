@@ -48,14 +48,17 @@ public class RFunctions {
     public static double StudentKnowledgeEstAvg(KnowledgeEstimateMatrix loMatrix, String user){
         RCaller rCaller = RCallerVariable();
 
-
+        rCaller.redirectROutputToStream(System.out);
         List<String> userIdList = loMatrix.getUserIdList();
 
         int stuIndex = userIdList.indexOf(user);
         RCode code = loMatrix.getrMatrix();
-        stuIndex++;
+        //stuIndex++;
         code.addInt("stuIndex", stuIndex);
+        code.addRCode("stuIndex <- stuIndex + 1");
+        //code.addRCode("print(matrix)");
         code.addRCode("stuAvg <- mean(matrix[stuIndex, ])");
+        //code.addRCode("print(stuAvg)");
         rCaller.setRCode(code);
         rCaller.runAndReturnResult("stuAvg");
         double[] results = rCaller.getParser().getAsDoubleArray("stuAvg");
@@ -75,11 +78,19 @@ public class RFunctions {
         code.addRCode("columnCount <- ncol(matrix)");
 
         //delete any columns that have no variance in data
+        code.addRCode("deleteVector = c()");
+        code.addRCode("vectorIndex <- 0");
         code.addRCode("for(i in columnCount:1){" +
-                "if(data[1,i] == mean(matrix[,i])){" +
-                "matrix <- matrix[,-c(i)]" +
+                "if(data[1,i] == mean(matrix[,i])){");
+        code.addRCode("vectorIndex <- vectorIndex + 1");
+        code.addRCode("deleteVector[vectorIndex] <- names(matrix[i])");
+        code.addRCode("matrix <- matrix[,-c(i)]" +
                 "}" +
                 "}");
+        code.addRCode("if(vectorIndex > 0){" +
+                "print(\"The LearningObjects directly below were removed due to 0 variance throughout all responses:\")");
+        code.addRCode("print(deleteVector)");
+        code.addRCode("}");
 
         code.addRCode("columnCount <- ncol(matrix)");
         rCaller.setRCode(code);
@@ -122,63 +133,27 @@ public class RFunctions {
         return result[0];
     }
 
-    public static double[][] getFactorMatrix(KnowledgeEstimateMatrix loMatrix){
+    public static void getFactorMatrix(KnowledgeEstimateMatrix loMatrix){
         int numOfFactors = findFactorCount(loMatrix);
         RCaller rCaller = RCallerVariable();
+
+        rCaller.redirectROutputToStream(System.out);
+
         RCode code = loMatrix.getrMatrix();
         code.addInt("numOfFactors", numOfFactors);
         code.addRCode("matrixOfLoadings <- factanal(matrix, factors = numOfFactors, method = 'mle')");
 
         rCaller.getRCallerOptions();
         code.addRCode("factorsMatrix <- matrixOfLoadings$loadings");
+        code.addRCode("print(factorsMatrix)");
         //code.addRCode("factorsMatrix <- t(factorsMatrix)");
         rCaller.setRCode(code);
         rCaller.runAndReturnResult("factorsMatrix");
         double[][] result = rCaller.getParser().getAsDoubleMatrix("factorsMatrix");
 
-        double oldArray[] = new double[result.length*result[0].length];
-        for(int i = 0; i < result.length; i++) {
-            double[] row = result[i];
-            for(int j = 0; j < row.length; j++) {
-                double number = result[i][j];
-                oldArray[i*row.length+j] = number;
-            }
-        }
-        int columnCount = getColumnCount(loMatrix);
-        double newMatrix[][] = new double[(oldArray.length)/columnCount][columnCount];
-        int oldArrayIterator = 0;
-        for(int rowIterator = 0; rowIterator < (oldArray.length/columnCount); rowIterator++){
-            for(int columnIterator = 0; columnIterator < columnCount; columnIterator++){
-                newMatrix[rowIterator][columnIterator] = oldArray[oldArrayIterator];
-                oldArrayIterator++;
-            }
-        }
-
-        //newMatrix[][]
-
-
-
-        printingFactor(newMatrix);
-        return newMatrix;
     }
 
-        //these 2 functions just print the matrix of the factors
-        public static void printRow(double[] row) {
-            for (double i : row) {
-                System.out.print(i);
-                System.out.print("\t");
-            }
-            System.out.println();
-        }
 
-        public static void printingFactor(double[][] factorMatrix) {
-        int factorNum = 0;
-            for(double[] row : factorMatrix) {
-                factorNum++;
-                System.out.println("Factor " + factorNum + ": ");
-                printRow(row);
-            }
-        }
 
 
     /**

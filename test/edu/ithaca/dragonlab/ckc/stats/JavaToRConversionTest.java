@@ -34,7 +34,19 @@ public class JavaToRConversionTest {
             double[][] struct = newMatrix.getStudentKnowledgeEstimates();
             List<LearningObject> objList = newMatrix.getObjList();
             List<String> user = newMatrix.getUserIdList();
-            RCode mycode = JavaToRConversion.JavaToR(struct);
+
+            int objLength = objList.size();
+
+            //object list into string array
+
+            int i = 0;
+            String[] objStr = new String[objLength];
+            for(LearningObject obj: objList){
+                objStr[i] = obj.getId();
+                i++;
+            }
+
+            RCode mycode = JavaToRConversion.JavaToR(struct, objStr);
             mycode.addRCode("classAvg <- mean(matrix[, 3])");
 
 

@@ -63,7 +63,8 @@ public class RFunctionsTest {
     }
 
 
-    //TODO: This does not pass but it can print to the console the correct format
+    //This function has been changed to void but may in the future need to return something and is now only used for printing
+    //TODO: Make into actual test. Currently commented out in order to not to print output every test
 
     @Test
     public void getFactorMatrixTest(){
@@ -72,9 +73,12 @@ public class RFunctionsTest {
             List<LearningObject> gotoMatrix = data.getManualGradedLearningObjects();
             KnowledgeEstimateMatrix newMatrix = new KnowledgeEstimateMatrix(gotoMatrix);
 
-            double[][] factorMatrix = RFunctions.getFactorMatrix(newMatrix);
+            RFunctions.getFactorMatrix(newMatrix);
 
             /**
+            double[][] factorMatrix = RFunctions.getFactorMatrix(newMatrix);
+
+
             double newArray[] = new double[factorMatrix.length*factorMatrix[0].length];
             for(int i = 0; i < factorMatrix.length; i++) {
                 double[] row = factorMatrix[i];
@@ -84,7 +88,7 @@ public class RFunctionsTest {
                 }
              }
             System.out.println(Arrays.toString(newArray));
-*/
+
             double[] arr1 = new double[7];
             double[] arr2 = new double[7];
 
@@ -103,13 +107,12 @@ public class RFunctionsTest {
 
             //Assert.assertArrayEquals(exArr1, arr1, 0.0001);
             //Assert.assertArrayEquals(exArr2, arr2, 0.0001);
-
+*/
         }catch (Exception e){
             e.printStackTrace();
             //Assert.fail();
         }
     }
-
 
 
     @Test
