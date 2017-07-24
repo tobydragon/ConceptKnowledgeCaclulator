@@ -109,10 +109,39 @@ public class ConceptKnowledgeCalculatorTest {
         } catch (Exception e) {
             Assert.fail("Unable to load default files. Test unable to run");
         }
-
-
     }
 
+
+    @Test
+    public void updateStructureWithAnotherFile() {
+        ConceptKnowledgeCalculatorAPI ckc = null;
+        try {
+            ckc = new ConceptKnowledgeCalculator("test/testresources/ManuallyCreated/basicRealisticConceptGraph.json");
+            ckc.addResource("test/testresources/ManuallyCreated/researchResource1.json");
+
+            Assert.assertEquals(ckc.getCurrentMode(), ConceptKnowledgeCalculator.Mode.STRUCTUREGRAPHWITHRESOURCE);
+            Assert.assertEquals(ckc.currentResource().size(), 1);
+            Assert.assertEquals(ckc.currentStructure().get(0), "test/testresources/ManuallyCreated/basicRealisticConceptGraph.json");
+            Assert.assertEquals(ckc.currentResource().size(),1);
+            Assert.assertEquals(ckc.currentResource().get(0), "test/testresources/ManuallyCreated/researchResource1.json");
+            Assert.assertEquals(ckc.currentAssessment().size(), 0);
+
+            ckc.updateStructureWithAnotherFile("test/testresources/ManuallyCreated/researchConceptGraph.json");
+
+            Assert.assertEquals(ckc.getCurrentMode(), ConceptKnowledgeCalculator.Mode.STRUCTUREGRAPHWITHRESOURCE);
+            Assert.assertEquals(ckc.currentResource().size(),1);
+            Assert.assertEquals(ckc.currentResource().get(0), "test/testresources/ManuallyCreated/researchResource1.json");
+            Assert.assertEquals(ckc.currentAssessment().size(), 0);
+
+            Assert.assertEquals(ckc.currentStructure().get(0), "test/testresources/ManuallyCreated/researchConceptGraph.json");
+
+
+        } catch (Exception e) {
+            Assert.fail("Unable to load default files. Test unable to run");
+        }
+    }
+
+    
 
     @Test
     public void clearandCreateCohortGraphTest() {
@@ -127,7 +156,7 @@ public class ConceptKnowledgeCalculatorTest {
             List<String> assess = new ArrayList<>();
             assess.add("test/testresources/ManuallyCreated/researchAssessment1.csv");
 
-            ckc.clearAndCreateCohortData(struct,res,assess );
+            ckc.clearAndCreateCohortData(struct,res,assess);
 
 //            Assert.assertEquals(ckc.currentStructure().get(0),"test/testresources/ManuallyCreated/researchConceptGraph.json" );
 //            Assert.assertEquals(ckc.currentResource().get(0),"test/testresources/ManuallyCreated/basicRealisticResource.json" );

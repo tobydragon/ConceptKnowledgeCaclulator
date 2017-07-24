@@ -81,6 +81,28 @@ public class ConceptKnowledgeCalculator implements ConceptKnowledgeCalculatorAPI
 
     }
 
+    @Override
+    public void updateStructureWithAnotherFile(String file) throws IOException {
+        Mode tempMode = currentMode;
+
+        List<String> strucTemp = new ArrayList<>();
+        strucTemp.add(file);
+
+
+        List<String> resourceTemp = new ArrayList<>();
+        resourceTemp.addAll(resourceFiles);
+
+        List<String> assessTemp = new ArrayList<>();
+        assessTemp.addAll(assessmentFiles);
+
+        clearAndCreateStructureData(strucTemp);
+
+        resourceFiles.addAll(resourceTemp);
+        assessmentFiles.addAll(assessTemp);
+
+        currentMode=tempMode;
+
+    }
 
     @Override
     public void clearAndCreateCohortData(List<String> structureFilename, List<String> resourceFilename, List<String> assessmentFilename) throws IOException {

@@ -137,6 +137,10 @@ public interface ConceptKnowledgeCalculatorAPI {
      */
     void setupClearandCreateCohort(String struct, String res, String assess) throws Exception;
 
+
+    void updateStructureWithAnotherFile(String file) throws IOException;
+
+
     ConceptKnowledgeCalculator.Mode getCurrentMode();
 
 

@@ -226,11 +226,10 @@ public class ConsoleUI {
         System.out.println("What file do you want to replace with?");
         String file = scanner.nextLine();
 
-        List<String> temp = new ArrayList<>();
-        temp.add(file);
+
 
         try {
-            ckc.clearAndCreateStructureData(temp);
+            ckc.updateStructureWithAnotherFile(file);
             System.out.println("Process Completed");
 
         } catch (Exception e) {
