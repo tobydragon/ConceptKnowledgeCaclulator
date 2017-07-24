@@ -7,6 +7,7 @@ import org.junit.Assert;
 import org.junit.Test;
 import stats.RFunctions;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -30,20 +31,25 @@ public class RFunctionsTest {
         Assert.assertEquals(1, avg, 0.001);
     }
 
+ */
     @Test
     public void studentKnowledgeEstAvgTest(){
-        String file = "test/testresources/partialComplexRealitsticAssessment.csv";
-        CSVReader data = new CSVReader(file);
-        ArrayList<LearningObject> gotoMatrix = data.getManualGradedLearningObjects();
-        KnowledgeEstimateMatrix newMatrix = new KnowledgeEstimateMatrix(gotoMatrix);
-        double avg = RFunctions.StudentKnowledgeEstAvg(newMatrix, 0);
-        Assert.assertEquals(.724, avg, 0.001);
-        avg = RFunctions.StudentKnowledgeEstAvg(newMatrix, 1);
-        Assert.assertEquals(.75, avg, 0.001);
-        avg = RFunctions.StudentKnowledgeEstAvg(newMatrix, 2);
-        Assert.assertEquals(.995, avg, 0.001);
+        String file = "test/testresources/ManuallyCreated/partialComplexRealitsticAssessment.csv";
+        try {
+            CSVReader data = new CSVReader(file);
+            List<LearningObject> gotoMatrix = data.getManualGradedLearningObjects();
+            KnowledgeEstimateMatrix newMatrix = new KnowledgeEstimateMatrix(gotoMatrix);
+            double avg = RFunctions.StudentKnowledgeEstAvg(newMatrix, "stu1");
+            Assert.assertEquals(.7238, avg, 0.001);
+            avg = RFunctions.StudentKnowledgeEstAvg(newMatrix, "stu2");
+            Assert.assertEquals(.861, avg, 0.001);
+            avg = RFunctions.StudentKnowledgeEstAvg(newMatrix, "stu3");
+            Assert.assertEquals(.995, avg, 0.001);
+        }catch (Exception e){
+            Assert.fail();
+        }
     }
-    */
+
 
 
 
@@ -65,9 +71,10 @@ public class RFunctionsTest {
 
     //This function has been changed to void but may in the future need to return something and is now only used for printing
     //TODO: Make into actual test. Currently commented out in order to not to print output every test
-
+/**
     @Test
     public void getFactorMatrixTest(){
+
         try{
             CSVReader data = new CSVReader("test/testresources/ManuallyCreated/complexRealisticAssessment.csv");
             List<LearningObject> gotoMatrix = data.getManualGradedLearningObjects();
@@ -107,13 +114,13 @@ public class RFunctionsTest {
 
             //Assert.assertArrayEquals(exArr1, arr1, 0.0001);
             //Assert.assertArrayEquals(exArr2, arr2, 0.0001);
-*/
+
         }catch (Exception e){
             e.printStackTrace();
             //Assert.fail();
         }
     }
-
+*/
 
     @Test
     public void getColumnCountTest(){

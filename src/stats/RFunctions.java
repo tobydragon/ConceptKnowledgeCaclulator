@@ -53,12 +53,13 @@ public class RFunctions {
 
         int stuIndex = userIdList.indexOf(user);
         RCode code = loMatrix.getrMatrix();
-        //stuIndex++;
+        stuIndex++;
         code.addInt("stuIndex", stuIndex);
-        code.addRCode("stuIndex <- stuIndex + 1");
+        //code.addRCode("stuIndex <- stuIndex + 1");
         //code.addRCode("print(matrix)");
-        code.addRCode("stuAvg <- mean(matrix[stuIndex, ])");
+        code.addRCode("stuAvgList <- rowMeans(matrix, na.rm = TRUE)");
         //code.addRCode("print(stuAvg)");
+        code.addRCode("stuAvg <- stuAvgList[stuIndex]");
         rCaller.setRCode(code);
         rCaller.runAndReturnResult("stuAvg");
         double[] results = rCaller.getParser().getAsDoubleArray("stuAvg");
