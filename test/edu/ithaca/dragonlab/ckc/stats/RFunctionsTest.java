@@ -52,7 +52,9 @@ public class RFunctionsTest {
 
 
 
-
+    //These two functions below, findFactorCount and getFactorMatrix, are commented out because they are forced to print through R's methods.
+    //These tests should be used if getFactorMatrix in ConsoleUI or ConceptKnowledgeCalculator need debugging
+    /**
     @Test
     public void findFactorCountTest(){
         try {
@@ -69,9 +71,8 @@ public class RFunctionsTest {
     }
 
 
-    //This function has been changed to void but may in the future need to return something and is now only used for printing
     //TODO: Make into actual test. Currently commented out in order to not to print output every test
-/**
+
     @Test
     public void getFactorMatrixTest(){
 

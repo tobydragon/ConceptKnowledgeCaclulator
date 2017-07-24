@@ -119,7 +119,7 @@ public interface ConceptKnowledgeCalculatorAPI {
      */
     double getStudentAvg(String user);
 
-
+    void getFactorMatrix();
 
     /**
      * Calculates a list of conceptNode based on an individual graph , returns a the list of ConceptNodes

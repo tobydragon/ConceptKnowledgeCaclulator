@@ -16,6 +16,8 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.junit.Assert;
 import org.junit.Test;
+import stats.RFunctions;
+
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -869,6 +871,20 @@ public class ConceptKnowledgeCalculatorTest {
 
     }
 
+//This function is tested through output reading and should only be uncommented during debugging
+    /**
+    @Test
+    public void getFactorMatrixTest(){
+        ConceptKnowledgeCalculatorAPI ckc = null;
+        try {
+            ckc = new ConceptKnowledgeCalculator("test/testresources/ManuallyCreated/basicRealisticConceptGraph.json", "test/testresources/ManuallyCreated/basicRealisticResource.json", "test/testresources/ManuallyCreated/basicRealisticAssessmentMoreUsers.csv");
+        } catch (IOException e) {
+            Assert.fail("Unable to load default files");
+        }
+        ckc.getFactorMatrix();
+
+    }
+*/
 
     @Test
     public void research1test() throws Exception {

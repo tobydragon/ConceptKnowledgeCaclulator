@@ -100,7 +100,7 @@ public class RFunctions {
         return result[0];
     }
 
-    public static int findFactorCount(KnowledgeEstimateMatrix loMatrix){
+    public static int findFactorCount(KnowledgeEstimateMatrix loMatrix)throws Exception{
         RCaller rCaller = RCallerVariable();
 
         RCode code = loMatrix.getrMatrix();
@@ -108,33 +108,38 @@ public class RFunctions {
 
         code.addInt("numOfFactors", numOfFactors);
         int columnCount = getColumnCount(loMatrix);
-        code.addInt("columnCount", columnCount);
+        if(columnCount > 2) {
+            code.addInt("columnCount", columnCount);
 
-        //sets a limit on how high R will go to find the factor amount based on how many columns exist
-        code.addRCode("if(columnCount %% 2 == 0){" +
-                "upperlimit <- (columnCount/2) - 1" +
-                "}else{" +
-                "upperlimit <- (columnCount/2) - 0.5" +
-                "}");
+            //sets a limit on how high R will go to find the factor amount based on how many columns exist
+            code.addRCode("if(columnCount %% 2 == 0){" +
+                    "upperlimit <- (columnCount/2) - 1" +
+                    "}else{" +
+                    "upperlimit <- (columnCount/2) - 0.5" +
+                    "}");
 
-        //put all p-values of the factor analysis into a list
-        //run through the list and take the factor number with the first p-value above .05
-        code.addRCode("vector = c()");
-        code.addRCode("for(i in 1:upperlimit){" +
-                "vector[i] <- factanal(matrix, i, method = 'mle')$PVAL" +
-                "}");
-        code.addRCode("for(i in 1:upperlimit){" +
-                "if(vector[i] < .05){" +
-                "numOfFactors <- i + 1" +
-                "}" +
-                "}");
-        rCaller.setRCode(code);
-        rCaller.runAndReturnResult("numOfFactors");
-        int[] result = rCaller.getParser().getAsIntArray("numOfFactors");
-        return result[0];
+            //put all p-values of the factor analysis into a list
+            //run through the list and take the factor number with the first p-value above .05
+            rCaller.redirectROutputToStream(System.out);
+            code.addRCode("vector = c()");
+            code.addRCode("for(i in 1:upperlimit){" +
+                    "vector[i] <- factanal(matrix, i, method = 'mle')$PVAL" +
+                    "}");
+            code.addRCode("for(i in 1:upperlimit){" +
+                    "if(vector[i] < .05){" +
+                    "numOfFactors <- i + 1" +
+                    "}" +
+                    "}");
+            rCaller.setRCode(code);
+            rCaller.runAndReturnResult("numOfFactors");
+            int[] result = rCaller.getParser().getAsIntArray("numOfFactors");
+            return result[0];
+        }else{
+            throw new Exception();
+        }
     }
 
-    public static void getFactorMatrix(KnowledgeEstimateMatrix loMatrix){
+    public static void getFactorMatrix(KnowledgeEstimateMatrix loMatrix)throws Exception {
         int numOfFactors = findFactorCount(loMatrix);
         RCaller rCaller = RCallerVariable();
 

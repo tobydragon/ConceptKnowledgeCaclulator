@@ -110,48 +110,6 @@ public class ConceptKnowledgeCalculator implements ConceptKnowledgeCalculatorAPI
 
     }
 
-//    @Override
-//    public void clearAndCreateCohortData(List<String> structureFilename, List<String> resourceFilename, List<String> assessmentFilename) throws IOException {
-//        cohortConceptGraphs = null;
-//        structureGraph = null;
-//
-//        //to change the structure file, clear the old list and add the new one.
-//        if (structureFilename.size()!=0 &&!structureFiles.contains(structureFilename.get(0))) {
-//            structureFiles.clear();
-//            structureFiles.add(structureFilename.get(0));
-//        }
-//
-//
-//        if(resourceFilename.size()!=0 && !resourceFiles.contains(resourceFilename.get(0))){
-//            resourceFiles.add(resourceFilename.get(0));
-//        }
-//        //create the graph structure to be copied for each user
-//        ConceptGraphRecord structureRecord = ConceptGraphRecord.buildFromJson(structureFiles.get(0));
-//        List<LearningObjectLinkRecord> linkRecord = new ArrayList<>();
-//        for (String rFiles : resourceFiles){
-//            List<LearningObjectLinkRecord> temp = LearningObjectLinkRecord.buildListFromJson(rFiles);
-//            linkRecord.addAll(temp);
-//        }
-//
-//        if(assessmentFilename.size()!=0 && !assessmentFiles.contains(assessmentFilename.get(0))){
-//            assessmentFiles.add(assessmentFilename.get(0));
-//        }
-//
-//        ConceptGraph graph = new ConceptGraph(structureRecord, linkRecord);
-//
-//        //create the data to be used to create and populate the graph copies
-//        List<LearningObjectResponse> assessments = new ArrayList<>();
-//
-//        for (String aname: assessmentFiles){
-//            CSVReader csvReader = new CSVReader(aname);
-//            List<LearningObjectResponse> temp = csvReader.getManualGradedResponses();
-//            assessments.addAll(temp);
-//        }
-//
-//        //create the average and individual graphs
-//        cohortConceptGraphs = new CohortConceptGraphs(graph, assessments);
-//        currentMode=Mode.COHORTGRAPH;
-//    }
 
     @Override
     public void clearAndCreateCohortData(List<String> structureFilename, List<String> resourceFilename, List<String> assessmentFilename) throws IOException {
@@ -612,6 +570,23 @@ public class ConceptKnowledgeCalculator implements ConceptKnowledgeCalculatorAPI
 
         if(userIdList.contains(user)) {
             return RFunctions.StudentKnowledgeEstAvg(myMatrix, user);
+        }else{
+            throw new NullPointerException();
+        }
+    }
+
+    public void getFactorMatrix(){
+        if(currentMode==Mode.COHORTGRAPH){
+            ConceptGraph graph = cohortConceptGraphs.getAvgGraph();
+            Map<String, LearningObject> loMap = graph.getLearningObjectMap();
+            List<LearningObject> objList = new ArrayList<LearningObject>(loMap.values());
+            KnowledgeEstimateMatrix myMatrix = new KnowledgeEstimateMatrix(objList);
+
+            try {
+                RFunctions.getFactorMatrix(myMatrix);
+            }catch (Exception e){
+                System.out.println("Not enough Learning Objects with varying data to perform factor analysis");
+            }
         }else{
             throw new NullPointerException();
         }
