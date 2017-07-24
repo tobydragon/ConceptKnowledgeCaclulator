@@ -56,11 +56,17 @@ public class ConceptKnowledgeCalculator implements ConceptKnowledgeCalculatorAPI
 
     public ConceptKnowledgeCalculator(String structureFilename, String resourceFilename, String assessmentFilename) throws IOException{
         this();
-        structureFiles.add(structureFilename);
-        resourceFiles.add(resourceFilename);
-        assessmentFiles.add(assessmentFilename);
-        currentMode= Mode.COHORTGRAPH;
-        clearAndCreateCohortData(new ArrayList<>(), new ArrayList<>(), new ArrayList<>());
+
+        List<String>  structure = new ArrayList<>();
+        structure.add(structureFilename);
+
+        List<String>  resource = new ArrayList<>();
+        resource.add(resourceFilename);
+
+        List<String>  assessment = new ArrayList<>();
+        assessment.add(assessmentFilename);
+
+        clearAndCreateCohortData(structure, resource, assessment);
     }
 
 
@@ -169,7 +175,7 @@ public class ConceptKnowledgeCalculator implements ConceptKnowledgeCalculatorAPI
             linkRecord.addAll(temp);
         }
 
-        assessmentFiles.add(assessmentFilename.get(0));
+        assessmentFiles.addAll(assessmentFilename);
 
         ConceptGraph graph = new ConceptGraph(structureRecord, linkRecord);
 
@@ -258,7 +264,6 @@ public class ConceptKnowledgeCalculator implements ConceptKnowledgeCalculatorAPI
     public void replaceCohortGraph(String graph) throws Exception{
         ConceptGraphRecord conceptGraph = ConceptGraphRecord.buildFromJson(graph);
         if(conceptGraph.getConcepts().size()>0){
-            Mode tempMode= currentMode;
 
             List<String>  structure = new ArrayList<>();
             structure.add(graph);
@@ -272,7 +277,6 @@ public class ConceptKnowledgeCalculator implements ConceptKnowledgeCalculatorAPI
 
             clearAndCreateCohortData(structure,resource,assessment);
 
-            currentMode=tempMode;
         }else{
             throw new Exception("Structure file invalid");
         }
@@ -280,30 +284,31 @@ public class ConceptKnowledgeCalculator implements ConceptKnowledgeCalculatorAPI
 
     @Override
     public void addResourceAndAssessment(String resource, String assignment) throws  Exception{
-        if(currentMode == Mode.STRUCTUREGRAPH) {
-            List<LearningObjectLinkRecord> temp = LearningObjectLinkRecord.buildListFromJson(resource);
-            if(temp.size()>0){
-                if(assessmentIsValid(assignment)){
-                    resourceFiles.add(resource);
-                    assessmentFiles.add(assignment);
-                }else{
-                    throw new Exception("Assessment file invalid");
-                }
-            }else{
-                throw new Exception("Resource file invalid");
-            }
-
-
-            try{
-                clearAndCreateCohortData(structureFiles, resourceFiles, assessmentFiles);
-                currentMode = Mode.COHORTGRAPH;
-
-            }catch (Exception e){
-                e.printStackTrace();
-            }
-        }else{
-            throw new Exception("Wrong mode");
-        }
+//        if(currentMode == Mode.STRUCTUREGRAPH) {
+//            List<LearningObjectLinkRecord> temp = LearningObjectLinkRecord.buildListFromJson(resource);
+//            if(temp.size()>0){
+//                if(assessmentIsValid(assignment)){
+//                    resourceFiles.add(resource);
+//                    assessmentFiles.add(assignment);
+//                }else{
+//                    throw new Exception("Assessment file invalid");
+//                }
+//            }else{
+//                throw new Exception("Resource file invalid");
+//            }
+//
+//
+//            try{
+//
+//                clearAndCreateCohortData(structureFiles, resourceFiles, assessmentFiles);
+//                currentMode = Mode.COHORTGRAPH;
+//
+//            }catch (Exception e){
+//                e.printStackTrace();
+//            }
+//        }else{
+//            throw new Exception("Wrong mode");
+//        }
     }
 
     @Override
@@ -312,6 +317,7 @@ public class ConceptKnowledgeCalculator implements ConceptKnowledgeCalculatorAPI
         if(currentMode== Mode.STRUCTUREGRAPH || currentMode== Mode.STRUCTUREGRAPHWITHRESOURCE){
             List<LearningObjectLinkRecord> temp = LearningObjectLinkRecord.buildListFromJson(secondResourceFile);
             if(temp.size()>0){
+                resourceFiles.clear();
                 resourceFiles.add(secondResourceFile);
                 currentMode=Mode.STRUCTUREGRAPHWITHRESOURCE;
             }else{
@@ -323,9 +329,17 @@ public class ConceptKnowledgeCalculator implements ConceptKnowledgeCalculatorAPI
             try {
                 List<LearningObjectLinkRecord> temp = LearningObjectLinkRecord.buildListFromJson(secondResourceFile);
                 if(temp.size()>0){
-                    resourceFiles.add(secondResourceFile);
-                    clearAndCreateCohortData(structureFiles, resourceFiles, assessmentFiles);
-                    currentMode= Mode.COHORTGRAPH;
+
+                    List<String>  structure = new ArrayList<>();
+                    structure.addAll(structureFiles);
+
+                    List<String>  resource = new ArrayList<>();
+                    resource.add(secondResourceFile);
+
+                    List<String>  assessment = new ArrayList<>();
+                    assessment.addAll(assessmentFiles);
+
+                    clearAndCreateCohortData(structure, resource, assessment);
                 }else{
                     throw new Exception("Resource file invalid");
                 }
@@ -343,16 +357,34 @@ public class ConceptKnowledgeCalculator implements ConceptKnowledgeCalculatorAPI
     public void addAssignment(String secondAssessmentFilename) throws Exception {
         if(currentMode==Mode.COHORTGRAPH) {
             if(assessmentIsValid(secondAssessmentFilename)){
-                assessmentFiles.add(secondAssessmentFilename);
-                clearAndCreateCohortData(structureFiles, resourceFiles, assessmentFiles);
+                List<String>  structure = new ArrayList<>();
+                structure.addAll(structureFiles);
+
+                List<String>  resource = new ArrayList<>();
+                resource.addAll(resourceFiles);
+
+                List<String>  assessment = new ArrayList<>();
+                assessment.addAll(assessmentFiles);
+                assessment.add(secondAssessmentFilename);
+
+                clearAndCreateCohortData(structure, resource, assessment);
             }else{
                 throw new Exception();
             }
 
         } else if(currentMode==Mode.STRUCTUREGRAPHWITHRESOURCE ){
             if(assessmentIsValid(secondAssessmentFilename)){
-                assessmentFiles.add(secondAssessmentFilename);
-                clearAndCreateCohortData(structureFiles, resourceFiles, assessmentFiles);
+                List<String>  structure = new ArrayList<>();
+                structure.addAll(structureFiles);
+
+                List<String>  resource = new ArrayList<>();
+                resource.addAll(resourceFiles);
+
+                List<String>  assessment = new ArrayList<>();
+                assessment.addAll(assessmentFiles);
+                assessment.add(secondAssessmentFilename);
+
+                clearAndCreateCohortData(structure, resource, assessment);
                 currentMode = Mode.COHORTGRAPH;
 
             }else{
@@ -393,9 +425,17 @@ public class ConceptKnowledgeCalculator implements ConceptKnowledgeCalculatorAPI
             }else {
 
                 if (currentMode == Mode.COHORTGRAPH) {
-                    assessmentFiles.remove(assessmentFile);
-                    clearAndCreateCohortData(structureFiles, resourceFiles, assessmentFiles);
+                    List<String>  structure = new ArrayList<>();
+                    structure.addAll(structureFiles);
 
+                    List<String>  resource = new ArrayList<>();
+                    resource.addAll(resourceFiles);
+
+                    List<String>  assessment = new ArrayList<>();
+                    assessment.addAll(assessmentFiles);
+                    assessment.remove(assessmentFile);
+
+                    clearAndCreateCohortData(structure, resource, assessment);
                 } else if (currentMode == Mode.STRUCTUREGRAPHWITHASSESSMENT) {
                     assessmentFiles.remove(assessmentFile);
 
@@ -413,7 +453,18 @@ public class ConceptKnowledgeCalculator implements ConceptKnowledgeCalculatorAPI
 
                 resourceFiles.clear();
                 resourceFiles.add(resourceFile);
-                clearAndCreateCohortData(structureFiles, resourceFiles, assessmentFiles);
+
+                List<String>  structure = new ArrayList<>();
+                structure.addAll(structureFiles);
+
+                List<String>  resource = new ArrayList<>();
+                resource.add(resourceFile);
+
+                List<String>  assessment = new ArrayList<>();
+                assessment.addAll(assessmentFiles);
+
+                clearAndCreateCohortData(structure, resource, assessment);
+
             }catch (Exception e){
                 throw new Exception("Can't find file");
             }
