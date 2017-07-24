@@ -12,8 +12,8 @@ import java.util.*;
  */
 public class LearningObjectSuggester {
 
-    public static double MAX= .75;
-    public static double MIN = .55;
+    public static double MAX= .85;
+    public static double MIN = .60;
 
 
     /**
@@ -31,6 +31,7 @@ public class LearningObjectSuggester {
                 graph.updateSuggestionList(node, suggestedConceptList);
             }
         }
+
         return suggestedConceptList;
     }
 
@@ -54,6 +55,9 @@ public class LearningObjectSuggester {
             List<LearningObjectSuggestion> list = buildLearningObjectSuggestionList(map, graph.getLearningObjectMap(), concept.getID());
 
             sortSuggestions(list);
+
+
+
             for (int i = 0; i < list.size(); i++) {
                 //if it is incomplete
                 if (choice.equals(1)) {
@@ -109,7 +113,7 @@ public class LearningObjectSuggester {
 
             }else{
 
-                if(estimate> 0 && estimate<= MAX){
+                if(estimate>= 0 && estimate<= MAX){
                     level = LearningObjectSuggestion.Level.WRONG;
                 }else{
                     level = LearningObjectSuggestion.Level.RIGHT;

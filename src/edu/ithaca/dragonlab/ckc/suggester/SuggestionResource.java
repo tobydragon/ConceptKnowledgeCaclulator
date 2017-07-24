@@ -3,6 +3,7 @@ package edu.ithaca.dragonlab.ckc.suggester;
 import edu.ithaca.dragonlab.ckc.conceptgraph.ConceptGraph;
 import edu.ithaca.dragonlab.ckc.conceptgraph.ConceptNode;
 import edu.ithaca.dragonlab.ckc.learningobject.LearningObject;
+import sun.jvm.hotspot.utilities.Assert;
 
 import java.util.*;
 
@@ -86,6 +87,7 @@ public class SuggestionResource {
      *@param choice  0= wrong list, 1= incomplete list
      */
     public void completeList(ConceptGraph graph, int choice, List<ConceptNode> concepts) {
+
         if (choice == 1) {
 //            incomplete
             suggestionMap = LearningObjectSuggester.buildSuggestionMap(concepts, 1,graph);
@@ -93,6 +95,8 @@ public class SuggestionResource {
 //            //wrong
             suggestionMap = LearningObjectSuggester.buildSuggestionMap(concepts,0,graph);
         }
+
+
 
 
         int max = 0;

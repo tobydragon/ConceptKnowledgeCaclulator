@@ -31,9 +31,10 @@ public class LearningObjectSuggesterTest {
         List<LearningObjectSuggestion> incomTest = res.incompleteList;
         List<LearningObjectSuggestion> wrongTest = res.wrongList;
 
-        Assert.assertEquals(wrongTest.size(),2);
-        Assert.assertEquals(wrongTest.get(0).getId(), "Q4");
-        Assert.assertEquals(wrongTest.get(1).getId(), "Q5");
+        Assert.assertEquals(wrongTest.size(),3);
+        Assert.assertEquals(wrongTest.get(0).getId(), "Q3");
+        Assert.assertEquals(wrongTest.get(1).getId(), "Q4");
+        Assert.assertEquals(wrongTest.get(2).getId(), "Q5");
 
         Assert.assertEquals(incomTest.size(),0);
     }
@@ -47,19 +48,15 @@ public class LearningObjectSuggesterTest {
 
         List<LearningObjectSuggestion> incomTest = res.incompleteList;
         List<LearningObjectSuggestion> wrongTest = res.wrongList;
-
-        Assert.assertEquals(incomTest.size(),5);
+        Assert.assertEquals(incomTest.size(),2);
         Assert.assertEquals(incomTest.get(0).getId(),"Q10");
-        Assert.assertEquals(incomTest.get(1).getId(),"Q10");
-        Assert.assertEquals(incomTest.get(2).getId(),"Q3");
-        Assert.assertEquals(incomTest.get(3).getId(),"Q6");
-        Assert.assertEquals(incomTest.get(4).getId(),"Q6");
+        Assert.assertEquals(incomTest.get(1).getId(),"Q6");
 
-        Assert.assertEquals(wrongTest.size(),4);
-        Assert.assertEquals(wrongTest.get(0).getId(), "Q9");
+
+        Assert.assertEquals(wrongTest.size(),2);
+        Assert.assertEquals(wrongTest.get(0).getId(), "Q7");
         Assert.assertEquals(wrongTest.get(1).getId(), "Q9");
-        Assert.assertEquals(wrongTest.get(2).getId(), "Q1");
-        Assert.assertEquals(wrongTest.get(3).getId(), "Q2");
+
 
     }
 
@@ -69,9 +66,8 @@ public class LearningObjectSuggesterTest {
 
         List<ConceptNode> concepts = LearningObjectSuggester.conceptsToWorkOn(orig);
 
-        Assert.assertEquals(concepts.size(), 2);
-        Assert.assertEquals(concepts.get(0).getID(), "If Statement");
-        Assert.assertEquals(concepts.get(1).getID(), "While Loop");
+        Assert.assertEquals(concepts.size(), 1);
+        Assert.assertEquals(concepts.get(0).getID(), "Boolean");
 
     }
 
@@ -147,14 +143,9 @@ public class LearningObjectSuggesterTest {
         List<ConceptNode> concepts = LearningObjectSuggester.conceptsToWorkOn(orig);
         HashMap<String, List<LearningObjectSuggestion>> objectSuggestionMap = LearningObjectSuggester.buildSuggestionMap(concepts,1,orig);
 
-        Assert.assertEquals(2, objectSuggestionMap.size());
-        Assert.assertEquals(objectSuggestionMap.get("If Statement").get(1).getId(), "Q3");
-        Assert.assertEquals(objectSuggestionMap.get("If Statement").get(0).getId(), "Q10");
-        Assert.assertEquals(objectSuggestionMap.get("If Statement").get(2).getId(), "Q6");
-        Assert.assertEquals(objectSuggestionMap.get("While Loop").get(0).getId(), "Q10");
-        Assert.assertEquals(objectSuggestionMap.get("While Loop").get(1).getId(), "Q6");
-
-
+        Assert.assertEquals(1, objectSuggestionMap.size());
+        Assert.assertEquals(objectSuggestionMap.get("Boolean").get(0).getId(), "Q10");
+        Assert.assertEquals(objectSuggestionMap.get("Boolean").get(1).getId(), "Q6");
     }
 
     @Test
@@ -205,72 +196,5 @@ public class LearningObjectSuggesterTest {
 
         }
     }
-
-    @Test
-    public void research1Test(){
-        try{
-        CSVReader csvReader = new CSVReader("test/testresources/ManuallyCreated/researchAssessment1.csv");
-
-            ConceptGraphRecord graphRecord = ConceptGraphRecord.buildFromJson("test/testresources/ManuallyCreated/researchConceptGraph.json");
-            List<LearningObjectLinkRecord> LOLRlist = LearningObjectLinkRecord.buildListFromJson("test/testresources/ManuallyCreated/researchResource1.json");
-
-            ConceptGraph graph = new ConceptGraph(graphRecord, LOLRlist, csvReader.getManualGradedResponses());
-            graph.calcKnowledgeEstimates();
-
-            List<ConceptNode> concepts = LearningObjectSuggester.conceptsToWorkOn(graph);
-            SuggestionResource res =  new SuggestionResource(graph, concepts);
-
-            List<LearningObjectSuggestion> incomTest = res.incompleteList;
-            List<LearningObjectSuggestion>  wrongTest = res.wrongList;
-
-            Assert.assertEquals(incomTest.get(0).getId(), "How are while loops and booleans related?");
-            Assert.assertEquals(incomTest.get(1).getId(), "What are the important rules for variable names?");
-            Assert.assertEquals(incomTest.get(2).getId(), "What are the things you need for a while loop?");
-            Assert.assertEquals(incomTest.get(3).getId(), "What is an assignment statement?");
-            Assert.assertEquals(incomTest.get(4).getId(), "What is 5%7?");
-            Assert.assertEquals(incomTest.get(5).getId(), "Write the following in camel case");
-            Assert.assertEquals(incomTest.get(6).getId(), "What are some of the statements we have already seen?");
-
-
-            Assert.assertEquals(wrongTest.get(0).getId(), "What are the differences and similarities between for loops and while loops?");
-            Assert.assertEquals(wrongTest.get(1).getId(), "What is a statement?");
-            Assert.assertEquals(wrongTest.get(2).getId(), "What is the proper while loop diction?");
-
-
-        }catch (Exception e){
-            Assert.fail();
-        }
-
-
-        try{
-        CSVReader csvReader2 = new CSVReader("test/testresources/ManuallyCreated/researchAssessment2.csv");
-
-            ConceptGraphRecord graphRecord2 = ConceptGraphRecord.buildFromJson("test/testresources/ManuallyCreated/researchConceptGraph.json");
-            List<LearningObjectLinkRecord> LOLRlist2 = LearningObjectLinkRecord.buildListFromJson("test/testresources/ManuallyCreated/researchResource2.json");
-
-            ConceptGraph graph2 = new ConceptGraph(graphRecord2, LOLRlist2, csvReader2.getManualGradedResponses());
-            graph2.calcKnowledgeEstimates();
-
-            List<ConceptNode> concepts2 = LearningObjectSuggester.conceptsToWorkOn(graph2);
-            SuggestionResource res2 =  new SuggestionResource(graph2, concepts2);
-
-            List<LearningObjectSuggestion> incomTest2 = res2.incompleteList;
-            List<LearningObjectSuggestion>  wrongTest2 = res2.wrongList;
-
-            Assert.assertEquals(incomTest2.get(0).getId(), "When do you want to cause a side effect?");
-
-            Assert.assertEquals(wrongTest2.get(0).getId(), "What is printed then the following statements execute?");
-            Assert.assertEquals(wrongTest2.get(1).getId(), "How many parameters can you have?");
-            Assert.assertEquals(wrongTest2.get(2).getId(), "What is an assignment token?");
-            Assert.assertEquals(wrongTest2.get(3).getId(), "When do you want to allow side effects?");
-            Assert.assertEquals(wrongTest2.get(4).getId(), "What is a reference diagram?");
-
-
-        }catch (Exception e){
-            Assert.fail();
-        }
-
-    }
-
 
 }

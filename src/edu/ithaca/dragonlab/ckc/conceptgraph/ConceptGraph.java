@@ -225,7 +225,8 @@ public class ConceptGraph {
 		if (findNode != null) {
 			HashMap<String, Integer> learningObjectSummary = new HashMap<>();
 			findNode.buildLearningObjectSummaryList(learningObjectSummary);
-			return learningObjectSummary;
+
+            return learningObjectSummary;
 		}else{
 			logger.warn("Building learningObjectSummaryList:" + node + " is not found in the graph");
 			return null;

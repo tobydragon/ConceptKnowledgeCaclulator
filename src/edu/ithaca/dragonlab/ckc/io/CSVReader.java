@@ -62,7 +62,7 @@ public class CSVReader {
                 }
             }
         } catch (IOException e) {
-            e.printStackTrace();
+//            e.printStackTrace();
         }
 
     }

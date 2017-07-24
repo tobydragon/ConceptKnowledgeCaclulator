@@ -33,15 +33,13 @@ public interface ConceptKnowledgeCalculatorAPI {
 
 
 
-    void addLORAndLO(String LO, String LOR) throws  Exception;
+    void addResourceAndAssessment(String resource, String assignment) throws  Exception;
 
-    void replaceGraph(String graph) throws Exception;
+    void replaceCohortGraph(String graph) throws Exception;
 
     void switchToStructure() throws Exception;
 
-
-
-    void replaceLOFile(String resourceFile) throws Exception;
+    void replaceResourceFile (String resourceFile) throws Exception;
 
     /**
      * @return the URL where the current graphs can be seen
@@ -54,7 +52,7 @@ public interface ConceptKnowledgeCalculatorAPI {
      * @param assessmentFilename
      * @throws IOException
      */
-    void additionalLOR(String assessmentFilename) throws Exception;
+    void addAssignment(String assessmentFilename) throws Exception;
 
 
 
@@ -65,11 +63,11 @@ public interface ConceptKnowledgeCalculatorAPI {
      * @param secondResourceFile
      * @throws IOException
      */
-    void addAnotherLO(String secondResourceFile) throws Exception;
+    void addResource(String secondResourceFile) throws Exception;
 
 
 
-    void removeLORFile(String assessmentFile) throws Exception;
+    void removeAssessmentFile(String assessmentFile) throws Exception;
 
 
     /**
@@ -112,7 +110,7 @@ public interface ConceptKnowledgeCalculatorAPI {
      * @pre a user selects to view a list of all users within the graph
      * @return list of userIds
      */
-    List<String> getUserIdList();
+    List<String> getUserIdList() throws Exception;
 
     /**
      * Calculates a student's average knowledgeEstimates across all LearningObjects
@@ -130,18 +128,32 @@ public interface ConceptKnowledgeCalculatorAPI {
      */
     List<String> calcIndividualConceptNodesSuggestions(String userID) throws Exception;
 
+    /**
+     * when you want to remove all of the old data and set up new data
+     * @param struct
+     * @param res
+     * @param assess
+     * @throws IOException
+     */
+    void setupClearandCreateCohort(String struct, String res, String assess) throws Exception;
+
+
+    void updateStructureWithAnotherFile(String file) throws IOException;
+
 
     ConceptKnowledgeCalculator.Mode getCurrentMode();
 
-    List<String> getResourceFiles();
 
-    List<String> getAssessmentFiles();
 
-    List<String> getStructureFiles();
+    List<String> currentAssessment();
+    List<String> currentResource();
+
+    List<String> currentStructure();
 
 
     boolean assessmentIsValid(String name)throws IOException;
 
+    //testing purposes
     ConceptGraph getStructureGraph();
     CohortConceptGraphs getCohortConceptGraphs();
 
