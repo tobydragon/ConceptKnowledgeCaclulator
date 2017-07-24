@@ -104,32 +104,72 @@ public class ConceptKnowledgeCalculator implements ConceptKnowledgeCalculatorAPI
 
     }
 
+//    @Override
+//    public void clearAndCreateCohortData(List<String> structureFilename, List<String> resourceFilename, List<String> assessmentFilename) throws IOException {
+//        cohortConceptGraphs = null;
+//        structureGraph = null;
+//
+//        //to change the structure file, clear the old list and add the new one.
+//        if (structureFilename.size()!=0 &&!structureFiles.contains(structureFilename.get(0))) {
+//            structureFiles.clear();
+//            structureFiles.add(structureFilename.get(0));
+//        }
+//
+//
+//        if(resourceFilename.size()!=0 && !resourceFiles.contains(resourceFilename.get(0))){
+//            resourceFiles.add(resourceFilename.get(0));
+//        }
+//        //create the graph structure to be copied for each user
+//        ConceptGraphRecord structureRecord = ConceptGraphRecord.buildFromJson(structureFiles.get(0));
+//        List<LearningObjectLinkRecord> linkRecord = new ArrayList<>();
+//        for (String rFiles : resourceFiles){
+//            List<LearningObjectLinkRecord> temp = LearningObjectLinkRecord.buildListFromJson(rFiles);
+//            linkRecord.addAll(temp);
+//        }
+//
+//        if(assessmentFilename.size()!=0 && !assessmentFiles.contains(assessmentFilename.get(0))){
+//            assessmentFiles.add(assessmentFilename.get(0));
+//        }
+//
+//        ConceptGraph graph = new ConceptGraph(structureRecord, linkRecord);
+//
+//        //create the data to be used to create and populate the graph copies
+//        List<LearningObjectResponse> assessments = new ArrayList<>();
+//
+//        for (String aname: assessmentFiles){
+//            CSVReader csvReader = new CSVReader(aname);
+//            List<LearningObjectResponse> temp = csvReader.getManualGradedResponses();
+//            assessments.addAll(temp);
+//        }
+//
+//        //create the average and individual graphs
+//        cohortConceptGraphs = new CohortConceptGraphs(graph, assessments);
+//        currentMode=Mode.COHORTGRAPH;
+//    }
+
     @Override
     public void clearAndCreateCohortData(List<String> structureFilename, List<String> resourceFilename, List<String> assessmentFilename) throws IOException {
-        cohortConceptGraphs = null;
         structureGraph = null;
+        cohortConceptGraphs=null;
+        structureFiles.clear();
+        resourceFiles.clear();
+        assessmentFiles.clear();
 
-        //to change the structure file, clear the old list and add the new one.
-        if (structureFilename.size()!=0 &&!structureFiles.contains(structureFilename.get(0))) {
-            structureFiles.clear();
-            structureFiles.add(structureFilename.get(0));
-        }
+        structureFiles.add(structureFilename.get(0));
+
+        resourceFiles.add(resourceFilename.get(0));
 
 
-        if(resourceFilename.size()!=0 && !resourceFiles.contains(resourceFilename.get(0))){
-            resourceFiles.add(resourceFilename.get(0));
-        }
         //create the graph structure to be copied for each user
         ConceptGraphRecord structureRecord = ConceptGraphRecord.buildFromJson(structureFiles.get(0));
+
         List<LearningObjectLinkRecord> linkRecord = new ArrayList<>();
         for (String rFiles : resourceFiles){
             List<LearningObjectLinkRecord> temp = LearningObjectLinkRecord.buildListFromJson(rFiles);
             linkRecord.addAll(temp);
         }
 
-        if(assessmentFilename.size()!=0 && !assessmentFiles.contains(assessmentFilename.get(0))){
-            assessmentFiles.add(assessmentFilename.get(0));
-        }
+        assessmentFiles.add(assessmentFilename.get(0));
 
         ConceptGraph graph = new ConceptGraph(structureRecord, linkRecord);
 
@@ -167,7 +207,6 @@ public class ConceptKnowledgeCalculator implements ConceptKnowledgeCalculatorAPI
         }else{
             return false;
         }
-
     }
 
     @Override
@@ -219,10 +258,21 @@ public class ConceptKnowledgeCalculator implements ConceptKnowledgeCalculatorAPI
     public void replaceCohortGraph(String graph) throws Exception{
         ConceptGraphRecord conceptGraph = ConceptGraphRecord.buildFromJson(graph);
         if(conceptGraph.getConcepts().size()>0){
+            Mode tempMode= currentMode;
+
             List<String>  structure = new ArrayList<>();
             structure.add(graph);
 
-            clearAndCreateCohortData(structure,resourceFiles,assessmentFiles);
+            List<String>  resource = new ArrayList<>();
+            resource.addAll(resourceFiles);
+
+            List<String>  assessment = new ArrayList<>();
+            assessment.addAll(assessmentFiles);
+
+
+            clearAndCreateCohortData(structure,resource,assessment);
+
+            currentMode=tempMode;
         }else{
             throw new Exception("Structure file invalid");
         }

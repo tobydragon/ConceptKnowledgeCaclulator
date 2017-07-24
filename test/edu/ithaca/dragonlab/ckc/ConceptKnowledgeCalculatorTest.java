@@ -922,8 +922,7 @@ public class ConceptKnowledgeCalculatorTest {
         } catch (IOException e) {
             Assert.fail("Unable to load default files");
         }
-
-                }
+    }
 
 
 
