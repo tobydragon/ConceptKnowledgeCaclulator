@@ -195,7 +195,7 @@ public class ConceptKnowledgeCalculator implements ConceptKnowledgeCalculatorAPI
 
     @Override
     public void switchToStructure() throws Exception {
-        if (currentMode == Mode.COHORTGRAPH){
+        if (currentMode == Mode.COHORTGRAPH || currentMode== Mode.STRUCTUREGRAPHWITHASSESSMENT || currentMode== Mode.STRUCTUREGRAPHWITHRESOURCE){
             List<String> structList = new ArrayList<>();
             structList.addAll(currentStructure());
 
@@ -215,50 +215,6 @@ public class ConceptKnowledgeCalculator implements ConceptKnowledgeCalculatorAPI
         }
     }
 
-    @Override
-    public void setupClearandCreateCohort(String struct, String res, String assess) throws Exception {
-        List<String> sList = new ArrayList<>();
-        List<String> rList = new ArrayList<>();
-        List<String> aList = new ArrayList<>();
-
-        boolean sbool;
-        boolean rbool;
-        boolean abool;
-
-        ConceptGraphRecord conceptGraph = ConceptGraphRecord.buildFromJson(struct);
-        if(conceptGraph.getConcepts().size()>0){
-            sbool=true;
-        }else{
-            throw new Exception("Structure file invalid");
-        }
-
-
-        List<LearningObjectLinkRecord> temp = LearningObjectLinkRecord.buildListFromJson(res);
-        if(temp.size()>0){
-            rbool=true;
-        }else{
-            throw new Exception("Resource file invalid");
-        }
-
-        if(assessmentIsValid(assess)){
-            abool=true;
-        }else{
-            throw new Exception("Assessment file invalid");
-        }
-
-        if(sbool && rbool && abool){
-            structureFiles.clear();
-            sList.add(struct);
-            resourceFiles.clear();
-            rList.add(res);
-            assessmentFiles.clear();
-            aList.add(assess);
-            clearAndCreateCohortData(sList, rList, aList);
-
-            currentMode= Mode.COHORTGRAPH;
-
-        }
-    }
 
     @Override
     public void replaceCohortGraph(String graph) throws Exception{
@@ -284,31 +240,31 @@ public class ConceptKnowledgeCalculator implements ConceptKnowledgeCalculatorAPI
 
     @Override
     public void addResourceAndAssessment(String resource, String assignment) throws  Exception{
-//        if(currentMode == Mode.STRUCTUREGRAPH) {
-//            List<LearningObjectLinkRecord> temp = LearningObjectLinkRecord.buildListFromJson(resource);
-//            if(temp.size()>0){
-//                if(assessmentIsValid(assignment)){
-//                    resourceFiles.add(resource);
-//                    assessmentFiles.add(assignment);
-//                }else{
-//                    throw new Exception("Assessment file invalid");
-//                }
-//            }else{
-//                throw new Exception("Resource file invalid");
-//            }
-//
-//
-//            try{
-//
-//                clearAndCreateCohortData(structureFiles, resourceFiles, assessmentFiles);
-//                currentMode = Mode.COHORTGRAPH;
-//
-//            }catch (Exception e){
-//                e.printStackTrace();
-//            }
-//        }else{
-//            throw new Exception("Wrong mode");
-//        }
+        if(currentMode == Mode.STRUCTUREGRAPH) {
+            List<LearningObjectLinkRecord> temp = LearningObjectLinkRecord.buildListFromJson(resource);
+            if(temp.size()>0){
+                if(assessmentIsValid(assignment)){
+                    List<String>  s = new ArrayList<>();
+                    s.addAll(structureFiles);
+
+                    List<String>  r = new ArrayList<>();
+                    r.add(resource);
+
+                    List<String>  a = new ArrayList<>();
+                    a.add(assignment);
+
+                    clearAndCreateCohortData(s,r,a);
+
+                }else{
+                    throw new Exception("Assessment file invalid");
+                }
+            }else{
+                throw new Exception("Resource file invalid");
+            }
+
+        }else{
+            throw new Exception("Wrong mode");
+        }
     }
 
     @Override
@@ -354,7 +310,7 @@ public class ConceptKnowledgeCalculator implements ConceptKnowledgeCalculatorAPI
     }
 
     @Override
-    public void addAssignment(String secondAssessmentFilename) throws Exception {
+    public void addAssessement(String secondAssessmentFilename) throws Exception {
         if(currentMode==Mode.COHORTGRAPH) {
             if(assessmentIsValid(secondAssessmentFilename)){
                 List<String>  structure = new ArrayList<>();

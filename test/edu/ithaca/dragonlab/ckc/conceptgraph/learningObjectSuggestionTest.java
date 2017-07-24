@@ -14,7 +14,7 @@ public class learningObjectSuggestionTest {
     public void getTest(){
 
 
-        LearningObjectSuggestion test1= new LearningObjectSuggestion("A", 2, LearningObjectSuggestion.Level.INCOMPLETE, "Intro to CS");
+        LearningObjectSuggestion test1= new LearningObjectSuggestion("A", 2, LearningObjectSuggestion.Level.INCOMPLETE, "Intro to CS",1);
 
         Assert.assertEquals("A", test1.getId() );
         Assert.assertEquals(2, test1.getPathNum() );
@@ -26,7 +26,7 @@ public class learningObjectSuggestionTest {
     @Test
     public void setTest(){
 
-        LearningObjectSuggestion test2= new LearningObjectSuggestion("A", 2, LearningObjectSuggestion.Level.INCOMPLETE, "Intro to CS");
+        LearningObjectSuggestion test2= new LearningObjectSuggestion("A", 2, LearningObjectSuggestion.Level.INCOMPLETE, "Intro to CS",1);
 
         test2.setId("W");
         Assert.assertEquals("W", test2.getId() );

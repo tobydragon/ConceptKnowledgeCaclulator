@@ -98,42 +98,44 @@ public class ConsoleUI {
                     contQuit = 0;
                 }
 
-            } else if(mode == ConceptKnowledgeCalculator.Mode.STRUCTUREGRAPHWITHRESOURCE){
+            } else if(mode == ConceptKnowledgeCalculator.Mode.STRUCTUREGRAPHWITHRESOURCE) {
 
-                System.out.println("What do you want to do? \n 1 - edit graph \n 2 - replace resource file \n 3 - add assessment file (switch to cohort mode) \n 4 - view graph \n 5 - quit ");
+                System.out.println("What do you want to do? \n 1 - edit graph \n 2 - replace resource file \n 3 - add assessment file (switch to cohort mode) \n 4 - view graph \n 5 - View Structure Graph (switch to structure mode) \n 6 - quit ");
                 Integer num = scanner.nextInt();
 
-                while (num < 1 || num > 5) {
+                while (num < 1 || num > 6) {
                     System.out.println("Out of bounds");
-                    System.out.println("What do you want to do? \n 1 - edit graph \n 2 - replace resource file \n 3 - add assessment file (switch to cohort mode) \n 4 - view graph \n 5 - quit ");
+                    System.out.println("What do you want to do? \n 1 - edit graph \n 2 - replace resource file \n 3 - add assessment file (switch to cohort mode) \n 4 - view graph \n 5 - View Structure Graph (switch to structure mode) \n 6 - quit ");
                     num = scanner.nextInt();
                 }
                 scanner.nextLine();
 
-                if (num==1){
+                if (num == 1) {
                     editStructureGraph(scanner);
 
-                } else if(num==2){
+                } else if (num == 2) {
                     replaceResourceFile(scanner);
 
-                }else if(num==3){
+                } else if (num == 3) {
                     addAssignment(scanner);
 
-                }else if(num ==4){
+                } else if (num == 4) {
                     viewgraph();
 
-                } else{
+                }else if(num ==5){
+                    switchToStructuremode();
+                }else{
                     contQuit=0;
                 }
 
             } else if(mode == ConceptKnowledgeCalculator.Mode.STRUCTUREGRAPHWITHASSESSMENT) {
 
-                System.out.println("What do you want to do? \n 1 - edit graph \n 2 - add assessment file  \n 3 - remove assessment file \n 4 - create resource file  \n 5 - add resource file (switch to cohort mode) \n 6 - view graph \n 7 - quit");
+                System.out.println("What do you want to do? \n 1 - edit graph \n 2 - add assessment file  \n 3 - remove assessment file \n 4 - create resource file  \n 5 - add resource file (switch to cohort mode) \n 6 - view graph \n 7 - View Structure Graph (switch to structure mode) \n 8 - quit");
                 Integer num = scanner.nextInt();
 
-                while (num < 1 || num > 7) {
+                while (num < 1 || num > 8) {
                     System.out.println("Out of bounds");
-                    System.out.println("What do you want to do? \n 1 - edit graph \n 2 - add assessment file  \n 3 - remove assessment file \n 4 - create resource file  \n 5 - add resource file (switch to cohort mode) \n 6 - view graph \n 7 - quit");
+                    System.out.println("What do you want to do? \n 1 - edit graph \n 2 - add assessment file  \n 3 - remove assessment file \n 4 - create resource file  \n 5 - add resource file (switch to cohort mode) \n 6 - view graph \n 7 - View Structure Graph (switch to structure mode) \n 8 - quit");
                     num = scanner.nextInt();
                 }
                 scanner.nextLine();
@@ -155,7 +157,9 @@ public class ConsoleUI {
 
                 } else if (num == 6) {
                     viewgraph();
-                } else {
+                } else  if(num ==7) {
+                    switchToStructuremode();
+                }else{
                     contQuit=0;
                 }
 
@@ -363,8 +367,18 @@ public class ConsoleUI {
         System.out.println("Type grade book path: ");
         String assessment = scanner.nextLine();
 
+
+        List<String>  s = new ArrayList<>();
+        s.add(structure);
+
+        List<String>  r = new ArrayList<>();
+        r.add(resource);
+
+        List<String>  a = new ArrayList<>();
+        a.add(assessment);
+
         try {
-            ckc.setupClearandCreateCohort(structure,resource,assessment);
+            ckc.clearAndCreateCohortData(s,r,a);
             System.out.println("Process Completed");
         } catch (Exception e) {
             System.out.println("Can't find files");
@@ -401,7 +415,7 @@ public class ConsoleUI {
         String assessment = scanner.nextLine();
 
         try {
-            ckc.addAssignment(assessment);
+            ckc.addAssessement(assessment);
             System.out.println("Process Completed");
         } catch (Exception e) {
             System.out.println("Can't find file");

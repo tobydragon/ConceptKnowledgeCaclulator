@@ -214,6 +214,30 @@ public class ConceptGraph {
     }
 
 
+    public HashMap<String, Integer> buildDirectConceptLinkCount(){
+        HashMap<String, Integer> directConceptLinkCountMap = new HashMap<>();
+
+                //resources , concept links
+
+        ////These same LearningObjects might also be held by other nodes
+        for (ConceptNode node: nodeMap.values()){
+
+
+            for (LearningObject lo : node.learningObjectMap.values()){
+
+                if(directConceptLinkCountMap.containsKey(lo.getId())){
+                    directConceptLinkCountMap.put(lo.getId(),directConceptLinkCountMap.get(lo.getId())+1);
+
+                }else{
+                    directConceptLinkCountMap.put(lo.getId(), 1);
+                }
+
+            }
+
+        }
+        return directConceptLinkCountMap;
+    }
+
     /**
     *Finds where to start building the summaryList via the parameter and creates a empty hashmap to pass with it to buildLearningObjectSummaryList
     *@param node name that is used to find a ConceptNode

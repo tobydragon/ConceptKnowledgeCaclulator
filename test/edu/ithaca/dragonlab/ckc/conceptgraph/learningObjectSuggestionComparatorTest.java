@@ -22,15 +22,15 @@ public class learningObjectSuggestionComparatorTest {
     @Test
     public void equalTest(){
         List<LearningObjectSuggestion> suggestList = new ArrayList<>();
-        suggestList.add(new LearningObjectSuggestion("Q1", 1, LearningObjectSuggestion.Level.RIGHT, "A") );
-        suggestList.add(new LearningObjectSuggestion("Q4", 1, LearningObjectSuggestion.Level.RIGHT, "A") );
+        suggestList.add(new LearningObjectSuggestion("Q1", 1, LearningObjectSuggestion.Level.RIGHT, "A",1) );
+        suggestList.add(new LearningObjectSuggestion("Q4", 1, LearningObjectSuggestion.Level.RIGHT, "A",1) );
 
         new LearningObjectSuggestionComparator();
         Collections.sort(suggestList, new LearningObjectSuggestionComparator());
 
         List<LearningObjectSuggestion> suggestListTest = new ArrayList<>();
-        suggestListTest.add(new LearningObjectSuggestion("Q1", 1, LearningObjectSuggestion.Level.RIGHT, "A") );
-        suggestListTest.add(new LearningObjectSuggestion("Q4", 1, LearningObjectSuggestion.Level.RIGHT, "A") );
+        suggestListTest.add(new LearningObjectSuggestion("Q1", 1, LearningObjectSuggestion.Level.RIGHT, "A",1) );
+        suggestListTest.add(new LearningObjectSuggestion("Q4", 1, LearningObjectSuggestion.Level.RIGHT, "A",1) );
 
         for (int i =0; i<suggestList.size(); i++){
 
@@ -45,14 +45,14 @@ public class learningObjectSuggestionComparatorTest {
     @Test
     public void SecondPathHigher(){
         List<LearningObjectSuggestion> suggestList = new ArrayList<>();
-        suggestList.add(new LearningObjectSuggestion("Q1", 1, LearningObjectSuggestion.Level.WRONG, "A") );
-        suggestList.add(new LearningObjectSuggestion("Q4", 2, LearningObjectSuggestion.Level.WRONG, "A") );
+        suggestList.add(new LearningObjectSuggestion("Q1", 1, LearningObjectSuggestion.Level.WRONG, "A",1) );
+        suggestList.add(new LearningObjectSuggestion("Q4", 2, LearningObjectSuggestion.Level.WRONG, "A",1) );
 
         Collections.sort(suggestList, new LearningObjectSuggestionComparator());
 
         List<LearningObjectSuggestion> suggestListTest = new ArrayList<>();
-        suggestListTest.add(new LearningObjectSuggestion("Q4", 2, LearningObjectSuggestion.Level.WRONG, "A") );
-        suggestListTest.add(new LearningObjectSuggestion("Q1", 1, LearningObjectSuggestion.Level.WRONG, "A") );
+        suggestListTest.add(new LearningObjectSuggestion("Q4", 2, LearningObjectSuggestion.Level.WRONG, "A",1) );
+        suggestListTest.add(new LearningObjectSuggestion("Q1", 1, LearningObjectSuggestion.Level.WRONG, "A",1) );
 
         for (int i =0; i<suggestList.size(); i++){
 
@@ -67,14 +67,14 @@ public class learningObjectSuggestionComparatorTest {
     @Test
     public void secondPathLower(){
         List<LearningObjectSuggestion> suggestList = new ArrayList<>();
-        suggestList.add(new LearningObjectSuggestion("Q1", 5, LearningObjectSuggestion.Level.RIGHT, "A") );
-        suggestList.add(new LearningObjectSuggestion("Q4", 1, LearningObjectSuggestion.Level.RIGHT, "A") );
+        suggestList.add(new LearningObjectSuggestion("Q1", 5, LearningObjectSuggestion.Level.RIGHT, "A",1) );
+        suggestList.add(new LearningObjectSuggestion("Q4", 1, LearningObjectSuggestion.Level.RIGHT, "A",1) );
 
         Collections.sort(suggestList, new LearningObjectSuggestionComparator());
 
         List<LearningObjectSuggestion> suggestListTest = new ArrayList<>();
-        suggestListTest.add(new LearningObjectSuggestion("Q1", 5, LearningObjectSuggestion.Level.RIGHT, "A") );
-        suggestListTest.add(new LearningObjectSuggestion("Q4", 1, LearningObjectSuggestion.Level.RIGHT, "A") );
+        suggestListTest.add(new LearningObjectSuggestion("Q1", 5, LearningObjectSuggestion.Level.RIGHT, "A",1) );
+        suggestListTest.add(new LearningObjectSuggestion("Q4", 1, LearningObjectSuggestion.Level.RIGHT, "A",1) );
 
 
         for (int i =0; i<suggestList.size(); i++){
@@ -89,14 +89,14 @@ public class learningObjectSuggestionComparatorTest {
     @Test
     public void firstLevelLower(){
         List<LearningObjectSuggestion> suggestList = new ArrayList<>();
-        suggestList.add(new LearningObjectSuggestion("Q1", 1, LearningObjectSuggestion.Level.INCOMPLETE, "A") );
-        suggestList.add(new LearningObjectSuggestion("Q4", 1, LearningObjectSuggestion.Level.RIGHT, "A") );
+        suggestList.add(new LearningObjectSuggestion("Q1", 1, LearningObjectSuggestion.Level.INCOMPLETE, "A",1) );
+        suggestList.add(new LearningObjectSuggestion("Q4", 1, LearningObjectSuggestion.Level.RIGHT, "A",1) );
 
         Collections.sort(suggestList, new LearningObjectSuggestionComparator());
 
         List<LearningObjectSuggestion> suggestListTest = new ArrayList<>();
-        suggestListTest.add(new LearningObjectSuggestion("Q4", 1, LearningObjectSuggestion.Level.RIGHT, "A") );
-        suggestListTest.add(new LearningObjectSuggestion("Q1", 1, LearningObjectSuggestion.Level.INCOMPLETE, "A") );
+        suggestListTest.add(new LearningObjectSuggestion("Q4", 1, LearningObjectSuggestion.Level.RIGHT, "A",1) );
+        suggestListTest.add(new LearningObjectSuggestion("Q1", 1, LearningObjectSuggestion.Level.INCOMPLETE, "A",1) );
 
 
         for (int i =0; i<suggestList.size(); i++){
@@ -111,14 +111,14 @@ public class learningObjectSuggestionComparatorTest {
     @Test
     public void firstLevelHigher(){
         List<LearningObjectSuggestion> suggestList = new ArrayList<>();
-        suggestList.add(new LearningObjectSuggestion("Q4", 1, LearningObjectSuggestion.Level.RIGHT, "A") );
-        suggestList.add(new LearningObjectSuggestion("Q1", 1, LearningObjectSuggestion.Level.INCOMPLETE, "A") );
+        suggestList.add(new LearningObjectSuggestion("Q4", 1, LearningObjectSuggestion.Level.RIGHT, "A",1) );
+        suggestList.add(new LearningObjectSuggestion("Q1", 1, LearningObjectSuggestion.Level.INCOMPLETE, "A",1) );
 
         Collections.sort(suggestList, new LearningObjectSuggestionComparator());
 
         List<LearningObjectSuggestion> suggestListTest = new ArrayList<>();
-        suggestListTest.add(new LearningObjectSuggestion("Q4", 1, LearningObjectSuggestion.Level.RIGHT, "A") );
-        suggestListTest.add(new LearningObjectSuggestion("Q1", 1, LearningObjectSuggestion.Level.INCOMPLETE, "A") );
+        suggestListTest.add(new LearningObjectSuggestion("Q4", 1, LearningObjectSuggestion.Level.RIGHT, "A",1) );
+        suggestListTest.add(new LearningObjectSuggestion("Q1", 1, LearningObjectSuggestion.Level.INCOMPLETE, "A",1) );
 
 
         for (int i =0; i<suggestList.size(); i++){
@@ -133,14 +133,14 @@ public class learningObjectSuggestionComparatorTest {
     @Test
     public void firstLevelLower2(){
         List<LearningObjectSuggestion> suggestList = new ArrayList<>();
-        suggestList.add(new LearningObjectSuggestion("Q4", 1, LearningObjectSuggestion.Level.WRONG, "A") );
-        suggestList.add(new LearningObjectSuggestion("Q1", 1, LearningObjectSuggestion.Level.INCOMPLETE, "A") );
+        suggestList.add(new LearningObjectSuggestion("Q4", 1, LearningObjectSuggestion.Level.WRONG, "A",1) );
+        suggestList.add(new LearningObjectSuggestion("Q1", 1, LearningObjectSuggestion.Level.INCOMPLETE, "A",1) );
 
         Collections.sort(suggestList, new LearningObjectSuggestionComparator());
 
         List<LearningObjectSuggestion> suggestListTest = new ArrayList<>();
-        suggestListTest.add(new LearningObjectSuggestion("Q4", 1, LearningObjectSuggestion.Level.WRONG, "A") );
-        suggestListTest.add(new LearningObjectSuggestion("Q1", 1, LearningObjectSuggestion.Level.INCOMPLETE, "A") );
+        suggestListTest.add(new LearningObjectSuggestion("Q4", 1, LearningObjectSuggestion.Level.WRONG, "A",1) );
+        suggestListTest.add(new LearningObjectSuggestion("Q1", 1, LearningObjectSuggestion.Level.INCOMPLETE, "A",1) );
 
 
         for (int i =0; i<suggestList.size(); i++){
@@ -157,17 +157,17 @@ public class learningObjectSuggestionComparatorTest {
     @Test
     public void LevelsAreDiff(){
         List<LearningObjectSuggestion> suggestList = new ArrayList<>();
-        suggestList.add(new LearningObjectSuggestion("Q1", 1, LearningObjectSuggestion.Level.WRONG, "A") );
-        suggestList.add(new LearningObjectSuggestion("Q2", 1, LearningObjectSuggestion.Level.INCOMPLETE, "A") );
-        suggestList.add(new LearningObjectSuggestion("Q3", 1, LearningObjectSuggestion.Level.RIGHT, "A") );
+        suggestList.add(new LearningObjectSuggestion("Q1", 1, LearningObjectSuggestion.Level.WRONG, "A",1) );
+        suggestList.add(new LearningObjectSuggestion("Q2", 1, LearningObjectSuggestion.Level.INCOMPLETE, "A",1) );
+        suggestList.add(new LearningObjectSuggestion("Q3", 1, LearningObjectSuggestion.Level.RIGHT, "A",1) );
 
 
         Collections.sort(suggestList, new LearningObjectSuggestionComparator());
 
         List<LearningObjectSuggestion> suggestListTest = new ArrayList<>();
-        suggestListTest.add(new LearningObjectSuggestion("Q3", 1, LearningObjectSuggestion.Level.RIGHT, "A") );
-        suggestListTest.add(new LearningObjectSuggestion("Q1", 1, LearningObjectSuggestion.Level.WRONG, "A") );
-        suggestListTest.add(new LearningObjectSuggestion("Q2", 1, LearningObjectSuggestion.Level.INCOMPLETE, "A") );
+        suggestListTest.add(new LearningObjectSuggestion("Q3", 1, LearningObjectSuggestion.Level.RIGHT, "A",1) );
+        suggestListTest.add(new LearningObjectSuggestion("Q1", 1, LearningObjectSuggestion.Level.WRONG, "A",1) );
+        suggestListTest.add(new LearningObjectSuggestion("Q2", 1, LearningObjectSuggestion.Level.INCOMPLETE, "A",1) );
 
 
 
@@ -187,14 +187,14 @@ public class learningObjectSuggestionComparatorTest {
     public void suggestionComparatorTest(){
 
         List<LearningObjectSuggestion> suggestList = new ArrayList<>();
-        suggestList.add(new LearningObjectSuggestion("Q1", 2, LearningObjectSuggestion.Level.INCOMPLETE, "A") );
-        suggestList.add(new LearningObjectSuggestion("Q2", 1, LearningObjectSuggestion.Level.WRONG, "A") );
+        suggestList.add(new LearningObjectSuggestion("Q1", 2, LearningObjectSuggestion.Level.INCOMPLETE, "A",1) );
+        suggestList.add(new LearningObjectSuggestion("Q2", 1, LearningObjectSuggestion.Level.WRONG, "A",1) );
         Collections.sort(suggestList, new LearningObjectSuggestionComparator());
 
 
         List<LearningObjectSuggestion> suggestListTest = new ArrayList<>();
-        suggestListTest.add(new LearningObjectSuggestion("Q2", 1, LearningObjectSuggestion.Level.WRONG, "A") );
-        suggestListTest.add(new LearningObjectSuggestion("Q1", 2, LearningObjectSuggestion.Level.INCOMPLETE, "A") );
+        suggestListTest.add(new LearningObjectSuggestion("Q2", 1, LearningObjectSuggestion.Level.WRONG, "A",1 ));
+        suggestListTest.add(new LearningObjectSuggestion("Q1", 2, LearningObjectSuggestion.Level.INCOMPLETE, "A",1) );
 
 
         for (int i =0; i<suggestListTest.size(); i++){

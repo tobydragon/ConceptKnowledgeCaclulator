@@ -239,6 +239,47 @@ public class ConceptGraphTest {
 
     }
 
+    @Test
+    public void buildDirectConceptLinkCountTest() {
+
+        ConceptGraph orig = ExampleConceptGraphFactory.willExampleConceptGraphTestOneStudent();
+
+        HashMap<String, Integer> map = orig.buildDirectConceptLinkCount();
+
+        int q1 =  map.get("Q1");
+        int q2 =  map.get("Q2");
+        int q3 =  map.get("Q3");
+        int q4 =  map.get("Q4");
+        int q5 =  map.get("Q5");
+        int q6 =  map.get("Q6");
+        int q7 =  map.get("Q7");
+        int q8 =  map.get("Q8");
+        int q9 =  map.get("Q9");
+        int q10 =  map.get("Q10");
+        int q11 =  map.get("Q11");
+        int q12 =  map.get("Q12");
+        int q13 =  map.get("Q13");
+        int q14 =  map.get("Q14");
+
+        Assert.assertEquals(q1, 1);
+        Assert.assertEquals(q2, 1);
+        Assert.assertEquals(q3, 2);
+        Assert.assertEquals(q4, 2);
+        Assert.assertEquals(q5, 2);
+        Assert.assertEquals(q6, 1);
+        Assert.assertEquals(q7, 1);
+        Assert.assertEquals(q8, 1);
+        Assert.assertEquals(q9, 3);
+        Assert.assertEquals(q10, 4);
+        Assert.assertEquals(q11, 1);
+        Assert.assertEquals(q12, 1);
+        Assert.assertEquals(q13, 1);
+        Assert.assertEquals(q14, 1);
+
+    }
+
+
+
 }
 
 	

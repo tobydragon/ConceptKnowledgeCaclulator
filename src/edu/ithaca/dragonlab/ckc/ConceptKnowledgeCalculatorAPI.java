@@ -52,7 +52,7 @@ public interface ConceptKnowledgeCalculatorAPI {
      * @param assessmentFilename
      * @throws IOException
      */
-    void addAssignment(String assessmentFilename) throws Exception;
+    void addAssessement(String assessmentFilename) throws Exception;
 
 
 
@@ -127,15 +127,6 @@ public interface ConceptKnowledgeCalculatorAPI {
      * @return List of Concept Nodes
      */
     List<String> calcIndividualConceptNodesSuggestions(String userID) throws Exception;
-
-    /**
-     * when you want to remove all of the old data and set up new data
-     * @param struct
-     * @param res
-     * @param assess
-     * @throws IOException
-     */
-    void setupClearandCreateCohort(String struct, String res, String assess) throws Exception;
 
 
     void updateStructureWithAnotherFile(String file) throws IOException;
