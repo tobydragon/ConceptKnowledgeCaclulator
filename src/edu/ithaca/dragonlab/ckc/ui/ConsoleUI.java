@@ -220,6 +220,8 @@ public class ConsoleUI {
 
     public void editStructureGraph(Scanner scanner){
         System.out.println("Edit structure graph");
+        System.out.println("Current Structure File: " + ckc.currentStructure().toString().replace("[", "").replace("]", ""));
+
 
         System.out.println("What file do you want to replace with?");
         String file = scanner.nextLine();
@@ -375,6 +377,7 @@ public class ConsoleUI {
 
     public void replaceCohortGraphFile(Scanner scanner){
         System.out.println("Replace Graph File");
+        System.out.println("Current Graph File: " + ckc.currentStructure().toString().replace("[", "").replace("]", ""));
 
         System.out.println("Type Graph Path ");
         String graph = scanner.nextLine();
@@ -391,7 +394,7 @@ public class ConsoleUI {
     public void addAssignment(Scanner scanner){
         if(ckc.getCurrentMode()== ConceptKnowledgeCalculator.Mode.COHORTGRAPH|| ckc.getCurrentMode()== ConceptKnowledgeCalculator.Mode.STRUCTUREGRAPHWITHASSESSMENT) {
             System.out.println("Add another assesment file to existing graph ");
-            System.out.println("Current Assignment Files: " + ckc.currentAssignments().toString().replace("[", "").replace("]", ""));
+            System.out.println("Current Assignment Files: " + ckc.currentAssessment().toString().replace("[", "").replace("]", ""));
         }else if(ckc.getCurrentMode()== ConceptKnowledgeCalculator.Mode.STRUCTUREGRAPH|| ckc.getCurrentMode()== ConceptKnowledgeCalculator.Mode.STRUCTUREGRAPHWITHRESOURCE){
             System.out.println("Add a assessment file");
         }
@@ -409,20 +412,20 @@ public class ConsoleUI {
 
     public void removeAssessment(Scanner scanner){
         System.out.println("Remove a assignment file");
-        if(ckc.currentAssignments().size()<1){
+        if(ckc.currentAssessment().size()<1){
             System.out.println("You Don't have any files");
         }else{
-            System.out.println("Current Assignment Files: " + ckc.currentAssignments().toString().replace("[", "").replace("]", ""));
+            System.out.println("Current Assignment Files: " + ckc.currentAssessment().toString().replace("[", "").replace("]", ""));
 
             System.out.println("Type path to file you want to remove: ");
             String assignment = scanner.nextLine();
             try {
-                if (ckc.currentAssignments().size()<1) {
+                if (ckc.currentAssessment().size()<1) {
                     System.out.println("You don't have any assessment files. Make sure to add one");
                 } else {
                     ckc.removeAssessmentFile(assignment);
                     System.out.println("Process Completed");
-                    if (ckc.currentAssignments().size()<1) {
+                    if (ckc.currentAssessment().size()<1) {
                         System.out.println("You now don't have any assessment files. Make sure to add one");
                     }
                 }

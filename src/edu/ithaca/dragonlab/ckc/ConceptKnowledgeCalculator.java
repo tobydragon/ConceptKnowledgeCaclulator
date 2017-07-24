@@ -129,7 +129,7 @@ public class ConceptKnowledgeCalculator implements ConceptKnowledgeCalculatorAPI
     public void switchToStructure() throws Exception {
         if (currentMode == Mode.COHORTGRAPH){
             List<String> structList = new ArrayList<>();
-            structList.addAll(getStructureFiles());
+            structList.addAll(currentStructure());
 
             clearAndCreateStructureData(structList);
         }else{
@@ -207,7 +207,7 @@ public class ConceptKnowledgeCalculator implements ConceptKnowledgeCalculatorAPI
     }
 
     @Override
-    public     void addResourceAndAssessment(String resource, String assignment) throws  Exception{
+    public void addResourceAndAssessment(String resource, String assignment) throws  Exception{
         if(currentMode == Mode.STRUCTUREGRAPH) {
             List<LearningObjectLinkRecord> temp = LearningObjectLinkRecord.buildListFromJson(resource);
             if(temp.size()>0){
@@ -370,17 +370,6 @@ public class ConceptKnowledgeCalculator implements ConceptKnowledgeCalculatorAPI
     }
 
 
-    @Override
-    public List<String> currentAssignments(){
-        List<String> temp = getAssessmentFiles();
-        return temp;
-    }
-
-    @Override
-    public List<String> currentResource(){
-        List<String> temp = getResourceFiles();
-        return temp;
-    }
 
 
     @Override
@@ -549,21 +538,27 @@ public class ConceptKnowledgeCalculator implements ConceptKnowledgeCalculatorAPI
     }
 
 
-    public List<String> getAssessmentFiles(){
-        return assessmentFiles;
+    @Override
+    public List<String> currentAssessment(){
+        List<String> temp = assessmentFiles;
+        return temp;
     }
+
+    @Override
+    public List<String> currentResource(){
+        List<String> temp = resourceFiles;
+        return temp;
+    }
+
+    @Override
+    public List<String> currentStructure(){
+        List<String> temp = structureFiles;
+        return temp;
+    }
+
 
     public Mode getCurrentMode(){
         return currentMode;
-    }
-
-    //testing purposes
-    public List<String> getStructureFiles(){
-        return structureFiles;
-    }
-
-    public List<String> getResourceFiles(){
-        return resourceFiles;
     }
 
     public CohortConceptGraphs getCohortConceptGraphs(){

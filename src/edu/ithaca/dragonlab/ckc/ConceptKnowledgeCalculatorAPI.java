@@ -139,14 +139,12 @@ public interface ConceptKnowledgeCalculatorAPI {
 
     ConceptKnowledgeCalculator.Mode getCurrentMode();
 
-    List<String> getResourceFiles();
 
-    List<String> getAssessmentFiles();
 
-    List<String> getStructureFiles();
-
-    List<String> currentAssignments();
+    List<String> currentAssessment();
     List<String> currentResource();
+
+    List<String> currentStructure();
 
 
     boolean assessmentIsValid(String name);

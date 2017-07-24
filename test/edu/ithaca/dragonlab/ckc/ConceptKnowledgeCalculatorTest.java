@@ -49,7 +49,7 @@ public class ConceptKnowledgeCalculatorTest {
         ConceptKnowledgeCalculatorAPI ckc = null;
         try {
             ckc = new ConceptKnowledgeCalculator("test/testresources/ManuallyCreated/basicRealisticConceptGraph.json", "test/testresources/ManuallyCreated/basicRealisticResource.json", "test/testresources/ManuallyCreated/basicRealisticAssessment.csv");
-            Assert.assertEquals(ckc.getStructureFiles().get(0),"test/testresources/ManuallyCreated/basicRealisticConceptGraph.json" );
+            Assert.assertEquals(ckc.currentStructure().get(0),"test/testresources/ManuallyCreated/basicRealisticConceptGraph.json" );
         } catch (IOException e) {
             Assert.fail("Unable to load default files. Test unable to run");
         }
@@ -85,26 +85,25 @@ public class ConceptKnowledgeCalculatorTest {
     public void clearandCreateStructureGraphTest() {
         ConceptKnowledgeCalculatorAPI ckc = null;
         try {
-            ckc = new ConceptKnowledgeCalculator("test/testresources/ManuallyCreated/basicRealisticConceptGraph.json", "test/testresources/ManuallyCreated/basicRealisticResource.json", "test/testresources/ManuallyCreated/basicRealisticAssessment.csv");
+            ckc = new ConceptKnowledgeCalculator("test/testresources/ManuallyCreated/basicRealisticConceptGraph.json");
 
-            ckc.switchToStructure();
             List<String> struct = new ArrayList<>();
             struct.add("test/testresources/ManuallyCreated/researchConceptGraph.json");
 
             ckc.clearAndCreateStructureData(struct);
 
-            Assert.assertEquals(ckc.getStructureFiles().get(0),"test/testresources/ManuallyCreated/researchConceptGraph.json" );
+            Assert.assertEquals(ckc.currentStructure().get(0),"test/testresources/ManuallyCreated/researchConceptGraph.json" );
 
-            Assert.assertEquals(ckc.getResourceFiles().size(),0);
-            Assert.assertEquals(ckc.getAssessmentFiles().size(), 0);
+            Assert.assertEquals(ckc.currentResource().size(),0);
+            Assert.assertEquals(ckc.currentAssessment().size(), 0);
 
             struct.clear();
             struct.add("test/testresources/ManuallyCreated/simpleConceptGraph.json");
             ckc.clearAndCreateStructureData(struct);
-            Assert.assertEquals(ckc.getStructureFiles().get(0),"test/testresources/ManuallyCreated/simpleConceptGraph.json" );
+            Assert.assertEquals(ckc.currentStructure().get(0),"test/testresources/ManuallyCreated/simpleConceptGraph.json" );
 
-            Assert.assertEquals(ckc.getResourceFiles().size(),0);
-            Assert.assertEquals(ckc.getAssessmentFiles().size(), 0);
+            Assert.assertEquals(ckc.currentResource().size(),0);
+            Assert.assertEquals(ckc.currentAssessment().size(), 0);
 
 
         } catch (Exception e) {
@@ -113,6 +112,7 @@ public class ConceptKnowledgeCalculatorTest {
 
 
     }
+
 
     @Test
     public void clearandCreateCohortGraphTest() {
@@ -129,12 +129,19 @@ public class ConceptKnowledgeCalculatorTest {
 
             ckc.clearAndCreateCohortData(struct,res,assess );
 
-            Assert.assertEquals(ckc.getStructureFiles().get(0),"test/testresources/ManuallyCreated/researchConceptGraph.json" );
+//            Assert.assertEquals(ckc.currentStructure().get(0),"test/testresources/ManuallyCreated/researchConceptGraph.json" );
+//            Assert.assertEquals(ckc.currentResource().get(0),"test/testresources/ManuallyCreated/basicRealisticResource.json" );
+//            Assert.assertEquals(ckc.currentResource().get(1),"test/testresources/ManuallyCreated/researchResource1.json" );
+//            Assert.assertEquals(ckc.currentAssignments().get(0), "test/testresources/ManuallyCreated/basicRealisticAssessment.csv");
+//            Assert.assertEquals(ckc.currentAssignments().get(1), "test/testresources/ManuallyCreated/researchAssessment1.csv");
 
-            Assert.assertEquals(ckc.getResourceFiles().get(0),"test/testresources/ManuallyCreated/basicRealisticResource.json" );
-            Assert.assertEquals(ckc.getResourceFiles().get(1),"test/testresources/ManuallyCreated/researchResource1.json" );
-            Assert.assertEquals(ckc.getAssessmentFiles().get(0), "test/testresources/ManuallyCreated/basicRealisticAssessment.csv");
-            Assert.assertEquals(ckc.getAssessmentFiles().get(1), "test/testresources/ManuallyCreated/researchAssessment1.csv");
+            Assert.assertEquals(ckc.currentStructure().size(), 1);
+            Assert.assertEquals(ckc.currentResource().size(),1);
+            Assert.assertEquals(ckc.currentAssessment().size(), 1);
+            Assert.assertEquals(ckc.currentStructure().get(0),"test/testresources/ManuallyCreated/researchConceptGraph.json" );
+            Assert.assertEquals(ckc.currentResource().get(0),"test/testresources/ManuallyCreated/researchResource1.json" );
+            Assert.assertEquals(ckc.currentAssessment().get(0), "test/testresources/ManuallyCreated/researchAssessment1.csv");
+
 
 
         } catch (Exception e) {
@@ -153,9 +160,9 @@ public class ConceptKnowledgeCalculatorTest {
 
             ckc.setupClearandCreateCohort("test/testresources/ManuallyCreated/researchConceptGraph.json", "test/testresources/ManuallyCreated/researchResource1.json","test/testresources/ManuallyCreated/researchAssessment1.csv" );
 
-            Assert.assertEquals(ckc.getStructureFiles().get(0),"test/testresources/ManuallyCreated/researchConceptGraph.json" );
-            Assert.assertEquals(ckc.getResourceFiles().get(0),"test/testresources/ManuallyCreated/researchResource1.json" );
-            Assert.assertEquals(ckc.getAssessmentFiles().get(0), "test/testresources/ManuallyCreated/researchAssessment1.csv");
+            Assert.assertEquals(ckc.currentStructure().get(0),"test/testresources/ManuallyCreated/researchConceptGraph.json" );
+            Assert.assertEquals(ckc.currentResource().get(0),"test/testresources/ManuallyCreated/researchResource1.json" );
+            Assert.assertEquals(ckc.currentAssessment().get(0), "test/testresources/ManuallyCreated/researchAssessment1.csv");
 
         } catch (Exception e) {
             Assert.fail("Unable to load default files. Test unable to run");
@@ -473,7 +480,7 @@ public class ConceptKnowledgeCalculatorTest {
             ckc = new ConceptKnowledgeCalculator("test/testresources/ManuallyCreated/basicRealisticConceptGraph.json", "test/testresources/ManuallyCreated/basicRealisticResource.json", "test/testresources/ManuallyCreated/basicRealisticAssessment.csv");
             List<String> test = new ArrayList<>();
             test.add("test/testresources/ManuallyCreated/basicRealisticAssessment.csv");
-            Assert.assertEquals(ckc.getAssessmentFiles(),test);
+            Assert.assertEquals(ckc.currentAssessment(),test);
         } catch (IOException e) {
             Assert.fail("Unable to load default files. Test unable to run");
         }
@@ -482,7 +489,7 @@ public class ConceptKnowledgeCalculatorTest {
         try {
             ckc.removeAssessmentFile("test/testresources/ManuallyCreated/basicRealisticAssessment.csv");
             List<String> test1 = new ArrayList<>();
-            Assert.assertEquals(ckc.getAssessmentFiles(),test1);
+            Assert.assertEquals(ckc.currentAssessment(),test1);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -513,13 +520,13 @@ public class ConceptKnowledgeCalculatorTest {
             ckc = new ConceptKnowledgeCalculator("test/testresources/ManuallyCreated/basicRealisticConceptGraph.json", "test/testresources/ManuallyCreated/basicRealisticResource.json", "test/testresources/ManuallyCreated/basicRealisticAssessment.csv");
             List<String> test = new ArrayList<>();
             test.add("test/testresources/ManuallyCreated/basicRealisticResource.json");
-            Assert.assertEquals(ckc.getResourceFiles(),test);
+            Assert.assertEquals(ckc.currentResource(),test);
             ckc.replaceResourceFile("test/testresources/ManuallyCreated/simpleChangeNameLOL.json");
 
             test.clear();
             test.add("test/testresources/ManuallyCreated/simpleChangeNameLOL.json");
 
-            Assert.assertEquals(ckc.getResourceFiles(), test);
+            Assert.assertEquals(ckc.currentResource(), test);
 
         } catch (Exception e) {
             Assert.fail("Unable to load default files. Test unable to run");
@@ -639,15 +646,15 @@ public class ConceptKnowledgeCalculatorTest {
             Assert.assertEquals(ckc.getCurrentMode(), ConceptKnowledgeCalculator.Mode.COHORTGRAPH);
             //the constructor starts out as a cohort concept graph and there should only be one file in each of the lists of files. The structure graph should be null, because we're not on that mode
             getTest.add("test/testresources/ManuallyCreated/basicRealisticConceptGraph.json");
-            Assert.assertEquals(ckc.getStructureFiles(),getTest );
+            Assert.assertEquals(ckc.currentStructure(),getTest );
             getTest.clear();
 
             getTest.add( "test/testresources/ManuallyCreated/basicRealisticResource.json");
-            Assert.assertEquals(ckc.getResourceFiles(), getTest);
+            Assert.assertEquals(ckc.currentResource(), getTest);
             getTest.clear();
 
             getTest.add("test/testresources/ManuallyCreated/basicRealisticAssessment.csv");
-            Assert.assertEquals(ckc.getAssessmentFiles(), getTest);
+            Assert.assertEquals(ckc.currentAssessment(), getTest);
 
             Assert.assertEquals(ckc.getStructureGraph(), null);
             Assert.assertNotEquals(ckc.getCohortConceptGraphs(), null);
@@ -663,10 +670,10 @@ public class ConceptKnowledgeCalculatorTest {
             Assert.assertEquals(ckc.getCohortConceptGraphs(), null);
 
             getTest.add("test/testresources/ManuallyCreated/basicRealisticConceptGraph.json");
-            Assert.assertEquals(ckc.getStructureFiles(), getTest);
+            Assert.assertEquals(ckc.currentStructure(), getTest);
 
-            Assert.assertEquals(ckc.getResourceFiles(), new ArrayList<>());
-            Assert.assertEquals(ckc.getAssessmentFiles(), new ArrayList<>());
+            Assert.assertEquals(ckc.currentResource(), new ArrayList<>());
+            Assert.assertEquals(ckc.currentAssessment(), new ArrayList<>());
 
             Assert.assertNotEquals(ckc.getStructureGraph(), null);
             Assert.assertEquals(ckc.getCohortConceptGraphs(), null);
@@ -679,13 +686,13 @@ public class ConceptKnowledgeCalculatorTest {
             Assert.assertEquals(ckc.getCurrentMode(), ConceptKnowledgeCalculator.Mode.STRUCTUREGRAPHWITHASSESSMENT);
 
             getTest.add("test/testresources/ManuallyCreated/basicRealisticConceptGraph.json");
-            Assert.assertEquals(ckc.getStructureFiles(), getTest);
+            Assert.assertEquals(ckc.currentStructure(), getTest);
             getTest.clear();
 
-            Assert.assertEquals(ckc.getResourceFiles(), new ArrayList<>());
+            Assert.assertEquals(ckc.currentResource(), new ArrayList<>());
 
             getTest.add("test/testresources/ManuallyCreated/mediumAssessment.csv");
-            Assert.assertEquals(ckc.getAssessmentFiles(), getTest);
+            Assert.assertEquals(ckc.currentAssessment(), getTest);
 
             Assert.assertNotEquals(ckc.getStructureGraph(), null);
             Assert.assertEquals(ckc.getCohortConceptGraphs(), null);
@@ -698,15 +705,15 @@ public class ConceptKnowledgeCalculatorTest {
             ckc.addResource("test/testresources/ManuallyCreated/simpleResource.json");
             Assert.assertEquals(ckc.getCurrentMode(), ConceptKnowledgeCalculator.Mode.COHORTGRAPH);
             getTest.add("test/testresources/ManuallyCreated/basicRealisticConceptGraph.json");
-            Assert.assertEquals(ckc.getStructureFiles(), getTest);
+            Assert.assertEquals(ckc.currentStructure(), getTest);
             getTest.clear();
 
             getTest.add("test/testresources/ManuallyCreated/simpleResource.json");
-            Assert.assertEquals(ckc.getResourceFiles(), getTest);
+            Assert.assertEquals(ckc.currentResource(), getTest);
             getTest.clear();
 
             getTest.add("test/testresources/ManuallyCreated/mediumAssessment.csv");
-            Assert.assertEquals(ckc.getAssessmentFiles(),getTest);
+            Assert.assertEquals(ckc.currentAssessment(),getTest);
             getTest.clear();
 
             Assert.assertEquals(ckc.getStructureGraph(), null);
@@ -723,14 +730,14 @@ public class ConceptKnowledgeCalculatorTest {
             ckc.addResource("test/testresources/ManuallyCreated/simpleResource.json");
             Assert.assertEquals(ckc.getCurrentMode(), ConceptKnowledgeCalculator.Mode.STRUCTUREGRAPHWITHRESOURCE);
             getTest.add("test/testresources/ManuallyCreated/basicRealisticConceptGraph.json");
-            Assert.assertEquals(ckc.getStructureFiles(), getTest);
+            Assert.assertEquals(ckc.currentStructure(), getTest);
             getTest.clear();
 
             getTest.add("test/testresources/ManuallyCreated/simpleResource.json");
-            Assert.assertEquals(ckc.getResourceFiles(),  getTest);
+            Assert.assertEquals(ckc.currentResource(),  getTest);
             getTest.clear();
 
-            Assert.assertEquals(ckc.getAssessmentFiles(), new ArrayList<>());
+            Assert.assertEquals(ckc.currentAssessment(), new ArrayList<>());
             Assert.assertNotEquals(ckc.getStructureGraph(), null);
             Assert.assertEquals(ckc.getCohortConceptGraphs(), null);
 
@@ -741,15 +748,15 @@ public class ConceptKnowledgeCalculatorTest {
             Assert.assertEquals(ckc.getCurrentMode(), ConceptKnowledgeCalculator.Mode.COHORTGRAPH);
 
             getTest.add("test/testresources/ManuallyCreated/basicRealisticConceptGraph.json");
-            Assert.assertEquals(ckc.getStructureFiles(), getTest);
+            Assert.assertEquals(ckc.currentStructure(), getTest);
             getTest.clear();
 
             getTest.add("test/testresources/ManuallyCreated/simpleResource.json");
-            Assert.assertEquals(ckc.getResourceFiles(),  getTest);
+            Assert.assertEquals(ckc.currentResource(),  getTest);
             getTest.clear();
 
             getTest.add("test/testresources/ManuallyCreated/simpleAssessment.csv");
-            Assert.assertEquals(ckc.getAssessmentFiles(),getTest);
+            Assert.assertEquals(ckc.currentAssessment(),getTest);
             getTest.clear();
 
             Assert.assertEquals(ckc.getStructureGraph(), null);
@@ -764,15 +771,15 @@ public class ConceptKnowledgeCalculatorTest {
 
             ckc.addResourceAndAssessment("test/testresources/ManuallyCreated/simpleResource.json", "test/testresources/ManuallyCreated/simpleAssessment.csv" );
             getTest.add("test/testresources/ManuallyCreated/basicRealisticConceptGraph.json");
-            Assert.assertEquals(ckc.getStructureFiles(), getTest);
+            Assert.assertEquals(ckc.currentStructure(), getTest);
             getTest.clear();
 
             getTest.add("test/testresources/ManuallyCreated/simpleResource.json");
-            Assert.assertEquals(ckc.getResourceFiles(), getTest);
+            Assert.assertEquals(ckc.currentResource(), getTest);
             getTest.clear();
 
             getTest.add("test/testresources/ManuallyCreated/simpleAssessment.csv" );
-            Assert.assertEquals(ckc.getAssessmentFiles(), getTest);
+            Assert.assertEquals(ckc.currentAssessment(), getTest);
 
             Assert.assertEquals(ckc.getStructureGraph(), null);
             Assert.assertNotEquals(ckc.getCohortConceptGraphs(), null);
