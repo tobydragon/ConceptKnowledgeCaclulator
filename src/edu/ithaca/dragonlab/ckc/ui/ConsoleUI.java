@@ -503,7 +503,7 @@ public class ConsoleUI {
     }
 
     public void getFactorMatrix(){
-        System.out.println("Collecting data and linking strengths of learning objects to different factors...");
+        System.out.println("Collecting data and linking strengths of learning objects to different factors...\n");
         ckc.getFactorMatrix();
     }
 
