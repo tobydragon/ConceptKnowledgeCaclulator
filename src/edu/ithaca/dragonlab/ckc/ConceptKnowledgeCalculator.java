@@ -585,7 +585,11 @@ public class ConceptKnowledgeCalculator implements ConceptKnowledgeCalculatorAPI
             try {
                 RFunctions.getFactorMatrix(myMatrix);
             }catch (Exception e){
-                System.out.println("Not enough Learning Objects with varying data to perform factor analysis");
+                System.out.println("Insufficient data to perform factor analysis. Please refer to the guidelines of the data below:\n" +
+                        "- Learning objects without any variance in scores between students will be ignored \n" +
+                        "- There must be at least 3 valid learning objects present\n" +
+                        "- There must be more students than learning objects\n");
+
             }
         }else{
             throw new NullPointerException();
