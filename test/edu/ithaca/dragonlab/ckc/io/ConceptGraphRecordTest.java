@@ -10,7 +10,7 @@ import static org.hamcrest.CoreMatchers.is;
  * Created by tdragon on 5/3/17.
  */
 public class ConceptGraphRecordTest {
-    public static final String TEST_DIR = "test/testresources/io/";
+    public static final String TEST_DIR = "test/testresources/practicalExamples/SystemCreated/";
 
 
     @Test

@@ -850,7 +850,7 @@ public class ConceptKnowledgeCalculatorTest {
     @Test
     public void csvToResourceTest(){
         try {
-            String testFilepath = "test/testresources/io/mediumGraphLearnObjectLinkRecordsCreationTest.json";
+            String testFilepath = "test/testresources/practicalExamples/SystemCreated/mediumGraphLearnObjectLinkRecordsCreationTest.json";
 
             List<String> csvFiles = new ArrayList<>();
             csvFiles.add("test/testresources/ManuallyCreated/mediumAssessment.csv");
