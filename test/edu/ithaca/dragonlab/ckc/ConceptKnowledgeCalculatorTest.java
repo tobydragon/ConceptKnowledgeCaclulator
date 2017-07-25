@@ -210,8 +210,9 @@ public class ConceptKnowledgeCalculatorTest {
             List<LearningObjectSuggestion> wrongTest = res.wrongList;
 
             Assert.assertEquals(incomTest.size(),2);
-            Assert.assertEquals(incomTest.get(0).getId(),"Q10");
-            Assert.assertEquals(incomTest.get(1).getId(),"Q6");
+            Assert.assertEquals(incomTest.get(0).getId(),"Q6");
+
+            Assert.assertEquals(incomTest.get(1).getId(),"Q10");
 
             Assert.assertEquals(wrongTest.size(),2);
             Assert.assertEquals(wrongTest.get(0).getId(), "Q7");
@@ -341,9 +342,10 @@ public class ConceptKnowledgeCalculatorTest {
         SuggestionResource resource = null;
         try {
             resource = ckc.calcIndividualSpecificConceptSuggestions("bspinache1", "If Statement");
+
             Assert.assertEquals(resource.incompleteList.get(0).getId(),"Q10" );
-            Assert.assertEquals(resource.incompleteList.get(1).getId(),"Q3" );
-            Assert.assertEquals(resource.incompleteList.get(2).getId(),"Q6" );
+            Assert.assertEquals(resource.incompleteList.get(1).getId(),"Q6" );
+            Assert.assertEquals(resource.incompleteList.get(2).getId(),"Q3" );
 
             Assert.assertEquals(resource.wrongList.get(0).getId(),"Q9" );
             Assert.assertEquals(resource.wrongList.get(1).getId(),"Q1" );

@@ -49,8 +49,8 @@ public class LearningObjectSuggesterTest {
         List<LearningObjectSuggestion> incomTest = res.incompleteList;
         List<LearningObjectSuggestion> wrongTest = res.wrongList;
         Assert.assertEquals(incomTest.size(),2);
-        Assert.assertEquals(incomTest.get(0).getId(),"Q10");
-        Assert.assertEquals(incomTest.get(1).getId(),"Q6");
+        Assert.assertEquals(incomTest.get(0).getId(),"Q6");
+        Assert.assertEquals(incomTest.get(1).getId(),"Q10");
 
 
         Assert.assertEquals(wrongTest.size(),2);
@@ -144,8 +144,10 @@ public class LearningObjectSuggesterTest {
         HashMap<String, List<LearningObjectSuggestion>> objectSuggestionMap = LearningObjectSuggester.buildSuggestionMap(concepts,1,orig);
 
         Assert.assertEquals(1, objectSuggestionMap.size());
-        Assert.assertEquals(objectSuggestionMap.get("Boolean").get(0).getId(), "Q10");
-        Assert.assertEquals(objectSuggestionMap.get("Boolean").get(1).getId(), "Q6");
+
+        Assert.assertEquals(objectSuggestionMap.get("Boolean").get(0).getId(), "Q6");
+        Assert.assertEquals(objectSuggestionMap.get("Boolean").get(1).getId(), "Q10");
+
     }
 
     @Test
