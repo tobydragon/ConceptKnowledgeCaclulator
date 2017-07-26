@@ -110,6 +110,7 @@ function makeColorsList2(dataList){
 
 function bucketColorList(dataList){
 
+
     var colorsList = [];
     var max = findMax(dataList);
     var min = findMax(dataList);

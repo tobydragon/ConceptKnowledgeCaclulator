@@ -15,7 +15,6 @@ import java.util.List;
 
 public class RFunctions {
 
-
     /**
      * Using RCode, the average of knowledgeEstimates of a LearningObject across all user's is calculated
      * @param loMatrix the current graph being searched
@@ -67,8 +66,12 @@ public class RFunctions {
         return actual;
     }
 
-
-
+    /**
+     * A helper function for getFactorCount() that deletes columns of the matrix that will crash R/is unnecessary data
+     * and finds the amount of columns that will be used in getFactorCount()
+     * @param loMatrix
+     * @return result the amount of columns valid for use in factor analysis
+     */
     public static int getColumnCount(KnowledgeEstimateMatrix loMatrix){
         RCaller rCaller = RCallerVariable();
 
@@ -100,6 +103,12 @@ public class RFunctions {
         return result[0];
     }
 
+    /**
+     * A helper function for getFactorMatrix() that finds the best number of factors to use in factor analysis
+     * @param loMatrix KnowledgeEstimateMatrix
+     * @return result the number of factors to be used in factor analysis on the current matrix
+     * @throws Exception
+     */
     public static int findFactorCount(KnowledgeEstimateMatrix loMatrix)throws Exception{
         RCaller rCaller = RCallerVariable();
 
@@ -120,7 +129,6 @@ public class RFunctions {
 
             //put all p-values of the factor analysis into a list
             //run through the list and take the factor number with the first p-value above .05
-            rCaller.redirectROutputToStream(System.out);
             code.addRCode("vector = c()");
             code.addRCode("for(i in 1:upperlimit){" +
                     "vector[i] <- factanal(matrix, i, method = 'mle')$PVAL" +
@@ -139,6 +147,12 @@ public class RFunctions {
         }
     }
 
+    /**
+     * Prints out a factor matrix connecting learning objects to similar higher up objects
+     * @param loMatrix KnowledgeEstimateMatrix object will use the RMatrix data member
+     * @pre resource, assessment, structure files are all present and an R Matrix is created
+     * @throws Exception
+     */
     public static void getFactorMatrix(KnowledgeEstimateMatrix loMatrix)throws Exception {
         int numOfFactors = findFactorCount(loMatrix);
         RCaller rCaller = RCallerVariable();
@@ -149,17 +163,14 @@ public class RFunctions {
         code.addInt("numOfFactors", numOfFactors);
         code.addRCode("matrixOfLoadings <- factanal(matrix, factors = numOfFactors, method = 'mle')");
 
-        rCaller.getRCallerOptions();
+        //rCaller.getRCallerOptions();
         code.addRCode("factorsMatrix <- matrixOfLoadings$loadings");
         code.addRCode("print(factorsMatrix)");
-        //code.addRCode("factorsMatrix <- t(factorsMatrix)");
         rCaller.setRCode(code);
         rCaller.runAndReturnResult("factorsMatrix");
         double[][] result = rCaller.getParser().getAsDoubleMatrix("factorsMatrix");
 
     }
-
-
 
 
     /**
@@ -168,7 +179,6 @@ public class RFunctions {
      * running the function is Windows or Mac and sets up RCaller accordingly.
      * @return an RCaller that works on whichever machine is running to use RCaller methods
      */
-
     public static RCaller RCallerVariable(){
         if(Globals.isWindows() == false) {
             RCallerOptions options = RCallerOptions.create("/usr/local/Cellar/r/3.4.0_1/bin/Rscript", Globals.R_current, FailurePolicy.RETRY_5, Long.MAX_VALUE, 100, RProcessStartUpOptions.create());
