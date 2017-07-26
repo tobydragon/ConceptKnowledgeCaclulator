@@ -97,8 +97,6 @@ public class SuggestionResource {
         }
 
 
-
-
         int max = 0;
         for (List<LearningObjectSuggestion> lists : suggestionMap.values()) {
             max += lists.size();

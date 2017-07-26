@@ -74,8 +74,7 @@ public class LearningObjectSuggestion {
     }
 
     public String toString(){
-            return "Resource: " +id + "\t Concept it relates to: " + reasoning + "\t Importance: "+ pathNum + " Direct Concept Links: " + directConceptLinkCount + "\n";
+            return "Resource: " +id + "\t Concept it relates to: " + reasoning + "\t Importance: "+ pathNum + "\t Direct Concept Links: " + directConceptLinkCount + "\n";
     }
-
 
 }

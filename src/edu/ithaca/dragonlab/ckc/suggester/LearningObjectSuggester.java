@@ -77,10 +77,7 @@ public class LearningObjectSuggester {
 
             }
             suggestedConceptNodeMap.put(concept.getID(), testList);
-
-
         }
-
         return suggestedConceptNodeMap;
     }
 
@@ -91,7 +88,7 @@ public class LearningObjectSuggester {
     }
 
     /**
-    *takes a map of strings and creates a list of learningObjectSuggestion that hold if the learningObject was incomplete, wrong, or right, the pathNum, and the concept that caused the LearningObject to be suggested
+    *takes a map of strings and creates a list of learningObjectSuggestion that holds if the learningObject was incomplete, wrong, or right, the pathNum, and the concept that caused the LearningObject to be suggested
     *@param summaryList- map of the summaryList (map of the LearningObjects and the pathNum from a certain start)
     *@param  learningObjectMap- map of all of the learningObjects
     *@param causedConcept- the ID of ConceptNode that the learningObject came from

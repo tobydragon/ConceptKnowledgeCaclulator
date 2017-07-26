@@ -88,7 +88,7 @@ public class ConceptKnowledgeCalculator implements ConceptKnowledgeCalculatorAPI
     }
 
     @Override
-    public void updateStructureWithAnotherFile(String file) throws IOException {
+    public void updateStructureFile(String file) throws IOException {
         Mode tempMode = currentMode;
 
         List<String> strucTemp = new ArrayList<>();
@@ -164,20 +164,8 @@ public class ConceptKnowledgeCalculator implements ConceptKnowledgeCalculatorAPI
     }
 
     @Override
-    public boolean assessmentIsValid(String name) throws IOException {
-        CSVReader csvReader = new CSVReader(name);
-        if (csvReader.getManualGradedResponses().size()>0){
-            return true;
-        }else{
-            return false;
-        }
-    }
-
-
-    @Override
     public void replaceCohortGraph(String graph) throws Exception{
-        ConceptGraphRecord conceptGraph = ConceptGraphRecord.buildFromJson(graph);
-        if(conceptGraph.getConcepts().size()>0){
+        if(structureIsValid(graph)){
 
             List<String>  structure = new ArrayList<>();
             structure.add(graph);
@@ -199,8 +187,7 @@ public class ConceptKnowledgeCalculator implements ConceptKnowledgeCalculatorAPI
     @Override
     public void addResourceAndAssessment(String resource, String assignment) throws  Exception{
         if(currentMode == Mode.STRUCTUREGRAPH) {
-            List<LearningObjectLinkRecord> temp = LearningObjectLinkRecord.buildListFromJson(resource);
-            if(temp.size()>0){
+            if(resourceIsValid(resource)){
                 if(assessmentIsValid(assignment)){
                     List<String>  s = new ArrayList<>();
                     s.addAll(structureFiles);
@@ -214,12 +201,11 @@ public class ConceptKnowledgeCalculator implements ConceptKnowledgeCalculatorAPI
                     clearAndCreateCohortData(s,r,a);
 
                 }else{
-                    throw new Exception("Assessment file invalid");
+                    throw new Exception("Assessment file is invalid");
                 }
             }else{
-                throw new Exception("Resource file invalid");
+                throw new Exception("Resource file is invalid");
             }
-
         }else{
             throw new Exception("Wrong mode");
         }
@@ -229,8 +215,7 @@ public class ConceptKnowledgeCalculator implements ConceptKnowledgeCalculatorAPI
     public void addResource(String secondResourceFile) throws Exception {
 
         if(currentMode== Mode.STRUCTUREGRAPH || currentMode== Mode.STRUCTUREGRAPHWITHRESOURCE){
-            List<LearningObjectLinkRecord> temp = LearningObjectLinkRecord.buildListFromJson(secondResourceFile);
-            if(temp.size()>0){
+            if(resourceIsValid(secondResourceFile)){
                 resourceFiles.clear();
                 resourceFiles.add(secondResourceFile);
                 currentMode=Mode.STRUCTUREGRAPHWITHRESOURCE;
@@ -240,10 +225,7 @@ public class ConceptKnowledgeCalculator implements ConceptKnowledgeCalculatorAPI
 
 
         }else if(currentMode== Mode.COHORTGRAPH || currentMode == Mode.STRUCTUREGRAPHWITHASSESSMENT){
-            try {
-                List<LearningObjectLinkRecord> temp = LearningObjectLinkRecord.buildListFromJson(secondResourceFile);
-                if(temp.size()>0){
-
+            if(resourceIsValid(secondResourceFile)){
                     List<String>  structure = new ArrayList<>();
                     structure.addAll(structureFiles);
 
@@ -254,12 +236,8 @@ public class ConceptKnowledgeCalculator implements ConceptKnowledgeCalculatorAPI
                     assessment.addAll(assessmentFiles);
 
                     clearAndCreateCohortData(structure, resource, assessment);
-                }else{
-                    throw new Exception("Resource file invalid");
-                }
-
-            }catch (Exception e){
-                e.printStackTrace();
+            }else{
+                throw  new Exception("Resource file is invalid");
             }
         }else{
             throw new Exception("Wrong mode");
@@ -269,7 +247,7 @@ public class ConceptKnowledgeCalculator implements ConceptKnowledgeCalculatorAPI
 
     @Override
     public void addAssessement(String secondAssessmentFilename) throws Exception {
-        if(currentMode==Mode.COHORTGRAPH) {
+        if(currentMode==Mode.COHORTGRAPH || currentMode==Mode.STRUCTUREGRAPHWITHRESOURCE) {
             if(assessmentIsValid(secondAssessmentFilename)){
                 List<String>  structure = new ArrayList<>();
                 structure.addAll(structureFiles);
@@ -283,49 +261,25 @@ public class ConceptKnowledgeCalculator implements ConceptKnowledgeCalculatorAPI
 
                 clearAndCreateCohortData(structure, resource, assessment);
             }else{
-                throw new Exception();
+                throw new Exception("Assessment file is invalid");
             }
 
-        } else if(currentMode==Mode.STRUCTUREGRAPHWITHRESOURCE ){
-            if(assessmentIsValid(secondAssessmentFilename)){
-                List<String>  structure = new ArrayList<>();
-                structure.addAll(structureFiles);
-
-                List<String>  resource = new ArrayList<>();
-                resource.addAll(resourceFiles);
-
-                List<String>  assessment = new ArrayList<>();
-                assessment.addAll(assessmentFiles);
-                assessment.add(secondAssessmentFilename);
-
-                clearAndCreateCohortData(structure, resource, assessment);
-                currentMode = Mode.COHORTGRAPH;
-
-            }else{
-                throw new Exception();
-            }
-
-        } else if(currentMode == Mode.STRUCTUREGRAPHWITHASSESSMENT ){
+        } else if(currentMode == Mode.STRUCTUREGRAPHWITHASSESSMENT || currentMode== Mode.STRUCTUREGRAPH){
             if(assessmentIsValid(secondAssessmentFilename)){
                 assessmentFiles.add(secondAssessmentFilename);
-            }else{
-                throw new Exception();
-            }
-        }else if(currentMode== Mode.STRUCTUREGRAPH){
-                if(assessmentIsValid(secondAssessmentFilename)){
-                    assessmentFiles.add(secondAssessmentFilename);
-                    currentMode = Mode.STRUCTUREGRAPHWITHASSESSMENT;
-                }else{
-                    throw new Exception();
+
+                if(currentMode==Mode.STRUCTUREGRAPH){
+                    currentMode= Mode.STRUCTUREGRAPHWITHASSESSMENT;
                 }
 
+            }else{
+                throw new Exception("Assessment file is invalid");
+            }
         }else{
             throw new Exception("Wrong mode");
 
         }
     }
-
-
 
 
     @Override
@@ -362,10 +316,7 @@ public class ConceptKnowledgeCalculator implements ConceptKnowledgeCalculatorAPI
     @Override
     public void replaceResourceFile(String resourceFile) throws Exception {
         if( currentMode==Mode.COHORTGRAPH || currentMode==Mode.STRUCTUREGRAPHWITHASSESSMENT){
-
-            try {
-                List<LearningObjectLinkRecord> temp = LearningObjectLinkRecord.buildListFromJson(resourceFile);
-
+            if(resourceIsValid(resourceFile)){
                 resourceFiles.clear();
                 resourceFiles.add(resourceFile);
 
@@ -380,13 +331,11 @@ public class ConceptKnowledgeCalculator implements ConceptKnowledgeCalculatorAPI
 
                 clearAndCreateCohortData(structure, resource, assessment);
 
-            }catch (Exception e){
+            }else{
                 throw new Exception("Can't find file");
             }
         }else if(currentMode==Mode.STRUCTUREGRAPH || currentMode== Mode.STRUCTUREGRAPHWITHRESOURCE){
-            try {
-                List<LearningObjectLinkRecord> temp = LearningObjectLinkRecord.buildListFromJson(resourceFile);
-
+            if(resourceIsValid(resourceFile)){
                 List<String> resourceTemp = new ArrayList<>();
                 resourceTemp.addAll(resourceFiles);
                 resourceTemp.add(resourceFile);
@@ -398,16 +347,13 @@ public class ConceptKnowledgeCalculator implements ConceptKnowledgeCalculatorAPI
 
                 currentMode = Mode.STRUCTUREGRAPHWITHRESOURCE;
 
-            }catch (Exception e){
+            }else{
                 throw new Exception("Can't find file");
-
             }
         }else{
             throw new Exception("Wrong mode");
         }
     }
-
-
 
 
     @Override
@@ -615,6 +561,37 @@ public class ConceptKnowledgeCalculator implements ConceptKnowledgeCalculatorAPI
         return temp;
     }
 
+
+
+    @Override
+    public boolean structureIsValid(String name) throws IOException {
+        ConceptGraphRecord conceptGraph = ConceptGraphRecord.buildFromJson(name);
+        if(conceptGraph.getConcepts().size()>0){
+            return true;
+        }else{
+            return false;
+        }
+    }
+
+    @Override
+    public boolean resourceIsValid(String name) throws IOException {
+        List<LearningObjectLinkRecord> temp = LearningObjectLinkRecord.buildListFromJson(name);
+        if(temp.size()>0){
+            return true;
+        }else{
+            return false;
+        }
+    }
+
+    @Override
+    public boolean assessmentIsValid(String name) throws IOException {
+        CSVReader csvReader = new CSVReader(name);
+        if (csvReader.getManualGradedResponses().size()>0){
+            return true;
+        }else{
+            return false;
+        }
+    }
 
     public Mode getCurrentMode(){
         return currentMode;

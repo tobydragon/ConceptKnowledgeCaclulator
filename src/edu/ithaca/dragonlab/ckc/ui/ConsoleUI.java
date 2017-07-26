@@ -231,10 +231,8 @@ public class ConsoleUI {
         System.out.println("What file do you want to replace with?");
         String file = scanner.nextLine();
 
-
-
         try {
-            ckc.updateStructureWithAnotherFile(file);
+            ckc.updateStructureFile(file);
             System.out.println("Process Completed");
 
         } catch (Exception e) {

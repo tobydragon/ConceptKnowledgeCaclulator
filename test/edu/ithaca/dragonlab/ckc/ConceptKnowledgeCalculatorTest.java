@@ -128,7 +128,7 @@ public class ConceptKnowledgeCalculatorTest {
             Assert.assertEquals(ckc.currentResource().get(0), "test/testresources/ManuallyCreated/researchResource1.json");
             Assert.assertEquals(ckc.currentAssessment().size(), 0);
 
-            ckc.updateStructureWithAnotherFile("test/testresources/ManuallyCreated/researchConceptGraph.json");
+            ckc.updateStructureFile("test/testresources/ManuallyCreated/researchConceptGraph.json");
 
             Assert.assertEquals(ckc.getCurrentMode(), ConceptKnowledgeCalculator.Mode.STRUCTUREGRAPHWITHRESOURCE);
             Assert.assertEquals(ckc.currentResource().size(),1);
