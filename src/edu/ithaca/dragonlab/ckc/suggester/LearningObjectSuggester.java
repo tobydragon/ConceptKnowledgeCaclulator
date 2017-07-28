@@ -32,6 +32,7 @@ public class LearningObjectSuggester {
             }
         }
 
+
         return suggestedConceptList;
     }
 
@@ -61,6 +62,7 @@ public class LearningObjectSuggester {
 
 
             for (int i = 0; i < list.size(); i++) {
+
                 //if it is incomplete
                 if (choice.equals(1)) {
                     if (list.get(i).getLevel().equals(LearningObjectSuggestion.Level.INCOMPLETE)) {

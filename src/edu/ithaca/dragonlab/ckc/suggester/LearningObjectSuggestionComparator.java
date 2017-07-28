@@ -16,7 +16,6 @@ public class LearningObjectSuggestionComparator implements Comparator<LearningOb
      * @return int
      */
     public int compare(LearningObjectSuggestion one, LearningObjectSuggestion two){
-        //if levels are equal, then compare the path nums
 
         if (one.getLevel().compareTo(two.getLevel()) == 0) {
             if (one.getPathNum() < two.getPathNum()) {

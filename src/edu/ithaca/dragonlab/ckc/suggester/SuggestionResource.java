@@ -96,7 +96,6 @@ public class SuggestionResource {
             suggestionMap = LearningObjectSuggester.buildSuggestionMap(concepts,0,graph);
         }
 
-
         int max = 0;
         for (List<LearningObjectSuggestion> lists : suggestionMap.values()) {
             max += lists.size();
@@ -123,8 +122,11 @@ public class SuggestionResource {
         }
     }
 
-
-
+    /**
+     * this goes through the list and finds repeats of resource id's and creates a list that only has one occurence of each resources and all of there related concepts.
+     * @param choice
+     * @return
+     */
     public String toString(int choice){
         List<LearningObjectSuggestion> list;
         if (choice==0){
@@ -132,11 +134,51 @@ public class SuggestionResource {
         }else{
             list = wrongList;
         }
+        HashMap<String, String> tempList = new HashMap<>();
+
+        for (LearningObjectSuggestion los: list){
+            if(tempList.keySet().contains(los.getId())){
+                String name = tempList.get(los.getId());
+                tempList.put(los.getId(), name += " & " +los.getReasoning());
+
+            }else{
+                tempList.put(los.getId(), los.getReasoning());
+            }
+        }
+
+
+        List<String>  list2 = new ArrayList<>();
         String st = "";
         for (LearningObjectSuggestion los: list){
-            st += los.toString();
+            if(list2.contains(los.getId())){
+
+            }else{
+                list2.add(los.getId());
+
+                if(tempList.keySet().contains(los.getId())){
+                    st+= "Resource: " + los.getId()+ "\t Concepts it relates to: " + tempList.get(los.getId())+ "\t Importance: "+ los.getPathNum() + "\t Direct Concept Links: " + los.getDirectConceptLinkCount() +"\n";
+                }else{
+                    st += los.toString();
+
+                }
+            }
         }
+
         return st;
     }
 
+//    public String toString(int choice){
+//        List<LearningObjectSuggestion> list;
+//        if (choice==0){
+//            list = incompleteList;
+//        }else{
+//            list = wrongList;
+//        }
+//
+//        String st = "";
+//        for (LearningObjectSuggestion los: list){
+//                st += los.toString();
+//        }
+//        return st;
+//    }
 }

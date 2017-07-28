@@ -210,6 +210,8 @@ public class ConceptGraph {
             suggestedList.removeAll(ancesList);
             suggestedList.add(node);
         }
+
+
     }
 
 
@@ -234,6 +236,8 @@ public class ConceptGraph {
             }
 
         }
+
+        System.out.println(directConceptLinkCountMap);
         return directConceptLinkCountMap;
     }
 
