@@ -130,6 +130,7 @@ function bucketColorList(dataList){
 
             //assigns new values to each color channel based on how the score is compared to the max and min.
 
+
             if(scorePer >= 85){
                 //Green
                 var currNodeColor = new NodeColor(0, 150, 0);
