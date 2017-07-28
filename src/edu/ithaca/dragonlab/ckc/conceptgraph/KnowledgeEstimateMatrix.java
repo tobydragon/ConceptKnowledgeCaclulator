@@ -32,7 +32,11 @@ public class KnowledgeEstimateMatrix {
         this.objList = lo;
         this.userIdList = new ArrayList<String>();
         this.studentKnowledgeEstimates = createMatrix(lo);
-        this.rMatrix = createRMatrix(studentKnowledgeEstimates);
+        try {
+            this.rMatrix = createRMatrix(studentKnowledgeEstimates);
+        }catch (Exception e){
+            System.out.println("statisical (R) functions unavailable. Install R.");
+        }
     }
 
 
@@ -112,7 +116,7 @@ public class KnowledgeEstimateMatrix {
      */
 
     //TODO: look into putting into constructor
-    public RCode createRMatrix(double[][] studentKnowledgeEstimates){
+    public RCode createRMatrix(double[][] studentKnowledgeEstimates)throws Exception{
 
         int objLength = objList.size();
 

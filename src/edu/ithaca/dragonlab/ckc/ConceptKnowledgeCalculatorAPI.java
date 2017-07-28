@@ -138,6 +138,11 @@ public interface ConceptKnowledgeCalculatorAPI {
      */
     double getStudentAvg(String user);
 
+    /**
+     * Prints a matrix of factors (columns) and learning objects (rows) that tell how  connected multiple learning
+     * objects are to just a few factors
+     * @pre resource, assessment, structure files are all present and an R Matrix is created
+     */
     void getFactorMatrix();
 
     /**

@@ -110,6 +110,7 @@ function makeColorsList2(dataList){
 
 function bucketColorList(dataList){
 
+
     var colorsList = [];
     var max = findMax(dataList);
     var min = findMax(dataList);
@@ -128,6 +129,7 @@ function bucketColorList(dataList){
             var scorePer = calcScorePerc(max, min, dataList[i][2]);
 
             //assigns new values to each color channel based on how the score is compared to the max and min.
+
 
             if(scorePer >= 85){
                 //Green

@@ -1,0 +1,139 @@
+{
+  "graphRecords" : [ {
+    "name" : "Average Graph",
+    "concepts" : [ {
+      "id" : "A",
+      "label" : "A",
+      "knowledgeEstimate" : 0.6153846153846154,
+      "knowledgePrediction" : 0.0,
+      "knowledgeDistFromAvg" : 0.0,
+      "dataImportance" : 26.0
+    }, {
+      "id" : "B",
+      "label" : "B",
+      "knowledgeEstimate" : 0.6875,
+      "knowledgePrediction" : 0.0,
+      "knowledgeDistFromAvg" : 0.0,
+      "dataImportance" : 16.0
+    }, {
+      "id" : "C",
+      "label" : "C",
+      "knowledgeEstimate" : 0.5,
+      "knowledgePrediction" : 0.0,
+      "knowledgeDistFromAvg" : 0.0,
+      "dataImportance" : 10.0
+    } ],
+    "links" : [ {
+      "parent" : "B",
+      "child" : "C"
+    }, {
+      "parent" : "A",
+      "child" : "B"
+    }, {
+      "parent" : "A",
+      "child" : "C"
+    } ]
+  }, {
+    "name" : "student2",
+    "concepts" : [ {
+      "id" : "A",
+      "label" : "A",
+      "knowledgeEstimate" : 0.4,
+      "knowledgePrediction" : 0.0,
+      "knowledgeDistFromAvg" : -0.2153846153846154,
+      "dataImportance" : 10.0
+    }, {
+      "id" : "B",
+      "label" : "B",
+      "knowledgeEstimate" : 0.5,
+      "knowledgePrediction" : 0.0,
+      "knowledgeDistFromAvg" : -0.1875,
+      "dataImportance" : 6.0
+    }, {
+      "id" : "C",
+      "label" : "C",
+      "knowledgeEstimate" : 0.25,
+      "knowledgePrediction" : 0.0,
+      "knowledgeDistFromAvg" : -0.25,
+      "dataImportance" : 4.0
+    } ],
+    "links" : [ {
+      "parent" : "B",
+      "child" : "C"
+    }, {
+      "parent" : "A",
+      "child" : "B"
+    }, {
+      "parent" : "A",
+      "child" : "C"
+    } ]
+  }, {
+    "name" : "student1",
+    "concepts" : [ {
+      "id" : "A",
+      "label" : "A",
+      "knowledgeEstimate" : 1.0,
+      "knowledgePrediction" : 0.0,
+      "knowledgeDistFromAvg" : 0.3846153846153846,
+      "dataImportance" : 10.0
+    }, {
+      "id" : "B",
+      "label" : "B",
+      "knowledgeEstimate" : 1.0,
+      "knowledgePrediction" : 0.0,
+      "knowledgeDistFromAvg" : 0.3125,
+      "dataImportance" : 6.0
+    }, {
+      "id" : "C",
+      "label" : "C",
+      "knowledgeEstimate" : 1.0,
+      "knowledgePrediction" : 0.0,
+      "knowledgeDistFromAvg" : 0.5,
+      "dataImportance" : 4.0
+    } ],
+    "links" : [ {
+      "parent" : "B",
+      "child" : "C"
+    }, {
+      "parent" : "A",
+      "child" : "B"
+    }, {
+      "parent" : "A",
+      "child" : "C"
+    } ]
+  }, {
+    "name" : "student3",
+    "concepts" : [ {
+      "id" : "A",
+      "label" : "A",
+      "knowledgeEstimate" : 0.3333333333333333,
+      "knowledgePrediction" : 0.0,
+      "knowledgeDistFromAvg" : -0.2820512820512821,
+      "dataImportance" : 6.0
+    }, {
+      "id" : "B",
+      "label" : "B",
+      "knowledgeEstimate" : 0.5,
+      "knowledgePrediction" : 0.0,
+      "knowledgeDistFromAvg" : -0.1875,
+      "dataImportance" : 4.0
+    }, {
+      "id" : "C",
+      "label" : "C",
+      "knowledgeEstimate" : 0.0,
+      "knowledgePrediction" : 0.0,
+      "knowledgeDistFromAvg" : -0.5,
+      "dataImportance" : 2.0
+    } ],
+    "links" : [ {
+      "parent" : "B",
+      "child" : "C"
+    }, {
+      "parent" : "A",
+      "child" : "B"
+    }, {
+      "parent" : "A",
+      "child" : "C"
+    } ]
+  } ]
+}
