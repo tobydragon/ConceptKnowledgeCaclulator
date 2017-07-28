@@ -237,7 +237,6 @@ public class ConceptGraph {
 
         }
 
-        System.out.println(directConceptLinkCountMap);
         return directConceptLinkCountMap;
     }
 
