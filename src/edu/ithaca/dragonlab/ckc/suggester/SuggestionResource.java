@@ -18,9 +18,7 @@ public class SuggestionResource {
 
 
     public SuggestionResource(ConceptGraph graph, List<ConceptNode> concepts){
-        this.incompleteList= new ArrayList<LearningObjectSuggestion>();
-        this.wrongList= new ArrayList<LearningObjectSuggestion>();
-        this.suggestionMap=new HashMap<>();
+        this();
         completeList(graph, 0, concepts );
         completeList(graph,1, concepts);
     }
@@ -134,19 +132,22 @@ public class SuggestionResource {
         }else{
             list = wrongList;
         }
-        HashMap<String, String> tempList = new HashMap<>();
+        //finds out which resources have repeated concepts
+        //Hashmap<learning suggestion resource, concept>
+        HashMap<String, String> repeatList = new HashMap<>();
 
         for (LearningObjectSuggestion los: list){
-            if(tempList.keySet().contains(los.getId())){
-                String name = tempList.get(los.getId());
-                tempList.put(los.getId(), name += " & " +los.getReasoning());
+            if(repeatList.keySet().contains(los.getId())){
+                String name = repeatList.get(los.getId());
+                repeatList.put(los.getId(), name += " & " +los.getReasoning());
 
             }else{
-                tempList.put(los.getId(), los.getReasoning());
+                repeatList.put(los.getId(), los.getReasoning());
             }
         }
 
 
+        //So repeated resources don't get added to the string multiple times
         List<String>  list2 = new ArrayList<>();
         String st = "";
         for (LearningObjectSuggestion los: list){
@@ -155,8 +156,8 @@ public class SuggestionResource {
             }else{
                 list2.add(los.getId());
 
-                if(tempList.keySet().contains(los.getId())){
-                    st+= "Resource: " + los.getId()+ "\t Concepts it relates to: " + tempList.get(los.getId())+ "\t Importance: "+ los.getPathNum() + "\t Direct Concept Links: " + los.getDirectConceptLinkCount() +"\n";
+                if(repeatList.keySet().contains(los.getId())){
+                    st+= "Resource: " + los.getId()+ "\t Concepts it relates to: " + repeatList.get(los.getId())+ "\t Importance: "+ los.getPathNum() + "\t Direct Concept Links: " + los.getDirectConceptLinkCount() +"\n";
                 }else{
                     st += los.toString();
 
