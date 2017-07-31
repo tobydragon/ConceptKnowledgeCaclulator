@@ -938,7 +938,6 @@ public class ConceptKnowledgeCalculatorTest {
 
             ckc.getCohortGraphsUrl();
 
-
             Assert.assertEquals(incomTest2.size(), 1);
             Assert.assertEquals(incomTest2.get(0).getId(), "What are values are accessed by?");
 
