@@ -171,7 +171,26 @@ public class RFunctions {
         double[][] result = rCaller.getParser().getAsDoubleMatrix("factorsMatrix");
 
     }
+/**
+    public static double getFactorMatrix(KnowledgeEstimateMatrix loMatrix)throws Exception {
+        int numOfFactors = findFactorCount(loMatrix);
+        RCaller rCaller = RCallerVariable();
 
+        rCaller.redirectROutputToStream(System.out);
+
+        RCode code = loMatrix.getrMatrix();
+        code.addInt("numOfFactors", numOfFactors);
+        code.addRCode("matrixOfLoadings <- factanal(matrix, factors = numOfFactors, method = 'mle')");
+
+        code.addRCode("factorsMatrix <- matrixOfLoadings$loadings");
+        code.addRCode("print(factorsMatrix)");
+        rCaller.setRCode(code);
+        rCaller.runAndReturnResult("factorsMatrix");
+        double[][] result = rCaller.getParser().getAsDoubleMatrix("factorsMatrix");
+
+        return result;
+    }
+*/
 
     /**
      * Must be called at the start of every function that uses RCaller methods in
