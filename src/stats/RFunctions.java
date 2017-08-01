@@ -15,6 +15,14 @@ import java.util.List;
 
 public class RFunctions {
 
+
+
+
+
+
+
+
+
     /**
      * Using RCode, the average of knowledgeEstimates of a LearningObject across all user's is calculated
      * @param loMatrix the current graph being searched
@@ -171,8 +179,16 @@ public class RFunctions {
         double[][] result = rCaller.getParser().getAsDoubleMatrix("factorsMatrix");
 
     }
-/**
-    public static double getFactorMatrix(KnowledgeEstimateMatrix loMatrix)throws Exception {
+
+    /**
+     * creates a matrix of factors in java
+     * @param loMatrix
+     * @return statsMatrix the matrix of factors
+     * @pre resource, assessment, structure files are all present and an R Matrix is created
+     * @throws Exception
+     */
+    public static double[][] returnFactorMatrix(KnowledgeEstimateMatrix loMatrix)throws Exception {
+        int learningObjectCount = getColumnCount(loMatrix);
         int numOfFactors = findFactorCount(loMatrix);
         RCaller rCaller = RCallerVariable();
 
@@ -183,14 +199,32 @@ public class RFunctions {
         code.addRCode("matrixOfLoadings <- factanal(matrix, factors = numOfFactors, method = 'mle')");
 
         code.addRCode("factorsMatrix <- matrixOfLoadings$loadings");
-        code.addRCode("print(factorsMatrix)");
+        //code.addRCode("print(factorsMatrix)");
         rCaller.setRCode(code);
         rCaller.runAndReturnResult("factorsMatrix");
-        double[][] result = rCaller.getParser().getAsDoubleMatrix("factorsMatrix");
+        double[][] factorMatrix = rCaller.getParser().getAsDoubleMatrix("factorsMatrix");
 
-        return result;
+        double newArray[] = new double[factorMatrix.length*factorMatrix[0].length];
+        for(int i = 0; i < factorMatrix.length; i++) {
+            double[] row = factorMatrix[i];
+            for(int j = 0; j < row.length; j++) {
+                double number = factorMatrix[i][j];
+                newArray[i*row.length+j] = number;
+            }
+        }
+
+        int arrayIndex = 0;
+        double[][] statsMatrix = new double[learningObjectCount][numOfFactors];
+        for(int i = 0; i < numOfFactors; i++){
+            for(int j = 0; j <learningObjectCount; j++){
+                statsMatrix[j][i] = newArray[arrayIndex];
+                arrayIndex++;
+            }
+        }
+
+        return statsMatrix;
     }
-*/
+
 
     /**
      * Must be called at the start of every function that uses RCaller methods in

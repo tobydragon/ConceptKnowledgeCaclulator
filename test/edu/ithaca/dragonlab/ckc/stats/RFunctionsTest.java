@@ -16,6 +16,17 @@ import java.util.List;
  */
 public class RFunctionsTest {
 
+    /**
+    public void main(){
+
+    }
+    */
+
+
+
+
+
+
 /**
     @Test
     public void LearningObjectAvgTest(){
@@ -69,10 +80,10 @@ public class RFunctionsTest {
             Assert.fail();
         }
     }
-
+*/
 
     //TODO: Make into actual test. Currently commented out in order to not to print output every test
-
+/**
     @Test
     public void getFactorMatrixTest(){
 
@@ -123,6 +134,63 @@ public class RFunctionsTest {
     }
 */
 
+/**
+    @Test
+    public void returnFactorMatrixTest(){
+        try {
+            CSVReader data = new CSVReader("test/testresources/ManuallyCreated/complexRealisticAssessment.csv");
+            List<LearningObject> gotoMatrix = data.getManualGradedLearningObjects();
+            KnowledgeEstimateMatrix newMatrix = new KnowledgeEstimateMatrix(gotoMatrix);
+
+            double[][] statsMatrix = RFunctions.returnFactorMatrix(newMatrix);
+/**
+    double newArray[] = new double[factorMatrix.length*factorMatrix[0].length];
+    for(int i = 0; i < factorMatrix.length; i++) {
+    double[] row = factorMatrix[i];
+    for(int j = 0; j < row.length; j++) {
+    double number = factorMatrix[i][j];
+    newArray[i*row.length+j] = number;
+    }
+    }
+    //System.out.println(Arrays.toString(newArray));
+
+            /**
+    int learningObjectCount = RFunctions.getColumnCount(newMatrix);
+    int factorCount = RFunctions.findFactorCount(newMatrix);
+    int arrayIndex = 0;
+    double[][] statsMatrix = new double[learningObjectCount][factorCount];
+    for(int i = 0; i < factorCount; i++){
+        for(int j = 0; j <learningObjectCount; j++){
+            statsMatrix[j][i] = newArray[arrayIndex];
+            arrayIndex++;
+        }
+    }
+
+    double[] arr1 = new double[7];
+    double[] arr2 = new double[7];
+
+    for (int i = 0; i < 7; i++) {
+    arr1[i] = statsMatrix[i][0];
+    }
+    //System.out.println("Factor 1: "+ Arrays.toString(arr1));
+    //System.out.println("----------");
+    for (int i = 0; i < 7; i++) {
+    arr2[i] = statsMatrix[i][1];
+    }
+    //System.out.println("Factor 2: "+ Arrays.toString(arr2));
+
+    double[] exArr1 = new double[]{0.6808680, 0.5922147, 0.6842057, 0.8361693, 0.9434352, 0.1443587, 0.2874747};
+    double[] exArr2 = new double[]{0.4648499, 0.5747219, 0.5261558, 0.1391935, 0.2398479, 0.7946735, 0.7936599};
+
+    Assert.assertArrayEquals(exArr1, arr1, 0.0001);
+    Assert.assertArrayEquals(exArr2, arr2, 0.0001);
+        }catch(Exception e){
+            e.printStackTrace();
+            Assert.fail();
+        }
+    }
+
+*/
     @Test
     public void getColumnCountTest(){
         try {
@@ -130,7 +198,6 @@ public class RFunctionsTest {
             List<LearningObject> gotoMatrix = data.getManualGradedLearningObjects();
             KnowledgeEstimateMatrix newMatrix = new KnowledgeEstimateMatrix(gotoMatrix);
             Assert.assertEquals(7, RFunctions.getColumnCount(newMatrix), 0);
-
         }catch(Exception e){
             e.printStackTrace();
             Assert.fail();
