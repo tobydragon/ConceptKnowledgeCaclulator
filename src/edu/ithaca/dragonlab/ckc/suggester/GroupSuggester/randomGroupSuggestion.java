@@ -13,7 +13,7 @@ public class randomGroupSuggestion extends GroupSuggester{
     @Override
     public List<List<String>> suggestGroup(CohortConceptGraphs graphs, int choice) {
 
-        List<String> user = getUsers(graphs);
+        List<String> user = getUsersList(graphs);
 
         List<String> userListCopy = new ArrayList<>();
         userListCopy.addAll(user);
@@ -46,8 +46,9 @@ public class randomGroupSuggestion extends GroupSuggester{
             //there aren't enough students
             //warning. there won't be one full group
 
+            Collections.shuffle(userListCopy);
             List<String> group = new ArrayList<>();
-            group.addAll(user);
+            group.addAll(userListCopy);
 
             groupingsOfGroups.add(group);
 
@@ -56,7 +57,8 @@ public class randomGroupSuggestion extends GroupSuggester{
 
             //there will be one group that doesn't have a full group
 
-            for(int i = user.size()%choice; i> 0 ; i--){
+            for(int i = user.size()/choice; i> 0 ; i--){
+
                 List<String> group = new ArrayList<>();
                 Collections.shuffle(userListCopy);
 

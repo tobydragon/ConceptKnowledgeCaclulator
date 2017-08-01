@@ -5,6 +5,7 @@ import edu.ithaca.dragonlab.ckc.ConceptKnowledgeCalculatorAPI;
 import edu.ithaca.dragonlab.ckc.conceptgraph.CohortConceptGraphs;
 import edu.ithaca.dragonlab.ckc.suggester.GroupSuggester.GroupSuggester;
 import edu.ithaca.dragonlab.ckc.suggester.GroupSuggester.randomGroupSuggestion;
+import edu.ithaca.dragonlab.ckc.suggester.GroupSuggester.suggestionGroupSuggestion;
 import org.junit.Assert;
 import org.junit.Test;
 
@@ -141,4 +142,57 @@ public class GroupSuggesterTest {
 //        }
 
     }
+
+
+    @Test
+    public void randomGroupTestRealData() {
+        ConceptKnowledgeCalculatorAPI ckc = null;
+
+
+        //            new ConsoleUI
+
+        try {
+            ckc = new ConceptKnowledgeCalculator("resources/comp220/comp220Graph.json","resources/comp220/comp220Resources.json","localresources/comp220/comp220ExampleDataPortion.csv");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        CohortConceptGraphs graphs = ckc.getCohortConceptGraphs();
+        Assert.assertNotEquals(graphs, null);
+
+
+        GroupSuggester obj = new randomGroupSuggestion();
+
+        //groups of two
+        List<List<String>> groupings = obj.suggestGroup(graphs, 3);
+
+
+        Assert.assertEquals(groupings.size(), 13);
+
+
+    }
+
+
+
+    @Test
+    public void suggestionGroupTestOddStudents() {
+        ConceptKnowledgeCalculatorAPI ckc = null;
+
+        try {
+            ckc = new ConceptKnowledgeCalculator("test/testresources/ManuallyCreated/researchConceptGraph.json", "test/testresources/ManuallyCreated/researchResource2.json", "test/testresources/ManuallyCreated/researchAssessment2.csv");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        CohortConceptGraphs graphs = ckc.getCohortConceptGraphs();
+        Assert.assertNotEquals(graphs, null);
+
+
+        GroupSuggester obj = new suggestionGroupSuggestion();
+
+        //groups of two
+        List<List<String>> groupings = obj.suggestGroup(graphs, 2);
+
+    }
+
 }
