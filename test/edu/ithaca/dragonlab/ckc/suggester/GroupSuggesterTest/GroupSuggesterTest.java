@@ -33,11 +33,13 @@ public class GroupSuggesterTest {
 
         GroupSuggester obj = new randomGroupSuggestion();
 
-        obj.suggestGroup(graphs, 2);
+        List<List<String>> groupings = obj.suggestGroup(graphs, 2);
 
+        for(List<String> lists : groupings){
+            System.out.println(lists);
+        }
 
-//        List<String> user = obj.getUsers(graphs);
-//        System.out.println(user);
+        //test to see each name is only used once in the groupings list
 
     }
 

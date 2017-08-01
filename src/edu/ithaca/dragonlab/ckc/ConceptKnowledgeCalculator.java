@@ -9,7 +9,7 @@ import edu.ithaca.dragonlab.ckc.learningobject.LearningObject;
 import edu.ithaca.dragonlab.ckc.learningobject.LearningObjectResponse;
 import edu.ithaca.dragonlab.ckc.suggester.LearningObjectSuggester;
 import edu.ithaca.dragonlab.ckc.suggester.SuggestionResource;
-import stats.RFunctions;
+//import stats.RFunctions;
 
 import java.io.IOException;
 import java.util.*;
@@ -486,60 +486,62 @@ public class ConceptKnowledgeCalculator implements ConceptKnowledgeCalculatorAPI
     }
 
     public double getLearningObjectAvg(String learningObject) throws Exception {
-        if(currentMode==Mode.COHORTGRAPH) {
-            ConceptGraph graph = cohortConceptGraphs.getAvgGraph();
-            Map<String, LearningObject> loMap = graph.getLearningObjectMap();
-            Collection<LearningObject> objList = loMap.values();
-            ArrayList<LearningObject> list;
-            list = new ArrayList<LearningObject>(objList);
-            KnowledgeEstimateMatrix myMatrix = new KnowledgeEstimateMatrix(list);
-            LearningObject concept = loMap.get(learningObject);
-
-            if (concept != null) {
-                double result = RFunctions.LearningObjectAvg(myMatrix, concept);
-                return result;
-            } else {
-                throw new NullPointerException();
-            }
-        }else {
-            throw new Exception("Wrong Mode");
-        }
+//        if(currentMode==Mode.COHORTGRAPH) {
+//            ConceptGraph graph = cohortConceptGraphs.getAvgGraph();
+//            Map<String, LearningObject> loMap = graph.getLearningObjectMap();
+//            Collection<LearningObject> objList = loMap.values();
+//            ArrayList<LearningObject> list;
+//            list = new ArrayList<LearningObject>(objList);
+//            KnowledgeEstimateMatrix myMatrix = new KnowledgeEstimateMatrix(list);
+//            LearningObject concept = loMap.get(learningObject);
+//
+//            if (concept != null) {
+//                double result = RFunctions.LearningObjectAvg(myMatrix, concept);
+//                return result;
+//            } else {
+//                throw new NullPointerException();
+//            }
+//        }else {
+//            throw new Exception("Wrong Mode");
+//        }
+        return 0;
 
     }
 
     public double getStudentAvg(String user)throws NullPointerException{
-        ConceptGraph graph = cohortConceptGraphs.getAvgGraph();
-        Map<String, LearningObject> loMap = graph.getLearningObjectMap();
-        List<LearningObject> objList = new ArrayList<LearningObject>(loMap.values());
-        KnowledgeEstimateMatrix myMatrix = new KnowledgeEstimateMatrix(objList);
-        List<String> userIdList = myMatrix.getUserIdList();
-
-        if(userIdList.contains(user)) {
-            return RFunctions.StudentKnowledgeEstAvg(myMatrix, user);
-        }else{
-            throw new NullPointerException();
-        }
+//        ConceptGraph graph = cohortConceptGraphs.getAvgGraph();
+//        Map<String, LearningObject> loMap = graph.getLearningObjectMap();
+//        List<LearningObject> objList = new ArrayList<LearningObject>(loMap.values());
+//        KnowledgeEstimateMatrix myMatrix = new KnowledgeEstimateMatrix(objList);
+//        List<String> userIdList = myMatrix.getUserIdList();
+//
+//        if(userIdList.contains(user)) {
+//            return RFunctions.StudentKnowledgeEstAvg(myMatrix, user);
+//        }else{
+//            throw new NullPointerException();
+//        }
+        return 0;
     }
 
     public void getFactorMatrix(){
-        if(currentMode==Mode.COHORTGRAPH){
-            ConceptGraph graph = cohortConceptGraphs.getAvgGraph();
-            Map<String, LearningObject> loMap = graph.getLearningObjectMap();
-            List<LearningObject> objList = new ArrayList<LearningObject>(loMap.values());
-            KnowledgeEstimateMatrix myMatrix = new KnowledgeEstimateMatrix(objList);
-
-            try {
-                RFunctions.getFactorMatrix(myMatrix);
-            }catch (Exception e){
-                System.out.println("Insufficient data to perform factor analysis. Please refer to the guidelines of the data below:\n" +
-                        "- Learning objects without any variance in scores between students will be ignored \n" +
-                        "- There must be at least 3 valid learning objects present\n" +
-                        "- There must be more students than learning objects\n");
-
-            }
-        }else{
-            throw new NullPointerException();
-        }
+//        if(currentMode==Mode.COHORTGRAPH){
+//            ConceptGraph graph = cohortConceptGraphs.getAvgGraph();
+//            Map<String, LearningObject> loMap = graph.getLearningObjectMap();
+//            List<LearningObject> objList = new ArrayList<LearningObject>(loMap.values());
+//            KnowledgeEstimateMatrix myMatrix = new KnowledgeEstimateMatrix(objList);
+//
+//            try {
+//                RFunctions.getFactorMatrix(myMatrix);
+//            }catch (Exception e){
+//                System.out.println("Insufficient data to perform factor analysis. Please refer to the guidelines of the data below:\n" +
+//                        "- Learning objects without any variance in scores between students will be ignored \n" +
+//                        "- There must be at least 3 valid learning objects present\n" +
+//                        "- There must be more students than learning objects\n");
+//
+//            }
+//        }else{
+//            throw new NullPointerException();
+//        }
     }
 
 

@@ -9,7 +9,7 @@ import java.util.*;
  */
 public abstract class GroupSuggester {
 
-    public abstract void suggestGroup(CohortConceptGraphs graphs, int choice);
+    public abstract List<List<String>> suggestGroup(CohortConceptGraphs graphs, int choice);
 
 
     public List<String> getUsers(CohortConceptGraphs graphs) {

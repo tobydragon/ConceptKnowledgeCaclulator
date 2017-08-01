@@ -11,55 +11,77 @@ public class randomGroupSuggestion extends GroupSuggester{
 
 
     @Override
-    public void suggestGroup(CohortConceptGraphs graphs, int choice) {
-
-        Random rand = new Random();
+    public List<List<String>> suggestGroup(CohortConceptGraphs graphs, int choice) {
 
         List<String> user = getUsers(graphs);
 
-        if(user.size()%choice==0){
+        List<String> userListCopy = new ArrayList<>();
+        userListCopy.addAll(user);
 
-            HashMap<Integer, String> userMap = new HashMap<>();
-            Map<String, ConceptGraph> userToGraph = graphs.getUserToGraph();
+        List<List<String>> groupings = new ArrayList<>();
 
-            int num =0;
-            for(String currentUser: userToGraph.keySet()){
-                userMap.put(num, currentUser);
-                num++;
-            }
+        if(user.size()%choice==0 && user.size()>= choice){
 
-
-            List<List<String>> groupings = new ArrayList<>();
-
-
-            int whileNum = user.size()/choice;
+            int whileNum = user.size();
             while(whileNum>0) {
 
                 List<String> group = new ArrayList<>();
+                Collections.shuffle(userListCopy);
 
-                int student = rand.nextInt(user.size());
-                int student1 = rand.nextInt(user.size());
-
-                System.out.println(student + " " + student1);
+                int choices =0;
+                choices = choice;
+                while (choices>0){
+                    group.add(userListCopy.get(choices-1));
+                    userListCopy.remove(userListCopy.get(choices-1));
+                    choices--;
+                }
 
                 groupings.add(group);
-                whileNum--;
 
+                whileNum= whileNum-choice;
             }
 
-            for(List<String> lists : groupings){
-                System.out.println(lists);
-            }
+            return groupings;
 
+        }else if (user.size()<choice && user.size()%choice!=0){
+            //there aren't enough students
+            List<String> group = new ArrayList<>();
+            group.addAll(user);
 
+            groupings.add(group);
+
+            return groupings;
         }else{
-            System.out.println("not even number of stdeutnst");
+
+            //user.size()%choice!=0 && user.size()>= choice
+
+
+            for(int i = user.size()%choice; i> 0 ; i--){
+                List<String> group = new ArrayList<>();
+                Collections.shuffle(userListCopy);
+
+                int choices =0;
+                choices = choice;
+                while (choices>0){
+                    group.add(userListCopy.get(choices-1));
+                    userListCopy.remove(userListCopy.get(choices-1));
+                    choices--;
+                }
+
+                groupings.add(group);
+
+            }
+
+            List<String> group = new ArrayList<>();
+            group.addAll(userListCopy);
+
+            groupings.add(group);
+
+            return groupings;
+//            System.out.println(userListCopy);
+
+
         }
-
-
-
-
-
     }
 
 
