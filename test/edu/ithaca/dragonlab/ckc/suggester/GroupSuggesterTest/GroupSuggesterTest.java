@@ -18,7 +18,7 @@ public class GroupSuggesterTest {
 
 
     @Test
-    public void randomGroupSuggesterTest() {
+    public void randomGroupTestOddStudents() {
         ConceptKnowledgeCalculatorAPI ckc = null;
 
         try {
@@ -33,15 +33,112 @@ public class GroupSuggesterTest {
 
         GroupSuggester obj = new randomGroupSuggestion();
 
+        //groups of two
         List<List<String>> groupings = obj.suggestGroup(graphs, 2);
 
-        for(List<String> lists : groupings){
-            System.out.println(lists);
-        }
+        Assert.assertEquals(groupings.size(), 2);
+        Assert.assertEquals(groupings.get(0).size(),2);
+        Assert.assertEquals(groupings.get(1).size(), 1);
+        Assert.assertNotEquals(groupings.get(0).get(0), groupings.get(0).get(1), groupings.get(1).get(0));
 
-        //test to see each name is only used once in the groupings list
+        //groups of three
+        List<List<String>> groupings2 = obj.suggestGroup(graphs, 3);
+
+        Assert.assertEquals(groupings2.size(), 1);
+        Assert.assertEquals(groupings2.get(0).size(),3);
+        Assert.assertNotEquals(groupings2.get(0).get(0), groupings2.get(0).get(1), groupings2.get(0).get(2));
+
 
     }
 
 
+    @Test
+    public void randomGroupTestLessStudents() {
+        ConceptKnowledgeCalculatorAPI ckc = null;
+
+        try {
+            ckc = new ConceptKnowledgeCalculator("test/testresources/ManuallyCreated/simpleConceptGraph.json", "test/testresources/ManuallyCreated/simpleResource.json", "test/testresources/ManuallyCreated/simpleAssessment.csv");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        CohortConceptGraphs graphs = ckc.getCohortConceptGraphs();
+        Assert.assertNotEquals(graphs, null);
+
+
+        GroupSuggester obj = new randomGroupSuggestion();
+
+        //groups of two
+        List<List<String>> groupings = obj.suggestGroup(graphs, 2);
+
+        Assert.assertEquals(groupings.size(), 1);
+        Assert.assertEquals(groupings.get(0).size(),1);
+
+
+//        //groups of three
+        List<List<String>> groupings2 = obj.suggestGroup(graphs, 3);
+
+        Assert.assertEquals(groupings2.size(), 1);
+        Assert.assertEquals(groupings2.get(0).size(),1);
+
+
+    }
+
+
+
+    @Test
+    public void randomGroupTestEvenStudents() {
+        ConceptKnowledgeCalculatorAPI ckc = null;
+
+        try {
+            ckc = new ConceptKnowledgeCalculator("test/testresources/ManuallyCreated/researchConceptGraph.json", "test/testresources/ManuallyCreated/researchResource1.json", "test/testresources/ManuallyCreated/researchAssessment1.csv");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        CohortConceptGraphs graphs = ckc.getCohortConceptGraphs();
+        Assert.assertNotEquals(graphs, null);
+
+
+        GroupSuggester obj = new randomGroupSuggestion();
+
+        //groups of two
+        List<List<String>> groupings = obj.suggestGroup(graphs, 2);
+
+        Assert.assertEquals(groupings.size(), 3);
+        Assert.assertEquals(groupings.get(0).size(),2);
+        Assert.assertEquals(groupings.get(1).size(), 2);
+        Assert.assertEquals(groupings.get(2).size(), 2);
+
+        List<String> test = new ArrayList<>();
+        test.add(groupings.get(0).get(0));
+        test.add( groupings.get(0).get(1));
+        test.add(groupings.get(1).get(0));
+        test.add( groupings.get(1).get(1));
+        test.add(groupings.get(2).get(0));
+        test.add(groupings.get(2).get(1));
+
+        Assert.assertEquals(test.size(),6);
+        Assert.assertEquals(test.contains("s1"), true);
+        Assert.assertEquals(test.contains("s2"), true);
+        Assert.assertEquals(test.contains("s3"), true);
+        Assert.assertEquals(test.contains("s4"), true);
+        Assert.assertEquals(test.contains("s5"), true);
+        Assert.assertEquals(test.contains("s6"), true);
+
+        //groups of three
+        List<List<String>> groupings2 = obj.suggestGroup(graphs, 3);
+
+        Assert.assertEquals(groupings2.size(), 2);
+        Assert.assertEquals(groupings2.get(0).size(),3);
+        Assert.assertEquals(groupings2.get(1).size(),3);
+        Assert.assertNotEquals(groupings2.get(0).get(0), groupings2.get(0).get(1), groupings2.get(0).get(2));
+        Assert.assertNotEquals(groupings2.get(1).get(0), groupings2.get(1).get(1), groupings2.get(1).get(2));
+
+
+//        for(List<String> lists : groupings2){
+//            System.out.println(lists);
+//        }
+
+    }
 }

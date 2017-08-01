@@ -18,7 +18,7 @@ public class randomGroupSuggestion extends GroupSuggester{
         List<String> userListCopy = new ArrayList<>();
         userListCopy.addAll(user);
 
-        List<List<String>> groupings = new ArrayList<>();
+        List<List<String>> groupingsOfGroups = new ArrayList<>();
 
         if(user.size()%choice==0 && user.size()>= choice){
 
@@ -36,25 +36,25 @@ public class randomGroupSuggestion extends GroupSuggester{
                     choices--;
                 }
 
-                groupings.add(group);
+                groupingsOfGroups.add(group);
 
                 whileNum= whileNum-choice;
             }
 
-            return groupings;
 
         }else if (user.size()<choice && user.size()%choice!=0){
             //there aren't enough students
+            //warning. there won't be one full group
+
             List<String> group = new ArrayList<>();
             group.addAll(user);
 
-            groupings.add(group);
+            groupingsOfGroups.add(group);
 
-            return groupings;
         }else{
-
             //user.size()%choice!=0 && user.size()>= choice
 
+            //there will be one group that doesn't have a full group
 
             for(int i = user.size()%choice; i> 0 ; i--){
                 List<String> group = new ArrayList<>();
@@ -68,20 +68,18 @@ public class randomGroupSuggestion extends GroupSuggester{
                     choices--;
                 }
 
-                groupings.add(group);
+                groupingsOfGroups.add(group);
 
             }
 
             List<String> group = new ArrayList<>();
             group.addAll(userListCopy);
 
-            groupings.add(group);
-
-            return groupings;
-//            System.out.println(userListCopy);
-
+            groupingsOfGroups.add(group);
 
         }
+        return groupingsOfGroups;
+
     }
 
 
