@@ -175,10 +175,13 @@ public class GroupSuggesterTest {
 
 
     @Test
-    public void suggestionGroupTestOddStudents() {
+    public void suggestionGroupTestLessLeftOverStudents() {
         ConceptKnowledgeCalculatorAPI ckc = null;
 
         try {
+//            ckc = new ConceptKnowledgeCalculator("resources/comp220/comp220Graph.json","resources/comp220/comp220Resources.json","localresources/comp220/comp220ExampleDataPortion.csv");
+//            ckc = new ConceptKnowledgeCalculator("test/testresources/ManuallyCreated/researchConceptGraph.json", "test/testresources/ManuallyCreated/researchResource1.json", "test/testresources/ManuallyCreated/researchAssessment1.csv");
+
             ckc = new ConceptKnowledgeCalculator("test/testresources/ManuallyCreated/researchConceptGraph.json", "test/testresources/ManuallyCreated/researchResource2.json", "test/testresources/ManuallyCreated/researchAssessment2.csv");
         } catch (IOException e) {
             e.printStackTrace();
@@ -193,6 +196,49 @@ public class GroupSuggesterTest {
         //groups of two
         List<List<String>> groupings = obj.suggestGroup(graphs, 2);
 
+//        System.out.println(groupings);
+
+        Assert.assertEquals(groupings.size(),2);
+
+        Assert.assertEquals(groupings.get(0).size(), 3);
+        Assert.assertEquals(groupings.get(1).size(), 2);
+
+        Assert.assertEquals(groupings.get(0).get(0),"s3" );
+        Assert.assertEquals(groupings.get(0).get(1),"s2" );
+        Assert.assertEquals(groupings.get(1).get(0),"s4" );
+
+
+//        System.out.println(groupings);
+
     }
+
+    @Test
+    public void suggestionGroupTestOddStudents() {
+        ConceptKnowledgeCalculatorAPI ckc = null;
+
+        try {
+            ckc = new ConceptKnowledgeCalculator("test/testresources/ManuallyCreated/researchConceptGraph.json", "test/testresources/ManuallyCreated/researchResource1.json", "test/testresources/ManuallyCreated/researchAssessment1.csv");
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        CohortConceptGraphs graphs = ckc.getCohortConceptGraphs();
+        Assert.assertNotEquals(graphs, null);
+
+
+        GroupSuggester obj = new suggestionGroupSuggestion();
+
+        //groups of two
+        List<List<String>> groupings = obj.suggestGroup(graphs, 2);
+
+//        System.out.println(groupings);
+
+        Assert.assertEquals(groupings.size(),3);
+
+
+
+    }
+
 
 }
