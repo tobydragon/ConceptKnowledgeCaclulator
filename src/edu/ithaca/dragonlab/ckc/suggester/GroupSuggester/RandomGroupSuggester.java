@@ -7,7 +7,7 @@ import java.util.*;
 /**
  * Created by mkimmitchell on 7/31/17.
  */
-public class randomGroupSuggestion extends GroupSuggester{
+public class RandomGroupSuggester extends GroupSuggester{
 
 
     @Override

@@ -905,9 +905,8 @@ public class ConceptKnowledgeCalculatorTest {
             List<LearningObjectSuggestion> wrongTest = sug.wrongList;
             List<LearningObjectSuggestion> incomTest = sug.incompleteList;
 
-            Assert.assertEquals(incomTest.size(), 2);
-            Assert.assertEquals(incomTest.get(0).getId(), "How are while loops and booleans related?");
-            Assert.assertEquals(incomTest.get(1).getId(), "What are the things you need for a while loop?");
+            Assert.assertEquals(incomTest.size(), 1);
+            Assert.assertEquals(incomTest.get(0).getId(), "What are the things you need for a while loop?");
 
             Assert.assertEquals(wrongTest.size(), 4);
             Assert.assertEquals(wrongTest.get(0).getId(), "What are the differences and similarities between for loops and while loops?");

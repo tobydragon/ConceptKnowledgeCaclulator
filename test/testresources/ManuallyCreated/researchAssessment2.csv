@@ -1,6 +1,11 @@
 student ID,Name, Counting in binary to 10 [100], Write an algorithm to change a list of ints to be a list of strings [100], What’s wrong with the following function definition? [100], What will the following function return? [100], Can a function be called several times by placing a function call in the body of a loop [100], How many parameters can you have? [100], When do you want to cause a side effect?[100], When do you want to allow side effects? [100], Describe how the following relate to a for loop  variable and terminating condition and loop body [100], What’s are the differences and similarities between for loops and while loops? [100], Describe how while loops can depend on booleans [100], Describe the flow of a while loop [100], What’s the difference between a statement and an expression? [100], Write a function that will convert 645 mins into hours[100], Write a function that will convert 645 mins into the whole hours [100], What does the modulus operator do? [100], What is an assignment token? [100], What is a reference diagram? [100], What is printed then the following statements execute? [100], Whats a key [100], What’s a value [100], What are values are accessed by? [100], Is a dictionary ordered? [100], Write a function that will calculate if the substring 'the' is in any user input [100]
+
+s1,s4,90,80,91,85,95,82,100,91,85,100,89,90,94,91,100,90,72,85,65,80,80,88,95,100
+
 s2,s1,55,60,90,94,96,71,80,75,64,,50,69,,75,55,,75,69,70,87,81,,78,50
 
 s3,s4,66,80,91,93,95,70,80,74,64,,50,68,,74,50,,72,67,65,80,80,,75,40
 
 s4,s4,90,80,91,85,95,82,100,91,85,100,89,90,94,91,100,90,72,85,65,80,80,88,95,100
+
+s5,s4,90,80,91,85,95,82,100,91,85,100,89,90,94,91,100,90,72,85,65,80,80,88,95,100
