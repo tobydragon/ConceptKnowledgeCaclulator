@@ -1,8 +1,10 @@
 package edu.ithaca.dragonlab.ckc.stats;
 
+import edu.ithaca.dragonlab.ckc.ConceptKnowledgeCalculator;
 import edu.ithaca.dragonlab.ckc.conceptgraph.KnowledgeEstimateMatrix;
 import edu.ithaca.dragonlab.ckc.io.CSVReader;
 import edu.ithaca.dragonlab.ckc.learningobject.LearningObject;
+import edu.ithaca.dragonlab.ckc.ui.ConsoleUI;
 import org.junit.Assert;
 import org.junit.Test;
 import stats.RFunctions;
@@ -16,15 +18,10 @@ import java.util.List;
  */
 public class RFunctionsTest {
 
-    /**
+    @Test
     public void main(){
 
     }
-    */
-
-
-
-
 
 
 /**

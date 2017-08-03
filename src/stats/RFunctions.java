@@ -2,6 +2,9 @@ package stats;
 
 import com.github.rcaller.rstuff.*;
 import com.github.rcaller.util.Globals;
+import edu.ithaca.dragonlab.ckc.conceptgraph.CohortConceptGraphs;
+import edu.ithaca.dragonlab.ckc.conceptgraph.ConceptGraph;
+import edu.ithaca.dragonlab.ckc.conceptgraph.ConceptNode;
 import edu.ithaca.dragonlab.ckc.conceptgraph.KnowledgeEstimateMatrix;
 import edu.ithaca.dragonlab.ckc.learningobject.LearningObject;
 
@@ -14,13 +17,6 @@ import java.util.List;
  */
 
 public class RFunctions {
-
-
-
-
-
-
-
 
 
     /**
@@ -73,6 +69,8 @@ public class RFunctions {
         double actual = results[0];
         return actual;
     }
+
+
 
     /**
      * A helper function for getFactorCount() that deletes columns of the matrix that will crash R/is unnecessary data
@@ -199,7 +197,6 @@ public class RFunctions {
         code.addRCode("matrixOfLoadings <- factanal(matrix, factors = numOfFactors, method = 'mle')");
 
         code.addRCode("factorsMatrix <- matrixOfLoadings$loadings");
-        //code.addRCode("print(factorsMatrix)");
         rCaller.setRCode(code);
         rCaller.runAndReturnResult("factorsMatrix");
         double[][] factorMatrix = rCaller.getParser().getAsDoubleMatrix("factorsMatrix");
@@ -223,6 +220,18 @@ public class RFunctions {
         }
 
         return statsMatrix;
+    }
+
+
+
+    public String modelMaker(CohortConceptGraphs ccg){
+        String modelString = "";
+        ConceptGraph graph = ccg.getAvgGraph();
+        List<ConceptNode> conceptList = graph.getRoots();
+
+
+
+        return modelString;
     }
 
 
