@@ -228,6 +228,9 @@ public class RFunctions {
         String modelString = "";
         ConceptGraph graph = ccg.getAvgGraph();
         List<ConceptNode> conceptList = graph.getRoots();
+        for(ConceptNode concept : conceptList){
+
+        }
 
 
 
