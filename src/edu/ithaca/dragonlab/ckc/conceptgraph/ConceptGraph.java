@@ -3,7 +3,6 @@ package edu.ithaca.dragonlab.ckc.conceptgraph;
 import edu.ithaca.dragonlab.ckc.io.*;
 import edu.ithaca.dragonlab.ckc.learningobject.LearningObject;
 import edu.ithaca.dragonlab.ckc.learningobject.LearningObjectResponse;
-import edu.ithaca.dragonlab.ckc.suggester.LearningObjectSuggester;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -305,6 +304,8 @@ public class ConceptGraph {
 		return nodeMap.keySet();
 	}
 
+	public Map<String, ConceptNode> getNodeMap(){ return nodeMap;}
+
     public Map<String, LearningObject> getLearningObjectMap() {
 	    return learningObjectMap;
     }
@@ -356,4 +357,7 @@ public class ConceptGraph {
         }
 
     }
+
+
+
 }

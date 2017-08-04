@@ -97,6 +97,38 @@ public class ConceptNode {
 
 	}
 
+
+
+	public double example(double num, List<String> allNode) {
+
+        System.out.println(this.getID());
+        if (this.children.size()>0) {
+            if (!allNode.contains(this.getID())) {
+
+                allNode.add(this.getID());
+
+                for (ConceptNode child : this.children) {
+                    if (!allNode.contains(child.getID())) {
+
+                        child.example(num, allNode);
+                    }
+                }
+            }
+                return 1;
+
+
+        }else{
+            if (!allNode.contains(this.getID())) {
+
+                System.out.println(num + this.getKnowledgeEstimate());
+                return num + this.getKnowledgeEstimate();
+            }
+        }
+        return num;
+    }
+
+
+
 	/**
      *fills up a hashmap with the LearningObjects IDs and the amount of ways to get to the learning object from the root (which is how importance is measured)
      *@param learningObjectSummary map>

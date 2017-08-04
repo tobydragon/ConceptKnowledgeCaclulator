@@ -65,12 +65,12 @@ public class SuggestionGroupSuggester extends GroupSuggester {
         List<LearningObjectSuggestion> wrong3 = s3.wrongList;
 
         /*
-        student1   student2
-        incomplete  ==true  2
-        wrong == true       3
-        incomplete wrong    4
-        wrong incomplete    4
-        empty empty         1
+        student1   student2 student3
+        incomplete  ==true              2
+        wrong == true                   3
+        incomplete wrong incomplete     4
+        wrong incomplete wrong          4
+        empty empty  empty              1
          */
 
 
@@ -121,9 +121,6 @@ public class SuggestionGroupSuggester extends GroupSuggester {
                         break;
                     }
                 }
-
-
-
             }
 
 
@@ -132,41 +129,12 @@ public class SuggestionGroupSuggester extends GroupSuggester {
                 groupRe.addAll(possiblePairing);
                 groupings.add(groupRe);
 
-
                 userTemp.removeAll(groupRe);
 
             }
 
         }
     }
-
-//        public void makeGroups(List<List<String>> num, List<String> userTemp, List<List<String>> groupings, int choice){
-//
-//            for(List<String> possiblePairing: num){
-//                boolean flag = false;
-//
-//                for(int i=0; i<possiblePairing.size()-2; i++){
-//                    String firstName = possiblePairing.get(i);
-//                    String secondName = possiblePairing.get(i+1);
-//
-//                    if(!userTemp.contains(firstName) || !userTemp.contains(secondName) ){
-//                        flag=true;
-//                        break;
-//                    }
-//                }
-//
-//
-//                if(!flag){
-//                    List<String> groupRe = new ArrayList<>();
-//                    groupRe.addAll(possiblePairing);
-//                    groupings.add(groupRe);
-//
-//                    userTemp.remove(possiblePairing.get(0));
-//                    userTemp.remove(possiblePairing.get(1));
-//
-//                }
-//            }
-//        }
 
 
     @Override
@@ -355,8 +323,8 @@ public class SuggestionGroupSuggester extends GroupSuggester {
             //user.size()%choice != 0 && user.size()>= choice
 
             //there will be one group that doesn't have a full group
-
             //while there are still pairings left to create
+
             for(int i = userTemp.size()/choice; i> 0 ; i--){
 
                 List<String> group = new ArrayList<>();
