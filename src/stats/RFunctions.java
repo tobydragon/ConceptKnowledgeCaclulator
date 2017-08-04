@@ -8,7 +8,13 @@ import edu.ithaca.dragonlab.ckc.conceptgraph.ConceptNode;
 import edu.ithaca.dragonlab.ckc.conceptgraph.KnowledgeEstimateMatrix;
 import edu.ithaca.dragonlab.ckc.learningobject.LearningObject;
 
+import java.io.File;
+import java.util.Collection;
 import java.util.List;
+import java.util.Map;
+import java.util.Set;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  * This class holds R Functions that can be used on the RCode's rMatrix 2DArray from the KnowledgeEstimateMatrix class
@@ -160,6 +166,7 @@ public class RFunctions {
      * @throws Exception
      */
     public static void getFactorMatrix(KnowledgeEstimateMatrix loMatrix)throws Exception {
+        try{
         int numOfFactors = findFactorCount(loMatrix);
         RCaller rCaller = RCallerVariable();
 
@@ -167,15 +174,24 @@ public class RFunctions {
 
         RCode code = loMatrix.getrMatrix();
         code.addInt("numOfFactors", numOfFactors);
-        code.addRCode("matrixOfLoadings <- factanal(matrix, factors = numOfFactors, method = 'mle')");
-
+        code.addRCode("matrixOfLoadings <- factanal(matrix,numOfFactors, method=\"MLE\")");
         //rCaller.getRCallerOptions();
         code.addRCode("factorsMatrix <- matrixOfLoadings$loadings");
         code.addRCode("print(factorsMatrix)");
+        //code.addRCode("require(semPlot)");
+        code.addRCode("library(semPlot)");
+        File file = code.startPlot();
+        System.out.println("Ignore warning messages below");
+        code.addRCode("semPaths(matrixOfLoadings, \"est\")");
+        code.endPlot();
         rCaller.setRCode(code);
-        rCaller.runAndReturnResult("factorsMatrix");
-        double[][] result = rCaller.getParser().getAsDoubleMatrix("factorsMatrix");
-
+        rCaller.runOnly();
+        //double[][] result = rCaller.getParser().getAsDoubleMatrix("factorsMatrix");
+        code.getPlot(file);
+        code.showPlot(file);
+    }catch(Exception e){
+        Logger.getLogger(RFunctions.class.getName()).log(Level.SEVERE, e.getMessage());
+    }
     }
 
     /**
@@ -222,21 +238,24 @@ public class RFunctions {
         return statsMatrix;
     }
 
-
-
-    public String modelMaker(CohortConceptGraphs ccg){
+//TODO: Finish function
+/**
+    public static String modelMaker(CohortConceptGraphs ccg){
         String modelString = "";
         ConceptGraph graph = ccg.getAvgGraph();
         List<ConceptNode> conceptList = graph.getRoots();
         for(ConceptNode concept : conceptList){
+            Map<String, LearningObject> loMap = concept.getLearningObjectMap();
+            Collection<LearningObject> loList = loMap.values();
+            for(LearningObject lo : loList){
+                modelString += lo + " -> " + lo.getId() + "," + lo + "To" + concept.getLabel() + ", NA \n";
 
+            }
         }
-
-
 
         return modelString;
     }
-
+*/
 
     /**
      * Must be called at the start of every function that uses RCaller methods in

@@ -1,6 +1,8 @@
 package edu.ithaca.dragonlab.ckc.stats;
 
 import edu.ithaca.dragonlab.ckc.ConceptKnowledgeCalculator;
+import edu.ithaca.dragonlab.ckc.ConceptKnowledgeCalculatorAPI;
+import edu.ithaca.dragonlab.ckc.conceptgraph.CohortConceptGraphs;
 import edu.ithaca.dragonlab.ckc.conceptgraph.KnowledgeEstimateMatrix;
 import edu.ithaca.dragonlab.ckc.io.CSVReader;
 import edu.ithaca.dragonlab.ckc.learningobject.LearningObject;
@@ -9,6 +11,7 @@ import org.junit.Assert;
 import org.junit.Test;
 import stats.RFunctions;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -188,6 +191,25 @@ public class RFunctionsTest {
     }
 
 */
+
+//TODO: Finish Test
+/**
+    @Test
+    public void modelMakerTest(){
+        ConceptKnowledgeCalculatorAPI ckc = null;
+        try {
+            ckc = new ConceptKnowledgeCalculator("test/testresources/ManuallyCreated/simpleConceptGraph.json",
+                    "test/testresources/ManuallyCreated/simpleResource.json",
+                    "test/testresources/ManuallyCreated/simpleAssessmentMoreUsers.csv");
+        } catch (IOException e) {
+            Assert.fail("Unable to load default files");
+        }
+        CohortConceptGraphs ccg = ckc.getCohortConceptGraphs();
+        String modelString = RFunctions.modelMaker(ccg);
+        Assert.assertEquals("Actual should not be empty", modelString);
+    }
+*/
+
     @Test
     public void getColumnCountTest(){
         try {
