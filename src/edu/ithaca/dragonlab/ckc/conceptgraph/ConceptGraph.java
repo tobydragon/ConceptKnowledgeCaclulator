@@ -10,7 +10,7 @@ import java.util.*;
 import java.util.List;
 
 
-public class ConceptGraph {
+public class  ConceptGraph {
     private static final Logger logger = LogManager.getLogger(ConceptGraph.class);
     public static final Integer DIVISION_FACTOR = 2;
 

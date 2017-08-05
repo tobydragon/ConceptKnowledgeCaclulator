@@ -2,10 +2,19 @@ package stats;
 
 import com.github.rcaller.rstuff.*;
 import com.github.rcaller.util.Globals;
+import edu.ithaca.dragonlab.ckc.conceptgraph.CohortConceptGraphs;
+import edu.ithaca.dragonlab.ckc.conceptgraph.ConceptGraph;
+import edu.ithaca.dragonlab.ckc.conceptgraph.ConceptNode;
 import edu.ithaca.dragonlab.ckc.conceptgraph.KnowledgeEstimateMatrix;
 import edu.ithaca.dragonlab.ckc.learningobject.LearningObject;
 
+import java.io.File;
+import java.util.Collection;
 import java.util.List;
+import java.util.Map;
+import java.util.Set;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  * This class holds R Functions that can be used on the RCode's rMatrix 2DArray from the KnowledgeEstimateMatrix class
@@ -14,6 +23,7 @@ import java.util.List;
  */
 
 public class RFunctions {
+
 
     /**
      * Using RCode, the average of knowledgeEstimates of a LearningObject across all user's is calculated
@@ -65,6 +75,8 @@ public class RFunctions {
         double actual = results[0];
         return actual;
     }
+
+
 
     /**
      * A helper function for getFactorCount() that deletes columns of the matrix that will crash R/is unnecessary data
@@ -154,6 +166,43 @@ public class RFunctions {
      * @throws Exception
      */
     public static void getFactorMatrix(KnowledgeEstimateMatrix loMatrix)throws Exception {
+        try{
+        int numOfFactors = findFactorCount(loMatrix);
+        RCaller rCaller = RCallerVariable();
+
+        rCaller.redirectROutputToStream(System.out);
+
+        RCode code = loMatrix.getrMatrix();
+        code.addInt("numOfFactors", numOfFactors);
+        code.addRCode("matrixOfLoadings <- factanal(matrix,numOfFactors, method=\"MLE\")");
+        //rCaller.getRCallerOptions();
+        code.addRCode("factorsMatrix <- matrixOfLoadings$loadings");
+        code.addRCode("print(factorsMatrix)");
+        //code.addRCode("require(semPlot)");
+        code.addRCode("library(semPlot)");
+        File file = code.startPlot();
+        System.out.println("Ignore warning messages below");
+        code.addRCode("semPaths(matrixOfLoadings, \"est\")");
+        code.endPlot();
+        rCaller.setRCode(code);
+        rCaller.runOnly();
+        //double[][] result = rCaller.getParser().getAsDoubleMatrix("factorsMatrix");
+        code.getPlot(file);
+        code.showPlot(file);
+    }catch(Exception e){
+        Logger.getLogger(RFunctions.class.getName()).log(Level.SEVERE, e.getMessage());
+    }
+    }
+
+    /**
+     * creates a matrix of factors in java
+     * @param loMatrix
+     * @return statsMatrix the matrix of factors
+     * @pre resource, assessment, structure files are all present and an R Matrix is created
+     * @throws Exception
+     */
+    public static double[][] returnFactorMatrix(KnowledgeEstimateMatrix loMatrix)throws Exception {
+        int learningObjectCount = getColumnCount(loMatrix);
         int numOfFactors = findFactorCount(loMatrix);
         RCaller rCaller = RCallerVariable();
 
@@ -163,15 +212,50 @@ public class RFunctions {
         code.addInt("numOfFactors", numOfFactors);
         code.addRCode("matrixOfLoadings <- factanal(matrix, factors = numOfFactors, method = 'mle')");
 
-        //rCaller.getRCallerOptions();
         code.addRCode("factorsMatrix <- matrixOfLoadings$loadings");
-        code.addRCode("print(factorsMatrix)");
         rCaller.setRCode(code);
         rCaller.runAndReturnResult("factorsMatrix");
-        double[][] result = rCaller.getParser().getAsDoubleMatrix("factorsMatrix");
+        double[][] factorMatrix = rCaller.getParser().getAsDoubleMatrix("factorsMatrix");
 
+        double newArray[] = new double[factorMatrix.length*factorMatrix[0].length];
+        for(int i = 0; i < factorMatrix.length; i++) {
+            double[] row = factorMatrix[i];
+            for(int j = 0; j < row.length; j++) {
+                double number = factorMatrix[i][j];
+                newArray[i*row.length+j] = number;
+            }
+        }
+
+        int arrayIndex = 0;
+        double[][] statsMatrix = new double[learningObjectCount][numOfFactors];
+        for(int i = 0; i < numOfFactors; i++){
+            for(int j = 0; j <learningObjectCount; j++){
+                statsMatrix[j][i] = newArray[arrayIndex];
+                arrayIndex++;
+            }
+        }
+
+        return statsMatrix;
     }
 
+//TODO: Finish function
+/**
+    public static String modelMaker(CohortConceptGraphs ccg){
+        String modelString = "";
+        ConceptGraph graph = ccg.getAvgGraph();
+        List<ConceptNode> conceptList = graph.getRoots();
+        for(ConceptNode concept : conceptList){
+            Map<String, LearningObject> loMap = concept.getLearningObjectMap();
+            Collection<LearningObject> loList = loMap.values();
+            for(LearningObject lo : loList){
+                modelString += lo + " -> " + lo.getId() + "," + lo + "To" + concept.getLabel() + ", NA \n";
+
+            }
+        }
+
+        return modelString;
+    }
+*/
 
     /**
      * Must be called at the start of every function that uses RCaller methods in
