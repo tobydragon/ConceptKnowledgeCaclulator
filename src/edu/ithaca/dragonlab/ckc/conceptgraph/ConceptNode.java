@@ -99,32 +99,28 @@ public class ConceptNode {
 
 
 
-	public double example(double num, List<String> allNode) {
+	public double countTotalKnowledgeEstimate( List<String> allNode) {
+        if (allNode.contains(this.getID())) {
+            return 0;
+        } else {
 
-        System.out.println(this.getID());
-        if (this.children.size()>0) {
-            if (!allNode.contains(this.getID())) {
+            allNode.add(this.getID());
 
-                allNode.add(this.getID());
+            if (this.children.size() == 0) {
+                return (this.getKnowledgeEstimate());
+
+            } else {
+                double sum = 0;
 
                 for (ConceptNode child : this.children) {
-                    if (!allNode.contains(child.getID())) {
-
-                        child.example(num, allNode);
-                    }
+                    sum += child.countTotalKnowledgeEstimate(allNode);
                 }
+
+            return (this.getKnowledgeEstimate() + sum);
             }
-                return 1;
 
-
-        }else{
-            if (!allNode.contains(this.getID())) {
-
-                System.out.println(num + this.getKnowledgeEstimate());
-                return num + this.getKnowledgeEstimate();
-            }
         }
-        return num;
+
     }
 
 

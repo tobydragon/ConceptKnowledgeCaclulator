@@ -14,6 +14,8 @@ import java.util.*;
  */
 public class SuggestionGroupSuggester extends GroupSuggester {
 
+
+
     public String getSimilarResourceLevel2 (SuggestionResource s1, SuggestionResource s2){
 
         List<LearningObjectSuggestion> incom1 = s1.incompleteList;

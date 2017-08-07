@@ -303,9 +303,6 @@ public class  ConceptGraph {
 	public Collection<String> getAllNodeIds(){
 		return nodeMap.keySet();
 	}
-
-	public Map<String, ConceptNode> getNodeMap(){ return nodeMap;}
-
     public Map<String, LearningObject> getLearningObjectMap() {
 	    return learningObjectMap;
     }
