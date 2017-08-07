@@ -195,7 +195,7 @@ public class RFunctions {
     }
 
     /**
-     * creates a matrix of factors in java
+     * creates a matrix of factors in java (factors=rows, LearningObjects=columns)
      * @param loMatrix
      * @return statsMatrix the matrix of factors
      * @pre resource, assessment, structure files are all present and an R Matrix is created
@@ -238,24 +238,54 @@ public class RFunctions {
         return statsMatrix;
     }
 
-//TODO: Finish function
-/**
+
+
     public static String modelMaker(CohortConceptGraphs ccg){
         String modelString = "";
         ConceptGraph graph = ccg.getAvgGraph();
-        List<ConceptNode> conceptList = graph.getRoots();
-        for(ConceptNode concept : conceptList){
+        Collection<String> conceptStringList = graph.getAllNodeIds();
+        for(String conceptString : conceptStringList){
+            ConceptNode concept = graph.findNodeById(conceptString);
             Map<String, LearningObject> loMap = concept.getLearningObjectMap();
             Collection<LearningObject> loList = loMap.values();
             for(LearningObject lo : loList){
-                modelString += lo + " -> " + lo.getId() + "," + lo + "To" + concept.getLabel() + ", NA \n";
+                modelString += conceptString + " -> " + lo.getId() + ", " + lo.getId() + "To" + conceptString + ", NA \n";
 
             }
         }
 
         return modelString;
     }
-*/
+
+    public static void confirmatoryGraph(KnowledgeEstimateMatrix loMatrix, CohortConceptGraphs ccg){
+        int matrixSize = loMatrix.getStudentKnowledgeEstimates().length;
+        if((matrixSize/loMatrix.getObjList().size()) < 1) {
+            try {
+                String modelString = modelMaker(ccg);
+                RCaller rCaller = RCallerVariable();
+                RCode code = loMatrix.getrMatrix();
+                code.addRCode("library(sem)");
+                code.addRCode("library(semPlot)");
+                code.addRCode("data.dhp <- specifyModel(text=\"" + modelString + "\")");
+                code.addRCode("dataCorrelation <- cor(matrix)");
+                code.addRCode("rowCount <- nrow(matrix)");
+                code.addRCode("dataSem.dhp <- sem(data.dhp, dataCorrelation, rowCount)");
+                File file = code.startPlot();
+                code.addRCode("semPaths(dataSem.dhp, \"est\")");
+                code.endPlot();
+                rCaller.setRCode(code);
+                rCaller.runOnly();
+                code.getPlot(file);
+                code.showPlot(file);
+            } catch (Exception e) {
+                Logger.getLogger(RFunctions.class.getName()).log(Level.SEVERE, e.getMessage());
+            }
+        }else{
+            throw new IndexOutOfBoundsException();
+        }
+    }
+
+
 
     /**
      * Must be called at the start of every function that uses RCaller methods in

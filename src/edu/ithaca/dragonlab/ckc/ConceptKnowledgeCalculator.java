@@ -9,6 +9,7 @@ import edu.ithaca.dragonlab.ckc.learningobject.LearningObject;
 import edu.ithaca.dragonlab.ckc.learningobject.LearningObjectResponse;
 import edu.ithaca.dragonlab.ckc.suggester.LearningObjectSuggester;
 import edu.ithaca.dragonlab.ckc.suggester.SuggestionResource;
+import org.apache.commons.lang.ObjectUtils;
 import stats.RFunctions;
 
 import java.io.IOException;
@@ -536,6 +537,24 @@ public class ConceptKnowledgeCalculator implements ConceptKnowledgeCalculatorAPI
                         "- There must be at least 3 valid learning objects present\n" +
                         "- There must be more students than learning objects\n");
 
+            }
+        }else{
+            throw new NullPointerException();
+        }
+    }
+
+    public void createConfirmatoryGraph(){
+        if(currentMode==Mode.COHORTGRAPH){
+            ConceptGraph graph = cohortConceptGraphs.getAvgGraph();
+            Map<String, LearningObject> loMap = graph.getLearningObjectMap();
+            List<LearningObject> objList = new ArrayList<LearningObject>(loMap.values());
+            KnowledgeEstimateMatrix myMatrix = new KnowledgeEstimateMatrix(objList);
+            try {
+                RFunctions.confirmatoryGraph(myMatrix, cohortConceptGraphs);
+            }catch (IndexOutOfBoundsException e){
+                System.out.println("Insufficient data to perform task. Please refer to guidelines of the data below:\n" +
+                        "- There must be more than 1 student\n" +
+                        "- For each student there must be the same amount of responses as there are learning objects");
             }
         }else{
             throw new NullPointerException();

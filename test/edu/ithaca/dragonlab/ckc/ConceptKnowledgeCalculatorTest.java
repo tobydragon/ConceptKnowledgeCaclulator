@@ -3,10 +3,8 @@ package edu.ithaca.dragonlab.ckc;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import edu.ithaca.dragonlab.ckc.conceptgraph.CohortConceptGraphs;
 import edu.ithaca.dragonlab.ckc.conceptgraph.ConceptGraph;
-import edu.ithaca.dragonlab.ckc.io.CohortConceptGraphsRecord;
-import edu.ithaca.dragonlab.ckc.io.ConceptGraphRecord;
-import edu.ithaca.dragonlab.ckc.io.ConceptRecord;
-import edu.ithaca.dragonlab.ckc.io.LearningObjectLinkRecord;
+import edu.ithaca.dragonlab.ckc.conceptgraph.KnowledgeEstimateMatrix;
+import edu.ithaca.dragonlab.ckc.io.*;
 import edu.ithaca.dragonlab.ckc.learningobject.LearningObject;
 import edu.ithaca.dragonlab.ckc.learningobject.LearningObjectResponse;
 import edu.ithaca.dragonlab.ckc.suggester.LearningObjectSuggester;
@@ -885,6 +883,22 @@ public class ConceptKnowledgeCalculatorTest {
         }
         ckc.getFactorMatrix();
 
+    }
+*/
+
+    //calls void function that creates a graph
+/**
+    @Test
+    public void createConfirmatoryGraphTest(){
+        ConceptKnowledgeCalculatorAPI ckc = null;
+        try {
+            ckc = new ConceptKnowledgeCalculator("test/testresources/ManuallyCreated/simpleConceptGraph.json",
+                    "test/testresources/ManuallyCreated/simpleResource.json",
+                    "test/testresources/ManuallyCreated/simpleAssessmentMoreUsers.csv");
+            ckc.createConfirmatoryGraph();
+        } catch (Exception e) {
+            Assert.fail("Unable to read assessment file");
+        }
     }
 */
 

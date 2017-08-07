@@ -192,10 +192,9 @@ public class RFunctionsTest {
 
 */
 
-//TODO: Finish Test
-/**
+
     @Test
-    public void modelMakerTest(){
+    public void modelMakerTest() {
         ConceptKnowledgeCalculatorAPI ckc = null;
         try {
             ckc = new ConceptKnowledgeCalculator("test/testresources/ManuallyCreated/simpleConceptGraph.json",
@@ -205,8 +204,30 @@ public class RFunctionsTest {
             Assert.fail("Unable to load default files");
         }
         CohortConceptGraphs ccg = ckc.getCohortConceptGraphs();
-        String modelString = RFunctions.modelMaker(ccg);
-        Assert.assertEquals("Actual should not be empty", modelString);
+        Assert.assertEquals("B -> Q1, Q1ToB, NA \n" +
+                "B -> Q2, Q2ToB, NA \n" +
+                "C -> Q3, Q3ToC, NA \n" +
+                "C -> Q4, Q4ToC, NA \n" +
+                "C -> Q5, Q5ToC, NA \n" +
+                "C -> Q6, Q6ToC, NA \n", RFunctions.modelMaker(ccg));
+
+    }
+/**
+    @Test
+    public void confirmatoryGraphTest() {
+        ConceptKnowledgeCalculatorAPI ckc = null;
+        try {
+            ckc = new ConceptKnowledgeCalculator("test/testresources/ManuallyCreated/simpleConceptGraph.json",
+                    "test/testresources/ManuallyCreated/simpleResource.json",
+                    "test/testresources/ManuallyCreated/simpleAssessmentMoreUsers.csv");
+        CohortConceptGraphs ccg = ckc.getCohortConceptGraphs();
+            CSVReader data = new CSVReader("test/testresources/ManuallyCreated/simpleAssessmentMoreUsers.csv");
+            List<LearningObject> gotoMatrix = data.getManualGradedLearningObjects();
+            KnowledgeEstimateMatrix newMatrix = new KnowledgeEstimateMatrix(gotoMatrix);
+            RFunctions.confirmatoryGraph(newMatrix, ccg);
+        } catch (Exception e) {
+            Assert.fail("Unable to read assessment file");
+        }
     }
 */
 

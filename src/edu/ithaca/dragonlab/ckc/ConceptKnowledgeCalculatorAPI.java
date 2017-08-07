@@ -146,6 +146,12 @@ public interface ConceptKnowledgeCalculatorAPI {
     void getFactorMatrix();
 
     /**
+     * Uses data from the students and the structure given by the user to create a graph showing the weights
+     * between the bottom layer of data and the concepts they influence.
+     */
+    void createConfirmatoryGraph();
+
+    /**
      * Calculates a list of conceptNode based on an individual graph , returns a the list of ConceptNodes
      * @param userID
      * @return List of Concept Nodes

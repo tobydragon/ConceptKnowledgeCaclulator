@@ -165,12 +165,12 @@ public class ConsoleUI {
 
                 //COHORTGRAPH MODE
             }else{
-                System.out.println("What do you want to do? \n 1 - calculate a list of concept nodes to work on \n 2 - calculate resources suggestions based on a specific concept \n 3 - automatically calculate suggestions \n 4 - View graph \n 5 - Create new graph \n 6 - Replace graph file \n 7 - Add another assessment file \n 8 - Remove assessment file \n 9 - Replace resource file \n 10 - View list of users \n 11 - Get Learning Object Average \n 12 - Get Student Average \n 13 - Link Learning Objects to similar factors \n 14 - View Structure Graph (switch to structure mode) \n 15 - quit");
+                System.out.println("What do you want to do? \n 1 - calculate a list of concept nodes to work on \n 2 - calculate resources suggestions based on a specific concept \n 3 - automatically calculate suggestions \n 4 - View graph \n 5 - Create new graph \n 6 - Replace graph file \n 7 - Add another assessment file \n 8 - Remove assessment file \n 9 - Replace resource file \n 10 - View list of users \n 11 - Get Learning Object Average \n 12 - Get Student Average \n 13 - Link Learning Objects to similar factors \n 14 - Graph strength of concept structure \n 15 - View Structure Graph (switch to structure mode) \n 16 - quit");
                 Integer num = scanner.nextInt();
 
-                while (num < 1 || num > 15) {
+                while (num < 1 || num > 16) {
                     System.out.println("Out of bounds");
-                    System.out.println("What do you want to do? \n 1 - calculate a list of concept nodes to work on \n 2 - calculate resource suggestions based on a specific concept \n 3 - automatically calculate suggestions \n 4 - View graph \n 5 - Create new graph \n 6 - Replace graph file \n 7 - Add another assessment file \n 8 - Remove assessment file \n 9 - Replace resource file \n 10 - View list of users \n 11 - Get Learning Object Average \n 12 - Get Student Average \n 13 - Link Learning Objects to similar factors \n 14 - View Structure Graph (switch to structure mode) \n 15 - quit");
+                    System.out.println("What do you want to do? \n 1 - calculate a list of concept nodes to work on \n 2 - calculate resource suggestions based on a specific concept \n 3 - automatically calculate suggestions \n 4 - View graph \n 5 - Create new graph \n 6 - Replace graph file \n 7 - Add another assessment file \n 8 - Remove assessment file \n 9 - Replace resource file \n 10 - View list of users \n 11 - Get Learning Object Average \n 12 - Get Student Average \n 13 - Link Learning Objects to similar factors \n 14 - Graph strength of concept structure \n 15 - View Structure Graph (switch to structure mode) \n 16 - quit");
                     num = scanner.nextInt();
                 }
                 scanner.nextLine();
@@ -210,9 +210,11 @@ public class ConsoleUI {
 
                 }else if(num ==12) {
                     studentAverage(scanner);
-                }else if(num == 13){
+                }else if(num == 13) {
                     getFactorMatrix();
-                }else if (num == 14) {
+                }else if(num == 14) {
+                    createConfirmatoryGraph();
+                }else if (num == 15) {
                     switchToStructuremode();
                 }else{
                     contQuit=0;
@@ -517,6 +519,11 @@ public class ConsoleUI {
     public void getFactorMatrix(){
         System.out.println("Collecting data and linking strengths of learning objects to different factors...\n");
         ckc.getFactorMatrix();
+    }
+
+    public void createConfirmatoryGraph(){
+        System.out.println("Creating graphs showing strengths between questions and concepts user has specified\n");
+        ckc.createConfirmatoryGraph();
     }
 
 
