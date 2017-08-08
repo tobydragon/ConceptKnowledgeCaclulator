@@ -97,6 +97,38 @@ public class ConceptNode {
 
 	}
 
+	public double calcDiff( List<String> allNode, ConceptGraph graph2) {
+        ConceptNode node2 = graph2.findNodeById(this.getID());
+
+
+        if (allNode.contains(this.getID())) {
+
+
+            return 0;
+
+
+		} else {
+
+
+            allNode.add(this.getID());
+
+			if (this.children.size() == 0) {
+
+                return (Math.abs(this.getKnowledgeEstimate()- node2.getKnowledgeEstimate()));
+
+			} else {
+				double sum = 0;
+
+				for (ConceptNode child : this.children) {
+					sum += child.calcDiff(allNode, graph2);
+				}
+
+                return (Math.abs(this.getKnowledgeEstimate()- node2.getKnowledgeEstimate())+ sum);
+			}
+
+		}
+
+	}
 
 
 	public double countTotalKnowledgeEstimate( List<String> allNode) {

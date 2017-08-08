@@ -4,10 +4,7 @@ import edu.ithaca.dragonlab.ckc.ConceptKnowledgeCalculator;
 import edu.ithaca.dragonlab.ckc.ConceptKnowledgeCalculatorAPI;
 import edu.ithaca.dragonlab.ckc.conceptgraph.CohortConceptGraphs;
 import edu.ithaca.dragonlab.ckc.conceptgraph.ConceptGraph;
-import edu.ithaca.dragonlab.ckc.suggester.GroupSuggester.GraphSumGroupSuggester;
-import edu.ithaca.dragonlab.ckc.suggester.GroupSuggester.GroupSuggester;
-import edu.ithaca.dragonlab.ckc.suggester.GroupSuggester.RandomGroupSuggester;
-import edu.ithaca.dragonlab.ckc.suggester.GroupSuggester.ResourceGroupSuggester;
+import edu.ithaca.dragonlab.ckc.suggester.GroupSuggester.*;
 import edu.ithaca.dragonlab.ckc.util.DataUtil;
 import org.junit.Assert;
 import org.junit.Test;
@@ -377,9 +374,6 @@ public class GroupSuggesterTest {
         Assert.assertEquals(grouping3.get(1).get(1), "s1");
         Assert.assertEquals(grouping3.get(1).get(2), "s4");
 
-
-
-
     }
 
 
@@ -480,6 +474,102 @@ public class GroupSuggesterTest {
 
 
     }
+
+    @Test
+    public void conceptDiffGroupSuggestiongetcalcDiffTest(){
+        ConceptKnowledgeCalculatorAPI ckc = null;
+
+        try {
+            ckc = new ConceptKnowledgeCalculator("test/testresources/ManuallyCreated/researchConceptGraph.json", "test/testresources/ManuallyCreated/researchResource1.json", "test/testresources/ManuallyCreated/researchAssessment1.csv");
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        CohortConceptGraphs graphs = ckc.getCohortConceptGraphs();
+        Assert.assertNotEquals(graphs, null);
+        ConceptDiffGroupSuggester sug = new ConceptDiffGroupSuggester();
+
+        ConceptGraph usergraph = graphs.getUserGraph("s6");
+        ConceptGraph usergraph2 = graphs.getUserGraph("s1");
+
+
+        double sum = sug.setupDiff(usergraph, usergraph2, "Values and Data Types");
+        Assert.assertEquals(sum, 0.5025,  DataUtil.OK_FLOAT_MARGIN);
+
+        double sum2 = sug.setupDiff(usergraph, usergraph2, "all");
+        Assert.assertEquals(sum2, 2.0866,  DataUtil.OK_FLOAT_MARGIN);
+    }
+
+
+    @Test
+    public void ConceptDiffGroupSuggestionEvenStudents(){
+        ConceptKnowledgeCalculatorAPI ckc = null;
+
+        try {
+            ckc = new ConceptKnowledgeCalculator("test/testresources/ManuallyCreated/researchConceptGraph.json", "test/testresources/ManuallyCreated/researchResource1.json", "test/testresources/ManuallyCreated/researchAssessment1.csv");
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        CohortConceptGraphs graphs = ckc.getCohortConceptGraphs();
+        Assert.assertNotEquals(graphs, null);
+
+        ConceptDiffGroupSuggester sug = new ConceptDiffGroupSuggester();
+
+        List<List<String>> groupings = sug.suggestGroup(graphs, 2, "all");
+
+        Assert.assertEquals(groupings.size(),3 );
+        Assert.assertEquals(groupings.get(0).size(), 2);
+        Assert.assertEquals(groupings.get(1).size(), 2);
+        Assert.assertEquals(groupings.get(2).size(), 2);
+//
+//        Assert.assertEquals(groupings.get(0).get(0), "s3");
+//        Assert.assertEquals(groupings.get(0).get(1), "s5");
+//
+//        Assert.assertEquals(groupings.get(1).get(0), "s6");
+//        Assert.assertEquals(groupings.get(1).get(1), "s1");
+//
+//
+//        Assert.assertEquals(groupings.get(2).get(0), "s4");
+//        Assert.assertEquals(groupings.get(2).get(1), "s2");
+
+//
+//        List<List<String>> groupings2 = sug.suggestGroup(graphs, 2, "Expressions and Statements");
+//
+//        Assert.assertEquals(groupings2.size(),3 );
+//        Assert.assertEquals(groupings2.get(0).size(), 2);
+//        Assert.assertEquals(groupings2.get(1).size(), 2);
+//        Assert.assertEquals(groupings2.get(2).size(), 2);
+//
+//        Assert.assertEquals(groupings2.get(0).get(0), "s5");
+//        Assert.assertEquals(groupings2.get(0).get(1), "s1");
+//
+//        Assert.assertEquals(groupings2.get(1).get(0), "s3");
+//        Assert.assertEquals(groupings2.get(1).get(1), "s6");
+//
+//
+//        Assert.assertEquals(groupings2.get(2).get(0), "s4");
+//        Assert.assertEquals(groupings2.get(2).get(1), "s2");
+//
+//
+//        List<List<String>> grouping3 = sug.suggestGroup(graphs, 3, "all");
+//
+//        Assert.assertEquals(grouping3.size(),2 );
+//        Assert.assertEquals(grouping3.get(0).size(), 3);
+//        Assert.assertEquals(grouping3.get(1).size(), 3);
+//
+//        Assert.assertEquals(grouping3.get(0).get(0), "s3");
+//        Assert.assertEquals(grouping3.get(0).get(1), "s5");
+//        Assert.assertEquals(grouping3.get(0).get(2), "s2");
+//
+//        Assert.assertEquals(grouping3.get(1).get(0), "s6");
+//        Assert.assertEquals(grouping3.get(1).get(1), "s1");
+//        Assert.assertEquals(grouping3.get(1).get(2), "s4");
+
+    }
+
 
     @Test
     public void groupTestRealData() {
