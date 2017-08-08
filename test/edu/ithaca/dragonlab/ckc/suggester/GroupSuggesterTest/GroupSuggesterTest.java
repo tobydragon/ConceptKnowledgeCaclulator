@@ -160,39 +160,38 @@ public class GroupSuggesterTest {
         Assert.assertNotEquals(graphs, null);
 
 
-//        GroupSuggester obj = new RandomGroupSuggester();
-//
-//        //groups of two
-//        List<List<String>> groupings = obj.suggestGroup(graphs, 3);
-//
-//        Assert.assertEquals(groupings.size(), 13);
-//
-//
-//        List<List<String>> groupings2 = obj.suggestGroup(graphs, 2);
-//        Assert.assertEquals(groupings2.size(), 19);
-//
-//
-////
-//        GroupSuggester group = new SuggestionGroupSuggester();
-//
-//        List<List<String>> groupings3 = group.suggestGroup(graphs, 3);
-//        Assert.assertEquals(groupings3.size(), 13);
-//
-//
-//        List<List<String>> groupings4 = group.suggestGroup(graphs, 2);
-//        Assert.assertEquals(groupings4.size(), 19);
-//
-//
-//
+        GroupSuggester obj = new RandomGroupSuggester();
+
+        //groups of two
+        List<List<String>> groupings = obj.suggestGroup(graphs, 3);
+
+        Assert.assertEquals(groupings.size(), 13);
+
+
+        List<List<String>> groupings2 = obj.suggestGroup(graphs, 2);
+        Assert.assertEquals(groupings2.size(), 19);
+
+
+        GroupSuggester group = new SuggestionGroupSuggester();
+
+        List<List<String>> groupings3 = group.suggestGroup(graphs, 3);
+        Assert.assertEquals(groupings3.size(), 13);
+
+
+        List<List<String>> groupings4 = group.suggestGroup(graphs, 2);
+        Assert.assertEquals(groupings4.size(), 19);
+
+
+
         KnowledgeEstimateGroupSuggester sug = new KnowledgeEstimateGroupSuggester();
+
+        List<List<String>> groupings5 = sug.suggestGroup(graphs, 2, "all");
+        Assert.assertEquals(groupings5.size(), 19);
+
+
+//        List<List<String>> grouping6 = sug.suggestGroup(graphs, 3, "all");
 //
-//        List<List<String>> groupings5 = sug.suggestGroup(graphs, 2, "all");
-//        Assert.assertEquals(groupings5.size(), 19);
-
-
-        List<List<String>> grouping6 = sug.suggestGroup(graphs, 3, "all");
-
-        Assert.assertEquals(grouping6.size(), 13);
+//        Assert.assertEquals(grouping6.size(), 13);
 
 
     }

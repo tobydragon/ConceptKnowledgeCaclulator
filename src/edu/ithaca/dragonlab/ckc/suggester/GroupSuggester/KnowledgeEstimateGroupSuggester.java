@@ -105,13 +105,13 @@ public class KnowledgeEstimateGroupSuggester extends GroupSuggester{
 
             List<List<String>> trioGroup = new ArrayList<>();
 
-
             for(int i =0; i< groupNum; i++){
 
                 List<String> group = groupings.get(i);
                 System.out.println(group );
 
                 trioGroup.add(group);
+
                 groupings.remove(group);
 
 
@@ -133,10 +133,6 @@ public class KnowledgeEstimateGroupSuggester extends GroupSuggester{
 
 
 
-
-
-
-//            for(int x=0; x<2; x++ ){
 
             int x =0;
             while(trioTemp.size() != 0){
