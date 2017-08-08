@@ -1,14 +1,13 @@
 package edu.ithaca.dragonlab.ckc.suggester.GroupSuggesterTest;
 
-import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import edu.ithaca.dragonlab.ckc.ConceptKnowledgeCalculator;
 import edu.ithaca.dragonlab.ckc.ConceptKnowledgeCalculatorAPI;
 import edu.ithaca.dragonlab.ckc.conceptgraph.CohortConceptGraphs;
 import edu.ithaca.dragonlab.ckc.conceptgraph.ConceptGraph;
-import edu.ithaca.dragonlab.ckc.suggester.GroupSuggester.KnowledgeEstimateGroupSuggester;
+import edu.ithaca.dragonlab.ckc.suggester.GroupSuggester.GraphSumGroupSuggester;
 import edu.ithaca.dragonlab.ckc.suggester.GroupSuggester.GroupSuggester;
 import edu.ithaca.dragonlab.ckc.suggester.GroupSuggester.RandomGroupSuggester;
-import edu.ithaca.dragonlab.ckc.suggester.GroupSuggester.SuggestionGroupSuggester;
+import edu.ithaca.dragonlab.ckc.suggester.GroupSuggester.ResourceGroupSuggester;
 import edu.ithaca.dragonlab.ckc.util.DataUtil;
 import org.junit.Assert;
 import org.junit.Test;
@@ -146,56 +145,6 @@ public class GroupSuggesterTest {
     }
 
 
-    @Test
-    public void groupTestRealData() {
-        ConceptKnowledgeCalculatorAPI ckc = null;
-
-        try {
-            ckc = new ConceptKnowledgeCalculator("resources/comp220/comp220Graph.json","resources/comp220/comp220Resources.json","localresources/comp220/comp220ExampleDataPortion.csv");
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
-        CohortConceptGraphs graphs = ckc.getCohortConceptGraphs();
-        Assert.assertNotEquals(graphs, null);
-
-
-        GroupSuggester obj = new RandomGroupSuggester();
-
-        //groups of two
-        List<List<String>> groupings = obj.suggestGroup(graphs, 3);
-
-        Assert.assertEquals(groupings.size(), 13);
-
-
-        List<List<String>> groupings2 = obj.suggestGroup(graphs, 2);
-        Assert.assertEquals(groupings2.size(), 19);
-
-
-        GroupSuggester group = new SuggestionGroupSuggester();
-
-        List<List<String>> groupings3 = group.suggestGroup(graphs, 3);
-        Assert.assertEquals(groupings3.size(), 13);
-
-
-        List<List<String>> groupings4 = group.suggestGroup(graphs, 2);
-        Assert.assertEquals(groupings4.size(), 19);
-
-
-
-        KnowledgeEstimateGroupSuggester sug = new KnowledgeEstimateGroupSuggester();
-
-        List<List<String>> groupings5 = sug.suggestGroup(graphs, 2, "all");
-        Assert.assertEquals(groupings5.size(), 19);
-
-
-//        List<List<String>> grouping6 = sug.suggestGroup(graphs, 3, "all");
-//
-//        Assert.assertEquals(grouping6.size(), 13);
-
-
-    }
-
 
 
     @Test
@@ -213,7 +162,7 @@ public class GroupSuggesterTest {
         Assert.assertNotEquals(graphs, null);
 
 
-        GroupSuggester obj = new SuggestionGroupSuggester();
+        GroupSuggester obj = new ResourceGroupSuggester();
 
         //groups of two
         List<List<String>> groupings = obj.suggestGroup(graphs, 2);
@@ -266,7 +215,7 @@ public class GroupSuggesterTest {
         Assert.assertNotEquals(graphs, null);
 
 
-        GroupSuggester obj = new SuggestionGroupSuggester();
+        GroupSuggester obj = new ResourceGroupSuggester();
 
         //groups of two
         List<List<String>> groupings = obj.suggestGroup(graphs, 2);
@@ -311,7 +260,7 @@ public class GroupSuggesterTest {
         Assert.assertNotEquals(graphs, null);
 
 
-        GroupSuggester obj = new SuggestionGroupSuggester();
+        GroupSuggester obj = new ResourceGroupSuggester();
 
         //groups of two
         List<List<String>> groupings = obj.suggestGroup(graphs, 2);
@@ -330,7 +279,7 @@ public class GroupSuggesterTest {
 
 
     @Test
-    public void graphGroupSuggestiongetSumTest(){
+    public void mapSumGroupSuggestiongetSumTest(){
         ConceptKnowledgeCalculatorAPI ckc = null;
 
         try {
@@ -342,7 +291,7 @@ public class GroupSuggesterTest {
 
         CohortConceptGraphs graphs = ckc.getCohortConceptGraphs();
         Assert.assertNotEquals(graphs, null);
-        KnowledgeEstimateGroupSuggester sug = new KnowledgeEstimateGroupSuggester();
+        GraphSumGroupSuggester sug = new GraphSumGroupSuggester();
 
         ConceptGraph usergraph = graphs.getUserGraph("s5");
 
@@ -363,7 +312,7 @@ public class GroupSuggesterTest {
     }
 
     @Test
-    public void graphGroupSuggestionEvenStudents(){
+    public void mapSumGroupSuggestionEvenStudents(){
         ConceptKnowledgeCalculatorAPI ckc = null;
 
         try {
@@ -376,7 +325,7 @@ public class GroupSuggesterTest {
         CohortConceptGraphs graphs = ckc.getCohortConceptGraphs();
         Assert.assertNotEquals(graphs, null);
 
-        KnowledgeEstimateGroupSuggester sug = new KnowledgeEstimateGroupSuggester();
+        GraphSumGroupSuggester sug = new GraphSumGroupSuggester();
 
         List<List<String>> groupings = sug.suggestGroup(graphs, 2, "all");
 
@@ -422,11 +371,11 @@ public class GroupSuggesterTest {
 
         Assert.assertEquals(grouping3.get(0).get(0), "s3");
         Assert.assertEquals(grouping3.get(0).get(1), "s5");
-        Assert.assertEquals(grouping3.get(0).get(2), "s6");
+        Assert.assertEquals(grouping3.get(0).get(2), "s2");
 
-        Assert.assertEquals(grouping3.get(1).get(0), "s4");
-        Assert.assertEquals(grouping3.get(1).get(1), "s2");
-        Assert.assertEquals(grouping3.get(1).get(2), "s1");
+        Assert.assertEquals(grouping3.get(1).get(0), "s6");
+        Assert.assertEquals(grouping3.get(1).get(1), "s1");
+        Assert.assertEquals(grouping3.get(1).get(2), "s4");
 
 
 
@@ -435,7 +384,7 @@ public class GroupSuggesterTest {
 
 
     @Test
-    public void graphGroupSuggestionOddStudents(){
+    public void mapSumGroupSuggestionOddStudents(){
         ConceptKnowledgeCalculatorAPI ckc = null;
 
         try {
@@ -448,7 +397,7 @@ public class GroupSuggesterTest {
         CohortConceptGraphs graphs = ckc.getCohortConceptGraphs();
         Assert.assertNotEquals(graphs, null);
 
-        KnowledgeEstimateGroupSuggester sug = new KnowledgeEstimateGroupSuggester();
+        GraphSumGroupSuggester sug = new GraphSumGroupSuggester();
 
         List<List<String>> groupings = sug.suggestGroup(graphs, 2, "all");
 
@@ -502,7 +451,7 @@ public class GroupSuggesterTest {
 
 
     @Test
-    public void graphGroupSuggestionlessStudents() {
+    public void mapSumGroupSuggestionlessStudents() {
         ConceptKnowledgeCalculatorAPI ckc = null;
 
         try {
@@ -515,7 +464,7 @@ public class GroupSuggesterTest {
         Assert.assertNotEquals(graphs, null);
 
 
-        KnowledgeEstimateGroupSuggester sug = new KnowledgeEstimateGroupSuggester();
+        GraphSumGroupSuggester sug = new GraphSumGroupSuggester();
 
         List<List<String>> groupings = sug.suggestGroup(graphs, 2, "all");
         Assert.assertEquals(groupings.size(), 1);
@@ -531,5 +480,55 @@ public class GroupSuggesterTest {
 
 
     }
+
+    @Test
+    public void groupTestRealData() {
+        ConceptKnowledgeCalculatorAPI ckc = null;
+
+        try {
+            ckc = new ConceptKnowledgeCalculator("resources/comp220/comp220Graph.json","resources/comp220/comp220Resources.json","localresources/comp220/comp220ExampleDataPortion.csv");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        CohortConceptGraphs graphs = ckc.getCohortConceptGraphs();
+        Assert.assertNotEquals(graphs, null);
+
+
+
+        GroupSuggester obj = new RandomGroupSuggester();
+
+        List<List<String>> groupings2 = obj.suggestGroup(graphs, 2);
+        Assert.assertEquals(groupings2.size(), 19);
+
+        List<List<String>> groupings = obj.suggestGroup(graphs, 3);
+        Assert.assertEquals(groupings.size(), 13);
+
+
+
+        GroupSuggester group = new ResourceGroupSuggester();
+
+        List<List<String>> groupings3 = group.suggestGroup(graphs, 3);
+        Assert.assertEquals(groupings3.size(), 13);
+
+        List<List<String>> groupings4 = group.suggestGroup(graphs, 2);
+        Assert.assertEquals(groupings4.size(), 19);
+
+
+
+        GraphSumGroupSuggester sug = new GraphSumGroupSuggester();
+
+        List<List<String>> groupings5 = sug.suggestGroup(graphs, 2, "all");
+        Assert.assertEquals(groupings5.size(), 19);
+
+
+        List<List<String>> grouping6 = sug.suggestGroup(graphs, 3, "all");
+
+        Assert.assertEquals(grouping6.size(), 13);
+
+
+    }
+
+
 
 }

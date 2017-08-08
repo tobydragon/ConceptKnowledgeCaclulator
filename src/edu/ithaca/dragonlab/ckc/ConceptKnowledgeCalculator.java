@@ -7,9 +7,10 @@ import edu.ithaca.dragonlab.ckc.io.ConceptGraphRecord;
 import edu.ithaca.dragonlab.ckc.io.LearningObjectLinkRecord;
 import edu.ithaca.dragonlab.ckc.learningobject.LearningObject;
 import edu.ithaca.dragonlab.ckc.learningobject.LearningObjectResponse;
+import edu.ithaca.dragonlab.ckc.suggester.GroupSuggester.GraphSumGroupSuggester;
 import edu.ithaca.dragonlab.ckc.suggester.GroupSuggester.GroupSuggester;
 import edu.ithaca.dragonlab.ckc.suggester.GroupSuggester.RandomGroupSuggester;
-import edu.ithaca.dragonlab.ckc.suggester.GroupSuggester.SuggestionGroupSuggester;
+import edu.ithaca.dragonlab.ckc.suggester.GroupSuggester.ResourceGroupSuggester;
 import edu.ithaca.dragonlab.ckc.suggester.LearningObjectSuggester;
 import edu.ithaca.dragonlab.ckc.suggester.SuggestionResource;
 import stats.RFunctions;
@@ -476,13 +477,45 @@ public class ConceptKnowledgeCalculator implements ConceptKnowledgeCalculatorAPI
 
 
     @Override
-    public List<List<String>> suggestionGroupSuggestions(int choice) throws Exception {
+    public List<List<String>> graphSumGroupSuggestions (int choice, String subject) throws Exception {
+        if(choice>3 || choice<2){
+            throw  new Exception("invalid group size");
+        }else {
+
+            Collection<String> nodeList = cohortConceptGraphs.getAvgGraph().getAllNodeIds();
+
+            if (subject.equals("all") || nodeList.contains(subject)) {
+                if (currentMode == Mode.COHORTGRAPH) {
+                    GraphSumGroupSuggester sug = new GraphSumGroupSuggester();
+
+                    List<List<String>> groupings = sug.suggestGroup(cohortConceptGraphs, choice, subject);
+
+                    return groupings;
+                } else {
+                    throw new Exception("Wrong Mode");
+
+                }
+
+            } else {
+                throw new Exception("Invalid subject");
+            }
+        }
+
+    }
+
+    @Override
+    public List<List<String>> resourceGroupSuggestions(int choice) throws Exception {
         if(currentMode==Mode.COHORTGRAPH) {
-            GroupSuggester obj = new SuggestionGroupSuggester();
 
-            List<List<String>> groupings = obj.suggestGroup(cohortConceptGraphs, choice);
+            if(choice>3 || choice <2){
+                throw new Exception("invalid group size");
+            }else {
+                GroupSuggester obj = new ResourceGroupSuggester();
 
-            return groupings;
+                List<List<String>> groupings = obj.suggestGroup(cohortConceptGraphs, choice);
+
+                return groupings;
+            }
         }else {
             throw new Exception("Wrong Mode");
 

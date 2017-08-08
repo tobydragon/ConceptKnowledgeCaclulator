@@ -195,7 +195,10 @@ public interface ConceptKnowledgeCalculatorAPI {
     List<List<String>> randomGroupSuggestions (int choice) throws Exception;
 
 
-    List<List<String>> suggestionGroupSuggestions(int choice) throws Exception;
+    List<List<String>> resourceGroupSuggestions(int choice) throws Exception;
+
+    List<List<String>> graphSumGroupSuggestions(int choice, String subject) throws Exception;
+
 
     //testing purposes
     ConceptGraph getStructureGraph();

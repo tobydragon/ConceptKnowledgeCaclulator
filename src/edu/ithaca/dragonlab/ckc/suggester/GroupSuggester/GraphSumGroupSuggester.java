@@ -1,7 +1,6 @@
 package edu.ithaca.dragonlab.ckc.suggester.GroupSuggester;
 
 
-import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import edu.ithaca.dragonlab.ckc.conceptgraph.CohortConceptGraphs;
 import edu.ithaca.dragonlab.ckc.conceptgraph.ConceptGraph;
 import edu.ithaca.dragonlab.ckc.conceptgraph.ConceptNode;
@@ -11,7 +10,7 @@ import java.util.*;
 /**
  * Created by mkimmitchell on 8/4/17.
  */
-public class KnowledgeEstimateGroupSuggester extends GroupSuggester{
+public class GraphSumGroupSuggester extends GroupSuggester{
 
 
     public List<List<String>> suggestGroup(CohortConceptGraphs graphs, int choice, String subject) {
@@ -107,17 +106,13 @@ public class KnowledgeEstimateGroupSuggester extends GroupSuggester{
 
             for(int i =0; i< groupNum; i++){
 
-                List<String> group = groupings.get(i);
-                System.out.println(group );
+                List<String> group = groupings.get(0);
 
                 trioGroup.add(group);
 
                 groupings.remove(group);
 
-
             }
-
-
 
 
             List<List<String>> trioTemp = new ArrayList<>();
@@ -133,46 +128,47 @@ public class KnowledgeEstimateGroupSuggester extends GroupSuggester{
 
 
 
-
             int x =0;
             while(trioTemp.size() != 0){
 
                 double temp = graphs.getAvgGraph().getAllNodeIds().size();
-                    String st1 = "";
-                    int sIndex = 0;
+                    String leftOverName = "";
+                    int groupingIndex = 0;
 
 
                     for(int i=0; i<trioTemp.size(); i++){
                         List<String> actualList = trioTemp.get(i);
-                        double num2 = knowledgeSums.get(actualList.get(0));
+
+                        double groupNameMapSize = knowledgeSums.get(actualList.get(0));
 
 
                         for(String name: leftOver) {
 
-                            double num = knowledgeSums.get(name);
+                            double leftNamemapSize = knowledgeSums.get(name);
 
+                            if ((Math.abs(groupNameMapSize - leftNamemapSize)) < temp) {
+                                temp = (Math.abs(groupNameMapSize - leftNamemapSize));
 
-                            if ((Math.abs(num2 - num)) < temp) {
-                                temp = (Math.abs(num2 - num));
+                                leftOverName = name;
+                                groupingIndex = x;
 
-                                st1 = name;
-                                sIndex = x+i;
 
                             }
                         }
-
                     }
 
 
-                    if(!st1.equals("")) {
-                        List<String> tempList = trioGroup.get(sIndex);
-                        tempList.add(st1);
+
+                if(!leftOverName.equals("")) {
+                        List<String> tempList = trioGroup.get(groupingIndex);
+                        tempList.add(leftOverName);
                     }
 
-                    leftOver.remove(st1);
+                    leftOver.remove(leftOverName);
 
-                    if(sIndex < trioTemp.size()){
-                        trioTemp.remove(sIndex);
+                    if(groupingIndex < trioTemp.size()){
+                        trioTemp.remove(groupingIndex);
+
 
                     }
 

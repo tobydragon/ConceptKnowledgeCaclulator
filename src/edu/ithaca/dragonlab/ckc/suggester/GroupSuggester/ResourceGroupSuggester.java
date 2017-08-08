@@ -12,7 +12,7 @@ import java.util.*;
 /**
  * Created by mkimmitchell on 8/1/17.
  */
-public class SuggestionGroupSuggester extends GroupSuggester {
+public class ResourceGroupSuggester extends GroupSuggester {
 
 
 
