@@ -18,7 +18,6 @@ public class ConsoleUI {
             ckc = new ConceptKnowledgeCalculator(structureFileName);
         } catch (Exception e) {
             System.out.println("Unable to load default files, please choose files manually. Error follows:");
-//            e.printStackTrace();
             ckc = new ConceptKnowledgeCalculator();
         }
         run();
@@ -29,7 +28,6 @@ public class ConsoleUI {
             ckc = new ConceptKnowledgeCalculator(structureFilename, resourceFilename, assessmentFilename);
         } catch (Exception e) {
             System.out.println("Unable to load default files, please choose files manually. Error follows:");
-//            e.printStackTrace();
             ckc = new ConceptKnowledgeCalculator();
         }
         run();
@@ -165,12 +163,12 @@ public class ConsoleUI {
 
                 //COHORTGRAPH MODE
             }else{
-                System.out.println("What do you want to do? \n 1 - calculate a list of concept nodes to work on \n 2 - calculate resources suggestions based on a specific concept \n 3 - automatically calculate suggestions \n 4 - View graph \n 5 - Create new graph \n 6 - Replace graph file \n 7 - Add another assessment file \n 8 - Remove assessment file \n 9 - Replace resource file \n 10 - View list of users \n 11 - Get Learning Object Average \n 12 - Get Student Average \n 13 - Link Learning Objects to similar factors \n 14 - View Structure Graph (switch to structure mode) \n 15 - quit");
+                System.out.println("What do you want to do? \n 1 - calculate a list of concept nodes to work on \n 2 - calculate resources suggestions based on a specific concept \n 3 - automatically calculate suggestions \n 4 - View graph \n 5 - Create new graph \n 6 - Replace graph file \n 7 - Add another assessment file \n 8 - Remove assessment file \n 9 - Replace resource file \n 10 - View list of users \n 11 - Get Learning Object Average \n 12 - Get Student Average \n 13 - Link Learning Objects to similar factors \n 14 - View Structure Graph (switch to structure mode) \n 15 - Create Groups of Random Students \n 16 - Create Groups of Students Based on Their Suggestions \n 17 - Quit");
                 Integer num = scanner.nextInt();
 
-                while (num < 1 || num > 15) {
+                while (num < 1 || num > 17) {
                     System.out.println("Out of bounds");
-                    System.out.println("What do you want to do? \n 1 - calculate a list of concept nodes to work on \n 2 - calculate resource suggestions based on a specific concept \n 3 - automatically calculate suggestions \n 4 - View graph \n 5 - Create new graph \n 6 - Replace graph file \n 7 - Add another assessment file \n 8 - Remove assessment file \n 9 - Replace resource file \n 10 - View list of users \n 11 - Get Learning Object Average \n 12 - Get Student Average \n 13 - Link Learning Objects to similar factors \n 14 - View Structure Graph (switch to structure mode) \n 15 - quit");
+                    System.out.println("What do you want to do? \n 1 - calculate a list of concept nodes to work on \n 2 - calculate resources suggestions based on a specific concept \n 3 - automatically calculate suggestions \n 4 - View graph \n 5 - Create new graph \n 6 - Replace graph file \n 7 - Add another assessment file \n 8 - Remove assessment file \n 9 - Replace resource file \n 10 - View list of users \n 11 - Get Learning Object Average \n 12 - Get Student Average \n 13 - Link Learning Objects to similar factors \n 14 - View Structure Graph (switch to structure mode) \n 15 - Create Groups of Random Students \n 16 - Create Groups of Students Based on Their Suggestions \n 17 - Quit");
                     num = scanner.nextInt();
                 }
                 scanner.nextLine();
@@ -214,7 +212,11 @@ public class ConsoleUI {
                     getFactorMatrix();
                 }else if (num == 14) {
                     switchToStructuremode();
-                }else{
+                }else if(num ==15){
+                    createRandomGroupSuggestions(scanner);
+                }else if(num ==16){
+                    createResourceGroupSuggestions(scanner);
+                } else{
                     contQuit=0;
                 }
             }
@@ -222,6 +224,50 @@ public class ConsoleUI {
         }
     }
 
+
+    public void createResourceGroupSuggestions(Scanner scanner){
+        System.out.println("Get group suggestions based on students resource suggestions");
+
+        System.out.println("Do you want groups of 2 or 3? ");
+        Integer choice = scanner.nextInt();
+
+        while(choice > 3 || choice <2){
+            System.out.println("Do you want groups of 2 or 3? ");
+            choice = scanner.nextInt();
+        }
+
+        try {
+            List<List<String>> groupings = ckc.suggestionGroupSuggestions(choice);
+
+            for(List<String> group: groupings){
+                System.out.println(group);
+            }
+        } catch (Exception e) {
+            System.out.println("Wrong mode");
+        }
+
+    }
+
+
+
+    public void createRandomGroupSuggestions(Scanner scanner){
+        System.out.println("Get random group suggestions");
+
+        System.out.println("How many people do you want per group?");
+        Integer choice = scanner.nextInt();
+
+        try {
+            List<List<String>> groupings = ckc.randomGroupSuggestions(choice);
+
+            for(List<String> group: groupings){
+                System.out.println(group);
+            }
+
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+
+    }
 
     public void editStructureGraph(Scanner scanner){
         System.out.println("Edit structure graph");
@@ -252,7 +298,7 @@ public class ConsoleUI {
         try {
             ckc.addResourceAndAssessment(resource, assignment);
         } catch (Exception e) {
-            e.printStackTrace();
+            System.out.println(e);
         }
     }
 
@@ -349,7 +395,7 @@ public class ConsoleUI {
         try {
             System.out.println(ckc.getCohortGraphsUrl());
         } catch (Exception e) {
-            e.printStackTrace();
+            System.out.println(e);;
         }
     }
 
@@ -524,7 +570,7 @@ public class ConsoleUI {
         try {
             ckc.switchToStructure();
         } catch (Exception e) {
-            e.printStackTrace();
+            System.out.println(e);;
         }
 
     }

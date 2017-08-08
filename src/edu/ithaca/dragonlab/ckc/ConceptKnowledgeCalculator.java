@@ -7,6 +7,9 @@ import edu.ithaca.dragonlab.ckc.io.ConceptGraphRecord;
 import edu.ithaca.dragonlab.ckc.io.LearningObjectLinkRecord;
 import edu.ithaca.dragonlab.ckc.learningobject.LearningObject;
 import edu.ithaca.dragonlab.ckc.learningobject.LearningObjectResponse;
+import edu.ithaca.dragonlab.ckc.suggester.GroupSuggester.GroupSuggester;
+import edu.ithaca.dragonlab.ckc.suggester.GroupSuggester.RandomGroupSuggester;
+import edu.ithaca.dragonlab.ckc.suggester.GroupSuggester.SuggestionGroupSuggester;
 import edu.ithaca.dragonlab.ckc.suggester.LearningObjectSuggester;
 import edu.ithaca.dragonlab.ckc.suggester.SuggestionResource;
 import stats.RFunctions;
@@ -453,6 +456,36 @@ public class ConceptKnowledgeCalculator implements ConceptKnowledgeCalculatorAPI
             }
         }else{
             throw new Exception("Wrong Mode");
+        }
+    }
+
+
+    @Override
+    public List<List<String>> randomGroupSuggestions (int choice) throws Exception {
+        if(currentMode==Mode.COHORTGRAPH) {
+            GroupSuggester obj = new RandomGroupSuggester();
+
+            List<List<String>> groupings = obj.suggestGroup(cohortConceptGraphs, choice);
+
+            return groupings;
+        }else {
+            throw new Exception("Wrong Mode");
+
+        }
+    }
+
+
+    @Override
+    public List<List<String>> suggestionGroupSuggestions(int choice) throws Exception {
+        if(currentMode==Mode.COHORTGRAPH) {
+            GroupSuggester obj = new SuggestionGroupSuggester();
+
+            List<List<String>> groupings = obj.suggestGroup(cohortConceptGraphs, choice);
+
+            return groupings;
+        }else {
+            throw new Exception("Wrong Mode");
+
         }
     }
 

@@ -192,6 +192,11 @@ public interface ConceptKnowledgeCalculatorAPI {
     boolean resourceIsValid(String name) throws IOException;
 
 
+    List<List<String>> randomGroupSuggestions (int choice) throws Exception;
+
+
+    List<List<String>> suggestionGroupSuggestions(int choice) throws Exception;
+
     //testing purposes
     ConceptGraph getStructureGraph();
     CohortConceptGraphs getCohortConceptGraphs();
