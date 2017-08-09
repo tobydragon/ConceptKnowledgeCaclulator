@@ -221,8 +221,7 @@ public class ConsoleUI {
                     createGraphSumGroupSuggestions(scanner);
                 } else if(num ==18) {
                     createConceptDiffGroupSuggestions(scanner);
-
-                }else if( num ==19) {
+                }else if( num ==19) { 
                     switchToStructuremode();
                 }else{
                     contQuit=0;
