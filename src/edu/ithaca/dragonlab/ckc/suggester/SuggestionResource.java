@@ -3,7 +3,6 @@ package edu.ithaca.dragonlab.ckc.suggester;
 import edu.ithaca.dragonlab.ckc.conceptgraph.ConceptGraph;
 import edu.ithaca.dragonlab.ckc.conceptgraph.ConceptNode;
 import edu.ithaca.dragonlab.ckc.learningobject.LearningObject;
-import sun.jvm.hotspot.utilities.Assert;
 
 import java.util.*;
 
