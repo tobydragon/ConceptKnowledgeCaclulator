@@ -265,8 +265,6 @@ public class RFunctions {
         return newStringList;
     }
 
-
-
     public static String modelMaker(CohortConceptGraphs ccg){
         String modelString = "";
         ConceptGraph graph = ccg.getAvgGraph();

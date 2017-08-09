@@ -20,7 +20,7 @@ public class JavaToRConversion {
      * @param aMatrix the 2D array of doubles from Java
      * @return RCode of a 2D array in the same format as the
      */
-    public static RCode JavaToR(double[][] aMatrix, String[] objStr)throws Exception{
+    public static RCode JavaToR(double[][] aMatrix, String[] objStr){
 
 
 
