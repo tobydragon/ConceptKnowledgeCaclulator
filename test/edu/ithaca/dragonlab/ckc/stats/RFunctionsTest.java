@@ -22,23 +22,6 @@ import java.util.concurrent.TimeUnit;
  */
 public class RFunctionsTest {
 
-    //@Test
-    public void main(){
-        System.out.println("- R prints info on deleting invalid columns \n" +
-                "- R prints a matrix of factors with Learning Objects\n" +
-                "- R prints other info. Not very useful\n" +
-                "- R prints warning messages about the graph and should be disregarded\n" +
-                "- R creates a graph displaying the exploratory factor analysis");
-        getFactorMatrixTest();
-        System.out.println("- R creates a graph displaying the confirmatory factor analysis");
-        confirmatoryGraphTest();
-
-        //both returns a double[][] and a printout
-        System.out.println("- R prints info on deleting invalid columns\n" +
-                "- The function returns a matrix of the factors seen from getMatrixTest()");
-        returnFactorMatrixTest();
-
-    }
 
     @Test
     public void studentKnowledgeEstAvgTest(){
@@ -80,7 +63,7 @@ public class RFunctionsTest {
 
 
 
-    public void getFactorMatrixTest(){
+    public static void getFactorMatrixTest(){
 
         try{
             CSVReader data = new CSVReader("test/testresources/ManuallyCreated/complexRealisticAssessment.csv");
@@ -97,7 +80,7 @@ public class RFunctionsTest {
 
 
     //@Test
-    public void returnFactorMatrixTest(){
+    public static void returnFactorMatrixTest(){
         try {
             CSVReader data = new CSVReader("test/testresources/ManuallyCreated/complexRealisticAssessment.csv");
             List<LearningObject> gotoMatrix = data.getManualGradedLearningObjects();
@@ -177,7 +160,7 @@ public class RFunctionsTest {
     }
 
 
-    public void confirmatoryGraphTest() {
+    public static void confirmatoryGraphTest() {
         ConceptKnowledgeCalculatorAPI ckc = null;
         try {
             ckc = new ConceptKnowledgeCalculator("test/testresources/ManuallyCreated/simpleConceptGraph.json",
@@ -208,5 +191,28 @@ public class RFunctionsTest {
             Assert.fail();
         }
     }
+
+    //@Test
+    public static void main(String args[]){
+        //getFactorMatrixTest()
+        //confirmatoryGraphTest()
+        //returnFactorMatrixTest()
+        System.out.println("- R prints info on deleting invalid columns \n" +
+                "- R prints a matrix of factors with Learning Objects\n" +
+                "- R prints other info. Not very useful\n" +
+                "- R prints warning messages about the graph and should be disregarded\n" +
+                "- R creates a graph displaying the exploratory factor analysis");
+        getFactorMatrixTest();
+        System.out.println(
+                "- R creates a graph displaying the confirmatory factor analysis");
+        confirmatoryGraphTest();
+
+        //both returns a double[][] and a printout
+        System.out.println("- R prints info on deleting invalid columns\n" +
+                "- The function returns a matrix of the factors seen from getMatrixTest()");
+        returnFactorMatrixTest();
+
+    }
+
 
 }
