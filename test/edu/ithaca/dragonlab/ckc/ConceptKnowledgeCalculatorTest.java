@@ -886,15 +886,16 @@ public class ConceptKnowledgeCalculatorTest {
     }
 */
 
-    //calls void function that creates a graph
-/**
+    //calls void function that creates a graph. Tested through output
+
+    /**
     @Test
     public void createConfirmatoryGraphTest(){
         ConceptKnowledgeCalculatorAPI ckc = null;
         try {
-            ckc = new ConceptKnowledgeCalculator("test/testresources/ManuallyCreated/simpleConceptGraph.json",
-                    "test/testresources/ManuallyCreated/simpleResource.json",
-                    "test/testresources/ManuallyCreated/simpleAssessmentMoreUsers.csv");
+            ckc = new ConceptKnowledgeCalculator("resources/comp220/comp220Graph.json",
+    "resources/comp220/comp220Resources.json",
+    "localresources/comp220/comp220ExampleDataPortionCleaned.csv");
             ckc.createConfirmatoryGraph();
         } catch (Exception e) {
             Assert.fail("Unable to read assessment file");

@@ -9,10 +9,7 @@ import edu.ithaca.dragonlab.ckc.conceptgraph.KnowledgeEstimateMatrix;
 import edu.ithaca.dragonlab.ckc.learningobject.LearningObject;
 
 import java.io.File;
-import java.util.Collection;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -239,27 +236,65 @@ public class RFunctions {
     }
 
 
+    public static Collection<String> duplicateCheck(ConceptGraph graph, Collection<String> conceptStringList){
+        List<String> removalList = new ArrayList<String>();
+        Collection<String> newStringList = new ArrayList<String>();
+        //copy the collection of concept strings into the new collection
+        for(String curString : conceptStringList){
+            newStringList.add(curString);
+        }
+        //Compare each concept string with a concept string
+        for(String curString : conceptStringList){
+            for(String otherString : newStringList){
+
+                //If the secondary concept list's concept is not already in the removal list and the list of LOs in
+                //the concept list are identical but the names of the concepts are different, add concept to removal list
+                if(!removalList.contains(curString) && !removalList.contains(otherString) && curString != otherString){
+                    ConceptNode curNode = graph.findNodeById(curString);
+                    ConceptNode otherNode = graph.findNodeById(otherString);
+                    if(curNode.getLearningObjectMap().equals(otherNode.getLearningObjectMap())){
+                        removalList.add(curString);
+                    }
+                }
+            }
+        }
+        for(String string : removalList){
+            newStringList.remove(string);
+
+        }
+        return newStringList;
+    }
+
+
 
     public static String modelMaker(CohortConceptGraphs ccg){
         String modelString = "";
         ConceptGraph graph = ccg.getAvgGraph();
         Collection<String> conceptStringList = graph.getAllNodeIds();
+        conceptStringList = duplicateCheck(graph, conceptStringList);
+
         for(String conceptString : conceptStringList){
             ConceptNode concept = graph.findNodeById(conceptString);
             Map<String, LearningObject> loMap = concept.getLearningObjectMap();
             Collection<LearningObject> loList = loMap.values();
             for(LearningObject lo : loList){
-                modelString += conceptString + " -> " + lo.getId() + ", " + lo.getId() + "To" + conceptString + ", NA \n";
+
+
+
+                //modelString += conceptString + " -> " + lo.getId() + ", " + lo.getId() + "To" + conceptString + ", NA \n";
+                modelString += conceptString + " -> " + lo.getId().replaceAll("\\s","") + ", " + lo.getId().replaceAll("\\s","") + "To" + conceptString + ", NA \n";
 
             }
         }
 
+        modelString = modelString.replaceAll(":", "");
+        modelString = modelString.replaceAll("\\.", "");
         return modelString;
     }
 
     public static void confirmatoryGraph(KnowledgeEstimateMatrix loMatrix, CohortConceptGraphs ccg){
         int matrixSize = loMatrix.getStudentKnowledgeEstimates().length;
-        if((matrixSize/loMatrix.getObjList().size()) < 1) {
+        //if((matrixSize/loMatrix.getObjList().size()) > 1) {
             try {
                 String modelString = modelMaker(ccg);
                 RCaller rCaller = RCallerVariable();
@@ -279,10 +314,11 @@ public class RFunctions {
                 code.showPlot(file);
             } catch (Exception e) {
                 Logger.getLogger(RFunctions.class.getName()).log(Level.SEVERE, e.getMessage());
+                throw new IndexOutOfBoundsException();
             }
-        }else{
-            throw new IndexOutOfBoundsException();
-        }
+        //}else{
+          //  throw new IndexOutOfBoundsException();
+        //}
     }
 
 

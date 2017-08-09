@@ -211,7 +211,37 @@ public class RFunctionsTest {
                 "C -> Q5, Q5ToC, NA \n" +
                 "C -> Q6, Q6ToC, NA \n", RFunctions.modelMaker(ccg));
 
+        try{
+            ckc = new ConceptKnowledgeCalculator("resources/comp220/comp220Graph.json",
+                    "resources/comp220/comp220Resources.json",
+                    "localresources/comp220/comp220ExampleDataPortionCleaned.csv");
+        }catch (IOException e){
+            Assert.fail("Unable to load files");
+        }
+        ccg = ckc.getCohortConceptGraphs();
+        Assert.assertEquals("Recursion -> Lab4Recursion, Lab4RecursionToRecursion, NA \n" +
+                "Recursion -> Lab5ComparingSearches, Lab5ComparingSearchesToRecursion, NA \n" +
+                "Stack vs Heap -> Lab2ArrayLibrary, Lab2ArrayLibraryToStack vs Heap, NA \n" +
+                "Stack vs Heap -> Lab3ComparingArrayLibraryEfficiency, Lab3ComparingArrayLibraryEfficiencyToStack vs Heap, NA \n" +
+                "Array -> Lab4Recursion, Lab4RecursionToArray, NA \n" +
+                "Array -> Lab8ComparingArraysandLinkedLists, Lab8ComparingArraysandLinkedListsToArray, NA \n" +
+                "Array -> Lab2ArrayLibrary, Lab2ArrayLibraryToArray, NA \n" +
+                "Array -> Lab6ArrayListandTesting, Lab6ArrayListandTestingToArray, NA \n" +
+                "Array -> Lab3ComparingArrayLibraryEfficiency, Lab3ComparingArrayLibraryEfficiencyToArray, NA \n" +
+                "Interfaces -> Lab1GuessthePattern, Lab1GuessthePatternToInterfaces, NA \n" +
+                "Pointers -> Lab4Recursion, Lab4RecursionToPointers, NA \n" +
+                "Pointers -> Lab2ArrayLibrary, Lab2ArrayLibraryToPointers, NA \n" +
+                "Pointers -> Lab3ComparingArrayLibraryEfficiency, Lab3ComparingArrayLibraryEfficiencyToPointers, NA \n" +
+                "Linked Nodes -> Lab7LinkedList, Lab7LinkedListToLinked Nodes, NA \n" +
+                "Sort -> Lab5ComparingSearches, Lab5ComparingSearchesToSort, NA \n" +
+                "List -> Lab8ComparingArraysandLinkedLists, Lab8ComparingArraysandLinkedListsToList, NA \n" +
+                "List -> Lab6ArrayListandTesting, Lab6ArrayListandTestingToList, NA \n" +
+                "List -> Lab7LinkedList, Lab7LinkedListToList, NA \n", RFunctions.modelMaker(ccg));
     }
+
+
+
+
 /**
     @Test
     public void confirmatoryGraphTest() {

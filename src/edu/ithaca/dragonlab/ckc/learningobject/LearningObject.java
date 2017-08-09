@@ -1,6 +1,7 @@
 package edu.ithaca.dragonlab.ckc.learningobject;
 
 import edu.ithaca.dragonlab.ckc.io.LearningObjectLinkRecord;
+import edu.ithaca.dragonlab.ckc.util.DataUtil;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -74,5 +75,21 @@ public class LearningObject {
     public List<LearningObjectResponse> getResponses() {
         return responses;
     }
+
+    public boolean equals(Object other){
+        if(other == null){
+            return false;
+        }
+        if(!LearningObject.class.isAssignableFrom(other.getClass())){
+            return false;
+        }
+        LearningObject otherNode = (LearningObject) other;
+        if(this.id.equals(otherNode.id) && this.responses.equals(otherNode.responses)){
+            return true;
+        } else {
+            return false;
+        }
+    }
+
 
 }
