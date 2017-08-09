@@ -194,6 +194,7 @@ public interface ConceptKnowledgeCalculatorAPI {
 
     List<List<String>> randomGroupSuggestions (int choice) throws Exception;
 
+    List<List<String>> conceptDiffGroupSuggestions (int choice, String subject) throws Exception;
 
     List<List<String>> resourceGroupSuggestions(int choice) throws Exception;
 

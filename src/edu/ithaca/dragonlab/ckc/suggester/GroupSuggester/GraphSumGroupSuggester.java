@@ -158,21 +158,20 @@ public class GraphSumGroupSuggester extends GroupSuggester{
                     }
 
 
-
                 if(!leftOverName.equals("")) {
-                        List<String> tempList = trioGroup.get(groupingIndex);
-                        tempList.add(leftOverName);
-                    }
+                    List<String> tempList = trioGroup.get(groupingIndex);
+                    tempList.add(leftOverName);
+                }
 
-                    leftOver.remove(leftOverName);
+                leftOver.remove(leftOverName);
 
-                    if(groupingIndex < trioTemp.size()){
-                        trioTemp.remove(groupingIndex);
+                if(groupingIndex < trioTemp.size()){
+                    trioTemp.remove(groupingIndex);
 
-
-                    }
+                }
 
                 x++;
+
                 }
 
 

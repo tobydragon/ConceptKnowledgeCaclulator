@@ -244,23 +244,6 @@ public class ResourceGroupSuggester extends GroupSuggester {
         }
 
 
-
-
-//        System.out.println("one");
-//        System.out.println(one);
-//
-//        System.out.println("two");
-//        System.out.println(two);
-//
-//        System.out.println("three");
-//        System.out.println(three);
-//
-//        System.out.println("four");
-//        System.out.println(four);
-//
-//        System.out.println("\n");
-
-
         List<String> userTemp = new ArrayList<>();
         userTemp.addAll(userSuggestionMap.keySet());
 
@@ -284,10 +267,6 @@ public class ResourceGroupSuggester extends GroupSuggester {
 
         }
 
-//        System.out.println("left over");
-//
-//        System.out.println(userTemp.size());
-//        System.out.println(choice);
 
         if(userTemp.size() % choice == 0 && userTemp.size() >= choice){
 

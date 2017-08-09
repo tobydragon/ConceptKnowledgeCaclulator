@@ -494,10 +494,10 @@ public class GroupSuggesterTest {
         ConceptGraph usergraph2 = graphs.getUserGraph("s1");
 
 
-        double sum = sug.setupDiff(usergraph, usergraph2, "Values and Data Types");
+        double sum = sug.calcDiff(usergraph, usergraph2, "Values and Data Types");
         Assert.assertEquals(sum, 0.5025,  DataUtil.OK_FLOAT_MARGIN);
 
-        double sum2 = sug.setupDiff(usergraph, usergraph2, "all");
+        double sum2 = sug.calcDiff(usergraph, usergraph2, "all");
         Assert.assertEquals(sum2, 2.0866,  DataUtil.OK_FLOAT_MARGIN);
     }
 
@@ -520,55 +520,141 @@ public class GroupSuggesterTest {
 
         List<List<String>> groupings = sug.suggestGroup(graphs, 2, "all");
 
-        Assert.assertEquals(groupings.size(),3 );
-        Assert.assertEquals(groupings.get(0).size(), 2);
-        Assert.assertEquals(groupings.get(1).size(), 2);
-        Assert.assertEquals(groupings.get(2).size(), 2);
-//
-//        Assert.assertEquals(groupings.get(0).get(0), "s3");
-//        Assert.assertEquals(groupings.get(0).get(1), "s5");
-//
-//        Assert.assertEquals(groupings.get(1).get(0), "s6");
-//        Assert.assertEquals(groupings.get(1).get(1), "s1");
-//
-//
-//        Assert.assertEquals(groupings.get(2).get(0), "s4");
-//        Assert.assertEquals(groupings.get(2).get(1), "s2");
 
-//
-//        List<List<String>> groupings2 = sug.suggestGroup(graphs, 2, "Expressions and Statements");
-//
-//        Assert.assertEquals(groupings2.size(),3 );
-//        Assert.assertEquals(groupings2.get(0).size(), 2);
-//        Assert.assertEquals(groupings2.get(1).size(), 2);
-//        Assert.assertEquals(groupings2.get(2).size(), 2);
-//
-//        Assert.assertEquals(groupings2.get(0).get(0), "s5");
-//        Assert.assertEquals(groupings2.get(0).get(1), "s1");
-//
-//        Assert.assertEquals(groupings2.get(1).get(0), "s3");
-//        Assert.assertEquals(groupings2.get(1).get(1), "s6");
-//
-//
-//        Assert.assertEquals(groupings2.get(2).get(0), "s4");
-//        Assert.assertEquals(groupings2.get(2).get(1), "s2");
-//
-//
-//        List<List<String>> grouping3 = sug.suggestGroup(graphs, 3, "all");
-//
-//        Assert.assertEquals(grouping3.size(),2 );
-//        Assert.assertEquals(grouping3.get(0).size(), 3);
-//        Assert.assertEquals(grouping3.get(1).size(), 3);
-//
-//        Assert.assertEquals(grouping3.get(0).get(0), "s3");
-//        Assert.assertEquals(grouping3.get(0).get(1), "s5");
-//        Assert.assertEquals(grouping3.get(0).get(2), "s2");
-//
-//        Assert.assertEquals(grouping3.get(1).get(0), "s6");
-//        Assert.assertEquals(grouping3.get(1).get(1), "s1");
-//        Assert.assertEquals(grouping3.get(1).get(2), "s4");
+        Assert.assertEquals(groupings.size(),3 );
+        Assert.assertEquals(groupings.get(0).size(), 3);
+        Assert.assertEquals(groupings.get(1).size(), 3);
+        Assert.assertEquals(groupings.get(2).size(), 3);
+
+        Assert.assertEquals(groupings.get(0).get(0), "s3");
+        Assert.assertEquals(groupings.get(0).get(1), "s5");
+
+        Assert.assertEquals(groupings.get(1).get(0), "s6");
+        Assert.assertEquals(groupings.get(1).get(1), "s2");
+
+
+        Assert.assertEquals(groupings.get(2).get(0), "s4");
+        Assert.assertEquals(groupings.get(2).get(1), "s1");
+
+
+        List<List<String>> groupings2 = sug.suggestGroup(graphs, 2, "Expressions and Statements");
+
+        Assert.assertEquals(groupings2.size(),3 );
+        Assert.assertEquals(groupings2.get(0).size(), 3);
+        Assert.assertEquals(groupings2.get(1).size(), 3);
+        Assert.assertEquals(groupings2.get(2).size(), 3);
+
+        Assert.assertEquals(groupings2.get(0).get(0), "s5");
+        Assert.assertEquals(groupings2.get(0).get(1), "s1");
+
+        Assert.assertEquals(groupings2.get(1).get(0), "s3");
+        Assert.assertEquals(groupings2.get(1).get(1), "s6");
+
+
+        Assert.assertEquals(groupings2.get(2).get(0), "s4");
+        Assert.assertEquals(groupings2.get(2).get(1), "s2");
+
+
+        List<List<String>> grouping3 = sug.suggestGroup(graphs, 3, "all");
+
+        Assert.assertEquals(grouping3.size(),2 );
+        Assert.assertEquals(grouping3.get(0).size(), 3);
+        Assert.assertEquals(grouping3.get(1).size(), 3);
+
+        Assert.assertEquals(grouping3.get(0).get(0), "s3");
+        Assert.assertEquals(grouping3.get(0).get(1), "s5");
+        Assert.assertEquals(grouping3.get(0).get(2), "s1");
+
+        Assert.assertEquals(grouping3.get(1).get(0), "s6");
+        Assert.assertEquals(grouping3.get(1).get(1), "s2");
+        Assert.assertEquals(grouping3.get(1).get(2), "s4");
 
     }
+
+
+    @Test
+    public void ConceptDiffGroupSuggestionLessStudents() {
+        ConceptKnowledgeCalculatorAPI ckc = null;
+
+        try {
+            ckc = new ConceptKnowledgeCalculator("test/testresources/ManuallyCreated/simpleConceptGraph.json", "test/testresources/ManuallyCreated/simpleResource.json", "test/testresources/ManuallyCreated/simpleAssessment.csv");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        CohortConceptGraphs graphs = ckc.getCohortConceptGraphs();
+        Assert.assertNotEquals(graphs, null);
+
+
+        ConceptDiffGroupSuggester sug = new ConceptDiffGroupSuggester();
+
+        List<List<String>> groupings = sug.suggestGroup(graphs, 2, "all");
+        Assert.assertEquals(groupings.size(), 1);
+        Assert.assertEquals(groupings.get(0).size(), 1);
+
+
+        List<List<String>> grouping3 = sug.suggestGroup(graphs, 3, "all");
+
+        Assert.assertEquals(grouping3.size(), 1);
+        Assert.assertEquals(grouping3.get(0).size(), 1);
+
+        Assert.assertEquals(grouping3.get(0).get(0), "bspinache1");
+
+
+    }
+
+
+    @Test
+    public void ConceptDiffGroupSuggestionOddStudents(){
+        ConceptKnowledgeCalculatorAPI ckc = null;
+
+        try {
+            ckc = new ConceptKnowledgeCalculator("test/testresources/ManuallyCreated/researchConceptGraph.json", "test/testresources/ManuallyCreated/researchResource2.json", "test/testresources/ManuallyCreated/researchAssessment2.csv");
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        CohortConceptGraphs graphs = ckc.getCohortConceptGraphs();
+        Assert.assertNotEquals(graphs, null);
+
+        ConceptDiffGroupSuggester sug = new ConceptDiffGroupSuggester();
+
+        List<List<String>> groupings = sug.suggestGroup(graphs, 2, "all");
+
+
+        Assert.assertEquals(groupings.size(),3 );
+        Assert.assertEquals(groupings.get(0).size(), 3);
+        Assert.assertEquals(groupings.get(1).size(), 3);
+        Assert.assertEquals(groupings.get(2).size(), 1);
+
+        Assert.assertEquals(groupings.get(0).get(0), "s4");
+        Assert.assertEquals(groupings.get(0).get(1), "s5");
+
+        Assert.assertEquals(groupings.get(1).get(0), "s3");
+        Assert.assertEquals(groupings.get(1).get(1), "s2");
+
+
+        Assert.assertEquals(groupings.get(2).get(0), "s1");
+
+
+
+
+        List<List<String>> grouping3 = sug.suggestGroup(graphs, 3, "all");
+
+        Assert.assertEquals(grouping3.size(),2 );
+        Assert.assertEquals(grouping3.get(0).size(), 3);
+        Assert.assertEquals(grouping3.get(1).size(), 2);
+
+        Assert.assertEquals(grouping3.get(0).get(0), "s4");
+        Assert.assertEquals(grouping3.get(0).get(1), "s5");
+        Assert.assertEquals(grouping3.get(0).get(2), "s3");
+
+        Assert.assertEquals(grouping3.get(1).get(0), "s2");
+        Assert.assertEquals(grouping3.get(1).get(1), "s1");
+
+    }
+
 
 
     @Test
@@ -586,13 +672,13 @@ public class GroupSuggesterTest {
 
 
 
-        GroupSuggester obj = new RandomGroupSuggester();
-
-        List<List<String>> groupings2 = obj.suggestGroup(graphs, 2);
-        Assert.assertEquals(groupings2.size(), 19);
-
-        List<List<String>> groupings = obj.suggestGroup(graphs, 3);
-        Assert.assertEquals(groupings.size(), 13);
+//        GroupSuggester obj = new RandomGroupSuggester();
+//
+//        List<List<String>> groupings2 = obj.suggestGroup(graphs, 2);
+//        Assert.assertEquals(groupings2.size(), 19);
+//
+//        List<List<String>> groupings = obj.suggestGroup(graphs, 3);
+//        Assert.assertEquals(groupings.size(), 13);
 
 
 
@@ -605,19 +691,32 @@ public class GroupSuggesterTest {
         Assert.assertEquals(groupings4.size(), 19);
 
 
+//
+//        GraphSumGroupSuggester sug = new GraphSumGroupSuggester();
+//
+//        List<List<String>> groupings5 = sug.suggestGroup(graphs, 2, "all");
+//        Assert.assertEquals(groupings5.size(), 19);
+//
+//
+//        List<List<String>> grouping6 = sug.suggestGroup(graphs, 3, "all");
+//
+//        Assert.assertEquals(grouping6.size(), 13);
 
-        GraphSumGroupSuggester sug = new GraphSumGroupSuggester();
-
-        List<List<String>> groupings5 = sug.suggestGroup(graphs, 2, "all");
-        Assert.assertEquals(groupings5.size(), 19);
 
 
-        List<List<String>> grouping6 = sug.suggestGroup(graphs, 3, "all");
-
-        Assert.assertEquals(grouping6.size(), 13);
-
+//        ConceptDiffGroupSuggester sug2 = new ConceptDiffGroupSuggester();
+//
+//        List<List<String>> groupings7 = sug2.suggestGroup(graphs, 2, "all");
+//        Assert.assertEquals(groupings7.size(), 19);
+//
+//
+//        List<List<String>> grouping8 = sug2.suggestGroup(graphs, 3, "all");
+//        Assert.assertEquals(grouping8.size(), 13);
 
     }
+
+
+
 
 
 
