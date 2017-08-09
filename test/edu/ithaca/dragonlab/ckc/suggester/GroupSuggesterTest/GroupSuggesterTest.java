@@ -161,24 +161,24 @@ public class GroupSuggesterTest {
 
         GroupSuggester obj = new ResourceGroupSuggester();
 
-        //groups of two
-        List<List<String>> groupings = obj.suggestGroup(graphs, 2);
-
-        Assert.assertEquals(groupings.size(),3);
-
-        Assert.assertEquals(groupings.get(0).size(), 3);
-        Assert.assertEquals(groupings.get(1).size(), 3);
-
-        Assert.assertEquals(groupings.get(0).get(0),"s4" );
-        Assert.assertEquals(groupings.get(0).get(1),"s5" );
-        Assert.assertEquals(groupings.get(0).get(2),"something challenging" );
-
-        Assert.assertEquals(groupings.get(1).get(0),"s3" );
-        Assert.assertEquals(groupings.get(1).get(1),"s2" );
-        Assert.assertEquals(groupings.get(1).get(2),"What are values are accessed by?" );
-
-        Assert.assertEquals(groupings.get(2).get(0),"s1" );
-        Assert.assertEquals(groupings.get(2).get(1),"No other students" );
+//        //groups of two
+//        List<List<String>> groupings = obj.suggestGroup(graphs, 2);
+//
+//        Assert.assertEquals(groupings.size(),3);
+//
+//        Assert.assertEquals(groupings.get(0).size(), 3);
+//        Assert.assertEquals(groupings.get(1).size(), 3);
+//
+//        Assert.assertEquals(groupings.get(0).get(0),"s4" );
+//        Assert.assertEquals(groupings.get(0).get(1),"s5" );
+//        Assert.assertEquals(groupings.get(0).get(2),"something challenging" );
+//
+//        Assert.assertEquals(groupings.get(1).get(0),"s3" );
+//        Assert.assertEquals(groupings.get(1).get(1),"s2" );
+//        Assert.assertEquals(groupings.get(1).get(2),"What are values are accessed by?" );
+//
+//        Assert.assertEquals(groupings.get(2).get(0),"s1" );
+//        Assert.assertEquals(groupings.get(2).get(1),"No other students" );
 
 
         List<List<String>> groupings2 = obj.suggestGroup(graphs, 3);

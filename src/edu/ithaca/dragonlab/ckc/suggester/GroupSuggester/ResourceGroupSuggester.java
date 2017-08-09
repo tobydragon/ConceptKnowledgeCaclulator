@@ -56,45 +56,45 @@ public class ResourceGroupSuggester extends GroupSuggester {
     }
 
 
-    public String getSimilarResourceLevel3 (SuggestionResource s1, SuggestionResource s2, SuggestionResource s3){
-
-        List<LearningObjectSuggestion> incom1 = s1.incompleteList;
-        List<LearningObjectSuggestion> incom2 = s2.incompleteList;
-        List<LearningObjectSuggestion> incom3 = s3.incompleteList;
-
-        List<LearningObjectSuggestion> wrong1 = s1.wrongList;
-        List<LearningObjectSuggestion> wrong2 = s2.wrongList;
-        List<LearningObjectSuggestion> wrong3 = s3.wrongList;
-
-        /*
-        student1   student2 student3
-        incomplete  ==true              2
-        wrong == true                   3
-        incomplete wrong incomplete     4
-        wrong incomplete wrong          4
-        empty empty  empty              1
-         */
-
-
-        if(incom1.size()> 0 && incom2.size()>0 && incom3.size()>0 && incom1.get(0).getId().equals(incom2.get(0).getId()) && incom2.get(0).getId().equals(incom3.get(0).getId()) && incom1.get(0).getId().equals(incom3.get(0).getId())) {
-            return 2 + "\n" + incom1.get(0).getId();
-
-        }else if(wrong1.size()> 0 && wrong1.size()>0 && wrong1.size()>0 && wrong1.get(0).getId().equals(wrong1.get(0).getId()) && wrong1.get(0).getId().equals(wrong1.get(0).getId()) && wrong1.get(0).getId().equals(wrong1.get(0).getId())){
-            return 3 + "\n" + wrong1.get(0).getId();
-
-        }else if(incom1.size()>0 && wrong2.size()>0 && incom3.size()> 0 &&incom1.get(0).getId().equals(wrong2.get(0).getId()) && incom1.get(0).getId().equals(incom3.get(0).getId()) && wrong2.get(0).getId().equals(incom3.get(0).getId())){
-            return 4 + "\n"+ incom1.get(0).getId();
-
-        } else if (wrong1.size()>0 && wrong2.size()>0  && incom3.size()>0 && wrong1.get(0).getId().equals(wrong2.get(0).getId()) && wrong1.get(0).getId().equals(incom3.get(0).getId()) && wrong2.get(0).getId().equals(incom2.get(0).getId())){
-            return 4+ "\n" + wrong1.get(0).getId();
-        } else if (wrong1.size()== 0&& incom1.size()==0 && wrong2.size()==0 && incom2.size()==0 && incom3.size()==0 && wrong3.size()==0){
-            return 1+ "\n"+ "something challenging";
-
-        } else{
-            return 0+"\n";
-
-        }
-    }
+//    public String getSimilarResourceLevel3 (SuggestionResource s1, SuggestionResource s2, SuggestionResource s3){
+//
+//        List<LearningObjectSuggestion> incom1 = s1.incompleteList;
+//        List<LearningObjectSuggestion> incom2 = s2.incompleteList;
+//        List<LearningObjectSuggestion> incom3 = s3.incompleteList;
+//
+//        List<LearningObjectSuggestion> wrong1 = s1.wrongList;
+//        List<LearningObjectSuggestion> wrong2 = s2.wrongList;
+//        List<LearningObjectSuggestion> wrong3 = s3.wrongList;
+//
+//        /*
+//        student1   student2 student3
+//        incomplete  ==true              2
+//        wrong == true                   3
+//        incomplete wrong incomplete     4
+//        wrong incomplete wrong          4
+//        empty empty  empty              1
+//         */
+//
+//
+//        if(incom1.size()> 0 && incom2.size()>0 && incom3.size()>0 && incom1.get(0).getId().equals(incom2.get(0).getId()) && incom2.get(0).getId().equals(incom3.get(0).getId()) && incom1.get(0).getId().equals(incom3.get(0).getId())) {
+//            return 2 + "\n" + incom1.get(0).getId();
+//
+//        }else if(wrong1.size()> 0 && wrong1.size()>0 && wrong1.size()>0 && wrong1.get(0).getId().equals(wrong1.get(0).getId()) && wrong1.get(0).getId().equals(wrong1.get(0).getId()) && wrong1.get(0).getId().equals(wrong1.get(0).getId())){
+//            return 3 + "\n" + wrong1.get(0).getId();
+//
+//        }else if(incom1.size()>0 && wrong2.size()>0 && incom3.size()> 0 &&incom1.get(0).getId().equals(wrong2.get(0).getId()) && incom1.get(0).getId().equals(incom3.get(0).getId()) && wrong2.get(0).getId().equals(incom3.get(0).getId())){
+//            return 4 + "\n"+ incom1.get(0).getId();
+//
+//        } else if (wrong1.size()>0 && wrong2.size()>0  && incom3.size()>0 && wrong1.get(0).getId().equals(wrong2.get(0).getId()) && wrong1.get(0).getId().equals(incom3.get(0).getId()) && wrong2.get(0).getId().equals(incom2.get(0).getId())){
+//            return 4+ "\n" + wrong1.get(0).getId();
+//        } else if (wrong1.size()== 0&& incom1.size()==0 && wrong2.size()==0 && incom2.size()==0 && incom3.size()==0 && wrong3.size()==0){
+//            return 1+ "\n"+ "something challenging";
+//
+//        } else{
+//            return 0+"\n";
+//
+//        }
+//    }
 
     public void makeGroups(List<List<String>> num, List<String> userTemp, List<List<String>> groupings, int choice){
 
@@ -157,9 +157,10 @@ public class ResourceGroupSuggester extends GroupSuggester {
         List<List<String>> four = new ArrayList<>();
 
         List<String> repeats = new ArrayList<>();
+        List<String> nameList = new ArrayList<>();
 
 
-        if(choice==2){
+//        if(choice==2){
             for(String name: userSuggestionMap.keySet()){
                 SuggestionResource sugres = userSuggestionMap.get(name);
 
@@ -191,55 +192,70 @@ public class ResourceGroupSuggester extends GroupSuggester {
 
                         repeats.add(name+"+"+name2);
 
+
                     }
                 }
             }
-        }
+//        }
         if(choice==3){
-            for(String name: userSuggestionMap.keySet()){
-                SuggestionResource sugres = userSuggestionMap.get(name);
 
-                for(String name2: userSuggestionMap.keySet()) {
-                    SuggestionResource sugres2 = userSuggestionMap.get(name2);
 
-                    for(String name3: userSuggestionMap.keySet()) {
-                        SuggestionResource sugres3 = userSuggestionMap.get(name3);
+            System.out.println(one);
+            System.out.println(two);
+            System.out.println(three);
+            System.out.println(four);
 
-                        boolean isRepeated = false;
-                        if(!(repeats.contains(name + "+" + name2 +"+"+name3) || repeats.contains(name3 + "+" + name +"+"+name2)|| repeats.contains(name2+ "+" + name3 +"+"+name)|| repeats.contains(name + "+" + name3 +"+"+name2) || repeats.contains(name2 + "+" + name +"+"+name3) || repeats.contains(name3 + "+" + name2 +"+"+name))){
-                            isRepeated=true;
-                        }
 
-                        if (!name.equals(name2) && !(name.equals(name3)) && !(name2.equals(name3))  && isRepeated) {
 
-                            String ex = getSimilarResourceLevel3(sugres, sugres2, sugres3);
 
-                            List<String> groups = new ArrayList<>();
 
-                            groups.add(name);
-                            groups.add(name2);
-                            groups.add(name3);
 
-                            if (ex.substring(0, 1).equals("1")) {
-                                groups.add(ex.substring(2, ex.length()));
-                                one.add(groups);
-                            } else if (ex.substring(0, 1).equals("2")) {
-                                groups.add(ex.substring(2, ex.length()));
-                                two.add(groups);
-                            } else if (ex.substring(0, 1).equals("3")) {
-                                groups.add(ex.substring(2, ex.length()));
-                                three.add(groups);
-                            } else if (ex.substring(0, 1).equals("4")) {
-                                groups.add(ex.substring(2, ex.length()));
-                                four.add(groups);
-                            }
 
-                            repeats.add(name + "+" + name2+ "+"+name3);
 
-                        }
-                    }
-                }
-            }
+//            for(String name: userSuggestionMap.keySet()){
+//                SuggestionResource sugres = userSuggestionMap.get(name);
+//
+//                for(String name2: userSuggestionMap.keySet()) {
+//                    SuggestionResource sugres2 = userSuggestionMap.get(name2);
+//
+//                    for(String name3: userSuggestionMap.keySet()) {
+//                        SuggestionResource sugres3 = userSuggestionMap.get(name3);
+//
+//                        boolean isRepeated = false;
+//                        if(!(repeats.contains(name + "+" + name2 +"+"+name3) || repeats.contains(name3 + "+" + name +"+"+name2)|| repeats.contains(name2+ "+" + name3 +"+"+name)|| repeats.contains(name + "+" + name3 +"+"+name2) || repeats.contains(name2 + "+" + name +"+"+name3) || repeats.contains(name3 + "+" + name2 +"+"+name))){
+//                            isRepeated=true;
+//                        }
+//
+//                        if (!name.equals(name2) && !(name.equals(name3)) && !(name2.equals(name3))  && isRepeated) {
+//
+//                            String ex = getSimilarResourceLevel3(sugres, sugres2, sugres3);
+//
+//                            List<String> groups = new ArrayList<>();
+//
+//                            groups.add(name);
+//                            groups.add(name2);
+//                            groups.add(name3);
+//
+//                            if (ex.substring(0, 1).equals("1")) {
+//                                groups.add(ex.substring(2, ex.length()));
+//                                one.add(groups);
+//                            } else if (ex.substring(0, 1).equals("2")) {
+//                                groups.add(ex.substring(2, ex.length()));
+//                                two.add(groups);
+//                            } else if (ex.substring(0, 1).equals("3")) {
+//                                groups.add(ex.substring(2, ex.length()));
+//                                three.add(groups);
+//                            } else if (ex.substring(0, 1).equals("4")) {
+//                                groups.add(ex.substring(2, ex.length()));
+//                                four.add(groups);
+//                            }
+//
+//                            repeats.add(name + "+" + name2+ "+"+name3);
+//
+//                        }
+//                    }
+//                }
+//            }
 
         }
 
