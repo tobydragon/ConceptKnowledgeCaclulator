@@ -307,9 +307,7 @@ public class  ConceptGraph {
 	    return learningObjectMap;
     }
 
-    public List<ConceptNode> getRoots() {
-        return roots;
-    }
+    public List<ConceptNode> getRoots() {return roots;}
 
     public String getName(){
 	    return name;
