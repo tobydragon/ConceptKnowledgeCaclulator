@@ -26,7 +26,12 @@ public class ConceptKnowledgeCalculatorMain {
 
 //            new ConsoleUI("resources/comp220/comp220Graph.json",
 //                    "resources/comp220/comp220Resources.json",
-//                    "localresources/comp220/comp220ExampleDataPortionCleaned.csv");
+//                    "localresources/comp220/comp220ExampleDataPortion.csv");
+
+            new ConsoleUI("resources/comp220/comp220Graph.json",
+                    "resources/comp220/comp220Resources.json",
+                    "localresources/comp220/comp220ExampleDataPortion.csv");
+
 
 //            new ConsoleUI("resources/comp220/comp220Graph.json",
 //                    "resources/comp220/comp220Resources.json",
@@ -41,10 +46,10 @@ public class ConceptKnowledgeCalculatorMain {
 //                    "test/testresources/ManuallyCreated/researchResource2.json",
 //                    "test/testresources/ManuallyCreated/researchAssessment2.csv");
 
-
-            new ConsoleUI("resources/comp220/comp220Graph.json",
-                    "resources/comp220/comp220Resources.json",
-                    "localresources/comp220/comp220ExampleDataPortionCleaned.csv");
+//
+//            new ConsoleUI("resources/comp220/comp220Graph.json",
+//                    "resources/comp220/comp220Resources.json",
+//                    "localresources/comp220/comp220ExampleDataPortionCleaned.csv");
 
 
         } else {

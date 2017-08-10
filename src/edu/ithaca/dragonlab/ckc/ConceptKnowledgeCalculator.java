@@ -464,9 +464,8 @@ public class ConceptKnowledgeCalculator implements ConceptKnowledgeCalculatorAPI
         if(currentMode==Mode.COHORTGRAPH) {
             GroupSuggester obj = new RandomGroupSuggester();
 
-            List<List<String>> groupings = obj.suggestGroup(cohortConceptGraphs, choice);
+            return obj.suggestGroup(cohortConceptGraphs, choice);
 
-            return groupings;
         }else {
             throw new Exception("Wrong Mode");
 
@@ -514,9 +513,8 @@ public class ConceptKnowledgeCalculator implements ConceptKnowledgeCalculatorAPI
                 if (currentMode == Mode.COHORTGRAPH) {
                     GraphSumGroupSuggester sug = new GraphSumGroupSuggester();
 
-                    List<List<String>> groupings = sug.suggestGroup(cohortConceptGraphs, choice, subject);
+                    return sug.suggestGroup(cohortConceptGraphs, choice, subject);
 
-                    return groupings;
                 } else {
                     throw new Exception("Wrong Mode");
 
@@ -536,11 +534,10 @@ public class ConceptKnowledgeCalculator implements ConceptKnowledgeCalculatorAPI
             if(choice>3 || choice <2){
                 throw new Exception("invalid group size");
             }else {
-                GroupSuggester obj = new ResourceGroupSuggester();
+                GroupSuggester obj = new ResourceNCubeGroupSuggester();
 
-                List<List<String>> groupings = obj.suggestGroup(cohortConceptGraphs, choice);
+                return obj.suggestGroup(cohortConceptGraphs, choice);
 
-                return groupings;
             }
         }else {
             throw new Exception("Wrong Mode");

@@ -322,6 +322,7 @@ public class ConsoleUI {
         try {
             List<List<String>> groupings = ckc.randomGroupSuggestions(choice);
 
+
             for(List<String> group: groupings){
                 System.out.println(group);
             }

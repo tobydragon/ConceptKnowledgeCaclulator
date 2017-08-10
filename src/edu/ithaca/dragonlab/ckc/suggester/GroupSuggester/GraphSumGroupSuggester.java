@@ -211,10 +211,7 @@ public class GraphSumGroupSuggester extends GroupSuggester{
             ConceptNode node = s1.findNodeById(subject);
 
 
-            double total = node.countTotalKnowledgeEstimate(new ArrayList<>());
-
-            return total;
-
+            return node.countTotalKnowledgeEstimate(new ArrayList<>());
 
         }
 

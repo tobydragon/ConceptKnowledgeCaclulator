@@ -298,7 +298,6 @@ public class ResourceGroupSuggester extends GroupSuggester {
                     }else{
                         group2.add(name);
                     }
-
                 }
             }
 
