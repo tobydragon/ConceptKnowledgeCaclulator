@@ -1,5 +1,6 @@
 package edu.ithaca.dragonlab.ckc.suggester.GroupSuggester;
 
+import com.sun.tools.corba.se.idl.constExpr.ShiftLeft;
 import edu.ithaca.dragonlab.ckc.conceptgraph.CohortConceptGraphs;
 import edu.ithaca.dragonlab.ckc.conceptgraph.ConceptGraph;
 import edu.ithaca.dragonlab.ckc.conceptgraph.ConceptNode;
@@ -16,7 +17,7 @@ public class ResourceGroupSuggester extends GroupSuggester {
 
 
 
-    public String getSimilarResourceLevel2 (SuggestionResource s1, SuggestionResource s2){
+    public List<String> getSimilarResourceLevel2 (SuggestionResource s1, SuggestionResource s2){
 
         List<LearningObjectSuggestion> incom1 = s1.incompleteList;
 
@@ -34,109 +35,39 @@ public class ResourceGroupSuggester extends GroupSuggester {
         empty empty         1
          */
 
+        List<String> order = new ArrayList<>();
+
+        String value = "0";
+        String resourceName = "";
+
+
 
         if(incom1.size()> 0 && incom2.size()>0 &&incom1.get(0).getId().equals(incom2.get(0).getId())){
-            return 2 + "\n" + incom1.get(0).getId();
+            value = String.valueOf(2);
+            resourceName = incom1.get(0).getId();
 
         } else if(wrong1.size()>0 && wrong2.size()>0&&wrong1.get(0).getId().equals(wrong2.get(0).getId())) {
-            return 3 + "\n" + wrong1.get(0).getId();
+            value = String.valueOf(3);
+            resourceName = wrong1.get(0).getId();
 
         }else if(incom1.size()>0 && wrong2.size()>0 &&incom1.get(0).getId().equals(wrong2.get(0).getId())){
-            return 4 + "\n"+ incom1.get(0).getId();
+            value = String.valueOf(4);
+            resourceName = incom1.get(0).getId();
 
         } else if (wrong1.size()>0 && incom2.size()>0&&wrong1.get(0).getId().equals(incom2.get(0).getId())){
-            return 4+ "\n" + wrong1.get(0).getId();
+            value = String.valueOf(4);
+            resourceName = wrong1.get(0).getId();
         } else if (wrong1.size()== 0&& incom1.size()==0 && wrong2.size()==0 && incom2.size()==0){
-            return 1+ "\n"+ "something challenging";
-
-        } else{
-            return 0+"\n";
+            value = String.valueOf(1);
+            resourceName = "something challenging";
 
         }
+
+        order.add(value);
+        order.add(resourceName);
+        return order;
     }
 
-
-//    public String getSimilarResourceLevel3 (SuggestionResource s1, SuggestionResource s2, SuggestionResource s3){
-//
-//        List<LearningObjectSuggestion> incom1 = s1.incompleteList;
-//        List<LearningObjectSuggestion> incom2 = s2.incompleteList;
-//        List<LearningObjectSuggestion> incom3 = s3.incompleteList;
-//
-//        List<LearningObjectSuggestion> wrong1 = s1.wrongList;
-//        List<LearningObjectSuggestion> wrong2 = s2.wrongList;
-//        List<LearningObjectSuggestion> wrong3 = s3.wrongList;
-//
-//        /*
-//        student1   student2 student3
-//        incomplete  ==true              2
-//        wrong == true                   3
-//        incomplete wrong incomplete     4
-//        wrong incomplete wrong          4
-//        empty empty  empty              1
-//         */
-//
-//
-//        if(incom1.size()> 0 && incom2.size()>0 && incom3.size()>0 && incom1.get(0).getId().equals(incom2.get(0).getId()) && incom2.get(0).getId().equals(incom3.get(0).getId()) && incom1.get(0).getId().equals(incom3.get(0).getId())) {
-//            return 2 + "\n" + incom1.get(0).getId();
-//
-//        }else if(wrong1.size()> 0 && wrong1.size()>0 && wrong1.size()>0 && wrong1.get(0).getId().equals(wrong1.get(0).getId()) && wrong1.get(0).getId().equals(wrong1.get(0).getId()) && wrong1.get(0).getId().equals(wrong1.get(0).getId())){
-//            return 3 + "\n" + wrong1.get(0).getId();
-//
-//        }else if(incom1.size()>0 && wrong2.size()>0 && incom3.size()> 0 &&incom1.get(0).getId().equals(wrong2.get(0).getId()) && incom1.get(0).getId().equals(incom3.get(0).getId()) && wrong2.get(0).getId().equals(incom3.get(0).getId())){
-//            return 4 + "\n"+ incom1.get(0).getId();
-//
-//        } else if (wrong1.size()>0 && wrong2.size()>0  && incom3.size()>0 && wrong1.get(0).getId().equals(wrong2.get(0).getId()) && wrong1.get(0).getId().equals(incom3.get(0).getId()) && wrong2.get(0).getId().equals(incom2.get(0).getId())){
-//            return 4+ "\n" + wrong1.get(0).getId();
-//        } else if (wrong1.size()== 0&& incom1.size()==0 && wrong2.size()==0 && incom2.size()==0 && incom3.size()==0 && wrong3.size()==0){
-//            return 1+ "\n"+ "something challenging";
-//
-//        } else{
-//            return 0+"\n";
-//
-//        }
-//    }
-
-    public void makeGroups(List<List<String>> num, List<String> userTemp, List<List<String>> groupings, int choice){
-
-        for(List<String> possiblePairing: num) {
-            boolean flag = false;
-
-            for(int i=0; i<possiblePairing.size()-choice; i++){
-
-                if(choice==2){
-                    String firstName = possiblePairing.get(i);
-                    String secondName = possiblePairing.get(i+1);
-
-                    if(!userTemp.contains(firstName) || !userTemp.contains(secondName) ){
-                        flag=true;
-                        break;
-                    }
-                }
-                if(choice ==3){
-                    String firstName = possiblePairing.get(i);
-                    String secondName = possiblePairing.get(i+1);
-                    String thirdname = possiblePairing.get(i+2);
-
-
-                    if(!userTemp.contains(firstName) || !userTemp.contains(secondName) || !userTemp.contains(thirdname)){
-                        flag=true;
-                        break;
-                    }
-                }
-            }
-
-
-            if(!flag){
-                List<String> groupRe = new ArrayList<>();
-                groupRe.addAll(possiblePairing);
-                groupings.add(groupRe);
-
-                userTemp.removeAll(groupRe);
-
-            }
-
-        }
-    }
 
 
     @Override
@@ -151,13 +82,12 @@ public class ResourceGroupSuggester extends GroupSuggester {
             userSuggestionMap.put(graph.getName(),new SuggestionResource(graph, nodeList) );
         }
 
-        List<List<String>> one = new ArrayList<>();
-        List<List<String>> two = new ArrayList<>();
-        List<List<String>> three = new ArrayList<>();
-        List<List<String>> four = new ArrayList<>();
+
+
+        Map<List<String>, Integer> storedMap = new HashMap<>();
+        // student 1, student 2, resource, integer
 
         List<String> repeats = new ArrayList<>();
-        List<String> nameList = new ArrayList<>();
 
 
 //        if(choice==2){
@@ -169,118 +99,43 @@ public class ResourceGroupSuggester extends GroupSuggester {
 
                     if(!name.equals(name2) && !(repeats.contains(name+"+"+name2) || repeats.contains(name2+"+"+name))){
 
-                        String ex = getSimilarResourceLevel2(sugres, sugres2);
+                        List<String> ex = getSimilarResourceLevel2(sugres, sugres2);
+                        if(!ex.get(0).equals("0")){
+                            List<String> mapList = new ArrayList<>();
 
-                        List<String> groups = new ArrayList<>();
+                            mapList.add(name);
+                            mapList.add(name2);
+                            mapList.add(ex.get(1));
+                            Integer value = Integer.parseInt(ex.get(0));
+                            storedMap.put(mapList, value);
 
-                        groups.add(name);
-                        groups.add(name2);
-
-                        if(ex.substring(0,1).equals("1")){
-                            groups.add(ex.substring(2,ex.length()));
-                            one.add(groups);
-                        }else if(ex.substring(0,1).equals("2")){
-                            groups.add(ex.substring(2,ex.length()));
-                            two.add(groups);
-                        }else if(ex.substring(0,1).equals("3")){
-                            groups.add(ex.substring(2,ex.length()));
-                            three.add(groups);
-                        }else if (ex.substring(0,1).equals("4")){
-                            groups.add(ex.substring(2,ex.length()));
-                            four.add(groups);
                         }
 
                         repeats.add(name+"+"+name2);
-
-
                     }
                 }
             }
-//        }
-        if(choice==3){
 
 
-            System.out.println(one);
-            System.out.println(two);
-            System.out.println(three);
-            System.out.println(four);
-
-
-
-
-
-
-
-
-//            for(String name: userSuggestionMap.keySet()){
-//                SuggestionResource sugres = userSuggestionMap.get(name);
-//
-//                for(String name2: userSuggestionMap.keySet()) {
-//                    SuggestionResource sugres2 = userSuggestionMap.get(name2);
-//
-//                    for(String name3: userSuggestionMap.keySet()) {
-//                        SuggestionResource sugres3 = userSuggestionMap.get(name3);
-//
-//                        boolean isRepeated = false;
-//                        if(!(repeats.contains(name + "+" + name2 +"+"+name3) || repeats.contains(name3 + "+" + name +"+"+name2)|| repeats.contains(name2+ "+" + name3 +"+"+name)|| repeats.contains(name + "+" + name3 +"+"+name2) || repeats.contains(name2 + "+" + name +"+"+name3) || repeats.contains(name3 + "+" + name2 +"+"+name))){
-//                            isRepeated=true;
-//                        }
-//
-//                        if (!name.equals(name2) && !(name.equals(name3)) && !(name2.equals(name3))  && isRepeated) {
-//
-//                            String ex = getSimilarResourceLevel3(sugres, sugres2, sugres3);
-//
-//                            List<String> groups = new ArrayList<>();
-//
-//                            groups.add(name);
-//                            groups.add(name2);
-//                            groups.add(name3);
-//
-//                            if (ex.substring(0, 1).equals("1")) {
-//                                groups.add(ex.substring(2, ex.length()));
-//                                one.add(groups);
-//                            } else if (ex.substring(0, 1).equals("2")) {
-//                                groups.add(ex.substring(2, ex.length()));
-//                                two.add(groups);
-//                            } else if (ex.substring(0, 1).equals("3")) {
-//                                groups.add(ex.substring(2, ex.length()));
-//                                three.add(groups);
-//                            } else if (ex.substring(0, 1).equals("4")) {
-//                                groups.add(ex.substring(2, ex.length()));
-//                                four.add(groups);
-//                            }
-//
-//                            repeats.add(name + "+" + name2+ "+"+name3);
-//
-//                        }
-//                    }
-//                }
-//            }
-
-        }
-
+        HashMap<List<String>, Integer> sortedUserMap = sortValues(storedMap);
 
         List<String> userTemp = new ArrayList<>();
         userTemp.addAll(userSuggestionMap.keySet());
 
-
         List<List<String>> groupings = new ArrayList<>();
 
-        if(one.size()>0){
-            makeGroups(one, userTemp, groupings, choice);
 
-        }
-        if(two.size()>0){
-            makeGroups(two, userTemp, groupings, choice);
+        for(List<String> list: sortedUserMap.keySet()){
+            if(userTemp.contains(list.get(0)) && userTemp.contains(list.get(1))){
 
-        }
-        if(three.size()>0){
-            makeGroups(three, userTemp, groupings, choice);
+                List<String> groups = new ArrayList<>();
+                groups.addAll(list);
+                groupings.add(groups);
 
-        }
-        if(four.size()>0){
-            makeGroups(four, userTemp, groupings, choice);
+                userTemp.remove(list.get(0));
+                userTemp.remove(list.get(1));
 
+            }
         }
 
 
@@ -348,9 +203,153 @@ public class ResourceGroupSuggester extends GroupSuggester {
 
 
         }
+        if(choice==2){
+            return groupings;
 
-        return groupings;
+        }
+
+        if(choice==3){
+//            System.out.println(groupings);
+
+            List<List<String>> trioGroup = new ArrayList<>();
+
+            for(int i =0; i< (getMaps.size()/choice); i++){
+
+                List<String> group = groupings.get(0);
+                trioGroup.add(group);
+                groupings.remove(group);
+            }
+
+
+            List<String> leftOver = new ArrayList<>();
+            for(List<String> list: groupings){
+                leftOver.addAll(list);
+            }
+
+            List<String> leftOver2 = new ArrayList<>();
+
+            for(String in: leftOver){
+                if(userSuggestionMap.containsKey(in)){
+                    leftOver2.add(in);
+                }
+            }
+
+            List<String> leftOver3 = new ArrayList<>();
+            leftOver3.addAll(leftOver2);
+
+
+            HashMap<String , Integer> addMap = new HashMap<>();
+
+            List<String > rr = new ArrayList<>();
+            for(String list: leftOver2){
+                SuggestionResource sugres = userSuggestionMap.get(list);
+
+                String leftOverName = "";
+                String trioTempTemp = "";
+                int index =0;
+
+
+                for(int i=0; i< trioGroup.size(); i++){
+                    List<String> actualList = trioGroup.get(i);
+                    String name = actualList.get(0);
+                    SuggestionResource sugres2 = userSuggestionMap.get(name);
+
+
+                    int temp = storedMap.get(actualList);
+
+                    if(getMaps.containsKey(list) && getMaps.containsKey(name)){
+
+                        List<String> ex = getSimilarResourceLevel2(sugres, sugres2);
+                        int value = Integer.parseInt(ex.get(0));
+
+
+                        if ( value == temp && (!rr.contains(name))) {
+
+
+                            leftOverName = list;
+                            trioTempTemp = name;
+                            index = i;
+
+
+
+                        }
+                    }
+                }
+
+                rr.add(trioTempTemp);
+
+                leftOver3.remove(leftOverName);
+
+                if(!addMap.containsValue(index) && (!leftOverName.equals(""))){
+                    addMap.put(leftOverName, index);
+
+                }
+            }
+
+
+            for(String name: addMap.keySet()){
+                int index2 = addMap.get(name);
+
+                if(trioGroup.size()>0){
+                    List<String> group2 = trioGroup.get(index2);
+
+                    if(group2.size()>2){
+                        group2.add(2, name);
+                    }else{
+                        group2.add(name);
+                    }
+
+                }
+            }
+
+
+            if(leftOver3.size()>0){
+                List<String> group = new ArrayList<>();
+                group.addAll(leftOver3);
+                if(group.size()<3){
+                    while(group.size()!=3){
+                        group.add("No other students");
+                    }
+                }
+
+                trioGroup.add(group);
+            }
+
+
+
+
+                return trioGroup;
+        }
+
+
+
+        return new ArrayList<>();
     }
+
+
+    private static  HashMap<List<String>, Integer> sortValues(Map<List<String>, Integer> map) {
+        List hashmapList = new LinkedList(map.entrySet());
+
+        Collections.sort(hashmapList, new Comparator() {
+            public int compare(Object o1, Object o2) {
+
+                return ((Comparable) ((Map.Entry) (o1)).getValue()).compareTo(((Map.Entry) (o2)).getValue());
+            }
+        }
+        );
+
+        HashMap<List<String>, Integer> sortedMap = new LinkedHashMap();
+        for (Iterator itr = hashmapList.iterator(); itr.hasNext(); ) {
+            Map.Entry entry = (Map.Entry) itr.next();
+
+            List<String> key = (List<String>) entry.getKey();
+            Integer value = (Integer) entry.getValue();
+
+            sortedMap.put(key, value);
+        }
+        return sortedMap;
+    }
+
 
 
 }
