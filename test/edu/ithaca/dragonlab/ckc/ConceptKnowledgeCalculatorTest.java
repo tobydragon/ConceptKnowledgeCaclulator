@@ -1098,7 +1098,6 @@ public class ConceptKnowledgeCalculatorTest {
 
             List<List<String>> grouping3 = ckc.graphSumGroupSuggestions(3, "all");
 
-
             Assert.assertEquals(grouping3.size(),2 );
             Assert.assertEquals(grouping3.get(0).size(), 3);
             Assert.assertEquals(grouping3.get(1).size(), 2);
@@ -1109,7 +1108,6 @@ public class ConceptKnowledgeCalculatorTest {
 
             Assert.assertEquals(grouping3.get(1).get(0), "s3");
             Assert.assertEquals(grouping3.get(1).get(1), "s2");
-
 
         }catch (IOException e){
             Assert.fail("unable to load files");
@@ -1127,8 +1125,8 @@ public class ConceptKnowledgeCalculatorTest {
             List<List<String>> groupings = ckc.conceptDiffGroupSuggestions(2, "all");
 
             Assert.assertEquals(groupings.size(),3 );
-            Assert.assertEquals(groupings.get(0).size(), 3);
-            Assert.assertEquals(groupings.get(1).size(), 3);
+            Assert.assertEquals(groupings.get(0).size(), 2);
+            Assert.assertEquals(groupings.get(1).size(), 2);
             Assert.assertEquals(groupings.get(2).size(), 1);
 
             Assert.assertEquals(groupings.get(0).get(0), "s4");

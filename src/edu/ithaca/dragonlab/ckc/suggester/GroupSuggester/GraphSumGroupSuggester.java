@@ -12,15 +12,15 @@ import java.util.*;
  */
 public class GraphSumGroupSuggester extends GroupSuggester{
 
-    /**
-     * creates a list of groups of 2 students with the closest knowledge sum to the furthest
-     * @param groupAmount the amount of full groups of 2 there should be
-     * @param maxDiffNum the max difference = the count of concept nodes
-     * @param knowledgeSums the map of each user and their concept graphs knowledge sum
-     * @return a list of list of students with the closest knowledge sum to the furthest
-     */
-    public List<List<String>> createGroupsOfTwo(int groupAmount, int maxDiffNum, Map<String, Double> knowledgeSums){
-       /*
+
+    public List<List<String>> suggestGroup(CohortConceptGraphs graphs, int choice, String subject) {
+        //the list of groups of least difference to the most difference
+
+
+        Map<String, ConceptGraph> getMaps = getUserMap(graphs);
+
+        Map<String, Double> knowledgeSums = new HashMap<>();
+           /*
         creates copy a map where the key is the student ID and the value is the sum of their knowledge estimates
 
         while the groupings list size is not equal to the full number of groups of 2 size
@@ -34,6 +34,17 @@ public class GraphSumGroupSuggester extends GroupSuggester{
          */
 
 
+        for (String name : getMaps.keySet()) {
+            ConceptGraph userGraph = getMaps.get(name);
+
+            double sum = calcSum(userGraph, subject);
+            knowledgeSums.put(name, sum);
+
+        }
+
+
+        //create groups with the most similar users
+        //groups will go from most similar to least similar
         List<List<String>> groupings = new ArrayList<>();
 
 
@@ -41,8 +52,10 @@ public class GraphSumGroupSuggester extends GroupSuggester{
         tempMap.putAll(knowledgeSums);
 
 
-        while (groupings.size() != groupAmount) {
-            double temp = maxDiffNum;
+        //this is for groups of 2
+
+        while (groupings.size() != getMaps.size() / 2) {
+            double temp = graphs.getAvgGraph().getAllNodeIds().size();
             String st1 = "";
             String st2 = "";
 
@@ -50,7 +63,6 @@ public class GraphSumGroupSuggester extends GroupSuggester{
 
             for (String name : tempMap.keySet()) {
                 double sum1 = tempMap.get(name);
-
 
                 for (String name2 : tempMap.keySet()) {
                     double sum2 = tempMap.get(name2);
@@ -86,7 +98,7 @@ public class GraphSumGroupSuggester extends GroupSuggester{
 
         }
 
-        if (tempMap.size() < 2 && tempMap.size() % 2 != 0) {
+        if (tempMap.size() < choice && tempMap.size() % choice != 0) {
             List<String> group = new ArrayList<>();
             group.addAll(tempMap.keySet());
 
@@ -94,21 +106,13 @@ public class GraphSumGroupSuggester extends GroupSuggester{
 
         }
 
-        return groupings;
+        if(choice==2){
+            return groupings;
+        }
 
-    }
+        if(choice==3){
 
-    /**
-     * creates a list groupings of 3 with the closest knowledge sum to the furthest
-     * @param groupings a list of ordered groups of 2
-     * @param maxDiffSize the maximum difference between two students = concept node count
-     * @param knowledgeSums the map of each student and their associated knowledge sum
-     * @param groupAmount the amount of full groups there can be
-     * @return a list of list with 3 student's names that go from min to max knowledge sum difference
-     */
-    public List<List<String>> createGroupsOfThree(List<List<String>> groupings, int maxDiffSize, Map<String, Double> knowledgeSums, int groupAmount){
-
-        /*
+            /*
         List of groups of 3 size =  studentListSize/3
         get the first studentListSize/3 of pairs of students because they are the pairs of students that have the closest knowledge sum estimates
         and there will be the closest rounded number of groups of 3
@@ -132,102 +136,98 @@ public class GraphSumGroupSuggester extends GroupSuggester{
         iterates through the rest of left over students, creates trio groups, and adds the group to the main grouping list trioGroups
          */
 
-        List<List<String>> trioGroup = new ArrayList<>();
+            int groupNum = getMaps.size()/choice;
 
-        for(int i =0; i< groupAmount; i++) {
-            List<String> group = groupings.get(0);
-            trioGroup.add(group);
-            groupings.remove(group);
-        }
+            List<List<String>> trioGroup = new ArrayList<>();
 
+            for(int i =0; i< groupNum; i++){
 
-        List<List<String>> trioTemp = new ArrayList<>();
-        trioTemp.addAll(trioGroup);
+                List<String> group = groupings.get(0);
 
+                trioGroup.add(group);
 
-        List<String> leftOver = new ArrayList<>();
-        for(List<String> list: groupings){
-            leftOver.addAll(list);
-        }
+                groupings.remove(group);
+
+            }
 
 
-        int x =0;
-        while(trioTemp.size() != 0){
-
-            double temp = maxDiffSize;
-            String leftOverName = "";
-            int groupingIndex = 0;
+            List<List<String>> trioTemp = new ArrayList<>();
+            trioTemp.addAll(trioGroup);
 
 
-            for(int i=0; i<trioTemp.size(); i++){
-                List<String> actualList = trioTemp.get(i);
 
-                double groupNameMapSize = knowledgeSums.get(actualList.get(0));
+            List<String> leftOver = new ArrayList<>();
+            for(List<String> list: groupings){
+                leftOver.addAll(list);
+            }
 
-                for(String name: leftOver) {
 
-                    double leftNamemapSize = knowledgeSums.get(name);
 
-                    if ((Math.abs(groupNameMapSize - leftNamemapSize)) < temp) {
-                        temp = (Math.abs(groupNameMapSize - leftNamemapSize));
 
-                        leftOverName = name;
-                        groupingIndex = x;
+            int x =0;
+            while(trioTemp.size() != 0){
+
+                double temp = graphs.getAvgGraph().getAllNodeIds().size();
+                String leftOverName = "";
+                int groupingIndex = 0;
+
+
+                for(int i=0; i<trioTemp.size(); i++){
+                    List<String> actualList = trioTemp.get(i);
+
+                    double groupNameMapSize = knowledgeSums.get(actualList.get(0));
+
+
+                    for(String name: leftOver) {
+
+                        double leftNamemapSize = knowledgeSums.get(name);
+
+                        if ((Math.abs(groupNameMapSize - leftNamemapSize)) < temp) {
+                            temp = (Math.abs(groupNameMapSize - leftNamemapSize));
+
+                            leftOverName = name;
+                            groupingIndex = x;
+
+
+                        }
                     }
                 }
+
+
+                if(!leftOverName.equals("")) {
+                    List<String> tempList = trioGroup.get(groupingIndex);
+                    tempList.add(leftOverName);
+                }
+
+                leftOver.remove(leftOverName);
+
+                if(groupingIndex < trioTemp.size()){
+                    trioTemp.remove(groupingIndex);
+
+                }
+
+                x++;
+
             }
 
 
-            if(!leftOverName.equals("")) {
-                List<String> tempList = trioGroup.get(groupingIndex);
-                tempList.add(leftOverName);
+            if(leftOver.size()!=0){
+                List<String> group = new ArrayList<>();
+                group.addAll(leftOver);
+                trioGroup.add(group);
             }
 
-            leftOver.remove(leftOverName);
 
-            if(groupingIndex < trioTemp.size()){
-                trioTemp.remove(groupingIndex);
-
-            }
-            x++;
+            return  trioGroup;
 
         }
 
 
-        if(leftOver.size()!=0){
-            List<String> group = new ArrayList<>();
-            group.addAll(leftOver);
-            trioGroup.add(group);
-        }
 
 
-        return  trioGroup;
+        return null;
     }
 
-
-    public List<List<String>> suggestGroup(CohortConceptGraphs graphs, int choice, String subject) {
-        Map<String, ConceptGraph> getMaps = getUserMap(graphs);
-
-        int maxDiffSize = graphs.getAvgGraph().getAllNodeIds().size();
-
-        Map<String, Double> knowledgeSums = new HashMap<>();
-
-        for (String name : getMaps.keySet()) {
-            ConceptGraph userGraph = getMaps.get(name);
-            double sum = calcSum(userGraph, subject);
-            knowledgeSums.put(name, sum);
-        }
-
-        List<List<String>> groupings = createGroupsOfTwo(getMaps.size()/choice, maxDiffSize, knowledgeSums);
-
-        if(choice==3){
-
-        return createGroupsOfThree(groupings, maxDiffSize, knowledgeSums, getMaps.size()/choice );
-
-        }
-
-        return groupings;
-    }
 
     /**
      * Calculates the sum of all of the student's knowledge estimates on the whole concept graph or a specific part of it
@@ -239,17 +239,27 @@ public class GraphSumGroupSuggester extends GroupSuggester{
 
         if(subject.equals("all")){
             double ex = 0;
+
             for(ConceptNode roots: s1.getRoots()){
                 double total = roots.countTotalKnowledgeEstimate(new ArrayList<>());
                 ex+= total;
+
             }
+
             return ex;
 
         }else{
+
             ConceptNode node = s1.findNodeById(subject);
+
+
             return node.countTotalKnowledgeEstimate(new ArrayList<>());
 
         }
+
+
+
+
     }
 
 
