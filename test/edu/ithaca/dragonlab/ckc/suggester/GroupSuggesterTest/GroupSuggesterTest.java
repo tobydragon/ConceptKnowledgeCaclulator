@@ -315,16 +315,16 @@ public class GroupSuggesterTest {
 
         ConceptGraph usergraph = graphs.getUserGraph("s5");
 
-        double sum = sug.getSum(usergraph, "Values and Data Types");
+        double sum = sug.calcSum(usergraph, "Values and Data Types");
         Assert.assertEquals(sum, 3.3575,  DataUtil.OK_FLOAT_MARGIN);
 
-        double sum2 = sug.getSum(usergraph, "all");
+        double sum2 = sug.calcSum(usergraph, "all");
         Assert.assertEquals(sum2, 12.87208,  DataUtil.OK_FLOAT_MARGIN);
 
 
 
         ConceptGraph usergraph2 = graphs.getUserGraph("s4");
-        double sum3 = sug.getSum(usergraph2, "all");
+        double sum3 = sug.calcSum(usergraph2, "all");
         Assert.assertEquals(sum3, 1.0,  DataUtil.OK_FLOAT_MARGIN);
 
 

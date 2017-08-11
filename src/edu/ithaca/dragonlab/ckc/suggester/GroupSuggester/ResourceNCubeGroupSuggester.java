@@ -97,6 +97,15 @@ public class ResourceNCubeGroupSuggester extends GroupSuggester {
 
     public void makeGroups(List<List<String>> num, List<String> userTemp, List<List<String>> groupings, int choice){
 
+        /*
+        go through the groupings,
+        see if the students in each possibly group has been already compared
+
+        if not, add to subgroup called groupRe, add subgroup to master list called groupings
+
+        remove the students from the copy of the userList
+
+         */
         for(List<String> possiblePairing: num) {
             boolean flag = false;
 
@@ -133,7 +142,6 @@ public class ResourceNCubeGroupSuggester extends GroupSuggester {
                 groupRe.addAll(possiblePairing);
                 groupings.add(groupRe);
 
-
                 userTemp.removeAll(groupRe);
 
             }
@@ -144,6 +152,22 @@ public class ResourceNCubeGroupSuggester extends GroupSuggester {
 
     @Override
     public List<List<String>> suggestGroup(CohortConceptGraphs graphs, int choice) {
+
+        /*
+        create map of student IDs and their suggestionResource called user suggestion map
+
+        create four lists of lists of strings
+
+        nest for loop where each loop goes through the user suggestion map
+        if the two users are not equal and have not been compared before then call getSimilarResourceLevel
+
+        a int will be returned that matched one of the four lists already created. Add to corresponding list
+
+
+        if groups of three,
+        triple nested loop
+
+         */
 
         Map <String, ConceptGraph> getMaps = getUserMap(graphs);
         Map<String, SuggestionResource> userSuggestionMap = new HashMap<>();
@@ -247,22 +271,10 @@ public class ResourceNCubeGroupSuggester extends GroupSuggester {
         }
 
 
+        /*
 
-
-//        System.out.println("one");
-//        System.out.println(one);
-//
-//        System.out.println("two");
-//        System.out.println(two);
-//
-//        System.out.println("three");
-//        System.out.println(three);
-//
-//        System.out.println("four");
-//        System.out.println(four);
-//
-//        System.out.println("\n");
-
+        in order, makeGroups is called on each of the four group List.
+         */
 
         List<String> userTemp = new ArrayList<>();
         userTemp.addAll(userSuggestionMap.keySet());
@@ -287,11 +299,31 @@ public class ResourceNCubeGroupSuggester extends GroupSuggester {
 
         }
 
-//        System.out.println("left over");
-//
-//        System.out.println(userTemp.size());
-//        System.out.println(choice);
+        /*
+        for the left over users
 
+                The number of student will evenly divide into the group size
+        while there are users unpaired
+         get the first users in the shuffled list, choice number of times
+        put the users in a sublist called group
+        remove users from copy of user list
+        put the group in the master list called groupings
+
+        or
+
+        there aren't as many students as there is the choice size
+        add them to the sublist, and add sublist to main list
+
+        or
+
+        if there are most students than choice size, but not all of them will fit evenly into a group (there will be a group that's not completly filled up)
+        the amount of full groups that can be created = userList.size/choice
+        create for loop with the amount of full groups
+        get the first users in the shuffled list, choice number of times
+        remove from copy of userlist
+        create subgroup, add the users, add subgroup to master list called groupings
+        for left over students in userList, add in subgroup, add subgroup to master list
+         */
         if(userTemp.size() % choice == 0 && userTemp.size() >= choice){
 
             int whileNum = userTemp.size();
@@ -325,11 +357,8 @@ public class ResourceNCubeGroupSuggester extends GroupSuggester {
 
 
         } else {
-            //user.size()%choice != 0 && user.size()>= choice
 
-            //there will be one group that doesn't have a full group
 
-            //while there are still pairings left to create
             for(int i = userTemp.size()/choice; i> 0 ; i--){
 
                 List<String> group = new ArrayList<>();

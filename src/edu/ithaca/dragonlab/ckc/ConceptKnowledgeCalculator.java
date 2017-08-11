@@ -461,15 +461,18 @@ public class ConceptKnowledgeCalculator implements ConceptKnowledgeCalculatorAPI
 
     @Override
     public List<List<String>> randomGroupSuggestions (int choice) throws Exception {
-        if(currentMode==Mode.COHORTGRAPH) {
-            GroupSuggester obj = new RandomGroupSuggester();
 
-            return obj.suggestGroup(cohortConceptGraphs, choice);
+            if (currentMode == Mode.COHORTGRAPH) {
 
-        }else {
-            throw new Exception("Wrong Mode");
+                GroupSuggester obj = new RandomGroupSuggester();
 
-        }
+                return obj.suggestGroup(cohortConceptGraphs, choice);
+
+            } else {
+                throw new Exception("Wrong Mode");
+
+            }
+
     }
 
 

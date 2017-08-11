@@ -318,7 +318,7 @@ public class ConsoleUI {
     public void createRandomGroupSuggestions(Scanner scanner){
         System.out.println("Get random group suggestions");
 
-        System.out.println("How many people do you want per group?");
+        System.out.println("What size groups do you want?");
         Integer choice = scanner.nextInt();
 
         try {
