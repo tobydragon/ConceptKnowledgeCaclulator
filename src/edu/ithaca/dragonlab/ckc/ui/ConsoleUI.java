@@ -252,9 +252,11 @@ public class ConsoleUI {
         try {
             List<List<String>> groupings = ckc.conceptDiffGroupSuggestions(choice, concept);
 
-            for(List<String> group: groupings){
+            for(List<String> group: groupings) {
                 System.out.println(group);
             }
+
+
         } catch (Exception e) {
             System.out.println("Wrong mode");
         }

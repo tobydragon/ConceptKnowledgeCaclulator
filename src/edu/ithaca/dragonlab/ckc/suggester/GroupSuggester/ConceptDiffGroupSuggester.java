@@ -42,11 +42,31 @@ public class ConceptDiffGroupSuggester extends GroupSuggester{
 
     }
 
+    /**
+     * Create a list of lists of two students. The list of pairs of students are ordered by the least Knowledge estimate difference to the greatest
+     * @param sortedUserPairMap a linked map where the key is a list with the pair of students and the value is their knowledge estimate difference
+     * @param userList a set of all the student IDs
+     * @return groupings. A list of list of students
+     */
+    public List<List<String>> createGroupsOfTwo(HashMap<List<String>, Double> sortedUserPairMap, Set<String> userList){
+        /*
+        iterate through the ordered user pair map will difference
+        beause the map is already ordered by the smallest difference num to the largest, you can go in order
+        get the pair
+        make sure that the pair has not already been calculated (and then add to the repeated list)
 
-    public List<List<String>> twoGroups(List<List<String>> groupings, HashMap<List<String>, Double> sortedUserMap, Map<String, ConceptGraph> getMaps, int choice){
+        create a sublist called group and add the pair of students
+        add the sublist to the main list called Groupings
+        because the map is already ordered, groupings will have pairs of students with the least knowledge estimate difference to the greatest
+
+
+        if there are left over students, add them to a sublist and add the sublist to groupings
+         */
+
+        List<List<String>> groupings = new ArrayList<>();
         List<String> repeatedNames = new ArrayList<>();
 
-        for(List<String> studentList: sortedUserMap.keySet()){
+        for(List<String> studentList: sortedUserPairMap.keySet()){
 
             String firstStudent = studentList.get(0);
             String secondStudent = studentList.get(1);
@@ -61,8 +81,6 @@ public class ConceptDiffGroupSuggester extends GroupSuggester{
                 group.add(firstStudent);
                 group.add(secondStudent);
 
-                String diff = new Double(sortedUserMap.get(studentList)).toString();
-                group.add(diff);
 
                 groupings.add(group);
             }
@@ -70,9 +88,9 @@ public class ConceptDiffGroupSuggester extends GroupSuggester{
 
         }
 
-        if(getMaps.size()%choice!=0){
+        if(userList.size()%2!=0){
             List<String> usersTemp = new ArrayList<>();
-            usersTemp.addAll(getMaps.keySet());
+            usersTemp.addAll(userList);
             usersTemp.removeAll(repeatedNames);
 
             List<String> group = new ArrayList<>();
@@ -88,19 +106,35 @@ public class ConceptDiffGroupSuggester extends GroupSuggester{
     }
 
 
-    public List<List< String>> threeGroups (List<List<String>> groupings, Map<String, ConceptGraph> getMaps, int choice, String subject, CohortConceptGraphs graphs){
-        //to remove the difference number that was added
-        for(List<String> group : groupings){
-            if(group.size()>2){
-                group.remove(group.size()-1);
-
-            }
-        }
-
+    /**
+     * Creates a list of groups of 3 based on the closest knowledge estimate difference to the furthest
+     * @param groupings list of groups of 2
+     * @param getMaps a map with all of the students and their associated concept graphs
+     * @param subject if difference calculation on the student's entire concept graphs or a part of it
+     * @param maxDifference the max difference between two concept graphs is a count of all of the concept nodes
+     * @return a list of groups of 3 that are ordered by the cloest knowledge estimates to the furthest
+     */
+    public List<List< String>> createGroupsOfThree (List<List<String>> groupings, Map<String, ConceptGraph> getMaps, String subject, int maxDifference){
         List<List<String>> trioGroup = new ArrayList<>();
 
-        for(int i =0; i< (getMaps.size()/choice); i++){
+        /*
+        List of groups of 3 size =  studentListSize/3
+        get the first studentListSize/3 of pairs of students because they are the pairs of students that have the closest knowledge estimates
+        and there will be the closest rounded number of groups for groups of 3
 
+        The rest of pairs of students will be added to a list of students called LeftOver
+
+        Iterate through the list of left over students and then through each of the pairs of students
+        For each of the iterations of the pairs of students, get the first student in the pair and find it's knowledge estimate difference
+        Save the index of the pair of students with the lowest knowledge estimate difference and which leftOver student it's currently on in the thirdStudentMap
+        Removes the currently leftOver student from the leftOver student list
+
+        iterates through the map, get's the group at the index in triogroup and adds the new group member to it and removes it from
+
+        iterates through the rest of left over students, creates trio groups, and adds the group to the main grouping list trioGroups
+         */
+
+        for(int i =0; i< (getMaps.size()/3); i++){
             List<String> group = groupings.get(0);
             trioGroup.add(group);
             groupings.remove(group);
@@ -109,23 +143,23 @@ public class ConceptDiffGroupSuggester extends GroupSuggester{
 
         List<String> leftOver = new ArrayList<>();
         for(List<String> list: groupings){
-
             leftOver.addAll(list);
         }
 
-        List<String> leftOver3 = new ArrayList<>();
-        leftOver3.addAll(leftOver);
+        List<String> leftOverTemp = new ArrayList<>();
+        leftOverTemp.addAll(leftOver);
 
-        HashMap<String , Integer> addMap = new HashMap<>();
 
-        List<String > rr = new ArrayList<>();
+        HashMap<String , Integer> thirdStudentMap = new HashMap<>();
+        List<String > repeatGroup = new ArrayList<>();
+
         for(String list: leftOver){
 
             String leftOverName = "";
             String trioTempTemp = "";
             int index =0;
 
-            double temp = graphs.getAvgGraph().getAllNodeIds().size();
+            double temp = maxDifference;
 
             for(int i=0; i< trioGroup.size(); i++){
                 List<String> actualList = trioGroup.get(i);
@@ -135,10 +169,11 @@ public class ConceptDiffGroupSuggester extends GroupSuggester{
 
                     ConceptGraph map1 = getMaps.get(list);
                     ConceptGraph map2 = getMaps.get(name);
+                    double differnce = calcDiff(map1, map2, subject);
 
-                    if (calcDiff(map1, map2, subject) < temp && (!rr.contains(name))) {
+                    if (differnce < temp && (!repeatGroup.contains(name))) {
 
-                        temp = calcDiff(map1, map2, subject);
+                        temp = differnce;
                         leftOverName = list;
                         trioTempTemp = name;
                         index = i;
@@ -147,19 +182,19 @@ public class ConceptDiffGroupSuggester extends GroupSuggester{
                 }
             }
 
-            rr.add(trioTempTemp);
-            leftOver3.remove(leftOverName);
+            repeatGroup.add(trioTempTemp);
+            leftOverTemp.remove(leftOverName);
 
-
-            if(!addMap.containsValue(index)){
-                addMap.put(leftOverName, index);
+            if(!thirdStudentMap.containsValue(index) && !leftOverName.equals("")){
+                thirdStudentMap.put(leftOverName, index);
 
             }
         }
 
 
-        for(String name: addMap.keySet()){
-            int num = addMap.get(name);
+        //get's the group at the index in triogroup and adds the new group memeber to it
+        for(String name: thirdStudentMap.keySet()){
+            int num = thirdStudentMap.get(name);
 
             if(trioGroup.size()>0){
                 List<String> group2 = trioGroup.get(num);
@@ -169,9 +204,9 @@ public class ConceptDiffGroupSuggester extends GroupSuggester{
         }
 
 
-        if(leftOver3.size()>0){
+        if(leftOverTemp.size()>0){
             List<String> group = new ArrayList<>();
-            group.addAll(leftOver3);
+            group.addAll(leftOverTemp);
             trioGroup.add(group);
         }
 
@@ -183,20 +218,27 @@ public class ConceptDiffGroupSuggester extends GroupSuggester{
 
         Map<String, ConceptGraph> getMaps = getUserMap(graphs);
         Map<List<String>, Double> differenceMap = createDiffMap(getMaps, subject);
-        HashMap<List<String>, Double> sortedUserMap = sortByValues(differenceMap);
+        HashMap<List<String>, Double> sortedUserPairMap = sortByValues(differenceMap);
 
-        List<List<String>> groupings = twoGroups(new ArrayList<>(),sortedUserMap, getMaps, choice);
+        //sorted user pair map is a map sorted by the difference values
+        List<List<String>> groupings = createGroupsOfTwo(sortedUserPairMap, getMaps.keySet());
+
 
         if (choice==3) {
 
-             return threeGroups (groupings, getMaps, choice, subject, graphs);
+            return createGroupsOfThree (groupings, getMaps, subject, graphs.getAvgGraph().getAllNodeIds().size());
+
         }
 
         return groupings;
     }
 
 
-
+    /**
+     * Creates a linked hashmap of ordered pairs of students based on the lowest to highest knowledge estimate difference (value)
+     * @param map map of each of the pairs and their knowledge estimate difference
+     * @return linked Hash map
+     */
     private static  HashMap<List<String>, Double> sortByValues(Map<List<String>, Double> map) {
         List hashmapList = new LinkedList(map.entrySet());
 
@@ -224,9 +266,13 @@ public class ConceptDiffGroupSuggester extends GroupSuggester{
     }
 
 
-
-
-
+    /**
+     * Calculates the difference between the knowledge estimates of two students' graphs
+     * @param graph1 student one's graph
+     * @param graph2 student two's graph
+     * @param subject if the calculation should be on the entirety of the student's graphs (all) or if it should start on a specific concept node (concept node ID)
+     * @return
+     */
     public double calcDiff(ConceptGraph graph1 , ConceptGraph graph2 ,String subject) {
 
         if (subject.equals("all")) {

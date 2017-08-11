@@ -131,12 +131,12 @@ public class ConceptNode {
 	}
 
 
-	public double countTotalKnowledgeEstimate( List<String> allNode) {
-        if (allNode.contains(this.getID())) {
+	public double countTotalKnowledgeEstimate( List<String> viewedNodes) {
+        if (viewedNodes.contains(this.getID())) {
             return 0;
         } else {
 
-            allNode.add(this.getID());
+            viewedNodes.add(this.getID());
 
             if (this.children.size() == 0) {
                 return (this.getKnowledgeEstimate());
@@ -145,7 +145,7 @@ public class ConceptNode {
                 double sum = 0;
 
                 for (ConceptNode child : this.children) {
-                    sum += child.countTotalKnowledgeEstimate(allNode);
+                    sum += child.countTotalKnowledgeEstimate(viewedNodes);
                 }
 
             return (this.getKnowledgeEstimate() + sum);

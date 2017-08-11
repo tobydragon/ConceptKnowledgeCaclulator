@@ -62,8 +62,7 @@ public class RandomGroupSuggester extends GroupSuggester{
                 List<String> group = new ArrayList<>();
                 Collections.shuffle(userListCopy);
 
-                int choices =0;
-                choices = choice;
+                int choices = choice;
                 while (choices>0){
                     group.add(userListCopy.get(choices-1));
                     userListCopy.remove(userListCopy.get(choices-1));

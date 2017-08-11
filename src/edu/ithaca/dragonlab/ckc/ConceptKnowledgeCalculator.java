@@ -485,9 +485,8 @@ public class ConceptKnowledgeCalculator implements ConceptKnowledgeCalculatorAPI
                 if (currentMode == Mode.COHORTGRAPH) {
                     ConceptDiffGroupSuggester sug = new ConceptDiffGroupSuggester();
 
-                    List<List<String>> groupings = sug.suggestGroup(cohortConceptGraphs, choice, subject);
+                    return sug.suggestGroup(cohortConceptGraphs, choice, subject);
 
-                    return groupings;
                 } else {
                     throw new Exception("Wrong Mode");
 
