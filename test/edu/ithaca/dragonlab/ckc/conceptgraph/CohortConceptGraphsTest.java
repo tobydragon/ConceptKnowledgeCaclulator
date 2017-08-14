@@ -3,6 +3,8 @@ package edu.ithaca.dragonlab.ckc.conceptgraph;
 import edu.ithaca.dragonlab.ckc.io.*;
 import edu.ithaca.dragonlab.ckc.learningobject.ExampleLearningObjectLinkRecordFactory;
 import edu.ithaca.dragonlab.ckc.learningobject.ExampleLearningObjectResponseFactory;
+import edu.ithaca.dragonlab.ckc.learningobject.LearningObject;
+import edu.ithaca.dragonlab.ckc.learningobject.LearningObjectResponse;
 import edu.ithaca.dragonlab.ckc.util.DataUtil;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -11,6 +13,7 @@ import org.junit.Test;
 
 import java.io.IOException;
 import java.util.Collection;
+import java.util.Map;
 
 public class CohortConceptGraphsTest {
 
@@ -38,6 +41,23 @@ public class CohortConceptGraphsTest {
 
         Assert.assertEquals(1,group.getUserGraph("student1").getLearningObjectMap().get("Q1").getResponses().size());
         Assert.assertEquals(0,group.getUserGraph("student3").getLearningObjectMap().get("Q5").getResponses().size());
+    }
+
+    //particular attention to what is copied in LearningObjects
+    @Test
+    public void testCreation(){
+        ConceptGraph graph = ExampleConceptGraphFactory.makeSimpleCompleteWithData();
+        CohortConceptGraphs group = new CohortConceptGraphs(graph, ExampleLearningObjectResponseFactory.makeSimpleResponses());
+
+        //test that learningObjectResponses don't get mixed between users
+        for (Map.Entry<String, ConceptGraph> entry : group.getUserToGraph().entrySet()){
+            for (LearningObject learningObject: entry.getValue().getLearningObjectMap().values()){
+                for (LearningObjectResponse response : learningObject.getResponses()){
+                    Assert.assertEquals(entry.getKey(), response.getUserId());
+                }
+            }
+        }
+
     }
 
     @Test

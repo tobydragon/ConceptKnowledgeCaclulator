@@ -21,11 +21,6 @@ public class CohortConceptGraphs {
 	public CohortConceptGraphs(ConceptGraph structureGraph, List<LearningObjectResponse> summaries){
 
 		averageGraph = new ConceptGraph(structureGraph, "Average Graph");
-		averageGraph.addLearningObjectResponses(summaries);
-
-		averageGraph.calcKnowledgeEstimates();
-
-
 //		averageGraph.calcPredictedScores();
 
 		Map<String, List<LearningObjectResponse>> userIdToResponses = LearningObjectResponse.getUserResponseMap(summaries);
@@ -39,6 +34,11 @@ public class CohortConceptGraphs {
 			structureCopy.calcPredictedScores();
 			userToGraph.put(user, structureCopy);
 		}
+
+		//Add data to average Graph after all other graphs have been created.
+		averageGraph.addLearningObjectResponses(summaries);
+		averageGraph.calcKnowledgeEstimates();
+
 		calcDistanceFromAvg();
 
 	}
