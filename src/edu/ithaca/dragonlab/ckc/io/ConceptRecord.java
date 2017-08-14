@@ -1,7 +1,11 @@
 package edu.ithaca.dragonlab.ckc.io;
 
 import edu.ithaca.dragonlab.ckc.conceptgraph.ConceptNode;
+import edu.ithaca.dragonlab.ckc.learningobject.LearningObject;
 import edu.ithaca.dragonlab.ckc.util.DataUtil;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * @author tdragon
@@ -17,14 +21,10 @@ public class ConceptRecord {
     private double knowledgeDistFromAvg;
     private double dataImportance;
 
-    public ConceptRecord() {
-        this.id = null;
-        this.label = null;
-        this.knowledgeEstimate = 0;
-        this.knowledgePrediction = 0;
-        this.knowledgeDistFromAvg = 0;
-        this.dataImportance = 0;
+    private List<String> resourceSummaries;
 
+    public ConceptRecord() {
+        this("");
     }
 
     public ConceptRecord(ConceptNode conceptToRecord, String newId) {
@@ -34,6 +34,10 @@ public class ConceptRecord {
         this.knowledgePrediction = 0;
         this.knowledgeDistFromAvg = conceptToRecord.getKnowledgeDistanceFromAvg();
         this.dataImportance = conceptToRecord.getDataImportance();
+        resourceSummaries = new ArrayList<>();
+        for (LearningObject objectToSummarize : conceptToRecord.getLearningObjectMap().values()){
+            resourceSummaries.add(objectToSummarize.getSummaryString());
+        }
     }
 
     public ConceptRecord(ConceptNode conceptToRecord) {
@@ -47,6 +51,7 @@ public class ConceptRecord {
         this.knowledgePrediction = 0;
         this.knowledgeDistFromAvg = 0;
         this.dataImportance = 0;
+        resourceSummaries = new ArrayList<>();
     }
 
     public String getId() {
@@ -114,6 +119,10 @@ public class ConceptRecord {
     }
 
     public String toString(){
-        return "ID: "+ getId() + "  Label: " + getLabel() + "  Est.: " + getKnowledgeEstimate();
+        return "ID: "+ getId() + "  Label: " + getLabel() + "  Est.: " + DataUtil.format(getKnowledgeEstimate());
+    }
+
+    public List<String> getResourceSummaries() {
+        return resourceSummaries;
     }
 }

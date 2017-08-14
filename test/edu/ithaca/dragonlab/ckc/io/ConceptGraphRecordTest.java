@@ -1,5 +1,8 @@
 package edu.ithaca.dragonlab.ckc.io;
 
+import edu.ithaca.dragonlab.ckc.conceptgraph.ConceptGraph;
+import edu.ithaca.dragonlab.ckc.conceptgraph.ConceptNode;
+import edu.ithaca.dragonlab.ckc.conceptgraph.ExampleConceptGraphFactory;
 import edu.ithaca.dragonlab.ckc.conceptgraph.ExampleConceptGraphRecordFactory;
 import org.junit.Assert;
 import org.junit.Test;
@@ -35,6 +38,17 @@ public class ConceptGraphRecordTest {
         }
         catch(Exception e){
             e.printStackTrace();
+        }
+    }
+
+    @Test
+    public void buildFromGraphWResourcesTest(){
+        ConceptGraph graph = ExampleConceptGraphFactory.makeSimpleCompleteWithData();
+        ConceptGraphRecord graphRecord = graph.buildConceptGraphRecord();
+        //Test for resources
+        for (ConceptRecord conceptRecord: graphRecord.getConcepts()){
+            ConceptNode node = graph.findNodeById(conceptRecord.getId());
+            Assert.assertEquals(node.getLearningObjectMap().size(), conceptRecord.getResourceSummaries().size());
         }
     }
 
