@@ -3,16 +3,14 @@ package edu.ithaca.dragonlab.ckc.conceptgraph;
 import edu.ithaca.dragonlab.ckc.io.*;
 import edu.ithaca.dragonlab.ckc.learningobject.LearningObject;
 import edu.ithaca.dragonlab.ckc.learningobject.LearningObjectResponse;
-import edu.ithaca.dragonlab.ckc.suggester.LearningObjectSuggester;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.junit.Assert;
 
 import java.util.*;
 import java.util.List;
 
 
-public class ConceptGraph {
+public class  ConceptGraph {
     private static final Logger logger = LogManager.getLogger(ConceptGraph.class);
     public static final Integer DIVISION_FACTOR = 2;
 
@@ -211,8 +209,35 @@ public class ConceptGraph {
             suggestedList.removeAll(ancesList);
             suggestedList.add(node);
         }
+
+
     }
 
+
+    public HashMap<String, Integer> buildDirectConceptLinkCount(){
+        HashMap<String, Integer> directConceptLinkCountMap = new HashMap<>();
+
+                //resources , concept links
+
+        ////These same LearningObjects might also be held by other nodes
+        for (ConceptNode node: nodeMap.values()){
+
+
+            for (LearningObject lo : node.learningObjectMap.values()){
+
+                if(directConceptLinkCountMap.containsKey(lo.getId())){
+                    directConceptLinkCountMap.put(lo.getId(),directConceptLinkCountMap.get(lo.getId())+1);
+
+                }else{
+                    directConceptLinkCountMap.put(lo.getId(), 1);
+                }
+
+            }
+
+        }
+
+        return directConceptLinkCountMap;
+    }
 
     /**
     *Finds where to start building the summaryList via the parameter and creates a empty hashmap to pass with it to buildLearningObjectSummaryList
@@ -225,7 +250,8 @@ public class ConceptGraph {
 		if (findNode != null) {
 			HashMap<String, Integer> learningObjectSummary = new HashMap<>();
 			findNode.buildLearningObjectSummaryList(learningObjectSummary);
-			return learningObjectSummary;
+
+            return learningObjectSummary;
 		}else{
 			logger.warn("Building learningObjectSummaryList:" + node + " is not found in the graph");
 			return null;
@@ -277,14 +303,11 @@ public class ConceptGraph {
 	public Collection<String> getAllNodeIds(){
 		return nodeMap.keySet();
 	}
-
     public Map<String, LearningObject> getLearningObjectMap() {
 	    return learningObjectMap;
     }
 
-    public List<ConceptNode> getRoots() {
-        return roots;
-    }
+    public List<ConceptNode> getRoots() {return roots;}
 
     public String getName(){
 	    return name;
@@ -329,4 +352,7 @@ public class ConceptGraph {
         }
 
     }
+
+
+
 }

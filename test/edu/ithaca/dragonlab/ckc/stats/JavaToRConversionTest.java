@@ -9,6 +9,7 @@ import org.junit.Assert;
 import org.junit.Test;
 import stats.JavaToRConversion;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -26,30 +27,50 @@ public class JavaToRConversionTest {
 
 
         String file = "test/testresources/ManuallyCreated/partialComplexRealitsticAssessment.csv";
-        CSVReader data = new CSVReader(file);
-        List<LearningObject> gotoMatrix = data.getManualGradedLearningObjects();
-        KnowledgeEstimateMatrix newMatrix = new KnowledgeEstimateMatrix(gotoMatrix);
-        double[][] struct = newMatrix.getStudentKnowledgeEstimates();
-        List<LearningObject> objList = newMatrix.getObjList();
-        List<String> user = newMatrix.getUserIdList();
-        RCode mycode = JavaToRConversion.JavaToR(struct);
-        mycode.addRCode("classAvg <- mean(matrix[, 3])");
+        try {
+            CSVReader data = new CSVReader(file);
+            List<LearningObject> gotoMatrix = data.getManualGradedLearningObjects();
+            KnowledgeEstimateMatrix newMatrix = new KnowledgeEstimateMatrix(gotoMatrix);
+            double[][] struct = newMatrix.getStudentKnowledgeEstimates();
+            List<LearningObject> objList = newMatrix.getObjList();
+            List<String> user = newMatrix.getUserIdList();
+
+            int objLength = objList.size();
+
+            //object list into string array
+
+            int i = 0;
+            String[] objStr = new String[objLength];
+            for(LearningObject obj: objList){
+                objStr[i] = obj.getId();
+                i++;
+            }
+            try {
+                RCode mycode = JavaToRConversion.JavaToR(struct, objStr);
+
+                mycode.addRCode("classAvg <- mean(matrix[, 3])");
 
 
-        RCaller rCaller;
-        if(Globals.isWindows() == false) {
-            RCallerOptions options = RCallerOptions.create("/usr/local/Cellar/r/3.4.0_1/bin/Rscript", Globals.R_current, FailurePolicy.RETRY_5, Long.MAX_VALUE, 100, RProcessStartUpOptions.create());
-            rCaller = RCaller.create(options);
-        }else {
-            rCaller  = RCaller.create();
+                RCaller rCaller;
+                if (Globals.isWindows() == false) {
+                    RCallerOptions options = RCallerOptions.create("/usr/local/Cellar/r/3.4.0_1/bin/Rscript", Globals.R_current, FailurePolicy.RETRY_5, Long.MAX_VALUE, 100, RProcessStartUpOptions.create());
+                    rCaller = RCaller.create(options);
+                } else {
+                    rCaller = RCaller.create();
+                }
+
+                rCaller.setRCode(mycode);
+                rCaller.runAndReturnResult("classAvg");
+                double[] results = rCaller.getParser().getAsDoubleArray("classAvg");
+                double actual = results[0];
+                Assert.assertEquals(0.88166, actual, 0.001);
+
+            }catch (Exception e){
+                System.out.println("R not installed");
+            }
+        }catch (IOException e){
+            Assert.fail();
         }
-
-        rCaller.setRCode(mycode);
-        rCaller.runAndReturnResult("classAvg");
-        double[] results = rCaller.getParser().getAsDoubleArray("classAvg");
-        double actual = results[0];
-        Assert.assertEquals(0.88166, actual, 0.001);
-
     }
 
 

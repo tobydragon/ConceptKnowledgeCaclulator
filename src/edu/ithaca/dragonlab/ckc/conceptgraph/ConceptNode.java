@@ -97,6 +97,66 @@ public class ConceptNode {
 
 	}
 
+	public double calcDiff( List<String> allNode, ConceptGraph graph2) {
+        ConceptNode node2 = graph2.findNodeById(this.getID());
+
+
+        if (allNode.contains(this.getID())) {
+
+
+            return 0;
+
+
+		} else {
+
+
+            allNode.add(this.getID());
+
+			if (this.children.size() == 0) {
+
+                return (Math.abs(this.getKnowledgeEstimate()- node2.getKnowledgeEstimate()));
+
+			} else {
+				double sum = 0;
+
+				for (ConceptNode child : this.children) {
+					sum += child.calcDiff(allNode, graph2);
+				}
+
+                return (Math.abs(this.getKnowledgeEstimate()- node2.getKnowledgeEstimate())+ sum);
+			}
+
+		}
+
+	}
+
+
+	public double countTotalKnowledgeEstimate( List<String> viewedNodes) {
+        if (viewedNodes.contains(this.getID())) {
+            return 0;
+        } else {
+
+            viewedNodes.add(this.getID());
+
+            if (this.children.size() == 0) {
+                return (this.getKnowledgeEstimate());
+
+            } else {
+                double sum = 0;
+
+                for (ConceptNode child : this.children) {
+                    sum += child.countTotalKnowledgeEstimate(viewedNodes);
+                }
+
+            return (this.getKnowledgeEstimate() + sum);
+            }
+
+        }
+
+    }
+
+
+
 	/**
      *fills up a hashmap with the LearningObjects IDs and the amount of ways to get to the learning object from the root (which is how importance is measured)
      *@param learningObjectSummary map>
@@ -114,10 +174,9 @@ public class ConceptNode {
                 learningObjectSummary.put(label.getId() ,learningObjectSummary.get(label.getId())+1);
 
 			}else{
-                learningObjectSummary.put(label.getId() ,1);
+                learningObjectSummary.put(label.getId(), 1);
 
 			}
-
 		}
 		//go to each of the children and call on child so that the child node's learning objects will be added.
 		for(ConceptNode child: children){
@@ -279,6 +338,8 @@ public class ConceptNode {
 	public String toString(){
 		return toString("\n");
 	}
+
+
 }
 
 	

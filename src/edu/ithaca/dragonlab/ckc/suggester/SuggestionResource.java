@@ -17,9 +17,7 @@ public class SuggestionResource {
 
 
     public SuggestionResource(ConceptGraph graph, List<ConceptNode> concepts){
-        this.incompleteList= new ArrayList<LearningObjectSuggestion>();
-        this.wrongList= new ArrayList<LearningObjectSuggestion>();
-        this.suggestionMap=new HashMap<>();
+        this();
         completeList(graph, 0, concepts );
         completeList(graph,1, concepts);
     }
@@ -86,6 +84,7 @@ public class SuggestionResource {
      *@param choice  0= wrong list, 1= incomplete list
      */
     public void completeList(ConceptGraph graph, int choice, List<ConceptNode> concepts) {
+
         if (choice == 1) {
 //            incomplete
             suggestionMap = LearningObjectSuggester.buildSuggestionMap(concepts, 1,graph);
@@ -93,7 +92,6 @@ public class SuggestionResource {
 //            //wrong
             suggestionMap = LearningObjectSuggester.buildSuggestionMap(concepts,0,graph);
         }
-
 
         int max = 0;
         for (List<LearningObjectSuggestion> lists : suggestionMap.values()) {
@@ -121,8 +119,11 @@ public class SuggestionResource {
         }
     }
 
-
-
+    /**
+     * this goes through the list and finds repeats of resource id's and creates a list that only has one occurence of each resources and all of there related concepts.
+     * @param choice
+     * @return
+     */
     public String toString(int choice){
         List<LearningObjectSuggestion> list;
         if (choice==0){
@@ -130,11 +131,54 @@ public class SuggestionResource {
         }else{
             list = wrongList;
         }
+        //finds out which resources have repeated concepts
+        //Hashmap<learning suggestion resource, concept>
+        HashMap<String, String> repeatList = new HashMap<>();
+
+        for (LearningObjectSuggestion los: list){
+            if(repeatList.keySet().contains(los.getId())){
+                String name = repeatList.get(los.getId());
+                repeatList.put(los.getId(), name += " & " +los.getReasoning());
+
+            }else{
+                repeatList.put(los.getId(), los.getReasoning());
+            }
+        }
+
+
+        //So repeated resources don't get added to the string multiple times
+        List<String>  list2 = new ArrayList<>();
         String st = "";
         for (LearningObjectSuggestion los: list){
-            st += los.toString();
+            if(list2.contains(los.getId())){
+
+            }else{
+                list2.add(los.getId());
+
+                if(repeatList.keySet().contains(los.getId())){
+                    st+= "Resource: " + los.getId()+ "\t Concepts it relates to: " + repeatList.get(los.getId())+ "\t Importance: "+ los.getPathNum() + "\t Direct Concept Links: " + los.getDirectConceptLinkCount() +"\n";
+                }else{
+                    st += los.toString();
+
+                }
+            }
         }
+
         return st;
     }
 
+//    public String toString(int choice){
+//        List<LearningObjectSuggestion> list;
+//        if (choice==0){
+//            list = incompleteList;
+//        }else{
+//            list = wrongList;
+//        }
+//
+//        String st = "";
+//        for (LearningObjectSuggestion los: list){
+//                st += los.toString();
+//        }
+//        return st;
+//    }
 }

@@ -29,30 +29,8 @@ public class ExampleConceptGraphFactory {
                 ExampleLearningObjectResponseFactory.makeSimpleResponses());
     }
 
-//TODO: make work with new concept graph
-//    public static ConceptGraph makeSimpleWithEstimates(){
-//        List<ConceptNode> cnList = new ArrayList<>();
-//        List<LinkRecord> clList = new ArrayList<>();
-//
-//        cnList.add(new ConceptNode("A"));
-//        ConceptNode node = cnList.get(0);
-//        node.setKnowledgeEstimate(0.5);
-//
-//        cnList.add(new ConceptNode("B"));
-//        ConceptNode node2 = cnList.get(1);
-//        node2.setKnowledgeEstimate(-0.5);
-//        cnList.add(new ConceptNode("C"));
-//        ConceptNode node3 = cnList.get(2);
-//        node3.setKnowledgeEstimate(-0.7);
-//
-//        clList.add(new LinkRecord("A","B")); //A -> B
-//        clList.add(new LinkRecord("A","C")); //A -> C
-//        clList.add(new LinkRecord("B","C")); //B -> C
-//
-//        ConceptGraphRecord inputNodesAndLinks = new ConceptGraphRecord(cnList,clList);
-//        return new ConceptGraph(inputNodesAndLinks);
-//
-//    }
+
+
 
     public static ConceptGraph makeMedium(){
         return new ConceptGraph(ExampleConceptGraphRecordFactory.makeMedium());
@@ -123,8 +101,8 @@ public class ExampleConceptGraphFactory {
 
 
      public static ConceptGraph willExampleConceptGraphTestOneStudent() {
+        try{
         CSVReader csvReader = new CSVReader("test/testresources/ManuallyCreated/basicRealisticAssessment.csv");
-        try {
             ConceptGraphRecord graphRecord = ConceptGraphRecord.buildFromJson("test/testresources/ManuallyCreated/basicRealisticConceptGraph.json");
             List<LearningObjectLinkRecord> LOLRlist = LearningObjectLinkRecord.buildListFromJson("test/testresources/ManuallyCreated/basicRealisticResource.json");
 
@@ -146,9 +124,8 @@ public class ExampleConceptGraphFactory {
         ObjectMapper graphMapper = new ObjectMapper();
 
         graphMapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
+        try{
         CSVReader csvReader = new CSVReader("test/testresources/ManuallyCreated/simpleAssessment.csv");
-
-        try {
             ConceptGraphRecord graphRecord = ConceptGraphRecord.buildFromJson("test/testresources/ManuallyCreated/simpleConceptGraph.json");
             List<LearningObjectLinkRecord> LOLRlist = LearningObjectLinkRecord.buildListFromJson("test/testresources/ManuallyCreated/simpleResource.json");
              ConceptGraph graph = new ConceptGraph(graphRecord, LOLRlist, csvReader.getManualGradedResponses());

@@ -52,7 +52,7 @@ public class LearningObjectLinkRecordTest {
 
         ObjectMapper mapper = new ObjectMapper();
         try {
-            mapper.writeValue(new File("test/testresources/io/recordToJson.json"), loObject);
+            mapper.writeValue(new File("test/testresources/practicalExamples/SystemCreated/recordToJson.json"), loObject);
         }catch (Exception e){
             e.printStackTrace();
         }
@@ -61,7 +61,7 @@ public class LearningObjectLinkRecordTest {
         mapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
 
         try {
-            LearningObjectLinkRecord  record = mapper.readValue(new File("test/testresources/io/recordToJson.json"), LearningObjectLinkRecord.class);
+            LearningObjectLinkRecord  record = mapper.readValue(new File("test/testresources/practicalExamples/SystemCreated/recordToJson.json"), LearningObjectLinkRecord.class);
 
             Assert.assertEquals("id 1", record.getLearningObject());
             Assert.assertEquals(2, record.getConceptIds().size());
@@ -97,20 +97,25 @@ public class LearningObjectLinkRecordTest {
 
     @Test
     public void createLearningObjectLinkRecordsTest(){
-        CSVReader test = new CSVReader("test/testresources/ManuallyCreated/complexRealisticAssessment.csv");
-        Collection<LearningObject> list = test.getManualGradedLearningObjects();
-        List<LearningObject> list2 = test.getManualGradedLearningObjects();
-        List<LearningObjectLinkRecord> lolrList = LearningObjectLinkRecord.createLearningObjectLinkRecords(list, 1);
-        List<String> resultString = new ArrayList<String>();
-        for(LearningObjectLinkRecord lolr: lolrList){
-            resultString.add(lolr.getLearningObject());
-        }
+        try {
+            CSVReader test = new CSVReader("test/testresources/ManuallyCreated/complexRealisticAssessment.csv");
+            Collection<LearningObject> list = test.getManualGradedLearningObjects();
+            List<LearningObject> list2 = test.getManualGradedLearningObjects();
+            List<LearningObjectLinkRecord> lolrList = LearningObjectLinkRecord.createLearningObjectLinkRecords(list, 1);
+            List<String> resultString = new ArrayList<String>();
+            for (LearningObjectLinkRecord lolr : lolrList) {
+                resultString.add(lolr.getLearningObject());
+            }
 
-        List<String> list2string = new ArrayList<String>();
-        for(LearningObject lo: list2){
-            list2string.add(lo.getId());
+            List<String> list2string = new ArrayList<String>();
+            for (LearningObject lo : list2) {
+                list2string.add(lo.getId());
+            }
+            Assert.assertEquals(list2string.toString(), resultString.toString());
+        }catch (IOException e){
+            e.printStackTrace();
+            Assert.fail();
         }
-        Assert.assertEquals(list2string.toString(), resultString.toString());
     }
 
 

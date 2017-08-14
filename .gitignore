@@ -63,6 +63,7 @@ fabric.properties
 .idea/inspectionProfiles/
 
 # these are testing files that are created through runing the tests
-/test/testresources/io/
 /test/testresources/practicalExamples/SystemCreated/
+
+
 /out/resourcesWithoutConceptConnections.json

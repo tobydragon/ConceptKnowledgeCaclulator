@@ -27,7 +27,7 @@ public class CSVReader {
      * (See DataCSVExample.csv in test/testresources/io for proper file format example)
      * @param filename
      */
-    public CSVReader(String filename){
+    public CSVReader(String filename)throws IOException{
         this.filename = filename;
         manualGradedResponseList = new ArrayList<>();
         learningObjectList = new ArrayList<>();
@@ -53,17 +53,16 @@ public class CSVReader {
                     this.learningObjectList = learningObjectsFromList(singleList);
                 } else {
                     try {
-                        lorLister(singleList, i);
                         //goes through and adds all the questions to their proper learning object, as well as adds them to
                         //the general list of manual graded responses
-
+                        lorLister(singleList, i);
                     }catch (NullPointerException e) {
-                        System.out.println("No Responses added to LearningObject");
+                        System.out.println("No Responses added to one or more LearningObjects");
                     }
                 }
             }
         } catch (IOException e) {
-            e.printStackTrace();
+//            e.printStackTrace();
         }
 
     }

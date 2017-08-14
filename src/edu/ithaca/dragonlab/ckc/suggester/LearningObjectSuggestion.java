@@ -8,6 +8,7 @@ public class LearningObjectSuggestion {
     private int pathNum;
     private String reasoning;
     private Level level;
+    private int directConceptLinkCount;
 
     public enum Level{
         //used to create ordering for suggestion
@@ -21,15 +22,17 @@ public class LearningObjectSuggestion {
         this.pathNum= 0;
         this.reasoning= null;
         this.level = Level.INCOMPLETE;
+        this.directConceptLinkCount= 0;
 
     }
 
-    public LearningObjectSuggestion(String id, int path, Level lev, String caused) {
+    public LearningObjectSuggestion(String id, int path, Level lev, String caused, int directConceptLinkCount) {
         this();
         this.id = id;
         this.pathNum= path;
         this.level = lev;
         this.reasoning= caused;
+        this.directConceptLinkCount = directConceptLinkCount;
     }
 
 
@@ -44,6 +47,9 @@ public class LearningObjectSuggestion {
 
     public void setLevel(Level lev){
         level = lev;
+    }
+    public void setDirectConceptLinkCount (int num ){
+        directConceptLinkCount= num;
     }
 
 
@@ -63,9 +69,12 @@ public class LearningObjectSuggestion {
         return reasoning;
     }
 
-    public String toString(){
-            return "Resource: " +id + "\t Concept it relates to: " + reasoning + "\t Importance: "+ pathNum + "\n";
+    public int getDirectConceptLinkCount(){
+        return directConceptLinkCount;
     }
 
+    public String toString(){
+            return "Resource: " +id + "\t Concept it relates to: " + reasoning + "\t Importance: "+ pathNum + "\t Direct Concept Links: " + directConceptLinkCount + "\n";
+    }
 
 }

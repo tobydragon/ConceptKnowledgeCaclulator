@@ -12,8 +12,8 @@ import java.util.*;
  */
 public class LearningObjectSuggester {
 
-    public static double MAX= .75;
-    public static double MIN = .55;
+    public static double MAX= .85;
+    public static double MIN = .60;
 
 
     /**
@@ -31,6 +31,8 @@ public class LearningObjectSuggester {
                 graph.updateSuggestionList(node, suggestedConceptList);
             }
         }
+
+
         return suggestedConceptList;
     }
 
@@ -51,10 +53,16 @@ public class LearningObjectSuggester {
             List<LearningObjectSuggestion> testList = new ArrayList<>();
 
             HashMap<String, Integer> map = graph.buildLearningObjectSummaryList(concept.getID());
-            List<LearningObjectSuggestion> list = buildLearningObjectSuggestionList(map, graph.getLearningObjectMap(), concept.getID());
+            HashMap<String, Integer> linkMap = graph.buildDirectConceptLinkCount();
+
+            List<LearningObjectSuggestion> list = buildLearningObjectSuggestionList(map, graph.getLearningObjectMap(), concept.getID(), linkMap);
 
             sortSuggestions(list);
+
+
+
             for (int i = 0; i < list.size(); i++) {
+
                 //if it is incomplete
                 if (choice.equals(1)) {
                     if (list.get(i).getLevel().equals(LearningObjectSuggestion.Level.INCOMPLETE)) {
@@ -71,10 +79,7 @@ public class LearningObjectSuggester {
 
             }
             suggestedConceptNodeMap.put(concept.getID(), testList);
-
-
         }
-
         return suggestedConceptNodeMap;
     }
 
@@ -85,36 +90,39 @@ public class LearningObjectSuggester {
     }
 
     /**
-    *takes a map of strings and creates a list of learningObjectSuggestion that hold if the learningObject was incomplete, wrong, or right, the pathNum, and the concept that caused the LearningObject to be suggested
+    *takes a map of strings and creates a list of learningObjectSuggestion that holds if the learningObject was incomplete, wrong, or right, the pathNum, and the concept that caused the LearningObject to be suggested
     *@param summaryList- map of the summaryList (map of the LearningObjects and the pathNum from a certain start)
     *@param  learningObjectMap- map of all of the learningObjects
     *@param causedConcept- the ID of ConceptNode that the learningObject came from
     *@returns a list of the created LearningObjectSuggestions
     */
-    public static List<LearningObjectSuggestion> buildLearningObjectSuggestionList(Map<String, Integer> summaryList, Map<String, LearningObject> learningObjectMap, String causedConcept){
-
+    public static List<LearningObjectSuggestion> buildLearningObjectSuggestionList(Map<String, Integer> summaryList, Map<String, LearningObject> learningObjectMap, String causedConcept, Map<String, Integer> directLinkMap){
         List<LearningObjectSuggestion> myList = new ArrayList<LearningObjectSuggestion>();
         for (String key : summaryList.keySet()){
             int lineNum = summaryList.get(key);
             LearningObject node = learningObjectMap.get(key);
             double estimate = node.calcKnowledgeEstimate();
+
+            int directConceptLinkCount = directLinkMap.get(node.getId());
+
             LearningObjectSuggestion.Level level;
             //fix to fit preconditions
             LearningObjectSuggestion.Level levelIn;
             List<LearningObjectResponse> resList = node.getResponses();
+
             if(resList.size()==0){
                 levelIn = LearningObjectSuggestion.Level.INCOMPLETE;
-                LearningObjectSuggestion suggestionNode = new LearningObjectSuggestion(key,lineNum,levelIn, causedConcept);
+                LearningObjectSuggestion suggestionNode = new LearningObjectSuggestion(key,lineNum,levelIn, causedConcept, directConceptLinkCount);
                 myList.add(suggestionNode);
 
             }else{
 
-                if(estimate> 0 && estimate<= MAX){
+                if(estimate>= 0 && estimate<= MAX){
                     level = LearningObjectSuggestion.Level.WRONG;
                 }else{
                     level = LearningObjectSuggestion.Level.RIGHT;
                 }
-                LearningObjectSuggestion suggestionNode = new LearningObjectSuggestion(key,lineNum,level,causedConcept);
+                LearningObjectSuggestion suggestionNode = new LearningObjectSuggestion(key,lineNum,level,causedConcept, directConceptLinkCount);
                 myList.add(suggestionNode);
 
             }

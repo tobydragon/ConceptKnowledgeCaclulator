@@ -114,7 +114,19 @@ public class KnowledgeEstimateMatrix {
     //TODO: look into putting into constructor
     public RCode createRMatrix(double[][] studentKnowledgeEstimates){
 
-        RCode rMatrix = JavaToRConversion.JavaToR(studentKnowledgeEstimates);
+        int objLength = objList.size();
+
+        //object list into string array
+
+        int i = 0;
+        String[] objStr = new String[objLength];
+        for(LearningObject obj: objList){
+            objStr[i] = obj.getId();
+            i++;
+        }
+
+
+        RCode rMatrix = JavaToRConversion.JavaToR(studentKnowledgeEstimates, objStr);
         return rMatrix;
     }
 

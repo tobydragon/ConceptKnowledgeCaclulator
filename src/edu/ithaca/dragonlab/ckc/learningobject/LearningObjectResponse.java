@@ -1,5 +1,7 @@
 package edu.ithaca.dragonlab.ckc.learningobject;
 
+import edu.ithaca.dragonlab.ckc.util.DataUtil;
+
 import java.util.*;
 
 /**
@@ -49,5 +51,22 @@ public class LearningObjectResponse {
 
     public String getUserId(){
         return userId;
+    }
+
+
+    public boolean equals(Object other){
+        if(other == null){
+            return false;
+        }
+        if(!LearningObjectResponse.class.isAssignableFrom(other.getClass())){
+            return false;
+        }
+        LearningObjectResponse otherNode = (LearningObjectResponse) other;
+        if(this.userId.equals(otherNode.userId) && DataUtil.equalsDoubles(this.knowledgeEstimate, otherNode.knowledgeEstimate)
+                && this.learningObjectId.equals(otherNode.learningObjectId)){
+            return true;
+        } else {
+            return false;
+        }
     }
 }

@@ -14,7 +14,7 @@ import static org.hamcrest.CoreMatchers.is;
  * Created by home on 5/20/17.
  */
 public class CohortConceptGraphsRecordTest {
-    public static final String TEST_DIR = "test/testresources/io/";
+    public static final String TEST_DIR = "test/testresources/practicalExamples/SystemCreated/";
 
     @Test
     public void CohortConceptGraphsRecordTest(){

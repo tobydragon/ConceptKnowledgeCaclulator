@@ -32,16 +32,34 @@ public interface ConceptKnowledgeCalculatorAPI {
     void clearAndCreateCohortData(List<String> structureFilename, List<String> resourceFilename, List<String> assessmentFilename) throws IOException;
 
 
+    /**
+     * after verifying that the files are valid, the files are used to create a new ckc
+     * @param resource
+     * @param assignment
+     * @throws Exception
+     */
+    void addResourceAndAssessment(String resource, String assignment) throws  Exception;
 
-    void addLORAndLO(String LO, String LOR) throws  Exception;
+    /**
+     * Creates a new ckc with the new graph file and all the old resource and assessment files.
+     * @param graph
+     * @throws Exception
+     */
+    void replaceCohortGraph(String graph) throws Exception;
 
-    void replaceGraph(String graph) throws Exception;
-
+    /**
+     * Creates a new CKC with only the structure graph file.
+     * All other files are cleared.
+     * @throws Exception
+     */
     void switchToStructure() throws Exception;
 
-
-
-    void replaceLOFile(String resourceFile) throws Exception;
+    /**
+     * Verifies the resource file is valid and then creates a new CKC will the added and old files
+     * @param resourceFile
+     * @throws Exception
+     */
+    void replaceResourceFile (String resourceFile) throws Exception;
 
     /**
      * @return the URL where the current graphs can be seen
@@ -50,26 +68,30 @@ public interface ConceptKnowledgeCalculatorAPI {
 
 
     /**
-     * creates two lists of the learning object responses with the old file and the new file and combines them into one to use in the cohort graph
+     * verifies the file is valid and then creates a new ckc will all the added and old files
      * @param assessmentFilename
      * @throws IOException
      */
-    void additionalLOR(String assessmentFilename) throws Exception;
+    void addAssessement(String assessmentFilename) throws Exception;
 
 
 
     /**
-     * adds another file of LearningObjects to the graph.
+     * Verifies the resourcce file is valid and then creates a new ckc with all the added and old files.
      * will only add learning objects that are associated with concepts already in the graph
      * will only add learning objects that are not already in the graph (aka no repeats)
      * @param secondResourceFile
      * @throws IOException
      */
-    void addAnotherLO(String secondResourceFile) throws Exception;
+    void addResource(String secondResourceFile) throws Exception;
 
 
-
-    void removeLORFile(String assessmentFile) throws Exception;
+    /**
+     * Verifies the file is valid and then creates a new ckc without the removed files.
+     * @param assessmentFile
+     * @throws Exception
+     */
+    void removeAssessmentFile(String assessmentFile) throws Exception;
 
 
     /**
@@ -90,11 +112,8 @@ public interface ConceptKnowledgeCalculatorAPI {
 
 
     /**
-     * Calculates suggestions specific to a certain concept for an individual graph, returns an object containing two ordered lists:
-     * an ordered list of new resources to try
-     * an ordered list of resources that have had unsuccessful assessments in the past
-     *
-     * @return Suggestion Resource
+     * Calculates suggestions specific to a certain concept for an individual graph
+     * @return Suggestion Resource object with two order resource lists
      */
     SuggestionResource calcIndividualSpecificConceptSuggestions(String userId, String conceptId) throws Exception;
 
@@ -103,8 +122,6 @@ public interface ConceptKnowledgeCalculatorAPI {
      * @param learningObject matrix, Learningobject
      * @return average knowledgeEstimates for given LearningObject
      */
-
-
     double getLearningObjectAvg(String learningObject) throws Exception;
 
     /**
@@ -112,7 +129,7 @@ public interface ConceptKnowledgeCalculatorAPI {
      * @pre a user selects to view a list of all users within the graph
      * @return list of userIds
      */
-    List<String> getUserIdList();
+    List<String> getUserIdList() throws Exception;
 
     /**
      * Calculates a student's average knowledgeEstimates across all LearningObjects
@@ -121,7 +138,18 @@ public interface ConceptKnowledgeCalculatorAPI {
      */
     double getStudentAvg(String user);
 
+    /**
+     * Prints a matrix of factors (columns) and learning objects (rows) that tell how  connected multiple learning
+     * objects are to just a few factors
+     * @pre resource, assessment, structure files are all present and an R Matrix is created
+     */
+    void getFactorMatrix();
 
+    /**
+     * Uses data from the students and the structure given by the user to create a graph showing the weights
+     * between the bottom layer of data and the concepts they influence.
+     */
+    void createConfirmatoryGraph();
 
     /**
      * Calculates a list of conceptNode based on an individual graph , returns a the list of ConceptNodes
@@ -130,21 +158,58 @@ public interface ConceptKnowledgeCalculatorAPI {
      */
     List<String> calcIndividualConceptNodesSuggestions(String userID) throws Exception;
 
+    /**
+     * When in structure mode, the ckc will clear and create a new structure ckc with the proper file
+     * @param file
+     * @throws IOException
+     */
+    void updateStructureFile(String file) throws IOException;
+
 
     ConceptKnowledgeCalculator.Mode getCurrentMode();
 
-    List<String> getResourceFiles();
+    /**
+     * @return a copy of the assessment file list
+     */
+    List<String> currentAssessment();
 
-    List<String> getAssessmentFiles();
+    /**
+     * @return a copy of the resource file lsit
+     */
+    List<String> currentResource();
 
-    List<String> getStructureFiles();
+    /**
+     * @return a copy of the structure file list
+     */
+    List<String> currentStructure();
 
 
-    boolean assessmentIsValid(String name);
+    /**
+     * Checks that a specified assessment file is valid.
+     * Used before adding to file lists that will be used in clear and create functions
+     * @param name
+     * @return true or false depending on if the file is valid
+     * @throws IOException
+     */
+    boolean assessmentIsValid(String name)throws IOException;
 
+    boolean structureIsValid(String name) throws IOException;
+
+    boolean resourceIsValid(String name) throws IOException;
+
+
+    List<List<String>> randomGroupSuggestions (int choice) throws Exception;
+
+    List<List<String>> conceptDiffGroupSuggestions (int choice, String subject) throws Exception;
+
+    List<List<String>> resourceGroupSuggestions(int choice) throws Exception;
+
+    List<List<String>> graphSumGroupSuggestions(int choice, String subject) throws Exception;
+
+
+    //testing purposes
     ConceptGraph getStructureGraph();
     CohortConceptGraphs getCohortConceptGraphs();
-
 
 
 }

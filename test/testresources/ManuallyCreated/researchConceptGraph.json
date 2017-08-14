@@ -18,9 +18,6 @@
     "id": "Booleans"
 
   }, {
-    "id": "If Statements"
-
-  }, {
     "id": "Functions"
 
   }, {
@@ -48,9 +45,6 @@
     "id": "Dictionaries"
 
   }, {
-    "id": "Find"
-
-  }, {
     "id": "Lists"
 
   }, {
@@ -75,10 +69,7 @@
   },{
     "parent": "Nested Conditionals",
     "child": "Loops"
-  },{
-    "parent": "Parameters",
-    "child": "Values and Data Types"
-  },{
+  }, {
     "parent": "Loops",
     "child": "For Loops"
   },{
@@ -98,12 +89,12 @@
     "child": "Variables"
   }, {
     "parent": "Variables",
-    "child": "Value and Data Types"
+    "child": "Values and Data Types"
   }, {
-    "parent": "Value and Data Types",
+    "parent": "Values and Data Types",
     "child": "Dictionaries"
   }, {
-    "parent": "Value and Data Types",
+    "parent": "Values and Data Types",
     "child": "Lists"
   }, {
     "parent": "Dictionaries",
