@@ -3,6 +3,8 @@ package edu.ithaca.dragonlab.ckc.conceptgraph;
 import edu.ithaca.dragonlab.ckc.io.CohortConceptGraphsRecord;
 import edu.ithaca.dragonlab.ckc.io.ConceptGraphRecord;
 import edu.ithaca.dragonlab.ckc.learningobject.LearningObjectResponse;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -10,6 +12,8 @@ import java.util.List;
 import java.util.Map;
 
 public class CohortConceptGraphs {
+	public Logger logger = LogManager.getLogger(this.getClass());
+
 	ConceptGraph averageGraph;
 	Map<String, ConceptGraph> userToGraph;
 
@@ -19,7 +23,9 @@ public class CohortConceptGraphs {
 	 * @param summaries
 	 */
 	public CohortConceptGraphs(ConceptGraph structureGraph, List<LearningObjectResponse> summaries){
-
+		if (structureGraph.hasAnyResponses()){
+			logger.warn("StructureGraph contains responses that will be copied to all CohortGraphs");
+		}
 		averageGraph = new ConceptGraph(structureGraph, "Average Graph");
 //		averageGraph.calcPredictedScores();
 

@@ -46,7 +46,7 @@ public class CohortConceptGraphsTest {
     //particular attention to what is copied in LearningObjects
     @Test
     public void testCreation(){
-        ConceptGraph graph = ExampleConceptGraphFactory.makeSimpleCompleteWithData();
+        ConceptGraph graph = ExampleConceptGraphFactory.makeSimpleStructureAndLearningObjects();
         CohortConceptGraphs group = new CohortConceptGraphs(graph, ExampleLearningObjectResponseFactory.makeSimpleResponses());
 
         //test that learningObjectResponses don't get mixed between users
@@ -62,7 +62,7 @@ public class CohortConceptGraphsTest {
 
     @Test
     public void calcKnowledgeEstimateTest() {
-        ConceptGraph graph = ExampleConceptGraphFactory.makeSimpleCompleteWithData();
+        ConceptGraph graph = ExampleConceptGraphFactory.makeSimpleStructureAndLearningObjects();
         CohortConceptGraphs group = new CohortConceptGraphs(graph, ExampleLearningObjectResponseFactory.makeSimpleResponses());
 
         Assert.assertEquals(0.5, group.getAvgGraph().findNodeById("C").getKnowledgeEstimate(), DataUtil.OK_FLOAT_MARGIN);
@@ -84,7 +84,7 @@ public class CohortConceptGraphsTest {
 
 	@Test
 	public void calcDistFromAvgTest(){
-        ConceptGraph graph = ExampleConceptGraphFactory.makeSimpleCompleteWithData();
+        ConceptGraph graph = ExampleConceptGraphFactory.makeSimpleStructureAndLearningObjects();
         CohortConceptGraphs group = new CohortConceptGraphs(graph, ExampleLearningObjectResponseFactory.makeSimpleResponses());
 
 		ConceptGraph user = group.getUserGraph("student1");
@@ -105,7 +105,7 @@ public class CohortConceptGraphsTest {
 
 	@Test
     public void buildCohortConceptTreeRecordTest() {
-        ConceptGraph graph = ExampleConceptGraphFactory.makeSimpleCompleteWithData();
+        ConceptGraph graph = ExampleConceptGraphFactory.makeSimpleStructureAndLearningObjects();
         CohortConceptGraphs group = new CohortConceptGraphs(graph, ExampleLearningObjectResponseFactory.makeSimpleResponses());
 
         CohortConceptGraphsRecord record = group.buildCohortConceptTreeRecord();

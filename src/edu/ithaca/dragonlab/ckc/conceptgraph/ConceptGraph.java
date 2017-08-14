@@ -275,6 +275,15 @@ public class  ConceptGraph {
 	}
 
 	////////////////////////////////////////////  Simple Functions    //////////////////////////////////////
+    public boolean hasAnyResponses(){
+	    for (LearningObject lo : learningObjectMap.values()){
+	        if (lo.getResponses().size()>0){
+	            return true;
+            }
+        }
+        return false;
+    }
+
 
     public void setDistFromAvg(ConceptGraph avgGraph){
         for (ConceptNode nodeToSet : nodeMap.values()){
