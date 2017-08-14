@@ -3,9 +3,11 @@ package edu.ithaca.dragonlab.ckc.conceptgraph;
 import edu.ithaca.dragonlab.ckc.io.ConceptGraphRecord;
 import edu.ithaca.dragonlab.ckc.io.ConceptRecord;
 import edu.ithaca.dragonlab.ckc.learningobject.LearningObject;
+import edu.ithaca.dragonlab.ckc.util.DataUtil;
 import org.junit.Assert;
 import org.junit.Test;
 
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -76,6 +78,17 @@ public class TreeConverterTest {
             Assert.assertEquals(entry.getValue(), treeCopy);
             Assert.assertTrue(entry.getValue() != treeCopy);
         }
+
+        //check that each tree copy of the same node in the graph has the same links
+        for (List<String> nodeCopies : tree.createSameLabelMap().values()){
+            ConceptNode first = tree.findNodeById(nodeCopies.get(0));
+            for (String nodeCopyId : nodeCopies){
+                ConceptNode next = tree.findNodeById(nodeCopyId);
+                Assert.assertEquals(first.getKnowledgeEstimate() , next.getKnowledgeEstimate(), DataUtil.OK_FLOAT_MARGIN);
+                Assert.assertEquals(first.getLearningObjectMap().size() , next.getLearningObjectMap().size());
+            }
+        }
+
 
     }
 

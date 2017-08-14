@@ -42,8 +42,7 @@ public class TreeConverter {
         }else{
             String prevId = idsList.get(idsList.size()-1);
             String nextId = makeNextId(prevId);
-            ConceptRecord nodeData = new ConceptRecord(nodeToMakeTreeCopyOf, nextId);
-            nodeCopy = new ConceptNode(nodeData);
+            nodeCopy = new ConceptNode(nextId, nodeToMakeTreeCopyOf, resourceMap);
         }
         //add the new name to the list
         idsList.add(nodeCopy.getID());

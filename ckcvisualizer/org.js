@@ -258,6 +258,7 @@ function drawOrgChart(dataInput){
         data.addColumn('string', 'Topic');
         data.addColumn('string', 'Parent');
         data.addColumn('number', 'Score');
+        data.addColumn('string', 'Resources');
           
         // Add all of the rows that were primed in readJson file.
         data.addRows(dataInput);
@@ -295,17 +296,20 @@ function drawOrgChart(dataInput){
                 if (item.row != null && item.column != null) {
                   var topic = data.getFormattedValue(item.row, item.column);
                   var score = data.getFormattedValue(item.row, 2);
+                  var resourcesStr = data.getFormattedValue(item.row, 3);
                 } else if (item.row != null) {
                   var topic = data.getFormattedValue(item.row, 0);
                   var score = data.getFormattedValue(item.row, 2);
+                  var resourcesStr = data.getFormattedValue(item.row, 3);
                 } else if (item.column != null) {
                   var topic = data.getFormattedValue(0, item.column);
                   var score = data.getFormattedValue(item.row, 2);
+                  var resourcesStr = data.getFormattedValue(item.row, 3);
                 }
               }
             //if the user has selected a node, set the div with the id "text" to the following string
             if(topic != null && score != null){
-                document.getElementById("text").innerHTML = "Topic: " + topic;
+                document.getElementById("text").innerHTML = "Topic: " + topic + "\n" + "<b>Associated Resources:</b>" + "<br>"+ resourcesStr;
             }else{
                 document.getElementById("text").innerHTML = "Select a topic to see the overall score";
             }

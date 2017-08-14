@@ -22,13 +22,13 @@ public class ConceptKnowledgeCalculatorMain {
 //                    "test/testresources/ManuallyCreated/simpleResource.json",
 //                    "test/testresources/ManuallyCreated/simpleAssessmentMoreUsers.csv");
 
-            new ConsoleUI("resources/comp220/comp220Graph.json",
-                    "resources/comp220/comp220Resources.json",
-                    "localresources/comp220/comp220ExampleDataPortion.csv");
+//            new ConsoleUI("resources/comp220/comp220Graph.json",
+//                    "resources/comp220/comp220Resources.json",
+//                    "localresources/comp220/comp220ExampleDataPortion.csv");
 //
-//            new ConsoleUI("test/testresources/ManuallyCreated/researchConceptGraph.json",
-//                    "test/testresources/ManuallyCreated/researchResource1.json",
-//                    "test/testresources/ManuallyCreated/researchAssessment1.csv");
+            new ConsoleUI("test/testresources/ManuallyCreated/researchConceptGraph.json",
+                    "test/testresources/ManuallyCreated/researchResource1.json",
+                    "test/testresources/ManuallyCreated/researchAssessment1.csv");
 
 //            new ConsoleUI("test/testresources/ManuallyCreated/researchConceptGraph.json",
 //                    "test/testresources/ManuallyCreated/researchResource2.json",

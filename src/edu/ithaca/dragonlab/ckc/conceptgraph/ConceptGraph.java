@@ -377,6 +377,19 @@ public class  ConceptGraph {
 
     }
 
+    public Map<String, List<String>> createSameLabelMap(){
+        Map<String, List<String>> labelMap = new HashMap<>();
+        for (ConceptNode curConcept : nodeMap.values()){
+            List<String> currList = labelMap.get(curConcept.getLabel());
+            if (currList == null){
+                currList = new ArrayList<>();
+                labelMap.put(curConcept.getLabel(), currList);
+            }
+            currList.add(curConcept.id);
+        }
+        return labelMap;
+    }
+
 
 
 }

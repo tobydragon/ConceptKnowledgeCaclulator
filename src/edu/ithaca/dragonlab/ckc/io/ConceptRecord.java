@@ -20,7 +20,7 @@ public class ConceptRecord {
     private double knowledgePrediction;
     private double knowledgeDistFromAvg;
     private double dataImportance;
-
+    //this field is used only for output, it is not converted into anything when a ConceptNode is created from a record
     private List<String> resourceSummaries;
 
     public ConceptRecord() {
