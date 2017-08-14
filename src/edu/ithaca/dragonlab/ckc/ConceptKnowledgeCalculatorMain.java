@@ -22,21 +22,9 @@ public class ConceptKnowledgeCalculatorMain {
 //                    "test/testresources/ManuallyCreated/simpleResource.json",
 //                    "test/testresources/ManuallyCreated/simpleAssessmentMoreUsers.csv");
 
-
-
-//            new ConsoleUI("resources/comp220/comp220Graph.json",
-//                    "resources/comp220/comp220Resources.json",
-//                    "localresources/comp220/comp220ExampleDataPortion.csv");
-
             new ConsoleUI("resources/comp220/comp220Graph.json",
                     "resources/comp220/comp220Resources.json",
                     "localresources/comp220/comp220ExampleDataPortion.csv");
-
-
-//            new ConsoleUI("resources/comp220/comp220Graph.json",
-//                    "resources/comp220/comp220Resources.json",
-//                    "localresources/comp220/comp220ExampleDataPortion.csv");
-
 //
 //            new ConsoleUI("test/testresources/ManuallyCreated/researchConceptGraph.json",
 //                    "test/testresources/ManuallyCreated/researchResource1.json",
@@ -46,11 +34,9 @@ public class ConceptKnowledgeCalculatorMain {
 //                    "test/testresources/ManuallyCreated/researchResource2.json",
 //                    "test/testresources/ManuallyCreated/researchAssessment2.csv");
 
-//
-//            new ConsoleUI("resources/comp220/comp220Graph.json",
-//                    "resources/comp220/comp220Resources.json",
-//                    "localresources/comp220/comp220ExampleDataPortionCleaned.csv");
-
+//            new ConsoleUI("resources/comp171/comp171Graph.json",
+//                    "resources/comp171/comp171Resources.json",
+//                    "localresources/comp171/comp171Assessment.csv");
 
         } else {
             throw new RuntimeException("Unrecognized starting mode, program cannot execute");
