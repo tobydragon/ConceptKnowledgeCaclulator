@@ -42,7 +42,8 @@ public class ConceptNode {
 	}
 
 	/**
-	 * Copy constructor used with ConceptGraph copy constructor, so it also takes maps to be updated for the entire graph
+	 *  Recursive copy constructor to copy entire sub-graph, so it also takes maps to be updated for the entire graph,
+	 *  Used with ConceptGraph copy constructor
 	 * @param other
 	 * @param graphNodeMap
 	 * @param graphLearningObjectMap
@@ -82,6 +83,37 @@ public class ConceptNode {
 				this.addChild(newChild);
 			}
 		}
+	}
+
+	/**
+	 * Copy constructor used to copy a single ConceptNode, it does not recurse
+	 * Used when another entity will recursively create children (e.g., TreeConverter.makeTreeNodeCopy)
+	 * @param other
+	 * @param graphLearningObjectMap
+	 */
+	public ConceptNode(String newId, ConceptNode other, Map<String, LearningObject> graphLearningObjectMap){
+		this.id = newId;
+		this.label = other.label;
+		this.knowledgeEstimate = other.knowledgeEstimate;
+		this.knowledgePrediction = other.knowledgePrediction;
+		this.knowledgeDistanceFromAvg = other.knowledgeDistanceFromAvg;
+		this.dataImportance = other.dataImportance;
+
+		//Complicated because it is a graph, so it should only recurse when a child hasn't already been created, which we can only tell from graphNodeMap
+
+		this.learningObjectMap = new HashMap<>();
+		for (Map.Entry<String, LearningObject> entry: other.getLearningObjectMap().entrySet()){
+
+			//check the graphMap first to see if that learning object has already been created
+			LearningObject newLearningObject = graphLearningObjectMap.get(entry.getKey());
+			if (newLearningObject == null) {
+				newLearningObject = new LearningObject(entry.getValue());
+				graphLearningObjectMap.put(entry.getKey(), newLearningObject);
+			}
+			this.learningObjectMap.put(entry.getKey(), newLearningObject);
+		}
+
+		this.children = new ArrayList<>();
 	}
 
 	public ConceptNode(){

@@ -79,10 +79,10 @@ public class  ConceptGraph {
      * used only by TreeConverter, does not have proper learningObjectMap or nodeMap
      * @param rootsIn
      */
-    public ConceptGraph(List<ConceptNode> rootsIn, String name){
+    public ConceptGraph(List<ConceptNode> rootsIn, String name, Map<String, LearningObject> learningObjectMap, Map<String, ConceptNode> nodeMap){
         this.name = name;
-        learningObjectMap = new HashMap<>();
-        nodeMap = new HashMap<>();
+        this.learningObjectMap = learningObjectMap;
+        this.nodeMap = nodeMap;
         this.roots = rootsIn;
     }
 
@@ -275,13 +275,12 @@ public class  ConceptGraph {
 	}
 
 	////////////////////////////////////////////  Simple Functions    //////////////////////////////////////
-    public boolean hasAnyResponses(){
+    public int responsesCount(){
+	    int total = 0;
 	    for (LearningObject lo : learningObjectMap.values()){
-	        if (lo.getResponses().size()>0){
-	            return true;
-            }
+	        total += lo.getResponses().size();
         }
-        return false;
+        return total;
     }
 
 

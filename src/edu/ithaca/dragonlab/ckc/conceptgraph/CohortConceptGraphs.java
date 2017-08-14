@@ -23,7 +23,7 @@ public class CohortConceptGraphs {
 	 * @param summaries
 	 */
 	public CohortConceptGraphs(ConceptGraph structureGraph, List<LearningObjectResponse> summaries){
-		if (structureGraph.hasAnyResponses()){
+		if (structureGraph.responsesCount()>0){
 			logger.warn("StructureGraph contains responses that will be copied to all CohortGraphs");
 		}
 		averageGraph = new ConceptGraph(structureGraph, "Average Graph");
