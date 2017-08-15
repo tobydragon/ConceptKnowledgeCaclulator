@@ -1,10 +1,11 @@
 //node object made to hold the root node information.
 //used in findRoots
-function RootNode(idIn, knowledgeEstimateIn, knowledgeDistFromAvgIn, resourceSummariesIn){
+function RootNode(idIn, knowledgeEstimateIn, knowledgeDistFromAvgIn, resourceSummariesIn, dataImportanceIn){
     this.id = idIn;
     this.knowledgeEstimate = knowledgeEstimateIn;
     this.knowledgeDistFromAvg = knowledgeDistFromAvgIn;
     this.resourceSummaries = resourceSummariesIn;
+    this.dataImportance = dataImportanceIn;
 }
 
 //takes the name of the student whose org chart should be drawn
@@ -33,6 +34,7 @@ function makeChart(dataObject,typeGraph){
         row1.push(null);//add the parent, null for roots
         row1.push(s);//add the score
         row1.push(convertToSingleString(roots[i].resourceSummaries));
+        row1.push(roots[i].dataImportance);
         visualizationList.push(row1);//push row to the list
     }
 
@@ -52,12 +54,14 @@ function makeChart(dataObject,typeGraph){
                     var s = dataObject.concepts[j].knowledgeDistFromAvg;
                     row.push({v:c, f:stripTitle(c)+'<div style="color:blue; font-style:italic">Distance: '+s+'</div>'});
                 }
-                var resourceSummaries = dataObject.concepts[j].resourceSummaries
+                var resourceSummaries = dataObject.concepts[j].resourceSummaries;
+                var dataImportance = dataObject.concepts[j].dataImportance;
             }
         }
         row.push(p); //add parent
         row.push(s); //add score
         row.push(convertToSingleString(resourceSummaries));
+        row.push(dataImportance);
         visualizationList.push(row); //push row to the list
     }
     //console.log(visualizationList);
@@ -73,7 +77,7 @@ function findRoot(graphToCheck){
     var roots = [];
     //add all of the node IDs to the roots array
     for(var i = 0; i < graphToCheck.concepts.length; i++){
-        roots.push(new RootNode(graphToCheck.concepts[i].id, graphToCheck.concepts[i].knowledgeEstimate, graphToCheck.concepts[i].knowledgeDistFromAvg, graphToCheck.concepts[i].resourceSummaries));
+        roots.push(new RootNode(graphToCheck.concepts[i].id, graphToCheck.concepts[i].knowledgeEstimate, graphToCheck.concepts[i].knowledgeDistFromAvg, graphToCheck.concepts[i].resourceSummaries, graphToCheck.concepts[i].dataImportance));
     }
     //loop through all of the links
     for(var i = 0; i < graphToCheck.links.length; i++){

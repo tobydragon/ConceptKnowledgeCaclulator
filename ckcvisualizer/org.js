@@ -120,8 +120,15 @@ function bucketColorList(dataList){
     //this is where you assign the color for the lowest score
     var minColor = new NodeColor(255,0,0);
 
+
+
     for(var i = 0; i < dataList.length; i++){
-        if(dataList[i][2] >= 0){
+        //if there is no data importance, make it gray
+        if (dataList[i][4] <= 0){
+            var grayColor = new NodeColor(200, 200, 200);
+            colorsList.push("#"+RGBToHex(grayColor));
+        }
+        else if(dataList[i][2] >= 0){
             min = 0;
             max = 1
             //maxColor = new NodeColor(0,200,0);
@@ -259,6 +266,7 @@ function drawOrgChart(dataInput){
         data.addColumn('string', 'Parent');
         data.addColumn('number', 'Score');
         data.addColumn('string', 'Resources');
+          data.addColumn('number', 'Data Importance');
           
         // Add all of the rows that were primed in readJson file.
         data.addRows(dataInput);
