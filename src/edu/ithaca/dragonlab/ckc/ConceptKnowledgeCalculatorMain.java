@@ -12,7 +12,7 @@ public class ConceptKnowledgeCalculatorMain {
         if (startMode == ConceptKnowledgeCalculator.Mode.STRUCTUREGRAPH) {
 //            new ConsoleUI("resources/comp220/comp220Graph.json");
 //            new ConsoleUI("resources/comp115/comp115Graph.json");
-            new ConsoleUI("resources/comp171/comp171Graph-PaulNate-V1git s.json");
+            new ConsoleUI("resources/comp171/comp171Graph-PaulNate-V1.json");
 
         } else if (startMode == ConceptKnowledgeCalculator.Mode.COHORTGRAPH) {
 
