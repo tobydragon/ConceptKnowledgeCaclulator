@@ -5,12 +5,15 @@ import edu.ithaca.dragonlab.ckc.ui.ConsoleUI;
 public class ConceptKnowledgeCalculatorMain {
 
     public static void main(String[] args) {
-//        ConceptKnowledgeCalculator.Mode startMode = ConceptKnowledgeCalculator.Mode.STRUCTUREGRAPH;
-        ConceptKnowledgeCalculator.Mode startMode = ConceptKnowledgeCalculator.Mode.COHORTGRAPH;
+        ConceptKnowledgeCalculator.Mode startMode = ConceptKnowledgeCalculator.Mode.STRUCTUREGRAPH;
+//        ConceptKnowledgeCalculator.Mode startMode = ConceptKnowledgeCalculator.Mode.COHORTGRAPH;
 
 
         if (startMode == ConceptKnowledgeCalculator.Mode.STRUCTUREGRAPH) {
-            new ConsoleUI("resources/comp220/comp220Graph.json");
+//            new ConsoleUI("resources/comp220/comp220Graph.json");
+//            new ConsoleUI("resources/comp115/comp115Graph.json");
+            new ConsoleUI("resources/comp171/comp171Graph-PaulNate-V1git s.json");
+
         } else if (startMode == ConceptKnowledgeCalculator.Mode.COHORTGRAPH) {
 
 //            new ConsoleUI("test/testresources/ManuallyCreated/basicRealisticConceptGraph.json",
@@ -26,9 +29,9 @@ public class ConceptKnowledgeCalculatorMain {
 //                    "resources/comp220/comp220Resources.json",
 //                    "localresources/comp220/comp220ExampleDataPortion.csv");
 //
-            new ConsoleUI("test/testresources/ManuallyCreated/researchConceptGraph.json",
-                    "test/testresources/ManuallyCreated/researchResource1.json",
-                    "test/testresources/ManuallyCreated/researchAssessment1.csv");
+//            new ConsoleUI("test/testresources/ManuallyCreated/researchConceptGraph.json",
+//                    "test/testresources/ManuallyCreated/researchResource1.json",
+//                    "test/testresources/ManuallyCreated/researchAssessment1.csv");
 
 //            new ConsoleUI("test/testresources/ManuallyCreated/researchConceptGraph.json",
 //                    "test/testresources/ManuallyCreated/researchResource2.json",

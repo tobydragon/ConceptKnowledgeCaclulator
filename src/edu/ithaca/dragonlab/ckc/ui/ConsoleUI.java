@@ -576,7 +576,8 @@ public class ConsoleUI {
             System.out.println("Process Completed");
 
         } catch (Exception e) {
-            System.out.println("File can't be found");
+            System.out.println("An error occured while rading file, details follow:");
+            e.printStackTrace();
         }
 
     }

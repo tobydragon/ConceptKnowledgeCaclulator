@@ -1,0 +1,57 @@
+[ {
+  "learningObject" : "7.1",
+  "conceptIds" : ["Multi-counting" ],
+  "dataImportance" : 1.0
+}, {
+  "learningObject" : "7.2",
+  "conceptIds" : ["Product Rule" ],
+  "dataImportance" : 1.0
+}, {
+  "learningObject" : "7.3",
+  "conceptIds" : [ ],
+  "dataImportance" : 1.0
+}, {
+  "learningObject" : "7.4",
+  "conceptIds" : ["Product Rule" ],
+  "dataImportance" : 1.0
+}, {
+  "learningObject" : "7.5",
+  "conceptIds" : ["Product Rule" ],
+  "dataImportance" : 1.0
+}, {
+  "learningObject" : "7.6",
+  "conceptIds" : ["Product Rule" ],
+  "dataImportance" : 1.0
+}, {
+  "learningObject" : "7.7",
+  "conceptIds" : ["Multi-counting", "Sum Rule" ],
+  "dataImportance" : 1.0
+}, {
+  "learningObject" : "7.8",
+  "conceptIds" : ["Counting by Compliment" ],
+  "dataImportance" : 1.0
+}, {
+  "learningObject" : "7.9",
+  "conceptIds" : [ "Permutations with repetition"],
+  "dataImportance" : 1.0
+}, {
+  "learningObject" : "8.1",
+  "conceptIds" : ["Line Ups" ],
+  "dataImportance" : 1.0
+}, {
+  "learningObject" : "8.2",
+  "conceptIds" : ["Product Rule", "r-permutations" ],
+  "dataImportance" : 1.0
+}, {
+  "learningObject" : "8.3",
+  "conceptIds" : ["Combinations" ],
+  "dataImportance" : 1.0
+}, {
+  "learningObject" : "8.4",
+  "conceptIds" : [ "Permutations with repetition"],
+  "dataImportance" : 1.0
+}, {
+  "learningObject" : "8.5",
+  "conceptIds" : [ "Counting Multisets"],
+  "dataImportance" : 1.0
+} ]
