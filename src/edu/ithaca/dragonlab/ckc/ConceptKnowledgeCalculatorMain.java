@@ -37,9 +37,9 @@ public class ConceptKnowledgeCalculatorMain {
 //                    "test/testresources/ManuallyCreated/researchResource2.json",
 //                    "test/testresources/ManuallyCreated/researchAssessment2.csv");
 
-//            new ConsoleUI("resources/comp171/comp171Graph.json",
-//                    "resources/comp171/comp171Resources.json",
-//                    "localresources/comp171/comp171Assessment.csv");
+            new ConsoleUI("resources/comp115/comp115Graph.json",
+                    "resources/comp115/comp115Resources.json",
+                    "resources/comp115/comp115Assessment.csv");
 
         } else {
             throw new RuntimeException("Unrecognized starting mode, program cannot execute");

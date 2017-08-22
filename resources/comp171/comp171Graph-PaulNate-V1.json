@@ -7,21 +7,26 @@
     {"id" : "Data Types"},
 
     {"id" : "User Input Output"},
+
+    {"id" : "Conditional Logic"},
     {"id" : "Boolean Expressions"},
-    {"id" : "If statements"},
-    {"id" : "???"},
+    {"id" : "If Statements"},
+    {"id" : "Nested If Statements"},
     {"id" : "While Loops"},
+
     {"id" : "Functions"},
     {"id" : "For Loops"},
     {"id" : "Nested For Loops"},
     {"id" : "Nested While Loops"},
-    {"id" : "Nested Loops"},
+    {"id" : "Nested Blocks"},
     {"id" : "Loops"},
     {"id" : "Lists"},
     {"id" : "List Iteration"},
     {"id" : "File Input Output"},
     {"id" : "Input Output"},
-    {"id" : "Strings"}
+    {"id" : "String Manipulation"},
+    {"id" : "Collections"}
+
 
   ],
   "links" : [
@@ -34,34 +39,59 @@
   },
 
     {
-      "parent" : "Loops",
-      "child" : "For Loops"
+      "parent" : "Conditional Logic",
+      "child" : "Boolean Expressions"
     }, {
+      "parent" : "Conditional Logic",
+      "child" : "If Statements"
+    }, {
+      "parent" : "If Statements",
+      "child" : "Nested If Statements"
+    }, {
+      "parent" : "Nested Blocks",
+      "child" : "Nested If Statements"
+    }, {
+      "parent" : "Conditional Logic",
+      "child" : "While Loops"
+    },
+
+    {
       "parent" : "Loops",
       "child" : "While Loops"
     }, {
       "parent" : "Loops",
-      "child" : "Nested Loops"
-    }, {
-      "parent" : "For Loops",
-      "child" : "Nested For Loops"
+      "child" : "For Loops"
     }, {
       "parent" : "While Loops",
       "child" : "Nested While Loops"
     }, {
-      "parent" : "Nested Loops",
+      "parent" : "For Loops",
       "child" : "Nested For Loops"
     }, {
-      "parent" : "Nested Loops",
+      "parent" : "Nested Blocks",
       "child" : "Nested While Loops"
+    }, {
+      "parent" : "Nested Blocks",
+      "child" : "Nested For Loops"
     },
 
     {
       "parent" : "List Iteration",
-      "child" : "Lists"
+      "child" : "For Loops"
     }, {
       "parent" : "List Iteration",
-      "child" : "For Loops"
+      "child" : "Lists"
+    },
+
+    {
+      "parent" : "Collections",
+      "child" : "Lists"
+    }, {
+      "parent" : "Collections",
+      "child" : "String Manipulation"
+    }, {
+      "parent" : "String Manipulation",
+      "child" : "Functions"
     },
 
     {

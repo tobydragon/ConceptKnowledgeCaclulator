@@ -125,7 +125,7 @@ function bucketColorList(dataList){
     for(var i = 0; i < dataList.length; i++){
         //if there is no data importance, make it gray
         if (dataList[i][4] <= 0){
-            var grayColor = new NodeColor(200, 200, 200);
+            var grayColor = new NodeColor(215, 215, 215);
             colorsList.push("#"+RGBToHex(grayColor));
         }
         else if(dataList[i][2] >= 0){

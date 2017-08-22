@@ -10,7 +10,7 @@
     {"id" : "Product Rule"},
     {"id" : "r-permutations"},
     {"id" : "Combinations"},
-    {"id" : "Permutations with repetition"}
+    {"id" : "Permutations with Repetition"}
 
   ],
   "links" : [
@@ -40,6 +40,26 @@
       "child" : "Combinations"
     } , {
       "parent" : "Combinatorics",
-      "child" : "Permutations with repetition"
+      "child" : "Permutations with Repetition"
+    },
+
+    {
+      "parent" : "Multi-counting",
+      "child" : "Sum Rule"
+    }, {
+      "parent" : "Multi-counting",
+      "child" : "Product Rule"
+    }, {
+      "parent" : "Line Ups",
+      "child" : "Sum Rule"
+    }, {
+      "parent" : "Line Ups",
+      "child" : "r-permutations"
+    }, {
+      "parent" : "Counting by Compliment",
+      "child" : "r-permutations"
+    },  {
+      "parent" : "Permutations with Repetition",
+      "child" : "r-permutations"
     }  ]
 }
