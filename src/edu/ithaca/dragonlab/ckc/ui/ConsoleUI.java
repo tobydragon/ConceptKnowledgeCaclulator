@@ -508,7 +508,8 @@ public class ConsoleUI {
             ckc.replaceCohortGraph(graph);
             System.out.println("Process Completed");
         } catch (Exception e) {
-            System.out.println("Can't find file");
+            System.err.println("Can't load file, error follows:");
+            e.printStackTrace();
 
         }
     }
@@ -529,7 +530,8 @@ public class ConsoleUI {
             ckc.addAssessement(assessment);
             System.out.println("Process Completed");
         } catch (Exception e) {
-            System.out.println("Can't find file");
+            System.err.println("Can't load file, error follows:");
+            e.printStackTrace();
         }
     }
 
@@ -553,7 +555,8 @@ public class ConsoleUI {
                     }
                 }
             } catch (Exception e) {
-                System.out.println("File can't be found");
+                System.err.println("Can't load file, error follows:");
+                e.printStackTrace();
             }
         }
     }

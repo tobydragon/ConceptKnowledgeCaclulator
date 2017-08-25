@@ -1,0 +1,85 @@
+[ {
+  "learningObject" : "Final Project Design Concept  Part 1",
+  "conceptIds" : [ ],
+  "dataImportance" : 1.0
+}, {
+  "learningObject" : "Final Project Implementation  Part 2",
+  "conceptIds" : [ ],
+  "dataImportance" : 1.0
+}, {
+  "learningObject" : "Browsers Editors and Tutorials",
+  "conceptIds" : [ ],
+  "dataImportance" : 1.0
+}, {
+  "learningObject" : "Lab1 Interaction  Zero",
+  "conceptIds" : [ ],
+  "dataImportance" : 1.0
+}, {
+  "learningObject" : "Lab2 Interaction Text   Survey",
+  "conceptIds" : [ ],
+  "dataImportance" : 1.0
+}, {
+  "learningObject" : "Lab3 Interaction Multimedia  Choose Your Own Adventure",
+  "conceptIds" : [ ],
+  "dataImportance" : 1.0
+}, {
+  "learningObject" : "Lab4 Canvas  Drawing Primitives ",
+  "conceptIds" : [ ],
+  "dataImportance" : 1.0
+}, {
+  "learningObject" : "Lab5 Canvas  Poster",
+  "conceptIds" : [ ],
+  "dataImportance" : 1.0
+}, {
+  "learningObject" : "Lab6 Mouse Events",
+  "conceptIds" : [ ],
+  "dataImportance" : 1.0
+}, {
+  "learningObject" : "Lab7  Keyboard Events",
+  "conceptIds" : [ ],
+  "dataImportance" : 1.0
+}, {
+  "learningObject" : "Lab8 Button Events",
+  "conceptIds" : [ ],
+  "dataImportance" : 1.0
+}, {
+  "learningObject" : "Lab9 Animated Artwork",
+  "conceptIds" : [ ],
+  "dataImportance" : 1.0
+}, {
+  "learningObject" : "Lab10 Collision  Bounding Box",
+  "conceptIds" : [ ],
+  "dataImportance" : 1.0
+}, {
+  "learningObject" : "Course Reflection",
+  "conceptIds" : [ ],
+  "dataImportance" : 1.0
+}, {
+  "learningObject" : "Quiz 1  Interaction Basics",
+  "conceptIds" : [ ],
+  "dataImportance" : 1.0
+}, {
+  "learningObject" : "Quiz 2  JS Basics",
+  "conceptIds" : [ ],
+  "dataImportance" : 1.0
+}, {
+  "learningObject" : "Quiz 3  Canvas Drawing",
+  "conceptIds" : [ ],
+  "dataImportance" : 1.0
+}, {
+  "learningObject" : "Quiz 4  Array Basics",
+  "conceptIds" : [ ],
+  "dataImportance" : 1.0
+}, {
+  "learningObject" : "Quiz 5  Event Handler Basics",
+  "conceptIds" : [ ],
+  "dataImportance" : 1.0
+}, {
+  "learningObject" : "Quiz 6  Functions For Loops",
+  "conceptIds" : [ ],
+  "dataImportance" : 1.0
+}, {
+  "learningObject" : "Course Grade",
+  "conceptIds" : [ ],
+  "dataImportance" : 1.0
+} ]
