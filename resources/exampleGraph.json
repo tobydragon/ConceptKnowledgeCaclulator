@@ -1,0 +1,17 @@
+{
+  "name" : "Example",
+  "concepts" : [
+    {"id" : "Top level"},
+    {"id" : "2nd Level 1"},
+    {"id" : "2nd Level 2"}
+
+  ],
+  "links" : [
+  {
+    "parent" : "Top level",
+    "child" : "2nd Level 1"
+  }, {
+    "parent" : "Top level",
+    "child" : "2nd Level 2"
+  } ]
+}

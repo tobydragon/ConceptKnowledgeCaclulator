@@ -1,0 +1,77 @@
+[ {
+  "learningObject" : "Project 1 Currency Converter Design",
+  "conceptIds" : [ "Loops"],
+  "dataImportance" : 1.0
+}, {
+  "learningObject" : "Project 2 Hangman Design",
+  "conceptIds" : [ "Functions"],
+  "dataImportance" : 1.0
+}, {
+  "learningObject" : "Project 3 Stock Evaluator Design",
+  "conceptIds" : [ "Functions", "Loops"],
+  "dataImportance" : 1.0
+}, {
+  "learningObject" : "Project 1 Currency Converter",
+  "conceptIds" : [ "Loops"],
+  "dataImportance" : 1.0
+}, {
+  "learningObject" : "Project 2 Hangman Implementation",
+  "conceptIds" : [ "Functions"],
+  "dataImportance" : 1.0
+}, {
+  "learningObject" : "Project 3 Stock Evaluator Implementation",
+  "conceptIds" : [ "Functions", "Loops"],
+  "dataImportance" : 1.0
+}, {
+  "learningObject" : "Final exam",
+  "conceptIds" : [ "Functions", "Loops"],
+  "dataImportance" : 1.0
+}, {
+  "learningObject" : "Homework 01",
+  "conceptIds" : [ "Loops"],
+  "dataImportance" : 1.0
+}, {
+  "learningObject" : "Exam 1",
+  "conceptIds" : [ "Loops"],
+  "dataImportance" : 1.0
+}, {
+  "learningObject" : "Exam 2",
+  "conceptIds" : [ "Functions"],
+  "dataImportance" : 1.0
+}, {
+  "learningObject" : "Quiz 01",
+  "conceptIds" : [ "Loops"],
+  "dataImportance" : 1.0
+}, {
+  "learningObject" : "Quiz 02",
+  "conceptIds" : [ "Loops"],
+  "dataImportance" : 1.0
+}, {
+  "learningObject" : "Quiz 03",
+  "conceptIds" : [ "Loops"],
+  "dataImportance" : 1.0
+}, {
+  "learningObject" : "Quiz 04",
+  "conceptIds" : ["Functions" ],
+  "dataImportance" : 1.0
+}, {
+  "learningObject" : "Quiz 05",
+  "conceptIds" : [ "Functions"],
+  "dataImportance" : 1.0
+}, {
+  "learningObject" : "Quiz 06",
+  "conceptIds" : [ "Functions"],
+  "dataImportance" : 1.0
+}, {
+  "learningObject" : "Quiz 07",
+  "conceptIds" : [ "Functions"],
+  "dataImportance" : 1.0
+}, {
+  "learningObject" : "Quiz 08",
+  "conceptIds" : [ "Functions", "Loops"],
+  "dataImportance" : 1.0
+}, {
+  "learningObject" : "Quiz 09",
+  "conceptIds" : ["Functions", "Loops" ],
+  "dataImportance" : 1.0
+} ]

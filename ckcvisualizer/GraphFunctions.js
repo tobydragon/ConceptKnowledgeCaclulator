@@ -1,10 +1,11 @@
 //node object made to hold the root node information.
 //used in findRoots
-function RootNode(idIn, knowledgeEstimateIn, knowledgeDistFromAvgIn){
+function RootNode(idIn, knowledgeEstimateIn, knowledgeDistFromAvgIn, resourceSummariesIn, dataImportanceIn){
     this.id = idIn;
     this.knowledgeEstimate = knowledgeEstimateIn;
     this.knowledgeDistFromAvg = knowledgeDistFromAvgIn;
-
+    this.resourceSummaries = resourceSummariesIn;
+    this.dataImportance = dataImportanceIn;
 }
 
 //takes the name of the student whose org chart should be drawn
@@ -32,10 +33,12 @@ function makeChart(dataObject,typeGraph){
         }
         row1.push(null);//add the parent, null for roots
         row1.push(s);//add the score
+        row1.push(convertToSingleString(roots[i].resourceSummaries));
+        row1.push(roots[i].dataImportance);
         visualizationList.push(row1);//push row to the list
     }
 
-    //iterate through all of the links and add a row for each one
+    //iterate through all of the links and add a row for each child node in the link (since nothing is the child of two things)
     for(var i = 0; i < dataObject.links.length; i++){
         var row = [];                              //make empty row
         var c = dataObject.links[i].child;         //def Topic
@@ -51,13 +54,17 @@ function makeChart(dataObject,typeGraph){
                     var s = dataObject.concepts[j].knowledgeDistFromAvg;
                     row.push({v:c, f:stripTitle(c)+'<div style="color:blue; font-style:italic">Distance: '+s+'</div>'});
                 }
+                var resourceSummaries = dataObject.concepts[j].resourceSummaries;
+                var dataImportance = dataObject.concepts[j].dataImportance;
             }
         }
         row.push(p); //add parent
         row.push(s); //add score
+        row.push(convertToSingleString(resourceSummaries));
+        row.push(dataImportance);
         visualizationList.push(row); //push row to the list
     }
-
+    //console.log(visualizationList);
     //calls drawOrgChart from org.js, passing the formatted double array of data
     drawOrgChart(visualizationList);
 }
@@ -70,7 +77,7 @@ function findRoot(graphToCheck){
     var roots = [];
     //add all of the node IDs to the roots array
     for(var i = 0; i < graphToCheck.concepts.length; i++){
-        roots.push(new RootNode(graphToCheck.concepts[i].id, graphToCheck.concepts[i].knowledgeEstimate, graphToCheck.concepts[i].knowledgeDistFromAvg));
+        roots.push(new RootNode(graphToCheck.concepts[i].id, graphToCheck.concepts[i].knowledgeEstimate, graphToCheck.concepts[i].knowledgeDistFromAvg, graphToCheck.concepts[i].resourceSummaries, graphToCheck.concepts[i].dataImportance));
     }
     //loop through all of the links
     for(var i = 0; i < graphToCheck.links.length; i++){
@@ -107,4 +114,17 @@ function readJson(fileName){
     request.send(null)
 
     return JSON.parse(request.responseText);
+}
+
+function convertToSingleString(listOfStrings){
+    if (listOfStrings.length > 0) {
+        var singleString = listOfStrings[0];
+        for (var i = 1; i < listOfStrings.length; i++) {
+            singleString += "<br>" + listOfStrings[i];
+        }
+        return singleString;
+    }
+    else {
+        return "none";
+    }
 }

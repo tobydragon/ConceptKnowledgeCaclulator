@@ -1,10 +1,12 @@
 package edu.ithaca.dragonlab.ckc.conceptgraph;
 
 import edu.ithaca.dragonlab.ckc.io.ConceptRecord;
+import edu.ithaca.dragonlab.ckc.learningobject.LearningObject;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by home on 5/19/17.
@@ -13,42 +15,42 @@ public class TreeConverter {
 
     private static final String symbol = "-";
 
-
-    //TODO: There are some major issues here in that it does not copy any info about learningObjects, or create new nodeMaps or learningObjectMaps
-    //Currently, it is only used as an output, in which case this should be moved to io and make records not Graphs...
-    //Otherwise, if full graphs are needed, we need to create learningObjects as well as ConceptNodes, and create the maps of both while we create.
     public static ConceptGraph makeTreeCopy(ConceptGraph graphToCopy){
+        Map<String, LearningObject> resourceMap = LearningObject.deepCopyLearningObjectMap(graphToCopy.getLearningObjectMap());
+        Map<String, ConceptNode> nodeMap = new HashMap<>();
+
         List<ConceptNode> newRoots = new ArrayList<>();
         HashMap<String, List<String>> initMultCopies = new HashMap<String, List<String>>();
         for(ConceptNode root : graphToCopy.getRoots()){
-            newRoots.add(makeTreeNodeCopy(root, initMultCopies));
+            newRoots.add(makeTreeNodeCopy(root, initMultCopies, nodeMap, resourceMap));
         }
-        return new ConceptGraph(newRoots, graphToCopy.getName());
+        return new ConceptGraph(newRoots, graphToCopy.getName(), resourceMap, nodeMap);
     }
 
 
-    public static ConceptNode makeTreeNodeCopy(ConceptNode nodeToMakeTreeCopyOf, HashMap<String, List<String>> labelToListOfIds){
+    public static ConceptNode makeTreeNodeCopy(ConceptNode nodeToMakeTreeCopyOf, HashMap<String, List<String>> labelToListOfIds,  Map<String, ConceptNode>nodeMap, Map<String, LearningObject> resourceMap){
         ConceptNode nodeCopy;
         List<String> idsList = labelToListOfIds.get(nodeToMakeTreeCopyOf.getLabel());
         //if there are no copies, make a new list to store all the copies and add it to the map
         if(idsList == null){
             String nextId = makeNextId(nodeToMakeTreeCopyOf.getLabel());
-            ConceptRecord nodeData = new ConceptRecord(nodeToMakeTreeCopyOf, nextId);
-            nodeCopy = new ConceptNode(nodeData);
+            //Creates a copy of the node with the correct links to the already-existing resourceMap
+            nodeCopy = new ConceptNode(nextId, nodeToMakeTreeCopyOf, resourceMap);
             idsList = new ArrayList<>();
             labelToListOfIds.put(nodeCopy.getLabel(), idsList);
             //else get the previous name from the list and make a new name from it
         }else{
             String prevId = idsList.get(idsList.size()-1);
             String nextId = makeNextId(prevId);
-            ConceptRecord nodeData = new ConceptRecord(nodeToMakeTreeCopyOf, nextId);
-            nodeCopy = new ConceptNode(nodeData);
+            nodeCopy = new ConceptNode(nextId, nodeToMakeTreeCopyOf, resourceMap);
         }
         //add the new name to the list
         idsList.add(nodeCopy.getID());
+        //add the new node to the map
+        nodeMap.put(nodeCopy.getID(), nodeCopy);
 
         for(ConceptNode origChild : nodeToMakeTreeCopyOf.getChildren()){
-            ConceptNode childCopy = makeTreeNodeCopy(origChild, labelToListOfIds);
+            ConceptNode childCopy = makeTreeNodeCopy(origChild, labelToListOfIds, nodeMap, resourceMap);
             nodeCopy.addChild(childCopy);
         }
         return nodeCopy;

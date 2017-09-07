@@ -10,7 +10,6 @@ import edu.ithaca.dragonlab.ckc.learningobject.LearningObjectResponse;
 import edu.ithaca.dragonlab.ckc.suggester.GroupSuggester.*;
 import edu.ithaca.dragonlab.ckc.suggester.LearningObjectSuggester;
 import edu.ithaca.dragonlab.ckc.suggester.SuggestionResource;
-import org.apache.commons.lang.ObjectUtils;
 import stats.RFunctions;
 
 import java.io.IOException;

@@ -3,6 +3,8 @@ package edu.ithaca.dragonlab.ckc.conceptgraph;
 import edu.ithaca.dragonlab.ckc.io.*;
 import edu.ithaca.dragonlab.ckc.learningobject.ExampleLearningObjectLinkRecordFactory;
 import edu.ithaca.dragonlab.ckc.learningobject.ExampleLearningObjectResponseFactory;
+import edu.ithaca.dragonlab.ckc.learningobject.LearningObject;
+import edu.ithaca.dragonlab.ckc.learningobject.LearningObjectResponse;
 import edu.ithaca.dragonlab.ckc.util.DataUtil;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -11,6 +13,7 @@ import org.junit.Test;
 
 import java.io.IOException;
 import java.util.Collection;
+import java.util.Map;
 
 public class CohortConceptGraphsTest {
 
@@ -40,9 +43,26 @@ public class CohortConceptGraphsTest {
         Assert.assertEquals(0,group.getUserGraph("student3").getLearningObjectMap().get("Q5").getResponses().size());
     }
 
+    //particular attention to what is copied in LearningObjects
+    @Test
+    public void testCreation(){
+        ConceptGraph graph = ExampleConceptGraphFactory.makeSimpleStructureAndLearningObjects();
+        CohortConceptGraphs group = new CohortConceptGraphs(graph, ExampleLearningObjectResponseFactory.makeSimpleResponses());
+
+        //test that learningObjectResponses don't get mixed between users
+        for (Map.Entry<String, ConceptGraph> entry : group.getUserToGraph().entrySet()){
+            for (LearningObject learningObject: entry.getValue().getLearningObjectMap().values()){
+                for (LearningObjectResponse response : learningObject.getResponses()){
+                    Assert.assertEquals(entry.getKey(), response.getUserId());
+                }
+            }
+        }
+
+    }
+
     @Test
     public void calcKnowledgeEstimateTest() {
-        ConceptGraph graph = ExampleConceptGraphFactory.makeSimpleCompleteWithData();
+        ConceptGraph graph = ExampleConceptGraphFactory.makeSimpleStructureAndLearningObjects();
         CohortConceptGraphs group = new CohortConceptGraphs(graph, ExampleLearningObjectResponseFactory.makeSimpleResponses());
 
         Assert.assertEquals(0.5, group.getAvgGraph().findNodeById("C").getKnowledgeEstimate(), DataUtil.OK_FLOAT_MARGIN);
@@ -64,7 +84,7 @@ public class CohortConceptGraphsTest {
 
 	@Test
 	public void calcDistFromAvgTest(){
-        ConceptGraph graph = ExampleConceptGraphFactory.makeSimpleCompleteWithData();
+        ConceptGraph graph = ExampleConceptGraphFactory.makeSimpleStructureAndLearningObjects();
         CohortConceptGraphs group = new CohortConceptGraphs(graph, ExampleLearningObjectResponseFactory.makeSimpleResponses());
 
 		ConceptGraph user = group.getUserGraph("student1");
@@ -85,7 +105,7 @@ public class CohortConceptGraphsTest {
 
 	@Test
     public void buildCohortConceptTreeRecordTest() {
-        ConceptGraph graph = ExampleConceptGraphFactory.makeSimpleCompleteWithData();
+        ConceptGraph graph = ExampleConceptGraphFactory.makeSimpleStructureAndLearningObjects();
         CohortConceptGraphs group = new CohortConceptGraphs(graph, ExampleLearningObjectResponseFactory.makeSimpleResponses());
 
         CohortConceptGraphsRecord record = group.buildCohortConceptTreeRecord();
