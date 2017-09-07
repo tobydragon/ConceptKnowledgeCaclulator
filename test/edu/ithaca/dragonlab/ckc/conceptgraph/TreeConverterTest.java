@@ -2,8 +2,13 @@ package edu.ithaca.dragonlab.ckc.conceptgraph;
 
 import edu.ithaca.dragonlab.ckc.io.ConceptGraphRecord;
 import edu.ithaca.dragonlab.ckc.io.ConceptRecord;
+import edu.ithaca.dragonlab.ckc.learningobject.LearningObject;
+import edu.ithaca.dragonlab.ckc.util.DataUtil;
 import org.junit.Assert;
 import org.junit.Test;
+
+import java.util.List;
+import java.util.Map;
 
 /**
  * Created by home on 5/19/17.
@@ -43,22 +48,48 @@ public class TreeConverterTest {
 
     @Test
     public void treeConversionTest(){
-        checkTreeConversionByNodesAndLinksNumbers(ExampleConceptGraphFactory.makeSimpleCompleteWithData(), 3, 3, 4, 3);
-        checkTreeConversionByNodesAndLinksNumbers(ExampleConceptGraphFactory.makeMedium(), 4, 5, 7, 6);
-        checkTreeConversionByNodesAndLinksNumbers(ExampleConceptGraphFactory.makeComplex(), 5, 8, 13, 12);
-        checkTreeConversionByNodesAndLinksNumbers(ExampleConceptGraphFactory.makeSuperComplex(), 6, 11, 24, 23);
+        checkTreeConversionByNodesAndLinksNumbers(ExampleConceptGraphFactory.makeSimpleCompleteWithData(), 3, 3, 4, 3, 6,16 );
+        checkTreeConversionByNodesAndLinksNumbers(ExampleConceptGraphFactory.makeMedium(), 4, 5, 7, 6, 0, 0);
+        checkTreeConversionByNodesAndLinksNumbers(ExampleConceptGraphFactory.makeComplex(), 5, 8, 13, 12, 0, 0);
+        checkTreeConversionByNodesAndLinksNumbers(ExampleConceptGraphFactory.makeSuperComplex(), 6, 11, 24, 23, 0, 0);
     }
 
-    public void checkTreeConversionByNodesAndLinksNumbers(ConceptGraph graphToTest, int expectedGraphNodeCount, int expectedGraphLinkCount, int expectedTreeNodeCount, int expectedTreeLinkCount){
+    public void checkTreeConversionByNodesAndLinksNumbers(ConceptGraph graphToTest, int expectedGraphNodeCount, int expectedGraphLinkCount, int expectedTreeNodeCount, int expectedTreeLinkCount, int expectedResourcesCount, int expectedResponsesCount){
         ConceptGraphRecord graphLists = graphToTest.buildConceptGraphRecord();
         Assert.assertEquals(expectedGraphNodeCount, graphLists.getConcepts().size());
         Assert.assertEquals(expectedGraphLinkCount, graphLists.getLinks().size());
 
-        ConceptGraphRecord treeLists = TreeConverter.makeTreeCopy(graphToTest).buildConceptGraphRecord();
+        ConceptGraph tree = TreeConverter.makeTreeCopy(graphToTest);
+        ConceptGraphRecord treeLists = tree.buildConceptGraphRecord();
         //System.out.println(treeLists);
 
         Assert.assertEquals(expectedTreeNodeCount, treeLists.getConcepts().size());
         Assert.assertEquals(expectedTreeLinkCount, treeLists.getLinks().size());
+
+        //Resources and responses are not nodes in the tree, and so their objects are linked to multiple nodes, and so
+        //there should be the same number in both graphs
+        Assert.assertEquals(expectedResourcesCount, graphToTest.getLearningObjectMap().size());
+        Assert.assertEquals(expectedResponsesCount, graphToTest.responsesCount());
+        Assert.assertEquals(expectedResourcesCount, tree.getLearningObjectMap().size());
+        Assert.assertEquals(expectedResponsesCount, tree.responsesCount());
+        //but they should be different, equivalent objects across tree and graph
+        for (Map.Entry<String, LearningObject> entry: graphToTest.learningObjectMap.entrySet()){
+            LearningObject treeCopy = tree.getLearningObjectMap().get(entry.getKey());
+            Assert.assertEquals(entry.getValue(), treeCopy);
+            Assert.assertTrue(entry.getValue() != treeCopy);
+        }
+
+        //check that each tree copy of the same node in the graph has the same links
+        for (List<String> nodeCopies : tree.createSameLabelMap().values()){
+            ConceptNode first = tree.findNodeById(nodeCopies.get(0));
+            for (String nodeCopyId : nodeCopies){
+                ConceptNode next = tree.findNodeById(nodeCopyId);
+                Assert.assertEquals(first.getKnowledgeEstimate() , next.getKnowledgeEstimate(), DataUtil.OK_FLOAT_MARGIN);
+                Assert.assertEquals(first.getLearningObjectMap().size() , next.getLearningObjectMap().size());
+            }
+        }
+
+
     }
 
     //TODO: fis the original creators

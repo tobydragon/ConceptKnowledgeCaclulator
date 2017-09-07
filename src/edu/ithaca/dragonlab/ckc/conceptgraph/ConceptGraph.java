@@ -42,14 +42,30 @@ public class  ConceptGraph {
 
     /**
      * Copy constructor that creates an entire copy but with a different name
+     * Use this copy constructor when you want all new learning objects created (not copied from other graph), e.g., when
+     * copying the structure of a graph without the data
      * @param other a graph to copy
      * @param newName the new name of the graph
      */
-	public ConceptGraph(ConceptGraph other, String newName){
-	    this.name = newName;
-		this.roots = new ArrayList<>();
+    public ConceptGraph(ConceptGraph other, String newName){
+        this(other, newName, new HashMap<>());
+    }
+
+    /**
+     * Copy constructor that creates an entire copy but with a different name
+     * Use this copy constructor (with a copied learning map, see LearningObject.copyLearningObjectMap)
+     * when you want a copy of the graph including a copy of the LearningObjects and LearningObjectResponses
+     * e.g., when you are making a tree copy
+     * @param other a graph to copy
+     * @param newName the new name of the graph
+     * @param loMap a map of learning objects, which can be in any state of populated/not populated. This function will
+     *              connect the existing learning obejcts, or add any new ones necessary
+     */
+    public ConceptGraph(ConceptGraph other, String newName, HashMap<String, LearningObject> loMap){
+        this.name = newName;
+        this.roots = new ArrayList<>();
         nodeMap = new HashMap<>();
-        learningObjectMap = new HashMap<>();
+        learningObjectMap = loMap;
 
         //recursively copy entire graph
         for (ConceptNode otherRoot : other.roots) {
@@ -63,10 +79,10 @@ public class  ConceptGraph {
      * used only by TreeConverter, does not have proper learningObjectMap or nodeMap
      * @param rootsIn
      */
-    public ConceptGraph(List<ConceptNode> rootsIn, String name){
+    public ConceptGraph(List<ConceptNode> rootsIn, String name, Map<String, LearningObject> learningObjectMap, Map<String, ConceptNode> nodeMap){
         this.name = name;
-        learningObjectMap = new HashMap<>();
-        nodeMap = new HashMap<>();
+        this.learningObjectMap = learningObjectMap;
+        this.nodeMap = nodeMap;
         this.roots = rootsIn;
     }
 
@@ -259,6 +275,14 @@ public class  ConceptGraph {
 	}
 
 	////////////////////////////////////////////  Simple Functions    //////////////////////////////////////
+    public int responsesCount(){
+	    int total = 0;
+	    for (LearningObject lo : learningObjectMap.values()){
+	        total += lo.getResponses().size();
+        }
+        return total;
+    }
+
 
     public void setDistFromAvg(ConceptGraph avgGraph){
         for (ConceptNode nodeToSet : nodeMap.values()){
@@ -351,6 +375,19 @@ public class  ConceptGraph {
             }
         }
 
+    }
+
+    public Map<String, List<String>> createSameLabelMap(){
+        Map<String, List<String>> labelMap = new HashMap<>();
+        for (ConceptNode curConcept : nodeMap.values()){
+            List<String> currList = labelMap.get(curConcept.getLabel());
+            if (currList == null){
+                currList = new ArrayList<>();
+                labelMap.put(curConcept.getLabel(), currList);
+            }
+            currList.add(curConcept.id);
+        }
+        return labelMap;
     }
 
 

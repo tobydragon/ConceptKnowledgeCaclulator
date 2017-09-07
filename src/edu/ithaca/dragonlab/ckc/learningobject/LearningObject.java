@@ -4,7 +4,9 @@ import edu.ithaca.dragonlab.ckc.io.LearningObjectLinkRecord;
 import edu.ithaca.dragonlab.ckc.util.DataUtil;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * @uathor tdragon
@@ -17,16 +19,20 @@ public class LearningObject {
     double maxPossibleKnowledgeEstimate;
 
     public LearningObject(String id){
+        this (id, 1);
+    }
+
+    public LearningObject(String id, double maxPossibleKnowledgeEstimate){
         this.id = id;
         this.responses = new ArrayList<>();
-        this.maxPossibleKnowledgeEstimate = 1;
+        this.maxPossibleKnowledgeEstimate = maxPossibleKnowledgeEstimate;
     }
 
     public LearningObject(LearningObject other){
         this.id = other.id;
         this.maxPossibleKnowledgeEstimate = other.maxPossibleKnowledgeEstimate;
         this.responses = new ArrayList<>();
-        for (LearningObjectResponse response : responses){
+        for (LearningObjectResponse response : other.responses){
             this.responses.add(new LearningObjectResponse(response));
         }
     }
@@ -63,6 +69,14 @@ public class LearningObject {
         return estimate;
     }
 
+    public static Map<String, LearningObject> deepCopyLearningObjectMap(Map<String, LearningObject> mapToCopy){
+        Map<String, LearningObject> newMap = new HashMap<>();
+        for (Map.Entry<String, LearningObject> entryToCopy : mapToCopy.entrySet()){
+            newMap.put(entryToCopy.getKey(), new LearningObject(entryToCopy.getValue()));
+        }
+        return newMap;
+    }
+
 
     public void setMaxPossibleKnowledgeEstimate(double max){ this.maxPossibleKnowledgeEstimate = max; }
 
@@ -89,6 +103,14 @@ public class LearningObject {
         } else {
             return false;
         }
+    }
+
+    public String toString(){
+        return "LO ID:" + id + "\t" + "maxPossKnowEst:" + maxPossibleKnowledgeEstimate + "\t" + responses.toString();
+    }
+
+    public String getSummaryString(){
+        return getId() + "   Est:" + DataUtil.format(calcKnowledgeEstimate()) + "  Imp:" + DataUtil.format(getDataImportance()) + "  ResponseCount:" + getResponses().size();
     }
 
 

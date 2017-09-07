@@ -1,0 +1,65 @@
+{
+  "name" : "Combinatorics",
+  "concepts" : [
+    {"id" : "Combinatorics"},
+    {"id" : "Sum Rule"},
+    {"id" : "Line Ups"},
+    {"id" : "Counting by Compliment"},
+    {"id" : "Counting Multisets"},
+    {"id" : "Multi-counting"},
+    {"id" : "Product Rule"},
+    {"id" : "r-permutations"},
+    {"id" : "Combinations"},
+    {"id" : "Permutations with Repetition"}
+
+  ],
+  "links" : [
+  {
+    "parent" : "Combinatorics",
+    "child" : "Sum Rule"
+  }, {
+      "parent" : "Combinatorics",
+      "child" : "Line Ups"
+  }, {
+      "parent" : "Combinatorics",
+      "child" : "Counting by Compliment"
+    } , {
+      "parent" : "Combinatorics",
+      "child" : "Counting Multisets"
+    } , {
+      "parent" : "Combinatorics",
+      "child" : "Multi-counting"
+    } , {
+      "parent" : "Combinatorics",
+      "child" : "Product Rule"
+    } , {
+      "parent" : "Combinatorics",
+      "child" : "r-permutations"
+    } , {
+      "parent" : "Combinatorics",
+      "child" : "Combinations"
+    } , {
+      "parent" : "Combinatorics",
+      "child" : "Permutations with Repetition"
+    },
+
+    {
+      "parent" : "Multi-counting",
+      "child" : "Sum Rule"
+    }, {
+      "parent" : "Multi-counting",
+      "child" : "Product Rule"
+    }, {
+      "parent" : "Line Ups",
+      "child" : "Sum Rule"
+    }, {
+      "parent" : "Line Ups",
+      "child" : "r-permutations"
+    }, {
+      "parent" : "Counting by Compliment",
+      "child" : "r-permutations"
+    },  {
+      "parent" : "Permutations with Repetition",
+      "child" : "r-permutations"
+    }  ]
+}
