@@ -570,11 +570,13 @@ public class ConceptKnowledgeCalculator implements ConceptKnowledgeCalculatorAPI
     }
 
     public static void conceptIdsToTextFile(Collection<String> conceptIds, String destinationFilepath) throws Exception{
-        Path path = Paths.get(destinationFilepath);
+
         List<String> conceptsOut = new ArrayList<>();
         for (String concept : conceptIds){
             conceptsOut.add("\"" + concept + "\"");
         }
+
+        Path path = Paths.get(destinationFilepath);
         Files.write(path, conceptsOut, StandardCharsets.UTF_8);
     }
 

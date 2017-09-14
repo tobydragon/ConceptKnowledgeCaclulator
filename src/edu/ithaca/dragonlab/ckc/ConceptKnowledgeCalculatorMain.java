@@ -39,13 +39,17 @@ public class ConceptKnowledgeCalculatorMain {
 //                    "test/testresources/ManuallyCreated/researchResource2.json",
 //                    "test/testresources/ManuallyCreated/researchAssessment2.csv");
 
-            new ConsoleUI("resources/comp115/comp115Graph.json",
-                    "resources/comp115/comp115Resources.json",
-                    "localresources/comp115/comp115Exam3.csv");
+//            new ConsoleUI("resources/comp115/comp115Graph.json",
+//                    "resources/comp115/comp115Resources.json",
+//                    "localresources/comp115/comp115Exam3.csv");
 
 //            new ConsoleUI("resources/comp110/comp110Graph.json",
 //                    "resources/comp110/comp110Resources.json",
 //                    "resources/comp110/comp110Assessment.csv");
+
+            new ConsoleUI("resources/comp105/comp105Graph.json",
+                    "resources/comp105/comp105Resources.json",
+                    "localresources/comp105/comp105Assessment.csv");
 
         } else {
             throw new RuntimeException("Unrecognized starting mode, program cannot execute");

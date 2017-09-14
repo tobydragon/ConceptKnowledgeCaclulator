@@ -37,6 +37,7 @@ public class RFunctionsTest {
             avg = RFunctions.StudentKnowledgeEstAvg(newMatrix, "stu3");
             Assert.assertEquals(.995, avg, 0.001);
         }catch (Exception e){
+            e.printStackTrace();
             Assert.fail();
         }
     }
