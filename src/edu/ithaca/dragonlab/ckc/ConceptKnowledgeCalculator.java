@@ -13,6 +13,10 @@ import edu.ithaca.dragonlab.ckc.suggester.SuggestionResource;
 import stats.RFunctions;
 
 import java.io.IOException;
+import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.*;
 
 /**
@@ -548,19 +552,30 @@ public class ConceptKnowledgeCalculator implements ConceptKnowledgeCalculatorAPI
 
     public String csvToResource() throws Exception {
         if(currentMode==Mode.STRUCTUREGRAPHWITHASSESSMENT) {
-            return csvToResource(assessmentFiles, OUTPUT_PATH + "resourcesWithoutConceptConnections.json");
+            String resourceFilename = "resourcesWithoutConceptConnections.json";
+            String conceptIdsFilename = "conceptIdsForConnections.txt";
+            csvToResource(assessmentFiles, OUTPUT_PATH + resourceFilename);
+            conceptIdsToTextFile(structureGraph.getAllNodeIds(), OUTPUT_PATH+conceptIdsFilename);
+            return "Resource files:  written:\n\t" + resourceFilename + "\n\t" + conceptIdsFilename + "\n in directory: " + OUTPUT_PATH;
         }
         else {
             throw new Exception("Wrong Mode");
         }
     }
 
-    public static String csvToResource(List<String> assessmentFiles, String destinationFilepath) throws Exception{
-            List<LearningObject> fullLoList = new ArrayList<LearningObject>();
-            fullLoList = CSVReader.learningObjectsFromCSVList(assessmentFiles);
+    public static void csvToResource(List<String> assessmentFiles, String destinationFilepath) throws Exception{
+            List<LearningObject> fullLoList = CSVReader.learningObjectsFromCSVList(assessmentFiles);
             List<LearningObjectLinkRecord> lolrList = LearningObjectLinkRecord.createLearningObjectLinkRecords(fullLoList, 10);
             LearningObjectLinkRecord.lolrToJSON(lolrList, destinationFilepath);
-            return "Your file has been written to :"+ destinationFilepath;
+    }
+
+    public static void conceptIdsToTextFile(Collection<String> conceptIds, String destinationFilepath) throws Exception{
+        Path path = Paths.get(destinationFilepath);
+        List<String> conceptsOut = new ArrayList<>();
+        for (String concept : conceptIds){
+            conceptsOut.add("\"" + concept + "\"");
+        }
+        Files.write(path, conceptsOut, StandardCharsets.UTF_8);
     }
 
     public List<String> getUserIdList()throws Exception{
