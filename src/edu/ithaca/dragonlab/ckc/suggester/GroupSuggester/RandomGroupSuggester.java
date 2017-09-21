@@ -109,8 +109,10 @@ public class RandomGroupSuggester extends GroupSuggester{
 
     }
 
-
-
+    @Override
+    public List<Map<String, ConceptGraph>> suggestGroup(List<Map<String, ConceptGraph>> groupings) {
+        return null;
+    }
 
 
 }

@@ -1,5 +1,6 @@
 package edu.ithaca.dragonlab.ckc.suggester.GroupSuggesterTest;
 
+import com.sun.org.apache.bcel.internal.classfile.ConstantCP;
 import edu.ithaca.dragonlab.ckc.ConceptKnowledgeCalculator;
 import edu.ithaca.dragonlab.ckc.ConceptKnowledgeCalculatorAPI;
 import edu.ithaca.dragonlab.ckc.conceptgraph.CohortConceptGraphs;
@@ -54,6 +55,34 @@ public class GroupSuggesterTest {
 
     }
 
+
+    @Test
+    public void random() {
+        ConceptKnowledgeCalculatorAPI ckc = null;
+
+        try {
+            ckc = new ConceptKnowledgeCalculator("test/testresources/ManuallyCreated/researchConceptGraph.json", "test/testresources/ManuallyCreated/researchResource2.json", "test/testresources/ManuallyCreated/researchAssessment2.csv");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        CohortConceptGraphs graphs = ckc.getCohortConceptGraphs();
+        Assert.assertNotEquals(graphs, null);
+
+
+        GroupSuggester obj = new random();
+
+
+        Map<String, ConceptGraph> userMap = obj.getUserMap(graphs);
+
+        List<Map<String, ConceptGraph>> groupings1 = new ArrayList<>();
+        groupings1.add(userMap);
+
+        //groups of two
+        List<Map<String, ConceptGraph>> groupings = obj.suggestGroup(groupings1);
+
+
+    }
 
     @Test
     public void randomGroupTestLessStudents() {

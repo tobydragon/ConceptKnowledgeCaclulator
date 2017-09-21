@@ -12,11 +12,12 @@ public abstract class GroupSuggester {
 
     public abstract List<List<String>> suggestGroup(CohortConceptGraphs graphs, int choice);
 
+    public abstract List<Map<String, ConceptGraph>> suggestGroup(List<Map<String, ConceptGraph>> groupings);
 
-    public List<String> getUsersList(CohortConceptGraphs graphs) {
+
+        public List<String> getUsersList(CohortConceptGraphs graphs) {
         List<String> userList = new ArrayList<>();
         Map<String, ConceptGraph> userToGraph = graphs.getUserToGraph();
-
         userList.addAll(userToGraph.keySet());
 
         return userList;

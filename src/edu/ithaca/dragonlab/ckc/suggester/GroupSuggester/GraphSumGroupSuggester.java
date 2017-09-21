@@ -267,4 +267,9 @@ public class GraphSumGroupSuggester extends GroupSuggester{
     public List<List<String>> suggestGroup(CohortConceptGraphs graphs, int choice) {
         return null;
     }
+
+    @Override
+    public List<Map<String, ConceptGraph>> suggestGroup(List<Map<String, ConceptGraph>> groupings) {
+        return null;
+    }
 }

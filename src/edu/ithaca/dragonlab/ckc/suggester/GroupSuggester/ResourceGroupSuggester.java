@@ -1,6 +1,6 @@
 package edu.ithaca.dragonlab.ckc.suggester.GroupSuggester;
 
-import com.sun.tools.corba.se.idl.constExpr.ShiftLeft;
+//import com.sun.tools.corba.se.idl.constExpr.ShiftLeft;
 import edu.ithaca.dragonlab.ckc.conceptgraph.CohortConceptGraphs;
 import edu.ithaca.dragonlab.ckc.conceptgraph.ConceptGraph;
 import edu.ithaca.dragonlab.ckc.conceptgraph.ConceptNode;
@@ -323,6 +323,11 @@ public class ResourceGroupSuggester extends GroupSuggester {
 
 
         return new ArrayList<>();
+    }
+
+    @Override
+    public List<Map<String, ConceptGraph>> suggestGroup(List<Map<String, ConceptGraph>> groupings) {
+        return null;
     }
 
 
