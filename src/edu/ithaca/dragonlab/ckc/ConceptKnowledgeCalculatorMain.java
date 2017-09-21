@@ -5,16 +5,17 @@ import edu.ithaca.dragonlab.ckc.ui.ConsoleUI;
 public class ConceptKnowledgeCalculatorMain {
 
     public static void main(String[] args) {
-//        ConceptKnowledgeCalculator.Mode startMode = ConceptKnowledgeCalculator.Mode.STRUCTUREGRAPH;
-        ConceptKnowledgeCalculator.Mode startMode = ConceptKnowledgeCalculator.Mode.COHORTGRAPH;
+        ConceptKnowledgeCalculator.Mode startMode = ConceptKnowledgeCalculator.Mode.STRUCTUREGRAPH;
+//        ConceptKnowledgeCalculator.Mode startMode = ConceptKnowledgeCalculator.Mode.COHORTGRAPH;
 
 
         if (startMode == ConceptKnowledgeCalculator.Mode.STRUCTUREGRAPH) {
 //            new ConsoleUI("resources/exampleGraph.json");
 //            new ConsoleUI("resources/comp220/comp220Graph.json");
-            new ConsoleUI("resources/comp115/comp115Graph.json");
+//            new ConsoleUI("resources/comp115/comp115Graph.json");
 //            new ConsoleUI("resources/comp171/comp171Graph-PaulNate-V1.json");
 //            new ConsoleUI("resources/comp110/comp110Graph.json");
+            new ConsoleUI("resources/comp105/comp105Graph.json");
 
         } else if (startMode == ConceptKnowledgeCalculator.Mode.COHORTGRAPH) {
 

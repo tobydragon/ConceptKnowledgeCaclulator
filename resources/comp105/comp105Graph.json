@@ -3,26 +3,26 @@
   "concepts" : [
     {"id" : "COMP 105"},
 
-    {"id" : "Content"},
+    {"id" : "Content Outline"},
     {"id" : "Copy"},
     {"id" : "Images"},
     {"id" : "Media Assets"},
-    {"id" : "Content Outline"},
-    {"id" : "Sketchups"},
-    {"id" : "Responsive"},
+    {"id" : "Responsive Content"},
+
 
     {"id" : "Design"},
-    {"id" : "Layout"},
+    {"id" : "Layout Sketchups"},
     {"id" : "Header"},
     {"id" : "Navigation"},
     {"id" : "Content Areas"},
     {"id" : "Footer"},
-    {"id" : "Style"},
+    {"id" : "Responsive Layout"},
+    {"id" : "Style Guide"},
     {"id" : "Fonts"},
     {"id" : "Presentation"},
     {"id" : "Colors"},
     {"id" : "Treatments"},
-    {"id" : "Style Guide"},
+    {"id" : "Responsive Style"},
 
     {"id" : "Code"},
     {"id" : "HTML"},
@@ -43,95 +43,90 @@
     {"id" : "Validation"},
     {"id" : "Asset Management"},
 
-    {"id" : "Presentation"}
+    {"id" : "Presentation"},
+
+    {"id" : "Responsiveness"}
   ],
 
   "links" : [
   {
     "parent" : "COMP 105",
-    "child" : "Content"
+    "child" : "Content Outline"
   },{
       "parent" : "COMP 105",
       "child" : "Design"
     },{
       "parent" : "COMP 105",
       "child" : "Code"
-    },{
+    }, {
+      "parent" : "COMP 105",
+      "child" : "Responsiveness"
+    }, {
       "parent" : "COMP 105",
       "child" : "Presentation"
     },
 
     {
-      "parent" : "Content",
+      "parent" : "Content Outline",
       "child" : "Copy"
     }, {
-      "parent" : "Content",
+      "parent" : "Content Outline",
       "child" : "Images"
     }, {
-      "parent" : "Content",
+      "parent" : "Content Outline",
       "child" : "Media Assets"
     }, {
-      "parent" : "Copy",
-      "child" : "Content Outline"
-    }, {
-      "parent" : "Images",
-      "child" : "Content Outline"
-    }, {
-      "parent" : "Media Assets",
-      "child" : "Content Outline"
+      "parent" : "Content Outline",
+      "child" : "Responsive Content"
     },
 
     {
       "parent" : "Design",
-      "child" : "Layout"
+      "child" : "Layout Sketchups"
     } , {
       "parent" : "Design",
-      "child" : "Style"
+      "child" : "Style Guide"
     } , {
-      "parent" : "Layout",
+      "parent" : "Layout Sketchups",
       "child" : "Header"
     } , {
-      "parent" : "Layout",
+      "parent" : "Layout Sketchups",
       "child" : "Navigation"
     } , {
-      "parent" : "Layout",
+      "parent" : "Layout Sketchups",
       "child" : "Content Areas"
     } , {
-      "parent" : "Layout",
+      "parent" : "Layout Sketchups",
       "child" : "Footer"
     } , {
-      "parent" : "Header",
-      "child" : "Sketchups"
-    } , {
-      "parent" : "Navigation",
-      "child" : "Sketchups"
-    } , {
-      "parent" : "Content Areas",
-      "child" : "Sketchups"
-    } , {
-      "parent" : "Footer",
-      "child" : "Sketchups"
-    } , {
-      "parent" : "Content Outline",
-      "child" : "Sketchups"
-    } , {
-      "parent" : "Style",
+      "parent" : "Layout Sketchups",
+      "child" : "Responsive Layout"
+    },{
+      "parent" : "Style Guide",
       "child" : "Fonts"
     } , {
-      "parent" : "Style",
+      "parent" : "Style Guide",
       "child" : "Colors"
     } , {
-      "parent" : "Style",
+      "parent" : "Style Guide",
       "child" : "Treatments"
     }, {
-      "parent" : "Fonts",
-      "child" : "Style Guide"
+      "parent" : "Style Guide",
+      "child" : "Responsive Style"
+    },
+
+    {
+      "parent" : "Responsiveness",
+      "child" : "Responsive Content"
     }, {
-      "parent" : "Treatments",
-      "child" : "Style Guide"
+      "parent" : "Responsiveness",
+      "child" : "Responsive Layout"
     }, {
-      "parent" : "Colors",
-      "child" : "Style Guide"
+      "parent" : "Responsiveness",
+      "child" : "Responsive Style"
+    }, {
+      "parent" : "Responsiveness",
+      "child" : "Bootstrap Framework"
     },
 
     {
@@ -185,16 +180,5 @@
     },  {
       "parent" : "PlugIns",
       "child" : "Image Effects"
-    },
-
-    {
-      "parent" : "SketchUps",
-      "child" : "Responsive"
-    },  {
-      "parent" : "Style Guide",
-      "child" : "Responsive"
-    },{
-      "parent" : "Responsive",
-      "child" : "Bootstrap Framework"
     }  ]
 }
