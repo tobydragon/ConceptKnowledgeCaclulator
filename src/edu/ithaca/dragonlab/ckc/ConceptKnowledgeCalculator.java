@@ -465,16 +465,18 @@ public class ConceptKnowledgeCalculator implements ConceptKnowledgeCalculatorAPI
     @Override
     public List<List<String>> randomGroupSuggestions (int choice) throws Exception {
 
-            if (currentMode == Mode.COHORTGRAPH) {
-
-                GroupSuggester obj = new RandomGroupSuggester();
-
-                return obj.suggestGroup(cohortConceptGraphs, choice);
-
-            } else {
-                throw new Exception("Wrong Mode");
-
-            }
+        //todo
+//            if (currentMode == Mode.COHORTGRAPH) {
+//
+//                GroupSuggester obj = new RandomGroupSuggester();
+//
+//                return obj.suggestGroup(cohortConceptGraphs, choice);
+//
+//            } else {
+//                throw new Exception("Wrong Mode");
+//
+//            }
+        return null;
 
     }
 
@@ -516,9 +518,10 @@ public class ConceptKnowledgeCalculator implements ConceptKnowledgeCalculatorAPI
 
             if (subject.equals("all") || nodeList.contains(subject)) {
                 if (currentMode == Mode.COHORTGRAPH) {
-                    GraphSumGroupSuggester sug = new GraphSumGroupSuggester();
-
-                    return sug.suggestGroup(cohortConceptGraphs, choice, subject);
+//                    GraphSumGroupSuggester sug = new GraphSumGroupSuggester();
+                        //todo
+//                    return sug.suggestGroup(cohortConceptGraphs, choice, subject);
+                    return null;
 
                 } else {
                     throw new Exception("Wrong Mode");
