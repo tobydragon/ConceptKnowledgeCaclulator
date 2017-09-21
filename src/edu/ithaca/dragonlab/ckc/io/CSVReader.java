@@ -194,6 +194,7 @@ public class CSVReader {
             }
             else{
                 item += line.charAt(i);
+
             }
         }
 //        if (line != null) {
