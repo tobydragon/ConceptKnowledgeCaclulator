@@ -1,6 +1,6 @@
 package edu.ithaca.dragonlab.ckc.suggester.GroupSuggester;
 
-//import com.sun.tools.corba.se.idl.constExpr.ShiftLeft;
+
 import edu.ithaca.dragonlab.ckc.conceptgraph.CohortConceptGraphs;
 import edu.ithaca.dragonlab.ckc.conceptgraph.ConceptGraph;
 import edu.ithaca.dragonlab.ckc.conceptgraph.ConceptNode;

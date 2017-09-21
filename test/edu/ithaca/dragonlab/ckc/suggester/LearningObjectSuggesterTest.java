@@ -1,6 +1,5 @@
 package edu.ithaca.dragonlab.ckc.suggester;
 
-import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import edu.ithaca.dragonlab.ckc.conceptgraph.*;
 import edu.ithaca.dragonlab.ckc.io.CSVReader;
 import edu.ithaca.dragonlab.ckc.io.ConceptGraphRecord;

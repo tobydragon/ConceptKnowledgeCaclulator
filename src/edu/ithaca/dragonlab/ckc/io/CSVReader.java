@@ -177,9 +177,8 @@ public class CSVReader {
 
     public List<LearningObject> getManualGradedLearningObjects(){return this.learningObjectList;}
 
-    private static ArrayList<String> lineToList(String line) {
+    public static ArrayList<String> lineToList(String line) {
         ArrayList<String> returnlist = new ArrayList<String>();
-
         if (line != null) {
             String[] splitData = line.split("\\s*,\\s*");
             for (int i = 0; i < splitData.length; i++) {

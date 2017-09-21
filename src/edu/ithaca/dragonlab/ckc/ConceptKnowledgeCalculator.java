@@ -10,7 +10,7 @@ import edu.ithaca.dragonlab.ckc.learningobject.LearningObjectResponse;
 import edu.ithaca.dragonlab.ckc.suggester.GroupSuggester.*;
 import edu.ithaca.dragonlab.ckc.suggester.LearningObjectSuggester;
 import edu.ithaca.dragonlab.ckc.suggester.SuggestionResource;
-//import stats.RFunctions;
+import stats.RFunctions;
 
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
@@ -602,36 +602,32 @@ public class ConceptKnowledgeCalculator implements ConceptKnowledgeCalculatorAPI
             Collection<LearningObject> objList = loMap.values();
             ArrayList<LearningObject> list;
             list = new ArrayList<LearningObject>(objList);
-//            KnowledgeEstimateMatrix myMatrix = new KnowledgeEstimateMatrix(list);
-//            LearningObject concept = loMap.get(learningObject);
-//
-//            if (concept != null) {
-//                double result = RFunctions.LearningObjectAvg(myMatrix, concept);
-//                return result;
-//            } else {
-//                throw new NullPointerException();
-//            }
-//        }else {
-//            throw new Exception("Wrong Mode");
-        }
+            KnowledgeEstimateMatrix myMatrix = new KnowledgeEstimateMatrix(list);
+            LearningObject concept = loMap.get(learningObject);
 
-            return 0;
+            if (concept != null) {
+                double result = RFunctions.LearningObjectAvg(myMatrix, concept);
+                return result;
+            } else {
+                throw new NullPointerException();
+            }
+        }else {
+            throw new Exception("Wrong Mode");
+        }
     }
 
     public double getStudentAvg(String user)throws NullPointerException{
-//        ConceptGraph graph = cohortConceptGraphs.getAvgGraph();
-//        Map<String, LearningObject> loMap = graph.getLearningObjectMap();
-//        List<LearningObject> objList = new ArrayList<LearningObject>(loMap.values());
-//        KnowledgeEstimateMatrix myMatrix = new KnowledgeEstimateMatrix(objList);
-//        List<String> userIdList = myMatrix.getUserIdList();
-//
-//        if(userIdList.contains(user)) {
-//            return RFunctions.StudentKnowledgeEstAvg(myMatrix, user);
-//        }else{
-//            throw new NullPointerException();
-//        }
+        ConceptGraph graph = cohortConceptGraphs.getAvgGraph();
+        Map<String, LearningObject> loMap = graph.getLearningObjectMap();
+        List<LearningObject> objList = new ArrayList<LearningObject>(loMap.values());
+        KnowledgeEstimateMatrix myMatrix = new KnowledgeEstimateMatrix(objList);
+        List<String> userIdList = myMatrix.getUserIdList();
 
-        return 0;
+        if(userIdList.contains(user)) {
+            return RFunctions.StudentKnowledgeEstAvg(myMatrix, user);
+        }else{
+            throw new NullPointerException();
+        }
     }
 
     public void getFactorMatrix(){
@@ -639,19 +635,19 @@ public class ConceptKnowledgeCalculator implements ConceptKnowledgeCalculatorAPI
             ConceptGraph graph = cohortConceptGraphs.getAvgGraph();
             Map<String, LearningObject> loMap = graph.getLearningObjectMap();
             List<LearningObject> objList = new ArrayList<LearningObject>(loMap.values());
-////            KnowledgeEstimateMatrix myMatrix = new KnowledgeEstimateMatrix(objList);
-//
-//            try {
-//                RFunctions.getFactorMatrix(myMatrix);
-//            }catch (Exception e){
-//                System.out.println("Insufficient data to perform factor analysis. Please refer to the guidelines of the data below:\n" +
-//                        "- Learning objects without any variance in scores between students will be ignored \n" +
-//                        "- There must be at least 3 valid learning objects present\n" +
-//                        "- There must be more students than learning objects\n");
-//
-//            }
-//        }else{
-//            throw new NullPointerException();
+            KnowledgeEstimateMatrix myMatrix = new KnowledgeEstimateMatrix(objList);
+
+            try {
+                RFunctions.getFactorMatrix(myMatrix);
+            }catch (Exception e){
+                System.out.println("Insufficient data to perform factor analysis. Please refer to the guidelines of the data below:\n" +
+                        "- Learning objects without any variance in scores between students will be ignored \n" +
+                        "- There must be at least 3 valid learning objects present\n" +
+                        "- There must be more students than learning objects\n");
+
+            }
+        }else{
+            throw new NullPointerException();
         }
 
     }
