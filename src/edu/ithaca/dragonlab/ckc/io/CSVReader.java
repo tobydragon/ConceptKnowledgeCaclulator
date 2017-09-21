@@ -179,31 +179,14 @@ public class CSVReader {
 
     public static ArrayList<String> lineToList(String line) {
         ArrayList<String> returnlist = new ArrayList<String>();
-        String item = "";
-        Boolean isQuote = false;
-        for (int i = 0; i < line.length(); i++){
-            if (line.charAt(i) == '"' && isQuote == false){
-                isQuote = true;
-            }
-            else if (line.charAt(i) == '"' && isQuote == true){
-                isQuote = false;
-            }
-            if (line.charAt(i) == '"' && !isQuote){
-                returnlist.add(item);
-                item = "";
-            }
-            else{
-                item += line.charAt(i);
+        if (line != null) {
+            String[] splitData = line.split("\\s*,\\s*");
+            for (int i = 0; i < splitData.length; i++) {
+                if (!(splitData[i] == null) || !(splitData[i].length() == 0)) {
+                    returnlist.add(splitData[i].trim());
+                }
             }
         }
-//        if (line != null) {
-//            String[] splitData = line.split("\\s*,\\s*");
-//            for (int i = 0; i < splitData.length; i++) {
-//                if (!(splitData[i] == null) || !(splitData[i].length() == 0)) {
-//                    returnlist.add(splitData[i].trim());
-//                }
-//            }
-//        }
 
         return returnlist;
     }
