@@ -53,7 +53,7 @@ public class CSVReaderTest {
     @Test
     public void titleCommasTestFour () {
         String titles = "hello, a fourth test, *Breaks here*";
-        List<String> myList = Arrays.asList("hello", "a third test" , "*Breaks here");
+        List<String> myList = Arrays.asList("hello", "a third test" , "*Breaks here*");
         try {
             Assert.assertEquals(myList, CSVReader.lineToList(titles));
         }
