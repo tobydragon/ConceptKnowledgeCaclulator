@@ -19,128 +19,121 @@ import java.util.*;
 public class GroupSuggesterTest {
 
 
-//    @Test
-//    public void randomGroupTestOddStudents() {
-//        ConceptKnowledgeCalculatorAPI ckc = null;
-//
-//        try {
-//            ckc = new ConceptKnowledgeCalculator("test/testresources/ManuallyCreated/researchConceptGraph.json", "test/testresources/ManuallyCreated/researchResource2.json", "test/testresources/ManuallyCreated/researchAssessment2.csv");
-//        } catch (IOException e) {
-//            e.printStackTrace();
-//        }
-//
-//        CohortConceptGraphs graphs = ckc.getCohortConceptGraphs();
-//        Assert.assertNotEquals(graphs, null);
-//
-//
-//        GroupSuggester obj = new RandomGroupSuggester();
-//
-//        //groups of two
-//        List<List<String>> groupings = obj.suggestGroup(graphs, 2);
-//
-//        Assert.assertEquals(groupings.size(), 3);
-//        Assert.assertEquals(groupings.get(0).size(),2);
-//        Assert.assertEquals(groupings.get(1).size(), 2);
-//        Assert.assertEquals(groupings.get(2).size(), 1);
-//
-//        Assert.assertNotEquals(groupings.get(0).get(0), groupings.get(0).get(1), groupings.get(1).get(0));
-//
-//        //groups of three
-//        List<List<String>> groupings2 = obj.suggestGroup(graphs, 3);
-//
-//        Assert.assertEquals(groupings2.size(), 2);
-//        Assert.assertEquals(groupings2.get(0).size(),3);
-//        Assert.assertNotEquals(groupings2.get(0).get(0), groupings2.get(0).get(1), groupings2.get(0).get(2));
-//
-//
-//    }
-//
-//
-//
-//    @Test
-//    public void randomGroupTestEvenStudents() {
-//        ConceptKnowledgeCalculatorAPI ckc = null;
-//
-//        try {
-//            ckc = new ConceptKnowledgeCalculator("test/testresources/ManuallyCreated/researchConceptGraph.json", "test/testresources/ManuallyCreated/researchResource1.json", "test/testresources/ManuallyCreated/researchAssessment1.csv");
-//        } catch (IOException e) {
-//            e.printStackTrace();
-//        }
-//
-//        CohortConceptGraphs graphs = ckc.getCohortConceptGraphs();
-//        Assert.assertNotEquals(graphs, null);
-//
-//
-//        GroupSuggester obj = new RandomGroupSuggester();
-//
-//        //groups of two
-//        List<List<String>> groupings = obj.suggestGroup(graphs, 2);
-//
-//        Assert.assertEquals(groupings.size(), 3);
-//        Assert.assertEquals(groupings.get(0).size(),2);
-//        Assert.assertEquals(groupings.get(1).size(), 2);
-//        Assert.assertEquals(groupings.get(2).size(), 2);
-//
-//        List<String> test = new ArrayList<>();
-//        test.add(groupings.get(0).get(0));
-//        test.add( groupings.get(0).get(1));
-//        test.add(groupings.get(1).get(0));
-//        test.add( groupings.get(1).get(1));
-//        test.add(groupings.get(2).get(0));
-//        test.add(groupings.get(2).get(1));
-//
-//        Assert.assertEquals(test.size(),6);
-//        Assert.assertEquals(test.contains("s1"), true);
-//        Assert.assertEquals(test.contains("s2"), true);
-//        Assert.assertEquals(test.contains("s3"), true);
-//        Assert.assertEquals(test.contains("s4"), true);
-//        Assert.assertEquals(test.contains("s5"), true);
-//        Assert.assertEquals(test.contains("s6"), true);
-//
-//        //groups of three
-//        List<List<String>> groupings2 = obj.suggestGroup(graphs, 3);
-//
-//        Assert.assertEquals(groupings2.size(), 2);
-//        Assert.assertEquals(groupings2.get(0).size(),3);
-//        Assert.assertEquals(groupings2.get(1).size(),3);
-//        Assert.assertNotEquals(groupings2.get(0).get(0), groupings2.get(0).get(1), groupings2.get(0).get(2));
-//        Assert.assertNotEquals(groupings2.get(1).get(0), groupings2.get(1).get(1), groupings2.get(1).get(2));
-//
-//
-//    }
-//@Test
-//public void randomGroupTestLessStudents() {
-//    ConceptKnowledgeCalculatorAPI ckc = null;
-//
-//    try {
-//        ckc = new ConceptKnowledgeCalculator("test/testresources/ManuallyCreated/simpleConceptGraph.json", "test/testresources/ManuallyCreated/simpleResource.json", "test/testresources/ManuallyCreated/simpleAssessment.csv");
-//    } catch (IOException e) {
-//        e.printStackTrace();
-//    }
-//
-//    CohortConceptGraphs graphs = ckc.getCohortConceptGraphs();
-//    Assert.assertNotEquals(graphs, null);
-//
-//
-//    GroupSuggester obj = new RandomGroupSuggester();
-//
-//    //groups of two
-//    List<List<String>> groupings = obj.suggestGroup(graphs, 2);
-//
-//    Assert.assertEquals(groupings.size(), 1);
-//    Assert.assertEquals(groupings.get(0).size(),1);
-//
-//
-////        //groups of three
-//    List<List<String>> groupings2 = obj.suggestGroup(graphs, 3);
-//
-//    Assert.assertEquals(groupings2.size(), 1);
-//    Assert.assertEquals(groupings2.get(0).size(),1);
-//
-//
-//}
-//
+    @Test
+    public void randomGroupTestOddStudents() {
+        ConceptKnowledgeCalculatorAPI ckc = null;
 
+        try {
+            ckc = new ConceptKnowledgeCalculator("test/testresources/ManuallyCreated/researchConceptGraph.json", "test/testresources/ManuallyCreated/researchResource2.json", "test/testresources/ManuallyCreated/researchAssessment2.csv");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        CohortConceptGraphs graphs = ckc.getCohortConceptGraphs();
+        Assert.assertNotEquals(graphs, null);
+
+
+        GroupSuggester obj = new random(2);
+
+        Map<String, ConceptGraph> userMap = obj.getUserMap(graphs);
+
+        List<Map<String, ConceptGraph>> groupings1 = new ArrayList<>();
+        groupings1.add(userMap);
+
+        //groups of two
+        List<Map<String, ConceptGraph>> groupings = obj.suggestGroup(groupings1);
+
+
+
+        Assert.assertEquals(groupings.size(), 2);
+        Assert.assertEquals(groupings.get(0).size(),3);
+        Assert.assertEquals(groupings.get(1).size(), 2);
+
+//        Assert.assertNotEquals(groupings.get(0).get(0), groupings.get(0).get(1), groupings.get(1).get(0));
+
+//        //groups of three
+        GroupSuggester obj2 = new random(3);
+        List<Map<String, ConceptGraph>> groupings2 = obj2.suggestGroup(groupings1);
+
+
+
+        Assert.assertEquals(groupings2.size(), 2);
+        Assert.assertEquals(groupings2.get(0).size(),3);
+        Assert.assertEquals(groupings2.get(1).size(),2);
+
+    }
+
+@Test
+public void randomGroupTestLessStudents() {
+    ConceptKnowledgeCalculatorAPI ckc = null;
+
+    try {
+        ckc = new ConceptKnowledgeCalculator("test/testresources/ManuallyCreated/simpleConceptGraph.json", "test/testresources/ManuallyCreated/simpleResource.json", "test/testresources/ManuallyCreated/simpleAssessment.csv");
+    } catch (IOException e) {
+        e.printStackTrace();
+    }
+
+    CohortConceptGraphs graphs = ckc.getCohortConceptGraphs();
+    Assert.assertNotEquals(graphs, null);
+
+
+    GroupSuggester obj = new random(2);
+
+    Map<String, ConceptGraph> userMap = obj.getUserMap(graphs);
+
+    List<Map<String, ConceptGraph>> groupings1 = new ArrayList<>();
+    groupings1.add(userMap);
+
+    //groups of two
+    List<Map<String, ConceptGraph>> groupings = obj.suggestGroup(groupings1);
+
+
+    Assert.assertEquals(groupings.size(), 1);
+    Assert.assertEquals(groupings.get(0).size(),1);
+
+
+    GroupSuggester obj2 = new random(3);
+
+
+//        //groups of three
+    List<Map<String, ConceptGraph>> groupings2 = obj2.suggestGroup(groupings1);
+
+    Assert.assertEquals(groupings2.size(), 1);
+    Assert.assertEquals(groupings2.get(0).size(),1);
+
+
+}
+
+
+    @Test
+    public void conceptTest(){
+        ConceptKnowledgeCalculatorAPI ckc = null;
+
+        try {
+            ckc = new ConceptKnowledgeCalculator("test/testresources/ManuallyCreated/researchConceptGraph.json", "test/testresources/ManuallyCreated/researchResource2.json", "test/testresources/ManuallyCreated/researchAssessment2.csv");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        CohortConceptGraphs graphs = ckc.getCohortConceptGraphs();
+        Assert.assertNotEquals(graphs, null);
+
+
+        GroupSuggester obj = new concept(2);
+
+
+        Map<String, ConceptGraph> userMap = obj.getUserMap(graphs);
+
+        List<Map<String, ConceptGraph>> groupings1 = new ArrayList<>();
+        groupings1.add(userMap);
+
+        //groups of two
+        List<Map<String, ConceptGraph>> groupings = obj.suggestGroup(groupings1);
+
+
+
+
+    }
 
     @Test
     public void randomTest() {
@@ -156,7 +149,7 @@ public class GroupSuggesterTest {
         Assert.assertNotEquals(graphs, null);
 
 
-        GroupSuggester obj = new random();
+        GroupSuggester obj = new random(2);
 
 
         Map<String, ConceptGraph> userMap = obj.getUserMap(graphs);
@@ -166,6 +159,30 @@ public class GroupSuggesterTest {
 
         //groups of two
         List<Map<String, ConceptGraph>> groupings = obj.suggestGroup(groupings1);
+
+
+
+        //testing with more than one list of groups
+        List<Map<String, ConceptGraph>> actualGroupings = new ArrayList<>();
+        Map<String, ConceptGraph> map = new HashMap<>();
+        map.put("mia", new ConceptGraph());
+        map.put("don", new ConceptGraph());
+        map.put("bob", new ConceptGraph());
+        map.put("alena", new ConceptGraph());
+        actualGroupings.add(map);
+
+        Map<String, ConceptGraph> map2 = new HashMap<>();
+        map2.put("kayli",new ConceptGraph());
+        map2.put("dan", new ConceptGraph());
+        actualGroupings.add(map2);
+//
+//        List<Map<String, ConceptGraph>> groupings2 = obj.suggestGroup(actualGroupings);
+//        for(Map<String,ConceptGraph> map7: groupings2){
+//            for(String name: map7.keySet()){
+//                System.out.println(name);
+//            }
+//            System.out.println("end group");
+//        }
 
     }
 
@@ -183,17 +200,72 @@ public class GroupSuggesterTest {
         CohortConceptGraphs graphs = ckc.getCohortConceptGraphs();
         Assert.assertNotEquals(graphs, null);
 
+        List<Integer> ranges = new ArrayList<>();
+        ranges.add(50);
+        ranges.add(80);
 
-        GroupSuggester obj = new bucket();
+        GroupSuggester obj = null;
+        try {
+            obj = new bucket(ranges);
+
+            Map<String, ConceptGraph> userMap = obj.getUserMap(graphs);
+
+            List<Map<String, ConceptGraph>> groupings1 = new ArrayList<>();
+            groupings1.add(userMap);
+
+            //groups of two
+            List<Map<String, ConceptGraph>> groupings = obj.suggestGroup(groupings1);
+
+            Assert.assertEquals(groupings.get(0).size(),0 );
+
+            Assert.assertEquals(groupings.get(1).size(), 2);
+            Assert.assertEquals(groupings.get(1).containsKey("s2"), true);
+            Assert.assertEquals(groupings.get(1).containsKey("s3"),true);
+
+            Assert.assertEquals(groupings.get(2).size(), 3);
+            Assert.assertEquals(groupings.get(2).containsKey("s4"), true);
+            Assert.assertEquals(groupings.get(2).containsKey("s5"), true);
+            Assert.assertEquals(groupings.get(2).containsKey("s1"),true);
 
 
-        Map<String, ConceptGraph> userMap = obj.getUserMap(graphs);
+            //testing with more than one list of groups
+            List<Map<String, ConceptGraph>> actualGroupings = new ArrayList<>();
+            Map<String, ConceptGraph> map = new HashMap<>();
+            map.put("mia", groupings.get(1).get("s3"));
+            map.put("don", groupings.get(2).get("s4"));
+            map.put("bob", groupings.get(1).get("s2"));
+            map.put("alena", groupings.get(1).get("s3"));
+            actualGroupings.add(map);
 
-        List<Map<String, ConceptGraph>> groupings1 = new ArrayList<>();
-        groupings1.add(userMap);
+            Map<String, ConceptGraph> map2 = new HashMap<>();
+            map2.put("kayli", groupings.get(2).get("s5"));
+            map2.put("dan", groupings.get(1).get("s2"));
+            actualGroupings.add(map2);
 
-        //groups of two
-        List<Map<String, ConceptGraph>> groupings = obj.suggestGroup(groupings1);
+            List<Map<String, ConceptGraph>> groupings2 = obj.suggestGroup(actualGroupings);
+
+            Assert.assertEquals(groupings2.get(0).size(),0 );
+
+            Assert.assertEquals(groupings2.get(1).size(),4 );
+            Assert.assertEquals(groupings2.get(1).containsKey("mia"), true);
+            Assert.assertEquals(groupings2.get(1).containsKey("dan"), true);
+            Assert.assertEquals(groupings2.get(1).containsKey("bob"), true);
+            Assert.assertEquals(groupings2.get(1).containsKey("alena"), true);
+
+            Assert.assertEquals(groupings2.get(2).size(),2);
+            Assert.assertEquals(groupings2.get(2).containsKey("kayli"), true);
+            Assert.assertEquals(groupings2.get(2).containsKey("don"), true);
+
+
+
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+
+
+
 
     }
 
@@ -365,7 +437,12 @@ public class GroupSuggesterTest {
 
         CohortConceptGraphs graphs = ckc.getCohortConceptGraphs();
         Assert.assertNotEquals(graphs, null);
-        bucket sug = new bucket();
+        bucket sug = null;
+        try {
+            sug = new bucket(new ArrayList<>());
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
 
         ConceptGraph usergraph = graphs.getUserGraph("s5");
 

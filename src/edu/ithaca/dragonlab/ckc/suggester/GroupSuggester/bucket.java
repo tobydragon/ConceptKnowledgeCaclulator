@@ -13,9 +13,19 @@ import java.util.Map;
  */
 public class bucket extends GroupSuggester{
 
+    List<Integer> ranges;
+
+    public bucket(List<Integer> ranges) throws Exception {
+        if(ranges.size()>2){
+            throw new Exception();
+        }else{
+            this.ranges = ranges;
+
+        }
+    }
+
     @Override
     public List<Map<String, ConceptGraph>> suggestGroup(List<Map<String, ConceptGraph>> groupings) {
-        int bucketAmount = 3;
         List<Map<String, ConceptGraph>> actualGroupings = new ArrayList<>();
 
         Map<String, ConceptGraph> bad = new HashMap<>();
@@ -25,40 +35,30 @@ public class bucket extends GroupSuggester{
 
         for(Map<String, ConceptGraph> groupSoFar: groupings){
 
-
             Map<String, Double> knowledgeSums = new HashMap<>();
             for(String name: groupSoFar.keySet()){
                 ConceptGraph userGraph = groupSoFar.get(name);
                 String subject = "all";
-                double sum = calcSum(userGraph, subject);
-                knowledgeSums.put(name, sum);
-
+                double sum = calcSum(userGraph,subject);
+                knowledgeSums.put(name, (sum/userGraph.getAllNodeIds().size())*100);
             }
 
-            int highestTotal = 16;
-            Object cg= groupSoFar.values().toArray()[0];
-//
-//            System.out.println(cg);
 
-
-            System.out.println(knowledgeSums);
             for(String student: knowledgeSums.keySet()){
-                if(knowledgeSums.get(student)<highestTotal/bucketAmount){
+                if(knowledgeSums.get(student)<ranges.get(0)){
                     bad.put(student,groupSoFar.get(student));
-                }else if((knowledgeSums.get(student)>highestTotal/bucketAmount) && (knowledgeSums.get(student)< (highestTotal/bucketAmount*2))){
+                } else if((knowledgeSums.get(student)> ranges.get(0)) && (knowledgeSums.get(student) < ranges.get(1))){
                     okay.put(student,groupSoFar.get(student));
-                }else{
+                }else {
                     good.put(student,groupSoFar.get(student));
                 }
             }
 
 
-
-            actualGroupings.add(bad);
-            actualGroupings.add(okay);
-            actualGroupings.add(good);
         }
-
+        actualGroupings.add(bad);
+        actualGroupings.add(okay);
+        actualGroupings.add(good);
 
 //        for(Map<String,ConceptGraph> map: actualGroupings){
 //                for(String name: map.keySet()){
@@ -100,6 +100,7 @@ public class bucket extends GroupSuggester{
 
         }
     }
+
 
 
     @Override

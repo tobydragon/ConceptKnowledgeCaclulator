@@ -9,61 +9,102 @@ import java.util.*;
  * Created by Mia Kimmich Mitchell on 9/20/2017.
  */
 public class random extends GroupSuggester{
+    int groupSize;
+
+    public random(int size){
+        //group can't be bigger than class size
+        groupSize = size;
+
+    }
+
 
     @Override
     public List<Map<String, ConceptGraph>> suggestGroup(List<Map<String, ConceptGraph>> groupings){
         List<Map<String, ConceptGraph>> actualGroupings = new ArrayList<>();
 
-        int initalGroupSize = groupings.get(0).size();
-        int stopItr = initalGroupSize/2;
-        int itr = 0;
+        Map<String, ConceptGraph> extraMembers = new HashMap<>();
 
-        List<String> userList = new ArrayList<>();
-        userList.addAll(groupings.get(0).keySet());
+        for(Map<String, ConceptGraph> groupSoFar: groupings) {
 
-        while(itr != stopItr){
-            Map<String, ConceptGraph> group = new HashMap<>();
+            List<String> copyGroups = new ArrayList<>();
+            copyGroups.addAll(groupSoFar.keySet());
+            copyGroups.addAll(extraMembers.keySet());
 
-            Collections.shuffle(userList);
+            if (groupSoFar.size() > groupSize) {
 
-            int choices = 2;
-            while (choices>0){
-                System.out.println(choices);
-                //change from 0
-                group.put(userList.get(choices-1), groupings.get(0).get(userList.get(choices-1)));
 
-                userList.remove(userList.get(choices-1));
-                choices--;
+                for (int i = 0; i < groupSoFar.size() / groupSize; i++) {
+
+                    Map<String, ConceptGraph> groups = new HashMap<>();
+
+                    int itr = 0;
+                    while (itr < groupSize) {
+                        Collections.shuffle(copyGroups);
+                        String user = copyGroups.get(0);
+
+                        if (groupSoFar.containsKey(user)) {
+                            groups.put(user, groupSoFar.get(user));
+                        } else {
+                            groups.put(user, extraMembers.get(user));
+                            extraMembers.remove(user);
+                        }
+                        copyGroups.remove(user);
+
+                        itr++;
+                    }
+                    actualGroupings.add(groups);
+
+                }
+
+                if (copyGroups.size() > 0) {
+                    for (int i = 0; i < copyGroups.size(); i++) {
+                        extraMembers.put(copyGroups.get(i), groupSoFar.get(copyGroups.get(i)));
+                    }
+                }
+
+
+            }else{
+
+                List<String> copyGroups2 = new ArrayList<>();
+                copyGroups2.addAll(groupSoFar.keySet());
+                Collections.shuffle(copyGroups);
+
+                Map<String, ConceptGraph> groups2 = new HashMap<>();
+
+                for(String name: copyGroups2){
+                    groups2.put(name, groupSoFar.get(name));
+                }
+                actualGroupings.add(groups2);
+
+
             }
-            actualGroupings.add(group);
 
-            itr++;
-        }
-
-        if(groupings.get(0).size()%2!=0 && actualGroupings.size()>0){
-            //if the group can't be evenly be put into 2
-            for(int i=0; i<userList.size(); i++){
-                //change 0
-                Map<String, ConceptGraph> tempMap = actualGroupings.get(0);
-                tempMap.put(userList.get(i), groupings.get(0).get(userList.get(i)));
 
             }
 
-        }else{
-            Map<String, ConceptGraph> group = new HashMap<>();
-            for(int x=0; x<userList.size(); x++){
-                //change 0
-                group.put(userList.get(x), groupings.get(0).get(userList.get(x)));
+            if (extraMembers.size() > 0) {
 
+                if ((groupSize + extraMembers.size()) > groupSize + 1) {
+
+//            if(extraMembers.size()> groupSize-1 && ((groupSize+extraMembers.size())==groupSize+2)){
+                    //if the extra member amount is less 1 less than the size of all the other groups
+                    Map<String, ConceptGraph> groups = new HashMap<>();
+                    groups.putAll(extraMembers);
+                    actualGroupings.add(groups);
+
+                } else {
+                    // if the  extra amount of members is a less than 1 less than a normal group size
+                    int itr = 0;
+                    for (String mem : extraMembers.keySet()) {
+                        Map<String, ConceptGraph> placeHolder = actualGroupings.get(itr);
+                        placeHolder.put(mem, extraMembers.get(mem));
+                    }
+                }
             }
-            actualGroupings.add(group);
-        }
 
-//                    for(Map<String,ConceptGraph> map: actualGroupings){
-//                for(String name: map.keySet()){
-//                    System.out.println(name);
-//                }
-//            }
+
+
+
 
         return actualGroupings;
 
