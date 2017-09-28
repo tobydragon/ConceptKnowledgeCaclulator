@@ -179,14 +179,33 @@ public class CSVReader {
 
     public static ArrayList<String> lineToList(String line) {
         ArrayList<String> returnlist = new ArrayList<String>();
-        if (line != null) {
-            String[] splitData = line.split("\\s*,\\s*");
-            for (int i = 0; i < splitData.length; i++) {
-                if (!(splitData[i] == null) || !(splitData[i].length() == 0)) {
-                    returnlist.add(splitData[i].trim());
-                }
+        String item = "";
+        Boolean betweenQuote = false;
+        for (int i = 0; i < line.length(); i++){
+            if (line.charAt(i) == '"' && betweenQuote == false){
+                betweenQuote = true;
+            }
+            else if (line.charAt(i) == '"' && betweenQuote == true){
+                betweenQuote = false;
+            }
+            else if (line.charAt(i) == ',' && !betweenQuote){
+                returnlist.add(item.trim());
+                item = "";
+            }
+            else{
+                item += line.charAt(i);
             }
         }
+        // make sure to add a separate function for String stripping
+        returnlist.add(item.trim());
+//        if (line != null) {
+//            String[] splitData = line.split("\\s*,\\s*");
+//            for (int i = 0; i < splitData.length; i++) {
+//                if (!(splitData[i] == null) || !(splitData[i].length() == 0)) {
+//                    returnlist.add(splitData[i].trim());
+//                }
+//            }
+//        }
 
         return returnlist;
     }
