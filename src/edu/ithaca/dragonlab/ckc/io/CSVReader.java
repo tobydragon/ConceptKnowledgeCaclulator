@@ -180,23 +180,24 @@ public class CSVReader {
     public static ArrayList<String> lineToList(String line) {
         ArrayList<String> returnlist = new ArrayList<String>();
         String item = "";
-        Boolean isQuote = false;
+        Boolean betweenQuote = false;
         for (int i = 0; i < line.length(); i++){
-            if (line.charAt(i) == '"' && isQuote == false){
-                isQuote = true;
+            if (line.charAt(i) == '"' && betweenQuote == false){
+                betweenQuote = true;
             }
-            else if (line.charAt(i) == '"' && isQuote == true){
-                isQuote = false;
+            else if (line.charAt(i) == '"' && betweenQuote == true){
+                betweenQuote = false;
             }
-            if (line.charAt(i) == '"' && !isQuote){
+            else if (line.charAt(i) == ',' && !betweenQuote){
                 returnlist.add(item);
                 item = "";
             }
             else{
                 item += line.charAt(i);
-
             }
         }
+        // make sure to add a separate function for String stripping
+        returnlist.add(item);
 //        if (line != null) {
 //            String[] splitData = line.split("\\s*,\\s*");
 //            for (int i = 0; i < splitData.length; i++) {
