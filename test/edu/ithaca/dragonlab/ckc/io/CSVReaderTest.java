@@ -19,7 +19,7 @@ public class CSVReaderTest {
     @Test
     public void titleCommasTest() {
         String titles = "this is, a title to test. this, will not work";
-        List<String> myList = Arrays.asList("this is"," a title to test. this"," will not work");
+        List<String> myList = Arrays.asList("this is","a title to test. this","will not work");
         try {
             Assert.assertEquals(myList, CSVReader.lineToList(titles));
         }
@@ -55,7 +55,7 @@ public class CSVReaderTest {
     @Test
     public void titleStarTest () {
         String titles = "hello, a \"fourth\" test, *Breaks here*";
-        List<String> myList = Arrays.asList("hello", "a third test" , "*Breaks here*");
+        List<String> myList = Arrays.asList("hello", "a fourth test" , "*Breaks here*");
         try {
             Assert.assertEquals(myList, CSVReader.lineToList(titles));
         }
@@ -68,7 +68,7 @@ public class CSVReaderTest {
     @Test
     public void titleColonTest() {
         String titles = "Test 5: another break, \"maybe, maybe-not?\"";
-        List<String> myList = Arrays.asList("hello", "a third test" , "maybe this one will pass. Probably not");
+        List<String> myList = Arrays.asList("Test 5: another break", "maybe, maybe-not?");
         try {
             Assert.assertEquals(myList, CSVReader.lineToList(titles));
         }

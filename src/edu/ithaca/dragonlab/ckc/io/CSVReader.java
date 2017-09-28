@@ -189,7 +189,7 @@ public class CSVReader {
                 betweenQuote = false;
             }
             else if (line.charAt(i) == ',' && !betweenQuote){
-                returnlist.add(item);
+                returnlist.add(item.trim());
                 item = "";
             }
             else{
@@ -197,7 +197,7 @@ public class CSVReader {
             }
         }
         // make sure to add a separate function for String stripping
-        returnlist.add(item);
+        returnlist.add(item.trim());
 //        if (line != null) {
 //            String[] splitData = line.split("\\s*,\\s*");
 //            for (int i = 0; i < splitData.length; i++) {
