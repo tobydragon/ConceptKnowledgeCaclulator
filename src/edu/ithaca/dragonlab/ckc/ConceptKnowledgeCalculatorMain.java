@@ -50,7 +50,7 @@ public class ConceptKnowledgeCalculatorMain {
 
             new ConsoleUI("resources/comp105/comp105Graph.json",
                     "resources/comp105/comp105Resources.json",
-                    "localresources/comp105/comp105Assessment.csv");
+                    "localresources/comp105/COMP105-gradebook.csv");
 
         } else {
             throw new RuntimeException("Unrecognized starting mode, program cannot execute");

@@ -32,7 +32,7 @@ function writeMenu(){
 
     newCode += "<li><button type='button' onclick='findAndMakeChart(&quot;" + names[0] + "&quot;,&quot;reg&quot;)'>" + names[0] + "</button>";
     for(var i = 1; i < names.length; i++){
-        newCode += "<li><button type='button' onclick='findAndMakeChart(&quot;" + names[i] + "&quot;,&quot;reg&quot;)'>" + names[i] + "</button>";
+        newCode += "<li style='float: left'><button type='button' onclick='findAndMakeChart(&quot;" + names[i] + "&quot;,&quot;reg&quot;)'>" + names[i] + "</button>";
         newCode +="<button type='button' onclick='findAndMakeChart(&quot;" + names[i] + "&quot;,&quot;avg&quot;)'>" + "DistAvg" + "</button></li>";
     }
     newCode += "</ul></div>";
