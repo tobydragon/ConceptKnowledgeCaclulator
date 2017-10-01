@@ -23,7 +23,7 @@ import java.util.*;
  * Created by tdragon on 6/8/17.
  */
 public class ConceptKnowledgeCalculator implements ConceptKnowledgeCalculatorAPI{
-    private static final String OUTPUT_PATH = "out/";
+    private static final String OUTPUT_PATH = "ckcvisualizer/json/";
 
     //graphs
     private CohortConceptGraphs cohortConceptGraphs;

@@ -1,3 +1,3 @@
-graph = readJson("../out/structureTreeCurrent.json")
+graph = readJson("json/structureTreeCurrent.json")
 makeChart(graph, "reg")
 
