@@ -1,0 +1,69 @@
+[ {
+  "learningObject" : "Lab 1: Guess the Pattern",
+  "conceptIds" : [".h and .cpp Files",  "Interfaces"],
+  "dataImportance" : 1.0
+}, {
+  "learningObject" : "Lab 2: Array Library",
+  "conceptIds" : [ "Arrays", "Pass by Pointer", ".h and .cpp Files", "Interfaces",  "Linear Search"],
+  "dataImportance" : 1.0
+}, {
+  "learningObject" : "Lab 3: Comparing Array Library Efficiency",
+  "conceptIds" : ["Timing Efficiency", "Comparing Algorithms",  "Pointers", "Pass by Pointer" ],
+  "dataImportance" : 1.0
+}, {
+  "learningObject" : "Lab 4: Recursion",
+  "conceptIds" : ["Recursion", "const" ],
+  "dataImportance" : 1.0
+}, {
+  "learningObject" : "Lab 5: Comparing Searches",
+  "conceptIds" : ["Comparing Algorithms", "Bubble, Selection, Insert Sort", "Linear Search", "Binary Search", "Timing Efficiency" ],
+  "dataImportance" : 1.0
+}, {
+  "learningObject" : "Lab 6: ArrayList and Testing",
+  "conceptIds" : ["Object Oriented Programming in C++", "Destructor",  "Pass by Reference", "Default Constructor, Copy Constructor, Assignment Operator", "Unit Testing"],
+  "dataImportance" : 1.0
+}, {
+  "learningObject" : "Lab 7: Linked List",
+  "conceptIds" : ["Linked Nodes", "Default Constructor, Copy Constructor, Assignment Operator", "Destructor" ],
+  "dataImportance" : 1.0
+}, {
+  "learningObject" : "Lab 8: Comparing Arrays and Linked Lists",
+  "conceptIds" : ["Abstract Data Types", "Comparing Data Structures", "Arrays", "Linked Nodes", "Interfaces" ],
+  "dataImportance" : 1.0
+}, {
+  "learningObject" : "Overall Project Score",
+  "conceptIds" : [ ],
+  "dataImportance" : 0.1
+}, {
+  "learningObject" : "Day 03 Reading - C++ intro and pointers",
+  "conceptIds" : ["Pointers" ],
+  "dataImportance" : 0.1
+}, {
+  "learningObject" : "Day 02 Reading - C++ Intro",
+  "conceptIds" : [ ".h and .cpp Files" ],
+  "dataImportance" : 0.1
+}, {
+  "learningObject" : "Day 06 Reading - Pointers, Arrays, and Dynamic Memory",
+  "conceptIds" : [ "Pointers", "Arrays", "Memory Management"],
+  "dataImportance" : 0.1
+}, {
+  "learningObject" : "Day 09 Reading - Ponters and const",
+  "conceptIds" : [ "Pointers", "const"],
+  "dataImportance" : 0.1
+}, {
+  "learningObject" : "Day 10 Reading - Recursion",
+  "conceptIds" : [ "Recursion"],
+  "dataImportance" : 0.1
+}, {
+  "learningObject" : "Day 15 Reading - Big-O Notation",
+  "conceptIds" : [ "Big-O Notation"],
+  "dataImportance" : 0.1
+}, {
+  "learningObject" : "Day 17 Reading - OOP in C++",
+  "conceptIds" : [ "Object Oriented Programming in C++"],
+  "dataImportance" : 0.1
+}, {
+  "learningObject" : "Day 27 Reading  - Copying Objects",
+  "conceptIds" : ["Object Memory Management: Deep vs. Shallow Copies", "Default Constructor, Copy Constructor, Assignment Operator", "Destructor" ],
+  "dataImportance" : 0.1
+}  ]

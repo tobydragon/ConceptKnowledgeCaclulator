@@ -5,8 +5,8 @@ import edu.ithaca.dragonlab.ckc.ui.ConsoleUI;
 public class ConceptKnowledgeCalculatorMain {
 
     public static void main(String[] args) {
-        ConceptKnowledgeCalculator.Mode startMode = ConceptKnowledgeCalculator.Mode.STRUCTUREGRAPH;
-//        ConceptKnowledgeCalculator.Mode startMode = ConceptKnowledgeCalculator.Mode.COHORTGRAPH;
+//        ConceptKnowledgeCalculator.Mode startMode = ConceptKnowledgeCalculator.Mode.STRUCTUREGRAPH;
+        ConceptKnowledgeCalculator.Mode startMode = ConceptKnowledgeCalculator.Mode.COHORTGRAPH;
 
 
         if (startMode == ConceptKnowledgeCalculator.Mode.STRUCTUREGRAPH) {
@@ -28,9 +28,9 @@ public class ConceptKnowledgeCalculatorMain {
 //                    "test/testresources/ManuallyCreated/simpleResource.json",
 //                    "test/testresources/ManuallyCreated/simpleAssessmentMoreUsers.csv");
 
-//            new ConsoleUI("resources/comp220/comp220Graph.json",
-//                    "resources/comp220/comp220Resources.json",
-//                    "localresources/comp220/comp220ExampleDataPortion.csv");
+            new ConsoleUI("resources/comp220/comp220Graph.json",
+                    "resources/comp220/comp220Resources-e1.json",
+                    "localresources/comp220/comp220-e1.csv");
 //
 //            new ConsoleUI("test/testresources/ManuallyCreated/researchConceptGraph.json",
 //                    "test/testresources/ManuallyCreated/researchResource1.json",
@@ -47,10 +47,10 @@ public class ConceptKnowledgeCalculatorMain {
 //            new ConsoleUI("resources/comp110/comp110Graph.json",
 //                    "resources/comp110/comp110Resources.json",
 //                    "resources/comp110/comp110Assessment.csv");
-
-            new ConsoleUI("resources/comp105/comp105Graph.json",
-                    "resources/comp105/comp105Resources.json",
-                    "localresources/comp105/COMP105-gradebook.csv");
+//
+//            new ConsoleUI("resources/comp105/comp105Graph.json",
+//                    "resources/comp105/comp105Resources.json",
+//                    "localresources/comp105/COMP105-gradebook.csv");
 
         } else {
             throw new RuntimeException("Unrecognized starting mode, program cannot execute");

@@ -31,40 +31,35 @@ public class CSVReader {
         this.filename = filename;
         manualGradedResponseList = new ArrayList<>();
         learningObjectList = new ArrayList<>();
-        try {
-            String line;
-            this.csvBuffer = new BufferedReader(new FileReader(filename));
-            ArrayList<ArrayList<String>> lineList = new ArrayList<ArrayList<String>>();
-            //Takes the file being read in and calls a function to convert each line into a list split at
-            //every comma, then pust all the lists returned into a list of lists lineList[line][item in line]
-            while((line = this.csvBuffer.readLine())!= null){
-                lineList.add(lineToList(line));
-            }
-
-            boolean firstIteration = true;
-            for(ArrayList<String> singleList: lineList){
-
-                //The first list in the list of lists, is the Learning objects (questions)
-                //so we go through the first line and pull out all the learning objects and put them into the
-                //learning object list
-                int i = 2; //this is 2 because the first two columns are not assignments, so the first assingment is index 2
-                if(firstIteration){
-                    firstIteration = false;
-                    this.learningObjectList = learningObjectsFromList(singleList);
-                } else {
-                    try {
-                        //goes through and adds all the questions to their proper learning object, as well as adds them to
-                        //the general list of manual graded responses
-                        lorLister(singleList, i);
-                    }catch (NullPointerException e) {
-                        System.out.println("No Responses added to one or more LearningObjects");
-                    }
-                }
-            }
-        } catch (IOException e) {
-//            e.printStackTrace();
+        String line;
+        this.csvBuffer = new BufferedReader(new FileReader(filename));
+        ArrayList<ArrayList<String>> lineList = new ArrayList<ArrayList<String>>();
+        //Takes the file being read in and calls a function to convert each line into a list split at
+        //every comma, then pust all the lists returned into a list of lists lineList[line][item in line]
+        while((line = this.csvBuffer.readLine())!= null){
+            lineList.add(lineToList(line));
         }
 
+        boolean firstIteration = true;
+        for(ArrayList<String> singleList: lineList){
+
+            //The first list in the list of lists, is the Learning objects (questions)
+            //so we go through the first line and pull out all the learning objects and put them into the
+            //learning object list
+            int i = 2; //this is 2 because the first two columns are not assignments, so the first assingment is index 2
+            if(firstIteration){
+                firstIteration = false;
+                this.learningObjectList = learningObjectsFromList(singleList);
+            } else {
+                try {
+                    //goes through and adds all the questions to their proper learning object, as well as adds them to
+                    //the general list of manual graded responses
+                    lorLister(singleList, i);
+                }catch (NullPointerException e) {
+                    System.out.println("No Responses added to one or more LearningObjects");
+                }
+            }
+        }
     }
 
     public static ArrayList<ArrayList<String>> staticLineToList(String filename){
