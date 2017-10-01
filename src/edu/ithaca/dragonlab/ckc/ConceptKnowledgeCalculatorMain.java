@@ -13,7 +13,8 @@ public class ConceptKnowledgeCalculatorMain {
 
         if (startMode == ConceptKnowledgeCalculator.Mode.STRUCTUREGRAPH) {
 //            new ConsoleUI("resources/exampleGraph.json");
-            new ConsoleUI("resources/comp220/comp220Graph.json");
+            new ConsoleUI("resources/comp171/comp171Graph.json");
+//            new ConsoleUI("resources/comp220/comp220Graph.json");
 //            new ConsoleUI("resources/comp115/comp115Graph.json");
 //            new ConsoleUI("resources/comp171/comp171Graph-PaulNate-V1.json");
 //            new ConsoleUI("resources/comp110/comp110Graph.json");
@@ -54,15 +55,19 @@ public class ConceptKnowledgeCalculatorMain {
 //                    "resources/comp105/comp105Resources.json",
 //                    "localresources/comp105/COMP105-gradebook.csv");
 
-            new ConsoleUI(Arrays.asList("resources/comp220/comp220Graph.json"),
-                    Arrays.asList("resources/comp220/comp220Resources-courseWork.json",
-                            "resources/comp220/comp220Resources-e1.json",
-                            "resources/comp220/comp220Resources-e2.json",
-                            "resources/comp220/comp220Resources-finalExam.json"),
-                    Arrays.asList("localresources/comp220/comp220-courseWork.csv",
-                            "localresources/comp220/comp220-e1.csv",
-                            "localresources/comp220/comp220-e2.csv",
-                            "localresources/comp220/comp220-finalExam.csv") );
+//            new ConsoleUI(Arrays.asList("resources/comp220/comp220Graph.json"),
+//                    Arrays.asList("resources/comp220/comp220Resources-courseWork.json",
+//                            "resources/comp220/comp220Resources-e1.json",
+//                            "resources/comp220/comp220Resources-e2.json",
+//                            "resources/comp220/comp220Resources-finalExam.json"),
+//                    Arrays.asList("localresources/comp220/comp220-courseWork.csv",
+//                            "localresources/comp220/comp220-e1.csv",
+//                            "localresources/comp220/comp220-e2.csv",
+//                            "localresources/comp220/comp220-finalExam.csv") );
+
+            new ConsoleUI(Arrays.asList("resources/comp171/comp171Graph.json"),
+                    Arrays.asList("resources/comp171/comp171Resources-courseWork.json"),
+                    Arrays.asList("localresources/comp171/comp171courseWork.csv") );
 
         } else {
             throw new RuntimeException("Unrecognized starting mode, program cannot execute");
