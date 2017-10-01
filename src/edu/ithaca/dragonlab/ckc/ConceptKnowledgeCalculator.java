@@ -74,6 +74,11 @@ public class ConceptKnowledgeCalculator implements ConceptKnowledgeCalculatorAPI
         clearAndCreateCohortData(structure, resource, assessment);
     }
 
+    public ConceptKnowledgeCalculator(List<String> structureFilenames, List<String> resourceFilenames, List<String> assessmentFilenames) throws IOException{
+        this();
+        clearAndCreateCohortData(structureFilenames, resourceFilenames, assessmentFilenames);
+    }
+
 
     @Override
     public void clearAndCreateStructureData(List<String> structureFilename) throws IOException{
@@ -126,16 +131,17 @@ public class ConceptKnowledgeCalculator implements ConceptKnowledgeCalculatorAPI
 
         structureFiles.add(structureFilename.get(0));
 
-        resourceFiles.add(resourceFilename.get(0));
+        //resourceFiles.add(resourceFilename.get(0));
 
 
         //create the graph structure to be copied for each user
         ConceptGraphRecord structureRecord = ConceptGraphRecord.buildFromJson(structureFiles.get(0));
 
         List<LearningObjectLinkRecord> linkRecord = new ArrayList<>();
-        for (String rFiles : resourceFiles){
+        for (String rFiles : resourceFilename){
             List<LearningObjectLinkRecord> temp = LearningObjectLinkRecord.buildListFromJson(rFiles);
             linkRecord.addAll(temp);
+            resourceFiles.add(rFiles);
         }
 
         assessmentFiles.addAll(assessmentFilename);

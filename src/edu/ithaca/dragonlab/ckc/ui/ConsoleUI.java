@@ -35,6 +35,17 @@ public class ConsoleUI {
         run();
     }
 
+    public ConsoleUI(List<String> structureFilenames, List<String> resourceFilenames, List<String> assessmentFilenames) {
+        try {
+            ckc = new ConceptKnowledgeCalculator(structureFilenames, resourceFilenames, assessmentFilenames);
+        } catch (Exception e) {
+            System.out.println("Unable to load default files, please choose files manually. Error follows:");
+            e.printStackTrace();
+            ckc = new ConceptKnowledgeCalculator();
+        }
+        run();
+    }
+
 
     public void run(){
         Scanner scanner = new Scanner(System.in);

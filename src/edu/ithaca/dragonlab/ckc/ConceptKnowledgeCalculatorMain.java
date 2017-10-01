@@ -2,6 +2,8 @@ package edu.ithaca.dragonlab.ckc;
 
 import edu.ithaca.dragonlab.ckc.ui.ConsoleUI;
 
+import java.util.Arrays;
+
 public class ConceptKnowledgeCalculatorMain {
 
     public static void main(String[] args) {
@@ -28,9 +30,9 @@ public class ConceptKnowledgeCalculatorMain {
 //                    "test/testresources/ManuallyCreated/simpleResource.json",
 //                    "test/testresources/ManuallyCreated/simpleAssessmentMoreUsers.csv");
 
-            new ConsoleUI("resources/comp220/comp220Graph.json",
-                    "resources/comp220/comp220Resources-e1.json",
-                    "localresources/comp220/comp220-e1.csv");
+//            new ConsoleUI("resources/comp220/comp220Graph.json",
+//                    "resources/comp220/comp220Resources-e1.json",
+//                    "localresources/comp220/comp220-e1.csv");
 //
 //            new ConsoleUI("test/testresources/ManuallyCreated/researchConceptGraph.json",
 //                    "test/testresources/ManuallyCreated/researchResource1.json",
@@ -51,6 +53,16 @@ public class ConceptKnowledgeCalculatorMain {
 //            new ConsoleUI("resources/comp105/comp105Graph.json",
 //                    "resources/comp105/comp105Resources.json",
 //                    "localresources/comp105/COMP105-gradebook.csv");
+
+            new ConsoleUI(Arrays.asList("resources/comp220/comp220Graph.json"),
+                    Arrays.asList("resources/comp220/comp220Resources-courseWork.json",
+                            "resources/comp220/comp220Resources-e1.json",
+                            "resources/comp220/comp220Resources-e2.json",
+                            "resources/comp220/comp220Resources-finalExam.json"),
+                    Arrays.asList("localresources/comp220/comp220-courseWork.csv",
+                            "localresources/comp220/comp220-e1.csv",
+                            "localresources/comp220/comp220-e2.csv",
+                            "localresources/comp220/comp220-finalExam.csv") );
 
         } else {
             throw new RuntimeException("Unrecognized starting mode, program cannot execute");

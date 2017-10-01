@@ -28,7 +28,7 @@
   "dataImportance" : 1.0
 }, {
   "learningObject" : "Lab 8: Comparing Arrays and Linked Lists",
-  "conceptIds" : ["Abstract Data Types", "Comparing Data Structures", "Arrays", "Linked Nodes", "Interfaces" ],
+  "conceptIds" : ["Lists", "Abstract Data Types", "Comparing Data Structures", "Arrays", "Linked Nodes", "Interfaces" ],
   "dataImportance" : 1.0
 }, {
   "learningObject" : "Overall Project Score",
