@@ -77,12 +77,12 @@ public class LearningObjectSuggesterTest {
         CohortConceptGraphs cohortConceptGraphs = null;
 
         //create the graph structure to be copied for each user
-        ConceptGraphRecord structureRecord = ConceptGraphRecord.buildFromJson("resources/comp220/comp220Graph.json");
-        List<LearningObjectLinkRecord> linkRecord = LearningObjectLinkRecord.buildListFromJson("resources/comp220/comp220Resources.json");
+        ConceptGraphRecord structureRecord = ConceptGraphRecord.buildFromJson("test/testresources/ManuallyCreated/comp220GraphExample.json");
+        List<LearningObjectLinkRecord> linkRecord = LearningObjectLinkRecord.buildListFromJson("test/testresources/ManuallyCreated/comp220Resources.json");
         ConceptGraph graph = new ConceptGraph(structureRecord, linkRecord);
 
         //create the data to be used to create and populate the graph copies
-        CSVReader csvReader = new CSVReader("localresources/comp220/comp220ExampleDataPortion.csv");
+        CSVReader csvReader = new CSVReader("testlocalresources/comp220ExampleDataPortion.csv");
         List<LearningObjectResponse> assessments = csvReader.getManualGradedResponses();
 
         //create the average and individual graphs
@@ -103,12 +103,12 @@ public class LearningObjectSuggesterTest {
         CohortConceptGraphs cohortConceptGraphs = null;
 
         //create the graph structure to be copied for each user
-        ConceptGraphRecord structureRecord = ConceptGraphRecord.buildFromJson("resources/comp220/comp220Graph.json");
-        List<LearningObjectLinkRecord> linkRecord = LearningObjectLinkRecord.buildListFromJson("resources/comp220/comp220Resources.json");
+        ConceptGraphRecord structureRecord = ConceptGraphRecord.buildFromJson("test/testresources/ManuallyCreated/comp220GraphExample.json");
+        List<LearningObjectLinkRecord> linkRecord = LearningObjectLinkRecord.buildListFromJson("test/testresources/ManuallyCreated/comp220Resources.json");
         ConceptGraph graph = new ConceptGraph(structureRecord, linkRecord);
 
         //create the data to be used to create and populate the graph copies
-        CSVReader csvReader = new CSVReader("localresources/comp220/comp220ExampleDataPortion.csv");
+        CSVReader csvReader = new CSVReader("testlocalresources/comp220ExampleDataPortion.csv");
         List<LearningObjectResponse> assessments = csvReader.getManualGradedResponses();
 
         //create the average and individual graphs
@@ -227,12 +227,12 @@ public class LearningObjectSuggesterTest {
         CohortConceptGraphs cohortConceptGraphs = null;
 
         //create the graph structure to be copied for each user
-        ConceptGraphRecord structureRecord = ConceptGraphRecord.buildFromJson("resources/comp220/comp220Graph.json");
-        List<LearningObjectLinkRecord> linkRecord = LearningObjectLinkRecord.buildListFromJson("resources/comp220/comp220Resources.json");
+        ConceptGraphRecord structureRecord = ConceptGraphRecord.buildFromJson("test/testresources/ManuallyCreated/comp220GraphExample.json");
+        List<LearningObjectLinkRecord> linkRecord = LearningObjectLinkRecord.buildListFromJson("test/testresources/ManuallyCreated/comp220Resources.json");
         ConceptGraph graph = new ConceptGraph(structureRecord, linkRecord);
 
         //create the data to be used to create and populate the graph copies
-        CSVReader csvReader = new CSVReader("localresources/comp220/comp220ExampleDataPortion.csv");
+        CSVReader csvReader = new CSVReader("testlocalresources/comp220ExampleDataPortion.csv");
         List<LearningObjectResponse> assessments = csvReader.getManualGradedResponses();
 
         //create the average and individual graphs

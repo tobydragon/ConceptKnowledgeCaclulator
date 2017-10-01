@@ -685,7 +685,7 @@ public class GroupSuggesterTest {
         ConceptKnowledgeCalculatorAPI ckc = null;
 
         try {
-            ckc = new ConceptKnowledgeCalculator("resources/comp220/comp220Graph.json","resources/comp220/comp220Resources.json","localresources/comp220/comp220ExampleDataPortion.csv");
+            ckc = new ConceptKnowledgeCalculator("test/testresources/ManuallyCreated/comp220GraphExample.json","test/testresources/ManuallyCreated/comp220Resources.json","testlocalresources/comp220ExampleDataPortion.csv");
         } catch (IOException e) {
             e.printStackTrace();
         }
