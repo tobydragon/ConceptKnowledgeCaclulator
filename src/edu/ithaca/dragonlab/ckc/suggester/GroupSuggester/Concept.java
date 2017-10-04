@@ -10,10 +10,10 @@ import java.util.*;
 /**
  * Created by Mia Kimmich Mitchell on 9/28/2017.
  */
-public class concept extends GroupSuggester {
+public class Concept extends GroupSuggester {
     int groupSize;
 
-    public concept(int size){
+    public Concept(int size){
         groupSize=size;
     }
 
@@ -64,29 +64,9 @@ public class concept extends GroupSuggester {
     }
 
     public static Map<ConceptGraph, List<String>> orderMap(Map<ConceptGraph, List<String>> pri){
-        List hashmapList = new LinkedList(pri.entrySet());
 
-        Collections.sort(hashmapList, new Comparator() {
-                    public int compare(Object o1, Object o2) {
 
-                        return ((Comparable) ((Map.Entry) (o1))).compareTo(((Map.Entry) (o2)));
-                    }
-                }
-        );
-
-        HashMap<ConceptGraph, List<String>> sortedMap = new LinkedHashMap();
-        for (Iterator itr = hashmapList.iterator(); itr.hasNext(); ) {
-            Map.Entry entry = (Map.Entry) itr.next();
-
-            ConceptGraph key = (ConceptGraph) entry.getKey();
-            List<String> value = (List<String>) entry.getValue();
-
-//            Integer value = (Integer) entry.getValue();
-
-            sortedMap.put(key, value);
-        }
-
-        return sortedMap;
+        return null;
     }
 
 

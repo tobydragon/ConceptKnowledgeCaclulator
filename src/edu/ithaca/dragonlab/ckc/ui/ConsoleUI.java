@@ -166,12 +166,12 @@ public class ConsoleUI {
             //COHORTGRAPH MODE
             }else{
 
-                System.out.println("What do you want to do? \n 1 - calculate a list of concept nodes to work on \n 2 - calculate resources suggestions based on a specific concept \n 3 - automatically calculate suggestions \n 4 - View graph \n 5 - Create new graph \n 6 - Replace graph file \n 7 - Add another assessment file \n 8 - Remove assessment file \n 9 - Replace resource file \n 10 - View list of users \n 11 - Get Learning Object Average \n 12 - Get Student Average \n 13 - Link Learning Objects to similar factors \n 14 -  Graph strength of concept structure \n 15 - Create Groups of Random Students \n 16 - Create Groups of Students Based on Their Suggestions \n 17 - Create Group Of Students Based on Their Graph Sums \n 18 - Concept Difference Sum Group Suggestions \n 19 - View Structure Graph (switch to structure mode) \n 20 - Quit");
+                System.out.println("What do you want to do? \n 1 - calculate a list of Concept nodes to work on \n 2 - calculate resources suggestions based on a specific Concept \n 3 - automatically calculate suggestions \n 4 - View graph \n 5 - Create new graph \n 6 - Replace graph file \n 7 - Add another assessment file \n 8 - Remove assessment file \n 9 - Replace resource file \n 10 - View list of users \n 11 - Get Learning Object Average \n 12 - Get Student Average \n 13 - Link Learning Objects to similar factors \n 14 -  Graph strength of Concept structure \n 15 - Create Groups of Random Students \n 16 - Create Groups of Students Based on Their Suggestions \n 17 - Create Group Of Students Based on Their Graph Sums \n 18 - Concept Difference Sum Group Suggestions \n 19 - View Structure Graph (switch to structure mode) \n 20 - Quit");
                 Integer num = scanner.nextInt();
 
                 while (num < 1 || num > 20) {
                     System.out.println("Out of bounds");
-                    System.out.println("What do you want to do? \n 1 - calculate a list of concept nodes to work on \n 2 - calculate resources suggestions based on a specific concept \n 3 - automatically calculate suggestions \n 4 - View graph \n 5 - Create new graph \n 6 - Replace graph file \n 7 - Add another assessment file \n 8 - Remove assessment file \n 9 - Replace resource file \n 10 - View list of users \n 11 - Get Learning Object Average \n 12 - Get Student Average \n 13 - Link Learning Objects to similar factors \n 14 -  Graph strength of concept structure \n 15 - Create Groups of Random Students \n 16 - Create Groups of Students Based on Their Suggestions \n 17 - Create Group Of Students Based on Their Graph Sums \n 18 - Concept Difference Sum Group Suggestions \n 19 - View Structure Graph (switch to structure mode) \n 20 - Quit");
+                    System.out.println("What do you want to do? \n 1 - calculate a list of Concept nodes to work on \n 2 - calculate resources suggestions based on a specific Concept \n 3 - automatically calculate suggestions \n 4 - View graph \n 5 - Create new graph \n 6 - Replace graph file \n 7 - Add another assessment file \n 8 - Remove assessment file \n 9 - Replace resource file \n 10 - View list of users \n 11 - Get Learning Object Average \n 12 - Get Student Average \n 13 - Link Learning Objects to similar factors \n 14 -  Graph strength of Concept structure \n 15 - Create Groups of Random Students \n 16 - Create Groups of Students Based on Their Suggestions \n 17 - Create Group Of Students Based on Their Graph Sums \n 18 - Concept Difference Sum Group Suggestions \n 19 - View Structure Graph (switch to structure mode) \n 20 - Quit");
                     num = scanner.nextInt();
                 }
                 scanner.nextLine();
@@ -235,7 +235,7 @@ public class ConsoleUI {
 
 
     public void createConceptDiffGroupSuggestions(Scanner scanner){
-        System.out.println("Get group suggestions based on the difference in concept node's");
+        System.out.println("Get group suggestions based on the difference in Concept node's");
 
         System.out.println("Do you want groups of 2 or 3? ");
         Integer choice = scanner.nextInt();
@@ -247,7 +247,7 @@ public class ConsoleUI {
 
         scanner.nextLine();
 
-        System.out.println("If you want to create groups on the entire graph type 'all' or type in the concept ID");
+        System.out.println("If you want to create groups on the entire graph type 'all' or type in the Concept ID");
         String concept = scanner.nextLine();
 
 
@@ -278,7 +278,7 @@ public class ConsoleUI {
 
         scanner.nextLine();
 
-        System.out.println("If you want to create groups on the entire graph type 'all' or type in the concept ID");
+        System.out.println("If you want to create groups on the entire graph type 'all' or type in the Concept ID");
         String concept = scanner.nextLine();
 
 
@@ -372,7 +372,7 @@ public class ConsoleUI {
 
 
     public void createLearningObjectList(Scanner scanner){
-        System.out.println("calculate a list of concept nodes to work on ");
+        System.out.println("calculate a list of Concept nodes to work on ");
         System.out.println("User ID");
         String userID = scanner.nextLine();
 
@@ -391,7 +391,7 @@ public class ConsoleUI {
 
 
     public void specificLearningObjectSuggestion(Scanner scanner){
-        System.out.println("calculate resource suggestions based on a specific concept");
+        System.out.println("calculate resource suggestions based on a specific Concept");
         System.out.println("User ID");
         String userID = scanner.nextLine();
 
@@ -471,7 +471,7 @@ public class ConsoleUI {
     public void createNewCohortGraph(Scanner scanner){
         System.out.println("create new cohort graphs");
 
-        System.out.println("Type concept graph path: ");
+        System.out.println("Type Concept graph path: ");
         String structure = scanner.nextLine();
 
         System.out.println("Type learning object record path: ");

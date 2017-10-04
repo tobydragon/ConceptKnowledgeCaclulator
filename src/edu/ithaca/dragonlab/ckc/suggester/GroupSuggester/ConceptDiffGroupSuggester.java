@@ -109,9 +109,9 @@ public class ConceptDiffGroupSuggester extends GroupSuggester{
     /**
      * Creates a list of groups of 3 based on the closest knowledge estimate difference to the furthest
      * @param groupings list of groups of 2
-     * @param getMaps a map with all of the students and their associated concept graphs
-     * @param subject if difference calculation on the student's entire concept graphs or a part of it
-     * @param maxDifference the max difference between two concept graphs is a count of all of the concept nodes
+     * @param getMaps a map with all of the students and their associated Concept graphs
+     * @param subject if difference calculation on the student's entire Concept graphs or a part of it
+     * @param maxDifference the max difference between two Concept graphs is a count of all of the Concept nodes
      * @return a list of groups of 3 that are ordered by the cloest knowledge estimates to the furthest
      */
     public List<List< String>> createGroupsOfThree (List<List<String>> groupings, Map<String, ConceptGraph> getMaps, String subject, int maxDifference){
@@ -270,7 +270,7 @@ public class ConceptDiffGroupSuggester extends GroupSuggester{
      * Calculates the difference between the knowledge estimates of two students' graphs
      * @param graph1 student one's graph
      * @param graph2 student two's graph
-     * @param subject if the calculation should be on the entirety of the student's graphs (all) or if it should start on a specific concept node (concept node ID)
+     * @param subject if the calculation should be on the entirety of the student's graphs (all) or if it should start on a specific Concept node (Concept node ID)
      * @return
      */
     public double calcDiff(ConceptGraph graph1 , ConceptGraph graph2 ,String subject) {

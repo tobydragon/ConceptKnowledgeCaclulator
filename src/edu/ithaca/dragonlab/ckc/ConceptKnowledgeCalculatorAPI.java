@@ -112,7 +112,7 @@ public interface ConceptKnowledgeCalculatorAPI {
 
 
     /**
-     * Calculates suggestions specific to a certain concept for an individual graph
+     * Calculates suggestions specific to a certain Concept for an individual graph
      * @return Suggestion Resource object with two order resource lists
      */
     SuggestionResource calcIndividualSpecificConceptSuggestions(String userId, String conceptId) throws Exception;

@@ -650,7 +650,7 @@ public class ConceptKnowledgeCalculatorTest {
             ckc = new ConceptKnowledgeCalculator("test/testresources/ManuallyCreated/basicRealisticConceptGraph.json", "test/testresources/ManuallyCreated/basicRealisticResource.json", "test/testresources/ManuallyCreated/basicRealisticAssessment.csv");
 
             Assert.assertEquals(ckc.getCurrentMode(), ConceptKnowledgeCalculator.Mode.COHORTGRAPH);
-            //the constructor starts out as a cohort concept graph and there should only be one file in each of the lists of files. The structure graph should be null, because we're not on that mode
+            //the constructor starts out as a cohort Concept graph and there should only be one file in each of the lists of files. The structure graph should be null, because we're not on that mode
             getTest.add("test/testresources/ManuallyCreated/basicRealisticConceptGraph.json");
             Assert.assertEquals(ckc.currentStructure(),getTest );
             getTest.clear();
@@ -668,7 +668,7 @@ public class ConceptKnowledgeCalculatorTest {
 
 
             //STRUCTURE MODE
-            //now in structure mode. Because of this cohort concept graph should be null as well as all the extra data (LO and LOR files). Structure graph should not be null now because we are in that mode.
+            //now in structure mode. Because of this cohort Concept graph should be null as well as all the extra data (LO and LOR files). Structure graph should not be null now because we are in that mode.
             //it should hold on to blank resource and assessment files. The structure file should have one file in it.
             ckc.switchToStructure();
             Assert.assertEquals(ckc.getCurrentMode(), ConceptKnowledgeCalculator.Mode.STRUCTUREGRAPH);
@@ -706,7 +706,7 @@ public class ConceptKnowledgeCalculatorTest {
 
 
             //CONCEPT GRAPH MODE
-            //switched back into concept graph mode because now the three lists of files are filled up with at least one file.
+            //switched back into Concept graph mode because now the three lists of files are filled up with at least one file.
             //all of the previous files should be stored in structure files, resource files, and assessment files
             ckc.addResource("test/testresources/ManuallyCreated/simpleResource.json");
             Assert.assertEquals(ckc.getCurrentMode(), ConceptKnowledgeCalculator.Mode.COHORTGRAPH);

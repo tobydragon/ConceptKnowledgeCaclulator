@@ -11,15 +11,17 @@ import java.util.Map;
 /**
  * Created by Mia Kimmich Mitchell on 9/20/2017.
  */
-public class bucket extends GroupSuggester{
+public class Bucket extends GroupSuggester{
 
     List<Integer> ranges;
 
-    public bucket(List<Integer> ranges) throws Exception {
-        if(ranges.size()>2){
+    public Bucket(List<Integer> ranges) throws Exception {
+        if(ranges.size()<0){
             throw new Exception();
         }else{
             this.ranges = ranges;
+            this.ranges.add(0,0);
+            this.ranges.add(100);
 
         }
     }
@@ -28,12 +30,14 @@ public class bucket extends GroupSuggester{
     public List<Map<String, ConceptGraph>> suggestGroup(List<Map<String, ConceptGraph>> groupings) {
         List<Map<String, ConceptGraph>> actualGroupings = new ArrayList<>();
 
-        Map<String, ConceptGraph> bad = new HashMap<>();
-        Map<String, ConceptGraph> okay = new HashMap<>();
-        Map<String, ConceptGraph> good = new HashMap<>();
-
 
         for(Map<String, ConceptGraph> groupSoFar: groupings){
+            List<Map<String, ConceptGraph>> buckets = new ArrayList<>();
+
+
+            Map<String, ConceptGraph> bad = new HashMap<>();
+            Map<String, ConceptGraph> okay = new HashMap<>();
+            Map<String, ConceptGraph> good = new HashMap<>();
 
             Map<String, Double> knowledgeSums = new HashMap<>();
             for(String name: groupSoFar.keySet()){
@@ -43,62 +47,57 @@ public class bucket extends GroupSuggester{
                 knowledgeSums.put(name, (sum/userGraph.getAllNodeIds().size())*100);
             }
 
+//            int r =0;
+//            for(Integer range: ranges){
+//
+//                for(String student:knowledgeSums.keySet()){
+//
+//                    if(ranges.get(r+1)!=100){
+//                        if(knowledgeSums.get(student)>ranges.get(r) && ){
+//
+//                        }
+//
+//                    }
+//
+//
+//
+//
+//                }
+//
+//            }
 
             for(String student: knowledgeSums.keySet()){
-                if(knowledgeSums.get(student)<ranges.get(0)){
+
+                if(knowledgeSums.get(student)>ranges.get(0) && knowledgeSums.get(student)< ranges.get(1)){
                     bad.put(student,groupSoFar.get(student));
-                } else if((knowledgeSums.get(student)> ranges.get(0)) && (knowledgeSums.get(student) < ranges.get(1))){
+                } else if((knowledgeSums.get(student)> ranges.get(1)) && (knowledgeSums.get(student) < ranges.get(2))){
                     okay.put(student,groupSoFar.get(student));
                 }else {
                     good.put(student,groupSoFar.get(student));
                 }
             }
 
-
+            actualGroupings.add(bad);
+            actualGroupings.add(okay);
+            actualGroupings.add(good);
         }
-        actualGroupings.add(bad);
-        actualGroupings.add(okay);
-        actualGroupings.add(good);
 
-//        for(Map<String,ConceptGraph> map: actualGroupings){
-//                for(String name: map.keySet()){
-//                    System.out.println(name);
-//                }
-//
-//            System.out.println("end group");
-//        }
+
+
 
         return actualGroupings;
     }
 
 
     /**
-     * Calculates the sum of all of the student's knowledge estimates on the whole concept graph or a specific part of it
-     * @param s1 student's concept graph
-     * @param subject 'all' for the entire tree or a concept node IDs
+     * Calculates the sum of all of the student's knowledge estimates on the whole Concept graph or a specific part of it
+     * @param subject 'all' for the entire tree or a Concept node IDs
      * @return double the sum of the estimates
      */
     public double calcSum (ConceptGraph s1, String subject){
 
-        if(subject.equals("all")){
-            double ex = 0;
+        return s1.calcTotalKnowledgeEstimate(subject);
 
-            for(ConceptNode roots: s1.getRoots()){
-                double total = roots.countTotalKnowledgeEstimate(new ArrayList<>());
-                ex+= total;
-
-            }
-
-            return ex;
-
-        }else{
-
-            ConceptNode node = s1.findNodeById(subject);
-
-
-            return node.countTotalKnowledgeEstimate(new ArrayList<>());
-
-        }
     }
 
 

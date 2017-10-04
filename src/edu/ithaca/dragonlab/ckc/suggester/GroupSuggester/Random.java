@@ -8,10 +8,10 @@ import java.util.*;
 /**
  * Created by Mia Kimmich Mitchell on 9/20/2017.
  */
-public class random extends GroupSuggester{
+public class Random extends GroupSuggester{
     int groupSize;
 
-    public random(int size){
+    public Random(int size){
         //group can't be bigger than class size
         groupSize = size;
 
@@ -80,27 +80,28 @@ public class random extends GroupSuggester{
             }
 
 
-            }
+        }
 
-            if (extraMembers.size() > 0) {
+        if (extraMembers.size() > 0) {
+            System.out.println(extraMembers.keySet());
 
-                if ((groupSize + extraMembers.size()) > groupSize + 1) {
+            if ((groupSize + extraMembers.size()) > groupSize + 1) {
 
 //            if(extraMembers.size()> groupSize-1 && ((groupSize+extraMembers.size())==groupSize+2)){
-                    //if the extra member amount is less 1 less than the size of all the other groups
-                    Map<String, ConceptGraph> groups = new HashMap<>();
-                    groups.putAll(extraMembers);
-                    actualGroupings.add(groups);
+                //if the extra member amount is less 1 less than the size of all the other groups
+                Map<String, ConceptGraph> groups = new HashMap<>();
+                groups.putAll(extraMembers);
+                actualGroupings.add(groups);
 
-                } else {
-                    // if the  extra amount of members is a less than 1 less than a normal group size
-                    int itr = 0;
-                    for (String mem : extraMembers.keySet()) {
-                        Map<String, ConceptGraph> placeHolder = actualGroupings.get(itr);
-                        placeHolder.put(mem, extraMembers.get(mem));
-                    }
+            } else {
+                // if the  extra amount of members is a less than 1 less than a normal group size
+                int itr = 0;
+                for (String mem : extraMembers.keySet()) {
+                    Map<String, ConceptGraph> placeHolder = actualGroupings.get(itr);
+                    placeHolder.put(mem, extraMembers.get(mem));
                 }
             }
+        }
 
 
 

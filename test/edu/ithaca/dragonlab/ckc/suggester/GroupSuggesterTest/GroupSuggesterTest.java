@@ -1,11 +1,11 @@
 package edu.ithaca.dragonlab.ckc.suggester.GroupSuggesterTest;
 
-import com.sun.org.apache.bcel.internal.classfile.ConstantCP;
 import edu.ithaca.dragonlab.ckc.ConceptKnowledgeCalculator;
 import edu.ithaca.dragonlab.ckc.ConceptKnowledgeCalculatorAPI;
 import edu.ithaca.dragonlab.ckc.conceptgraph.CohortConceptGraphs;
 import edu.ithaca.dragonlab.ckc.conceptgraph.ConceptGraph;
 import edu.ithaca.dragonlab.ckc.suggester.GroupSuggester.*;
+import edu.ithaca.dragonlab.ckc.suggester.GroupSuggester.Random;
 import edu.ithaca.dragonlab.ckc.util.DataUtil;
 import org.junit.Assert;
 import org.junit.Test;
@@ -33,7 +33,7 @@ public class GroupSuggesterTest {
         Assert.assertNotEquals(graphs, null);
 
 
-        GroupSuggester obj = new random(2);
+        GroupSuggester obj = new Random(2);
 
         Map<String, ConceptGraph> userMap = obj.getUserMap(graphs);
 
@@ -52,7 +52,7 @@ public class GroupSuggesterTest {
 //        Assert.assertNotEquals(groupings.get(0).get(0), groupings.get(0).get(1), groupings.get(1).get(0));
 
 //        //groups of three
-        GroupSuggester obj2 = new random(3);
+        GroupSuggester obj2 = new Random(3);
         List<Map<String, ConceptGraph>> groupings2 = obj2.suggestGroup(groupings1);
 
 
@@ -77,7 +77,7 @@ public void randomGroupTestLessStudents() {
     Assert.assertNotEquals(graphs, null);
 
 
-    GroupSuggester obj = new random(2);
+    GroupSuggester obj = new Random(2);
 
     Map<String, ConceptGraph> userMap = obj.getUserMap(graphs);
 
@@ -92,7 +92,7 @@ public void randomGroupTestLessStudents() {
     Assert.assertEquals(groupings.get(0).size(),1);
 
 
-    GroupSuggester obj2 = new random(3);
+    GroupSuggester obj2 = new Random(3);
 
 
 //        //groups of three
@@ -119,7 +119,7 @@ public void randomGroupTestLessStudents() {
         Assert.assertNotEquals(graphs, null);
 
 
-        GroupSuggester obj = new concept(2);
+        GroupSuggester obj = new Concept(2);
 
 
         Map<String, ConceptGraph> userMap = obj.getUserMap(graphs);
@@ -149,7 +149,7 @@ public void randomGroupTestLessStudents() {
         Assert.assertNotEquals(graphs, null);
 
 
-        GroupSuggester obj = new random(2);
+        GroupSuggester obj = new Random(2);
 
 
         Map<String, ConceptGraph> userMap = obj.getUserMap(graphs);
@@ -206,7 +206,7 @@ public void randomGroupTestLessStudents() {
 
         GroupSuggester obj = null;
         try {
-            obj = new bucket(ranges);
+            obj = new Bucket(ranges);
 
             Map<String, ConceptGraph> userMap = obj.getUserMap(graphs);
 
@@ -216,6 +216,7 @@ public void randomGroupTestLessStudents() {
             //groups of two
             List<Map<String, ConceptGraph>> groupings = obj.suggestGroup(groupings1);
 
+            Assert.assertEquals(groupings.size(), 3);
             Assert.assertEquals(groupings.get(0).size(),0 );
 
             Assert.assertEquals(groupings.get(1).size(), 2);
@@ -244,21 +245,24 @@ public void randomGroupTestLessStudents() {
 
             List<Map<String, ConceptGraph>> groupings2 = obj.suggestGroup(actualGroupings);
 
+            Assert.assertEquals(groupings2.size(), 6);
             Assert.assertEquals(groupings2.get(0).size(),0 );
 
-            Assert.assertEquals(groupings2.get(1).size(),4 );
+            Assert.assertEquals(groupings2.get(1).size(),3 );
             Assert.assertEquals(groupings2.get(1).containsKey("mia"), true);
-            Assert.assertEquals(groupings2.get(1).containsKey("dan"), true);
             Assert.assertEquals(groupings2.get(1).containsKey("bob"), true);
             Assert.assertEquals(groupings2.get(1).containsKey("alena"), true);
 
-            Assert.assertEquals(groupings2.get(2).size(),2);
-            Assert.assertEquals(groupings2.get(2).containsKey("kayli"), true);
+            Assert.assertEquals(groupings2.get(2).size(),1);
             Assert.assertEquals(groupings2.get(2).containsKey("don"), true);
 
+            Assert.assertEquals(groupings2.get(3).size(),0);
 
+            Assert.assertEquals(groupings2.get(4).size(),1);
+            Assert.assertEquals(groupings2.get(4).containsKey("dan"), true);
 
-
+            Assert.assertEquals(groupings2.get(5).size(),1);
+            Assert.assertEquals(groupings2.get(5).containsKey("kayli"), true);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -437,9 +441,9 @@ public void randomGroupTestLessStudents() {
 
         CohortConceptGraphs graphs = ckc.getCohortConceptGraphs();
         Assert.assertNotEquals(graphs, null);
-        bucket sug = null;
+        Bucket sug = null;
         try {
-            sug = new bucket(new ArrayList<>());
+            sug = new Bucket(new ArrayList<>());
         } catch (Exception e) {
             e.printStackTrace();
         }
