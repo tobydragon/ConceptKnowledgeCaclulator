@@ -200,9 +200,28 @@ public void randomGroupTestLessStudents() {
         CohortConceptGraphs graphs = ckc.getCohortConceptGraphs();
         Assert.assertNotEquals(graphs, null);
 
-        List<Integer> ranges = new ArrayList<>();
-        ranges.add(50);
-        ranges.add(80);
+        List<List<Integer>> ranges = new ArrayList<>();
+
+        List<Integer> temp = new ArrayList<>();
+        temp.add(0);
+        temp.add(50);
+
+        List<Integer> temp2 = new ArrayList<>();
+        temp2.add(51);
+        temp2.add(80);
+
+        List<Integer> temp3 = new ArrayList<>();
+        temp3.add(81);
+        temp3.add(100);
+
+        ranges.add(temp);
+        ranges.add(temp2);
+        ranges.add(temp3);
+
+//        List<Integer> ranges = new ArrayList<>();
+//
+//        ranges.add(50);
+//        ranges.add(80);
 
         GroupSuggester obj = null;
         try {

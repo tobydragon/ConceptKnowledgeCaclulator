@@ -225,31 +225,21 @@ public class  ConceptGraph {
             suggestedList.removeAll(ancesList);
             suggestedList.add(node);
         }
-
-
     }
 
     public double calcTotalKnowledgeEstimate( String startingSubject){
-
-
         if(startingSubject.equals("all")){
             double ex = 0;
-
             for(ConceptNode roots: this.getRoots()){
                 double total = roots.countTotalKnowledgeEstimate(new ArrayList<>());
                 ex+= total;
 
             }
-
             return ex;
-
         }else{
 
             ConceptNode node = this.findNodeById(startingSubject);
-
-
             return node.countTotalKnowledgeEstimate(new ArrayList<>());
-
         }
     }
 

@@ -13,16 +13,16 @@ import java.util.Map;
  */
 public class Bucket extends GroupSuggester{
 
-    List<Integer> ranges;
+    //a list of list of ranges. Each list (within the list) is a specific range.
+    List<List<Integer>> ranges;
 
-    public Bucket(List<Integer> ranges) throws Exception {
+    public Bucket(List<List<Integer>> ranges) throws Exception {
         if(ranges.size()<0){
             throw new Exception();
-        }else{
-            this.ranges = ranges;
-            this.ranges.add(0,0);
-            this.ranges.add(100);
 
+        }else{
+
+            this.ranges =ranges;
         }
     }
 
@@ -30,14 +30,7 @@ public class Bucket extends GroupSuggester{
     public List<Map<String, ConceptGraph>> suggestGroup(List<Map<String, ConceptGraph>> groupings) {
         List<Map<String, ConceptGraph>> actualGroupings = new ArrayList<>();
 
-
         for(Map<String, ConceptGraph> groupSoFar: groupings){
-            List<Map<String, ConceptGraph>> buckets = new ArrayList<>();
-
-
-            Map<String, ConceptGraph> bad = new HashMap<>();
-            Map<String, ConceptGraph> okay = new HashMap<>();
-            Map<String, ConceptGraph> good = new HashMap<>();
 
             Map<String, Double> knowledgeSums = new HashMap<>();
             for(String name: groupSoFar.keySet()){
@@ -47,43 +40,21 @@ public class Bucket extends GroupSuggester{
                 knowledgeSums.put(name, (sum/userGraph.getAllNodeIds().size())*100);
             }
 
-//            int r =0;
-//            for(Integer range: ranges){
-//
-//                for(String student:knowledgeSums.keySet()){
-//
-//                    if(ranges.get(r+1)!=100){
-//                        if(knowledgeSums.get(student)>ranges.get(r) && ){
-//
-//                        }
-//
-//                    }
-//
-//
-//
-//
-//                }
-//
-//            }
+            for(List<Integer> r: ranges){
+                Map<String, ConceptGraph> map = new HashMap<>();
 
-            for(String student: knowledgeSums.keySet()){
+                for(String student:knowledgeSums.keySet()){
 
-                if(knowledgeSums.get(student)>ranges.get(0) && knowledgeSums.get(student)< ranges.get(1)){
-                    bad.put(student,groupSoFar.get(student));
-                } else if((knowledgeSums.get(student)> ranges.get(1)) && (knowledgeSums.get(student) < ranges.get(2))){
-                    okay.put(student,groupSoFar.get(student));
-                }else {
-                    good.put(student,groupSoFar.get(student));
+                    if ( knowledgeSums.get(student)>r.get(0) && knowledgeSums.get(student) < r.get(1) ){
+                        map.put(student,groupSoFar.get(student));
+                    }
+
                 }
+
+                actualGroupings.add(map);
             }
 
-            actualGroupings.add(bad);
-            actualGroupings.add(okay);
-            actualGroupings.add(good);
         }
-
-
-
 
         return actualGroupings;
     }

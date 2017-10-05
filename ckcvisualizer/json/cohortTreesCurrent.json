@@ -1,0 +1,2187 @@
+{
+  "graphRecords" : [ {
+    "name" : "Average Graph",
+    "concepts" : [ {
+      "id" : "Intro to CS-1",
+      "label" : "Intro to CS",
+      "knowledgeEstimate" : 0.8076699029126213,
+      "knowledgePrediction" : 0.0,
+      "knowledgeDistFromAvg" : 0.0,
+      "dataImportance" : 206.0,
+      "resourceSummaries" : [ ]
+    }, {
+      "id" : "Algorithms-1",
+      "label" : "Algorithms",
+      "knowledgeEstimate" : 0.8369841269841269,
+      "knowledgePrediction" : 0.0,
+      "knowledgeDistFromAvg" : 0.0,
+      "dataImportance" : 63.0,
+      "resourceSummaries" : [ "Write an algorithm to change a list of ints to be a list of strings   Est:0.760  Imp:5.000  ResponseCount:5" ]
+    }, {
+      "id" : "Functions-1",
+      "label" : "Functions",
+      "knowledgeEstimate" : 0.8436206896551725,
+      "knowledgePrediction" : 0.0,
+      "knowledgeDistFromAvg" : 0.0,
+      "dataImportance" : 58.0,
+      "resourceSummaries" : [ "What’s wrong with the following function definition?   Est:0.908  Imp:5.000  ResponseCount:5", "What will the following function return?   Est:0.884  Imp:5.000  ResponseCount:5", "Can a function be called several times by placing a function call in the body of a loop   Est:0.952  Imp:5.000  ResponseCount:5" ]
+    }, {
+      "id" : "Parameters-1",
+      "label" : "Parameters",
+      "knowledgeEstimate" : 0.8188372093023256,
+      "knowledgePrediction" : 0.0,
+      "knowledgeDistFromAvg" : 0.0,
+      "dataImportance" : 43.0,
+      "resourceSummaries" : [ "How many parameters can you have?   Est:0.774  Imp:5.000  ResponseCount:5", "When do you want to cause a side effect?   Est:0.000  Imp:0.000  ResponseCount:0", "When do you want to allow side effects?   Est:0.844  Imp:5.000  ResponseCount:5" ]
+    }, {
+      "id" : "Values and Data Types-1",
+      "label" : "Values and Data Types",
+      "knowledgeEstimate" : 0.8218181818181819,
+      "knowledgePrediction" : 0.0,
+      "knowledgeDistFromAvg" : 0.0,
+      "dataImportance" : 33.0,
+      "resourceSummaries" : [ "When do you want to cause a side effect?   Est:0.000  Imp:0.000  ResponseCount:0" ]
+    }, {
+      "id" : "Dictionaries-1",
+      "label" : "Dictionaries",
+      "knowledgeEstimate" : 0.8260869565217391,
+      "knowledgePrediction" : 0.0,
+      "knowledgeDistFromAvg" : 0.0,
+      "dataImportance" : 23.0,
+      "resourceSummaries" : [ "What are values are accessed by?   Est:0.880  Imp:3.000  ResponseCount:3", "What’s a value   Est:0.802  Imp:5.000  ResponseCount:5", "Is a dictionary ordered?   Est:0.876  Imp:5.000  ResponseCount:5", "Whats a key   Est:0.814  Imp:5.000  ResponseCount:5" ]
+    }, {
+      "id" : "Strings-1",
+      "label" : "Strings",
+      "knowledgeEstimate" : 0.78,
+      "knowledgePrediction" : 0.0,
+      "knowledgeDistFromAvg" : 0.0,
+      "dataImportance" : 5.0,
+      "resourceSummaries" : [ "Write a function that will calculate if the substring 'the' is in any user input   Est:0.780  Imp:5.000  ResponseCount:5" ]
+    }, {
+      "id" : "Lists-1",
+      "label" : "Lists",
+      "knowledgeEstimate" : 0.812,
+      "knowledgePrediction" : 0.0,
+      "knowledgeDistFromAvg" : 0.0,
+      "dataImportance" : 10.0,
+      "resourceSummaries" : [ "When do you want to allow side effects?   Est:0.844  Imp:5.000  ResponseCount:5" ]
+    }, {
+      "id" : "Strings-2",
+      "label" : "Strings",
+      "knowledgeEstimate" : 0.78,
+      "knowledgePrediction" : 0.0,
+      "knowledgeDistFromAvg" : 0.0,
+      "dataImportance" : 5.0,
+      "resourceSummaries" : [ "Write a function that will calculate if the substring 'the' is in any user input   Est:0.780  Imp:5.000  ResponseCount:5" ]
+    }, {
+      "id" : "Nested Conditionals-1",
+      "label" : "Nested Conditionals",
+      "knowledgeEstimate" : 0.7952173913043479,
+      "knowledgePrediction" : 0.0,
+      "knowledgeDistFromAvg" : 0.0,
+      "dataImportance" : 69.0,
+      "resourceSummaries" : [ ]
+    }, {
+      "id" : "Loops-1",
+      "label" : "Loops",
+      "knowledgeEstimate" : 0.7952173913043479,
+      "knowledgePrediction" : 0.0,
+      "knowledgeDistFromAvg" : 0.0,
+      "dataImportance" : 69.0,
+      "resourceSummaries" : [ ]
+    }, {
+      "id" : "For Loops-1",
+      "label" : "For Loops",
+      "knowledgeEstimate" : 0.0,
+      "knowledgePrediction" : 0.0,
+      "knowledgeDistFromAvg" : 0.0,
+      "dataImportance" : 0.0,
+      "resourceSummaries" : [ "Describe how the following relate to a for loop: variable, terminating condition, loop body   Est:0.000  Imp:0.000  ResponseCount:0" ]
+    }, {
+      "id" : "While Loops-1",
+      "label" : "While Loops",
+      "knowledgeEstimate" : 0.7340000000000001,
+      "knowledgePrediction" : 0.0,
+      "knowledgeDistFromAvg" : 0.0,
+      "dataImportance" : 10.0,
+      "resourceSummaries" : [ "Describe how while loops can depend on booleans   Est:0.734  Imp:5.000  ResponseCount:5", "Describe the flow of a while loop?   Est:0.000  Imp:0.000  ResponseCount:0", "What are the differences and similarities between for loops and while loops   Est:0.000  Imp:0.000  ResponseCount:0", "What is the proper while loop diction?   Est:0.000  Imp:0.000  ResponseCount:0" ]
+    }, {
+      "id" : "Booleans-1",
+      "label" : "Booleans",
+      "knowledgeEstimate" : 0.7340000000000001,
+      "knowledgePrediction" : 0.0,
+      "knowledgeDistFromAvg" : 0.0,
+      "dataImportance" : 5.0,
+      "resourceSummaries" : [ "Describe how while loops can depend on booleans   Est:0.734  Imp:5.000  ResponseCount:5" ]
+    }, {
+      "id" : "Expressions and Statements-1",
+      "label" : "Expressions and Statements",
+      "knowledgeEstimate" : 0.8055932203389831,
+      "knowledgePrediction" : 0.0,
+      "knowledgeDistFromAvg" : 0.0,
+      "dataImportance" : 59.0,
+      "resourceSummaries" : [ "What does the modulus operator do?   Est:0.900  Imp:3.000  ResponseCount:3", "Write a function that will convert 645 mins into hours   Est:0.000  Imp:0.000  ResponseCount:0", "Write a function that will convert 645 mins into the whole hours   Est:0.810  Imp:5.000  ResponseCount:5", "What’s the difference between a statement and an expression?   Est:0.940  Imp:3.000  ResponseCount:3", "What are some of the statements we have already seen?   Est:0.000  Imp:0.000  ResponseCount:0" ]
+    }, {
+      "id" : "Variables-1",
+      "label" : "Variables",
+      "knowledgeEstimate" : 0.7908333333333334,
+      "knowledgePrediction" : 0.0,
+      "knowledgeDistFromAvg" : 0.0,
+      "dataImportance" : 48.0,
+      "resourceSummaries" : [ "What is printed then the following statements execute?   Est:0.660  Imp:5.000  ResponseCount:5", "What is an assignment token?   Est:0.726  Imp:5.000  ResponseCount:5", "What is a reference diagram?   Est:0.782  Imp:5.000  ResponseCount:5" ]
+    }, {
+      "id" : "Values and Data Types-2",
+      "label" : "Values and Data Types",
+      "knowledgeEstimate" : 0.8218181818181819,
+      "knowledgePrediction" : 0.0,
+      "knowledgeDistFromAvg" : 0.0,
+      "dataImportance" : 33.0,
+      "resourceSummaries" : [ "When do you want to cause a side effect?   Est:0.000  Imp:0.000  ResponseCount:0" ]
+    }, {
+      "id" : "Dictionaries-2",
+      "label" : "Dictionaries",
+      "knowledgeEstimate" : 0.8260869565217391,
+      "knowledgePrediction" : 0.0,
+      "knowledgeDistFromAvg" : 0.0,
+      "dataImportance" : 23.0,
+      "resourceSummaries" : [ "What are values are accessed by?   Est:0.880  Imp:3.000  ResponseCount:3", "What’s a value   Est:0.802  Imp:5.000  ResponseCount:5", "Is a dictionary ordered?   Est:0.876  Imp:5.000  ResponseCount:5", "Whats a key   Est:0.814  Imp:5.000  ResponseCount:5" ]
+    }, {
+      "id" : "Strings-3",
+      "label" : "Strings",
+      "knowledgeEstimate" : 0.78,
+      "knowledgePrediction" : 0.0,
+      "knowledgeDistFromAvg" : 0.0,
+      "dataImportance" : 5.0,
+      "resourceSummaries" : [ "Write a function that will calculate if the substring 'the' is in any user input   Est:0.780  Imp:5.000  ResponseCount:5" ]
+    }, {
+      "id" : "Lists-2",
+      "label" : "Lists",
+      "knowledgeEstimate" : 0.812,
+      "knowledgePrediction" : 0.0,
+      "knowledgeDistFromAvg" : 0.0,
+      "dataImportance" : 10.0,
+      "resourceSummaries" : [ "When do you want to allow side effects?   Est:0.844  Imp:5.000  ResponseCount:5" ]
+    }, {
+      "id" : "Strings-4",
+      "label" : "Strings",
+      "knowledgeEstimate" : 0.78,
+      "knowledgePrediction" : 0.0,
+      "knowledgeDistFromAvg" : 0.0,
+      "dataImportance" : 5.0,
+      "resourceSummaries" : [ "Write a function that will calculate if the substring 'the' is in any user input   Est:0.780  Imp:5.000  ResponseCount:5" ]
+    }, {
+      "id" : "Counting-1",
+      "label" : "Counting",
+      "knowledgeEstimate" : 0.7943243243243243,
+      "knowledgePrediction" : 0.0,
+      "knowledgeDistFromAvg" : 0.0,
+      "dataImportance" : 74.0,
+      "resourceSummaries" : [ "Counting in binary to 10   Est:0.782  Imp:5.000  ResponseCount:5" ]
+    }, {
+      "id" : "Loops-2",
+      "label" : "Loops",
+      "knowledgeEstimate" : 0.7952173913043479,
+      "knowledgePrediction" : 0.0,
+      "knowledgeDistFromAvg" : 0.0,
+      "dataImportance" : 69.0,
+      "resourceSummaries" : [ ]
+    }, {
+      "id" : "For Loops-2",
+      "label" : "For Loops",
+      "knowledgeEstimate" : 0.0,
+      "knowledgePrediction" : 0.0,
+      "knowledgeDistFromAvg" : 0.0,
+      "dataImportance" : 0.0,
+      "resourceSummaries" : [ "Describe how the following relate to a for loop: variable, terminating condition, loop body   Est:0.000  Imp:0.000  ResponseCount:0" ]
+    }, {
+      "id" : "While Loops-2",
+      "label" : "While Loops",
+      "knowledgeEstimate" : 0.7340000000000001,
+      "knowledgePrediction" : 0.0,
+      "knowledgeDistFromAvg" : 0.0,
+      "dataImportance" : 10.0,
+      "resourceSummaries" : [ "Describe how while loops can depend on booleans   Est:0.734  Imp:5.000  ResponseCount:5", "Describe the flow of a while loop?   Est:0.000  Imp:0.000  ResponseCount:0", "What are the differences and similarities between for loops and while loops   Est:0.000  Imp:0.000  ResponseCount:0", "What is the proper while loop diction?   Est:0.000  Imp:0.000  ResponseCount:0" ]
+    }, {
+      "id" : "Booleans-2",
+      "label" : "Booleans",
+      "knowledgeEstimate" : 0.7340000000000001,
+      "knowledgePrediction" : 0.0,
+      "knowledgeDistFromAvg" : 0.0,
+      "dataImportance" : 5.0,
+      "resourceSummaries" : [ "Describe how while loops can depend on booleans   Est:0.734  Imp:5.000  ResponseCount:5" ]
+    }, {
+      "id" : "Expressions and Statements-2",
+      "label" : "Expressions and Statements",
+      "knowledgeEstimate" : 0.8055932203389831,
+      "knowledgePrediction" : 0.0,
+      "knowledgeDistFromAvg" : 0.0,
+      "dataImportance" : 59.0,
+      "resourceSummaries" : [ "What does the modulus operator do?   Est:0.900  Imp:3.000  ResponseCount:3", "Write a function that will convert 645 mins into hours   Est:0.000  Imp:0.000  ResponseCount:0", "Write a function that will convert 645 mins into the whole hours   Est:0.810  Imp:5.000  ResponseCount:5", "What’s the difference between a statement and an expression?   Est:0.940  Imp:3.000  ResponseCount:3", "What are some of the statements we have already seen?   Est:0.000  Imp:0.000  ResponseCount:0" ]
+    }, {
+      "id" : "Variables-2",
+      "label" : "Variables",
+      "knowledgeEstimate" : 0.7908333333333334,
+      "knowledgePrediction" : 0.0,
+      "knowledgeDistFromAvg" : 0.0,
+      "dataImportance" : 48.0,
+      "resourceSummaries" : [ "What is printed then the following statements execute?   Est:0.660  Imp:5.000  ResponseCount:5", "What is an assignment token?   Est:0.726  Imp:5.000  ResponseCount:5", "What is a reference diagram?   Est:0.782  Imp:5.000  ResponseCount:5" ]
+    }, {
+      "id" : "Values and Data Types-3",
+      "label" : "Values and Data Types",
+      "knowledgeEstimate" : 0.8218181818181819,
+      "knowledgePrediction" : 0.0,
+      "knowledgeDistFromAvg" : 0.0,
+      "dataImportance" : 33.0,
+      "resourceSummaries" : [ "When do you want to cause a side effect?   Est:0.000  Imp:0.000  ResponseCount:0" ]
+    }, {
+      "id" : "Dictionaries-3",
+      "label" : "Dictionaries",
+      "knowledgeEstimate" : 0.8260869565217391,
+      "knowledgePrediction" : 0.0,
+      "knowledgeDistFromAvg" : 0.0,
+      "dataImportance" : 23.0,
+      "resourceSummaries" : [ "What are values are accessed by?   Est:0.880  Imp:3.000  ResponseCount:3", "What’s a value   Est:0.802  Imp:5.000  ResponseCount:5", "Is a dictionary ordered?   Est:0.876  Imp:5.000  ResponseCount:5", "Whats a key   Est:0.814  Imp:5.000  ResponseCount:5" ]
+    }, {
+      "id" : "Strings-5",
+      "label" : "Strings",
+      "knowledgeEstimate" : 0.78,
+      "knowledgePrediction" : 0.0,
+      "knowledgeDistFromAvg" : 0.0,
+      "dataImportance" : 5.0,
+      "resourceSummaries" : [ "Write a function that will calculate if the substring 'the' is in any user input   Est:0.780  Imp:5.000  ResponseCount:5" ]
+    }, {
+      "id" : "Lists-3",
+      "label" : "Lists",
+      "knowledgeEstimate" : 0.812,
+      "knowledgePrediction" : 0.0,
+      "knowledgeDistFromAvg" : 0.0,
+      "dataImportance" : 10.0,
+      "resourceSummaries" : [ "When do you want to allow side effects?   Est:0.844  Imp:5.000  ResponseCount:5" ]
+    }, {
+      "id" : "Strings-6",
+      "label" : "Strings",
+      "knowledgeEstimate" : 0.78,
+      "knowledgePrediction" : 0.0,
+      "knowledgeDistFromAvg" : 0.0,
+      "dataImportance" : 5.0,
+      "resourceSummaries" : [ "Write a function that will calculate if the substring 'the' is in any user input   Est:0.780  Imp:5.000  ResponseCount:5" ]
+    } ],
+    "links" : [ {
+      "parent" : "Dictionaries-1",
+      "child" : "Strings-1"
+    }, {
+      "parent" : "Values and Data Types-1",
+      "child" : "Dictionaries-1"
+    }, {
+      "parent" : "Lists-1",
+      "child" : "Strings-2"
+    }, {
+      "parent" : "Values and Data Types-1",
+      "child" : "Lists-1"
+    }, {
+      "parent" : "Parameters-1",
+      "child" : "Values and Data Types-1"
+    }, {
+      "parent" : "Functions-1",
+      "child" : "Parameters-1"
+    }, {
+      "parent" : "Algorithms-1",
+      "child" : "Functions-1"
+    }, {
+      "parent" : "Intro to CS-1",
+      "child" : "Algorithms-1"
+    }, {
+      "parent" : "Loops-1",
+      "child" : "For Loops-1"
+    }, {
+      "parent" : "While Loops-1",
+      "child" : "Booleans-1"
+    }, {
+      "parent" : "Loops-1",
+      "child" : "While Loops-1"
+    }, {
+      "parent" : "Dictionaries-2",
+      "child" : "Strings-3"
+    }, {
+      "parent" : "Values and Data Types-2",
+      "child" : "Dictionaries-2"
+    }, {
+      "parent" : "Lists-2",
+      "child" : "Strings-4"
+    }, {
+      "parent" : "Values and Data Types-2",
+      "child" : "Lists-2"
+    }, {
+      "parent" : "Variables-1",
+      "child" : "Values and Data Types-2"
+    }, {
+      "parent" : "Expressions and Statements-1",
+      "child" : "Variables-1"
+    }, {
+      "parent" : "Loops-1",
+      "child" : "Expressions and Statements-1"
+    }, {
+      "parent" : "Nested Conditionals-1",
+      "child" : "Loops-1"
+    }, {
+      "parent" : "Intro to CS-1",
+      "child" : "Nested Conditionals-1"
+    }, {
+      "parent" : "Loops-2",
+      "child" : "For Loops-2"
+    }, {
+      "parent" : "While Loops-2",
+      "child" : "Booleans-2"
+    }, {
+      "parent" : "Loops-2",
+      "child" : "While Loops-2"
+    }, {
+      "parent" : "Dictionaries-3",
+      "child" : "Strings-5"
+    }, {
+      "parent" : "Values and Data Types-3",
+      "child" : "Dictionaries-3"
+    }, {
+      "parent" : "Lists-3",
+      "child" : "Strings-6"
+    }, {
+      "parent" : "Values and Data Types-3",
+      "child" : "Lists-3"
+    }, {
+      "parent" : "Variables-2",
+      "child" : "Values and Data Types-3"
+    }, {
+      "parent" : "Expressions and Statements-2",
+      "child" : "Variables-2"
+    }, {
+      "parent" : "Loops-2",
+      "child" : "Expressions and Statements-2"
+    }, {
+      "parent" : "Counting-1",
+      "child" : "Loops-2"
+    }, {
+      "parent" : "Intro to CS-1",
+      "child" : "Counting-1"
+    } ]
+  }, {
+    "name" : "s3",
+    "concepts" : [ {
+      "id" : "Intro to CS-1",
+      "label" : "Intro to CS",
+      "knowledgeEstimate" : 0.6605405405405406,
+      "knowledgePrediction" : 0.0,
+      "knowledgeDistFromAvg" : -0.14712936237208074,
+      "dataImportance" : 37.0,
+      "resourceSummaries" : [ ]
+    }, {
+      "id" : "Algorithms-1",
+      "label" : "Algorithms",
+      "knowledgeEstimate" : 0.7433333333333335,
+      "knowledgePrediction" : 0.0,
+      "knowledgeDistFromAvg" : -0.09365079365079343,
+      "dataImportance" : 12.0,
+      "resourceSummaries" : [ "Write an algorithm to change a list of ints to be a list of strings   Est:0.800  Imp:1.000  ResponseCount:1" ]
+    }, {
+      "id" : "Functions-1",
+      "label" : "Functions",
+      "knowledgeEstimate" : 0.7381818181818183,
+      "knowledgePrediction" : 0.0,
+      "knowledgeDistFromAvg" : -0.10543887147335418,
+      "dataImportance" : 11.0,
+      "resourceSummaries" : [ "What’s wrong with the following function definition?   Est:0.910  Imp:1.000  ResponseCount:1", "What will the following function return?   Est:0.930  Imp:1.000  ResponseCount:1", "Can a function be called several times by placing a function call in the body of a loop   Est:0.950  Imp:1.000  ResponseCount:1" ]
+    }, {
+      "id" : "Parameters-1",
+      "label" : "Parameters",
+      "knowledgeEstimate" : 0.66625,
+      "knowledgePrediction" : 0.0,
+      "knowledgeDistFromAvg" : -0.1525872093023256,
+      "dataImportance" : 8.0,
+      "resourceSummaries" : [ "How many parameters can you have?   Est:0.700  Imp:1.000  ResponseCount:1", "When do you want to cause a side effect?   Est:0.000  Imp:0.000  ResponseCount:0", "When do you want to allow side effects?   Est:0.740  Imp:1.000  ResponseCount:1" ]
+    }, {
+      "id" : "Values and Data Types-1",
+      "label" : "Values and Data Types",
+      "knowledgeEstimate" : 0.6483333333333333,
+      "knowledgePrediction" : 0.0,
+      "knowledgeDistFromAvg" : -0.17348484848484858,
+      "dataImportance" : 6.0,
+      "resourceSummaries" : [ "When do you want to cause a side effect?   Est:0.000  Imp:0.000  ResponseCount:0" ]
+    }, {
+      "id" : "Dictionaries-1",
+      "label" : "Dictionaries",
+      "knowledgeEstimate" : 0.6875,
+      "knowledgePrediction" : 0.0,
+      "knowledgeDistFromAvg" : -0.13858695652173914,
+      "dataImportance" : 4.0,
+      "resourceSummaries" : [ "What are values are accessed by?   Est:0.000  Imp:0.000  ResponseCount:0", "What’s a value   Est:0.800  Imp:1.000  ResponseCount:1", "Is a dictionary ordered?   Est:0.750  Imp:1.000  ResponseCount:1", "Whats a key   Est:0.800  Imp:1.000  ResponseCount:1" ]
+    }, {
+      "id" : "Strings-1",
+      "label" : "Strings",
+      "knowledgeEstimate" : 0.4,
+      "knowledgePrediction" : 0.0,
+      "knowledgeDistFromAvg" : -0.38,
+      "dataImportance" : 1.0,
+      "resourceSummaries" : [ "Write a function that will calculate if the substring 'the' is in any user input   Est:0.400  Imp:1.000  ResponseCount:1" ]
+    }, {
+      "id" : "Lists-1",
+      "label" : "Lists",
+      "knowledgeEstimate" : 0.5700000000000001,
+      "knowledgePrediction" : 0.0,
+      "knowledgeDistFromAvg" : -0.242,
+      "dataImportance" : 2.0,
+      "resourceSummaries" : [ "When do you want to allow side effects?   Est:0.740  Imp:1.000  ResponseCount:1" ]
+    }, {
+      "id" : "Strings-2",
+      "label" : "Strings",
+      "knowledgeEstimate" : 0.4,
+      "knowledgePrediction" : 0.0,
+      "knowledgeDistFromAvg" : -0.38,
+      "dataImportance" : 1.0,
+      "resourceSummaries" : [ "Write a function that will calculate if the substring 'the' is in any user input   Est:0.400  Imp:1.000  ResponseCount:1" ]
+    }, {
+      "id" : "Nested Conditionals-1",
+      "label" : "Nested Conditionals",
+      "knowledgeEstimate" : 0.6191666666666666,
+      "knowledgePrediction" : 0.0,
+      "knowledgeDistFromAvg" : -0.17605072463768123,
+      "dataImportance" : 12.0,
+      "resourceSummaries" : [ ]
+    }, {
+      "id" : "Loops-1",
+      "label" : "Loops",
+      "knowledgeEstimate" : 0.6191666666666666,
+      "knowledgePrediction" : 0.0,
+      "knowledgeDistFromAvg" : -0.17605072463768123,
+      "dataImportance" : 12.0,
+      "resourceSummaries" : [ ]
+    }, {
+      "id" : "For Loops-1",
+      "label" : "For Loops",
+      "knowledgeEstimate" : 0.0,
+      "knowledgePrediction" : 0.0,
+      "knowledgeDistFromAvg" : 0.0,
+      "dataImportance" : 0.0,
+      "resourceSummaries" : [ "Describe how the following relate to a for loop: variable, terminating condition, loop body   Est:0.000  Imp:0.000  ResponseCount:0" ]
+    }, {
+      "id" : "While Loops-1",
+      "label" : "While Loops",
+      "knowledgeEstimate" : 0.5,
+      "knowledgePrediction" : 0.0,
+      "knowledgeDistFromAvg" : -0.2340000000000001,
+      "dataImportance" : 2.0,
+      "resourceSummaries" : [ "Describe how while loops can depend on booleans   Est:0.500  Imp:1.000  ResponseCount:1", "Describe the flow of a while loop?   Est:0.000  Imp:0.000  ResponseCount:0", "What are the differences and similarities between for loops and while loops   Est:0.000  Imp:0.000  ResponseCount:0", "What is the proper while loop diction?   Est:0.000  Imp:0.000  ResponseCount:0" ]
+    }, {
+      "id" : "Booleans-1",
+      "label" : "Booleans",
+      "knowledgeEstimate" : 0.5,
+      "knowledgePrediction" : 0.0,
+      "knowledgeDistFromAvg" : -0.2340000000000001,
+      "dataImportance" : 1.0,
+      "resourceSummaries" : [ "Describe how while loops can depend on booleans   Est:0.500  Imp:1.000  ResponseCount:1" ]
+    }, {
+      "id" : "Expressions and Statements-1",
+      "label" : "Expressions and Statements",
+      "knowledgeEstimate" : 0.643,
+      "knowledgePrediction" : 0.0,
+      "knowledgeDistFromAvg" : -0.16259322033898305,
+      "dataImportance" : 10.0,
+      "resourceSummaries" : [ "What does the modulus operator do?   Est:0.000  Imp:0.000  ResponseCount:0", "Write a function that will convert 645 mins into hours   Est:0.000  Imp:0.000  ResponseCount:0", "Write a function that will convert 645 mins into the whole hours   Est:0.500  Imp:1.000  ResponseCount:1", "What’s the difference between a statement and an expression?   Est:0.000  Imp:0.000  ResponseCount:0", "What are some of the statements we have already seen?   Est:0.000  Imp:0.000  ResponseCount:0" ]
+    }, {
+      "id" : "Variables-1",
+      "label" : "Variables",
+      "knowledgeEstimate" : 0.6588888888888889,
+      "knowledgePrediction" : 0.0,
+      "knowledgeDistFromAvg" : -0.13194444444444453,
+      "dataImportance" : 9.0,
+      "resourceSummaries" : [ "What is printed then the following statements execute?   Est:0.650  Imp:1.000  ResponseCount:1", "What is an assignment token?   Est:0.720  Imp:1.000  ResponseCount:1", "What is a reference diagram?   Est:0.670  Imp:1.000  ResponseCount:1" ]
+    }, {
+      "id" : "Values and Data Types-2",
+      "label" : "Values and Data Types",
+      "knowledgeEstimate" : 0.6483333333333333,
+      "knowledgePrediction" : 0.0,
+      "knowledgeDistFromAvg" : -0.17348484848484858,
+      "dataImportance" : 6.0,
+      "resourceSummaries" : [ "When do you want to cause a side effect?   Est:0.000  Imp:0.000  ResponseCount:0" ]
+    }, {
+      "id" : "Dictionaries-2",
+      "label" : "Dictionaries",
+      "knowledgeEstimate" : 0.6875,
+      "knowledgePrediction" : 0.0,
+      "knowledgeDistFromAvg" : -0.13858695652173914,
+      "dataImportance" : 4.0,
+      "resourceSummaries" : [ "What are values are accessed by?   Est:0.000  Imp:0.000  ResponseCount:0", "What’s a value   Est:0.800  Imp:1.000  ResponseCount:1", "Is a dictionary ordered?   Est:0.750  Imp:1.000  ResponseCount:1", "Whats a key   Est:0.800  Imp:1.000  ResponseCount:1" ]
+    }, {
+      "id" : "Strings-3",
+      "label" : "Strings",
+      "knowledgeEstimate" : 0.4,
+      "knowledgePrediction" : 0.0,
+      "knowledgeDistFromAvg" : -0.38,
+      "dataImportance" : 1.0,
+      "resourceSummaries" : [ "Write a function that will calculate if the substring 'the' is in any user input   Est:0.400  Imp:1.000  ResponseCount:1" ]
+    }, {
+      "id" : "Lists-2",
+      "label" : "Lists",
+      "knowledgeEstimate" : 0.5700000000000001,
+      "knowledgePrediction" : 0.0,
+      "knowledgeDistFromAvg" : -0.242,
+      "dataImportance" : 2.0,
+      "resourceSummaries" : [ "When do you want to allow side effects?   Est:0.740  Imp:1.000  ResponseCount:1" ]
+    }, {
+      "id" : "Strings-4",
+      "label" : "Strings",
+      "knowledgeEstimate" : 0.4,
+      "knowledgePrediction" : 0.0,
+      "knowledgeDistFromAvg" : -0.38,
+      "dataImportance" : 1.0,
+      "resourceSummaries" : [ "Write a function that will calculate if the substring 'the' is in any user input   Est:0.400  Imp:1.000  ResponseCount:1" ]
+    }, {
+      "id" : "Counting-1",
+      "label" : "Counting",
+      "knowledgeEstimate" : 0.6223076923076923,
+      "knowledgePrediction" : 0.0,
+      "knowledgeDistFromAvg" : -0.17201663201663198,
+      "dataImportance" : 13.0,
+      "resourceSummaries" : [ "Counting in binary to 10   Est:0.660  Imp:1.000  ResponseCount:1" ]
+    }, {
+      "id" : "Loops-2",
+      "label" : "Loops",
+      "knowledgeEstimate" : 0.6191666666666666,
+      "knowledgePrediction" : 0.0,
+      "knowledgeDistFromAvg" : -0.17605072463768123,
+      "dataImportance" : 12.0,
+      "resourceSummaries" : [ ]
+    }, {
+      "id" : "For Loops-2",
+      "label" : "For Loops",
+      "knowledgeEstimate" : 0.0,
+      "knowledgePrediction" : 0.0,
+      "knowledgeDistFromAvg" : 0.0,
+      "dataImportance" : 0.0,
+      "resourceSummaries" : [ "Describe how the following relate to a for loop: variable, terminating condition, loop body   Est:0.000  Imp:0.000  ResponseCount:0" ]
+    }, {
+      "id" : "While Loops-2",
+      "label" : "While Loops",
+      "knowledgeEstimate" : 0.5,
+      "knowledgePrediction" : 0.0,
+      "knowledgeDistFromAvg" : -0.2340000000000001,
+      "dataImportance" : 2.0,
+      "resourceSummaries" : [ "Describe how while loops can depend on booleans   Est:0.500  Imp:1.000  ResponseCount:1", "Describe the flow of a while loop?   Est:0.000  Imp:0.000  ResponseCount:0", "What are the differences and similarities between for loops and while loops   Est:0.000  Imp:0.000  ResponseCount:0", "What is the proper while loop diction?   Est:0.000  Imp:0.000  ResponseCount:0" ]
+    }, {
+      "id" : "Booleans-2",
+      "label" : "Booleans",
+      "knowledgeEstimate" : 0.5,
+      "knowledgePrediction" : 0.0,
+      "knowledgeDistFromAvg" : -0.2340000000000001,
+      "dataImportance" : 1.0,
+      "resourceSummaries" : [ "Describe how while loops can depend on booleans   Est:0.500  Imp:1.000  ResponseCount:1" ]
+    }, {
+      "id" : "Expressions and Statements-2",
+      "label" : "Expressions and Statements",
+      "knowledgeEstimate" : 0.643,
+      "knowledgePrediction" : 0.0,
+      "knowledgeDistFromAvg" : -0.16259322033898305,
+      "dataImportance" : 10.0,
+      "resourceSummaries" : [ "What does the modulus operator do?   Est:0.000  Imp:0.000  ResponseCount:0", "Write a function that will convert 645 mins into hours   Est:0.000  Imp:0.000  ResponseCount:0", "Write a function that will convert 645 mins into the whole hours   Est:0.500  Imp:1.000  ResponseCount:1", "What’s the difference between a statement and an expression?   Est:0.000  Imp:0.000  ResponseCount:0", "What are some of the statements we have already seen?   Est:0.000  Imp:0.000  ResponseCount:0" ]
+    }, {
+      "id" : "Variables-2",
+      "label" : "Variables",
+      "knowledgeEstimate" : 0.6588888888888889,
+      "knowledgePrediction" : 0.0,
+      "knowledgeDistFromAvg" : -0.13194444444444453,
+      "dataImportance" : 9.0,
+      "resourceSummaries" : [ "What is printed then the following statements execute?   Est:0.650  Imp:1.000  ResponseCount:1", "What is an assignment token?   Est:0.720  Imp:1.000  ResponseCount:1", "What is a reference diagram?   Est:0.670  Imp:1.000  ResponseCount:1" ]
+    }, {
+      "id" : "Values and Data Types-3",
+      "label" : "Values and Data Types",
+      "knowledgeEstimate" : 0.6483333333333333,
+      "knowledgePrediction" : 0.0,
+      "knowledgeDistFromAvg" : -0.17348484848484858,
+      "dataImportance" : 6.0,
+      "resourceSummaries" : [ "When do you want to cause a side effect?   Est:0.000  Imp:0.000  ResponseCount:0" ]
+    }, {
+      "id" : "Dictionaries-3",
+      "label" : "Dictionaries",
+      "knowledgeEstimate" : 0.6875,
+      "knowledgePrediction" : 0.0,
+      "knowledgeDistFromAvg" : -0.13858695652173914,
+      "dataImportance" : 4.0,
+      "resourceSummaries" : [ "What are values are accessed by?   Est:0.000  Imp:0.000  ResponseCount:0", "What’s a value   Est:0.800  Imp:1.000  ResponseCount:1", "Is a dictionary ordered?   Est:0.750  Imp:1.000  ResponseCount:1", "Whats a key   Est:0.800  Imp:1.000  ResponseCount:1" ]
+    }, {
+      "id" : "Strings-5",
+      "label" : "Strings",
+      "knowledgeEstimate" : 0.4,
+      "knowledgePrediction" : 0.0,
+      "knowledgeDistFromAvg" : -0.38,
+      "dataImportance" : 1.0,
+      "resourceSummaries" : [ "Write a function that will calculate if the substring 'the' is in any user input   Est:0.400  Imp:1.000  ResponseCount:1" ]
+    }, {
+      "id" : "Lists-3",
+      "label" : "Lists",
+      "knowledgeEstimate" : 0.5700000000000001,
+      "knowledgePrediction" : 0.0,
+      "knowledgeDistFromAvg" : -0.242,
+      "dataImportance" : 2.0,
+      "resourceSummaries" : [ "When do you want to allow side effects?   Est:0.740  Imp:1.000  ResponseCount:1" ]
+    }, {
+      "id" : "Strings-6",
+      "label" : "Strings",
+      "knowledgeEstimate" : 0.4,
+      "knowledgePrediction" : 0.0,
+      "knowledgeDistFromAvg" : -0.38,
+      "dataImportance" : 1.0,
+      "resourceSummaries" : [ "Write a function that will calculate if the substring 'the' is in any user input   Est:0.400  Imp:1.000  ResponseCount:1" ]
+    } ],
+    "links" : [ {
+      "parent" : "Dictionaries-1",
+      "child" : "Strings-1"
+    }, {
+      "parent" : "Values and Data Types-1",
+      "child" : "Dictionaries-1"
+    }, {
+      "parent" : "Lists-1",
+      "child" : "Strings-2"
+    }, {
+      "parent" : "Values and Data Types-1",
+      "child" : "Lists-1"
+    }, {
+      "parent" : "Parameters-1",
+      "child" : "Values and Data Types-1"
+    }, {
+      "parent" : "Functions-1",
+      "child" : "Parameters-1"
+    }, {
+      "parent" : "Algorithms-1",
+      "child" : "Functions-1"
+    }, {
+      "parent" : "Intro to CS-1",
+      "child" : "Algorithms-1"
+    }, {
+      "parent" : "Loops-1",
+      "child" : "For Loops-1"
+    }, {
+      "parent" : "While Loops-1",
+      "child" : "Booleans-1"
+    }, {
+      "parent" : "Loops-1",
+      "child" : "While Loops-1"
+    }, {
+      "parent" : "Dictionaries-2",
+      "child" : "Strings-3"
+    }, {
+      "parent" : "Values and Data Types-2",
+      "child" : "Dictionaries-2"
+    }, {
+      "parent" : "Lists-2",
+      "child" : "Strings-4"
+    }, {
+      "parent" : "Values and Data Types-2",
+      "child" : "Lists-2"
+    }, {
+      "parent" : "Variables-1",
+      "child" : "Values and Data Types-2"
+    }, {
+      "parent" : "Expressions and Statements-1",
+      "child" : "Variables-1"
+    }, {
+      "parent" : "Loops-1",
+      "child" : "Expressions and Statements-1"
+    }, {
+      "parent" : "Nested Conditionals-1",
+      "child" : "Loops-1"
+    }, {
+      "parent" : "Intro to CS-1",
+      "child" : "Nested Conditionals-1"
+    }, {
+      "parent" : "Loops-2",
+      "child" : "For Loops-2"
+    }, {
+      "parent" : "While Loops-2",
+      "child" : "Booleans-2"
+    }, {
+      "parent" : "Loops-2",
+      "child" : "While Loops-2"
+    }, {
+      "parent" : "Dictionaries-3",
+      "child" : "Strings-5"
+    }, {
+      "parent" : "Values and Data Types-3",
+      "child" : "Dictionaries-3"
+    }, {
+      "parent" : "Lists-3",
+      "child" : "Strings-6"
+    }, {
+      "parent" : "Values and Data Types-3",
+      "child" : "Lists-3"
+    }, {
+      "parent" : "Variables-2",
+      "child" : "Values and Data Types-3"
+    }, {
+      "parent" : "Expressions and Statements-2",
+      "child" : "Variables-2"
+    }, {
+      "parent" : "Loops-2",
+      "child" : "Expressions and Statements-2"
+    }, {
+      "parent" : "Counting-1",
+      "child" : "Loops-2"
+    }, {
+      "parent" : "Intro to CS-1",
+      "child" : "Counting-1"
+    } ]
+  }, {
+    "name" : "s4",
+    "concepts" : [ {
+      "id" : "Intro to CS-1",
+      "label" : "Intro to CS",
+      "knowledgeEstimate" : 0.8827272727272728,
+      "knowledgePrediction" : 0.0,
+      "knowledgeDistFromAvg" : 0.0750573698146515,
+      "dataImportance" : 44.0,
+      "resourceSummaries" : [ ]
+    }, {
+      "id" : "Algorithms-1",
+      "label" : "Algorithms",
+      "knowledgeEstimate" : 0.8907692307692309,
+      "knowledgePrediction" : 0.0,
+      "knowledgeDistFromAvg" : 0.05378510378510393,
+      "dataImportance" : 13.0,
+      "resourceSummaries" : [ "Write an algorithm to change a list of ints to be a list of strings   Est:0.800  Imp:1.000  ResponseCount:1" ]
+    }, {
+      "id" : "Functions-1",
+      "label" : "Functions",
+      "knowledgeEstimate" : 0.8983333333333334,
+      "knowledgePrediction" : 0.0,
+      "knowledgeDistFromAvg" : 0.05471264367816098,
+      "dataImportance" : 12.0,
+      "resourceSummaries" : [ "What’s wrong with the following function definition?   Est:0.910  Imp:1.000  ResponseCount:1", "What will the following function return?   Est:0.850  Imp:1.000  ResponseCount:1", "Can a function be called several times by placing a function call in the body of a loop   Est:0.950  Imp:1.000  ResponseCount:1" ]
+    }, {
+      "id" : "Parameters-1",
+      "label" : "Parameters",
+      "knowledgeEstimate" : 0.8966666666666667,
+      "knowledgePrediction" : 0.0,
+      "knowledgeDistFromAvg" : 0.0778294573643411,
+      "dataImportance" : 9.0,
+      "resourceSummaries" : [ "How many parameters can you have?   Est:0.820  Imp:1.000  ResponseCount:1", "When do you want to cause a side effect?   Est:0.000  Imp:0.000  ResponseCount:0", "When do you want to allow side effects?   Est:0.910  Imp:1.000  ResponseCount:1" ]
+    }, {
+      "id" : "Values and Data Types-1",
+      "label" : "Values and Data Types",
+      "knowledgeEstimate" : 0.9057142857142857,
+      "knowledgePrediction" : 0.0,
+      "knowledgeDistFromAvg" : 0.0838961038961038,
+      "dataImportance" : 7.0,
+      "resourceSummaries" : [ "When do you want to cause a side effect?   Est:0.000  Imp:0.000  ResponseCount:0" ]
+    }, {
+      "id" : "Dictionaries-1",
+      "label" : "Dictionaries",
+      "knowledgeEstimate" : 0.8859999999999999,
+      "knowledgePrediction" : 0.0,
+      "knowledgeDistFromAvg" : 0.059913043478260763,
+      "dataImportance" : 5.0,
+      "resourceSummaries" : [ "What are values are accessed by?   Est:0.880  Imp:1.000  ResponseCount:1", "What’s a value   Est:0.800  Imp:1.000  ResponseCount:1", "Is a dictionary ordered?   Est:0.950  Imp:1.000  ResponseCount:1", "Whats a key   Est:0.800  Imp:1.000  ResponseCount:1" ]
+    }, {
+      "id" : "Strings-1",
+      "label" : "Strings",
+      "knowledgeEstimate" : 1.0,
+      "knowledgePrediction" : 0.0,
+      "knowledgeDistFromAvg" : 0.21999999999999997,
+      "dataImportance" : 1.0,
+      "resourceSummaries" : [ "Write a function that will calculate if the substring 'the' is in any user input   Est:1.000  Imp:1.000  ResponseCount:1" ]
+    }, {
+      "id" : "Lists-1",
+      "label" : "Lists",
+      "knowledgeEstimate" : 0.9550000000000001,
+      "knowledgePrediction" : 0.0,
+      "knowledgeDistFromAvg" : 0.14300000000000002,
+      "dataImportance" : 2.0,
+      "resourceSummaries" : [ "When do you want to allow side effects?   Est:0.910  Imp:1.000  ResponseCount:1" ]
+    }, {
+      "id" : "Strings-2",
+      "label" : "Strings",
+      "knowledgeEstimate" : 1.0,
+      "knowledgePrediction" : 0.0,
+      "knowledgeDistFromAvg" : 0.21999999999999997,
+      "dataImportance" : 1.0,
+      "resourceSummaries" : [ "Write a function that will calculate if the substring 'the' is in any user input   Est:1.000  Imp:1.000  ResponseCount:1" ]
+    }, {
+      "id" : "Nested Conditionals-1",
+      "label" : "Nested Conditionals",
+      "knowledgeEstimate" : 0.8786666666666666,
+      "knowledgePrediction" : 0.0,
+      "knowledgeDistFromAvg" : 0.08344927536231872,
+      "dataImportance" : 15.0,
+      "resourceSummaries" : [ ]
+    }, {
+      "id" : "Loops-1",
+      "label" : "Loops",
+      "knowledgeEstimate" : 0.8786666666666666,
+      "knowledgePrediction" : 0.0,
+      "knowledgeDistFromAvg" : 0.08344927536231872,
+      "dataImportance" : 15.0,
+      "resourceSummaries" : [ ]
+    }, {
+      "id" : "For Loops-1",
+      "label" : "For Loops",
+      "knowledgeEstimate" : 0.0,
+      "knowledgePrediction" : 0.0,
+      "knowledgeDistFromAvg" : 0.0,
+      "dataImportance" : 0.0,
+      "resourceSummaries" : [ "Describe how the following relate to a for loop: variable, terminating condition, loop body   Est:0.000  Imp:0.000  ResponseCount:0" ]
+    }, {
+      "id" : "While Loops-1",
+      "label" : "While Loops",
+      "knowledgeEstimate" : 0.89,
+      "knowledgePrediction" : 0.0,
+      "knowledgeDistFromAvg" : 0.15599999999999992,
+      "dataImportance" : 2.0,
+      "resourceSummaries" : [ "Describe how while loops can depend on booleans   Est:0.890  Imp:1.000  ResponseCount:1", "Describe the flow of a while loop?   Est:0.000  Imp:0.000  ResponseCount:0", "What are the differences and similarities between for loops and while loops   Est:0.000  Imp:0.000  ResponseCount:0", "What is the proper while loop diction?   Est:0.000  Imp:0.000  ResponseCount:0" ]
+    }, {
+      "id" : "Booleans-1",
+      "label" : "Booleans",
+      "knowledgeEstimate" : 0.89,
+      "knowledgePrediction" : 0.0,
+      "knowledgeDistFromAvg" : 0.15599999999999992,
+      "dataImportance" : 1.0,
+      "resourceSummaries" : [ "Describe how while loops can depend on booleans   Est:0.890  Imp:1.000  ResponseCount:1" ]
+    }, {
+      "id" : "Expressions and Statements-1",
+      "label" : "Expressions and Statements",
+      "knowledgeEstimate" : 0.8769230769230769,
+      "knowledgePrediction" : 0.0,
+      "knowledgeDistFromAvg" : 0.07132985658409385,
+      "dataImportance" : 13.0,
+      "resourceSummaries" : [ "What does the modulus operator do?   Est:0.900  Imp:1.000  ResponseCount:1", "Write a function that will convert 645 mins into hours   Est:0.000  Imp:0.000  ResponseCount:0", "Write a function that will convert 645 mins into the whole hours   Est:1.000  Imp:1.000  ResponseCount:1", "What’s the difference between a statement and an expression?   Est:0.940  Imp:1.000  ResponseCount:1", "What are some of the statements we have already seen?   Est:0.000  Imp:0.000  ResponseCount:0" ]
+    }, {
+      "id" : "Variables-1",
+      "label" : "Variables",
+      "knowledgeEstimate" : 0.8560000000000001,
+      "knowledgePrediction" : 0.0,
+      "knowledgeDistFromAvg" : 0.0651666666666667,
+      "dataImportance" : 10.0,
+      "resourceSummaries" : [ "What is printed then the following statements execute?   Est:0.650  Imp:1.000  ResponseCount:1", "What is an assignment token?   Est:0.720  Imp:1.000  ResponseCount:1", "What is a reference diagram?   Est:0.850  Imp:1.000  ResponseCount:1" ]
+    }, {
+      "id" : "Values and Data Types-2",
+      "label" : "Values and Data Types",
+      "knowledgeEstimate" : 0.9057142857142857,
+      "knowledgePrediction" : 0.0,
+      "knowledgeDistFromAvg" : 0.0838961038961038,
+      "dataImportance" : 7.0,
+      "resourceSummaries" : [ "When do you want to cause a side effect?   Est:0.000  Imp:0.000  ResponseCount:0" ]
+    }, {
+      "id" : "Dictionaries-2",
+      "label" : "Dictionaries",
+      "knowledgeEstimate" : 0.8859999999999999,
+      "knowledgePrediction" : 0.0,
+      "knowledgeDistFromAvg" : 0.059913043478260763,
+      "dataImportance" : 5.0,
+      "resourceSummaries" : [ "What are values are accessed by?   Est:0.880  Imp:1.000  ResponseCount:1", "What’s a value   Est:0.800  Imp:1.000  ResponseCount:1", "Is a dictionary ordered?   Est:0.950  Imp:1.000  ResponseCount:1", "Whats a key   Est:0.800  Imp:1.000  ResponseCount:1" ]
+    }, {
+      "id" : "Strings-3",
+      "label" : "Strings",
+      "knowledgeEstimate" : 1.0,
+      "knowledgePrediction" : 0.0,
+      "knowledgeDistFromAvg" : 0.21999999999999997,
+      "dataImportance" : 1.0,
+      "resourceSummaries" : [ "Write a function that will calculate if the substring 'the' is in any user input   Est:1.000  Imp:1.000  ResponseCount:1" ]
+    }, {
+      "id" : "Lists-2",
+      "label" : "Lists",
+      "knowledgeEstimate" : 0.9550000000000001,
+      "knowledgePrediction" : 0.0,
+      "knowledgeDistFromAvg" : 0.14300000000000002,
+      "dataImportance" : 2.0,
+      "resourceSummaries" : [ "When do you want to allow side effects?   Est:0.910  Imp:1.000  ResponseCount:1" ]
+    }, {
+      "id" : "Strings-4",
+      "label" : "Strings",
+      "knowledgeEstimate" : 1.0,
+      "knowledgePrediction" : 0.0,
+      "knowledgeDistFromAvg" : 0.21999999999999997,
+      "dataImportance" : 1.0,
+      "resourceSummaries" : [ "Write a function that will calculate if the substring 'the' is in any user input   Est:1.000  Imp:1.000  ResponseCount:1" ]
+    }, {
+      "id" : "Counting-1",
+      "label" : "Counting",
+      "knowledgeEstimate" : 0.88,
+      "knowledgePrediction" : 0.0,
+      "knowledgeDistFromAvg" : 0.08567567567567569,
+      "dataImportance" : 16.0,
+      "resourceSummaries" : [ "Counting in binary to 10   Est:0.900  Imp:1.000  ResponseCount:1" ]
+    }, {
+      "id" : "Loops-2",
+      "label" : "Loops",
+      "knowledgeEstimate" : 0.8786666666666666,
+      "knowledgePrediction" : 0.0,
+      "knowledgeDistFromAvg" : 0.08344927536231872,
+      "dataImportance" : 15.0,
+      "resourceSummaries" : [ ]
+    }, {
+      "id" : "For Loops-2",
+      "label" : "For Loops",
+      "knowledgeEstimate" : 0.0,
+      "knowledgePrediction" : 0.0,
+      "knowledgeDistFromAvg" : 0.0,
+      "dataImportance" : 0.0,
+      "resourceSummaries" : [ "Describe how the following relate to a for loop: variable, terminating condition, loop body   Est:0.000  Imp:0.000  ResponseCount:0" ]
+    }, {
+      "id" : "While Loops-2",
+      "label" : "While Loops",
+      "knowledgeEstimate" : 0.89,
+      "knowledgePrediction" : 0.0,
+      "knowledgeDistFromAvg" : 0.15599999999999992,
+      "dataImportance" : 2.0,
+      "resourceSummaries" : [ "Describe how while loops can depend on booleans   Est:0.890  Imp:1.000  ResponseCount:1", "Describe the flow of a while loop?   Est:0.000  Imp:0.000  ResponseCount:0", "What are the differences and similarities between for loops and while loops   Est:0.000  Imp:0.000  ResponseCount:0", "What is the proper while loop diction?   Est:0.000  Imp:0.000  ResponseCount:0" ]
+    }, {
+      "id" : "Booleans-2",
+      "label" : "Booleans",
+      "knowledgeEstimate" : 0.89,
+      "knowledgePrediction" : 0.0,
+      "knowledgeDistFromAvg" : 0.15599999999999992,
+      "dataImportance" : 1.0,
+      "resourceSummaries" : [ "Describe how while loops can depend on booleans   Est:0.890  Imp:1.000  ResponseCount:1" ]
+    }, {
+      "id" : "Expressions and Statements-2",
+      "label" : "Expressions and Statements",
+      "knowledgeEstimate" : 0.8769230769230769,
+      "knowledgePrediction" : 0.0,
+      "knowledgeDistFromAvg" : 0.07132985658409385,
+      "dataImportance" : 13.0,
+      "resourceSummaries" : [ "What does the modulus operator do?   Est:0.900  Imp:1.000  ResponseCount:1", "Write a function that will convert 645 mins into hours   Est:0.000  Imp:0.000  ResponseCount:0", "Write a function that will convert 645 mins into the whole hours   Est:1.000  Imp:1.000  ResponseCount:1", "What’s the difference between a statement and an expression?   Est:0.940  Imp:1.000  ResponseCount:1", "What are some of the statements we have already seen?   Est:0.000  Imp:0.000  ResponseCount:0" ]
+    }, {
+      "id" : "Variables-2",
+      "label" : "Variables",
+      "knowledgeEstimate" : 0.8560000000000001,
+      "knowledgePrediction" : 0.0,
+      "knowledgeDistFromAvg" : 0.0651666666666667,
+      "dataImportance" : 10.0,
+      "resourceSummaries" : [ "What is printed then the following statements execute?   Est:0.650  Imp:1.000  ResponseCount:1", "What is an assignment token?   Est:0.720  Imp:1.000  ResponseCount:1", "What is a reference diagram?   Est:0.850  Imp:1.000  ResponseCount:1" ]
+    }, {
+      "id" : "Values and Data Types-3",
+      "label" : "Values and Data Types",
+      "knowledgeEstimate" : 0.9057142857142857,
+      "knowledgePrediction" : 0.0,
+      "knowledgeDistFromAvg" : 0.0838961038961038,
+      "dataImportance" : 7.0,
+      "resourceSummaries" : [ "When do you want to cause a side effect?   Est:0.000  Imp:0.000  ResponseCount:0" ]
+    }, {
+      "id" : "Dictionaries-3",
+      "label" : "Dictionaries",
+      "knowledgeEstimate" : 0.8859999999999999,
+      "knowledgePrediction" : 0.0,
+      "knowledgeDistFromAvg" : 0.059913043478260763,
+      "dataImportance" : 5.0,
+      "resourceSummaries" : [ "What are values are accessed by?   Est:0.880  Imp:1.000  ResponseCount:1", "What’s a value   Est:0.800  Imp:1.000  ResponseCount:1", "Is a dictionary ordered?   Est:0.950  Imp:1.000  ResponseCount:1", "Whats a key   Est:0.800  Imp:1.000  ResponseCount:1" ]
+    }, {
+      "id" : "Strings-5",
+      "label" : "Strings",
+      "knowledgeEstimate" : 1.0,
+      "knowledgePrediction" : 0.0,
+      "knowledgeDistFromAvg" : 0.21999999999999997,
+      "dataImportance" : 1.0,
+      "resourceSummaries" : [ "Write a function that will calculate if the substring 'the' is in any user input   Est:1.000  Imp:1.000  ResponseCount:1" ]
+    }, {
+      "id" : "Lists-3",
+      "label" : "Lists",
+      "knowledgeEstimate" : 0.9550000000000001,
+      "knowledgePrediction" : 0.0,
+      "knowledgeDistFromAvg" : 0.14300000000000002,
+      "dataImportance" : 2.0,
+      "resourceSummaries" : [ "When do you want to allow side effects?   Est:0.910  Imp:1.000  ResponseCount:1" ]
+    }, {
+      "id" : "Strings-6",
+      "label" : "Strings",
+      "knowledgeEstimate" : 1.0,
+      "knowledgePrediction" : 0.0,
+      "knowledgeDistFromAvg" : 0.21999999999999997,
+      "dataImportance" : 1.0,
+      "resourceSummaries" : [ "Write a function that will calculate if the substring 'the' is in any user input   Est:1.000  Imp:1.000  ResponseCount:1" ]
+    } ],
+    "links" : [ {
+      "parent" : "Dictionaries-1",
+      "child" : "Strings-1"
+    }, {
+      "parent" : "Values and Data Types-1",
+      "child" : "Dictionaries-1"
+    }, {
+      "parent" : "Lists-1",
+      "child" : "Strings-2"
+    }, {
+      "parent" : "Values and Data Types-1",
+      "child" : "Lists-1"
+    }, {
+      "parent" : "Parameters-1",
+      "child" : "Values and Data Types-1"
+    }, {
+      "parent" : "Functions-1",
+      "child" : "Parameters-1"
+    }, {
+      "parent" : "Algorithms-1",
+      "child" : "Functions-1"
+    }, {
+      "parent" : "Intro to CS-1",
+      "child" : "Algorithms-1"
+    }, {
+      "parent" : "Loops-1",
+      "child" : "For Loops-1"
+    }, {
+      "parent" : "While Loops-1",
+      "child" : "Booleans-1"
+    }, {
+      "parent" : "Loops-1",
+      "child" : "While Loops-1"
+    }, {
+      "parent" : "Dictionaries-2",
+      "child" : "Strings-3"
+    }, {
+      "parent" : "Values and Data Types-2",
+      "child" : "Dictionaries-2"
+    }, {
+      "parent" : "Lists-2",
+      "child" : "Strings-4"
+    }, {
+      "parent" : "Values and Data Types-2",
+      "child" : "Lists-2"
+    }, {
+      "parent" : "Variables-1",
+      "child" : "Values and Data Types-2"
+    }, {
+      "parent" : "Expressions and Statements-1",
+      "child" : "Variables-1"
+    }, {
+      "parent" : "Loops-1",
+      "child" : "Expressions and Statements-1"
+    }, {
+      "parent" : "Nested Conditionals-1",
+      "child" : "Loops-1"
+    }, {
+      "parent" : "Intro to CS-1",
+      "child" : "Nested Conditionals-1"
+    }, {
+      "parent" : "Loops-2",
+      "child" : "For Loops-2"
+    }, {
+      "parent" : "While Loops-2",
+      "child" : "Booleans-2"
+    }, {
+      "parent" : "Loops-2",
+      "child" : "While Loops-2"
+    }, {
+      "parent" : "Dictionaries-3",
+      "child" : "Strings-5"
+    }, {
+      "parent" : "Values and Data Types-3",
+      "child" : "Dictionaries-3"
+    }, {
+      "parent" : "Lists-3",
+      "child" : "Strings-6"
+    }, {
+      "parent" : "Values and Data Types-3",
+      "child" : "Lists-3"
+    }, {
+      "parent" : "Variables-2",
+      "child" : "Values and Data Types-3"
+    }, {
+      "parent" : "Expressions and Statements-2",
+      "child" : "Variables-2"
+    }, {
+      "parent" : "Loops-2",
+      "child" : "Expressions and Statements-2"
+    }, {
+      "parent" : "Counting-1",
+      "child" : "Loops-2"
+    }, {
+      "parent" : "Intro to CS-1",
+      "child" : "Counting-1"
+    } ]
+  }, {
+    "name" : "s5",
+    "concepts" : [ {
+      "id" : "Intro to CS-1",
+      "label" : "Intro to CS",
+      "knowledgeEstimate" : 0.8827272727272728,
+      "knowledgePrediction" : 0.0,
+      "knowledgeDistFromAvg" : 0.0750573698146515,
+      "dataImportance" : 44.0,
+      "resourceSummaries" : [ ]
+    }, {
+      "id" : "Algorithms-1",
+      "label" : "Algorithms",
+      "knowledgeEstimate" : 0.8907692307692309,
+      "knowledgePrediction" : 0.0,
+      "knowledgeDistFromAvg" : 0.05378510378510393,
+      "dataImportance" : 13.0,
+      "resourceSummaries" : [ "Write an algorithm to change a list of ints to be a list of strings   Est:0.800  Imp:1.000  ResponseCount:1" ]
+    }, {
+      "id" : "Functions-1",
+      "label" : "Functions",
+      "knowledgeEstimate" : 0.8983333333333334,
+      "knowledgePrediction" : 0.0,
+      "knowledgeDistFromAvg" : 0.05471264367816098,
+      "dataImportance" : 12.0,
+      "resourceSummaries" : [ "What’s wrong with the following function definition?   Est:0.910  Imp:1.000  ResponseCount:1", "What will the following function return?   Est:0.850  Imp:1.000  ResponseCount:1", "Can a function be called several times by placing a function call in the body of a loop   Est:0.950  Imp:1.000  ResponseCount:1" ]
+    }, {
+      "id" : "Parameters-1",
+      "label" : "Parameters",
+      "knowledgeEstimate" : 0.8966666666666667,
+      "knowledgePrediction" : 0.0,
+      "knowledgeDistFromAvg" : 0.0778294573643411,
+      "dataImportance" : 9.0,
+      "resourceSummaries" : [ "How many parameters can you have?   Est:0.820  Imp:1.000  ResponseCount:1", "When do you want to cause a side effect?   Est:0.000  Imp:0.000  ResponseCount:0", "When do you want to allow side effects?   Est:0.910  Imp:1.000  ResponseCount:1" ]
+    }, {
+      "id" : "Values and Data Types-1",
+      "label" : "Values and Data Types",
+      "knowledgeEstimate" : 0.9057142857142857,
+      "knowledgePrediction" : 0.0,
+      "knowledgeDistFromAvg" : 0.0838961038961038,
+      "dataImportance" : 7.0,
+      "resourceSummaries" : [ "When do you want to cause a side effect?   Est:0.000  Imp:0.000  ResponseCount:0" ]
+    }, {
+      "id" : "Dictionaries-1",
+      "label" : "Dictionaries",
+      "knowledgeEstimate" : 0.8859999999999999,
+      "knowledgePrediction" : 0.0,
+      "knowledgeDistFromAvg" : 0.059913043478260763,
+      "dataImportance" : 5.0,
+      "resourceSummaries" : [ "What are values are accessed by?   Est:0.880  Imp:1.000  ResponseCount:1", "What’s a value   Est:0.800  Imp:1.000  ResponseCount:1", "Is a dictionary ordered?   Est:0.950  Imp:1.000  ResponseCount:1", "Whats a key   Est:0.800  Imp:1.000  ResponseCount:1" ]
+    }, {
+      "id" : "Strings-1",
+      "label" : "Strings",
+      "knowledgeEstimate" : 1.0,
+      "knowledgePrediction" : 0.0,
+      "knowledgeDistFromAvg" : 0.21999999999999997,
+      "dataImportance" : 1.0,
+      "resourceSummaries" : [ "Write a function that will calculate if the substring 'the' is in any user input   Est:1.000  Imp:1.000  ResponseCount:1" ]
+    }, {
+      "id" : "Lists-1",
+      "label" : "Lists",
+      "knowledgeEstimate" : 0.9550000000000001,
+      "knowledgePrediction" : 0.0,
+      "knowledgeDistFromAvg" : 0.14300000000000002,
+      "dataImportance" : 2.0,
+      "resourceSummaries" : [ "When do you want to allow side effects?   Est:0.910  Imp:1.000  ResponseCount:1" ]
+    }, {
+      "id" : "Strings-2",
+      "label" : "Strings",
+      "knowledgeEstimate" : 1.0,
+      "knowledgePrediction" : 0.0,
+      "knowledgeDistFromAvg" : 0.21999999999999997,
+      "dataImportance" : 1.0,
+      "resourceSummaries" : [ "Write a function that will calculate if the substring 'the' is in any user input   Est:1.000  Imp:1.000  ResponseCount:1" ]
+    }, {
+      "id" : "Nested Conditionals-1",
+      "label" : "Nested Conditionals",
+      "knowledgeEstimate" : 0.8786666666666666,
+      "knowledgePrediction" : 0.0,
+      "knowledgeDistFromAvg" : 0.08344927536231872,
+      "dataImportance" : 15.0,
+      "resourceSummaries" : [ ]
+    }, {
+      "id" : "Loops-1",
+      "label" : "Loops",
+      "knowledgeEstimate" : 0.8786666666666666,
+      "knowledgePrediction" : 0.0,
+      "knowledgeDistFromAvg" : 0.08344927536231872,
+      "dataImportance" : 15.0,
+      "resourceSummaries" : [ ]
+    }, {
+      "id" : "For Loops-1",
+      "label" : "For Loops",
+      "knowledgeEstimate" : 0.0,
+      "knowledgePrediction" : 0.0,
+      "knowledgeDistFromAvg" : 0.0,
+      "dataImportance" : 0.0,
+      "resourceSummaries" : [ "Describe how the following relate to a for loop: variable, terminating condition, loop body   Est:0.000  Imp:0.000  ResponseCount:0" ]
+    }, {
+      "id" : "While Loops-1",
+      "label" : "While Loops",
+      "knowledgeEstimate" : 0.89,
+      "knowledgePrediction" : 0.0,
+      "knowledgeDistFromAvg" : 0.15599999999999992,
+      "dataImportance" : 2.0,
+      "resourceSummaries" : [ "Describe how while loops can depend on booleans   Est:0.890  Imp:1.000  ResponseCount:1", "Describe the flow of a while loop?   Est:0.000  Imp:0.000  ResponseCount:0", "What are the differences and similarities between for loops and while loops   Est:0.000  Imp:0.000  ResponseCount:0", "What is the proper while loop diction?   Est:0.000  Imp:0.000  ResponseCount:0" ]
+    }, {
+      "id" : "Booleans-1",
+      "label" : "Booleans",
+      "knowledgeEstimate" : 0.89,
+      "knowledgePrediction" : 0.0,
+      "knowledgeDistFromAvg" : 0.15599999999999992,
+      "dataImportance" : 1.0,
+      "resourceSummaries" : [ "Describe how while loops can depend on booleans   Est:0.890  Imp:1.000  ResponseCount:1" ]
+    }, {
+      "id" : "Expressions and Statements-1",
+      "label" : "Expressions and Statements",
+      "knowledgeEstimate" : 0.8769230769230769,
+      "knowledgePrediction" : 0.0,
+      "knowledgeDistFromAvg" : 0.07132985658409385,
+      "dataImportance" : 13.0,
+      "resourceSummaries" : [ "What does the modulus operator do?   Est:0.900  Imp:1.000  ResponseCount:1", "Write a function that will convert 645 mins into hours   Est:0.000  Imp:0.000  ResponseCount:0", "Write a function that will convert 645 mins into the whole hours   Est:1.000  Imp:1.000  ResponseCount:1", "What’s the difference between a statement and an expression?   Est:0.940  Imp:1.000  ResponseCount:1", "What are some of the statements we have already seen?   Est:0.000  Imp:0.000  ResponseCount:0" ]
+    }, {
+      "id" : "Variables-1",
+      "label" : "Variables",
+      "knowledgeEstimate" : 0.8560000000000001,
+      "knowledgePrediction" : 0.0,
+      "knowledgeDistFromAvg" : 0.0651666666666667,
+      "dataImportance" : 10.0,
+      "resourceSummaries" : [ "What is printed then the following statements execute?   Est:0.650  Imp:1.000  ResponseCount:1", "What is an assignment token?   Est:0.720  Imp:1.000  ResponseCount:1", "What is a reference diagram?   Est:0.850  Imp:1.000  ResponseCount:1" ]
+    }, {
+      "id" : "Values and Data Types-2",
+      "label" : "Values and Data Types",
+      "knowledgeEstimate" : 0.9057142857142857,
+      "knowledgePrediction" : 0.0,
+      "knowledgeDistFromAvg" : 0.0838961038961038,
+      "dataImportance" : 7.0,
+      "resourceSummaries" : [ "When do you want to cause a side effect?   Est:0.000  Imp:0.000  ResponseCount:0" ]
+    }, {
+      "id" : "Dictionaries-2",
+      "label" : "Dictionaries",
+      "knowledgeEstimate" : 0.8859999999999999,
+      "knowledgePrediction" : 0.0,
+      "knowledgeDistFromAvg" : 0.059913043478260763,
+      "dataImportance" : 5.0,
+      "resourceSummaries" : [ "What are values are accessed by?   Est:0.880  Imp:1.000  ResponseCount:1", "What’s a value   Est:0.800  Imp:1.000  ResponseCount:1", "Is a dictionary ordered?   Est:0.950  Imp:1.000  ResponseCount:1", "Whats a key   Est:0.800  Imp:1.000  ResponseCount:1" ]
+    }, {
+      "id" : "Strings-3",
+      "label" : "Strings",
+      "knowledgeEstimate" : 1.0,
+      "knowledgePrediction" : 0.0,
+      "knowledgeDistFromAvg" : 0.21999999999999997,
+      "dataImportance" : 1.0,
+      "resourceSummaries" : [ "Write a function that will calculate if the substring 'the' is in any user input   Est:1.000  Imp:1.000  ResponseCount:1" ]
+    }, {
+      "id" : "Lists-2",
+      "label" : "Lists",
+      "knowledgeEstimate" : 0.9550000000000001,
+      "knowledgePrediction" : 0.0,
+      "knowledgeDistFromAvg" : 0.14300000000000002,
+      "dataImportance" : 2.0,
+      "resourceSummaries" : [ "When do you want to allow side effects?   Est:0.910  Imp:1.000  ResponseCount:1" ]
+    }, {
+      "id" : "Strings-4",
+      "label" : "Strings",
+      "knowledgeEstimate" : 1.0,
+      "knowledgePrediction" : 0.0,
+      "knowledgeDistFromAvg" : 0.21999999999999997,
+      "dataImportance" : 1.0,
+      "resourceSummaries" : [ "Write a function that will calculate if the substring 'the' is in any user input   Est:1.000  Imp:1.000  ResponseCount:1" ]
+    }, {
+      "id" : "Counting-1",
+      "label" : "Counting",
+      "knowledgeEstimate" : 0.88,
+      "knowledgePrediction" : 0.0,
+      "knowledgeDistFromAvg" : 0.08567567567567569,
+      "dataImportance" : 16.0,
+      "resourceSummaries" : [ "Counting in binary to 10   Est:0.900  Imp:1.000  ResponseCount:1" ]
+    }, {
+      "id" : "Loops-2",
+      "label" : "Loops",
+      "knowledgeEstimate" : 0.8786666666666666,
+      "knowledgePrediction" : 0.0,
+      "knowledgeDistFromAvg" : 0.08344927536231872,
+      "dataImportance" : 15.0,
+      "resourceSummaries" : [ ]
+    }, {
+      "id" : "For Loops-2",
+      "label" : "For Loops",
+      "knowledgeEstimate" : 0.0,
+      "knowledgePrediction" : 0.0,
+      "knowledgeDistFromAvg" : 0.0,
+      "dataImportance" : 0.0,
+      "resourceSummaries" : [ "Describe how the following relate to a for loop: variable, terminating condition, loop body   Est:0.000  Imp:0.000  ResponseCount:0" ]
+    }, {
+      "id" : "While Loops-2",
+      "label" : "While Loops",
+      "knowledgeEstimate" : 0.89,
+      "knowledgePrediction" : 0.0,
+      "knowledgeDistFromAvg" : 0.15599999999999992,
+      "dataImportance" : 2.0,
+      "resourceSummaries" : [ "Describe how while loops can depend on booleans   Est:0.890  Imp:1.000  ResponseCount:1", "Describe the flow of a while loop?   Est:0.000  Imp:0.000  ResponseCount:0", "What are the differences and similarities between for loops and while loops   Est:0.000  Imp:0.000  ResponseCount:0", "What is the proper while loop diction?   Est:0.000  Imp:0.000  ResponseCount:0" ]
+    }, {
+      "id" : "Booleans-2",
+      "label" : "Booleans",
+      "knowledgeEstimate" : 0.89,
+      "knowledgePrediction" : 0.0,
+      "knowledgeDistFromAvg" : 0.15599999999999992,
+      "dataImportance" : 1.0,
+      "resourceSummaries" : [ "Describe how while loops can depend on booleans   Est:0.890  Imp:1.000  ResponseCount:1" ]
+    }, {
+      "id" : "Expressions and Statements-2",
+      "label" : "Expressions and Statements",
+      "knowledgeEstimate" : 0.8769230769230769,
+      "knowledgePrediction" : 0.0,
+      "knowledgeDistFromAvg" : 0.07132985658409385,
+      "dataImportance" : 13.0,
+      "resourceSummaries" : [ "What does the modulus operator do?   Est:0.900  Imp:1.000  ResponseCount:1", "Write a function that will convert 645 mins into hours   Est:0.000  Imp:0.000  ResponseCount:0", "Write a function that will convert 645 mins into the whole hours   Est:1.000  Imp:1.000  ResponseCount:1", "What’s the difference between a statement and an expression?   Est:0.940  Imp:1.000  ResponseCount:1", "What are some of the statements we have already seen?   Est:0.000  Imp:0.000  ResponseCount:0" ]
+    }, {
+      "id" : "Variables-2",
+      "label" : "Variables",
+      "knowledgeEstimate" : 0.8560000000000001,
+      "knowledgePrediction" : 0.0,
+      "knowledgeDistFromAvg" : 0.0651666666666667,
+      "dataImportance" : 10.0,
+      "resourceSummaries" : [ "What is printed then the following statements execute?   Est:0.650  Imp:1.000  ResponseCount:1", "What is an assignment token?   Est:0.720  Imp:1.000  ResponseCount:1", "What is a reference diagram?   Est:0.850  Imp:1.000  ResponseCount:1" ]
+    }, {
+      "id" : "Values and Data Types-3",
+      "label" : "Values and Data Types",
+      "knowledgeEstimate" : 0.9057142857142857,
+      "knowledgePrediction" : 0.0,
+      "knowledgeDistFromAvg" : 0.0838961038961038,
+      "dataImportance" : 7.0,
+      "resourceSummaries" : [ "When do you want to cause a side effect?   Est:0.000  Imp:0.000  ResponseCount:0" ]
+    }, {
+      "id" : "Dictionaries-3",
+      "label" : "Dictionaries",
+      "knowledgeEstimate" : 0.8859999999999999,
+      "knowledgePrediction" : 0.0,
+      "knowledgeDistFromAvg" : 0.059913043478260763,
+      "dataImportance" : 5.0,
+      "resourceSummaries" : [ "What are values are accessed by?   Est:0.880  Imp:1.000  ResponseCount:1", "What’s a value   Est:0.800  Imp:1.000  ResponseCount:1", "Is a dictionary ordered?   Est:0.950  Imp:1.000  ResponseCount:1", "Whats a key   Est:0.800  Imp:1.000  ResponseCount:1" ]
+    }, {
+      "id" : "Strings-5",
+      "label" : "Strings",
+      "knowledgeEstimate" : 1.0,
+      "knowledgePrediction" : 0.0,
+      "knowledgeDistFromAvg" : 0.21999999999999997,
+      "dataImportance" : 1.0,
+      "resourceSummaries" : [ "Write a function that will calculate if the substring 'the' is in any user input   Est:1.000  Imp:1.000  ResponseCount:1" ]
+    }, {
+      "id" : "Lists-3",
+      "label" : "Lists",
+      "knowledgeEstimate" : 0.9550000000000001,
+      "knowledgePrediction" : 0.0,
+      "knowledgeDistFromAvg" : 0.14300000000000002,
+      "dataImportance" : 2.0,
+      "resourceSummaries" : [ "When do you want to allow side effects?   Est:0.910  Imp:1.000  ResponseCount:1" ]
+    }, {
+      "id" : "Strings-6",
+      "label" : "Strings",
+      "knowledgeEstimate" : 1.0,
+      "knowledgePrediction" : 0.0,
+      "knowledgeDistFromAvg" : 0.21999999999999997,
+      "dataImportance" : 1.0,
+      "resourceSummaries" : [ "Write a function that will calculate if the substring 'the' is in any user input   Est:1.000  Imp:1.000  ResponseCount:1" ]
+    } ],
+    "links" : [ {
+      "parent" : "Dictionaries-1",
+      "child" : "Strings-1"
+    }, {
+      "parent" : "Values and Data Types-1",
+      "child" : "Dictionaries-1"
+    }, {
+      "parent" : "Lists-1",
+      "child" : "Strings-2"
+    }, {
+      "parent" : "Values and Data Types-1",
+      "child" : "Lists-1"
+    }, {
+      "parent" : "Parameters-1",
+      "child" : "Values and Data Types-1"
+    }, {
+      "parent" : "Functions-1",
+      "child" : "Parameters-1"
+    }, {
+      "parent" : "Algorithms-1",
+      "child" : "Functions-1"
+    }, {
+      "parent" : "Intro to CS-1",
+      "child" : "Algorithms-1"
+    }, {
+      "parent" : "Loops-1",
+      "child" : "For Loops-1"
+    }, {
+      "parent" : "While Loops-1",
+      "child" : "Booleans-1"
+    }, {
+      "parent" : "Loops-1",
+      "child" : "While Loops-1"
+    }, {
+      "parent" : "Dictionaries-2",
+      "child" : "Strings-3"
+    }, {
+      "parent" : "Values and Data Types-2",
+      "child" : "Dictionaries-2"
+    }, {
+      "parent" : "Lists-2",
+      "child" : "Strings-4"
+    }, {
+      "parent" : "Values and Data Types-2",
+      "child" : "Lists-2"
+    }, {
+      "parent" : "Variables-1",
+      "child" : "Values and Data Types-2"
+    }, {
+      "parent" : "Expressions and Statements-1",
+      "child" : "Variables-1"
+    }, {
+      "parent" : "Loops-1",
+      "child" : "Expressions and Statements-1"
+    }, {
+      "parent" : "Nested Conditionals-1",
+      "child" : "Loops-1"
+    }, {
+      "parent" : "Intro to CS-1",
+      "child" : "Nested Conditionals-1"
+    }, {
+      "parent" : "Loops-2",
+      "child" : "For Loops-2"
+    }, {
+      "parent" : "While Loops-2",
+      "child" : "Booleans-2"
+    }, {
+      "parent" : "Loops-2",
+      "child" : "While Loops-2"
+    }, {
+      "parent" : "Dictionaries-3",
+      "child" : "Strings-5"
+    }, {
+      "parent" : "Values and Data Types-3",
+      "child" : "Dictionaries-3"
+    }, {
+      "parent" : "Lists-3",
+      "child" : "Strings-6"
+    }, {
+      "parent" : "Values and Data Types-3",
+      "child" : "Lists-3"
+    }, {
+      "parent" : "Variables-2",
+      "child" : "Values and Data Types-3"
+    }, {
+      "parent" : "Expressions and Statements-2",
+      "child" : "Variables-2"
+    }, {
+      "parent" : "Loops-2",
+      "child" : "Expressions and Statements-2"
+    }, {
+      "parent" : "Counting-1",
+      "child" : "Loops-2"
+    }, {
+      "parent" : "Intro to CS-1",
+      "child" : "Counting-1"
+    } ]
+  }, {
+    "name" : "s1",
+    "concepts" : [ {
+      "id" : "Intro to CS-1",
+      "label" : "Intro to CS",
+      "knowledgeEstimate" : 0.8827272727272728,
+      "knowledgePrediction" : 0.0,
+      "knowledgeDistFromAvg" : 0.0750573698146515,
+      "dataImportance" : 44.0,
+      "resourceSummaries" : [ ]
+    }, {
+      "id" : "Algorithms-1",
+      "label" : "Algorithms",
+      "knowledgeEstimate" : 0.8907692307692309,
+      "knowledgePrediction" : 0.0,
+      "knowledgeDistFromAvg" : 0.05378510378510393,
+      "dataImportance" : 13.0,
+      "resourceSummaries" : [ "Write an algorithm to change a list of ints to be a list of strings   Est:0.800  Imp:1.000  ResponseCount:1" ]
+    }, {
+      "id" : "Functions-1",
+      "label" : "Functions",
+      "knowledgeEstimate" : 0.8983333333333334,
+      "knowledgePrediction" : 0.0,
+      "knowledgeDistFromAvg" : 0.05471264367816098,
+      "dataImportance" : 12.0,
+      "resourceSummaries" : [ "What’s wrong with the following function definition?   Est:0.910  Imp:1.000  ResponseCount:1", "What will the following function return?   Est:0.850  Imp:1.000  ResponseCount:1", "Can a function be called several times by placing a function call in the body of a loop   Est:0.950  Imp:1.000  ResponseCount:1" ]
+    }, {
+      "id" : "Parameters-1",
+      "label" : "Parameters",
+      "knowledgeEstimate" : 0.8966666666666667,
+      "knowledgePrediction" : 0.0,
+      "knowledgeDistFromAvg" : 0.0778294573643411,
+      "dataImportance" : 9.0,
+      "resourceSummaries" : [ "How many parameters can you have?   Est:0.820  Imp:1.000  ResponseCount:1", "When do you want to cause a side effect?   Est:0.000  Imp:0.000  ResponseCount:0", "When do you want to allow side effects?   Est:0.910  Imp:1.000  ResponseCount:1" ]
+    }, {
+      "id" : "Values and Data Types-1",
+      "label" : "Values and Data Types",
+      "knowledgeEstimate" : 0.9057142857142857,
+      "knowledgePrediction" : 0.0,
+      "knowledgeDistFromAvg" : 0.0838961038961038,
+      "dataImportance" : 7.0,
+      "resourceSummaries" : [ "When do you want to cause a side effect?   Est:0.000  Imp:0.000  ResponseCount:0" ]
+    }, {
+      "id" : "Dictionaries-1",
+      "label" : "Dictionaries",
+      "knowledgeEstimate" : 0.8859999999999999,
+      "knowledgePrediction" : 0.0,
+      "knowledgeDistFromAvg" : 0.059913043478260763,
+      "dataImportance" : 5.0,
+      "resourceSummaries" : [ "What are values are accessed by?   Est:0.880  Imp:1.000  ResponseCount:1", "What’s a value   Est:0.800  Imp:1.000  ResponseCount:1", "Is a dictionary ordered?   Est:0.950  Imp:1.000  ResponseCount:1", "Whats a key   Est:0.800  Imp:1.000  ResponseCount:1" ]
+    }, {
+      "id" : "Strings-1",
+      "label" : "Strings",
+      "knowledgeEstimate" : 1.0,
+      "knowledgePrediction" : 0.0,
+      "knowledgeDistFromAvg" : 0.21999999999999997,
+      "dataImportance" : 1.0,
+      "resourceSummaries" : [ "Write a function that will calculate if the substring 'the' is in any user input   Est:1.000  Imp:1.000  ResponseCount:1" ]
+    }, {
+      "id" : "Lists-1",
+      "label" : "Lists",
+      "knowledgeEstimate" : 0.9550000000000001,
+      "knowledgePrediction" : 0.0,
+      "knowledgeDistFromAvg" : 0.14300000000000002,
+      "dataImportance" : 2.0,
+      "resourceSummaries" : [ "When do you want to allow side effects?   Est:0.910  Imp:1.000  ResponseCount:1" ]
+    }, {
+      "id" : "Strings-2",
+      "label" : "Strings",
+      "knowledgeEstimate" : 1.0,
+      "knowledgePrediction" : 0.0,
+      "knowledgeDistFromAvg" : 0.21999999999999997,
+      "dataImportance" : 1.0,
+      "resourceSummaries" : [ "Write a function that will calculate if the substring 'the' is in any user input   Est:1.000  Imp:1.000  ResponseCount:1" ]
+    }, {
+      "id" : "Nested Conditionals-1",
+      "label" : "Nested Conditionals",
+      "knowledgeEstimate" : 0.8786666666666666,
+      "knowledgePrediction" : 0.0,
+      "knowledgeDistFromAvg" : 0.08344927536231872,
+      "dataImportance" : 15.0,
+      "resourceSummaries" : [ ]
+    }, {
+      "id" : "Loops-1",
+      "label" : "Loops",
+      "knowledgeEstimate" : 0.8786666666666666,
+      "knowledgePrediction" : 0.0,
+      "knowledgeDistFromAvg" : 0.08344927536231872,
+      "dataImportance" : 15.0,
+      "resourceSummaries" : [ ]
+    }, {
+      "id" : "For Loops-1",
+      "label" : "For Loops",
+      "knowledgeEstimate" : 0.0,
+      "knowledgePrediction" : 0.0,
+      "knowledgeDistFromAvg" : 0.0,
+      "dataImportance" : 0.0,
+      "resourceSummaries" : [ "Describe how the following relate to a for loop: variable, terminating condition, loop body   Est:0.000  Imp:0.000  ResponseCount:0" ]
+    }, {
+      "id" : "While Loops-1",
+      "label" : "While Loops",
+      "knowledgeEstimate" : 0.89,
+      "knowledgePrediction" : 0.0,
+      "knowledgeDistFromAvg" : 0.15599999999999992,
+      "dataImportance" : 2.0,
+      "resourceSummaries" : [ "Describe how while loops can depend on booleans   Est:0.890  Imp:1.000  ResponseCount:1", "Describe the flow of a while loop?   Est:0.000  Imp:0.000  ResponseCount:0", "What are the differences and similarities between for loops and while loops   Est:0.000  Imp:0.000  ResponseCount:0", "What is the proper while loop diction?   Est:0.000  Imp:0.000  ResponseCount:0" ]
+    }, {
+      "id" : "Booleans-1",
+      "label" : "Booleans",
+      "knowledgeEstimate" : 0.89,
+      "knowledgePrediction" : 0.0,
+      "knowledgeDistFromAvg" : 0.15599999999999992,
+      "dataImportance" : 1.0,
+      "resourceSummaries" : [ "Describe how while loops can depend on booleans   Est:0.890  Imp:1.000  ResponseCount:1" ]
+    }, {
+      "id" : "Expressions and Statements-1",
+      "label" : "Expressions and Statements",
+      "knowledgeEstimate" : 0.8769230769230769,
+      "knowledgePrediction" : 0.0,
+      "knowledgeDistFromAvg" : 0.07132985658409385,
+      "dataImportance" : 13.0,
+      "resourceSummaries" : [ "What does the modulus operator do?   Est:0.900  Imp:1.000  ResponseCount:1", "Write a function that will convert 645 mins into hours   Est:0.000  Imp:0.000  ResponseCount:0", "Write a function that will convert 645 mins into the whole hours   Est:1.000  Imp:1.000  ResponseCount:1", "What’s the difference between a statement and an expression?   Est:0.940  Imp:1.000  ResponseCount:1", "What are some of the statements we have already seen?   Est:0.000  Imp:0.000  ResponseCount:0" ]
+    }, {
+      "id" : "Variables-1",
+      "label" : "Variables",
+      "knowledgeEstimate" : 0.8560000000000001,
+      "knowledgePrediction" : 0.0,
+      "knowledgeDistFromAvg" : 0.0651666666666667,
+      "dataImportance" : 10.0,
+      "resourceSummaries" : [ "What is printed then the following statements execute?   Est:0.650  Imp:1.000  ResponseCount:1", "What is an assignment token?   Est:0.720  Imp:1.000  ResponseCount:1", "What is a reference diagram?   Est:0.850  Imp:1.000  ResponseCount:1" ]
+    }, {
+      "id" : "Values and Data Types-2",
+      "label" : "Values and Data Types",
+      "knowledgeEstimate" : 0.9057142857142857,
+      "knowledgePrediction" : 0.0,
+      "knowledgeDistFromAvg" : 0.0838961038961038,
+      "dataImportance" : 7.0,
+      "resourceSummaries" : [ "When do you want to cause a side effect?   Est:0.000  Imp:0.000  ResponseCount:0" ]
+    }, {
+      "id" : "Dictionaries-2",
+      "label" : "Dictionaries",
+      "knowledgeEstimate" : 0.8859999999999999,
+      "knowledgePrediction" : 0.0,
+      "knowledgeDistFromAvg" : 0.059913043478260763,
+      "dataImportance" : 5.0,
+      "resourceSummaries" : [ "What are values are accessed by?   Est:0.880  Imp:1.000  ResponseCount:1", "What’s a value   Est:0.800  Imp:1.000  ResponseCount:1", "Is a dictionary ordered?   Est:0.950  Imp:1.000  ResponseCount:1", "Whats a key   Est:0.800  Imp:1.000  ResponseCount:1" ]
+    }, {
+      "id" : "Strings-3",
+      "label" : "Strings",
+      "knowledgeEstimate" : 1.0,
+      "knowledgePrediction" : 0.0,
+      "knowledgeDistFromAvg" : 0.21999999999999997,
+      "dataImportance" : 1.0,
+      "resourceSummaries" : [ "Write a function that will calculate if the substring 'the' is in any user input   Est:1.000  Imp:1.000  ResponseCount:1" ]
+    }, {
+      "id" : "Lists-2",
+      "label" : "Lists",
+      "knowledgeEstimate" : 0.9550000000000001,
+      "knowledgePrediction" : 0.0,
+      "knowledgeDistFromAvg" : 0.14300000000000002,
+      "dataImportance" : 2.0,
+      "resourceSummaries" : [ "When do you want to allow side effects?   Est:0.910  Imp:1.000  ResponseCount:1" ]
+    }, {
+      "id" : "Strings-4",
+      "label" : "Strings",
+      "knowledgeEstimate" : 1.0,
+      "knowledgePrediction" : 0.0,
+      "knowledgeDistFromAvg" : 0.21999999999999997,
+      "dataImportance" : 1.0,
+      "resourceSummaries" : [ "Write a function that will calculate if the substring 'the' is in any user input   Est:1.000  Imp:1.000  ResponseCount:1" ]
+    }, {
+      "id" : "Counting-1",
+      "label" : "Counting",
+      "knowledgeEstimate" : 0.88,
+      "knowledgePrediction" : 0.0,
+      "knowledgeDistFromAvg" : 0.08567567567567569,
+      "dataImportance" : 16.0,
+      "resourceSummaries" : [ "Counting in binary to 10   Est:0.900  Imp:1.000  ResponseCount:1" ]
+    }, {
+      "id" : "Loops-2",
+      "label" : "Loops",
+      "knowledgeEstimate" : 0.8786666666666666,
+      "knowledgePrediction" : 0.0,
+      "knowledgeDistFromAvg" : 0.08344927536231872,
+      "dataImportance" : 15.0,
+      "resourceSummaries" : [ ]
+    }, {
+      "id" : "For Loops-2",
+      "label" : "For Loops",
+      "knowledgeEstimate" : 0.0,
+      "knowledgePrediction" : 0.0,
+      "knowledgeDistFromAvg" : 0.0,
+      "dataImportance" : 0.0,
+      "resourceSummaries" : [ "Describe how the following relate to a for loop: variable, terminating condition, loop body   Est:0.000  Imp:0.000  ResponseCount:0" ]
+    }, {
+      "id" : "While Loops-2",
+      "label" : "While Loops",
+      "knowledgeEstimate" : 0.89,
+      "knowledgePrediction" : 0.0,
+      "knowledgeDistFromAvg" : 0.15599999999999992,
+      "dataImportance" : 2.0,
+      "resourceSummaries" : [ "Describe how while loops can depend on booleans   Est:0.890  Imp:1.000  ResponseCount:1", "Describe the flow of a while loop?   Est:0.000  Imp:0.000  ResponseCount:0", "What are the differences and similarities between for loops and while loops   Est:0.000  Imp:0.000  ResponseCount:0", "What is the proper while loop diction?   Est:0.000  Imp:0.000  ResponseCount:0" ]
+    }, {
+      "id" : "Booleans-2",
+      "label" : "Booleans",
+      "knowledgeEstimate" : 0.89,
+      "knowledgePrediction" : 0.0,
+      "knowledgeDistFromAvg" : 0.15599999999999992,
+      "dataImportance" : 1.0,
+      "resourceSummaries" : [ "Describe how while loops can depend on booleans   Est:0.890  Imp:1.000  ResponseCount:1" ]
+    }, {
+      "id" : "Expressions and Statements-2",
+      "label" : "Expressions and Statements",
+      "knowledgeEstimate" : 0.8769230769230769,
+      "knowledgePrediction" : 0.0,
+      "knowledgeDistFromAvg" : 0.07132985658409385,
+      "dataImportance" : 13.0,
+      "resourceSummaries" : [ "What does the modulus operator do?   Est:0.900  Imp:1.000  ResponseCount:1", "Write a function that will convert 645 mins into hours   Est:0.000  Imp:0.000  ResponseCount:0", "Write a function that will convert 645 mins into the whole hours   Est:1.000  Imp:1.000  ResponseCount:1", "What’s the difference between a statement and an expression?   Est:0.940  Imp:1.000  ResponseCount:1", "What are some of the statements we have already seen?   Est:0.000  Imp:0.000  ResponseCount:0" ]
+    }, {
+      "id" : "Variables-2",
+      "label" : "Variables",
+      "knowledgeEstimate" : 0.8560000000000001,
+      "knowledgePrediction" : 0.0,
+      "knowledgeDistFromAvg" : 0.0651666666666667,
+      "dataImportance" : 10.0,
+      "resourceSummaries" : [ "What is printed then the following statements execute?   Est:0.650  Imp:1.000  ResponseCount:1", "What is an assignment token?   Est:0.720  Imp:1.000  ResponseCount:1", "What is a reference diagram?   Est:0.850  Imp:1.000  ResponseCount:1" ]
+    }, {
+      "id" : "Values and Data Types-3",
+      "label" : "Values and Data Types",
+      "knowledgeEstimate" : 0.9057142857142857,
+      "knowledgePrediction" : 0.0,
+      "knowledgeDistFromAvg" : 0.0838961038961038,
+      "dataImportance" : 7.0,
+      "resourceSummaries" : [ "When do you want to cause a side effect?   Est:0.000  Imp:0.000  ResponseCount:0" ]
+    }, {
+      "id" : "Dictionaries-3",
+      "label" : "Dictionaries",
+      "knowledgeEstimate" : 0.8859999999999999,
+      "knowledgePrediction" : 0.0,
+      "knowledgeDistFromAvg" : 0.059913043478260763,
+      "dataImportance" : 5.0,
+      "resourceSummaries" : [ "What are values are accessed by?   Est:0.880  Imp:1.000  ResponseCount:1", "What’s a value   Est:0.800  Imp:1.000  ResponseCount:1", "Is a dictionary ordered?   Est:0.950  Imp:1.000  ResponseCount:1", "Whats a key   Est:0.800  Imp:1.000  ResponseCount:1" ]
+    }, {
+      "id" : "Strings-5",
+      "label" : "Strings",
+      "knowledgeEstimate" : 1.0,
+      "knowledgePrediction" : 0.0,
+      "knowledgeDistFromAvg" : 0.21999999999999997,
+      "dataImportance" : 1.0,
+      "resourceSummaries" : [ "Write a function that will calculate if the substring 'the' is in any user input   Est:1.000  Imp:1.000  ResponseCount:1" ]
+    }, {
+      "id" : "Lists-3",
+      "label" : "Lists",
+      "knowledgeEstimate" : 0.9550000000000001,
+      "knowledgePrediction" : 0.0,
+      "knowledgeDistFromAvg" : 0.14300000000000002,
+      "dataImportance" : 2.0,
+      "resourceSummaries" : [ "When do you want to allow side effects?   Est:0.910  Imp:1.000  ResponseCount:1" ]
+    }, {
+      "id" : "Strings-6",
+      "label" : "Strings",
+      "knowledgeEstimate" : 1.0,
+      "knowledgePrediction" : 0.0,
+      "knowledgeDistFromAvg" : 0.21999999999999997,
+      "dataImportance" : 1.0,
+      "resourceSummaries" : [ "Write a function that will calculate if the substring 'the' is in any user input   Est:1.000  Imp:1.000  ResponseCount:1" ]
+    } ],
+    "links" : [ {
+      "parent" : "Dictionaries-1",
+      "child" : "Strings-1"
+    }, {
+      "parent" : "Values and Data Types-1",
+      "child" : "Dictionaries-1"
+    }, {
+      "parent" : "Lists-1",
+      "child" : "Strings-2"
+    }, {
+      "parent" : "Values and Data Types-1",
+      "child" : "Lists-1"
+    }, {
+      "parent" : "Parameters-1",
+      "child" : "Values and Data Types-1"
+    }, {
+      "parent" : "Functions-1",
+      "child" : "Parameters-1"
+    }, {
+      "parent" : "Algorithms-1",
+      "child" : "Functions-1"
+    }, {
+      "parent" : "Intro to CS-1",
+      "child" : "Algorithms-1"
+    }, {
+      "parent" : "Loops-1",
+      "child" : "For Loops-1"
+    }, {
+      "parent" : "While Loops-1",
+      "child" : "Booleans-1"
+    }, {
+      "parent" : "Loops-1",
+      "child" : "While Loops-1"
+    }, {
+      "parent" : "Dictionaries-2",
+      "child" : "Strings-3"
+    }, {
+      "parent" : "Values and Data Types-2",
+      "child" : "Dictionaries-2"
+    }, {
+      "parent" : "Lists-2",
+      "child" : "Strings-4"
+    }, {
+      "parent" : "Values and Data Types-2",
+      "child" : "Lists-2"
+    }, {
+      "parent" : "Variables-1",
+      "child" : "Values and Data Types-2"
+    }, {
+      "parent" : "Expressions and Statements-1",
+      "child" : "Variables-1"
+    }, {
+      "parent" : "Loops-1",
+      "child" : "Expressions and Statements-1"
+    }, {
+      "parent" : "Nested Conditionals-1",
+      "child" : "Loops-1"
+    }, {
+      "parent" : "Intro to CS-1",
+      "child" : "Nested Conditionals-1"
+    }, {
+      "parent" : "Loops-2",
+      "child" : "For Loops-2"
+    }, {
+      "parent" : "While Loops-2",
+      "child" : "Booleans-2"
+    }, {
+      "parent" : "Loops-2",
+      "child" : "While Loops-2"
+    }, {
+      "parent" : "Dictionaries-3",
+      "child" : "Strings-5"
+    }, {
+      "parent" : "Values and Data Types-3",
+      "child" : "Dictionaries-3"
+    }, {
+      "parent" : "Lists-3",
+      "child" : "Strings-6"
+    }, {
+      "parent" : "Values and Data Types-3",
+      "child" : "Lists-3"
+    }, {
+      "parent" : "Variables-2",
+      "child" : "Values and Data Types-3"
+    }, {
+      "parent" : "Expressions and Statements-2",
+      "child" : "Variables-2"
+    }, {
+      "parent" : "Loops-2",
+      "child" : "Expressions and Statements-2"
+    }, {
+      "parent" : "Counting-1",
+      "child" : "Loops-2"
+    }, {
+      "parent" : "Intro to CS-1",
+      "child" : "Counting-1"
+    } ]
+  }, {
+    "name" : "s2",
+    "concepts" : [ {
+      "id" : "Intro to CS-1",
+      "label" : "Intro to CS",
+      "knowledgeEstimate" : 0.6870270270270271,
+      "knowledgePrediction" : 0.0,
+      "knowledgeDistFromAvg" : -0.12064287588559419,
+      "dataImportance" : 37.0,
+      "resourceSummaries" : [ ]
+    }, {
+      "id" : "Algorithms-1",
+      "label" : "Algorithms",
+      "knowledgeEstimate" : 0.7558333333333332,
+      "knowledgePrediction" : 0.0,
+      "knowledgeDistFromAvg" : -0.0811507936507937,
+      "dataImportance" : 12.0,
+      "resourceSummaries" : [ "Write an algorithm to change a list of ints to be a list of strings   Est:0.600  Imp:1.000  ResponseCount:1" ]
+    }, {
+      "id" : "Functions-1",
+      "label" : "Functions",
+      "knowledgeEstimate" : 0.7699999999999999,
+      "knowledgePrediction" : 0.0,
+      "knowledgeDistFromAvg" : -0.07362068965517254,
+      "dataImportance" : 11.0,
+      "resourceSummaries" : [ "What’s wrong with the following function definition?   Est:0.900  Imp:1.000  ResponseCount:1", "What will the following function return?   Est:0.940  Imp:1.000  ResponseCount:1", "Can a function be called several times by placing a function call in the body of a loop   Est:0.960  Imp:1.000  ResponseCount:1" ]
+    }, {
+      "id" : "Parameters-1",
+      "label" : "Parameters",
+      "knowledgeEstimate" : 0.70875,
+      "knowledgePrediction" : 0.0,
+      "knowledgeDistFromAvg" : -0.11008720930232563,
+      "dataImportance" : 8.0,
+      "resourceSummaries" : [ "How many parameters can you have?   Est:0.710  Imp:1.000  ResponseCount:1", "When do you want to cause a side effect?   Est:0.000  Imp:0.000  ResponseCount:0", "When do you want to allow side effects?   Est:0.750  Imp:1.000  ResponseCount:1" ]
+    }, {
+      "id" : "Values and Data Types-1",
+      "label" : "Values and Data Types",
+      "knowledgeEstimate" : 0.7016666666666667,
+      "knowledgePrediction" : 0.0,
+      "knowledgeDistFromAvg" : -0.12015151515151523,
+      "dataImportance" : 6.0,
+      "resourceSummaries" : [ "When do you want to cause a side effect?   Est:0.000  Imp:0.000  ResponseCount:0" ]
+    }, {
+      "id" : "Dictionaries-1",
+      "label" : "Dictionaries",
+      "knowledgeEstimate" : 0.74,
+      "knowledgePrediction" : 0.0,
+      "knowledgeDistFromAvg" : -0.08608695652173914,
+      "dataImportance" : 4.0,
+      "resourceSummaries" : [ "What are values are accessed by?   Est:0.000  Imp:0.000  ResponseCount:0", "What’s a value   Est:0.810  Imp:1.000  ResponseCount:1", "Is a dictionary ordered?   Est:0.780  Imp:1.000  ResponseCount:1", "Whats a key   Est:0.870  Imp:1.000  ResponseCount:1" ]
+    }, {
+      "id" : "Strings-1",
+      "label" : "Strings",
+      "knowledgeEstimate" : 0.5,
+      "knowledgePrediction" : 0.0,
+      "knowledgeDistFromAvg" : -0.28,
+      "dataImportance" : 1.0,
+      "resourceSummaries" : [ "Write a function that will calculate if the substring 'the' is in any user input   Est:0.500  Imp:1.000  ResponseCount:1" ]
+    }, {
+      "id" : "Lists-1",
+      "label" : "Lists",
+      "knowledgeEstimate" : 0.625,
+      "knowledgePrediction" : 0.0,
+      "knowledgeDistFromAvg" : -0.18700000000000006,
+      "dataImportance" : 2.0,
+      "resourceSummaries" : [ "When do you want to allow side effects?   Est:0.750  Imp:1.000  ResponseCount:1" ]
+    }, {
+      "id" : "Strings-2",
+      "label" : "Strings",
+      "knowledgeEstimate" : 0.5,
+      "knowledgePrediction" : 0.0,
+      "knowledgeDistFromAvg" : -0.28,
+      "dataImportance" : 1.0,
+      "resourceSummaries" : [ "Write a function that will calculate if the substring 'the' is in any user input   Est:0.500  Imp:1.000  ResponseCount:1" ]
+    }, {
+      "id" : "Nested Conditionals-1",
+      "label" : "Nested Conditionals",
+      "knowledgeEstimate" : 0.6583333333333333,
+      "knowledgePrediction" : 0.0,
+      "knowledgeDistFromAvg" : -0.13688405797101455,
+      "dataImportance" : 12.0,
+      "resourceSummaries" : [ ]
+    }, {
+      "id" : "Loops-1",
+      "label" : "Loops",
+      "knowledgeEstimate" : 0.6583333333333333,
+      "knowledgePrediction" : 0.0,
+      "knowledgeDistFromAvg" : -0.13688405797101455,
+      "dataImportance" : 12.0,
+      "resourceSummaries" : [ ]
+    }, {
+      "id" : "For Loops-1",
+      "label" : "For Loops",
+      "knowledgeEstimate" : 0.0,
+      "knowledgePrediction" : 0.0,
+      "knowledgeDistFromAvg" : 0.0,
+      "dataImportance" : 0.0,
+      "resourceSummaries" : [ "Describe how the following relate to a for loop: variable, terminating condition, loop body   Est:0.000  Imp:0.000  ResponseCount:0" ]
+    }, {
+      "id" : "While Loops-1",
+      "label" : "While Loops",
+      "knowledgeEstimate" : 0.5,
+      "knowledgePrediction" : 0.0,
+      "knowledgeDistFromAvg" : -0.2340000000000001,
+      "dataImportance" : 2.0,
+      "resourceSummaries" : [ "Describe how while loops can depend on booleans   Est:0.500  Imp:1.000  ResponseCount:1", "Describe the flow of a while loop?   Est:0.000  Imp:0.000  ResponseCount:0", "What are the differences and similarities between for loops and while loops   Est:0.000  Imp:0.000  ResponseCount:0", "What is the proper while loop diction?   Est:0.000  Imp:0.000  ResponseCount:0" ]
+    }, {
+      "id" : "Booleans-1",
+      "label" : "Booleans",
+      "knowledgeEstimate" : 0.5,
+      "knowledgePrediction" : 0.0,
+      "knowledgeDistFromAvg" : -0.2340000000000001,
+      "dataImportance" : 1.0,
+      "resourceSummaries" : [ "Describe how while loops can depend on booleans   Est:0.500  Imp:1.000  ResponseCount:1" ]
+    }, {
+      "id" : "Expressions and Statements-1",
+      "label" : "Expressions and Statements",
+      "knowledgeEstimate" : 0.69,
+      "knowledgePrediction" : 0.0,
+      "knowledgeDistFromAvg" : -0.11559322033898312,
+      "dataImportance" : 10.0,
+      "resourceSummaries" : [ "What does the modulus operator do?   Est:0.000  Imp:0.000  ResponseCount:0", "Write a function that will convert 645 mins into hours   Est:0.000  Imp:0.000  ResponseCount:0", "Write a function that will convert 645 mins into the whole hours   Est:0.550  Imp:1.000  ResponseCount:1", "What’s the difference between a statement and an expression?   Est:0.000  Imp:0.000  ResponseCount:0", "What are some of the statements we have already seen?   Est:0.000  Imp:0.000  ResponseCount:0" ]
+    }, {
+      "id" : "Variables-1",
+      "label" : "Variables",
+      "knowledgeEstimate" : 0.7055555555555555,
+      "knowledgePrediction" : 0.0,
+      "knowledgeDistFromAvg" : -0.0852777777777779,
+      "dataImportance" : 9.0,
+      "resourceSummaries" : [ "What is printed then the following statements execute?   Est:0.700  Imp:1.000  ResponseCount:1", "What is an assignment token?   Est:0.750  Imp:1.000  ResponseCount:1", "What is a reference diagram?   Est:0.690  Imp:1.000  ResponseCount:1" ]
+    }, {
+      "id" : "Values and Data Types-2",
+      "label" : "Values and Data Types",
+      "knowledgeEstimate" : 0.7016666666666667,
+      "knowledgePrediction" : 0.0,
+      "knowledgeDistFromAvg" : -0.12015151515151523,
+      "dataImportance" : 6.0,
+      "resourceSummaries" : [ "When do you want to cause a side effect?   Est:0.000  Imp:0.000  ResponseCount:0" ]
+    }, {
+      "id" : "Dictionaries-2",
+      "label" : "Dictionaries",
+      "knowledgeEstimate" : 0.74,
+      "knowledgePrediction" : 0.0,
+      "knowledgeDistFromAvg" : -0.08608695652173914,
+      "dataImportance" : 4.0,
+      "resourceSummaries" : [ "What are values are accessed by?   Est:0.000  Imp:0.000  ResponseCount:0", "What’s a value   Est:0.810  Imp:1.000  ResponseCount:1", "Is a dictionary ordered?   Est:0.780  Imp:1.000  ResponseCount:1", "Whats a key   Est:0.870  Imp:1.000  ResponseCount:1" ]
+    }, {
+      "id" : "Strings-3",
+      "label" : "Strings",
+      "knowledgeEstimate" : 0.5,
+      "knowledgePrediction" : 0.0,
+      "knowledgeDistFromAvg" : -0.28,
+      "dataImportance" : 1.0,
+      "resourceSummaries" : [ "Write a function that will calculate if the substring 'the' is in any user input   Est:0.500  Imp:1.000  ResponseCount:1" ]
+    }, {
+      "id" : "Lists-2",
+      "label" : "Lists",
+      "knowledgeEstimate" : 0.625,
+      "knowledgePrediction" : 0.0,
+      "knowledgeDistFromAvg" : -0.18700000000000006,
+      "dataImportance" : 2.0,
+      "resourceSummaries" : [ "When do you want to allow side effects?   Est:0.750  Imp:1.000  ResponseCount:1" ]
+    }, {
+      "id" : "Strings-4",
+      "label" : "Strings",
+      "knowledgeEstimate" : 0.5,
+      "knowledgePrediction" : 0.0,
+      "knowledgeDistFromAvg" : -0.28,
+      "dataImportance" : 1.0,
+      "resourceSummaries" : [ "Write a function that will calculate if the substring 'the' is in any user input   Est:0.500  Imp:1.000  ResponseCount:1" ]
+    }, {
+      "id" : "Counting-1",
+      "label" : "Counting",
+      "knowledgeEstimate" : 0.6500000000000001,
+      "knowledgePrediction" : 0.0,
+      "knowledgeDistFromAvg" : -0.14432432432432418,
+      "dataImportance" : 13.0,
+      "resourceSummaries" : [ "Counting in binary to 10   Est:0.550  Imp:1.000  ResponseCount:1" ]
+    }, {
+      "id" : "Loops-2",
+      "label" : "Loops",
+      "knowledgeEstimate" : 0.6583333333333333,
+      "knowledgePrediction" : 0.0,
+      "knowledgeDistFromAvg" : -0.13688405797101455,
+      "dataImportance" : 12.0,
+      "resourceSummaries" : [ ]
+    }, {
+      "id" : "For Loops-2",
+      "label" : "For Loops",
+      "knowledgeEstimate" : 0.0,
+      "knowledgePrediction" : 0.0,
+      "knowledgeDistFromAvg" : 0.0,
+      "dataImportance" : 0.0,
+      "resourceSummaries" : [ "Describe how the following relate to a for loop: variable, terminating condition, loop body   Est:0.000  Imp:0.000  ResponseCount:0" ]
+    }, {
+      "id" : "While Loops-2",
+      "label" : "While Loops",
+      "knowledgeEstimate" : 0.5,
+      "knowledgePrediction" : 0.0,
+      "knowledgeDistFromAvg" : -0.2340000000000001,
+      "dataImportance" : 2.0,
+      "resourceSummaries" : [ "Describe how while loops can depend on booleans   Est:0.500  Imp:1.000  ResponseCount:1", "Describe the flow of a while loop?   Est:0.000  Imp:0.000  ResponseCount:0", "What are the differences and similarities between for loops and while loops   Est:0.000  Imp:0.000  ResponseCount:0", "What is the proper while loop diction?   Est:0.000  Imp:0.000  ResponseCount:0" ]
+    }, {
+      "id" : "Booleans-2",
+      "label" : "Booleans",
+      "knowledgeEstimate" : 0.5,
+      "knowledgePrediction" : 0.0,
+      "knowledgeDistFromAvg" : -0.2340000000000001,
+      "dataImportance" : 1.0,
+      "resourceSummaries" : [ "Describe how while loops can depend on booleans   Est:0.500  Imp:1.000  ResponseCount:1" ]
+    }, {
+      "id" : "Expressions and Statements-2",
+      "label" : "Expressions and Statements",
+      "knowledgeEstimate" : 0.69,
+      "knowledgePrediction" : 0.0,
+      "knowledgeDistFromAvg" : -0.11559322033898312,
+      "dataImportance" : 10.0,
+      "resourceSummaries" : [ "What does the modulus operator do?   Est:0.000  Imp:0.000  ResponseCount:0", "Write a function that will convert 645 mins into hours   Est:0.000  Imp:0.000  ResponseCount:0", "Write a function that will convert 645 mins into the whole hours   Est:0.550  Imp:1.000  ResponseCount:1", "What’s the difference between a statement and an expression?   Est:0.000  Imp:0.000  ResponseCount:0", "What are some of the statements we have already seen?   Est:0.000  Imp:0.000  ResponseCount:0" ]
+    }, {
+      "id" : "Variables-2",
+      "label" : "Variables",
+      "knowledgeEstimate" : 0.7055555555555555,
+      "knowledgePrediction" : 0.0,
+      "knowledgeDistFromAvg" : -0.0852777777777779,
+      "dataImportance" : 9.0,
+      "resourceSummaries" : [ "What is printed then the following statements execute?   Est:0.700  Imp:1.000  ResponseCount:1", "What is an assignment token?   Est:0.750  Imp:1.000  ResponseCount:1", "What is a reference diagram?   Est:0.690  Imp:1.000  ResponseCount:1" ]
+    }, {
+      "id" : "Values and Data Types-3",
+      "label" : "Values and Data Types",
+      "knowledgeEstimate" : 0.7016666666666667,
+      "knowledgePrediction" : 0.0,
+      "knowledgeDistFromAvg" : -0.12015151515151523,
+      "dataImportance" : 6.0,
+      "resourceSummaries" : [ "When do you want to cause a side effect?   Est:0.000  Imp:0.000  ResponseCount:0" ]
+    }, {
+      "id" : "Dictionaries-3",
+      "label" : "Dictionaries",
+      "knowledgeEstimate" : 0.74,
+      "knowledgePrediction" : 0.0,
+      "knowledgeDistFromAvg" : -0.08608695652173914,
+      "dataImportance" : 4.0,
+      "resourceSummaries" : [ "What are values are accessed by?   Est:0.000  Imp:0.000  ResponseCount:0", "What’s a value   Est:0.810  Imp:1.000  ResponseCount:1", "Is a dictionary ordered?   Est:0.780  Imp:1.000  ResponseCount:1", "Whats a key   Est:0.870  Imp:1.000  ResponseCount:1" ]
+    }, {
+      "id" : "Strings-5",
+      "label" : "Strings",
+      "knowledgeEstimate" : 0.5,
+      "knowledgePrediction" : 0.0,
+      "knowledgeDistFromAvg" : -0.28,
+      "dataImportance" : 1.0,
+      "resourceSummaries" : [ "Write a function that will calculate if the substring 'the' is in any user input   Est:0.500  Imp:1.000  ResponseCount:1" ]
+    }, {
+      "id" : "Lists-3",
+      "label" : "Lists",
+      "knowledgeEstimate" : 0.625,
+      "knowledgePrediction" : 0.0,
+      "knowledgeDistFromAvg" : -0.18700000000000006,
+      "dataImportance" : 2.0,
+      "resourceSummaries" : [ "When do you want to allow side effects?   Est:0.750  Imp:1.000  ResponseCount:1" ]
+    }, {
+      "id" : "Strings-6",
+      "label" : "Strings",
+      "knowledgeEstimate" : 0.5,
+      "knowledgePrediction" : 0.0,
+      "knowledgeDistFromAvg" : -0.28,
+      "dataImportance" : 1.0,
+      "resourceSummaries" : [ "Write a function that will calculate if the substring 'the' is in any user input   Est:0.500  Imp:1.000  ResponseCount:1" ]
+    } ],
+    "links" : [ {
+      "parent" : "Dictionaries-1",
+      "child" : "Strings-1"
+    }, {
+      "parent" : "Values and Data Types-1",
+      "child" : "Dictionaries-1"
+    }, {
+      "parent" : "Lists-1",
+      "child" : "Strings-2"
+    }, {
+      "parent" : "Values and Data Types-1",
+      "child" : "Lists-1"
+    }, {
+      "parent" : "Parameters-1",
+      "child" : "Values and Data Types-1"
+    }, {
+      "parent" : "Functions-1",
+      "child" : "Parameters-1"
+    }, {
+      "parent" : "Algorithms-1",
+      "child" : "Functions-1"
+    }, {
+      "parent" : "Intro to CS-1",
+      "child" : "Algorithms-1"
+    }, {
+      "parent" : "Loops-1",
+      "child" : "For Loops-1"
+    }, {
+      "parent" : "While Loops-1",
+      "child" : "Booleans-1"
+    }, {
+      "parent" : "Loops-1",
+      "child" : "While Loops-1"
+    }, {
+      "parent" : "Dictionaries-2",
+      "child" : "Strings-3"
+    }, {
+      "parent" : "Values and Data Types-2",
+      "child" : "Dictionaries-2"
+    }, {
+      "parent" : "Lists-2",
+      "child" : "Strings-4"
+    }, {
+      "parent" : "Values and Data Types-2",
+      "child" : "Lists-2"
+    }, {
+      "parent" : "Variables-1",
+      "child" : "Values and Data Types-2"
+    }, {
+      "parent" : "Expressions and Statements-1",
+      "child" : "Variables-1"
+    }, {
+      "parent" : "Loops-1",
+      "child" : "Expressions and Statements-1"
+    }, {
+      "parent" : "Nested Conditionals-1",
+      "child" : "Loops-1"
+    }, {
+      "parent" : "Intro to CS-1",
+      "child" : "Nested Conditionals-1"
+    }, {
+      "parent" : "Loops-2",
+      "child" : "For Loops-2"
+    }, {
+      "parent" : "While Loops-2",
+      "child" : "Booleans-2"
+    }, {
+      "parent" : "Loops-2",
+      "child" : "While Loops-2"
+    }, {
+      "parent" : "Dictionaries-3",
+      "child" : "Strings-5"
+    }, {
+      "parent" : "Values and Data Types-3",
+      "child" : "Dictionaries-3"
+    }, {
+      "parent" : "Lists-3",
+      "child" : "Strings-6"
+    }, {
+      "parent" : "Values and Data Types-3",
+      "child" : "Lists-3"
+    }, {
+      "parent" : "Variables-2",
+      "child" : "Values and Data Types-3"
+    }, {
+      "parent" : "Expressions and Statements-2",
+      "child" : "Variables-2"
+    }, {
+      "parent" : "Loops-2",
+      "child" : "Expressions and Statements-2"
+    }, {
+      "parent" : "Counting-1",
+      "child" : "Loops-2"
+    }, {
+      "parent" : "Intro to CS-1",
+      "child" : "Counting-1"
+    } ]
+  } ]
+}
