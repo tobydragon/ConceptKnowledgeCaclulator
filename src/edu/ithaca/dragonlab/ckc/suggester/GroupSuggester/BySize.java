@@ -8,7 +8,7 @@ import java.util.*;
 /**
  * Created by Mia Kimmich Mitchell on 9/20/2017.
  */
-public class BySize{
+public class BySize extends Suggester {
     int groupSize;
 
     public BySize(int size){
@@ -18,8 +18,9 @@ public class BySize{
     }
 
 
-    public List<Map<String, ConceptGraph>> suggestGroup(Group groupSoFar, Group extraMembers){
-        List<Map<String, ConceptGraph>> actualGroupings = new ArrayList<>();
+    @Override
+    public List<Group> suggestGroup(Group groupSoFar, Group extraMembers){
+        List<Group> actualGroupings = new ArrayList<>();
 
         Map<String, ConceptGraph> group = groupSoFar.getStudents();
         Map<String, ConceptGraph> exMem = extraMembers.getStudents();
@@ -38,15 +39,11 @@ public class BySize{
                     while (itr < groupSize) {
                         Collections.shuffle(copyGroups);
                         String user = copyGroups.get(0);
-//                        Map<String, ConceptGraph> st = new HashMap<>();
-//                        st.put(user, )
 
                         if (group.containsKey(user)) {
                             groups.addMembers(user, group.get(user));
-//                            groups.put(user, group.get(user));
                         } else {
                             groups.addMembers(user, exMem.get(user));
-//                            groups.put(user, exMem.get(user));
                             extraMembers.removeMember(user);
                         }
                         copyGroups.remove(user);
@@ -54,15 +51,12 @@ public class BySize{
                         itr++;
                     }
                     actualGroupings.add(groups);
-
                 }
 
                 if (copyGroups.size() > 0) {
-                    extraMembers.addMembers(copyGroups);
-//                    for (int i = 0; i < copyGroups.size(); i++) {
-//                        extraMembers.addMembers();
-//                                put(copyGroups.get(i), group.get(copyGroups.get(i)));
-//                    }
+                    for (int i = 0; i < copyGroups.size(); i++) {
+                        extraMembers.addMembers(copyGroups.get(i), group.get(copyGroups.get(i)));
+                    }
                 }
 
 
@@ -72,13 +66,12 @@ public class BySize{
                 copyGroups2.addAll(group.keySet());
                 Collections.shuffle(copyGroups);
 
-                Map<String, ConceptGraph> groups2 = new HashMap<>();
+                Group groups2 = new Group();
 
                 for(String name: copyGroups2){
-                    groups2.put(name, group.get(name));
+                    groups2.addMembers(name, group.get(name));
                 }
                 actualGroupings.add(groups2);
-
 
             }
 

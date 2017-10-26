@@ -56,4 +56,16 @@ public class Group {
     }
 
 
+    public String toString (){
+        String list = "";
+
+        for(String name: studentGraphMap.keySet()){
+            list += name ;
+        }
+
+        return list;
+
+
+    }
+
 }

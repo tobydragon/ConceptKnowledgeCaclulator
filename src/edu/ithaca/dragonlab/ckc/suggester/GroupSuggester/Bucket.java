@@ -11,7 +11,7 @@ import java.util.Map;
 /**
  * Created by Mia Kimmich Mitchell on 9/20/2017.
  */
-public class Bucket {
+public class Bucket extends Suggester {
 
     //a list of list of ranges. Each list (within the list) is a specific range.
     List<List<Integer>> ranges;
@@ -26,6 +26,7 @@ public class Bucket {
         }
     }
 
+    @Override
     public List<Group> suggestGroup(Group groupSoFar, Group extraMembers) {
         List<Group> actualGroupings = new ArrayList<>();
 
