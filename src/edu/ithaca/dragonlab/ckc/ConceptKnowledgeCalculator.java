@@ -490,21 +490,22 @@ public class ConceptKnowledgeCalculator implements ConceptKnowledgeCalculatorAPI
             Collection<String> nodeList = cohortConceptGraphs.getAvgGraph().getAllNodeIds();
 
             if (subject.equals("all") || nodeList.contains(subject)) {
-                if (currentMode == Mode.COHORTGRAPH) {
-                    ConceptDiffGroupSuggester sug = new ConceptDiffGroupSuggester();
-
-                    return sug.suggestGroup(cohortConceptGraphs, choice, subject);
-
-                } else {
-                    throw new Exception("Wrong Mode");
-
-                }
-
-            } else {
-                throw new Exception("Invalid subject");
+//                if (currentMode == Mode.COHORTGRAPH) {
+//                    ConceptDiffGroupSuggester sug = new ConceptDiffGroupSuggester();
+//
+//                    return sug.suggestGroup(cohortConceptGraphs, choice, subject);
+//
+//                } else {
+//                    throw new Exception("Wrong Mode");
+//
+//                }
+//
+//            } else {
+//                throw new Exception("Invalid subject");
             }
         }
 
+                return null;
     }
 
 
@@ -539,18 +540,19 @@ public class ConceptKnowledgeCalculator implements ConceptKnowledgeCalculatorAPI
     public List<List<String>> resourceGroupSuggestions(int choice) throws Exception {
         if(currentMode==Mode.COHORTGRAPH) {
 
-            if(choice>3 || choice <2){
-                throw new Exception("invalid group size");
-            }else {
-                GroupSuggester obj = new ResourceNCubeGroupSuggester();
-
-                return obj.suggestGroup(cohortConceptGraphs, choice);
-
-            }
-        }else {
-            throw new Exception("Wrong Mode");
-
+//            if(choice>3 || choice <2){
+//                throw new Exception("invalid group size");
+//            }else {
+//                GroupSuggester obj = new ResourceNCubeGroupSuggester();
+//
+//                return obj.suggestGroup(cohortConceptGraphs, choice);
+//
+//            }
+//        }else {
+//            throw new Exception("Wrong Mode");
+//
         }
+        return null;
     }
 
     public String csvToResource() throws Exception {

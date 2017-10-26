@@ -11,7 +11,7 @@ import java.util.Map;
 /**
  * Created by Mia Kimmich Mitchell on 9/20/2017.
  */
-public class Bucket extends GroupSuggester{
+public class Bucket {
 
     //a list of list of ranges. Each list (within the list) is a specific range.
     List<List<Integer>> ranges;
@@ -26,15 +26,17 @@ public class Bucket extends GroupSuggester{
         }
     }
 
-    @Override
-    public List<Map<String, ConceptGraph>> suggestGroup(List<Map<String, ConceptGraph>> groupings) {
-        List<Map<String, ConceptGraph>> actualGroupings = new ArrayList<>();
-
-        for(Map<String, ConceptGraph> groupSoFar: groupings){
+    public List<Group> suggestGroup(Group groupSoFar, Group extraMembers) {
+        List<Group> actualGroupings = new ArrayList<>();
 
             Map<String, Double> knowledgeSums = new HashMap<>();
-            for(String name: groupSoFar.keySet()){
-                ConceptGraph userGraph = groupSoFar.get(name);
+
+
+            Map<String, ConceptGraph> group = groupSoFar.getStudents();
+
+
+            for(String name: group.keySet()){
+                ConceptGraph userGraph = group.get(name);
                 String subject = "all";
                 double sum = calcSum(userGraph,subject);
                 knowledgeSums.put(name, (sum/userGraph.getAllNodeIds().size())*100);
@@ -46,15 +48,16 @@ public class Bucket extends GroupSuggester{
                 for(String student:knowledgeSums.keySet()){
 
                     if ( knowledgeSums.get(student)>r.get(0) && knowledgeSums.get(student) < r.get(1) ){
-                        map.put(student,groupSoFar.get(student));
+                        map.put(student,group.get(student));
                     }
 
                 }
 
-                actualGroupings.add(map);
-            }
+                Group newGroup = new Group(map, "");
+                actualGroupings.add(newGroup);
 
-        }
+//                actualGroupings.add(map);
+            }
 
         return actualGroupings;
     }
@@ -71,11 +74,5 @@ public class Bucket extends GroupSuggester{
 
     }
 
-
-
-    @Override
-    public List<List<String>> suggestGroup(CohortConceptGraphs graphs, int choice) {
-        return null;
-    }
 
 }
