@@ -1,6 +1,5 @@
 package edu.ithaca.dragonlab.ckc.suggester.GroupSuggester;
 
-import edu.ithaca.dragonlab.ckc.conceptgraph.CohortConceptGraphs;
 import edu.ithaca.dragonlab.ckc.conceptgraph.ConceptGraph;
 
 import java.util.*;
@@ -22,12 +21,13 @@ public class BySize extends Suggester {
     public List<Group> suggestGroup(Group groupSoFar, Group extraMembers){
         List<Group> actualGroupings = new ArrayList<>();
 
+
         Map<String, ConceptGraph> group = groupSoFar.getStudents();
         Map<String, ConceptGraph> exMem = extraMembers.getStudents();
 
 
         List<String> copyGroups = new ArrayList<>();
-            copyGroups.addAll(group.keySet());
+        copyGroups.addAll(group.keySet());
 
             if (group.size() > groupSize) {
 
@@ -40,22 +40,25 @@ public class BySize extends Suggester {
                         Collections.shuffle(copyGroups);
                         String user = copyGroups.get(0);
 
-                        if (group.containsKey(user)) {
-                            groups.addMembers(user, group.get(user));
+                        if (!exMem.containsKey(user)) {
+                            groups.addMember(user, group.get(user));
                         } else {
-                            groups.addMembers(user, exMem.get(user));
+                            groups.addMember(user, exMem.get(user));
                             extraMembers.removeMember(user);
                         }
                         copyGroups.remove(user);
 
+
                         itr++;
                     }
+
+
                     actualGroupings.add(groups);
                 }
 
                 if (copyGroups.size() > 0) {
                     for (int i = 0; i < copyGroups.size(); i++) {
-                        extraMembers.addMembers(copyGroups.get(i), group.get(copyGroups.get(i)));
+                        extraMembers.addMember(copyGroups.get(i), group.get(copyGroups.get(i)));
                     }
                 }
 
@@ -69,7 +72,7 @@ public class BySize extends Suggester {
                 Group groups2 = new Group();
 
                 for(String name: copyGroups2){
-                    groups2.addMembers(name, group.get(name));
+                    groups2.addMember(name, group.get(name));
                 }
                 actualGroupings.add(groups2);
 

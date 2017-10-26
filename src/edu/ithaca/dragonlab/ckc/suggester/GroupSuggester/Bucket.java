@@ -57,7 +57,6 @@ public class Bucket extends Suggester {
                 Group newGroup = new Group(map, "");
                 actualGroupings.add(newGroup);
 
-//                actualGroupings.add(map);
             }
 
         return actualGroupings;

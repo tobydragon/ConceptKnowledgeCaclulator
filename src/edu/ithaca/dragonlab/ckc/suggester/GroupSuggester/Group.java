@@ -38,17 +38,18 @@ public class Group {
 
     }
 
-    public void addMembers(Map<String, ConceptGraph> addStudent){
+    public void addMember(Group gr){
+        Map<String, ConceptGraph> list = gr.getStudents();
+        this.studentGraphMap.putAll(list);
+
+    }
+
+    public void addMember(Map<String, ConceptGraph> addStudent){
         this.studentGraphMap.putAll(addStudent);
     }
 
-    public void addMembers(String st, ConceptGraph graph){
+    public void addMember(String st, ConceptGraph graph){
         this.studentGraphMap.put(st,graph);
-    }
-
-
-    public void removeMember(Map<String,ConceptGraph> remStudent){
-        this.studentGraphMap.remove(remStudent);
     }
 
     public void removeMember(String remStudent){
@@ -56,13 +57,30 @@ public class Group {
     }
 
 
+
+    ///////testing
+
+    public boolean contains(String name){
+        if(this.studentGraphMap.containsKey(name)){
+            return true;
+        }else{
+            return false;
+        }
+
+    }
+
+    public ConceptGraph getGraph (String name){
+        return this.studentGraphMap.get(name);
+
+    }
+
     public String toString (){
+
         String list = "";
 
         for(String name: studentGraphMap.keySet()){
-            list += name ;
+            list += name + " " ;
         }
-
         return list;
 
 

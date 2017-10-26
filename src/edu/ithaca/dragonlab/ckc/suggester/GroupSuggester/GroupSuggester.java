@@ -11,18 +11,14 @@ public class GroupSuggester {
     int size;
     Suggester  sug;
 
-//    public GroupSuggester(List<Group> groupings, int groupSize, int groupingType){
-////        grouping(groupings, groupSize, groupingType);
-//    }
 
-
-    public List<Group>  grouping(List<Group> groupings, int groupSize, int groupingType){
+    public List<Group>  grouping(List<Group> groupings, int groupSize, int groupingType, List<List<Integer>> range){
         size = groupSize;
 
         if(groupingType == 0) {
             //bucket
             try {
-                sug = new Bucket(new ArrayList<>());
+                sug = new Bucket(range);
             } catch (Exception e) {
                 e.printStackTrace();
             }
@@ -38,9 +34,7 @@ public class GroupSuggester {
         }
 
         List<Group> actualGroupings = new ArrayList<>();
-
         Group extraMembers = new Group(new HashMap<>(), " ");
-
 
         for(Group groupSoFar: groupings) {
 
@@ -48,11 +42,34 @@ public class GroupSuggester {
                 groupSoFar.combinegroups(extraMembers);
             }
 
-
             List<Group> temp  = sug.suggestGroup(groupSoFar, extraMembers);
+
 
             actualGroupings.addAll(temp);
         }
+
+        //if there are left over students
+        //todo fix this so that it can work with any amount of student group sizes
+
+        if(extraMembers.getSize()>0){
+            if(extraMembers.getSize()>size){
+
+                Suggester two = new BySize(groupSize);
+                List<Group> temp = two.suggestGroup(extraMembers, new Group());
+                actualGroupings.addAll(temp);
+
+            }else if (extraMembers.getSize() == size/2) {
+
+                Group tempGr = actualGroupings.get(actualGroupings.size()-1);
+                tempGr.addMember(extraMembers);
+
+            }else{
+                actualGroupings.add(extraMembers);
+
+
+            }
+        }
+
 
         return actualGroupings;
     }
@@ -83,16 +100,22 @@ public class GroupSuggester {
 
     public List<Group> getGroupList (CohortConceptGraphs graphs){
         Map<String, ConceptGraph> userMap = getUserMap(graphs);
+
         List<Group> groupings1 = new ArrayList<>();
+        Group gr = new Group();
 
         for(String name: userMap.keySet()){
 
             Map<String, ConceptGraph> student = new HashMap<>();
-            Group gr = new Group(student, "");
-            groupings1.add(gr);
+            student.put(name, userMap.get(name));
+            gr.addMember(student);
 
         }
-    return groupings1;
+
+        groupings1.add(gr);
+
+
+        return groupings1;
     }
 
 
