@@ -1115,48 +1115,4 @@ public class ConceptKnowledgeCalculatorTest {
 //    }
 
 
-    @Test
-    public void ConceptDiffGroupSuggestions() throws Exception {
-        ConceptKnowledgeCalculatorAPI ckc = null;
-
-        try {
-            ckc = new ConceptKnowledgeCalculator("test/testresources/ManuallyCreated/researchConceptGraph.json", "test/testresources/ManuallyCreated/researchResource2.json", "test/testresources/ManuallyCreated/researchAssessment2.csv");
-
-            List<List<String>> groupings = ckc.conceptDiffGroupSuggestions(2, "all");
-
-            Assert.assertEquals(groupings.size(),3 );
-            Assert.assertEquals(groupings.get(0).size(), 2);
-            Assert.assertEquals(groupings.get(1).size(), 2);
-            Assert.assertEquals(groupings.get(2).size(), 1);
-
-            Assert.assertEquals(groupings.get(0).get(0), "s4");
-            Assert.assertEquals(groupings.get(0).get(1), "s5");
-
-            Assert.assertEquals(groupings.get(1).get(0), "s3");
-            Assert.assertEquals(groupings.get(1).get(1), "s2");
-
-
-            Assert.assertEquals(groupings.get(2).get(0), "s1");
-
-
-
-
-            List<List<String>> grouping3 = ckc.conceptDiffGroupSuggestions(3, "all");
-
-            Assert.assertEquals(grouping3.size(),2 );
-            Assert.assertEquals(grouping3.get(0).size(), 3);
-            Assert.assertEquals(grouping3.get(1).size(), 2);
-
-            Assert.assertEquals(grouping3.get(0).get(0), "s4");
-            Assert.assertEquals(grouping3.get(0).get(1), "s5");
-            Assert.assertEquals(grouping3.get(0).get(2), "s3");
-
-            Assert.assertEquals(grouping3.get(1).get(0), "s2");
-            Assert.assertEquals(grouping3.get(1).get(1), "s1");
-
-
-        }catch (IOException e){
-            Assert.fail("unable to load files");
-        }
-    }
 }
