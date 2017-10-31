@@ -84,13 +84,13 @@ public class ZybooksReaderTest {
         String file = "test/testresources/io/assessmentSources/zybook-comp115-DataExample.csv";
         try {
             ZybooksReader readfile = new ZybooksReader(file);
-            List<LearningObjectResponse> manualGradedResponseList = toolBox.getManualGradedResponses();
-            List<LearningObject> manualGradedLearningObjectList = toolBox.getManualGradedLearningObjects();
+            List<LearningObjectResponse> manualGradedResponseList = readfile.getManualGradedResponses();
+            List<LearningObject> manualGradedLearningObjectList = readfile.getManualGradedLearningObjects();
             //testing title entries from the csv files
 
             //Testing for first entry in the CSV
             Assert.assertEquals(16 * 26, manualGradedResponseList.size());
-            ManualGradedResponse testQ = new ManualGradedResponse("Participation total", 148, 148, "lname09 fname09");
+            ManualGradedResponse testQ = new ManualGradedResponse("Participation total", 148, 78.37837838, "lname01 fname01");
             Assert.assertEquals(testQ.calcKnowledgeEstimate(), manualGradedResponseList.get(0).calcKnowledgeEstimate(), 0);
             Assert.assertEquals(testQ.getNonNormalizedScore(), ((ManualGradedResponse) manualGradedResponseList.get(0)).getNonNormalizedScore(), 0);
             Assert.assertEquals(testQ.getMaxPossibleScore(), ((ManualGradedResponse) manualGradedResponseList.get(0)).getMaxPossibleScore(), 0);
@@ -98,7 +98,7 @@ public class ZybooksReaderTest {
             Assert.assertEquals(testQ.getLearningObjectId(), manualGradedResponseList.get(0).getLearningObjectId());
 
             //Testing for last entry in CSV
-            ManualGradedResponse testQ2 = new ManualGradedResponse("1.12 - Challenge", 0, 0, "lname12 fname12");
+            ManualGradedResponse testQ2 = new ManualGradedResponse("1.12 - Challenge", 0, 0, "lname16 fname16");
             int lastIndex = manualGradedResponseList.size() - 1;
             Assert.assertEquals(testQ2.calcKnowledgeEstimate(), manualGradedResponseList.get(lastIndex).calcKnowledgeEstimate(), 0);
             Assert.assertEquals(testQ2.getNonNormalizedScore(), ((ManualGradedResponse) manualGradedResponseList.get(lastIndex)).getNonNormalizedScore(), 0);
