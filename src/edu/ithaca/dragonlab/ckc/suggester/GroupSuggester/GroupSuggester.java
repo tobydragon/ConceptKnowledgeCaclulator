@@ -12,7 +12,7 @@ public class GroupSuggester {
     Suggester  sug;
 
 
-    public List<Group>  grouping(List<Group> groupings, int groupSize, int groupingType, List<List<Integer>> range){
+    public List<Group>  grouping(List<Group> groupings, int groupSize, int groupingType, List<List<Integer>> range, boolean random){
         size = groupSize;
 
         if(groupingType == 0) {
@@ -24,10 +24,10 @@ public class GroupSuggester {
             }
 
         }else if(groupingType ==1){
-//            sug = new Concept();
+            sug = new Concept(size);
 
         }else if(groupingType==2){
-            sug = new BySize(groupSize);
+            sug = new BySize(groupSize, random);
 
         }else{
             //jigsaw
@@ -54,7 +54,7 @@ public class GroupSuggester {
         if(extraMembers.getSize()>0){
             if(extraMembers.getSize()>size){
 
-                Suggester two = new BySize(groupSize);
+                Suggester two = new BySize(groupSize, random);
                 List<Group> temp = two.suggestGroup(extraMembers, new Group());
                 actualGroupings.addAll(temp);
 

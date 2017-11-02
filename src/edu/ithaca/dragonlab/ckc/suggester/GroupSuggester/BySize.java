@@ -9,10 +9,12 @@ import java.util.*;
  */
 public class BySize extends Suggester {
     int groupSize;
+    boolean random;
 
-    public BySize(int size){
+    public BySize(int size, boolean israndom){
         //group can't be bigger than class size
         groupSize = size;
+        random = israndom;
 
     }
 
@@ -37,7 +39,9 @@ public class BySize extends Suggester {
 
                     int itr = 0;
                     while (itr < groupSize) {
-                        Collections.shuffle(copyGroups);
+                        if(random) {
+                            Collections.shuffle(copyGroups);
+                        }
                         String user = copyGroups.get(0);
 
                         if (!exMem.containsKey(user)) {
@@ -67,7 +71,9 @@ public class BySize extends Suggester {
 
                 List<String> copyGroups2 = new ArrayList<>();
                 copyGroups2.addAll(group.keySet());
-                Collections.shuffle(copyGroups);
+                if(random) {
+                    Collections.shuffle(copyGroups);
+                }
 
                 Group groups2 = new Group();
 

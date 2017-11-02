@@ -10,7 +10,7 @@ import java.util.*;
 /**
  * Created by Mia Kimmich Mitchell on 9/28/2017.
  */
-public abstract class Concept extends Suggester {
+public class Concept extends Suggester {
     int groupSize;
 
     public Concept(int size){
@@ -18,121 +18,66 @@ public abstract class Concept extends Suggester {
     }
 
     @Override
-    public List<Group> suggestGroup(Group groupings, Group extraMembers) {
+    public List<Group> suggestGroup(Group groupSoFar, Group extraMembers){
+        List<Group> actualGroupings = new ArrayList<>();
 
-//        List<Map<String, ConceptGraph>> actualGroupings = new ArrayList<>();
-//
-//
-////        Map<String,ConceptGraph> extraMembers = new HashMap<>();
-//
-//
-////        for (Map<String, ConceptGraph> groupSoFar : groupings) {
-//
-//                                                                //concept2studentList
-//            Map<String, List<Map<String,ConceptGraph>>> conceptMap= createConceptMap(groupSoFar, extraMembers);
-//
-//
-//            for(String conceptName: conceptMap.keySet()) {
-//                System.out.println(conceptName);
-//
-//                //the list of maps of groups of students and their graphs
-//                List<Map<String, ConceptGraph>> mapGroups = conceptMap.get(conceptName);
-//
-//                if(mapGroups.size()== groupSize){
-//                    //mapGroups.size() % groupSize == 0
-////                    List<Map<String, ConceptGraph>> groupCopy = conceptMap.get(conceptName);
-////                    groupCopy.addAll(mapGroups);
-//
-//                    int groupAmount = mapGroups.size()%groupSize;
-//                    //while (groupAmount>0){
-//                    Map<String, ConceptGraph> tempTotalGroups = new HashMap<>();
-//
-//                    for(Map<String,ConceptGraph> singleGroup: mapGroups){
-//
-//                        for(String name: singleGroup.keySet()){
-//                            tempTotalGroups.put(name,singleGroup.get(name) );
-//
-//                            if(extraMembers.containsKey(name)){
-//                                extraMembers.remove(name);
-//                            }
-//                        }
-//                    }
-//
-//                    actualGroupings.add(tempTotalGroups);
-//
-//                 //} for while loop
-//
-//                }else if(mapGroups.size()>groupSize && mapGroups.size()%groupSize != 0){
-//                    //the size is larger than the groupsize, so there can be mutiple groups, but there will be some left out
-//
-//                }else{
-//                    //the size is smaller than the groupSize thus all of them are put in the extraMember list.
-//
-//                    Map<String, ConceptGraph> tempTotalGroups = new HashMap<>();
-//
-//                    for(Map<String,ConceptGraph> map7: mapGroups){
-//
-//                        for(String name: map7.keySet()){
-//                            tempTotalGroups.put(name,map7.get(name) );
-//                        }
-//                    }
-//
-//                    extraMembers.putAll(tempTotalGroups);
-//
-//                }
-//
-//
-//                if(extraMembers.size()>groupSize){
-//                    //do something about it
-//                }else{
-//                    //add all of the students
-//                }
-//
-//
-//            }
-//
-//
-////        }
-//        return actualGroupings;
-
-        return null;
-    }
-
-    public static Map<String, List<Map<String,ConceptGraph>>> createConceptMap(Map<String, ConceptGraph> groupSoFar, Map<String, ConceptGraph> extraMembers){
-        Map<String, List<Map<String,ConceptGraph>>> conceptMap= new HashMap<>();
-            //concept, list of maps of users and their concept graphs
-
-        Map<String, ConceptGraph> totalStudents = new HashMap<>();
-        totalStudents.putAll(groupSoFar);
-        totalStudents.putAll(extraMembers);
+        Map<String, Group> concept2StudentList= createConceptMap(groupSoFar);
 
 
-        for(String name: totalStudents.keySet()){
-            List<String> conceptsToWorkOn = getPriority(totalStudents.get(name));
-            System.out.println("name " + name + " " + conceptsToWorkOn);
-            String firstConcept = "no suggestions";
-            if(conceptsToWorkOn.size()>0){
-                firstConcept = conceptsToWorkOn.get(0);
+        for(String conceptName: concept2StudentList.keySet()){
+            System.out.println(conceptName);
+
+            Group foundGroup = concept2StudentList.get(conceptName);
+
+            Map<String, ConceptGraph> mapStudents = foundGroup.getStudents();
+
+            for(String stName: mapStudents.keySet()){
+
 
             }
 
-            if (conceptMap.containsKey(firstConcept)){
-                List<Map<String, ConceptGraph>> tempValue = conceptMap.get(firstConcept);
+        }
 
-                Map<String, ConceptGraph> additionalGroup = new HashMap<>();
-                additionalGroup.put(name, totalStudents.get(name));
-                tempValue.add(additionalGroup);
+
+
+
+
+        return actualGroupings;
+
+    }
+
+    /**
+     * creates a map of suggested concept ID to group of students who need to work on the concept (key)
+     * @param groupSoFar
+     * @return map of suggested concept ID to group of students
+     */
+    public static  Map<String, Group>  createConceptMap(Group groupSoFar){
+        Map<String, Group> conceptMap= new HashMap<>();
+            //concept, list of maps of users and their concept graphs
+
+        Map<String, ConceptGraph> totalStudents = new HashMap<>();
+        totalStudents = groupSoFar.getStudents();
+
+        for(String name: totalStudents.keySet()){
+            List<String> conceptsToWorkOn = getConcepts(totalStudents.get(name));
+            String firstConcept = "no suggestions";
+            if(conceptsToWorkOn.size()>0){
+                firstConcept = conceptsToWorkOn.get(0);
+            }
+
+            if (conceptMap.containsKey(firstConcept)){
+
+                //the group of students associated to the already found concept
+                Group foundGroup = conceptMap.get(firstConcept);
+                foundGroup.addMember(name, totalStudents.get(name));
 
             }else{
-                List<Map<String, ConceptGraph>> tempValue = new ArrayList<>();
 
-                Map<String, ConceptGraph> additionalGroup = new HashMap<>();
-                additionalGroup.put(name, totalStudents.get(name));
-                tempValue.add(additionalGroup);
+                Map<String, ConceptGraph> addedGroup = new HashMap<>();
+                addedGroup.put(name, totalStudents.get(name));
+                Group tempGroup = new Group(addedGroup, name);
 
-                conceptMap.put(firstConcept, tempValue);
-
-
+                conceptMap.put(firstConcept, tempGroup);
             }
         }
 
@@ -141,9 +86,12 @@ public abstract class Concept extends Suggester {
     }
 
 
-
-
-    public static List<String> getPriority(ConceptGraph graph){
+    /**
+     * Gets the list of concept titles that the student should work on. If there are no concepts that need to be worked on then the list is empty
+     * @param graph
+     * @return list of concept names
+     */
+    public static List<String> getConcepts(ConceptGraph graph){
         List<String> stringConcepts = new ArrayList<>();
 
         List<ConceptNode> nodes = LearningObjectSuggester.conceptsToWorkOn(graph);
@@ -153,7 +101,6 @@ public abstract class Concept extends Suggester {
 
         return stringConcepts;
         }
-
 
 
 }

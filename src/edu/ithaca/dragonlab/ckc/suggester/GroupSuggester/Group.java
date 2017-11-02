@@ -69,6 +69,15 @@ public class Group {
 
     }
 
+    public List<String> getStudentNames(){
+        Map<String, ConceptGraph> graphMap = this.studentGraphMap;
+
+        List<String> nameList = new ArrayList<>();
+        nameList.addAll(graphMap.keySet());
+
+        return nameList;
+    }
+
     public ConceptGraph getGraph (String name){
         return this.studentGraphMap.get(name);
 
