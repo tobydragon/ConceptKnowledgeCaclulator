@@ -5,7 +5,7 @@ import edu.ithaca.dragonlab.ckc.ConceptKnowledgeCalculatorAPI;
 import edu.ithaca.dragonlab.ckc.conceptgraph.CohortConceptGraphs;
 import edu.ithaca.dragonlab.ckc.conceptgraph.ConceptGraph;
 import edu.ithaca.dragonlab.ckc.suggester.GroupSuggester.*;
-//import edu.ithaca.dragonlab.ckc.suggester.GroupSuggester.BySize;
+//import edu.ithaca.dragonlab.ckc.suggester.GroupSuggester.BySizeSuggester;
 import org.junit.Assert;
 import org.junit.Test;
 
@@ -189,9 +189,34 @@ public class GroupSuggesterTest {
         //groups of 2
         List<Group> groupings = sug.grouping(groupings1, 2, 1, null, false);
 
+        List<String> three = groupings.get(0).getStudentNames();
+        Assert.assertEquals(three.get(0),"s3");
+        Assert.assertEquals(three.get(1),"s2");
+        List<String> four = groupings.get(1).getStudentNames();
+        Assert.assertEquals(four.get(0),"s4");
+        Assert.assertEquals(four.get(1),"s5");
+        Assert.assertEquals(four.get(2),"s1");
 
 
+        //testing with more than one list of groups
+        List<Group> actualGroupings = new ArrayList<>();
 
+        Group group = new Group();
+        group.addMember("mia", new ConceptGraph());
+        group.addMember("don", new ConceptGraph());
+        group.addMember("bob", new ConceptGraph());
+        actualGroupings.add(group);
+
+        Group group2 = new Group();
+        group2.addMember("kayli",new ConceptGraph());
+        group2.addMember("dan", new ConceptGraph());
+        actualGroupings.add(group2);
+
+        List<Group> groupings2 = sug.grouping(actualGroupings, 2, 2, null , true);
+
+        Assert.assertEquals(groupings2.size(), 2);
+        Assert.assertEquals(groupings2.get(0).getSize(),2);
+        Assert.assertEquals(groupings2.get(1).getSize(),3);
 
 
     }

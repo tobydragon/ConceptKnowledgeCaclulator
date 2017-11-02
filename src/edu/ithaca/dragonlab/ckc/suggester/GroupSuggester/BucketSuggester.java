@@ -11,12 +11,12 @@ import java.util.Map;
 /**
  * Created by Mia Kimmich Mitchell on 9/20/2017.
  */
-public class Bucket extends Suggester {
+public class BucketSuggester extends Suggester {
 
     //a list of list of ranges. Each list (within the list) is a specific range.
     List<List<Integer>> ranges;
 
-    public Bucket(List<List<Integer>> ranges) throws Exception {
+    public BucketSuggester(List<List<Integer>> ranges) throws Exception {
         if(ranges.size()<0){
             throw new Exception();
 

@@ -7,16 +7,17 @@ import java.util.*;
 /**
  * Created by Mia Kimmich Mitchell on 9/20/2017.
  */
-public class BySize extends Suggester {
+public class BySizeSuggester extends Suggester {
     int groupSize;
     boolean random;
 
-    public BySize(int size, boolean israndom){
+    public BySizeSuggester(int size, boolean israndom){
         //group can't be bigger than class size
         groupSize = size;
         random = israndom;
 
     }
+
 
 
     @Override

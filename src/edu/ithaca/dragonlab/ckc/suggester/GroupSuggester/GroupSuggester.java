@@ -18,16 +18,16 @@ public class GroupSuggester {
         if(groupingType == 0) {
             //bucket
             try {
-                sug = new Bucket(range);
+                sug = new BucketSuggester(range);
             } catch (Exception e) {
                 e.printStackTrace();
             }
 
         }else if(groupingType ==1){
-            sug = new Concept(size);
+            sug = new ConceptSuggester(size);
 
         }else if(groupingType==2){
-            sug = new BySize(groupSize, random);
+            sug = new BySizeSuggester(groupSize, random);
 
         }else{
             //jigsaw
@@ -54,7 +54,7 @@ public class GroupSuggester {
         if(extraMembers.getSize()>0){
             if(extraMembers.getSize()>size){
 
-                Suggester two = new BySize(groupSize, random);
+                Suggester two = new BySizeSuggester(groupSize, random);
                 List<Group> temp = two.suggestGroup(extraMembers, new Group());
                 actualGroupings.addAll(temp);
 
@@ -98,7 +98,7 @@ public class GroupSuggester {
     }
 
 
-    public List<Group> getGroupList (CohortConceptGraphs graphs){
+    public static List<Group> getGroupList (CohortConceptGraphs graphs){
         Map<String, ConceptGraph> userMap = getUserMap(graphs);
 
         List<Group> groupings1 = new ArrayList<>();

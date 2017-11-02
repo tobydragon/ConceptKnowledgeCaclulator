@@ -10,37 +10,24 @@ import java.util.*;
 /**
  * Created by Mia Kimmich Mitchell on 9/28/2017.
  */
-public class Concept extends Suggester {
+public class ConceptSuggester extends Suggester {
     int groupSize;
 
-    public Concept(int size){
+    public ConceptSuggester(int size){
         groupSize=size;
     }
 
     @Override
     public List<Group> suggestGroup(Group groupSoFar, Group extraMembers){
         List<Group> actualGroupings = new ArrayList<>();
-
         Map<String, Group> concept2StudentList= createConceptMap(groupSoFar);
 
-
         for(String conceptName: concept2StudentList.keySet()){
-            System.out.println(conceptName);
 
             Group foundGroup = concept2StudentList.get(conceptName);
-
-            Map<String, ConceptGraph> mapStudents = foundGroup.getStudents();
-
-            for(String stName: mapStudents.keySet()){
-
-
-            }
+            actualGroupings.add(foundGroup);
 
         }
-
-
-
-
 
         return actualGroupings;
 
