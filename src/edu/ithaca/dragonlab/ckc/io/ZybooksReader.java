@@ -53,7 +53,7 @@ public class ZybooksReader {
                 //The first list in the list of lists, is the Learning objects (questions)
                 //so we go through the first line and pull out all the learning objects and put them into the
                 //learning object list
-                int i = 5; //this is 5 because the first two columns are not assignments, so the first assingment is index 5
+                int i = 5; //this is 5 because the first five columns are not assignments, so the first assingment is index 5
                 if(firstIteration){
                     firstIteration = false;
                     this.learningObjectList = learningObjectsFromList(singleList);
@@ -175,7 +175,7 @@ public class ZybooksReader {
         //////////////////////////////////////////////////////////////////////////////////////
         if (learningObjectList.size() + 5 < singleList.size()) {
             logger.warn("More data than learning objects on line for id:" + stdID);
-        } else if (learningObjectList.size() + 5 > singleList.size()) {
+        } else if (learningObjectList.size() + 2 > singleList.size()) {
             logger.warn("More learning objects than data on line for id:" + stdID);
         }
         //need to make sure we don't go out of bounds on either list

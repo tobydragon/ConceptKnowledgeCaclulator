@@ -16,7 +16,6 @@ public class ReaderTools {
 
     static Logger logger = LogManager.getLogger(ReaderTools.class);
 
-    String filename;
     BufferedReader csvBuffer = null;
     List<LearningObject> learningObjectList;
     List<LearningObjectResponse> manualGradedResponseList;

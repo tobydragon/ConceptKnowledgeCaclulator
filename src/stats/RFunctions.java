@@ -328,7 +328,8 @@ public class RFunctions {
      * @return an RCaller that works on whichever machine is running to use RCaller methods
      */
     public static RCaller RCallerVariable(){
-        if(Globals.isWindows() == false) {
+        String osName = System.getProperty("os.name");
+        if(osName.contains("Windows") == false) {
             RCallerOptions options = RCallerOptions.create("/usr/local/Cellar/r/3.4.1_2/bin/Rscript", Globals.R_current, FailurePolicy.RETRY_5, Long.MAX_VALUE, 100, RProcessStartUpOptions.create());
             return RCaller.create(options);
         }else {
