@@ -193,6 +193,26 @@ public class RFunctionsTest {
         }
     }
 
+    @Test
+    public void modelToFileTest() {
+        ConceptKnowledgeCalculatorAPI ckc = null;
+        try {
+            ckc = new ConceptKnowledgeCalculator("resources/comp220/comp220Graph.json",
+                    "resources/comp220/comp220Resources.json",
+                    "localresources/comp220/comp220ExampleDataPortionCleaned.csv");
+//            ckc = new ConceptKnowledgeCalculator("test/testresources/ManuallyCreated/simpleConceptGraph.json",
+//                    "test/testresources/ManuallyCreated/simpleResource.json",
+//                    "test/testresources/ManuallyCreated/simpleAssessmentMoreUsers.csv");
+
+            CohortConceptGraphs ccg = ckc.getCohortConceptGraphs();
+            RFunctions.modelToFile(ccg);
+        } catch (IOException e) {
+            Assert.fail("Unable to load files");
+        }
+
+
+    }
+
     //@Test
     public static void main(String args[]){
         //getFactorMatrixTest()

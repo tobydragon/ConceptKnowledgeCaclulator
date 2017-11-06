@@ -23,9 +23,9 @@ public class ConceptKnowledgeCalculatorMain {
 //                    "test/testresources/ManuallyCreated/basicRealisticAssessment.csv");
 
 
-//                        new ConsoleUI("test/testresources/ManuallyCreated/simpleConceptGraph.json",
-//                    "test/testresources/ManuallyCreated/simpleResource.json",
-//                    "test/testresources/ManuallyCreated/simpleAssessmentMoreUsers.csv");
+                        new ConsoleUI("test/testresources/ManuallyCreated/simpleConceptGraph.json",
+                    "test/testresources/ManuallyCreated/simpleResource.json",
+                    "test/testresources/ManuallyCreated/simpleAssessmentMoreUsers.csv");
 
 //            new ConsoleUI("resources/comp220/comp220Graph.json",
 //                    "resources/comp220/comp220Resources.json",
@@ -47,9 +47,9 @@ public class ConceptKnowledgeCalculatorMain {
 //                    "resources/comp110/comp110Resources.json",
 //                    "resources/comp110/comp110Assessment.csv");
 
-            new ConsoleUI("resources/comp105/comp105Graph.json",
-                    "resources/comp105/comp105Resources.json",
-                    "localresources/comp105/comp105Assessment.csv");
+//            new ConsoleUI("resources/comp105/comp105Graph.json",
+  //                  "resources/comp105/comp105Resources.json",
+    //                "localresources/comp105/comp105Assessment.csv");
 
         } else {
             throw new RuntimeException("Unrecognized starting mode, program cannot execute");

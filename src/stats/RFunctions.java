@@ -9,6 +9,8 @@ import edu.ithaca.dragonlab.ckc.conceptgraph.KnowledgeEstimateMatrix;
 import edu.ithaca.dragonlab.ckc.learningobject.LearningObject;
 
 import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.PrintWriter;
 import java.util.*;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -285,20 +287,40 @@ public class RFunctions {
             }
         }
 
+
         modelString = modelString.replaceAll(":", "");
         modelString = modelString.replaceAll("\\.", "");
         return modelString;
     }
 
+    public static void modelToFile(CohortConceptGraphs ccg){
+        String modelString = modelMaker(ccg);
+        try(  PrintWriter out = new PrintWriter( "model.txt" )  ){
+            out.println( modelString );
+            out.close();
+        }catch (FileNotFoundException e){
+            System.out.println("Error occurred in exporting data model to file.");
+        }
+    }
+
+    //TODO: Let function create a model file and then import into function to be used as the model to simulate the use of Rstudio modeling and graphing
     public static void confirmatoryGraph(KnowledgeEstimateMatrix loMatrix, CohortConceptGraphs ccg){
         int matrixSize = loMatrix.getStudentKnowledgeEstimates().length;
         //if((matrixSize/loMatrix.getObjList().size()) > 1) {
             try {
                 String modelString = modelMaker(ccg);
+
+                //modelToFile(ccg);
+
                 RCaller rCaller = RCallerVariable();
                 RCode code = loMatrix.getrMatrix();
                 code.addRCode("library(sem)");
                 code.addRCode("library(semPlot)");
+
+                code.addRCode("library(readr)");
+                //code.addRCode("modelFile.txt <- (read_file(file='/Users/bleblanc2/IdeaProjects/ConceptKnowledgeCalculator/model.txt')");
+                //code.addRCode("data.dhp <- specifyModel(text=modelFile.txt)");
+
                 code.addRCode("data.dhp <- specifyModel(text=\"" + modelString + "\")");
                 code.addRCode("dataCorrelation <- cor(matrix)");
                 code.addRCode("rowCount <- nrow(matrix)");
@@ -329,7 +351,7 @@ public class RFunctions {
      */
     public static RCaller RCallerVariable(){
         if(Globals.isWindows() == false) {
-            RCallerOptions options = RCallerOptions.create("/usr/local/Cellar/r/3.4.1_2/bin/Rscript", Globals.R_current, FailurePolicy.RETRY_5, Long.MAX_VALUE, 100, RProcessStartUpOptions.create());
+            RCallerOptions options = RCallerOptions.create("/usr/local/Cellar/r/3.4.2/bin/Rscript", Globals.R_current, FailurePolicy.RETRY_5, Long.MAX_VALUE, 100, RProcessStartUpOptions.create());
             return RCaller.create(options);
         }else {
             return RCaller.create();
