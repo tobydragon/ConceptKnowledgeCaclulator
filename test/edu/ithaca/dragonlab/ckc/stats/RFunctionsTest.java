@@ -135,7 +135,7 @@ public class RFunctionsTest {
         try{
             ckc = new ConceptKnowledgeCalculator("test/testresources/ManuallyCreated/comp220GraphExample.json",
                     "test/testresources/ManuallyCreated/comp220Resources.json",
-                    "testlocalresources/comp220ExampleDataPortion.csv");
+                    "localresources/comp220/comp220ExampleDataPortion.csv");
         }catch (IOException e){
             e.printStackTrace();
             Assert.fail("Unable to load files");

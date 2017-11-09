@@ -52,6 +52,7 @@ public class CSVReaderTest {
             Assert.fail();
         }
     }
+
     @Test
     public void titleStarTest () {
         String titles = "hello, a \"fourth\" test, *Breaks here*";

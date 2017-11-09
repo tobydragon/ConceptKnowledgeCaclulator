@@ -22,7 +22,7 @@ public class ConceptNode {
 	List<ConceptNode> children;
 
 	/**
-	 * builds a node from a concept record
+	 * builds a node from a Concept record
 	 * @param conceptRecord
 	 */
 	public ConceptNode(ConceptRecord conceptRecord) {
