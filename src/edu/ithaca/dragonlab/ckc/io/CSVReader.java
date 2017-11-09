@@ -28,6 +28,7 @@ public class CSVReader {
      * (See DataCSVExample.csv in test/testresources/io for proper file format example)
      * @param filename
      */
+    // make integer to CSV to make index of grade start, Call it : GradeStartColumnIndex
     public CSVReader(String filename)throws IOException{
         this.filename = filename;
         manualGradedResponseList = new ArrayList<>();
@@ -162,7 +163,15 @@ public class CSVReader {
             LearningObject currentLearningObject = this.learningObjectList.get(i - 2);
             String qid = currentLearningObject.getId();
             if (!("".equals(singleList.get(i)))) {
-                ManualGradedResponse response = new ManualGradedResponse(qid, currentLearningObject.getMaxPossibleKnowledgeEstimate(), Double.parseDouble(singleList.get(i)), stdID);
+                double studentGrade;
+                String number = pullNumber(singleList.get(i));
+                if (number.equals("")){
+                    studentGrade = 0.0;
+                }
+                else{
+                    studentGrade = Double.parseDouble(number);
+                }
+                ManualGradedResponse response = new ManualGradedResponse(qid, currentLearningObject.getMaxPossibleKnowledgeEstimate(), studentGrade, stdID);
                 if(response != null) {
                     currentLearningObject.addResponse(response);
                     this.manualGradedResponseList.add(response);
@@ -177,6 +186,26 @@ public class CSVReader {
     public List<LearningObjectResponse> getManualGradedResponses(){return this.manualGradedResponseList;}
 
     public List<LearningObject> getManualGradedLearningObjects(){return this.learningObjectList;}
+
+    public static String pullNumber(String object) {
+        String numbers = "";
+        int decimal = 0;
+        char character = 'a';
+        for (int i = 0; i < object.length(); i++){
+            character = object.charAt(i);
+            if (Character.isDigit(character) && decimal <= 1){
+                numbers += character;
+            }
+            if (character == '.'){
+                decimal += 1;
+                numbers += character;
+            }
+            else if (decimal >= 2){
+                return "";
+            }
+        }
+        return numbers;
+    }
 
     public static ArrayList<String> lineToList(String line) {
         ArrayList<String> returnlist = new ArrayList<String>();

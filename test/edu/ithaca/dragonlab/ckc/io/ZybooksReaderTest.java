@@ -10,19 +10,109 @@ import org.junit.Assert;
 import org.junit.Test;
 import edu.ithaca.dragonlab.ckc.learningobject.ManualGradedResponse;
 
+import static edu.ithaca.dragonlab.ckc.io.ZybooksReader.lineToList;
+import static edu.ithaca.dragonlab.ckc.io.ZybooksReader.pullNumber;
+
 /**
  * Created by rdebolt on 10/23/18.
  */
 
 // make pull request from dev to commaTest
 public class ZybooksReaderTest {
-    ReaderTools toolBox = new ReaderTools();
+    //ReaderTools toolBox = new ReaderTools();
+    @Test
+    public void NumbersTest(){
+        String object = "total Score - 25";
+        String outCome = "25";
+        try {
+            Assert.assertEquals(outCome,pullNumber(object));
+        }
+        catch (Exception e){
+            e.printStackTrace();
+            Assert.fail();
+        }
+    }
+    @Test
+    public void NumbersTestReturnEmpty(){
+        String object = "total Score - 25.3.2";
+        String outCome = "";
+        try {
+            Assert.assertEquals(outCome,pullNumber(object));
+        }
+        catch (Exception e){
+            e.printStackTrace();
+            Assert.fail();
+        }
+    }
+    @Test
+    public void NumbersTestDouble(){
+        String object = "total Score - 25.34";
+        String outCome = "25.34";
+        try {
+            Assert.assertEquals(outCome,pullNumber(object));
+        }
+        catch (Exception e){
+            e.printStackTrace();
+            Assert.fail();
+        }
+    }
+    @Test
+    public void NumbersTestNoNumbers(){
+        String object = "total Score - N/A";
+        String outCome = "";
+        try {
+            Assert.assertEquals(outCome,pullNumber(object));
+        }
+        catch (Exception e){
+            e.printStackTrace();
+            Assert.fail();
+        }
+    }
+    @Test
+    public void FullNameTest(){
+        String name = "DeBolt Ryan";
+        String returnName = "DeBolt Ryan1";
+        List<String> nameList = Arrays.asList("DeBolt Ryan", "Suchanek Will", "Dragon Toby");
+        try{
+            Assert.assertEquals(returnName, ZybooksReader.makeFullName(name, nameList));
+        }
+        catch (Exception e){
+            e.printStackTrace();
+            Assert.fail();
+        }
+    }
+    @Test
+    public void FullNameTestnoConflict(){
+        String name = "DeBolt Ryan";
+        String returnName = "DeBolt Ryan";
+        List<String> nameList = Arrays.asList("Lane Nicole", "Suchanek Will", "Dragon Toby");
+        try{
+            Assert.assertEquals(returnName, ZybooksReader.makeFullName(name, nameList));
+        }
+        catch (Exception e){
+            e.printStackTrace();
+            Assert.fail();
+        }
+    }
+    @Test
+    public void FullNameTestTwoConflicts(){
+        String name = "DeBolt Ryan";
+        String returnName = "DeBolt Ryan2";
+        List<String> nameList = Arrays.asList("DeBolt Ryan", "DeBolt Ryan2", "Suchanek Will", "Dragon Toby");
+        try{
+            Assert.assertEquals(returnName, ZybooksReader.makeFullName(name, nameList));
+        }
+        catch (Exception e){
+            e.printStackTrace();
+            Assert.fail();
+        }
+    }
     @Test
     public void titleCommasTest() {
         String titles = "this is, a title to test. this, will not work";
         List<String> myList = Arrays.asList("this is","a title to test. this","will not work");
         try {
-            Assert.assertEquals(myList, toolBox.lineToList(titles));
+            Assert.assertEquals(myList, lineToList(titles));
         }
         catch(Exception e){
             e.printStackTrace();
@@ -34,7 +124,7 @@ public class ZybooksReaderTest {
         String titles = "another test, to fail again, lets see how this goes";
         List<String> myList = Arrays.asList("another test", "to fail again", "lets see how this goes");
         try {
-            Assert.assertEquals(myList, toolBox.lineToList(titles));
+            Assert.assertEquals(myList, lineToList(titles));
         }
         catch(Exception e){
             e.printStackTrace();
@@ -46,7 +136,7 @@ public class ZybooksReaderTest {
         String titles = "hello, a third test, maybe \"this one will pass\". Probably not";
         List<String> myList = Arrays.asList("hello", "a third test" , "maybe this one will pass. Probably not");
         try {
-            Assert.assertEquals(myList, toolBox.lineToList(titles));
+            Assert.assertEquals(myList, lineToList(titles));
         }
         catch(Exception e){
             e.printStackTrace();
@@ -58,20 +148,19 @@ public class ZybooksReaderTest {
         String titles = "hello, a \"fourth\" test, *Breaks here*";
         List<String> myList = Arrays.asList("hello", "a fourth test" , "*Breaks here*");
         try {
-            Assert.assertEquals(myList, toolBox.lineToList(titles));
+            Assert.assertEquals(myList, lineToList(titles));
         }
         catch(Exception e){
             e.printStackTrace();
             Assert.fail();
         }
     }
-
     @Test
     public void titleColonTest() {
         String titles = "Test 5: another break, \"maybe, maybe-not?\"";
         List<String> myList = Arrays.asList("Test 5: another break", "maybe, maybe-not?");
         try {
-            Assert.assertEquals(myList, toolBox.lineToList(titles));
+            Assert.assertEquals(myList, lineToList(titles));
         }
         catch(Exception e){
             e.printStackTrace();
