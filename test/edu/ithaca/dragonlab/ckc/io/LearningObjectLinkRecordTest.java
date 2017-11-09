@@ -23,30 +23,30 @@ public class LearningObjectLinkRecordTest {
     @Test
     public void addConceptIDTest(){
         ArrayList<String> concepts = new ArrayList<>();
-        concepts.add("concept 1");
+        concepts.add("Concept 1");
         String id = "id 1";
         LearningObjectLinkRecord loObject = new LearningObjectLinkRecord(id,concepts);
-        Assert.assertEquals("concept 1",loObject.getConceptIds().get(0));
+        Assert.assertEquals("Concept 1",loObject.getConceptIds().get(0));
         Assert.assertEquals(1,loObject.getConceptIds().size());
         Assert.assertEquals("id 1", loObject.getLearningObject());
-        loObject.addConceptId("concept 2");
-        Assert.assertEquals("concept 2", loObject.getConceptIds().get(1));
+        loObject.addConceptId("Concept 2");
+        Assert.assertEquals("Concept 2", loObject.getConceptIds().get(1));
         Assert.assertEquals(2,loObject.getConceptIds().size());
     }
     @Test
     public void toStringTest(){
         ArrayList<String> concepts = new ArrayList<>();
-        concepts.add("concept 1");
-        concepts.add("concept 2");
+        concepts.add("Concept 1");
+        concepts.add("Concept 2");
         String id = "id 1";
         LearningObjectLinkRecord loObject = new LearningObjectLinkRecord(id,concepts);
-        Assert.assertEquals("(Learning Object ID: id 1 Concept IDs: concept 1, concept 2)\n",loObject.toString());
+        Assert.assertEquals("(Learning Object ID: id 1 Concept IDs: Concept 1, Concept 2)\n",loObject.toString());
     }
     @Test
     public void toJsonTest(){
         ArrayList<String> concepts = new ArrayList<>();
-        concepts.add("concept 1");
-        concepts.add("concept 2");
+        concepts.add("Concept 1");
+        concepts.add("Concept 2");
         String id = "id 1";
         LearningObjectLinkRecord loObject = new LearningObjectLinkRecord(id,concepts);
 
@@ -65,7 +65,7 @@ public class LearningObjectLinkRecordTest {
 
             Assert.assertEquals("id 1", record.getLearningObject());
             Assert.assertEquals(2, record.getConceptIds().size());
-            Assert.assertEquals("concept 2", record.getConceptIds().get(1));
+            Assert.assertEquals("Concept 2", record.getConceptIds().get(1));
 
         } catch (IOException e) {
             e.printStackTrace();

@@ -10,7 +10,7 @@ import java.util.List;
 /**
  * @author tdragon
  *         2/20/17
- *         This class represents all the information that should be recorded about a concept when serializing
+ *         This class represents all the information that should be recorded about a Concept when serializing
  */
 public class ConceptRecord {
     private String id;

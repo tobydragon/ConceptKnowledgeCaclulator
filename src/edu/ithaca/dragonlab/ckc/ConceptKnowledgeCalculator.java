@@ -468,93 +468,7 @@ public class ConceptKnowledgeCalculator implements ConceptKnowledgeCalculatorAPI
     }
 
 
-    @Override
-    public List<List<String>> randomGroupSuggestions (int choice) throws Exception {
 
-            if (currentMode == Mode.COHORTGRAPH) {
-
-                GroupSuggester obj = new RandomGroupSuggester();
-
-                return obj.suggestGroup(cohortConceptGraphs, choice);
-
-            } else {
-                throw new Exception("Wrong Mode");
-
-            }
-
-    }
-
-
-    @Override
-    public List<List<String>> conceptDiffGroupSuggestions (int choice, String subject) throws Exception {
-        if(choice>3 || choice<2){
-            throw  new Exception("invalid group size");
-        }else {
-
-            Collection<String> nodeList = cohortConceptGraphs.getAvgGraph().getAllNodeIds();
-
-            if (subject.equals("all") || nodeList.contains(subject)) {
-                if (currentMode == Mode.COHORTGRAPH) {
-                    ConceptDiffGroupSuggester sug = new ConceptDiffGroupSuggester();
-
-                    return sug.suggestGroup(cohortConceptGraphs, choice, subject);
-
-                } else {
-                    throw new Exception("Wrong Mode");
-
-                }
-
-            } else {
-                throw new Exception("Invalid subject");
-            }
-        }
-
-    }
-
-
-    @Override
-    public List<List<String>> graphSumGroupSuggestions (int choice, String subject) throws Exception {
-        if(choice>3 || choice<2){
-            throw  new Exception("invalid group size");
-        }else {
-
-            Collection<String> nodeList = cohortConceptGraphs.getAvgGraph().getAllNodeIds();
-
-            if (subject.equals("all") || nodeList.contains(subject)) {
-                if (currentMode == Mode.COHORTGRAPH) {
-                    GraphSumGroupSuggester sug = new GraphSumGroupSuggester();
-
-                    return sug.suggestGroup(cohortConceptGraphs, choice, subject);
-
-                } else {
-                    throw new Exception("Wrong Mode");
-
-                }
-
-            } else {
-                throw new Exception("Invalid subject");
-            }
-        }
-
-    }
-
-    @Override
-    public List<List<String>> resourceGroupSuggestions(int choice) throws Exception {
-        if(currentMode==Mode.COHORTGRAPH) {
-
-            if(choice>3 || choice <2){
-                throw new Exception("invalid group size");
-            }else {
-                GroupSuggester obj = new ResourceNCubeGroupSuggester();
-
-                return obj.suggestGroup(cohortConceptGraphs, choice);
-
-            }
-        }else {
-            throw new Exception("Wrong Mode");
-
-        }
-    }
 
     public String csvToResource() throws Exception {
         if(currentMode==Mode.STRUCTUREGRAPHWITHASSESSMENT) {
@@ -617,7 +531,6 @@ public class ConceptKnowledgeCalculator implements ConceptKnowledgeCalculatorAPI
         }else {
             throw new Exception("Wrong Mode");
         }
-
     }
 
     public double getStudentAvg(String user)throws NullPointerException{
@@ -653,6 +566,7 @@ public class ConceptKnowledgeCalculator implements ConceptKnowledgeCalculatorAPI
         }else{
             throw new NullPointerException();
         }
+
     }
 
     public void createConfirmatoryGraph(){
@@ -660,9 +574,9 @@ public class ConceptKnowledgeCalculator implements ConceptKnowledgeCalculatorAPI
             ConceptGraph graph = cohortConceptGraphs.getAvgGraph();
             Map<String, LearningObject> loMap = graph.getLearningObjectMap();
             List<LearningObject> objList = new ArrayList<LearningObject>(loMap.values());
-            KnowledgeEstimateMatrix myMatrix = new KnowledgeEstimateMatrix(objList);
+//            KnowledgeEstimateMatrix myMatrix = new KnowledgeEstimateMatrix(objList);
             try {
-                RFunctions.confirmatoryGraph(myMatrix, cohortConceptGraphs);
+//                RFunctions.confirmatoryGraph(myMatrix, cohortConceptGraphs);
             }catch (IndexOutOfBoundsException e){
                 System.out.println("Insufficient data to perform task. Please refer to guidelines of the data below:\n" +
                         "- There must be more than 1 student\n" +

@@ -1,6 +1,5 @@
 package edu.ithaca.dragonlab.ckc.suggester;
 
-import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import edu.ithaca.dragonlab.ckc.conceptgraph.*;
 import edu.ithaca.dragonlab.ckc.io.CSVReader;
 import edu.ithaca.dragonlab.ckc.io.ConceptGraphRecord;
@@ -82,7 +81,7 @@ public class LearningObjectSuggesterTest {
         ConceptGraph graph = new ConceptGraph(structureRecord, linkRecord);
 
         //create the data to be used to create and populate the graph copies
-        CSVReader csvReader = new CSVReader("testlocalresources/comp220ExampleDataPortion.csv");
+        CSVReader csvReader = new CSVReader("localresources/comp220/comp220ExampleDataPortion.csv");
         List<LearningObjectResponse> assessments = csvReader.getManualGradedResponses();
 
         //create the average and individual graphs
@@ -108,7 +107,7 @@ public class LearningObjectSuggesterTest {
         ConceptGraph graph = new ConceptGraph(structureRecord, linkRecord);
 
         //create the data to be used to create and populate the graph copies
-        CSVReader csvReader = new CSVReader("testlocalresources/comp220ExampleDataPortion.csv");
+        CSVReader csvReader = new CSVReader("localresources/comp220/comp220ExampleDataPortion.csv");
         List<LearningObjectResponse> assessments = csvReader.getManualGradedResponses();
 
         //create the average and individual graphs
@@ -232,7 +231,7 @@ public class LearningObjectSuggesterTest {
         ConceptGraph graph = new ConceptGraph(structureRecord, linkRecord);
 
         //create the data to be used to create and populate the graph copies
-        CSVReader csvReader = new CSVReader("testlocalresources/comp220ExampleDataPortion.csv");
+        CSVReader csvReader = new CSVReader("localresources/comp220/comp220ExampleDataPortion.csv");
         List<LearningObjectResponse> assessments = csvReader.getManualGradedResponses();
 
         //create the average and individual graphs
