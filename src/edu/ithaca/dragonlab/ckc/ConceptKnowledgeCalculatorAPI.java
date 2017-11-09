@@ -2,6 +2,7 @@ package edu.ithaca.dragonlab.ckc;
 
 import edu.ithaca.dragonlab.ckc.conceptgraph.CohortConceptGraphs;
 import edu.ithaca.dragonlab.ckc.conceptgraph.ConceptGraph;
+import edu.ithaca.dragonlab.ckc.suggester.GroupSuggester.Group;
 import edu.ithaca.dragonlab.ckc.suggester.SuggestionResource;
 import java.io.IOException;
 import java.util.List;
@@ -183,7 +184,6 @@ public interface ConceptKnowledgeCalculatorAPI {
      */
     List<String> currentStructure();
 
-
     /**
      * Checks that a specified assessment file is valid.
      * Used before adding to file lists that will be used in clear and create functions
@@ -196,15 +196,6 @@ public interface ConceptKnowledgeCalculatorAPI {
     boolean structureIsValid(String name) throws IOException;
 
     boolean resourceIsValid(String name) throws IOException;
-
-
-    List<List<String>> randomGroupSuggestions (int choice) throws Exception;
-
-    List<List<String>> conceptDiffGroupSuggestions (int choice, String subject) throws Exception;
-
-    List<List<String>> resourceGroupSuggestions(int choice) throws Exception;
-
-    List<List<String>> graphSumGroupSuggestions(int choice, String subject) throws Exception;
 
 
     //testing purposes

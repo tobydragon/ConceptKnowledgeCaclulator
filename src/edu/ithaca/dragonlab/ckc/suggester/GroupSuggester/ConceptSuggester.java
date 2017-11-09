@@ -11,16 +11,16 @@ import java.util.*;
  * Created by Mia Kimmich Mitchell on 9/28/2017.
  */
 public class ConceptSuggester extends Suggester {
-    int groupSize;
-
-    public ConceptSuggester(int size){
-        groupSize=size;
-    }
 
     @Override
     public List<Group> suggestGroup(Group groupSoFar, Group extraMembers){
         List<Group> actualGroupings = new ArrayList<>();
         Map<String, Group> concept2StudentList= createConceptMap(groupSoFar);
+
+//        for(String concept: concept2StudentList.keySet()){
+//            Group gr = concept2StudentList.get(concept);
+//            System.out.println("conept " + concept + " " + gr);
+//        }
 
         for(String conceptName: concept2StudentList.keySet()){
 

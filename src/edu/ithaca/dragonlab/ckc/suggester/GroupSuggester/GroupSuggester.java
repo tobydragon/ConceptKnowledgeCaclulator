@@ -11,38 +11,22 @@ public class GroupSuggester {
     int size;
     Suggester  sug;
 
-
-    public List<Group>  grouping(List<Group> groupings, int groupSize, int groupingType, List<List<Integer>> range, boolean random){
-        size = groupSize;
-
-        if(groupingType == 0) {
-            //bucket
-            try {
-                sug = new BucketSuggester(range);
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-
-        }else if(groupingType ==1){
-            sug = new ConceptSuggester(size);
-
-        }else if(groupingType==2){
-            sug = new BySizeSuggester(groupSize, random);
-
-        }else{
-            //jigsaw
-        }
-
+    /**
+     * creates groups based off of the list of groups.These are the final groups
+     * @param groupings
+     * @param extraMembers
+     * @return
+     */
+    public List<Group > createGroups (List<Group> groupings, Group extraMembers){
         List<Group> actualGroupings = new ArrayList<>();
-        Group extraMembers = new Group(new HashMap<>(), " ");
 
-        for(Group groupSoFar: groupings) {
+        for (Group groupSoFar : groupings) {
 
-            if(extraMembers.getSize()>0){
+            if (extraMembers.getSize() > 0) {
                 groupSoFar.combinegroups(extraMembers);
             }
 
-            List<Group> temp  = sug.suggestGroup(groupSoFar, extraMembers);
+            List<Group> temp = sug.suggestGroup(groupSoFar, extraMembers);
 
 
             actualGroupings.addAll(temp);
@@ -50,41 +34,47 @@ public class GroupSuggester {
 
         //if there are left over students
         //todo fix this so that it can work with any amount of student group sizes
+        if (extraMembers.getSize() > 0) {
+            if (extraMembers.getSize() > size) {
 
-        if(extraMembers.getSize()>0){
-            if(extraMembers.getSize()>size){
-
-                Suggester two = new BySizeSuggester(groupSize, random);
+                Suggester two = new BySizeSuggester(size, false );
                 List<Group> temp = two.suggestGroup(extraMembers, new Group());
                 actualGroupings.addAll(temp);
 
-            }else if (extraMembers.getSize() == size/2) {
+            } else if (extraMembers.getSize() == size / 2) {
 
-                Group tempGr = actualGroupings.get(actualGroupings.size()-1);
+                Group tempGr = actualGroupings.get(actualGroupings.size() - 1);
                 tempGr.addMember(extraMembers);
 
-            }else{
+            } else {
                 actualGroupings.add(extraMembers);
-
 
             }
         }
-
-
         return actualGroupings;
     }
 
 
+    /**
+     * loops through all of the suggesters and calls a function that will group the students based on that suggester. That list gets updated as the suggester list is iterated through
+     * @param groupings
+     * @param groupSize
+     * @param suggesterList
+     * @return
+     */
+    public List<Group>  grouping(List<Group> groupings, int groupSize, List<Suggester> suggesterList){
+        size = groupSize;
+        List<Group> actualGroupings = new ArrayList<>();
+        Group extraMembers = new Group(new HashMap<>(), " ");
+        actualGroupings.addAll(groupings);
 
-//    public List<String> getUsersList(CohortConceptGraphs graphs) {
-//        List<String> userList = new ArrayList<>();
-//
-//        Map<String, ConceptGraph> userToGraph = graphs.getUserToGraph();
-//        userList.addAll(userToGraph.keySet());
-//
-//        return userList;
-//    }
+        for(Suggester sugType: suggesterList) {
+            sug = sugType;
+            actualGroupings = createGroups(actualGroupings, extraMembers);
+        }
 
+        return actualGroupings;
+    }
 
 
     private static Map<String, ConceptGraph> getUserMap(CohortConceptGraphs graphs){
@@ -113,7 +103,6 @@ public class GroupSuggester {
         }
 
         groupings1.add(gr);
-
 
         return groupings1;
     }

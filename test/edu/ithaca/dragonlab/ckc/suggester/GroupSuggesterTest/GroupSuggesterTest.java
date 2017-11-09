@@ -5,7 +5,6 @@ import edu.ithaca.dragonlab.ckc.ConceptKnowledgeCalculatorAPI;
 import edu.ithaca.dragonlab.ckc.conceptgraph.CohortConceptGraphs;
 import edu.ithaca.dragonlab.ckc.conceptgraph.ConceptGraph;
 import edu.ithaca.dragonlab.ckc.suggester.GroupSuggester.*;
-//import edu.ithaca.dragonlab.ckc.suggester.GroupSuggester.BySizeSuggester;
 import org.junit.Assert;
 import org.junit.Test;
 
@@ -19,7 +18,7 @@ public class GroupSuggesterTest {
 
 
     @Test
-    public void randomGroupTestOddStudents() {
+    public void randomBySizeTest() {
         ConceptKnowledgeCalculatorAPI ckc = null;
 
         try {
@@ -34,14 +33,20 @@ public class GroupSuggesterTest {
 
         List<Group> groupings1 = sug.getGroupList(graphs);
 
+        List<Suggester> suggesterList = new ArrayList<>();
+        suggesterList.add(new BySizeSuggester(2,true));
+
         //groups of 2
-        List<Group> groupings = sug.grouping(groupings1, 2, 2, null, true);
+        List<Group> groupings = sug.grouping(groupings1, 2,suggesterList );
         Assert.assertEquals(groupings.size(), 2);
         Assert.assertEquals(groupings.get(0).getSize(), 2);
         Assert.assertEquals(groupings.get(1).getSize(), 3);
 
+
+        List<Suggester> suggesterList2 = new ArrayList<>();
+        suggesterList2.add(new BySizeSuggester(3,true));
         //groups of three
-        List<Group> groupings2 = sug.grouping(groupings1, 3, 2 , null, true);
+        List<Group> groupings2 = sug.grouping(groupings1, 3, suggesterList2);
         Assert.assertEquals(groupings2.size(), 2);
         Assert.assertEquals(groupings2.get(0).getSize(), 3);
         Assert.assertEquals(groupings2.get(1).getSize(), 2);
@@ -50,7 +55,7 @@ public class GroupSuggesterTest {
     }
 
     @Test
-    public void randomGroupTestLessStudents() {
+    public void randomBySizeLessStudentsTest() {
         ConceptKnowledgeCalculatorAPI ckc = null;
 
         try {
@@ -62,15 +67,21 @@ public class GroupSuggesterTest {
         CohortConceptGraphs graphs = ckc.getCohortConceptGraphs();
         Assert.assertNotEquals(graphs, null);
         GroupSuggester sug = new GroupSuggester();
-
         List<Group> groupings1 = sug.getGroupList(graphs);
+
+        List<Suggester> suggesterList = new ArrayList<>();
+        suggesterList.add(new BySizeSuggester(2,true));
+
         //groups of 2
-        List<Group> groupings = sug.grouping(groupings1, 2, 2, null ,true);
+        List<Group> groupings = sug.grouping(groupings1, 2,suggesterList );
         Assert.assertEquals(groupings.size(), 1);
         Assert.assertEquals(groupings.get(0).getSize(),1);
 
-        //groups of three
-        List<Group> groupings2 = sug.grouping(groupings1, 3, 2 , null, true);
+        List<Suggester> suggesterList2 = new ArrayList<>();
+        suggesterList2.add(new BySizeSuggester(2,true));
+
+        //groups of 3
+        List<Group> groupings2 = sug.grouping(groupings1, 3,suggesterList2 );
         Assert.assertEquals(groupings2.size(), 1);
         Assert.assertEquals(groupings2.get(0).getSize(),1);
     }
@@ -95,7 +106,10 @@ public class GroupSuggesterTest {
         List<Group> groupings1 = sug.getGroupList(graphs);
 
         //groups of 2
-        List<Group> groupings = sug.grouping(groupings1, 2, 2, null, false);
+        List<Suggester> suggesterList = new ArrayList<>();
+        suggesterList.add(new BySizeSuggester(2,false));
+
+        List<Group> groupings = sug.grouping(groupings1, 2, suggesterList);
         Assert.assertEquals(groupings.size(), 2);
 
         List<String> one = groupings.get(0).getStudentNames();
@@ -110,7 +124,10 @@ public class GroupSuggesterTest {
 
 
         //groups of three
-        List<Group> groupings2 = sug.grouping(groupings1, 3, 2 , null, false);
+        List<Suggester> suggesterList2 = new ArrayList<>();
+        suggesterList2.add(new BySizeSuggester(3,false));
+
+        List<Group> groupings2 = sug.grouping(groupings1, 3, suggesterList2);
         Assert.assertEquals(groupings2.size(), 2);
 
 
@@ -153,7 +170,11 @@ public class GroupSuggesterTest {
         group2.addMember("dan", new ConceptGraph());
         actualGroupings.add(group2);
 
-        List<Group> groupings2 = sug.grouping(actualGroupings, 2, 2, null , true);
+        List<Suggester> suggesterList = new ArrayList<>();
+        suggesterList.add(new BySizeSuggester(2,true));
+
+
+        List<Group> groupings2 = sug.grouping(actualGroupings, 2, suggesterList);
 
         Assert.assertEquals(groupings2.size(), 2);
         Assert.assertEquals(groupings2.get(0).getSize(),2);
@@ -186,8 +207,11 @@ public class GroupSuggesterTest {
 
         List<Group> groupings1 = sug.getGroupList(graphs);
 
-        //groups of 2
-        List<Group> groupings = sug.grouping(groupings1, 2, 1, null, false);
+//        groups of 2
+        List<Suggester> suggesterList = new ArrayList<>();
+        suggesterList.add(new ConceptSuggester());
+
+        List<Group> groupings = sug.grouping(groupings1, 2, suggesterList);
 
         List<String> three = groupings.get(0).getStudentNames();
         Assert.assertEquals(three.get(0),"s3");
@@ -202,21 +226,26 @@ public class GroupSuggesterTest {
         List<Group> actualGroupings = new ArrayList<>();
 
         Group group = new Group();
-        group.addMember("mia", new ConceptGraph());
-        group.addMember("don", new ConceptGraph());
-        group.addMember("bob", new ConceptGraph());
+        group.addMember("mia", mapGraph.get("s1"));
+        group.addMember("don", mapGraph.get("s3"));
+        group.addMember("bob", mapGraph.get("s1"));
         actualGroupings.add(group);
 
         Group group2 = new Group();
-        group2.addMember("kayli",new ConceptGraph());
-        group2.addMember("dan", new ConceptGraph());
+        group2.addMember("kayli", mapGraph.get("s3"));
+        group2.addMember("dan", mapGraph.get("s5"));
         actualGroupings.add(group2);
 
-        List<Group> groupings2 = sug.grouping(actualGroupings, 2, 2, null , true);
+        List<Suggester> suggesterList2 = new ArrayList<>();
+        suggesterList2.add(new ConceptSuggester());
 
-        Assert.assertEquals(groupings2.size(), 2);
-        Assert.assertEquals(groupings2.get(0).getSize(),2);
-        Assert.assertEquals(groupings2.get(1).getSize(),3);
+        List<Group> groupings2 = sug.grouping(actualGroupings, 2, suggesterList2);
+
+        Assert.assertEquals(groupings2.size(), 4);
+        Assert.assertEquals(groupings2.get(0).getSize(),1);
+        Assert.assertEquals(groupings2.get(1).getSize(),2);
+        Assert.assertEquals(groupings2.get(2).getSize(),1);
+        Assert.assertEquals(groupings2.get(3).getSize(),1);
 
 
     }
@@ -255,7 +284,10 @@ public class GroupSuggesterTest {
 
             List<Group> groupings1 = sug.getGroupList(graphs);
             //groups of 2
-            List<Group> groupings = sug.grouping(groupings1, 2, 0 , ranges, false);
+            List<Suggester> suggesterList = new ArrayList<>();
+            suggesterList.add(new BucketSuggester(ranges));
+
+            List<Group> groupings = sug.grouping(groupings1, 2, suggesterList);
 
             Assert.assertEquals(groupings.size(), 3);
             Assert.assertEquals(groupings.get(0).getSize(),0 );
@@ -286,7 +318,10 @@ public class GroupSuggesterTest {
             group2.addMember("dan", groupings.get(1).getGraph("s2"));
             actualGroupings.add(group2);
 
-            List<Group> groupings2 = sug.grouping(actualGroupings, 2, 0 , ranges, false);
+
+            List<Suggester> suggesterList2 = new ArrayList<>();
+            suggesterList2.add(new BucketSuggester(ranges));
+            List<Group> groupings2 = sug.grouping(actualGroupings, 2, suggesterList2);
 
             Assert.assertEquals(groupings2.size(), 6);
             Assert.assertEquals(groupings2.get(0).getSize(),0 );
@@ -310,9 +345,71 @@ public class GroupSuggesterTest {
 
             e.printStackTrace();
         }
+    }
+
+    @Test
+    public void mixedSuggesterTest(){
+        ConceptKnowledgeCalculatorAPI ckc = null;
+
+        try {
+            ckc = new ConceptKnowledgeCalculator("test/testresources/ManuallyCreated/researchConceptGraph.json", "test/testresources/ManuallyCreated/researchResource2.json", "test/testresources/ManuallyCreated/researchAssessment2.csv");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        CohortConceptGraphs graphs = ckc.getCohortConceptGraphs();
+        Assert.assertNotEquals(graphs, null);
+
+        //set up for buckets
+        List<List<Integer>> ranges = new ArrayList<>();
+        List<Integer> temp = new ArrayList<>();
+        temp.add(0);
+        temp.add(50);
+        List<Integer> temp2 = new ArrayList<>();
+        temp2.add(51);
+        temp2.add(80);
+        List<Integer> temp3 = new ArrayList<>();
+        temp3.add(81);
+        temp3.add(100);
+        ranges.add(temp);
+        ranges.add(temp2);
+        ranges.add(temp3);
 
 
+        try {
+            GroupSuggester sug = new GroupSuggester();
 
+            List<Group> groupings = sug.getGroupList(graphs);
+            Map<String, ConceptGraph> mapGraph = graphs.getUserToGraph();
+
+            List<Group> actualGroupings = new ArrayList<>();
+            Group group = new Group();
+            group.addMember("mia", mapGraph.get("s3"));
+            group.addMember("don", mapGraph.get("s4"));
+            group.addMember("bob", mapGraph.get("s2"));
+            group.addMember("alena", mapGraph.get("s3"));
+            group.addMember("kayli", mapGraph.get("s5"));
+            group.addMember("dan", mapGraph.get("s2"));
+            actualGroupings.add(group);
+
+            List<Suggester> suggesterList = new ArrayList<>();
+            suggesterList.add(new BucketSuggester(ranges));
+            suggesterList.add(new ConceptSuggester());
+            suggesterList.add(new BySizeSuggester(2, false));
+
+            List<Group> groupings1 = sug.grouping(actualGroupings, 2, suggesterList);
+
+            Assert.assertEquals(groupings1.size(), 3);
+            Assert.assertEquals(groupings1.get(0).getSize(), 2);
+            Assert.assertEquals(groupings1.get(1).getSize(), 2);
+            Assert.assertEquals(groupings1.get(2).getSize(), 2);
+//            for (Group gr: groupings1){
+//                System.out.println(gr + " hello");
+//            }
+
+
+        }catch (Exception e){
+            e.printStackTrace();
+        }
 
 
     }

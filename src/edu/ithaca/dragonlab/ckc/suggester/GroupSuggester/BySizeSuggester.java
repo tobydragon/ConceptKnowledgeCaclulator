@@ -11,10 +11,10 @@ public class BySizeSuggester extends Suggester {
     int groupSize;
     boolean random;
 
-    public BySizeSuggester(int size, boolean israndom){
+    public BySizeSuggester(int size, boolean isRandom){
         //group can't be bigger than class size
         groupSize = size;
-        random = israndom;
+        random = isRandom;
 
     }
 
