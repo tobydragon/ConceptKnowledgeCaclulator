@@ -318,8 +318,12 @@ public class RFunctions {
                 code.addRCode("library(semPlot)");
 
                 code.addRCode("library(readr)");
-                //code.addRCode("modelFile.txt <- (read_file(file='/Users/bleblanc2/IdeaProjects/ConceptKnowledgeCalculator/model.txt')");
-                //code.addRCode("data.dhp <- specifyModel(text=modelFile.txt)");
+
+                //TODO: the function of these lines are 2 read the model in. Currently unfunctional and main cause of problems
+                //code.addRCode("modelFile.txt <- read_file(file='/Users/bleblanc2/IdeaProjects/ConceptKnowledgeCalculator/model.txt')");
+                //code.addRCode("modelString <- scan(modelFile.txt)");
+                //code.addRCode("data.dhp <- specifyModel(text=modelString)");
+
 
                 code.addRCode("data.dhp <- specifyModel(text=\"" + modelString + "\")");
                 code.addRCode("dataCorrelation <- cor(matrix)");
