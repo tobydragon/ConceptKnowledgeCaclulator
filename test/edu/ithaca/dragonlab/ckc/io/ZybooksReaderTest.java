@@ -72,7 +72,7 @@ public class ZybooksReaderTest {
     public void FullNameTest(){
         String name = "DeBolt Ryan";
         String returnName = "DeBolt Ryan1";
-        List<String> nameList = Arrays.asList("DeBolt Ryan", "Suchanek Will", "Dragon Toby");
+        List<String> nameList = new ArrayList<>(Arrays.asList("DeBolt Ryan", "Suchanek Will", "Dragon Toby"));
         try{
             Assert.assertEquals(returnName, ZybooksReader.makeFullName(name, nameList));
         }
@@ -85,7 +85,7 @@ public class ZybooksReaderTest {
     public void FullNameTestnoConflict(){
         String name = "DeBolt Ryan";
         String returnName = "DeBolt Ryan";
-        List<String> nameList = Arrays.asList("Lane Nicole", "Suchanek Will", "Dragon Toby");
+        List<String> nameList = new ArrayList<>(Arrays.asList("Lane Nicole", "Suchanek Will", "Dragon Toby"));
         try{
             Assert.assertEquals(returnName, ZybooksReader.makeFullName(name, nameList));
         }
@@ -98,7 +98,7 @@ public class ZybooksReaderTest {
     public void FullNameTestTwoConflicts(){
         String name = "DeBolt Ryan";
         String returnName = "DeBolt Ryan2";
-        List<String> nameList = Arrays.asList("DeBolt Ryan", "DeBolt Ryan2", "Suchanek Will", "Dragon Toby");
+        List<String> nameList = new ArrayList<>(Arrays.asList("DeBolt Ryan", "DeBolt Ryan1", "Suchanek Will", "Dragon Toby"));
         try{
             Assert.assertEquals(returnName, ZybooksReader.makeFullName(name, nameList));
         }

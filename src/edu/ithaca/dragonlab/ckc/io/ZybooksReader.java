@@ -13,6 +13,7 @@ import edu.ithaca.dragonlab.ckc.learningobject.LearningObjectResponse;
 import edu.ithaca.dragonlab.ckc.learningobject.ManualGradedResponse;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.apache.logging.log4j.core.layout.StringBuilderEncoder;
 
 public class ZybooksReader {
 
@@ -36,7 +37,6 @@ public class ZybooksReader {
         this.filename = filename;
         manualGradedResponseList = new ArrayList<>();
         learningObjectList = new ArrayList<>();
-        ArrayList<String> studentNames = new ArrayList<>(0);
         try {
             String line;
             this.csvBuffer = new BufferedReader(new FileReader(filename));
@@ -48,6 +48,8 @@ public class ZybooksReader {
             }
 
             boolean firstIteration = true;
+            List<String> studentNames = new ArrayList<>(0);
+
             for(ArrayList<String> singleList: lineList){
 
                 //The first list in the list of lists, is the Learning objects (questions)
@@ -70,7 +72,6 @@ public class ZybooksReader {
         } catch (IOException e) {
 //            e.printStackTrace();
         }
-        System.out.println(manualGradedResponseList.size());
     }
 
     public static ArrayList<ArrayList<String>> staticLineToList(String filename){
@@ -155,23 +156,9 @@ public class ZybooksReader {
      * @param i used to keep track of which index in the list of LORs the function is currently on
      * @throws NullPointerException if the ManualGradedResponse is null
      */
-    public void lorLister(ArrayList<String> studentNames, ArrayList<String> singleList, int i)throws NullPointerException{
+    public void lorLister(List<String> studentNames, ArrayList<String> singleList, int i)throws NullPointerException{
         ///////////////////////////////////////////////////////////////////////////////////////
-        boolean inList = false;
-        int sameNameCnt = 0;
-        String stdID = singleList.get(0) + " " + singleList.get(1); // gets last name and first name to append together
-        String nameTest = stdID;
-        while(inList == false){
-            if (studentNames.indexOf(nameTest) > -1){
-                sameNameCnt += 1;
-                nameTest = stdID + Integer.toString(sameNameCnt);
-            }
-            else{
-                studentNames.add(nameTest);
-                stdID = nameTest;
-                inList = true;
-            }
-        }
+        String stdID = makeFullName(singleList.get(0) + " " + singleList.get(1), studentNames);
         //////////////////////////////////////////////////////////////////////////////////////
         if (learningObjectList.size() + 5 < singleList.size()) {
             logger.warn("More data than learning objects on line for id:" + stdID);
@@ -186,11 +173,12 @@ public class ZybooksReader {
                 // made to catch any grade issue with N/A, a temporary Fix
                 //////////////////////////////////////////////////////////////////////////////
                 double studentGrade;
-                if (singleList.get(i).equals("N/A")){
+                String number = pullNumber(singleList.get(i));
+                if (number.equals("")){
                     studentGrade = 0.0;
                 }
                 else{
-                    studentGrade = Double.parseDouble(singleList.get(i));
+                    studentGrade = Double.parseDouble(number);
                 }
                 ///////////////////////////////////////////////////////////////////////////////
                 ManualGradedResponse response = new ManualGradedResponse(qid, currentLearningObject.getMaxPossibleKnowledgeEstimate(), studentGrade, stdID);
@@ -203,6 +191,24 @@ public class ZybooksReader {
             }
             i++;
         }
+    }
+
+    public static String makeFullName (String stdID, List<String> studentNames){
+        boolean inList = false;
+        int sameNameCnt = 0;
+        String nameTest = stdID;
+        while(inList == false){
+            if (studentNames.indexOf(nameTest) > -1){
+                sameNameCnt += 1;
+                nameTest = stdID + Integer.toString(sameNameCnt);
+            }
+            else{
+                studentNames.add(nameTest);
+                stdID = nameTest;
+                inList = true;
+            }
+        }
+        return stdID;
     }
 
     public List<LearningObjectResponse> getManualGradedResponses(){return this.manualGradedResponseList;}

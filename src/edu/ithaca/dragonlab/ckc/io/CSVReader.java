@@ -15,7 +15,7 @@ import org.apache.logging.log4j.Logger;
 
 
 public class CSVReader {
-    int gradeMark = 5; //replacement for 2 in the regards of which column grades start to be recorded
+    private int gradeMark = 5; //replacement for 2 in the regards of which column grades start to be recorded
     static Logger logger = LogManager.getLogger(CSVReader.class);
 
     String filename;
