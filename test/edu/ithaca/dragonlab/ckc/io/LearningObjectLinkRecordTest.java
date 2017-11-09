@@ -9,12 +9,9 @@ import org.junit.Test;
 
 import java.io.File;
 import java.io.IOException;
-import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
-
-import static edu.ithaca.dragonlab.ckc.io.LearningObjectLinkRecord.createLearningObjectLinkRecords;
 
 /**
  * Created by willsuchanek on 4/10/17.

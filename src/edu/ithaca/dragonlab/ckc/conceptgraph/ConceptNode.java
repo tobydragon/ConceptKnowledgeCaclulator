@@ -18,6 +18,7 @@ public class ConceptNode {
 	private double dataImportance;
 
 	Map<String, LearningObject> learningObjectMap;  //These same LearningObjects might also be held by other nodes
+
 	List<ConceptNode> children;
 
 	/**

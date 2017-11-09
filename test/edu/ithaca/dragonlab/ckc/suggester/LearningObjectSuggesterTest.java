@@ -153,7 +153,7 @@ public class LearningObjectSuggesterTest {
     @Test
     public void suggestedOrderBuildLearningObjectListTest() {
         List<LearningObjectLinkRecord> myList = ExampleLearningObjectLinkRecordFactory.makeSimpleLOLRecords();
-        myList.add(new LearningObjectLinkRecord("Q10", Arrays.asList("A"), 1));
+        myList.add(new LearningObjectLinkRecord("Q10", Arrays.asList("A")));
         ConceptGraph orig = new ConceptGraph(ExampleConceptGraphRecordFactory.makeSimple(),
                 myList, ExampleLearningObjectResponseFactory.makeSimpleResponses());
 

@@ -34,12 +34,6 @@ public class LearningObjectLinkRecord {
         this.maxPossibleKnowledgeEstimate = maxPossibleKnowledgeEstimate;
     }
 
-    public LearningObjectLinkRecord(String learningObject, List<String> conceptIds, double dataImportance){
-        this(learningObject,conceptIds);
-        this.dataImportance = dataImportance;
-        this.maxPossibleKnowledgeEstimate = maxPossibleKnowledgeEstimate;
-    }
-
     public LearningObjectLinkRecord(String learningObject, double maxPossibleKnowledgeEstimate){
         this.learningObject = learningObject;
         conceptIds = new ArrayList<>();
@@ -64,6 +58,7 @@ public class LearningObjectLinkRecord {
 
     /**
      * takes a collection of LearningObjects and uses a max possible knowledge estimate to create a list of LOLRs
+     * Currently Used for writing these out to a file
      * @param learningObjects
      * @param maxPossibleKnowledgeEstimate
      * @return a list of LOLRs
@@ -71,6 +66,7 @@ public class LearningObjectLinkRecord {
     public static List<LearningObjectLinkRecord> createLearningObjectLinkRecords(Collection<LearningObject> learningObjects, double maxPossibleKnowledgeEstimate){
         List<LearningObjectLinkRecord> lolrList = new ArrayList<LearningObjectLinkRecord>();
         for(LearningObject learningObject: learningObjects){
+            //TODO: should be sending in max points as well, which should come from learningObject from csv
             lolrList.add( new LearningObjectLinkRecord(learningObject.getId(), maxPossibleKnowledgeEstimate));
         }
         return lolrList;
@@ -84,30 +80,6 @@ public class LearningObjectLinkRecord {
     }
 
 
-    //TODO: Create a text file of conceptIDs. One Concept per line
-/**
-    public static Path lolrToTxt(LearningObjectLinkRecord learningObjectLinkRecord, String filename){
-        List<String> conceptIds = learningObjectLinkRecord.getConceptIds();
-        Path file = Paths.get(filename);
-        try {
-                Files.write(file, conceptIds, Charset.forName("UTF-8"));
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        return file;
-    }
- */
-
-    public void setMatchingKnowledgeEstimates(Collection<LearningObject> learningObjects, Map<String, LearningObject> loMap){
-        List<LearningObject> loList= new ArrayList<LearningObject>(loMap.values());
-        for(LearningObject fromList: learningObjects){
-            for(LearningObject toList: loList){
-                if(fromList == toList){
-                    toList.setMaxPossibleKnowledgeEstimate(fromList.getMaxPossibleKnowledgeEstimate());
-                }
-            }
-        }
-    }
 
     public String getLearningObject(){ return this.learningObject; }
     public List<String> getConceptIds(){ return this.conceptIds; }
