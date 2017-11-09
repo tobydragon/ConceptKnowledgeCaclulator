@@ -23,7 +23,7 @@ import java.util.*;
  * Created by tdragon on 6/8/17.
  */
 public class ConceptKnowledgeCalculator implements ConceptKnowledgeCalculatorAPI{
-    private static final String OUTPUT_PATH = "out/";
+    private static final String OUTPUT_PATH = "ckcvisualizer/json/";
 
     //graphs
     private CohortConceptGraphs cohortConceptGraphs;
@@ -72,6 +72,11 @@ public class ConceptKnowledgeCalculator implements ConceptKnowledgeCalculatorAPI
         assessment.add(assessmentFilename);
 
         clearAndCreateCohortData(structure, resource, assessment);
+    }
+
+    public ConceptKnowledgeCalculator(List<String> structureFilenames, List<String> resourceFilenames, List<String> assessmentFilenames) throws IOException{
+        this();
+        clearAndCreateCohortData(structureFilenames, resourceFilenames, assessmentFilenames);
     }
 
 
@@ -126,16 +131,17 @@ public class ConceptKnowledgeCalculator implements ConceptKnowledgeCalculatorAPI
 
         structureFiles.add(structureFilename.get(0));
 
-        resourceFiles.add(resourceFilename.get(0));
+        //resourceFiles.add(resourceFilename.get(0));
 
 
         //create the graph structure to be copied for each user
         ConceptGraphRecord structureRecord = ConceptGraphRecord.buildFromJson(structureFiles.get(0));
 
         List<LearningObjectLinkRecord> linkRecord = new ArrayList<>();
-        for (String rFiles : resourceFiles){
+        for (String rFiles : resourceFilename){
             List<LearningObjectLinkRecord> temp = LearningObjectLinkRecord.buildListFromJson(rFiles);
             linkRecord.addAll(temp);
+            resourceFiles.add(rFiles);
         }
 
         assessmentFiles.addAll(assessmentFilename);

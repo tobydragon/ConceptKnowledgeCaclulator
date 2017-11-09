@@ -1,4 +1,4 @@
-localresources/
+.idea/artifacts
 
 # Created by https://www.gitignore.io/api/intellij
 
@@ -61,9 +61,3 @@ fabric.properties
 .idea/kotlinc.xml
 .DS_Store
 .idea/inspectionProfiles/
-
-# these are testing files that are created through runing the tests
-/test/testresources/practicalExamples/SystemCreated/
-
-
-/out/resourcesWithoutConceptConnections.json

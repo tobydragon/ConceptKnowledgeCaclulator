@@ -307,6 +307,7 @@ public class GroupSuggesterTest {
             Assert.assertEquals(groupings2.get(5).getSize(),1);
             Assert.assertEquals(groupings2.get(5).contains("kayli"), true);
         } catch (Exception e) {
+
             e.printStackTrace();
         }
 
