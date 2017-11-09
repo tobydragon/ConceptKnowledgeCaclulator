@@ -262,17 +262,17 @@ public class ConsoleUI {
         String concept = scanner.nextLine();
 
 
-        try {
-            List<List<String>> groupings = ckc.conceptDiffGroupSuggestions(choice, concept);
-
-            for(List<String> group: groupings) {
-                System.out.println(group);
-            }
-
-
-        } catch (Exception e) {
-            System.out.println("Wrong mode");
-        }
+//        try {
+//            List<List<String>> groupings = ckc.conceptDiffGroupSuggestions(choice, concept);
+//
+//            for(List<String> group: groupings) {
+//                System.out.println(group);
+//            }
+//
+//
+//        } catch (Exception e) {
+//            System.out.println("Wrong mode");
+//        }
     }
 
 
@@ -293,15 +293,15 @@ public class ConsoleUI {
         String concept = scanner.nextLine();
 
 
-        try {
-            List<List<String>> groupings = ckc.graphSumGroupSuggestions(choice, concept);
-
-            for(List<String> group: groupings){
-                System.out.println(group);
-            }
-        } catch (Exception e) {
-            System.out.println("Wrong mode");
-        }
+//        try {
+//            List<List<String>> groupings = ckc.graphSumGroupSuggestions(choice, concept);
+//
+//            for(List<String> group: groupings){
+//                System.out.println(group);
+//            }
+//        } catch (Exception e) {
+//            System.out.println("Wrong mode");
+//        }
     }
 
     public void createResourceGroupSuggestions(Scanner scanner){
@@ -315,15 +315,15 @@ public class ConsoleUI {
             choice = scanner.nextInt();
         }
 
-        try {
-            List<List<String>> groupings = ckc.resourceGroupSuggestions(choice);
-
-            for(List<String> group: groupings){
-                System.out.println(group);
-            }
-        } catch (Exception e) {
-            System.out.println("Wrong mode");
-        }
+//        try {
+//            List<List<String>> groupings = ckc.resourceGroupSuggestions(choice);
+//
+//            for(List<String> group: groupings){
+//                System.out.println(group);
+//            }
+//        } catch (Exception e) {
+//            System.out.println("Wrong mode");
+//        }
     }
 
 
@@ -334,17 +334,17 @@ public class ConsoleUI {
         System.out.println("What size groups do you want?");
         Integer choice = scanner.nextInt();
 
-        try {
-            List<List<String>> groupings = ckc.randomGroupSuggestions(choice);
-
-
-            for(List<String> group: groupings){
-                System.out.println(group);
-            }
-
-        } catch (Exception e) {
-            System.out.println(e);
-        }
+//        try {
+//            List<List<String>> groupings = ckc.randomGroupSuggestions(choice);
+//
+//
+//            for(List<String> group: groupings){
+//                System.out.println(group);
+//            }
+//
+//        } catch (Exception e) {
+//            System.out.println(e);
+//        }
 
     }
 
