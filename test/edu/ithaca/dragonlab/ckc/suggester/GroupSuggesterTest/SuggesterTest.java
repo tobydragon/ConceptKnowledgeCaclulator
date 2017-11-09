@@ -16,8 +16,6 @@ import java.util.*;
  */
 public class SuggesterTest {
 
-
-
     @Test
     public void bySizeRandomTest() {
         //because this doesn't handle the extra members, they will not be tested here
@@ -179,98 +177,5 @@ public class SuggesterTest {
         Assert.assertEquals(four.get(2),"s1");
 
     }
-
-
-//    @Test
-//    public void bucketTesting() {
-//        ConceptKnowledgeCalculatorAPI ckc = null;
-//
-//        try {
-//            ckc = new ConceptKnowledgeCalculator("test/testresources/ManuallyCreated/researchConceptGraph.json", "test/testresources/ManuallyCreated/researchResource2.json", "test/testresources/ManuallyCreated/researchAssessment2.csv");
-//        } catch (IOException e) {
-//            e.printStackTrace();
-//        }
-//
-//        CohortConceptGraphs graphs = ckc.getCohortConceptGraphs();
-//        Assert.assertNotEquals(graphs, null);
-//
-//        List<List<Integer>> ranges = new ArrayList<>();
-//        List<Integer> temp = new ArrayList<>();
-//        temp.add(0);
-//        temp.add(50);
-//        List<Integer> temp2 = new ArrayList<>();
-//        temp2.add(51);
-//        temp2.add(80);
-//        List<Integer> temp3 = new ArrayList<>();
-//        temp3.add(81);
-//        temp3.add(100);
-//        ranges.add(temp);
-//        ranges.add(temp2);
-//        ranges.add(temp3);
-//
-//
-//        try {
-//
-//            List<Group> list = GroupSuggester.getGroupList(graphs);
-//
-//            ConceptSuggester sug  = new ConceptSuggester();
-//            List<Group> groupings = sug.suggestGroup(list.get(0), new Group());
-//
-//            Assert.assertEquals(groupings.size(), 2);
-//
-//            Assert.assertEquals(groupings.get(0).getSize(), 2);
-//            Assert.assertEquals(groupings.get(0).contains("s2"), true);
-//            Assert.assertEquals(groupings.get(0).contains("s3"),true);
-//
-//            Assert.assertEquals(groupings.get(1).getSize(), 3);
-//            Assert.assertEquals(groupings.get(1).contains("s4"), true);
-//            Assert.assertEquals(groupings.get(1).contains("s5"), true);
-//            Assert.assertEquals(groupings.get(1).contains("s1"),true);
-//
-//
-////            //testing with more than one list of groups
-//            List<Group> actualGroupings = new ArrayList<>();
-//
-//            Group group = new Group();
-//
-//            group.addMember("mia", groupings.get(0).getGraph("s3"));
-//            group.addMember("don", groupings.get(0).getGraph("s4"));
-//            group.addMember("bob", groupings.get(0).getGraph("s2"));
-//            group.addMember("alena", groupings.get(0).getGraph("s3"));
-//            group.addMember("kayli", groupings.get(0).getGraph("s5"));
-//            group.addMember("dan", groupings.get(0).getGraph("s2"));
-//            actualGroupings.add(group);
-//
-//            List<Group> groupings2 = sug.suggestGroup(actualGroupings.get(0), new Group());
-//
-////            for(Group gr: groupings2){
-////                System.out.println("hello " + gr);
-////            }
-////            Assert.assertEquals(groupings2.size(), 6);
-////            Assert.assertEquals(groupings2.get(0).getSize(),0 );
-//////
-////            Assert.assertEquals(groupings2.get(1).getSize(),3 );
-////            Assert.assertEquals(groupings2.get(1).contains("mia"), true);
-////            Assert.assertEquals(groupings2.get(1).contains("bob"), true);
-////            Assert.assertEquals(groupings2.get(1).contains("alena"), true);
-////
-////            Assert.assertEquals(groupings2.get(2).getSize(),1);
-////            Assert.assertEquals(groupings2.get(2).contains("don"), true);
-////
-////            Assert.assertEquals(groupings2.get(3).getSize(),0);
-////
-////            Assert.assertEquals(groupings2.get(4).getSize(),1);
-////            Assert.assertEquals(groupings2.get(4).contains("dan"), true);
-////
-////            Assert.assertEquals(groupings2.get(5).getSize(),1);
-////            Assert.assertEquals(groupings2.get(5).contains("kayli"), true);
-//        } catch (Exception e) {
-//
-//            e.printStackTrace();
-//        }
-//    }
-
-
-
 
 }
