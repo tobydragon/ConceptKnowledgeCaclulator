@@ -4,6 +4,7 @@ import edu.ithaca.dragonlab.ckc.io.*;
 import edu.ithaca.dragonlab.ckc.learningobject.LearningMaterial;
 import edu.ithaca.dragonlab.ckc.learningobject.LearningObject;
 import edu.ithaca.dragonlab.ckc.learningobject.LearningObjectResponse;
+import edu.ithaca.dragonlab.ckc.learningobject.LearningResource;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -36,6 +37,11 @@ public class  ConceptGraph {
     public ConceptGraph(ConceptGraphRecord structureDef, List<LearningObjectLinkRecord> lolRecords){
         this(structureDef);
         addLearningObjectsFromLearningObjectLinkRecords(lolRecords);
+    }
+
+    public ConceptGraph(ConceptGraphRecord structureDef, List<LearningResourceRecord> lolRecords, boolean noPurpose){
+        this(structureDef);
+        addLearningResourcesFromRecords(lolRecords);
     }
 
     public ConceptGraph(ConceptGraphRecord structureDef, List<LearningObjectLinkRecord> lolRecords, List<LearningObjectResponse> learningObjectsResponses){
@@ -154,7 +160,7 @@ public class  ConceptGraph {
      * @post   the learningObject is added to the graph's map, and to all associated Concept's maps
      * @return the number of concepts the learning object was added to, or -1 if the learning object already exists
      */
-    public int linkLearningObjects(LearningObject toLink, List<String> conceptIds){
+    public int linkLearningObjects(LearningObject toLink, Collection<String> conceptIds){
         int numAdded = 0;
         if (learningObjectMap.get(toLink.getId()) != null){
             logger.warn(toLink.getId()+" already exists in this graph. Nothing was added.");
@@ -181,7 +187,7 @@ public class  ConceptGraph {
      * @post   the learningObject is added to the graph's map, and to all associated Concept's maps
      * @return the number of concepts the learning object was added to, or -1 if the learning object already exists
      */
-    public int linkLearningMaterials(LearningMaterial toLink, List<String> conceptIds){
+    public int linkLearningMaterials(LearningMaterial toLink, Collection<String> conceptIds){
         int numAdded = 0;
         if (learningMaterialMap.get(toLink.getId()) != null){
             logger.warn(toLink.getId()+" already exists in this graph. Nothing was added.");
@@ -210,6 +216,28 @@ public class  ConceptGraph {
             linkLearningObjects(new LearningObject(record), record.getConceptIds());
         }
     }
+
+    public void addLearningResourcesFromRecords(List<LearningResourceRecord> learningObjectLinkRecords){
+
+        for (LearningResourceRecord record: learningObjectLinkRecords){
+            linkLearningObjects(new LearningObject(record), record.getConceptIds());
+
+            //set defaults if there aren't any resources
+            if (record.getResourceTypes().size() == 0){
+                record.setResourceTypes(LearningResource.DEFAULT_RESOURCE_TYPES);
+            }
+            //may create duplicate records if one resource is both an assessment and a material
+            if (record.isType(LearningResource.Type.ASSESSMENT)){
+                linkLearningObjects(new LearningObject(record), record.getConceptIds());
+            }
+            if (record.isType(LearningResource.Type.INFORMATION) || record.isType(LearningResource.Type.PRACTICE)){
+                //since we've already added possibly an assessment for this record, remove it (if it were there) so the list can be used to create the material directly from the list
+                record.getResourceTypes().remove(LearningResource.Type.ASSESSMENT);
+                linkLearningMaterials(new LearningMaterial(record), record.getConceptIds());
+            }
+        }
+    }
+
 
     /**
      * connects LearningObjectResponse to the appropriate LearningObject in this graph

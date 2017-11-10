@@ -279,7 +279,7 @@ public class RFunctions {
 
 
 
-                //modelString += conceptString + " -> " + lo.getId() + ", " + lo.getId() + "To" + conceptString + ", NA \n";
+                //modelString += conceptString + " -> " + lo.getLearningResourceId() + ", " + lo.getLearningResourceId() + "To" + conceptString + ", NA \n";
                 modelString += conceptString + " -> " + lo.getId().replaceAll("\\s","") + ", " + lo.getId().replaceAll("\\s","") + "To" + conceptString + ", NA \n";
 
             }

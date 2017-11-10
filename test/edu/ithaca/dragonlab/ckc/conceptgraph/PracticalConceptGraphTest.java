@@ -63,8 +63,8 @@ public class PracticalConceptGraphTest {
 
             ConceptGraphRecord graphRecord = ConceptGraphRecord.buildFromJson("test/testresources/ManuallyCreated/basicRealisticConceptGraph.json");
 
-            List<LearningObjectLinkRecord> LOLRlist = LearningObjectLinkRecord.buildListFromJson("test/testresources/ManuallyCreated/basicRealisticResource.json");
-            ConceptGraph graph = new ConceptGraph(graphRecord, LOLRlist);
+            List<LearningResourceRecord> LOLRlist = LearningResourceRecord.buildListFromJson("test/testresources/ManuallyCreated/basicRealisticResource.json");
+            ConceptGraph graph = new ConceptGraph(graphRecord, LOLRlist, true);
 
             CohortConceptGraphs gcg = new CohortConceptGraphs(graph,csvReader.getManualGradedResponses());
 

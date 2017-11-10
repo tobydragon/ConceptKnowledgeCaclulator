@@ -22,7 +22,7 @@ public class LearningMaterial extends LearningResource {
     }
 
     public LearningMaterial(LearningResourceRecord record){
-        super(record.getResourceId(), record.getResourceTypes());
+        super(record.getLearningResourceId(), record.getResourceTypes());
     }
 
     public static Map<String, LearningMaterial> deepCopyLearningMaterialMap(Map<String, LearningMaterial> mapToCopy){

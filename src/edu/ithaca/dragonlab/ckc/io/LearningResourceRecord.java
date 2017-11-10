@@ -19,14 +19,14 @@ import java.util.List;
  */
 public class LearningResourceRecord {
 
-    private String resourceId;
+    private String learningResourceId;
     private Collection <LearningResource.Type> resourceTypes;
     private Collection<String> conceptIds;
     private double dataImportance;
     private double maxPossibleKnowledgeEstimate;
 
-    public LearningResourceRecord(String resourceId, Collection<LearningResource.Type> resourceTypes, Collection<String> conceptIds, double maxPossibleKnowledgeEstimate, double dataImportance){
-        this.resourceId = resourceId;
+    public LearningResourceRecord(String learningResourceId, Collection<LearningResource.Type> resourceTypes, Collection<String> conceptIds, double maxPossibleKnowledgeEstimate, double dataImportance){
+        this.learningResourceId = learningResourceId;
         this.resourceTypes = new ArrayList<>(resourceTypes);
         this.conceptIds = new ArrayList<>(conceptIds);
         this.dataImportance = dataImportance;
@@ -44,7 +44,7 @@ public class LearningResourceRecord {
 
     //should not be needed because it is used for writing out after reading csv, and we already should have maxKnowledgeEstimate
 //    public LearningResourceRecord(String learningObject, double maxPossibleKnowledgeEstimate){
-//        this.resourceId = learningObject;
+//        this.learningResourceId = learningObject;
 //        conceptIds = new ArrayList<>();
 //        this.dataImportance = 1;
 //        this.maxPossibleKnowledgeEstimate = maxPossibleKnowledgeEstimate;
@@ -76,11 +76,11 @@ public class LearningResourceRecord {
         return resourceTypes.contains(typeToCheck);
     }
 
-    public String getResourceId(){ return this.resourceId; }
+    public String getLearningResourceId(){ return this.learningResourceId; }
     public Collection<String> getConceptIds(){ return this.conceptIds; }
     public double getDataImportance(){ return this.dataImportance; }
     public double getMaxPossibleKnowledgeEstimate(){ return this.maxPossibleKnowledgeEstimate;}
-    public void setResourceId(String lo){this.resourceId = lo;}
+    public void setLearningResourceId(String lo){this.learningResourceId = lo;}
     public void setConceptIds(List<String> conceptIds){this.conceptIds=conceptIds;}
     public void setDataImportance(double dataImportance){this.dataImportance=dataImportance;}
     public void setMaxPossibleKnowledgeEstimate(double maxPossibleKnowledgeEstimate) {this.maxPossibleKnowledgeEstimate = maxPossibleKnowledgeEstimate;}
@@ -98,7 +98,7 @@ public class LearningResourceRecord {
     }
 
     public String toString(){
-        String out = "(Learning Resource ID: " + this.resourceId + " Concept IDs: ";
+        String out = "(Learning Resource ID: " + this.learningResourceId + " Concept IDs: ";
         for (String id : conceptIds){
             out+=id + ", ";
         }

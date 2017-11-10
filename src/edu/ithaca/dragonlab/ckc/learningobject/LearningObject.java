@@ -43,7 +43,7 @@ public class LearningObject {
 
     //temprary fucntion to get htings working before switching to LearningResourceRecords
     public LearningObject(LearningResourceRecord record){
-        this.id = record.getResourceId();
+        this.id = record.getLearningResourceId();
         this.maxPossibleKnowledgeEstimate = record.getMaxPossibleKnowledgeEstimate();
         this.responses = new ArrayList<>();
     }
