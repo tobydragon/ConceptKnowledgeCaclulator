@@ -9,8 +9,8 @@ public class LearningResource {
 
     public static Collection<Type> DEFAULT_RESOURCE_TYPES = Arrays.asList(Type.ASSESSMENT, Type.PRACTICE);
 
-    private Collection<Type> types;
-    String id;
+    protected Collection<Type> types;
+    private String id;
 
     LearningResource(String id, Collection<Type> types){
         this.id = id;
@@ -21,4 +21,7 @@ public class LearningResource {
         this(id,  Arrays.asList(type));
     }
 
+    public String getId() {
+        return id;
+    }
 }

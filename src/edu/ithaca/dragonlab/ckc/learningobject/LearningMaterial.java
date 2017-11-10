@@ -4,6 +4,8 @@ import edu.ithaca.dragonlab.ckc.io.LearningResourceRecord;
 
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.HashMap;
+import java.util.Map;
 
 public class LearningMaterial extends LearningResource {
 
@@ -15,8 +17,20 @@ public class LearningMaterial extends LearningResource {
         super(id, Arrays.asList(type));
     }
 
+    public LearningMaterial(LearningMaterial record){
+        super(record.getId(), record.types);
+    }
+
     public LearningMaterial(LearningResourceRecord record){
         super(record.getResourceId(), record.getResourceTypes());
+    }
+
+    public static Map<String, LearningMaterial> deepCopyLearningMaterialMap(Map<String, LearningMaterial> mapToCopy){
+        Map<String, LearningMaterial> newMap = new HashMap<>();
+        for (Map.Entry<String, LearningMaterial> entryToCopy : mapToCopy.entrySet()){
+            newMap.put(entryToCopy.getKey(), new LearningMaterial(entryToCopy.getValue()));
+        }
+        return newMap;
     }
 
 }
