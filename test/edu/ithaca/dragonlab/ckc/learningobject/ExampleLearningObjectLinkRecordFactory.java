@@ -1,6 +1,7 @@
 package edu.ithaca.dragonlab.ckc.learningobject;
 
 import edu.ithaca.dragonlab.ckc.io.LearningObjectLinkRecord;
+import edu.ithaca.dragonlab.ckc.io.LearningResourceRecord;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -12,15 +13,15 @@ import java.util.List;
  */
 public class ExampleLearningObjectLinkRecordFactory {
 
-    public static List<LearningObjectLinkRecord> makeSimpleLOLRecords(){
-        List<LearningObjectLinkRecord> clList = new ArrayList<>();
+    public static List<LearningResourceRecord> makeSimpleLOLRecords(){
+        List<LearningResourceRecord> clList = new ArrayList<>();
 
-        clList.add(new LearningObjectLinkRecord("Q1", Arrays.asList("B")));
-        clList.add(new LearningObjectLinkRecord("Q2", Arrays.asList("B")));
-        clList.add(new LearningObjectLinkRecord("Q3", Arrays.asList("C")));
-        clList.add(new LearningObjectLinkRecord("Q4", Arrays.asList("C")));
-        clList.add(new LearningObjectLinkRecord("Q5", Arrays.asList("C")));
-        clList.add(new LearningObjectLinkRecord("Q6", Arrays.asList("C")));
+        clList.add(new LearningResourceRecord("Q1", Arrays.asList(LearningResource.Type.ASSESSMENT, LearningResource.Type.PRACTICE), Arrays.asList("B"),1 , 1));
+        clList.add(new LearningResourceRecord("Q2", Arrays.asList(LearningResource.Type.ASSESSMENT, LearningResource.Type.PRACTICE), Arrays.asList("B"),1 , 1));
+        clList.add(new LearningResourceRecord("Q3", Arrays.asList(LearningResource.Type.ASSESSMENT, LearningResource.Type.PRACTICE), Arrays.asList("C"),1 , 1));
+        clList.add(new LearningResourceRecord("Q4", Arrays.asList(LearningResource.Type.ASSESSMENT, LearningResource.Type.PRACTICE), Arrays.asList("C"),1 , 1));
+        clList.add(new LearningResourceRecord("Q5", Arrays.asList(LearningResource.Type.ASSESSMENT, LearningResource.Type.PRACTICE), Arrays.asList("C"),1 , 1));
+        clList.add(new LearningResourceRecord("Q6", Arrays.asList(LearningResource.Type.ASSESSMENT, LearningResource.Type.PRACTICE), Arrays.asList("C"),1 , 1));
 
         return clList;
     }

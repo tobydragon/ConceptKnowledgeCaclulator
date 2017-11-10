@@ -76,12 +76,12 @@ public class LearningObjectLinkRecordTest {
             mapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
 
 
-            List<LearningObjectLinkRecord> list = LearningObjectLinkRecord.buildListFromJson("test/testresources/ManuallyCreated/simpleResource.json");
+            List<LearningResourceRecord> list = LearningResourceRecord.buildListFromJson("test/testresources/ManuallyCreated/simpleResource.json");
 
             Assert.assertEquals(6, list.size());
-            Assert.assertEquals("Q1", list.get(0).getLearningObject());
+            Assert.assertEquals("Q1", list.get(0).getLearningResourceId());
             Assert.assertEquals(1, list.get(0).getConceptIds().size());
-            Assert.assertEquals("C", list.get(2).getConceptIds().get(0));
+            Assert.assertEquals("C", list.get(2).getConceptIds().iterator().next());
             Assert.assertEquals(1, list.get(0).getDataImportance(), DataUtil.OK_FLOAT_MARGIN);
             Assert.assertEquals(1, list.get(1).getDataImportance(), DataUtil.OK_FLOAT_MARGIN);
             Assert.assertEquals(.3, list.get(2).getDataImportance(), DataUtil.OK_FLOAT_MARGIN);

@@ -2,6 +2,7 @@ package edu.ithaca.dragonlab.ckc.conceptgraph;
 
 import edu.ithaca.dragonlab.ckc.io.ConceptGraphRecord;
 import edu.ithaca.dragonlab.ckc.io.LearningObjectLinkRecord;
+import edu.ithaca.dragonlab.ckc.io.LearningResourceRecord;
 import edu.ithaca.dragonlab.ckc.learningobject.ExampleLearningObjectLinkRecordFactory;
 import edu.ithaca.dragonlab.ckc.learningobject.ExampleLearningObjectResponseFactory;
 import edu.ithaca.dragonlab.ckc.learningobject.LearningObject;
@@ -93,7 +94,7 @@ public class ConceptGraphTest {
     @Test
     public void buildGraphConstructorTest(){
         ConceptGraphRecord structure = ExampleConceptGraphRecordFactory.makeSimple();
-        List<LearningObjectLinkRecord> lolinks = ExampleLearningObjectLinkRecordFactory.makeSimpleLOLRecords();
+        List<LearningResourceRecord> lolinks = ExampleLearningObjectLinkRecordFactory.makeSimpleLOLRecords();
         List<LearningObjectResponse> responses = ExampleLearningObjectResponseFactory.makeSimpleResponses();
 
         ConceptGraph graph = new ConceptGraph(structure, lolinks, responses);

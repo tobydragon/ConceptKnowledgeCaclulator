@@ -4,9 +4,11 @@ import edu.ithaca.dragonlab.ckc.conceptgraph.*;
 import edu.ithaca.dragonlab.ckc.io.CSVReader;
 import edu.ithaca.dragonlab.ckc.io.ConceptGraphRecord;
 import edu.ithaca.dragonlab.ckc.io.LearningObjectLinkRecord;
+import edu.ithaca.dragonlab.ckc.io.LearningResourceRecord;
 import edu.ithaca.dragonlab.ckc.learningobject.ExampleLearningObjectLinkRecordFactory;
 import edu.ithaca.dragonlab.ckc.learningobject.ExampleLearningObjectResponseFactory;
 import edu.ithaca.dragonlab.ckc.learningobject.LearningObjectResponse;
+import edu.ithaca.dragonlab.ckc.learningobject.LearningResource;
 import org.junit.Assert;
 import org.junit.Test;
 
@@ -77,7 +79,7 @@ public class LearningObjectSuggesterTest {
 
         //create the graph structure to be copied for each user
         ConceptGraphRecord structureRecord = ConceptGraphRecord.buildFromJson("test/testresources/ManuallyCreated/comp220GraphExample.json");
-        List<LearningObjectLinkRecord> linkRecord = LearningObjectLinkRecord.buildListFromJson("test/testresources/ManuallyCreated/comp220Resources.json");
+        List<LearningResourceRecord> linkRecord = LearningResourceRecord.buildListFromJson("test/testresources/ManuallyCreated/comp220Resources.json");
         ConceptGraph graph = new ConceptGraph(structureRecord, linkRecord);
 
         //create the data to be used to create and populate the graph copies
@@ -103,7 +105,7 @@ public class LearningObjectSuggesterTest {
 
         //create the graph structure to be copied for each user
         ConceptGraphRecord structureRecord = ConceptGraphRecord.buildFromJson("test/testresources/ManuallyCreated/comp220GraphExample.json");
-        List<LearningObjectLinkRecord> linkRecord = LearningObjectLinkRecord.buildListFromJson("test/testresources/ManuallyCreated/comp220Resources.json");
+        List<LearningResourceRecord> linkRecord = LearningResourceRecord.buildListFromJson("test/testresources/ManuallyCreated/comp220Resources.json");
         ConceptGraph graph = new ConceptGraph(structureRecord, linkRecord);
 
         //create the data to be used to create and populate the graph copies
@@ -151,8 +153,8 @@ public class LearningObjectSuggesterTest {
 
     @Test
     public void suggestedOrderBuildLearningObjectListTest() {
-        List<LearningObjectLinkRecord> myList = ExampleLearningObjectLinkRecordFactory.makeSimpleLOLRecords();
-        myList.add(new LearningObjectLinkRecord("Q10", Arrays.asList("A")));
+        List<LearningResourceRecord> myList = ExampleLearningObjectLinkRecordFactory.makeSimpleLOLRecords();
+        myList.add(new LearningResourceRecord("Q10", Arrays.asList(LearningResource.Type.ASSESSMENT, LearningResource.Type.PRACTICE), Arrays.asList("A"), 1, 1));
         ConceptGraph orig = new ConceptGraph(ExampleConceptGraphRecordFactory.makeSimple(),
                 myList, ExampleLearningObjectResponseFactory.makeSimpleResponses());
 
@@ -227,7 +229,7 @@ public class LearningObjectSuggesterTest {
 
         //create the graph structure to be copied for each user
         ConceptGraphRecord structureRecord = ConceptGraphRecord.buildFromJson("test/testresources/ManuallyCreated/comp220GraphExample.json");
-        List<LearningObjectLinkRecord> linkRecord = LearningObjectLinkRecord.buildListFromJson("test/testresources/ManuallyCreated/comp220Resources.json");
+        List<LearningResourceRecord> linkRecord = LearningResourceRecord.buildListFromJson("test/testresources/ManuallyCreated/comp220Resources.json");
         ConceptGraph graph = new ConceptGraph(structureRecord, linkRecord);
 
         //create the data to be used to create and populate the graph copies

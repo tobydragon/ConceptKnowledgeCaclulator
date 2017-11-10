@@ -34,20 +34,24 @@ public class  ConceptGraph {
         this.learningMaterialMap = new HashMap<>();
     }
 
-    public ConceptGraph(ConceptGraphRecord structureDef, List<LearningObjectLinkRecord> lolRecords){
-        this(structureDef);
-        addLearningObjectsFromLearningObjectLinkRecords(lolRecords);
-    }
+//    public ConceptGraph(ConceptGraphRecord structureDef, List<LearningObjectLinkRecord> lolRecords){
+//        this(structureDef);
+//        addLearningObjectsFromLearningObjectLinkRecords(lolRecords);
+//    }
 
-    public ConceptGraph(ConceptGraphRecord structureDef, List<LearningResourceRecord> lolRecords, boolean noPurpose){
+    public ConceptGraph(ConceptGraphRecord structureDef, List<LearningResourceRecord> lolRecords){
         this(structureDef);
         addLearningResourcesFromRecords(lolRecords);
     }
-
-    public ConceptGraph(ConceptGraphRecord structureDef, List<LearningObjectLinkRecord> lolRecords, List<LearningObjectResponse> learningObjectsResponses){
+    public ConceptGraph(ConceptGraphRecord structureDef, List<LearningResourceRecord> lolRecords, List<LearningObjectResponse> learningObjectsResponses){
         this(structureDef, lolRecords);
         addLearningObjectResponses(learningObjectsResponses);
     }
+
+//    public ConceptGraph(ConceptGraphRecord structureDef, List<LearningObjectLinkRecord> lolRecords, List<LearningObjectResponse> learningObjectsResponses){
+//        this(structureDef, lolRecords);
+//        addLearningObjectResponses(learningObjectsResponses);
+//    }
 
     /**
      * Copy constructor that creates an entire copy but with a different name

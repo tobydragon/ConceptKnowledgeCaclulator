@@ -1,10 +1,7 @@
 package edu.ithaca.dragonlab.ckc;
 
 import edu.ithaca.dragonlab.ckc.conceptgraph.*;
-import edu.ithaca.dragonlab.ckc.io.CSVReader;
-import edu.ithaca.dragonlab.ckc.io.CohortConceptGraphsRecord;
-import edu.ithaca.dragonlab.ckc.io.ConceptGraphRecord;
-import edu.ithaca.dragonlab.ckc.io.LearningObjectLinkRecord;
+import edu.ithaca.dragonlab.ckc.io.*;
 import edu.ithaca.dragonlab.ckc.learningobject.LearningObject;
 import edu.ithaca.dragonlab.ckc.learningobject.LearningObjectResponse;
 import edu.ithaca.dragonlab.ckc.suggester.GroupSuggester.*;
@@ -137,9 +134,9 @@ public class ConceptKnowledgeCalculator implements ConceptKnowledgeCalculatorAPI
         //create the graph structure to be copied for each user
         ConceptGraphRecord structureRecord = ConceptGraphRecord.buildFromJson(structureFiles.get(0));
 
-        List<LearningObjectLinkRecord> linkRecord = new ArrayList<>();
+        List<LearningResourceRecord> linkRecord = new ArrayList<>();
         for (String rFiles : resourceFilename){
-            List<LearningObjectLinkRecord> temp = LearningObjectLinkRecord.buildListFromJson(rFiles);
+            List<LearningResourceRecord> temp = LearningResourceRecord.buildListFromJson(rFiles);
             linkRecord.addAll(temp);
             resourceFiles.add(rFiles);
         }
