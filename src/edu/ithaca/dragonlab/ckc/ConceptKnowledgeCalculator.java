@@ -4,6 +4,7 @@ import edu.ithaca.dragonlab.ckc.conceptgraph.*;
 import edu.ithaca.dragonlab.ckc.io.*;
 import edu.ithaca.dragonlab.ckc.learningobject.LearningObject;
 import edu.ithaca.dragonlab.ckc.learningobject.LearningObjectResponse;
+import edu.ithaca.dragonlab.ckc.learningobject.LearningResource;
 import edu.ithaca.dragonlab.ckc.suggester.GroupSuggester.*;
 import edu.ithaca.dragonlab.ckc.suggester.LearningObjectSuggester;
 import edu.ithaca.dragonlab.ckc.suggester.SuggestionResource;
@@ -482,8 +483,8 @@ public class ConceptKnowledgeCalculator implements ConceptKnowledgeCalculatorAPI
 
     public static void csvToResource(List<String> assessmentFiles, String destinationFilepath) throws Exception{
             List<LearningObject> fullLoList = CSVReader.learningObjectsFromCSVList(assessmentFiles);
-            List<LearningObjectLinkRecord> lolrList = LearningObjectLinkRecord.createLearningObjectLinkRecords(fullLoList, 10);
-            LearningObjectLinkRecord.lolrToJSON(lolrList, destinationFilepath);
+            List<LearningResourceRecord> lolrList = LearningResourceRecord.createLRecordsFromAssessments(fullLoList);
+            LearningResourceRecord.resourceRecordsToJSON(lolrList, destinationFilepath);
     }
 
     public static void conceptIdsToTextFile(Collection<String> conceptIds, String destinationFilepath) throws Exception{
@@ -617,7 +618,7 @@ public class ConceptKnowledgeCalculator implements ConceptKnowledgeCalculatorAPI
 
     @Override
     public boolean resourceIsValid(String name) throws IOException {
-        List<LearningObjectLinkRecord> temp = LearningObjectLinkRecord.buildListFromJson(name);
+        List<LearningResourceRecord> temp = LearningResourceRecord.buildListFromJson(name);
         if(temp.size()>0){
             return true;
         }else{

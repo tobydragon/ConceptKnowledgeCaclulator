@@ -1,6 +1,5 @@
 package edu.ithaca.dragonlab.ckc.learningobject;
 
-import edu.ithaca.dragonlab.ckc.io.LearningObjectLinkRecord;
 import edu.ithaca.dragonlab.ckc.io.LearningResourceRecord;
 import edu.ithaca.dragonlab.ckc.util.DataUtil;
 
@@ -35,11 +34,11 @@ public class LearningObject {
         }
     }
 
-    public LearningObject(LearningObjectLinkRecord record) {
-        this.id = record.getLearningObject();
-        this.responses = new ArrayList<>();
-        this.maxPossibleKnowledgeEstimate = 1;
-    }
+//    public LearningObject(LearningObjectLinkRecord record) {
+//        this.id = record.getLearningObject();
+//        this.responses = new ArrayList<>();
+//        this.maxPossibleKnowledgeEstimate = 1;
+//    }
 
     //temprary fucntion to get htings working before switching to LearningResourceRecords
     public LearningObject(LearningResourceRecord record){

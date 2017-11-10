@@ -1,12 +1,8 @@
 package edu.ithaca.dragonlab.ckc.conceptgraph;
 
 import edu.ithaca.dragonlab.ckc.io.ConceptGraphRecord;
-import edu.ithaca.dragonlab.ckc.io.LearningObjectLinkRecord;
 import edu.ithaca.dragonlab.ckc.io.LearningResourceRecord;
-import edu.ithaca.dragonlab.ckc.learningobject.ExampleLearningObjectLinkRecordFactory;
-import edu.ithaca.dragonlab.ckc.learningobject.ExampleLearningObjectResponseFactory;
-import edu.ithaca.dragonlab.ckc.learningobject.LearningObject;
-import edu.ithaca.dragonlab.ckc.learningobject.LearningObjectResponse;
+import edu.ithaca.dragonlab.ckc.learningobject.*;
 import edu.ithaca.dragonlab.ckc.util.DataUtil;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -191,15 +187,15 @@ public class ConceptGraphTest {
         responses.add( new LearningObjectResponse("user1","Q7",1));
 
         //Creating learningObjectLinkedRecord list
-        List<LearningObjectLinkRecord> learningObjectLinkRecords = new ArrayList<>();
+        List<LearningResourceRecord> learningObjectLinkRecords = new ArrayList<>();
 
         List<String> concepts = new ArrayList<>();
         concepts.add("B");
         concepts.add("C");
-        LearningObjectLinkRecord question7Record = new LearningObjectLinkRecord("Q7",concepts);
+        LearningResourceRecord question7Record = new LearningResourceRecord("Q7", Arrays.asList(LearningResource.Type.ASSESSMENT, LearningResource.Type.PRACTICE),concepts, 1, 1);
         learningObjectLinkRecords.add(question7Record);
 
-        graph.addLearningObjectsFromLearningObjectLinkRecords(learningObjectLinkRecords);
+        graph.addLearningResourcesFromRecords(learningObjectLinkRecords);
         graph.addLearningObjectResponses(responses);
 
         // all info is correct

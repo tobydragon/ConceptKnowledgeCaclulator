@@ -1,6 +1,5 @@
 package edu.ithaca.dragonlab.ckc.learningobject;
 
-import edu.ithaca.dragonlab.ckc.io.LearningObjectLinkRecord;
 import edu.ithaca.dragonlab.ckc.io.LearningResourceRecord;
 
 import java.util.ArrayList;

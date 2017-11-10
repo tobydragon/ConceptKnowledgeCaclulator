@@ -854,13 +854,13 @@ public class ConceptKnowledgeCalculatorTest {
             csvFiles.add("test/testresources/ManuallyCreated/mediumAssessment.csv");
             ConceptKnowledgeCalculator.csvToResource(csvFiles, testFilepath);
 
-            List<LearningObjectLinkRecord> recordsFromFile = LearningObjectLinkRecord.buildListFromJson(testFilepath);
+            List<LearningResourceRecord> recordsFromFile = LearningResourceRecord.buildListFromJson(testFilepath);
             Assert.assertNotNull(recordsFromFile);
             //TODO:test that these LOLRecords are good compared to the input csv file, they just won't have any concepts in their lists
-            LearningObjectLinkRecord currRec = recordsFromFile.get(0);
-            Assert.assertEquals("Q1", currRec.getLearningObject());
-            LearningObjectLinkRecord nextRec = recordsFromFile.get(13);
-            Assert.assertEquals("Q14", nextRec.getLearningObject());
+            LearningResourceRecord currRec = recordsFromFile.get(0);
+            Assert.assertEquals("Q1", currRec.getLearningResourceId());
+            LearningResourceRecord nextRec = recordsFromFile.get(13);
+            Assert.assertEquals("Q14", nextRec.getLearningResourceId());
 
         }catch (Exception e){
             e.printStackTrace();

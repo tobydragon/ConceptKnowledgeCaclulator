@@ -34,24 +34,15 @@ public class  ConceptGraph {
         this.learningMaterialMap = new HashMap<>();
     }
 
-//    public ConceptGraph(ConceptGraphRecord structureDef, List<LearningObjectLinkRecord> lolRecords){
-//        this(structureDef);
-//        addLearningObjectsFromLearningObjectLinkRecords(lolRecords);
-//    }
-
     public ConceptGraph(ConceptGraphRecord structureDef, List<LearningResourceRecord> lolRecords){
         this(structureDef);
         addLearningResourcesFromRecords(lolRecords);
     }
+
     public ConceptGraph(ConceptGraphRecord structureDef, List<LearningResourceRecord> lolRecords, List<LearningObjectResponse> learningObjectsResponses){
         this(structureDef, lolRecords);
         addLearningObjectResponses(learningObjectsResponses);
     }
-
-//    public ConceptGraph(ConceptGraphRecord structureDef, List<LearningObjectLinkRecord> lolRecords, List<LearningObjectResponse> learningObjectsResponses){
-//        this(structureDef, lolRecords);
-//        addLearningObjectResponses(learningObjectsResponses);
-//    }
 
     /**
      * Copy constructor that creates an entire copy but with a different name
@@ -208,17 +199,6 @@ public class  ConceptGraph {
             }
         }
         return numAdded;
-    }
-
-    /**
-     * creates learningObjects and links them to concepts based on a list of learningObjectLinkRecords
-     * @param learningObjectLinkRecords - list of learningObjectLinkRecords
-     */
-    public void addLearningObjectsFromLearningObjectLinkRecords(List<LearningObjectLinkRecord> learningObjectLinkRecords){
-
-        for (LearningObjectLinkRecord record: learningObjectLinkRecords){
-            linkLearningObjects(new LearningObject(record), record.getConceptIds());
-        }
     }
 
     public void addLearningResourcesFromRecords(List<LearningResourceRecord> learningObjectLinkRecords){
