@@ -7,6 +7,8 @@ import java.util.Collection;
 public class LearningResource {
     public enum Type {ASSESSMENT, INFORMATION, PRACTICE}
 
+    public static Collection<Type> DEFAULT_RESOURCE_TYPES = Arrays.asList(Type.ASSESSMENT, Type.PRACTICE);
+
     private Collection<Type> types;
     String id;
 

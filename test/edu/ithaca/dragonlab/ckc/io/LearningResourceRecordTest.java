@@ -18,19 +18,30 @@ public class LearningResourceRecordTest {
     public void testBuildingResourcesFromRecords(){
         Collection<LearningObject> assessments = new ArrayList<>();
         Collection<LearningMaterial> materials = new ArrayList<>();
-        for (LearningResourceRecord record : buildTestInstances()){
-            //may create duplicate records if one resource is both an assessment and a material
-            if (record.isType(LearningResource.Type.ASSESSMENT)){
-                assessments.add(new LearningObject(record));
+        try {
+            Collection<LearningResourceRecord> fromFile = LearningResourceRecord.buildListFromJson("test/testresources/ManuallyCreated/LearningRecordResourceTest-MissingFields.json");
+
+            for (LearningResourceRecord record : fromFile){
+                //set defaults if there aren't any resources
+                if (record.getResourceTypes().size() == 0){
+                    record.setResourceTypes(LearningResource.DEFAULT_RESOURCE_TYPES);
+                }
+                //may create duplicate records if one resource is both an assessment and a material
+                if (record.isType(LearningResource.Type.ASSESSMENT)){
+                    assessments.add(new LearningObject(record));
+                }
+                if (record.isType(LearningResource.Type.INFORMATION) || record.isType(LearningResource.Type.PRACTICE)){
+                    //since we've already added an assessment for this record, remove it so the list can be used to create the material directly from the list
+                    record.getResourceTypes().remove(LearningResource.Type.ASSESSMENT);
+                    materials.add(new LearningMaterial(record));
+                }
             }
-            if (record.isType(LearningResource.Type.INFORMATION) || record.isType(LearningResource.Type.PRACTICE)){
-                //since we've already added an assessment for this record, remove it so the list can be used to create the material directly from the list
-                record.getResourceTypes().remove(LearningResource.Type.ASSESSMENT);
-                materials.add(new LearningMaterial(record));
-            }
+            Assert.assertEquals(2, assessments.size());
+            Assert.assertEquals(3, materials.size());
+        } catch (IOException e) {
+            e.printStackTrace();
+            Assert.fail();
         }
-        Assert.assertEquals(2, assessments.size());
-        Assert.assertEquals(3, materials.size());
     }
 
     public static Collection<LearningResourceRecord> buildTestInstances(){

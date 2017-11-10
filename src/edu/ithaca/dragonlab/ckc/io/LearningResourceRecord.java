@@ -18,6 +18,7 @@ import java.util.List;
  * Created by willsuchanek on 4/10/17.
  */
 public class LearningResourceRecord {
+
     private String resourceId;
     private Collection <LearningResource.Type> resourceTypes;
     private Collection<String> conceptIds;
@@ -93,7 +94,7 @@ public class LearningResourceRecord {
     }
 
     public void setResourceTypes(Collection<LearningResource.Type> resourceTypes) {
-        this.resourceTypes = resourceTypes;
+        this.resourceTypes = new ArrayList<>(resourceTypes);
     }
 
     public String toString(){
