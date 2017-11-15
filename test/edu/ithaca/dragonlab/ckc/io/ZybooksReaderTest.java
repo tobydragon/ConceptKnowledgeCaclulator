@@ -10,8 +10,8 @@ import org.junit.Assert;
 import org.junit.Test;
 import edu.ithaca.dragonlab.ckc.learningobject.ManualGradedResponse;
 
-import static edu.ithaca.dragonlab.ckc.io.ZybooksReader.lineToList;
-import static edu.ithaca.dragonlab.ckc.io.ZybooksReader.pullNumber;
+import static edu.ithaca.dragonlab.ckc.io.ReaderTools.lineToList;
+import static edu.ithaca.dragonlab.ckc.io.ReaderTools.pullNumber;
 
 /**
  * Created by rdebolt on 10/23/18.
@@ -25,7 +25,7 @@ public class ZybooksReaderTest {
         String object = "total Score - 25";
         String outCome = "25";
         try {
-            Assert.assertEquals(outCome,pullNumber(object));
+            Assert.assertEquals(outCome,ReaderTools.pullNumber(object));
         }
         catch (Exception e){
             e.printStackTrace();
@@ -37,7 +37,7 @@ public class ZybooksReaderTest {
         String object = "total Score - 25.3.2";
         String outCome = "";
         try {
-            Assert.assertEquals(outCome,pullNumber(object));
+            Assert.assertEquals(outCome,ReaderTools.pullNumber(object));
         }
         catch (Exception e){
             e.printStackTrace();
@@ -46,10 +46,10 @@ public class ZybooksReaderTest {
     }
     @Test
     public void NumbersTestDouble(){
-        String object = "total Score - 25.34";
-        String outCome = "25.34";
+        String object = "total Score - -25.34";
+        String outCome = "-25.34";
         try {
-            Assert.assertEquals(outCome,pullNumber(object));
+            Assert.assertEquals(outCome,ReaderTools.pullNumber(object));
         }
         catch (Exception e){
             e.printStackTrace();
@@ -61,7 +61,7 @@ public class ZybooksReaderTest {
         String object = "total Score - N/A";
         String outCome = "";
         try {
-            Assert.assertEquals(outCome,pullNumber(object));
+            Assert.assertEquals(outCome,ReaderTools.pullNumber(object));
         }
         catch (Exception e){
             e.printStackTrace();
@@ -70,11 +70,13 @@ public class ZybooksReaderTest {
     }
     @Test
     public void FullNameTest(){
-        String name = "DeBolt Ryan";
+        String file = "test/testresources/io/assessmentSources/zybook-comp115-DataExample.csv";
+        List<String> name = new ArrayList<>(Arrays.asList("DeBolt", "Ryan", "12", "100", "95"));
         String returnName = "DeBolt Ryan1";
         List<String> nameList = new ArrayList<>(Arrays.asList("DeBolt Ryan", "Suchanek Will", "Dragon Toby"));
         try{
-            Assert.assertEquals(returnName, ZybooksReader.makeFullName(name, nameList));
+            ZybooksReader readfile = new ZybooksReader(file);
+            Assert.assertEquals(returnName, readfile.makeFullName(name, nameList));
         }
         catch (Exception e){
             e.printStackTrace();
@@ -83,11 +85,13 @@ public class ZybooksReaderTest {
     }
     @Test
     public void FullNameTestnoConflict(){
-        String name = "DeBolt Ryan";
+        String file = "test/testresources/io/assessmentSources/zybook-comp115-DataExample.csv";
+        List<String> name = new ArrayList<>(Arrays.asList("DeBolt", "Ryan", "12", "100", "95"));
         String returnName = "DeBolt Ryan";
         List<String> nameList = new ArrayList<>(Arrays.asList("Lane Nicole", "Suchanek Will", "Dragon Toby"));
         try{
-            Assert.assertEquals(returnName, ZybooksReader.makeFullName(name, nameList));
+            ZybooksReader readfile = new ZybooksReader(file);
+            Assert.assertEquals(returnName, readfile.makeFullName(name, nameList));
         }
         catch (Exception e){
             e.printStackTrace();
@@ -96,11 +100,13 @@ public class ZybooksReaderTest {
     }
     @Test
     public void FullNameTestTwoConflicts(){
-        String name = "DeBolt Ryan";
+        String file = "test/testresources/io/assessmentSources/zybook-comp115-DataExample.csv";
+        List<String> name = new ArrayList<>(Arrays.asList("DeBolt", "Ryan", "12", "100", "95"));
         String returnName = "DeBolt Ryan2";
         List<String> nameList = new ArrayList<>(Arrays.asList("DeBolt Ryan", "DeBolt Ryan1", "Suchanek Will", "Dragon Toby"));
         try{
-            Assert.assertEquals(returnName, ZybooksReader.makeFullName(name, nameList));
+            ZybooksReader readfile = new ZybooksReader(file);
+            Assert.assertEquals(returnName, readfile.makeFullName(name, nameList));
         }
         catch (Exception e){
             e.printStackTrace();

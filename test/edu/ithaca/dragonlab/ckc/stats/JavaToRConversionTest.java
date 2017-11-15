@@ -4,6 +4,7 @@ import com.github.rcaller.rstuff.*;
 import com.github.rcaller.util.Globals;
 import edu.ithaca.dragonlab.ckc.conceptgraph.KnowledgeEstimateMatrix;
 import edu.ithaca.dragonlab.ckc.io.CSVReader;
+import edu.ithaca.dragonlab.ckc.io.SakaiReader;
 import edu.ithaca.dragonlab.ckc.learningobject.LearningObject;
 import org.junit.Assert;
 import org.junit.Test;
@@ -28,7 +29,7 @@ public class JavaToRConversionTest {
 
         String file = "test/testresources/ManuallyCreated/partialComplexRealitsticAssessment.csv";
         try {
-            CSVReader data = new CSVReader(file);
+            CSVReader data = new SakaiReader(file);
             List<LearningObject> gotoMatrix = data.getManualGradedLearningObjects();
             KnowledgeEstimateMatrix newMatrix = new KnowledgeEstimateMatrix(gotoMatrix);
             double[][] struct = newMatrix.getStudentKnowledgeEstimates();

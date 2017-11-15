@@ -9,16 +9,12 @@ import edu.ithaca.dragonlab.ckc.learningobject.LearningObjectResponse;
 import edu.ithaca.dragonlab.ckc.learningobject.ManualGradedResponse;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.apache.logging.log4j.core.config.plugins.convert.TypeConverters;
+
 /**
  * Created by Ryan on 10/25/2017.
  */
 public class ReaderTools {
-
-    static Logger logger = LogManager.getLogger(ReaderTools.class);
-
-    BufferedReader csvBuffer = null;
-    List<LearningObject> learningObjectList;
-    List<LearningObjectResponse> manualGradedResponseList;
 
 
     public static ArrayList<ArrayList<String>> staticLineToList(String filename){
@@ -38,18 +34,22 @@ public class ReaderTools {
     }
 
     public static List<LearningObject> learningObjectsFromList(int indexMark, List<String> singleList) {
+        int i = indexMark;
         List<LearningObject> loList = new ArrayList<LearningObject>();
-        while(indexMark<singleList.size()){
-            String question = singleList.get(indexMark);
+        while(i<singleList.size()){
+            String question = singleList.get(i);
             //used to find the max score of a question (won't be affected if there are other brackets in the question title
-            int begin = question.lastIndexOf('('); // important change for the outcome of the exercises
+            int begin = question.lastIndexOf('(');
             int end = question.lastIndexOf(')');
 
+            if (indexMark == 5){
+                begin = question.lastIndexOf('(');
+                end = question.lastIndexOf(')');
+            }
             if (indexMark == 2){
                 begin = question.lastIndexOf('['); // important change for the outcome of the exercises
                 end = question.lastIndexOf(']');
             }
-
 
             if (begin >= 0 && end >= 0) {
                 String maxScoreStr = question.substring(begin + 1, end);
@@ -65,66 +65,9 @@ public class ReaderTools {
                 learningObject.setMaxPossibleKnowledgeEstimate(1);
                 loList.add(learningObject);
             }
-            indexMark++;
+            i++;
         }
         return loList;
-    }
-
-    /**
-     *
-     * @param singleList a list with each line in the csv file holding LORs
-     * @param indexMark used to keep track of which index in the list of LORs the function is currently on
-     * @throws NullPointerException if the ManualGradedResponse is null
-     */
-
-    public void lorLister(ArrayList<String> studentNames, ArrayList<String> singleList, int indexMark, int spaceVariable)throws NullPointerException{
-        ///////////////////////////////////////////////////////////////////////////////////////
-        boolean inList = false;
-        int sameNameCnt = 0;
-        String stdID = singleList.get(0) + " " + singleList.get(1); // gets last name and first name to append together
-        String nameTest = stdID;
-        while(inList == false){
-            if (studentNames.indexOf(nameTest) > -1){
-                sameNameCnt += 1;
-                nameTest = stdID + Integer.toString(sameNameCnt);
-            }
-            else{
-                studentNames.add(nameTest);
-                stdID = nameTest;
-                inList = true;
-            }
-        }
-        //////////////////////////////////////////////////////////////////////////////////////
-        if (learningObjectList.size() + spaceVariable < singleList.size()) {
-            logger.warn("More data than learning objects on line for id:" + stdID);
-        } else if (learningObjectList.size() + spaceVariable > singleList.size()) {
-            logger.warn("More learning objects than data on line for id:" + stdID);
-        }
-        //need to make sure we don't go out of bounds on either list
-        while (indexMark < singleList.size() && indexMark < learningObjectList.size() + spaceVariable) {
-            LearningObject currentLearningObject = this.learningObjectList.get(indexMark - spaceVariable);
-            String qid = currentLearningObject.getId();
-            if (!("".equals(singleList.get(indexMark)))) {
-                // made to catch any grade issue with N/A, a temporary fix
-                //////////////////////////////////////////////////////////////////////////////
-                double studentGrade;
-                if (singleList.get(indexMark).equals("N/A")){
-                    studentGrade = 0.0;
-                }
-                else{
-                    studentGrade = Double.parseDouble(singleList.get(indexMark));
-                }
-                ///////////////////////////////////////////////////////////////////////////////
-                ManualGradedResponse response = new ManualGradedResponse(qid, currentLearningObject.getMaxPossibleKnowledgeEstimate(), studentGrade, stdID);
-                if(response != null) {
-                    currentLearningObject.addResponse(response);
-                    this.manualGradedResponseList.add(response);
-                }else{
-                    throw new NullPointerException();
-                }
-            }
-            indexMark++;
-        }
     }
 
     /**
@@ -135,7 +78,7 @@ public class ReaderTools {
     //
     // need to know what other classes call this funtion to edit call
     //
-    private static List<LearningObject> learningObjectsFromCSVList(int indexMark, List<String> csvfiles){
+    public static List<LearningObject> learningObjectsFromCSVList(int indexMark, List<String> csvfiles){
         List<LearningObject> fullLoList = new ArrayList<LearningObject>();
 
         //Each csvfile has their LOs searched
@@ -153,10 +96,6 @@ public class ReaderTools {
     }
 
 
-    public List<LearningObjectResponse> getManualGradedResponses(){return this.manualGradedResponseList;}
-
-    public List<LearningObject> getManualGradedLearningObjects(){return this.learningObjectList;}
-
     public static String pullNumber(String object) {
         String numbers = "";
         int decimal = 0;
@@ -166,6 +105,8 @@ public class ReaderTools {
             if (Character.isDigit(character) && decimal <= 1){
                 numbers += character;
             }
+            if (character == '-' && Character.isDigit(object.charAt(i+1)))
+                    numbers += character;
             if (character == '.'){
                 decimal += 1;
                 numbers += character;
@@ -196,19 +137,7 @@ public class ReaderTools {
                 item += line.charAt(i);
             }
         }
-        // make sure to add a separate function for String stripping
         returnlist.add(item.trim());
-//        if (line != null) {
-//            String[] splitData = line.split("\\s*,\\s*");
-//            for (int i = 0; i < splitData.length; i++) {
-//                if (!(splitData[i] == null) || !(splitData[i].length() == 0)) {
-//                    returnlist.add(splitData[i].trim());
-//                }
-//            }
-//        }
-
         return returnlist;
     }
-
-
 }
