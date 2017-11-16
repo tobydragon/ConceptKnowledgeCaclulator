@@ -1,6 +1,7 @@
 package edu.ithaca.dragonlab.ckc.conceptgraph;
 
 import edu.ithaca.dragonlab.ckc.io.CSVReader;
+import edu.ithaca.dragonlab.ckc.io.SakaiReader;
 import edu.ithaca.dragonlab.ckc.learningobject.LearningObject;
 import org.junit.Assert;
 import org.junit.Test;
@@ -24,7 +25,7 @@ public class KnowledgeEstimateMatrixTest {
         String file = "test/testresources/ManuallyCreated/complexRealisticAssessment.csv";
 
         try {
-            CSVReader data = new CSVReader(file);
+            CSVReader data = new SakaiReader(file);
             List<LearningObject> gotoMatrix = data.getManualGradedLearningObjects();
             KnowledgeEstimateMatrix newMatrix = new KnowledgeEstimateMatrix(gotoMatrix);
             double[][] myMatrix = newMatrix.getStudentKnowledgeEstimates();

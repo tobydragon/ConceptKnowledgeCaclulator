@@ -4,6 +4,7 @@ import edu.ithaca.dragonlab.ckc.conceptgraph.*;
 import edu.ithaca.dragonlab.ckc.io.CSVReader;
 import edu.ithaca.dragonlab.ckc.io.ConceptGraphRecord;
 import edu.ithaca.dragonlab.ckc.io.LearningResourceRecord;
+import edu.ithaca.dragonlab.ckc.io.SakaiReader;
 import edu.ithaca.dragonlab.ckc.learningobject.ExampleLearningObjectLinkRecordFactory;
 import edu.ithaca.dragonlab.ckc.learningobject.ExampleLearningObjectResponseFactory;
 import edu.ithaca.dragonlab.ckc.learningobject.LearningObjectResponse;
@@ -82,7 +83,7 @@ public class LearningObjectSuggesterTest {
         ConceptGraph graph = new ConceptGraph(structureRecord, linkRecord);
 
         //create the data to be used to create and populate the graph copies
-        CSVReader csvReader = new CSVReader("localresources/comp220/comp220ExampleDataPortion.csv");
+        CSVReader csvReader = new SakaiReader("localresources/comp220/comp220ExampleDataPortion.csv");
         List<LearningObjectResponse> assessments = csvReader.getManualGradedResponses();
 
         //create the average and individual graphs
@@ -108,7 +109,7 @@ public class LearningObjectSuggesterTest {
         ConceptGraph graph = new ConceptGraph(structureRecord, linkRecord);
 
         //create the data to be used to create and populate the graph copies
-        CSVReader csvReader = new CSVReader("localresources/comp220/comp220ExampleDataPortion.csv");
+        CSVReader csvReader = new SakaiReader("localresources/comp220/comp220ExampleDataPortion.csv");
         List<LearningObjectResponse> assessments = csvReader.getManualGradedResponses();
 
         //create the average and individual graphs
@@ -232,7 +233,7 @@ public class LearningObjectSuggesterTest {
         ConceptGraph graph = new ConceptGraph(structureRecord, linkRecord);
 
         //create the data to be used to create and populate the graph copies
-        CSVReader csvReader = new CSVReader("localresources/comp220/comp220ExampleDataPortion.csv");
+        CSVReader csvReader = new SakaiReader("localresources/comp220/comp220ExampleDataPortion.csv");
         List<LearningObjectResponse> assessments = csvReader.getManualGradedResponses();
 
         //create the average and individual graphs

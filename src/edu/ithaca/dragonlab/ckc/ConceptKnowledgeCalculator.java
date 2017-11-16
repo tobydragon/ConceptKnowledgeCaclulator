@@ -150,7 +150,7 @@ public class ConceptKnowledgeCalculator implements ConceptKnowledgeCalculatorAPI
         List<LearningObjectResponse> assessments = new ArrayList<>();
 
         for (String aname: assessmentFiles){
-            CSVReader csvReader = new CSVReader(aname);
+            CSVReader csvReader = new SakaiReader(aname);
             List<LearningObjectResponse> temp = csvReader.getManualGradedResponses();
             assessments.addAll(temp);
         }
@@ -465,6 +465,17 @@ public class ConceptKnowledgeCalculator implements ConceptKnowledgeCalculatorAPI
         }
     }
 
+    public List<Group> calcSmallGroups(List<Suggester> groupTypeList, int groupSize) throws Exception {
+        if(currentMode==Mode.COHORTGRAPH) {
+            GroupSuggester sug = new GroupSuggester();
+            List<Group> initialGroup = sug.getGroupList(this.cohortConceptGraphs);
+            return sug.grouping(initialGroup, groupSize, groupTypeList);
+        }else{
+            throw new Exception("Wrong Mode");
+        }
+
+    }
+
 
 
 
@@ -482,7 +493,7 @@ public class ConceptKnowledgeCalculator implements ConceptKnowledgeCalculatorAPI
     }
 
     public static void csvToResource(List<String> assessmentFiles, String destinationFilepath) throws Exception{
-            List<LearningObject> fullLoList = CSVReader.learningObjectsFromCSVList(assessmentFiles);
+            List<LearningObject> fullLoList = ReaderTools.learningObjectsFromCSVList(2, assessmentFiles);
             List<LearningResourceRecord> lolrList = LearningResourceRecord.createLRecordsFromAssessments(fullLoList);
             LearningResourceRecord.resourceRecordsToJSON(lolrList, destinationFilepath);
     }
@@ -628,7 +639,7 @@ public class ConceptKnowledgeCalculator implements ConceptKnowledgeCalculatorAPI
 
     @Override
     public boolean assessmentIsValid(String name) throws IOException {
-        CSVReader csvReader = new CSVReader(name);
+        CSVReader csvReader = new SakaiReader(name);
         if (csvReader.getManualGradedResponses().size()>0){
             return true;
         }else{

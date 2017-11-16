@@ -179,7 +179,7 @@ public class LearningResourceRecordTest {
     @Test
     public void createLearningObjectLinkRecordsTest(){
         try {
-            CSVReader test = new CSVReader("test/testresources/ManuallyCreated/complexRealisticAssessment.csv");
+            CSVReader test = new SakaiReader("test/testresources/ManuallyCreated/complexRealisticAssessment.csv");
             Collection<LearningObject> list = test.getManualGradedLearningObjects();
             List<LearningObject> list2 = test.getManualGradedLearningObjects();
             List<LearningResourceRecord> lolrList = LearningResourceRecord.createLRecordsFromAssessments(list);
