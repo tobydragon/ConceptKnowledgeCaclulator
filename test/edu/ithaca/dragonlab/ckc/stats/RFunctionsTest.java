@@ -179,6 +179,23 @@ public class RFunctionsTest {
 
     }
 
+    public static void modelImportingforTestingTest(){
+        ConceptKnowledgeCalculatorAPI ckc = null;
+        try {
+            ckc = new ConceptKnowledgeCalculator("test/testresources/ManuallyCreated/simpleConceptGraph.json",
+                    "test/testresources/ManuallyCreated/simpleResource.json",
+                    "test/testresources/ManuallyCreated/simpleAssessmentMoreUsers.csv");
+            CohortConceptGraphs ccg = ckc.getCohortConceptGraphs();
+            CSVReader data = new CSVReader("test/testresources/ManuallyCreated/simpleAssessmentMoreUsers.csv");
+            List<LearningObject> gotoMatrix = data.getManualGradedLearningObjects();
+            KnowledgeEstimateMatrix newMatrix = new KnowledgeEstimateMatrix(gotoMatrix);
+            RFunctions.modelImportingforTesting(newMatrix, ccg);
+            TimeUnit.SECONDS.sleep(5);
+        } catch (Exception e) {
+            Assert.fail("Unable to read assessment file");
+        }
+    }
+
 
     @Test
     public void getColumnCountTest(){
@@ -232,6 +249,7 @@ public class RFunctionsTest {
         System.out.println("- R prints info on deleting invalid columns\n" +
                 "- The function returns a matrix of the factors seen from getMatrixTest()");
         returnFactorMatrixTest();
+        //modelImportingforTestingTest();
 
     }
 

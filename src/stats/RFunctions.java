@@ -346,6 +346,29 @@ public class RFunctions {
     }
 
 
+    public static void modelImportingforTesting(KnowledgeEstimateMatrix loMatrix, CohortConceptGraphs ccg) {
+        try {
+            String modelString = modelMaker(ccg);
+
+            //modelToFile(ccg);
+
+            RCaller rCaller = RCallerVariable();
+            RCode code = loMatrix.getrMatrix();
+            code.addRCode("library(sem)");
+            code.addRCode("library(semPlot)");
+
+            code.addRCode("library(readr)");
+
+            code.addRCode("modelFile.txt <- read_file(file='/Users/bleblanc2/IdeaProjects/ConceptKnowledgeCalculator/model.txt')");
+            code.addRCode("modelString <- scan(modelFile.txt)");
+            code.addRCode("print(modelString)");
+        } catch (Exception e) {
+            Logger.getLogger(RFunctions.class.getName()).log(Level.SEVERE, e.getMessage());
+            throw new IndexOutOfBoundsException();
+        }
+    }
+
+
 
     /**
      * Must be called at the start of every function that uses RCaller methods in
