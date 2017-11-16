@@ -75,9 +75,6 @@ public class ReaderTools {
      * @param csvfiles
      * @return a list of all LearningObjects across all files
      */
-    //
-    // need to know what other classes call this funtion to edit call
-    //
     public static List<LearningObject> learningObjectsFromCSVList(int indexMark, List<String> csvfiles){
         List<LearningObject> fullLoList = new ArrayList<LearningObject>();
 
@@ -105,15 +102,16 @@ public class ReaderTools {
             if (Character.isDigit(character) && decimal <= 1){
                 numbers += character;
             }
-            if (character == '-' && Character.isDigit(object.charAt(i+1)))
+            else if (character == '-' && Character.isDigit(object.charAt(i+1)))
                     numbers += character;
-            if (character == '.'){
+            else if (character == '.'){
                 decimal += 1;
                 numbers += character;
             }
             else if (decimal >= 2){
                 return "";
             }
+            // else that means there is a second decimal and should return an empty string
         }
         return numbers;
     }
