@@ -1,10 +1,7 @@
 package edu.ithaca.dragonlab.ckc;
 
 import edu.ithaca.dragonlab.ckc.conceptgraph.*;
-import edu.ithaca.dragonlab.ckc.io.CSVReader;
-import edu.ithaca.dragonlab.ckc.io.CohortConceptGraphsRecord;
-import edu.ithaca.dragonlab.ckc.io.ConceptGraphRecord;
-import edu.ithaca.dragonlab.ckc.io.LearningObjectLinkRecord;
+import edu.ithaca.dragonlab.ckc.io.*;
 import edu.ithaca.dragonlab.ckc.learningobject.LearningObject;
 import edu.ithaca.dragonlab.ckc.learningobject.LearningObjectResponse;
 import edu.ithaca.dragonlab.ckc.suggester.GroupSuggester.*;
@@ -152,7 +149,7 @@ public class ConceptKnowledgeCalculator implements ConceptKnowledgeCalculatorAPI
         List<LearningObjectResponse> assessments = new ArrayList<>();
 
         for (String aname: assessmentFiles){
-            CSVReader csvReader = new CSVReader(aname);
+            CSVReader csvReader = new SakaiReader(aname);
             List<LearningObjectResponse> temp = csvReader.getManualGradedResponses();
             assessments.addAll(temp);
         }
@@ -495,7 +492,7 @@ public class ConceptKnowledgeCalculator implements ConceptKnowledgeCalculatorAPI
     }
 
     public static void csvToResource(List<String> assessmentFiles, String destinationFilepath) throws Exception{
-            List<LearningObject> fullLoList = CSVReader.learningObjectsFromCSVList(assessmentFiles);
+            List<LearningObject> fullLoList = ReaderTools.learningObjectsFromCSVList(2,assessmentFiles);
             List<LearningObjectLinkRecord> lolrList = LearningObjectLinkRecord.createLearningObjectLinkRecords(fullLoList, 10);
             LearningObjectLinkRecord.lolrToJSON(lolrList, destinationFilepath);
     }
@@ -641,7 +638,7 @@ public class ConceptKnowledgeCalculator implements ConceptKnowledgeCalculatorAPI
 
     @Override
     public boolean assessmentIsValid(String name) throws IOException {
-        CSVReader csvReader = new CSVReader(name);
+        CSVReader csvReader = new SakaiReader(name);
         if (csvReader.getManualGradedResponses().size()>0){
             return true;
         }else{
