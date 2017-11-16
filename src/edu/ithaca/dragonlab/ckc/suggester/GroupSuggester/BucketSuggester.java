@@ -32,7 +32,6 @@ public class BucketSuggester extends Suggester {
 
             Map<String, Double> knowledgeSums = new HashMap<>();
 
-
             Map<String, ConceptGraph> group = groupSoFar.getStudents();
 
 
@@ -40,8 +39,10 @@ public class BucketSuggester extends Suggester {
                 ConceptGraph userGraph = group.get(name);
                 String subject = "all";
                 double sum = calcSum(userGraph,subject);
+
                 knowledgeSums.put(name, (sum/userGraph.getAllNodeIds().size())*100);
             }
+
 
             for(List<Integer> r: ranges){
                 Map<String, ConceptGraph> map = new HashMap<>();
