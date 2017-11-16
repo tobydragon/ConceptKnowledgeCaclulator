@@ -136,7 +136,7 @@ public class CohortConceptGraphsTest {
     @Test
     public void buildCohortConceptTreeRecordComplexTest() {
         try{
-        CSVReader csvReader = new CSVReader("test/testresources/ManuallyCreated/basicRealisticAssessment.csv");
+        CSVReader csvReader = new SakaiReader("test/testresources/ManuallyCreated/basicRealisticAssessment.csv");
             ConceptGraph  structure = new ConceptGraph(ConceptGraphRecord.buildFromJson("test/testresources/ManuallyCreated/basicRealisticConceptGraph.json"),
                     LearningObjectLinkRecord.buildListFromJson("test/testresources/ManuallyCreated/basicRealisticResource.json" ));
             CohortConceptGraphs group = new CohortConceptGraphs(structure, csvReader.getManualGradedResponses());
@@ -157,7 +157,7 @@ public class CohortConceptGraphsTest {
 	@Test
     public void onlyOneLearningObject(){
         try {
-            CSVReader csvReader = new CSVReader("test/testresources/ManuallyCreated/basicRealisticAssessment.csv");
+            CSVReader csvReader = new SakaiReader("test/testresources/ManuallyCreated/basicRealisticAssessment.csv");
             ConceptGraph graph = new ConceptGraph(ConceptGraphRecord.buildFromJson("test/testresources/ManuallyCreated/basicRealisticConceptGraph.json"),
                     LearningObjectLinkRecord.buildListFromJson("test/testresources/ManuallyCreated/basicRealisticResource.json"));
             CohortConceptGraphs gcg = new CohortConceptGraphs(graph,csvReader.getManualGradedResponses());
@@ -176,7 +176,7 @@ public class CohortConceptGraphsTest {
 	@Test
     public void calcKnowledgeEstimateSameInCohortAndConceptGraphsTest(){
         try {
-            CSVReader csvReader = new CSVReader("test/testresources/ManuallyCreated/basicRealisticAssessment.csv");
+            CSVReader csvReader = new SakaiReader("test/testresources/ManuallyCreated/basicRealisticAssessment.csv");
 
             ConceptGraph singleGraph = new ConceptGraph(ConceptGraphRecord.buildFromJson("test/testresources/ManuallyCreated/basicRealisticConceptGraph.json"),
                     LearningObjectLinkRecord.buildListFromJson("test/testresources/ManuallyCreated/basicRealisticResource.json"),

@@ -102,7 +102,7 @@ public class ExampleConceptGraphFactory {
 
      public static ConceptGraph willExampleConceptGraphTestOneStudent() {
         try{
-        CSVReader csvReader = new CSVReader("test/testresources/ManuallyCreated/basicRealisticAssessment.csv");
+        CSVReader csvReader = new SakaiReader("test/testresources/ManuallyCreated/basicRealisticAssessment.csv");
             ConceptGraphRecord graphRecord = ConceptGraphRecord.buildFromJson("test/testresources/ManuallyCreated/basicRealisticConceptGraph.json");
             List<LearningObjectLinkRecord> LOLRlist = LearningObjectLinkRecord.buildListFromJson("test/testresources/ManuallyCreated/basicRealisticResource.json");
 
@@ -125,7 +125,7 @@ public class ExampleConceptGraphFactory {
 
         graphMapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
         try{
-        CSVReader csvReader = new CSVReader("test/testresources/ManuallyCreated/simpleAssessment.csv");
+        CSVReader csvReader = new SakaiReader("test/testresources/ManuallyCreated/simpleAssessment.csv");
             ConceptGraphRecord graphRecord = ConceptGraphRecord.buildFromJson("test/testresources/ManuallyCreated/simpleConceptGraph.json");
             List<LearningObjectLinkRecord> LOLRlist = LearningObjectLinkRecord.buildListFromJson("test/testresources/ManuallyCreated/simpleResource.json");
              ConceptGraph graph = new ConceptGraph(graphRecord, LOLRlist, csvReader.getManualGradedResponses());
