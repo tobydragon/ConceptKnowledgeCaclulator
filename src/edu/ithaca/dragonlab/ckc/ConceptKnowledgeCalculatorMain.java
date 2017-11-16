@@ -35,9 +35,9 @@ public class ConceptKnowledgeCalculatorMain {
 //                    "resources/comp220/comp220Resources-e1.json",
 //                    "localresources/comp220/comp220-e1.csv");
 //
-//            new ConsoleUI("test/testresources/ManuallyCreated/researchConceptGraph.json",
-//                    "test/testresources/ManuallyCreated/researchResource1.json",
-//                    "test/testresources/ManuallyCreated/researchAssessment1.csv");
+            new ConsoleUI("test/testresources/ManuallyCreated/researchConceptGraph.json",
+                    "test/testresources/ManuallyCreated/researchResource1.json",
+                    "test/testresources/ManuallyCreated/researchAssessment1.csv");
 
 //            new ConsoleUI("test/testresources/ManuallyCreated/researchConceptGraph.json",
 //                    "test/testresources/ManuallyCreated/researchResource2.json",
@@ -65,9 +65,9 @@ public class ConceptKnowledgeCalculatorMain {
 //                            "localresources/comp220/comp220-e2.csv",
 //                            "localresources/comp220/comp220-finalExam.csv") );
 
-            new ConsoleUI(Arrays.asList("resources/comp171/comp171Graph.json"),
-                    Arrays.asList("resources/comp171/comp171Resources-courseWork.json"),
-                    Arrays.asList("localresources/comp171/comp171courseWork.csv") );
+//            new ConsoleUI(Arrays.asList("resources/comp171/comp171Graph.json"),
+//                    Arrays.asList("resources/comp171/comp171Resources-courseWork.json"),
+//                    Arrays.asList("localresources/comp171/comp171courseWork.csv") );
 
         } else {
             throw new RuntimeException("Unrecognized starting mode, program cannot execute");

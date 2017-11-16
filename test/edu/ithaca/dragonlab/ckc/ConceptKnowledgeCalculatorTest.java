@@ -7,6 +7,7 @@ import edu.ithaca.dragonlab.ckc.conceptgraph.KnowledgeEstimateMatrix;
 import edu.ithaca.dragonlab.ckc.io.*;
 import edu.ithaca.dragonlab.ckc.learningobject.LearningObject;
 import edu.ithaca.dragonlab.ckc.learningobject.LearningObjectResponse;
+import edu.ithaca.dragonlab.ckc.suggester.GroupSuggester.*;
 import edu.ithaca.dragonlab.ckc.suggester.LearningObjectSuggester;
 import edu.ithaca.dragonlab.ckc.suggester.LearningObjectSuggestion;
 import edu.ithaca.dragonlab.ckc.suggester.SuggestionResource;
@@ -297,6 +298,55 @@ public class ConceptKnowledgeCalculatorTest {
 
     }
 
+    @Test
+    public void  realDataCreateSmallGroupTest(){
+        ConceptKnowledgeCalculatorAPI ckc = null;
+        try {
+            ckc = new ConceptKnowledgeCalculator("test/testresources/ManuallyCreated/researchConceptGraph.json",
+                    "test/testresources/ManuallyCreated/researchResource1.json",
+                    "test/testresources/ManuallyCreated/researchAssessment1.csv");
+        } catch (IOException e) {
+            Assert.fail("Unable to load default files. Test unable to run");
+        }
+
+            //set up for buckets
+            List<List<Integer>> ranges = new ArrayList<>();
+            List<Integer> temp = new ArrayList<>();
+            temp.add(0);
+            temp.add(50);
+            List<Integer> temp2 = new ArrayList<>();
+            temp2.add(50);
+            temp2.add(80);
+            List<Integer> temp3 = new ArrayList<>();
+            temp3.add(80);
+            temp3.add(100);
+            ranges.add(temp);
+            ranges.add(temp2);
+            ranges.add(temp3);
+
+            List<Suggester> suggesterList = new ArrayList<>();
+        try {
+            suggesterList.add(new BucketSuggester(ranges));
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        List<Group> groupings = null;
+        try {
+            groupings = ckc.calcSmallGroups(suggesterList, 2);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        Assert.assertEquals(groupings.get(0).getStudentNames().get(0), "s4" );
+
+        Assert.assertEquals(groupings.get(1).getStudentNames().get(0), "s6" );
+        Assert.assertEquals(groupings.get(1).getStudentNames().get(1), "s2" );
+
+        Assert.assertEquals(groupings.get(2).getStudentNames().get(0), "s3" );
+        Assert.assertEquals(groupings.get(2).getStudentNames().get(1), "s5" );
+        Assert.assertEquals(groupings.get(2).getStudentNames().get(2), "s1" );
+    }
 
 
     @Test
