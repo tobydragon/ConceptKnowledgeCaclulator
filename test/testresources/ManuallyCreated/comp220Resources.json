@@ -1,5 +1,5 @@
 [
-    {"learningObject":"Lab 1: Guess the Pattern",
+  {"learningObject":"Lab 1: Guess the Pattern",
     "conceptIds":[
       "Interfaces"
     ],
@@ -15,10 +15,10 @@
   },
   {"learningObject":"Lab 3: Comparing Array Library Efficiency",
     "conceptIds":[
-        "Array",
-        "Pointers",
-        "Stack vs. Heap",
-        "Timing"
+      "Array",
+      "Pointers",
+      "Stack vs. Heap",
+      "Timing"
     ],
     "dataImportance": "1"
   },

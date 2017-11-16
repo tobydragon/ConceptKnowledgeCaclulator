@@ -141,11 +141,11 @@ public class  ConceptGraph {
     }
 
     /**
-     * Takes a Learning Object and a list of concept Id's it connects to. Adds the learning object to the graph and to the corresponding concepts
+     * Takes a Learning Object and a list of Concept Id's it connects to. Adds the learning object to the graph and to the corresponding concepts
      * If the learning Object already exists in the graph that is recorded in the logger and nothing happens
-     * @param toLink - the learning object that is going to be linked to the incoming concept IDs (cannot already be part of the graph)
-     * @param conceptIds - list of strings of the concept IDs the learning object will be linked to
-     * @post   the learningObject is added to the graph's map, and to all associated concept's maps
+     * @param toLink - the learning object that is going to be linked to the incoming Concept IDs (cannot already be part of the graph)
+     * @param conceptIds - list of strings of the Concept IDs the learning object will be linked to
+     * @post   the learningObject is added to the graph's map, and to all associated Concept's maps
      * @return the number of concepts the learning object was added to, or -1 if the learning object already exists
      */
     public int linkLearningObjects(LearningObject toLink, List<String> conceptIds){
@@ -161,7 +161,7 @@ public class  ConceptGraph {
                 ConceptNode current = nodeMap.get(id);
                 current.addLearningObject(toLink);
             } else{
-                logger.warn("Authoring Warning: Concept '"+id+"' is not in your concept map. "+toLink.getId()+" was not added to the map under the concept ID "+id);
+                logger.warn("Authoring Warning: Concept '"+id+"' is not in your Concept map. "+toLink.getId()+" was not added to the map under the Concept ID "+id);
             }
         }
         return numAdded;
@@ -198,7 +198,7 @@ public class  ConceptGraph {
 
 
     /**
-     * updates a list of the suggested concept node list so that there are ancestors of nodes already in the list.
+     * updates a list of the suggested Concept node list so that there are ancestors of nodes already in the list.
      * You need to iterate nodes to add and then call this function.
      * @param node
      * @param suggestedList
@@ -225,15 +225,29 @@ public class  ConceptGraph {
             suggestedList.removeAll(ancesList);
             suggestedList.add(node);
         }
+    }
 
+    public double calcTotalKnowledgeEstimate( String startingSubject){
+        if(startingSubject.equals("all")){
+            double ex = 0;
+            for(ConceptNode roots: this.getRoots()){
+                double total = roots.countTotalKnowledgeEstimate(new ArrayList<>());
+                ex+= total;
 
+            }
+            return ex;
+        }else{
+
+            ConceptNode node = this.findNodeById(startingSubject);
+            return node.countTotalKnowledgeEstimate(new ArrayList<>());
+        }
     }
 
 
     public HashMap<String, Integer> buildDirectConceptLinkCount(){
         HashMap<String, Integer> directConceptLinkCountMap = new HashMap<>();
 
-                //resources , concept links
+                //resources , Concept links
 
         ////These same LearningObjects might also be held by other nodes
         for (ConceptNode node: nodeMap.values()){

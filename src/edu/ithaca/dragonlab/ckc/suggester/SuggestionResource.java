@@ -132,7 +132,7 @@ public class SuggestionResource {
             list = wrongList;
         }
         //finds out which resources have repeated concepts
-        //Hashmap<learning suggestion resource, concept>
+        //Hashmap<learning suggestion resource, Concept>
         HashMap<String, String> repeatList = new HashMap<>();
 
         for (LearningObjectSuggestion los: list){

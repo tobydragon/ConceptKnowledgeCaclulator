@@ -14,7 +14,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.junit.Assert;
 import org.junit.Test;
-//import stats.RFunctions;
+import stats.RFunctions;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -227,8 +227,8 @@ public class ConceptKnowledgeCalculatorTest {
     public void  realDataCalcIndividualGraphSuggestionsTest(){
         ConceptKnowledgeCalculatorAPI ckc = null;
         try {
-            ckc =new ConceptKnowledgeCalculator("resources/comp220/comp220Graph.json",
-                    "resources/comp220/comp220Resources.json",
+            ckc =new ConceptKnowledgeCalculator("test/testresources/ManuallyCreated/comp220GraphExample.json",
+                    "test/testresources/ManuallyCreated/comp220Resources.json",
                     "localresources/comp220/comp220ExampleDataPortion.csv");
 
         } catch (IOException e) {
@@ -262,8 +262,8 @@ public class ConceptKnowledgeCalculatorTest {
     public void  realDataCalcIndividualGraphSuggestionsTest2(){
         ConceptKnowledgeCalculatorAPI ckc = null;
         try {
-            ckc =new ConceptKnowledgeCalculator("resources/comp220/comp220Graph.json",
-                    "resources/comp220/comp220Resources.json",
+            ckc =new ConceptKnowledgeCalculator("test/testresources/ManuallyCreated/comp220GraphExample.json",
+                    "test/testresources/ManuallyCreated/comp220Resources.json",
                     "localresources/comp220/comp220ExampleDataPortion.csv");
 
         } catch (IOException e) {
@@ -303,7 +303,7 @@ public class ConceptKnowledgeCalculatorTest {
     public void  calcIndividualGraphSuggestionsWIthEmptyListTest() throws Exception {
             ConceptKnowledgeCalculatorAPI ckc = null;
         try {
-            ckc = new ConceptKnowledgeCalculator("resources/comp220/comp220Graph.json","resources/comp220/comp220Resources.json", "localresources/comp220/comp220ExampleDataPortion.csv");
+            ckc = new ConceptKnowledgeCalculator("test/testresources/ManuallyCreated/comp220GraphExample.json","test/testresources/ManuallyCreated/comp220Resources.json", "localresources/comp220/comp220ExampleDataPortion.csv");
             SuggestionResource res = ckc.calcIndividualGraphSuggestions("s17");
 
             List<LearningObjectSuggestion> incomTest = res.incompleteList;
@@ -650,7 +650,7 @@ public class ConceptKnowledgeCalculatorTest {
             ckc = new ConceptKnowledgeCalculator("test/testresources/ManuallyCreated/basicRealisticConceptGraph.json", "test/testresources/ManuallyCreated/basicRealisticResource.json", "test/testresources/ManuallyCreated/basicRealisticAssessment.csv");
 
             Assert.assertEquals(ckc.getCurrentMode(), ConceptKnowledgeCalculator.Mode.COHORTGRAPH);
-            //the constructor starts out as a cohort concept graph and there should only be one file in each of the lists of files. The structure graph should be null, because we're not on that mode
+            //the constructor starts out as a cohort Concept graph and there should only be one file in each of the lists of files. The structure graph should be null, because we're not on that mode
             getTest.add("test/testresources/ManuallyCreated/basicRealisticConceptGraph.json");
             Assert.assertEquals(ckc.currentStructure(),getTest );
             getTest.clear();
@@ -668,7 +668,7 @@ public class ConceptKnowledgeCalculatorTest {
 
 
             //STRUCTURE MODE
-            //now in structure mode. Because of this cohort concept graph should be null as well as all the extra data (LO and LOR files). Structure graph should not be null now because we are in that mode.
+            //now in structure mode. Because of this cohort Concept graph should be null as well as all the extra data (LO and LOR files). Structure graph should not be null now because we are in that mode.
             //it should hold on to blank resource and assessment files. The structure file should have one file in it.
             ckc.switchToStructure();
             Assert.assertEquals(ckc.getCurrentMode(), ConceptKnowledgeCalculator.Mode.STRUCTUREGRAPH);
@@ -706,7 +706,7 @@ public class ConceptKnowledgeCalculatorTest {
 
 
             //CONCEPT GRAPH MODE
-            //switched back into concept graph mode because now the three lists of files are filled up with at least one file.
+            //switched back into Concept graph mode because now the three lists of files are filled up with at least one file.
             //all of the previous files should be stored in structure files, resource files, and assessment files
             ckc.addResource("test/testresources/ManuallyCreated/simpleResource.json");
             Assert.assertEquals(ckc.getCurrentMode(), ConceptKnowledgeCalculator.Mode.COHORTGRAPH);
@@ -893,8 +893,8 @@ public class ConceptKnowledgeCalculatorTest {
     public void createConfirmatoryGraphTest(){
         ConceptKnowledgeCalculatorAPI ckc = null;
         try {
-            ckc = new ConceptKnowledgeCalculator("resources/comp220/comp220Graph.json",
-    "resources/comp220/comp220Resources.json",
+            ckc = new ConceptKnowledgeCalculator("test/testresources/ManuallyCreated/comp220GraphExample.json",
+    "test/testresources/ManuallyCreated/comp220Resources.json",
     "localresources/comp220/comp220ExampleDataPortionCleaned.csv");
             ckc.createConfirmatoryGraph();
         } catch (Exception e) {
@@ -971,192 +971,148 @@ public class ConceptKnowledgeCalculatorTest {
     }
 
 
-    @Test
-    public void randomGroupSuggestionsTest() throws Exception {
-        ConceptKnowledgeCalculatorAPI ckc = null;
+//    @Test
+//    public void randomGroupSuggestionsTest() throws Exception {
+//        ConceptKnowledgeCalculatorAPI ckc = null;
+//
+//        try {
+//            ckc = new ConceptKnowledgeCalculator("test/testresources/ManuallyCreated/researchConceptGraph.json", "test/testresources/ManuallyCreated/researchResource2.json", "test/testresources/ManuallyCreated/researchAssessment2.csv");
+//
+//           List<List<String>> groupings = ckc.randomGroupSuggestions(2);
+//
+//            Assert.assertEquals(groupings.size(), 3);
+//            Assert.assertEquals(groupings.get(0).size(),2);
+//            Assert.assertEquals(groupings.get(1).size(), 2);
+//            Assert.assertEquals(groupings.get(2).size(), 1);
+//
+//            Assert.assertNotEquals(groupings.get(0).get(0), groupings.get(0).get(1), groupings.get(1).get(0));
+//
+//            //groups of three
+//            List<List<String>> groupings2 = ckc.randomGroupSuggestions(3);
+//
+//            Assert.assertEquals(groupings2.size(), 2);
+//            Assert.assertEquals(groupings2.get(0).size(),3);
+//            Assert.assertNotEquals(groupings2.get(0).get(0), groupings2.get(0).get(1), groupings2.get(0).get(2));
+//
+//
+//        }catch (IOException e){
+//            Assert.fail("unable to load files");
+//        }
+//    }
+
+
+//    @Test(expected = Exception.class)
+//    public void suggestionGroupSuggestions() throws Exception {
+//        ConceptKnowledgeCalculatorAPI ckc = null;
+//
+//        try {
+//            ckc = new ConceptKnowledgeCalculator("test/testresources/ManuallyCreated/researchConceptGraph.json", "test/testresources/ManuallyCreated/researchResource2.json", "test/testresources/ManuallyCreated/researchAssessment2.csv");
+//
+//            List<List<String>> groupings = ckc.resourceGroupSuggestions(2);
+//
+//            Assert.assertEquals(groupings.get(0).size(), 3);
+//            Assert.assertEquals(groupings.get(1).size(), 3);
+//
+//            Assert.assertEquals(groupings.get(0).get(0),"s4" );
+//            Assert.assertEquals(groupings.get(0).get(1),"s5" );
+//            Assert.assertEquals(groupings.get(0).get(2),"something challenging" );
+//
+//            Assert.assertEquals(groupings.get(1).get(0),"s3" );
+//            Assert.assertEquals(groupings.get(1).get(1),"s2" );
+//            Assert.assertEquals(groupings.get(1).get(2),"What are values are accessed by?" );
+//
+//            Assert.assertEquals(groupings.get(2).get(0),"s1" );
+//            Assert.assertEquals(groupings.get(2).get(1),"No other students" );
+//
+//
+//            List<List<String>> groupings2 = ckc.resourceGroupSuggestions(3);
+//
+//            Assert.assertEquals(groupings2.size(),2);
+//            Assert.assertEquals(groupings2.get(0).size(), 4);
+//            Assert.assertEquals(groupings2.get(0).get(0), "s4");
+//            Assert.assertEquals(groupings2.get(0).get(1), "s5");
+//            Assert.assertEquals(groupings2.get(0).get(2), "s1");
+//            Assert.assertEquals(groupings2.get(0).get(3), "something challenging");
+//
+//            Assert.assertEquals(groupings2.get(1).size(), 3);
+//            Assert.assertEquals(groupings2.get(1).get(0), "s3");
+//            Assert.assertEquals(groupings2.get(1).get(1), "s2");
+//            Assert.assertEquals(groupings2.get(1).get(2), "No other students");
+//
+//
+//            try {
+//                List<List<String>> groupings3 = ckc.resourceGroupSuggestions(4);
+//            }catch (IOException e){
+//                Assert.fail("invalid group size");
+//
+//            }
+//
+//
+//        }catch (IOException e){
+//            Assert.fail("unable to load files");
+//        }
+//    }
+
+
+
+//    @Test
+//    public void graphSumGroupSuggestions() throws Exception {
+//        ConceptKnowledgeCalculatorAPI ckc = null;
+//
+//        try {
+//            ckc = new ConceptKnowledgeCalculator("test/testresources/ManuallyCreated/researchConceptGraph.json", "test/testresources/ManuallyCreated/researchResource2.json", "test/testresources/ManuallyCreated/researchAssessment2.csv");
+//
+//            List<List<String>> groupings = ckc.graphSumGroupSuggestions(2, "all");
+//
+//
+//            Assert.assertEquals(groupings.size(),3 );
+//            Assert.assertEquals(groupings.get(0).size(), 2);
+//            Assert.assertEquals(groupings.get(1).size(), 2);
+//            Assert.assertEquals(groupings.get(2).size(), 1);
+//
+//            Assert.assertEquals(groupings.get(0).get(0), "s4");
+//            Assert.assertEquals(groupings.get(0).get(1), "s5");
+//
+//            Assert.assertEquals(groupings.get(1).get(0), "s3");
+//            Assert.assertEquals(groupings.get(1).get(1), "s2");
+//
+//            Assert.assertEquals(groupings.get(2).get(0), "s1");
+//
+//
+//            List<List<String>> groupings2 = ckc.graphSumGroupSuggestions( 2, "Expressions and Statements");
+//
+//            Assert.assertEquals(groupings2.size(),3 );
+//            Assert.assertEquals(groupings2.get(0).size(), 2);
+//            Assert.assertEquals(groupings2.get(1).size(), 2);
+//            Assert.assertEquals(groupings2.get(2).size(), 1);
+//
+//            Assert.assertEquals(groupings2.get(0).get(0), "s4");
+//            Assert.assertEquals(groupings2.get(0).get(1), "s5");
+//
+//            Assert.assertEquals(groupings2.get(1).get(0), "s3");
+//            Assert.assertEquals(groupings2.get(1).get(1), "s2");
+//
+//
+//            Assert.assertEquals(groupings2.get(2).get(0), "s1");
+//
+//
+//            List<List<String>> grouping3 = ckc.graphSumGroupSuggestions(3, "all");
+//
+//            Assert.assertEquals(grouping3.size(),2 );
+//            Assert.assertEquals(grouping3.get(0).size(), 3);
+//            Assert.assertEquals(grouping3.get(1).size(), 2);
+//
+//            Assert.assertEquals(grouping3.get(0).get(0), "s4");
+//            Assert.assertEquals(grouping3.get(0).get(1), "s5");
+//            Assert.assertEquals(grouping3.get(0).get(2), "s1");
+//
+//            Assert.assertEquals(grouping3.get(1).get(0), "s3");
+//            Assert.assertEquals(grouping3.get(1).get(1), "s2");
+//
+//        }catch (IOException e){
+//            Assert.fail("unable to load files");
+//        }
+//    }
 
-        try {
-            ckc = new ConceptKnowledgeCalculator("test/testresources/ManuallyCreated/researchConceptGraph.json", "test/testresources/ManuallyCreated/researchResource2.json", "test/testresources/ManuallyCreated/researchAssessment2.csv");
 
-           List<List<String>> groupings = ckc.randomGroupSuggestions(2);
-
-            Assert.assertEquals(groupings.size(), 3);
-            Assert.assertEquals(groupings.get(0).size(),2);
-            Assert.assertEquals(groupings.get(1).size(), 2);
-            Assert.assertEquals(groupings.get(2).size(), 1);
-
-            Assert.assertNotEquals(groupings.get(0).get(0), groupings.get(0).get(1), groupings.get(1).get(0));
-
-            //groups of three
-            List<List<String>> groupings2 = ckc.randomGroupSuggestions(3);
-
-            Assert.assertEquals(groupings2.size(), 2);
-            Assert.assertEquals(groupings2.get(0).size(),3);
-            Assert.assertNotEquals(groupings2.get(0).get(0), groupings2.get(0).get(1), groupings2.get(0).get(2));
-
-
-        }catch (IOException e){
-            Assert.fail("unable to load files");
-        }
-    }
-
-
-    @Test(expected = Exception.class)
-    public void suggestionGroupSuggestions() throws Exception {
-        ConceptKnowledgeCalculatorAPI ckc = null;
-
-        try {
-            ckc = new ConceptKnowledgeCalculator("test/testresources/ManuallyCreated/researchConceptGraph.json", "test/testresources/ManuallyCreated/researchResource2.json", "test/testresources/ManuallyCreated/researchAssessment2.csv");
-
-            List<List<String>> groupings = ckc.resourceGroupSuggestions(2);
-
-            Assert.assertEquals(groupings.get(0).size(), 3);
-            Assert.assertEquals(groupings.get(1).size(), 3);
-
-            Assert.assertEquals(groupings.get(0).get(0),"s4" );
-            Assert.assertEquals(groupings.get(0).get(1),"s5" );
-            Assert.assertEquals(groupings.get(0).get(2),"something challenging" );
-
-            Assert.assertEquals(groupings.get(1).get(0),"s3" );
-            Assert.assertEquals(groupings.get(1).get(1),"s2" );
-            Assert.assertEquals(groupings.get(1).get(2),"What are values are accessed by?" );
-
-            Assert.assertEquals(groupings.get(2).get(0),"s1" );
-            Assert.assertEquals(groupings.get(2).get(1),"No other students" );
-
-
-            List<List<String>> groupings2 = ckc.resourceGroupSuggestions(3);
-
-            Assert.assertEquals(groupings2.size(),2);
-            Assert.assertEquals(groupings2.get(0).size(), 4);
-            Assert.assertEquals(groupings2.get(0).get(0), "s4");
-            Assert.assertEquals(groupings2.get(0).get(1), "s5");
-            Assert.assertEquals(groupings2.get(0).get(2), "s1");
-            Assert.assertEquals(groupings2.get(0).get(3), "something challenging");
-
-            Assert.assertEquals(groupings2.get(1).size(), 3);
-            Assert.assertEquals(groupings2.get(1).get(0), "s3");
-            Assert.assertEquals(groupings2.get(1).get(1), "s2");
-            Assert.assertEquals(groupings2.get(1).get(2), "No other students");
-
-
-            try {
-                List<List<String>> groupings3 = ckc.resourceGroupSuggestions(4);
-            }catch (IOException e){
-                Assert.fail("invalid group size");
-
-            }
-
-
-        }catch (IOException e){
-            Assert.fail("unable to load files");
-        }
-    }
-
-
-
-    @Test
-    public void graphSumGroupSuggestions() throws Exception {
-        ConceptKnowledgeCalculatorAPI ckc = null;
-
-        try {
-            ckc = new ConceptKnowledgeCalculator("test/testresources/ManuallyCreated/researchConceptGraph.json", "test/testresources/ManuallyCreated/researchResource2.json", "test/testresources/ManuallyCreated/researchAssessment2.csv");
-
-            List<List<String>> groupings = ckc.graphSumGroupSuggestions(2, "all");
-
-
-            Assert.assertEquals(groupings.size(),3 );
-            Assert.assertEquals(groupings.get(0).size(), 2);
-            Assert.assertEquals(groupings.get(1).size(), 2);
-            Assert.assertEquals(groupings.get(2).size(), 1);
-
-            Assert.assertEquals(groupings.get(0).get(0), "s4");
-            Assert.assertEquals(groupings.get(0).get(1), "s5");
-
-            Assert.assertEquals(groupings.get(1).get(0), "s3");
-            Assert.assertEquals(groupings.get(1).get(1), "s2");
-
-            Assert.assertEquals(groupings.get(2).get(0), "s1");
-
-
-            List<List<String>> groupings2 = ckc.graphSumGroupSuggestions( 2, "Expressions and Statements");
-
-            Assert.assertEquals(groupings2.size(),3 );
-            Assert.assertEquals(groupings2.get(0).size(), 2);
-            Assert.assertEquals(groupings2.get(1).size(), 2);
-            Assert.assertEquals(groupings2.get(2).size(), 1);
-
-            Assert.assertEquals(groupings2.get(0).get(0), "s4");
-            Assert.assertEquals(groupings2.get(0).get(1), "s5");
-
-            Assert.assertEquals(groupings2.get(1).get(0), "s3");
-            Assert.assertEquals(groupings2.get(1).get(1), "s2");
-
-
-            Assert.assertEquals(groupings2.get(2).get(0), "s1");
-
-
-            List<List<String>> grouping3 = ckc.graphSumGroupSuggestions(3, "all");
-
-            Assert.assertEquals(grouping3.size(),2 );
-            Assert.assertEquals(grouping3.get(0).size(), 3);
-            Assert.assertEquals(grouping3.get(1).size(), 2);
-
-            Assert.assertEquals(grouping3.get(0).get(0), "s4");
-            Assert.assertEquals(grouping3.get(0).get(1), "s5");
-            Assert.assertEquals(grouping3.get(0).get(2), "s1");
-
-            Assert.assertEquals(grouping3.get(1).get(0), "s3");
-            Assert.assertEquals(grouping3.get(1).get(1), "s2");
-
-        }catch (IOException e){
-            Assert.fail("unable to load files");
-        }
-    }
-
-
-    @Test
-    public void ConceptDiffGroupSuggestions() throws Exception {
-        ConceptKnowledgeCalculatorAPI ckc = null;
-
-        try {
-            ckc = new ConceptKnowledgeCalculator("test/testresources/ManuallyCreated/researchConceptGraph.json", "test/testresources/ManuallyCreated/researchResource2.json", "test/testresources/ManuallyCreated/researchAssessment2.csv");
-
-            List<List<String>> groupings = ckc.conceptDiffGroupSuggestions(2, "all");
-
-            Assert.assertEquals(groupings.size(),3 );
-            Assert.assertEquals(groupings.get(0).size(), 2);
-            Assert.assertEquals(groupings.get(1).size(), 2);
-            Assert.assertEquals(groupings.get(2).size(), 1);
-
-            Assert.assertEquals(groupings.get(0).get(0), "s4");
-            Assert.assertEquals(groupings.get(0).get(1), "s5");
-
-            Assert.assertEquals(groupings.get(1).get(0), "s3");
-            Assert.assertEquals(groupings.get(1).get(1), "s2");
-
-
-            Assert.assertEquals(groupings.get(2).get(0), "s1");
-
-
-
-
-            List<List<String>> grouping3 = ckc.conceptDiffGroupSuggestions(3, "all");
-
-            Assert.assertEquals(grouping3.size(),2 );
-            Assert.assertEquals(grouping3.get(0).size(), 3);
-            Assert.assertEquals(grouping3.get(1).size(), 2);
-
-            Assert.assertEquals(grouping3.get(0).get(0), "s4");
-            Assert.assertEquals(grouping3.get(0).get(1), "s5");
-            Assert.assertEquals(grouping3.get(0).get(2), "s3");
-
-            Assert.assertEquals(grouping3.get(1).get(0), "s2");
-            Assert.assertEquals(grouping3.get(1).get(1), "s1");
-
-
-        }catch (IOException e){
-            Assert.fail("unable to load files");
-        }
-    }
 }

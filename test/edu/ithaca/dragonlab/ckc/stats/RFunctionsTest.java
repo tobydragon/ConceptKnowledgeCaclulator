@@ -134,11 +134,13 @@ public class RFunctionsTest {
                 "C -> Q6, Q6ToC, NA \n", RFunctions.modelMaker(ccg));
 
         try{
-            ckc = new ConceptKnowledgeCalculator("resources/comp220/comp220Graph.json",
-                    "resources/comp220/comp220Resources.json",
-                    "localresources/comp220/comp220ExampleDataPortionCleaned.csv");
+            ckc = new ConceptKnowledgeCalculator("test/testresources/ManuallyCreated/comp220GraphExample.json",
+                    "test/testresources/ManuallyCreated/comp220Resources.json",
+                    "localresources/comp220/comp220ExampleDataPortion.csv");
         }catch (IOException e){
+            e.printStackTrace();
             Assert.fail("Unable to load files");
+
         }
         ccg = ckc.getCohortConceptGraphs();
         Assert.assertEquals("Recursion -> Lab4Recursion, Lab4RecursionToRecursion, NA \n" +

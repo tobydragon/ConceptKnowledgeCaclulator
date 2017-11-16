@@ -49,6 +49,6 @@ function writeMenu(){
     }
 }
 
-cohortGraphs = readJson("../out/cohortTreesCurrent.json")
+cohortGraphs = readJson("json/cohortTreesCurrent.json")
 writeMenu()
 

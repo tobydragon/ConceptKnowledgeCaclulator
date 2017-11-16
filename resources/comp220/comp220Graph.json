@@ -1,135 +1,225 @@
 {
   "name" : "COMP 220",
   "concepts" : [
-    {"id" : "Comparing Data Structures"},
-    {"id" : "Interfaces"},
+    {"id" : "Unit Testing"},
 
-
-    {"id" : "Abstract Data Types"},
-    {"id" : "Stack"},
-    {"id" : "Queue"},
-    {"id" : "List"},
-    {"id" : "Object Oriented Programming"},
-
-    {"id" : "Data Structure Implementations"},
-    {"id" : "Array"},
-    {"id" : "Linked Nodes"},
-
-    {"id" : "Pointers"},
-    {"id" : "Dangling Pointers"},
-    {"id" : "Stack vs. Heap"},
-    {"id" : "Memory Leak"},
-    {"id" : "Pass by Pointer"},
-    {"id" : "Deep vs. Shallow Copies"},
-    {"id" : "Pass by Value"},
-    {"id" : "Pass by Reference"},
-    {"id" : "Copy Constructor, Destructor, Assignment Operator"},
-
+    {"id" : "Comparing Algorithms"},
     {"id" : "Search"},
+    {"id" : "Linear Search"},
+    {"id" : "Binary Search"},
     {"id" : "Sort"},
+    {"id" : "Bubble, Selection, Insert Sort"},
+    {"id" : "Merge Sort"},
+    {"id" : "Timing Efficiency"},
+    {"id" : "Big-O Notation"},
+
+
+    {"id" : "Interfaces"},
+    {"id" : ".h and .cpp Files"},
+    {"id" : "Memory Management"},
+
+
+    {"id" : "Comparing Data Structures"},
+    {"id" : "Data Structure Implementations"},
+    {"id" : "Arrays"},
+    {"id" : "Linked Nodes"},
+    {"id" : "Trees"},
+    {"id" : "Abstract Data Types"},
+    {"id" : "Lists"},
+    {"id" : "Stacks and Queues"},
+    {"id" : "Abstract Classes and Inheritance"},
+    {"id" : "Object Oriented Programming in C++"},
+    {"id" : "Object Memory Management: Deep vs. Shallow Copies"},
+    {"id" : "Default Constructor, Copy Constructor, Assignment Operator"},
+    {"id" : "Destructor"},
+
     {"id" : "Recursion"},
 
-    {"id" : "Testing Time Efficiency"}
+    {"id" : "Stack vs. Heap"},
+    {"id" : "Pointers"},
+    {"id" : "Dangling Pointers"},
+    {"id" : "Memory Leaks"},
+    {"id" : "Pass by Pointer"},
+
+    {"id" : "Parameters in C++"},
+    {"id" : "Pass by Pointer"},
+    {"id" : "Pass by Value"},
+    {"id" : "Pass by Reference"},
+    {"id" : "const"},
+
+    {"id" : "Memory Diagrams"}
 
   ],
+
+
+
+
   "links" : [
-  {
-    "parent" : "Comparing Data Structures",
-    "child" : "Abstract Data Types"
-  }, {
-    "parent" : "Interfaces",
-    "child" : "Abstract Data Types"
-  }, {
-    "parent" : "Comparing Data Structures",
-    "child" : "Data Structure Implementations"
-  },
+    {
+      "parent" : "Comparing Algorithms",
+      "child" : "Search"
+    }, {
+      "parent" : "Search",
+      "child" : "Linear Search"
+    }, {
+      "parent" : "Search",
+      "child" : "Binary Search"
+    }, {
+      "parent" : "Binary Search",
+      "child" : "Sort"
+    }, {
+      "parent" : "Binary Search",
+      "child" : "Recursion"
+    },
 
     {
-    "parent" : "Abstract Data Types",
-    "child" : "Stack"
-  }, {
-    "parent" : "Abstract Data Types",
-    "child" : "Queue"
-  }, {
-    "parent" : "Abstract Data Types",
-    "child" : "List"
-  },
+      "parent" : "Comparing Algorithms",
+      "child" : "Sort"
+    }, {
+      "parent" : "Sort",
+      "child" : "Bubble, Selection, Insert Sort"
+    }, {
+      "parent" : "Sort",
+      "child" : "Merge Sort"
+    }, {
+      "parent" : "Merge Sort",
+      "child" : "Recursion"
+    },
 
     {
-    "parent" : "Data Structure Implementations",
-    "child" : "Array"
-  }, {
-    "parent" : "Data Structure Implementations",
-    "child" : "Linked Nodes"
-  }, {
-    "parent" : "Array",
-    "child" : "Pointers"
-  }, {
+      "parent" : "Comparing Algorithms",
+      "child" : "Arrays"
+    }, {
+      "parent" : "Comparing Algorithms",
+      "child" : "Timing Efficiency"
+    }, {
+      "parent" : "Timing Efficiency",
+      "child" : "Big-O Notation"
+    }, {
+      "parent" : "Comparing Algorithms",
+      "child" : "Interfaces"
+    },
+
+    {
+      "parent" : "Interfaces",
+      "child" : ".h and .cpp Files"
+    }, {
+      "parent" : "Interfaces",
+      "child" : "Data Structure Implementations"
+    }, {
+      "parent" : "Interfaces",
+      "child" : "Abstract Data Types"
+    },
+
+    {
+      "parent" : "Comparing Data Structures",
+      "child" : "Interfaces"
+    }, {
+      "parent" : "Comparing Data Structures",
+      "child" : "Data Structure Implementations"
+    }, {
+      "parent" : "Data Structure Implementations",
+      "child" : "Arrays"
+    }, {
+      "parent" : "Arrays",
+      "child" : "Pointers"
+    }, {
+      "parent" : "Data Structure Implementations",
+      "child" : "Linked Nodes"
+    }, {
       "parent" : "Linked Nodes",
       "child" : "Pointers"
+    }, {
+      "parent" : "Linked Nodes",
+      "child" : "Recursion"
+    }, {
+      "parent" : "Comparing Data Structures",
+      "child" : "Trees"
+    }, {
+      "parent" : "Trees",
+      "child" : "Recursion"
+    }, {
+      "parent" : "Trees",
+      "child" : "Linked Nodes"
     },
+
+    {
+      "parent" : "Abstract Data Types",
+      "child" : "Lists"
+    }, {
+      "parent" : "Abstract Data Types",
+      "child" : "Stacks and Queues"
+    }, {
+      "parent" : "Abstract Data Types",
+      "child" : "Abstract Classes and Inheritance"
+    }, {
+      "parent" : "Abstract Classes and Inheritance",
+      "child" : "Object Oriented Programming in C++"
+    }, {
+      "parent" : "Object Oriented Programming in C++",
+      "child" : "Object Memory Management: Deep vs. Shallow Copies"
+    },
+
+    {
+      "parent" : "Memory Management",
+      "child" : "Stack vs. Heap"
+    }, {
+      "parent" : "Stack vs. Heap",
+      "child" : "Pointers"
+    }, {
+      "parent" : "Memory Management",
+      "child" : "Object Memory Management: Deep vs. Shallow Copies"
+    }, {
+      "parent" : "Object Memory Management: Deep vs. Shallow Copies",
+      "child" : "Default Constructor, Copy Constructor, Assignment Operator"
+    }, {
+      "parent" : "Default Constructor, Copy Constructor, Assignment Operator",
+      "child" : "const"
+    }, {
+      "parent" : "Default Constructor, Copy Constructor, Assignment Operator",
+      "child" : "Pass by Reference"
+    }, {
+      "parent" : "Object Memory Management: Deep vs. Shallow Copies",
+      "child" : "Destructor"
+    },
+
 
     {
       "parent" : "Pointers",
       "child" : "Dangling Pointers"
     }, {
       "parent" : "Pointers",
-      "child" : "Memory Leak"
+      "child" : "Memory Leaks"
     }, {
       "parent" : "Pointers",
       "child" : "Pass by Pointer"
-    }, {
-      "parent" : "Stack vs. Heap",
-      "child" : "Pointers"
-    },{
-      "parent" : "Pass by Reference",
-      "child" : "Stack vs. Heap"
-    },{
-      "parent" : "Pass by Reference",
-      "child" : "Pointers"
-    },{
-      "parent" : "Deep vs. Shallow Copies",
-      "child" : "Pass by Value"
-    },{
-      "parent" : "Deep vs. Shallow Copies",
-      "child" : "Pass by Reference"
-    },{
-      "parent" : "Deep vs. Shallow Copies",
-      "child" : "Stack vs. Heap"
-    },{
-      "parent" : "Copy Constructor, Destructor, Assignment Operator",
-      "child" : "Deep vs. Shallow Copies"
-    },{
-      "parent" : "Object Oriented Programming",
-      "child" : "Copy Constructor, Destructor, Assignment Operator"
-    },{
-      "parent" : "Abstract Data Types",
-      "child" : "Object Oriented Programming"
     },
 
     {
-      "parent" : "Comparing Data Structures",
-      "child" : "Testing Time Efficiency"
+      "parent" : "Parameters in C++",
+      "child" : "Pass by Pointer"
     }, {
-      "parent" : "Search",
-      "child" : "Testing Time Efficiency"
+      "parent" : "Parameters in C++",
+      "child" : "Pass by Value"
+    },{
+      "parent" :"Parameters in C++",
+      "child" : "Pass by Reference"
+    },{
+      "parent" : "Parameters in C++",
+      "child" : "const"
+    },
+
+    {
+      "parent" : "Recursion",
+      "child" : "Memory Diagrams"
     }, {
-      "parent" : "Sort",
-      "child" : "Testing Time Efficiency"
+      "parent" : "Pointers",
+      "child" : "Memory Diagrams"
     }, {
-      "parent" : "Search",
-      "child" : "Recursion"
+      "parent" : "Parameters in C++",
+      "child" : "Memory Diagrams"
     }, {
-      "parent" : "Sort",
-      "child" : "Recursion"
-    }, {
-      "parent" : "Search",
-      "child" : "Array"
-    }, {
-      "parent" : "Sort",
-      "child" : "Array"
-    }, {
-      "parent" : "Linked Nodes",
-      "child" : "Recursion"
+      "parent" : "Memory Management",
+      "child" : "Memory Diagrams"
     } ]
 }

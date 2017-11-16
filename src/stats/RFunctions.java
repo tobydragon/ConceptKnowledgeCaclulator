@@ -239,16 +239,16 @@ public class RFunctions {
     public static Collection<String> duplicateCheck(ConceptGraph graph, Collection<String> conceptStringList){
         List<String> removalList = new ArrayList<String>();
         Collection<String> newStringList = new ArrayList<String>();
-        //copy the collection of concept strings into the new collection
+        //copy the collection of Concept strings into the new collection
         for(String curString : conceptStringList){
             newStringList.add(curString);
         }
-        //Compare each concept string with a concept string
+        //Compare each Concept string with a Concept string
         for(String curString : conceptStringList){
             for(String otherString : newStringList){
 
-                //If the secondary concept list's concept is not already in the removal list and the list of LOs in
-                //the concept list are identical but the names of the concepts are different, add concept to removal list
+                //If the secondary Concept list's Concept is not already in the removal list and the list of LOs in
+                //the Concept list are identical but the names of the concepts are different, add Concept to removal list
                 if(!removalList.contains(curString) && !removalList.contains(otherString) && curString != otherString){
                     ConceptNode curNode = graph.findNodeById(curString);
                     ConceptNode otherNode = graph.findNodeById(otherString);
@@ -328,9 +328,8 @@ public class RFunctions {
      * @return an RCaller that works on whichever machine is running to use RCaller methods
      */
     public static RCaller RCallerVariable(){
-        String osName = System.getProperty("os.name");
-        if(osName.contains("Windows") == false) {
-            RCallerOptions options = RCallerOptions.create("/usr/local/Cellar/r/3.4.1_2/bin/Rscript", Globals.R_current, FailurePolicy.RETRY_5, Long.MAX_VALUE, 100, RProcessStartUpOptions.create());
+        if(Globals.isWindows() == false) {
+            RCallerOptions options = RCallerOptions.create("/usr/local/Cellar/r/3.4.2/bin/Rscript", Globals.R_current, FailurePolicy.RETRY_5, Long.MAX_VALUE, 100, RProcessStartUpOptions.create());
             return RCaller.create(options);
         }else {
             return RCaller.create();
