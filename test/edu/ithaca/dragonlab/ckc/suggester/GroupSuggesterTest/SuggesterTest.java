@@ -140,10 +140,32 @@ public class SuggesterTest {
 
         List<Group> list = GroupSuggester.getGroupList(graphs);
 
-        //groups of 2
-        ConceptSuggester sug  = new ConceptSuggester();
-        List<Group> groupings = sug.suggestGroup(list.get(0), new Group());
 
+        //testing with more than one list of groups
+        List<Group> actualGroupings = new ArrayList<>();
+
+        Group group = new Group();
+        group.addMember("mia", mapGraph.get("s1"));
+        group.addMember("don", mapGraph.get("s3"));
+        group.addMember("bob", mapGraph.get("s1"));
+        group.addMember("kayli", mapGraph.get("s3"));
+        group.addMember("dan", mapGraph.get("s5"));
+        actualGroupings.add(group);
+
+        ConceptSuggester sug  = new ConceptSuggester();
+        List<Group> groupings2 = sug.suggestGroup(actualGroupings.get(0), new Group());
+
+        Assert.assertEquals(groupings2.size(), 2);
+        Assert.assertEquals(groupings2.get(0).getSize(),2);
+        Assert.assertEquals(groupings2.get(1).getSize(),3);
+
+
+
+        //        groups of 2
+        List<Suggester> suggesterList = new ArrayList<>();
+        suggesterList.add(new ConceptSuggester());
+
+        List<Group> groupings = sug.suggestGroup(list.get(0), new Group());
 
         List<String> three = groupings.get(0).getStudentNames();
         Assert.assertEquals(three.get(0),"s3");
@@ -208,6 +230,7 @@ public class SuggesterTest {
 
             e.printStackTrace();
         }
+
     }
 
 }

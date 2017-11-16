@@ -480,6 +480,7 @@ public class ConceptKnowledgeCalculator implements ConceptKnowledgeCalculatorAPI
 
 
 
+
     public String csvToResource() throws Exception {
         if(currentMode==Mode.STRUCTUREGRAPHWITHASSESSMENT) {
             String resourceFilename = "resourcesWithoutConceptConnections.json";
