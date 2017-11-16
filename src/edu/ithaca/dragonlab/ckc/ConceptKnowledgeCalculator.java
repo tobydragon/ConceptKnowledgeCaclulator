@@ -493,9 +493,10 @@ public class ConceptKnowledgeCalculator implements ConceptKnowledgeCalculatorAPI
     }
 
     public static void csvToResource(List<String> assessmentFiles, String destinationFilepath) throws Exception{
-            List<LearningObject> fullLoList = ReaderTools.learningObjectsFromCSVList(2, assessmentFiles);
-            List<LearningResourceRecord> lolrList = LearningResourceRecord.createLRecordsFromAssessments(fullLoList);
-            LearningResourceRecord.resourceRecordsToJSON(lolrList, destinationFilepath);
+        //TODO: hardcoded to sakai csv, need to hold a list of CSVReaders, or the information about which kind of reader it is...
+        List<LearningObject> fullLoList = ReaderTools.learningObjectsFromCSVList(2, assessmentFiles);
+        List<LearningResourceRecord> lolrList = LearningResourceRecord.createLRecordsFromAssessments(fullLoList);
+        LearningResourceRecord.resourceRecordsToJSON(lolrList, destinationFilepath);
     }
 
     public static void conceptIdsToTextFile(Collection<String> conceptIds, String destinationFilepath) throws Exception{
