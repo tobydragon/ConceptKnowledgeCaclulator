@@ -16,6 +16,33 @@ import java.util.*;
  */
 public class GroupSuggesterTest {
 
+    @Test
+    public void compKNowTEST() {
+        ConceptKnowledgeCalculatorAPI ckc = null;
+
+        try {
+            ckc = new ConceptKnowledgeCalculator("test/testresources/ManuallyCreated/researchConceptGraph.json", "test/testresources/ManuallyCreated/researchResource2.json", "test/testresources/ManuallyCreated/researchAssessment2.csv");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        CohortConceptGraphs graphs = ckc.getCohortConceptGraphs();
+        Assert.assertNotEquals(graphs, null);
+        GroupSuggester sug = new GroupSuggester();
+
+        List<Group> groupings1 = sug.getGroupList(graphs);
+
+        List<Suggester> suggesterList = new ArrayList<>();
+        suggesterList.add(new ConceptSuggester());
+        suggesterList.add(new ComplementaryKnowledgeSuggester());
+
+
+        //groups of 2
+        List<Group> groupings = sug.grouping(groupings1, 2,suggesterList );
+//        Assert.assertEquals(groupings.size(), 2);
+//        Assert.assertEquals(groupings.get(0).getSize(), 2);
+//        Assert.assertEquals(groupings.get(1).getSize(), 3);
+    }
 
     @Test
     public void randomBySizeTest() {

@@ -11,17 +11,33 @@ public class Group {
 
     Map<String, ConceptGraph> studentGraphMap;
     String id;
+    String concept;
 
-    public Group(Map<String, ConceptGraph> map, String id){
+    public Group(Map<String, ConceptGraph> map, String id) {
         this.studentGraphMap = map;
         this.id = id;
 
     }
 
+    public Group(Map<String, ConceptGraph> map, String id, String conceptID){
+        this.studentGraphMap= map;
+        this.id = id;
+        this.concept = conceptID;
+    }
+
     public Group(){
         this.studentGraphMap = new HashMap<>();
         this.id = "";
+        this.concept = "";
+    }
 
+    public String getConcept(){
+        return this.concept;
+    }
+
+    public void setConcept(String conceptString){
+
+        this.concept = conceptString;
     }
 
     public Map<String, ConceptGraph> getStudents(){
@@ -84,6 +100,7 @@ public class Group {
     }
 
     public String toString (){
+//        String list = this.concept + " ";
 
         String list = "";
 

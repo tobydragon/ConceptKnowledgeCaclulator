@@ -242,6 +242,7 @@ public class  ConceptGraph {
     }
 
 
+
     /**
      * updates a list of the suggested Concept node list so that there are ancestors of nodes already in the list.
      * You need to iterate nodes to add and then call this function.
@@ -287,6 +288,44 @@ public class  ConceptGraph {
             return node.countTotalKnowledgeEstimate(new ArrayList<>());
         }
     }
+
+
+    /**
+     * checks to see if the two concept nodes have the same size for children,
+     * then checks if the absolute value between all the concept nodes are above 0.1
+     * if all that is true, true is returned
+     * @param node1
+     * @param node2
+     * @return
+     */
+    public boolean isComplementary(ConceptNode node1, ConceptNode node2){
+        List<ConceptNode> childrenOne = node1.getChildren();
+        List<ConceptNode> childrenTwo = node2.getChildren();
+
+        if(childrenOne.size()==childrenTwo.size()){
+            int flag = 0;
+            for(int i=0; i<childrenOne.size(); i++){
+                if(childrenOne.get(i).getID().equals(childrenTwo.get(i).getID())){
+                    double value = Math.abs(childrenOne.get(i).getKnowledgeEstimate() - childrenTwo.get(i).getKnowledgeEstimate());
+                    if(value < 0.1){
+                        flag =1;
+                        break;
+                    }
+                }else{
+                    flag=1;
+                    break;
+                }
+            }
+            if(flag==0){
+                return true;
+            }else{
+                return false;
+            }
+        }else{
+            return false;
+        }
+    }
+
 
 
     //TODO: should use materials, not assessments (I think)
