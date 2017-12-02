@@ -22,6 +22,8 @@ public class GroupSuggesterTest {
 
         try {
             ckc = new ConceptKnowledgeCalculator("test/testresources/ManuallyCreated/researchConceptGraph.json", "test/testresources/ManuallyCreated/researchResource2.json", "test/testresources/ManuallyCreated/researchAssessment2.csv");
+            ckc = new ConceptKnowledgeCalculator("test/testresources/ManuallyCreated/simpleConceptGraphTest.json", "test/testresources/ManuallyCreated/simpleResourceTest.json", "test/testresources/ManuallyCreated/simpleAssessmentTest.csv");
+
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -39,9 +41,54 @@ public class GroupSuggesterTest {
 
         //groups of 2
         List<Group> groupings = sug.grouping(groupings1, 2,suggesterList );
-//        Assert.assertEquals(groupings.size(), 2);
-//        Assert.assertEquals(groupings.get(0).getSize(), 2);
-//        Assert.assertEquals(groupings.get(1).getSize(), 3);
+        Assert.assertEquals(groupings.size(), 2);
+        Assert.assertEquals(groupings.get(0).getSize(), 2);
+        Assert.assertEquals(groupings.get(0).getStudentNames().get(0), "s3");
+        Assert.assertEquals(groupings.get(0).getStudentNames().get(1), "s5");
+
+        Assert.assertEquals(groupings.get(1).getSize(), 3);
+        Assert.assertEquals(groupings.get(1).getStudentNames().get(0), "s4");
+        Assert.assertEquals(groupings.get(1).getStudentNames().get(1), "s1");
+        Assert.assertEquals(groupings.get(1).getStudentNames().get(2), "s2");
+
+    }
+
+    @Test
+    public void compKNowTEST2() {
+        ConceptKnowledgeCalculatorAPI ckc = null;
+
+        try {
+            ckc = new ConceptKnowledgeCalculator("test/testresources/ManuallyCreated/researchConceptGraph.json", "test/testresources/ManuallyCreated/researchResource2.json", "test/testresources/ManuallyCreated/researchAssessment2.csv");
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        CohortConceptGraphs graphs = ckc.getCohortConceptGraphs();
+        Assert.assertNotEquals(graphs, null);
+        GroupSuggester sug = new GroupSuggester();
+
+        List<Group> groupings1 = sug.getGroupList(graphs);
+
+        List<Suggester> suggesterList = new ArrayList<>();
+        suggesterList.add(new ConceptSuggester());
+        suggesterList.add(new ComplementaryKnowledgeSuggester());
+
+
+        //groups of 2
+        List<Group> groupings = sug.grouping(groupings1, 2,suggesterList );
+        //no jigsaw suggesters therefore it's just bysize
+
+        Assert.assertEquals(groupings.size(), 2);
+        Assert.assertEquals(groupings.get(0).getSize(), 2);
+        Assert.assertEquals(groupings.get(0).getStudentNames().get(0), "s3");
+        Assert.assertEquals(groupings.get(0).getStudentNames().get(1), "s4");
+        Assert.assertEquals(groupings.get(1).getSize(), 3);
+        Assert.assertEquals(groupings.get(1).getStudentNames().get(0), "s5");
+        Assert.assertEquals(groupings.get(1).getStudentNames().get(1), "s1");
+        Assert.assertEquals(groupings.get(1).getStudentNames().get(2), "s2");
+//
+
     }
 
     @Test

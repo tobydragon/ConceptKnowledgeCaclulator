@@ -12,6 +12,8 @@ public class Group {
     Map<String, ConceptGraph> studentGraphMap;
     String id;
     String concept;
+    //rationale
+    //resource
 
     public Group(Map<String, ConceptGraph> map, String id) {
         this.studentGraphMap = map;

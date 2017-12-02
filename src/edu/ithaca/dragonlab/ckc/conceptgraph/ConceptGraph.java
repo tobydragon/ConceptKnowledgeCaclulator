@@ -302,11 +302,17 @@ public class  ConceptGraph {
         List<ConceptNode> childrenOne = node1.getChildren();
         List<ConceptNode> childrenTwo = node2.getChildren();
 
+        for(int x=0; x<childrenOne.size(); x++){
+//            System.out.println(childrenOne.get(x).getID() + " " + childrenOne.get(x).getKnowledgeEstimate() +" " + childrenTwo.get(x).getID()+ " " + childrenTwo.get(x).getKnowledgeEstimate());
+
+        }
         if(childrenOne.size()==childrenTwo.size()){
             int flag = 0;
             for(int i=0; i<childrenOne.size(); i++){
                 if(childrenOne.get(i).getID().equals(childrenTwo.get(i).getID())){
+
                     double value = Math.abs(childrenOne.get(i).getKnowledgeEstimate() - childrenTwo.get(i).getKnowledgeEstimate());
+
                     if(value < 0.1){
                         flag =1;
                         break;
