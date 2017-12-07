@@ -56,6 +56,7 @@ public class BucketSuggester extends Suggester {
                 }
 
                 Group newGroup = new Group(map, "");
+                newGroup.addRationale(groupSoFar.getRationale() + " bucket: " + r.get(0) + " - " + r.get(1));
                 actualGroupings.add(newGroup);
 
             }

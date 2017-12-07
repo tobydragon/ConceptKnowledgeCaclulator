@@ -26,6 +26,7 @@ public class ConceptSuggester extends Suggester {
 
             Group foundGroup = concept2StudentList.get(conceptName);
             foundGroup.setConcept(conceptName);
+            foundGroup.addRationale(groupSoFar.getRationale() + " Concept: " + conceptName);
             actualGroupings.add(foundGroup);
         }
 

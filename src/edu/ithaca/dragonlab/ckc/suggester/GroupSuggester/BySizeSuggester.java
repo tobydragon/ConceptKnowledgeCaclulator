@@ -57,6 +57,13 @@ public class BySizeSuggester extends Suggester {
                         itr++;
                     }
 
+                    if(this.random){
+                        groups.addRationale(groupSoFar.getRationale() + " Random");
+
+                    }else{
+                        groups.addRationale(groupSoFar.getRationale()+ " By Size: " + groupSize);
+
+                    }
 
                     actualGroupings.add(groups);
                 }

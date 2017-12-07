@@ -9,9 +9,6 @@ import java.util.*;
  * Created by Mia Kimmich Mitchell on 11/28/2017.
  */
 public class ComplementaryKnowledgeSuggester extends Suggester{
-
-
-
     //have to do concept suggester first
     // bucket, concept, bysize
 
@@ -50,6 +47,7 @@ public class ComplementaryKnowledgeSuggester extends Suggester{
                         Group gr = new Group(tempMap, " ");
                         gr.addMember(map.get(studentlist.get(x)).getName(), map.get(studentlist.get(x))) ;
 
+                        gr.addRationale(groupSoFar.getRationale() + " Complementary Knowledge");
                         actualGroupings.add(gr);
                     }
 
