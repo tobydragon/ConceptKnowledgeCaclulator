@@ -291,43 +291,48 @@ public class  ConceptGraph {
 
 
     /**
-     * checks to see if the two concept nodes have the same size for children,
-     * then checks if the absolute value between all the concept nodes are above 0.1
-     * if all that is true, true is returned
-     * @param node1
-     * @param node2
-     * @return
+     * Checks to see if the two student's ConceptNodes (and partial graph) are equal and if the children concept nodes are at a specific distance (complementary)
+     * @param node1 Student one's concept node
+     * @param node2 Student two's concept node
+     * @return boolean if the two students concept nodes (and partial) graphs' knowledge estimates are complementary.
      */
     public boolean isComplementary(ConceptNode node1, ConceptNode node2){
-        List<ConceptNode> childrenOne = node1.getChildren();
-        List<ConceptNode> childrenTwo = node2.getChildren();
+        List<ConceptNode> childOne = node1.getChildren();
+        List<ConceptNode> childTwo = node2.getChildren();
 
-        for(int x=0; x<childrenOne.size(); x++){
-//            System.out.println(childrenOne.get(x).getID() + " " + childrenOne.get(x).getKnowledgeEstimate() +" " + childrenTwo.get(x).getID()+ " " + childrenTwo.get(x).getKnowledgeEstimate());
+        if(childOne.size()==childTwo.size()){
+            //if the children have the same size concept node lists. This is the first step to ensure that the two students graphs that are being
+            // compared are the same
 
-        }
-        if(childrenOne.size()==childrenTwo.size()){
-            int flag = 0;
-            for(int i=0; i<childrenOne.size(); i++){
-                if(childrenOne.get(i).getID().equals(childrenTwo.get(i).getID())){
+            int complementaryFlag = 0;
+            for(int i=0; i<childOne.size(); i++){
+                //to iterate through the children concept nodes
 
-                    double value = Math.abs(childrenOne.get(i).getKnowledgeEstimate() - childrenTwo.get(i).getKnowledgeEstimate());
+                if(childOne.get(i).getID().equals(childTwo.get(i).getID())){
+                    //compares if the concept for childOne's current child concept is the same as childTwo's.
+
+                    double value = Math.abs(childOne.get(i).getKnowledgeEstimate() - childTwo.get(i).getKnowledgeEstimate());
 
                     if(value < 0.1){
-                        flag =1;
+                        //if the all the children are the same, but the difference between the current conceptNodes is less than 0.1 (this value can change)
+                        //then, break from the loop because if one concept isn't complementary, then the students are not complementary
+                        complementaryFlag =1;
                         break;
                     }
                 }else{
-                    flag=1;
+                    //if the current concept for childOne and childTwo are not the same, then they cannot be complementary students
+                    complementaryFlag=1;
                     break;
                 }
             }
-            if(flag==0){
+
+            if(complementaryFlag==0){
                 return true;
             }else{
                 return false;
             }
         }else{
+            //if the two students' list of concept node's children are not the same size, then they cannot be complementary students
             return false;
         }
     }

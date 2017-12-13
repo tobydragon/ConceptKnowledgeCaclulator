@@ -468,7 +468,13 @@ public class ConceptKnowledgeCalculator implements ConceptKnowledgeCalculatorAPI
     public List<Group> calcSmallGroups(List<Suggester> groupTypeList, int groupSize) throws Exception {
         if(currentMode==Mode.COHORTGRAPH) {
             GroupSuggester sug = new GroupSuggester();
-            List<Group> initialGroup = sug.getGroupList(this.cohortConceptGraphs);
+
+            List<Group> initialGroup = GroupSuggester.getGroupList(this.cohortConceptGraphs);
+
+
+//            List<Group> initialGroup = sug.getGroupList(this.cohortConceptGraphs);
+            System.out.println("DLSKJDFL " + initialGroup);
+
             return sug.grouping(initialGroup, groupSize, groupTypeList);
         }else{
             throw new Exception("Wrong Mode");

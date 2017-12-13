@@ -17,16 +17,11 @@ public class ConceptSuggester extends Suggester {
         List<Group> actualGroupings = new ArrayList<>();
         Map<String, Group> concept2StudentList= createConceptMap(groupSoFar);
 
-//        for(String concept: concept2StudentList.keySet()){
-//            Group gr = concept2StudentList.get(concept);
-//            System.out.println("conept " + concept + " " + gr);
-//        }
-
         for(String conceptName: concept2StudentList.keySet()){
 
             Group foundGroup = concept2StudentList.get(conceptName);
             foundGroup.setConcept(conceptName);
-            foundGroup.addRationale(groupSoFar.getRationale() + " Concept: " + conceptName);
+            foundGroup.addRationale(groupSoFar.getRationale() + " ,Concept: " + conceptName);
             actualGroupings.add(foundGroup);
         }
 

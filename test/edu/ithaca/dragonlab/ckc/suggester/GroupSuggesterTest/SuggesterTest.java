@@ -39,9 +39,9 @@ public class SuggesterTest {
         //groups of 2
         Assert.assertEquals(groupings.size(), 2);
         Assert.assertEquals(groupings.get(0).getSize(), 2);
-        Assert.assertEquals(groupings.get(0).getRationale(), "  Random");
+        Assert.assertEquals(groupings.get(0).getRationale(), "  , Random");
         Assert.assertEquals(groupings.get(1).getSize(), 2);
-        Assert.assertEquals(groupings.get(1).getRationale(), "  Random");
+        Assert.assertEquals(groupings.get(1).getRationale(), "  , Random");
 
 
         //groups of three
@@ -49,7 +49,7 @@ public class SuggesterTest {
         List<Group> groupings2 = sug2.suggestGroup(list.get(0), new Group() );
         Assert.assertEquals(groupings2.size(), 1);
         Assert.assertEquals(groupings2.get(0).getSize(), 3);
-        Assert.assertEquals(groupings.get(0).getRationale(), "  Random");
+        Assert.assertEquals(groupings.get(0).getRationale(), "  , Random");
 
 
     }
@@ -110,12 +110,12 @@ public class SuggesterTest {
         BySizeSuggester sug  = new BySizeSuggester(2, false);
         List<Group> groupings = sug.suggestGroup(list.get(0), new Group());
         Assert.assertEquals(groupings.size(), 2);
-        Assert.assertEquals(groupings.get(0).getRationale(), "  By Size: "+2);
+        Assert.assertEquals(groupings.get(0).getRationale(), "  ,By Size: 2");
         List<String> one = groupings.get(0).getStudentNames();
         Assert.assertEquals(one.get(0),"s3");
         Assert.assertEquals(one.get(1),"s4");
 
-        Assert.assertEquals(groupings.get(1).getRationale(), "  By Size: "+2);
+        Assert.assertEquals(groupings.get(1).getRationale(), "  ,By Size: 2");
         List<String> two = groupings.get(1).getStudentNames();
         Assert.assertEquals(two.get(0),"s5");
         Assert.assertEquals(two.get(1),"s1");
@@ -127,7 +127,7 @@ public class SuggesterTest {
         Assert.assertEquals(groupings2.size(), 1);
 
         List<String> three = groupings2.get(0).getStudentNames();
-        Assert.assertEquals(groupings2.get(0).getRationale(), "  By Size: "+3);
+        Assert.assertEquals(groupings2.get(0).getRationale(), "  ,By Size: "+3);
         Assert.assertEquals(three.get(0),"s3");
         Assert.assertEquals(three.get(1),"s4");
         Assert.assertEquals(three.get(2),"s5");
@@ -175,11 +175,11 @@ public class SuggesterTest {
         suggesterList.add(new ConceptSuggester());
 
         List<Group> groupings = sug.suggestGroup(list.get(0), new Group());
-        Assert.assertEquals(groupings.get(0).getRationale(), "  Concept: Dictionaries");
+        Assert.assertEquals(groupings.get(0).getRationale(), "  ,Concept: Dictionaries");
         List<String> three = groupings.get(0).getStudentNames();
         Assert.assertEquals(three.get(0),"s3");
         Assert.assertEquals(three.get(1),"s2");
-        Assert.assertEquals(groupings.get(1).getRationale(), "  Concept: no suggestions");
+        Assert.assertEquals(groupings.get(1).getRationale(), "  ,Concept: no suggestions");
         List<String> four = groupings.get(1).getStudentNames();
         Assert.assertEquals(four.get(0),"s4");
         Assert.assertEquals(four.get(1),"s5");

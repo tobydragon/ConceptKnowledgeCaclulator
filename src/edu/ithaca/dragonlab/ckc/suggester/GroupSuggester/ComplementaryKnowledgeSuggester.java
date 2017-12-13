@@ -16,11 +16,7 @@ public class ComplementaryKnowledgeSuggester extends Suggester{
     public List<Group> suggestGroup(Group groupSoFar, Group extraMembers) {
         List<Group > actualGroupings = new ArrayList<>();
         Map<String, ConceptGraph> map = groupSoFar.getStudents();
-        List<String> studentlist = groupStudents(map);
-
-            //randomize list, (when it's actually being used)
-        boolean isC = false;
-
+        List<String> studentlist = getCompleteStudentList(map);
         List<String> assignedStudents = new ArrayList<>();
         List<String> questioningStudents = new ArrayList<>();
 
@@ -30,7 +26,7 @@ public class ComplementaryKnowledgeSuggester extends Suggester{
                 //if the pairing is not to itself and either of the possibly paired students aren't already paired with someone else
                 if((!studentlist.get(i).equals(studentlist.get(x))) && !assignedStudents.contains(studentlist.get(i)) && !assignedStudents.contains(studentlist.get(x))){
 
-                    boolean complementary = isComp(map, studentlist.get(i), studentlist.get(x), groupSoFar);
+                    boolean complementary = isComplementary(map, studentlist.get(i), studentlist.get(x), groupSoFar);
                     if(complementary ){
                         assignedStudents.add(studentlist.get(i));
                         assignedStudents.add(studentlist.get(x));
@@ -47,7 +43,7 @@ public class ComplementaryKnowledgeSuggester extends Suggester{
                         Group gr = new Group(tempMap, " ");
                         gr.addMember(map.get(studentlist.get(x)).getName(), map.get(studentlist.get(x))) ;
 
-                        gr.addRationale(groupSoFar.getRationale() + " Complementary Knowledge");
+                        gr.addRationale(groupSoFar.getRationale() + " ,Complementary Knowledge");
                         actualGroupings.add(gr);
                     }
 
@@ -74,9 +70,20 @@ public class ComplementaryKnowledgeSuggester extends Suggester{
 
     }
 
-    private boolean isComp(Map<String, ConceptGraph> map, String name1, String name2, Group groupSoFar) {
-
+    /**
+     * This returns if the two students knowledge is complementary. This means that they both have the same graph and that they both have the same
+     * knowledge estimate on the same parent concept, but different knowledge estimates in the children.
+     * @param map The String to ConceptGraph Map
+     * @param name1 Student 1
+     * @param name2 Student 2
+     * @param groupSoFar The current group of students
+     * @return
+     */
+    private boolean isComplementary(Map<String, ConceptGraph> map, String name1, String name2, Group groupSoFar) {
         ConceptGraph graph = new ConceptGraph();
+
+        // if the current first student's concept isn't equal to "no suggestions" and the current second student isn't equal to "no suggestions"
+        //"no suggestions" as a the concept resource in the current group will return null because there is never a concept in the graph called "no suggestions"
         if(map.get(name1).findNodeById(groupSoFar.getConcept()) != null && map.get(name2).findNodeById(groupSoFar.getConcept()) != null){
             return graph.isComplementary(map.get(name1).findNodeById(groupSoFar.getConcept()), map.get(name2).findNodeById(groupSoFar.getConcept()));
         }else{
@@ -85,7 +92,12 @@ public class ComplementaryKnowledgeSuggester extends Suggester{
     }
 
 
-    private List<String> groupStudents(Map<String, ConceptGraph> map){
+    /**
+     * Returns a list of all the students. This is to be used to iterate and modify all the students in the class
+     * @param map
+     * @return list of strings which are the student names
+     */
+    private List<String> getCompleteStudentList(Map<String, ConceptGraph> map){
         List<String> studentList = new ArrayList<>();
         studentList.addAll(map.keySet());
 

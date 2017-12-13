@@ -27,10 +27,9 @@ public class GroupSuggester {
             }
 
             List<Group> temp = sug.suggestGroup(groupSoFar, extraMembers);
-
-
             actualGroupings.addAll(temp);
         }
+
 
         //if there are left over students
         //todo fix this so that it can work with any amount of student group sizes
@@ -54,11 +53,13 @@ public class GroupSuggester {
                 actualGroupings.addAll(temp);
 
                 Group tempGr = actualGroupings.get(actualGroupings.size() - 1);
+                tempGr.addRationale(" ,Extra Members");
                 tempGr.addMember(extraMembers);
 
             } else if (extraMembers.getSize() == size / 2) {
 
                 Group tempGr = actualGroupings.get(actualGroupings.size() - 1);
+                tempGr.addRationale( " ,Extra Members");
                 tempGr.addMember(extraMembers);
 
             } else {
@@ -66,6 +67,7 @@ public class GroupSuggester {
 
             }
         }
+
         return actualGroupings;
     }
 

@@ -33,7 +33,6 @@ public class BySizeSuggester extends Suggester {
         copyGroups.addAll(group.keySet());
 
             if (group.size() > groupSize) {
-
                 for (int i = 0; i < group.size() / groupSize; i++) {
 
                     Group groups = new Group();
@@ -57,13 +56,14 @@ public class BySizeSuggester extends Suggester {
                         itr++;
                     }
 
-                    if(this.random){
-                        groups.addRationale(groupSoFar.getRationale() + " Random");
-
-                    }else{
-                        groups.addRationale(groupSoFar.getRationale()+ " By Size: " + groupSize);
+                    if(random){
+                        groups.addRationale(groupSoFar.getRationale()+ " , Random");
 
                     }
+                    if(!random){
+                        groups.addRationale(groupSoFar.getRationale()+ " ,By Size: "+ groupSize);
+                    }
+
 
                     actualGroupings.add(groups);
                 }
@@ -83,13 +83,21 @@ public class BySizeSuggester extends Suggester {
                     Collections.shuffle(copyGroups);
                 }
 
-                Group groups2 = new Group();
+                Group group2 = new Group();
 
                 for(String name: copyGroups2){
-                    groups2.addMember(name, group.get(name));
-                }
-                actualGroupings.add(groups2);
+                    group2.addMember(name, group.get(name));
 
+                }
+
+                actualGroupings.add(group2);
+                if(random){
+                    group2.addRationale(groupSoFar.getRationale()+ " , Random");
+
+                }
+                if(!random){
+                    group2.addRationale(groupSoFar.getRationale()+ " ,By Size: "+ groupSize);
+                }
             }
 
 
