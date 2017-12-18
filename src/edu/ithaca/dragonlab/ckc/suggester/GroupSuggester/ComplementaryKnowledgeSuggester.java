@@ -26,7 +26,12 @@ public class ComplementaryKnowledgeSuggester extends Suggester{
                 //if the pairing is not to itself and either of the possibly paired students aren't already paired with someone else
                 if((!studentlist.get(i).equals(studentlist.get(x))) && !assignedStudents.contains(studentlist.get(i)) && !assignedStudents.contains(studentlist.get(x))){
 
-                    boolean complementary = isComplementary(map, studentlist.get(i), studentlist.get(x), groupSoFar);
+                    boolean complementary = false;
+                    try {
+                        complementary = isComplementary(map, studentlist.get(i), studentlist.get(x), groupSoFar);
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
                     if(complementary ){
                         assignedStudents.add(studentlist.get(i));
                         assignedStudents.add(studentlist.get(x));
@@ -79,7 +84,7 @@ public class ComplementaryKnowledgeSuggester extends Suggester{
      * @param groupSoFar The current group of students
      * @return
      */
-    private boolean isComplementary(Map<String, ConceptGraph> map, String name1, String name2, Group groupSoFar) {
+    private boolean isComplementary(Map<String, ConceptGraph> map, String name1, String name2, Group groupSoFar) throws Exception {
         ConceptGraph graph = new ConceptGraph();
 
         // if the current first student's concept isn't equal to "no suggestions" and the current second student isn't equal to "no suggestions"

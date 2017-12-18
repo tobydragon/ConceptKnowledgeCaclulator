@@ -296,7 +296,7 @@ public class  ConceptGraph {
      * @param node2 Student two's concept node
      * @return boolean if the two students concept nodes (and partial) graphs' knowledge estimates are complementary.
      */
-    public boolean isComplementary(ConceptNode node1, ConceptNode node2){
+    public boolean isComplementary(ConceptNode node1, ConceptNode node2) throws Exception {
         List<ConceptNode> childOne = node1.getChildren();
         List<ConceptNode> childTwo = node2.getChildren();
 
@@ -320,9 +320,11 @@ public class  ConceptGraph {
                         break;
                     }
                 }else{
+                    throw new Exception();
+
                     //if the current concept for childOne and childTwo are not the same, then they cannot be complementary students
-                    complementaryFlag=1;
-                    break;
+//                    complementaryFlag=1;
+//                    break;
                 }
             }
 

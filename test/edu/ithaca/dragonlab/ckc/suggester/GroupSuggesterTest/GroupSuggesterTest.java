@@ -21,7 +21,6 @@ public class GroupSuggesterTest {
         ConceptKnowledgeCalculatorAPI ckc = null;
 
         try {
-            ckc = new ConceptKnowledgeCalculator("test/testresources/ManuallyCreated/researchConceptGraph.json", "test/testresources/ManuallyCreated/researchResource2.json", "test/testresources/ManuallyCreated/researchAssessment2.csv");
             ckc = new ConceptKnowledgeCalculator("test/testresources/ManuallyCreated/simpleConceptGraphTest.json", "test/testresources/ManuallyCreated/simpleResourceTest.json", "test/testresources/ManuallyCreated/simpleAssessmentTest.csv");
 
         } catch (IOException e) {
