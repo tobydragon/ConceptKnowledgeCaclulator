@@ -178,8 +178,7 @@ public class RFunctionsTest {
         }
 
     }
-
-    public static void modelImportingforTestingTest(){
+    public static void getConfirmatoryMatrixTest() {
         ConceptKnowledgeCalculatorAPI ckc = null;
         try {
             ckc = new ConceptKnowledgeCalculator("test/testresources/ManuallyCreated/simpleConceptGraph.json",
@@ -189,12 +188,14 @@ public class RFunctionsTest {
             CSVReader data = new CSVReader("test/testresources/ManuallyCreated/simpleAssessmentMoreUsers.csv");
             List<LearningObject> gotoMatrix = data.getManualGradedLearningObjects();
             KnowledgeEstimateMatrix newMatrix = new KnowledgeEstimateMatrix(gotoMatrix);
-            RFunctions.modelImportingforTesting(newMatrix, ccg);
+            RFunctions.getConfirmatoryMatrix(newMatrix, ccg);
             TimeUnit.SECONDS.sleep(5);
         } catch (Exception e) {
             Assert.fail("Unable to read assessment file");
         }
+
     }
+
 
 
     @Test
@@ -232,9 +233,9 @@ public class RFunctionsTest {
 
     //@Test
     public static void main(String args[]){
-        //getFactorMatrixTest()
-        //confirmatoryGraphTest()
-        //returnFactorMatrixTest()
+        //getFactorMatrixTest();
+        //confirmatoryGraphTest();
+        //returnFactorMatrixTest();
         System.out.println("- R prints info on deleting invalid columns \n" +
                 "- R prints a matrix of factors with Learning Objects\n" +
                 "- R prints other info. Not very useful\n" +
@@ -244,12 +245,13 @@ public class RFunctionsTest {
         System.out.println(
                 "- R creates a graph displaying the confirmatory factor analysis");
         confirmatoryGraphTest();
+        //getConfirmatoryMatrixTest();
 
         //both returns a double[][] and a printout
         System.out.println("- R prints info on deleting invalid columns\n" +
                 "- The function returns a matrix of the factors seen from getMatrixTest()");
         returnFactorMatrixTest();
-        //modelImportingforTestingTest();
+
 
     }
 

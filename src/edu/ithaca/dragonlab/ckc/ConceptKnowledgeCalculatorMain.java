@@ -23,9 +23,9 @@ public class ConceptKnowledgeCalculatorMain {
 //                    "test/testresources/ManuallyCreated/basicRealisticAssessment.csv");
 
 
-                        new ConsoleUI("test/testresources/ManuallyCreated/simpleConceptGraph.json",
-                    "test/testresources/ManuallyCreated/simpleResource.json",
-                    "test/testresources/ManuallyCreated/simpleAssessmentMoreUsers.csv");
+//                        new ConsoleUI("test/testresources/ManuallyCreated/simpleConceptGraph.json",
+//                    "test/testresources/ManuallyCreated/simpleResource.json",
+//                    "test/testresources/ManuallyCreated/simpleAssessmentMoreUsers.csv");
 
 //            new ConsoleUI("resources/comp220/comp220Graph.json",
 //                    "resources/comp220/comp220Resources.json",
@@ -35,9 +35,9 @@ public class ConceptKnowledgeCalculatorMain {
 //                    "test/testresources/ManuallyCreated/researchResource1.json",
 //                    "test/testresources/ManuallyCreated/researchAssessment1.csv");
 
-//            new ConsoleUI("test/testresources/ManuallyCreated/researchConceptGraph.json",
-//                    "test/testresources/ManuallyCreated/researchResource2.json",
-//                    "test/testresources/ManuallyCreated/researchAssessment2.csv");
+            new ConsoleUI("test/testresources/ManuallyCreated/researchConceptGraph.json",
+                    "test/testresources/ManuallyCreated/researchResource2.json",
+                    "test/testresources/ManuallyCreated/researchAssessment2.csv");
 
 //            new ConsoleUI("resources/comp115/comp115Graph.json",
 //                    "resources/comp115/comp115Resources.json",

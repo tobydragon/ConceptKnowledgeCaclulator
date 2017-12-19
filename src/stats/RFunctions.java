@@ -196,7 +196,7 @@ public class RFunctions {
     /**
      * creates a matrix of factors in java (factors=rows, LearningObjects=columns)
      * @param loMatrix
-     * @return statsMatrix the matrix of factors
+     * @return statsMatrix the matrix of strengths between a factor and LearningObject
      * @pre resource, assessment, structure files are all present and an R Matrix is created
      * @throws Exception
      */
@@ -303,32 +303,32 @@ public class RFunctions {
         }
     }
 
-    //TODO: Let function create a model file and then import into function to be used as the model to simulate the use of Rstudio modeling and graphing
+
     public static void confirmatoryGraph(KnowledgeEstimateMatrix loMatrix, CohortConceptGraphs ccg){
         int matrixSize = loMatrix.getStudentKnowledgeEstimates().length;
-        //if((matrixSize/loMatrix.getObjList().size()) > 1) {
             try {
                 String modelString = modelMaker(ccg);
 
-                //modelToFile(ccg);
+                modelToFile(ccg);
 
                 RCaller rCaller = RCallerVariable();
                 RCode code = loMatrix.getrMatrix();
                 code.addRCode("library(sem)");
                 code.addRCode("library(semPlot)");
+                code.addRCode("library(stringr)");
 
                 code.addRCode("library(readr)");
 
-                //TODO: the function of these lines are 2 read the model in. Currently unfunctional and main cause of problems
-                //code.addRCode("modelFile.txt <- read_file(file='/Users/bleblanc2/IdeaProjects/ConceptKnowledgeCalculator/model.txt')");
-                //code.addRCode("modelString <- scan(modelFile.txt)");
-                //code.addRCode("data.dhp <- specifyModel(text=modelString)");
+
+                code.addRCode("model.txt <- readLines('/Users/bleblanc2/IdeaProjects/ConceptKnowledgeCalculator/model.txt')");
+                code.addRCode("data.dhp <- specifyModel(text=model.txt)");
 
 
-                code.addRCode("data.dhp <- specifyModel(text=\"" + modelString + "\")");
+                //code.addRCode("data.dhp <- specifyModel(text=\"" + modelString + "\")");
                 code.addRCode("dataCorrelation <- cor(matrix)");
                 code.addRCode("rowCount <- nrow(matrix)");
                 code.addRCode("dataSem.dhp <- sem(data.dhp, dataCorrelation, rowCount)");
+                code.addRCode("dataSem.dhp");
                 File file = code.startPlot();
                 code.addRCode("semPaths(dataSem.dhp, \"est\")");
                 code.endPlot();
@@ -340,34 +340,39 @@ public class RFunctions {
                 Logger.getLogger(RFunctions.class.getName()).log(Level.SEVERE, e.getMessage());
                 throw new IndexOutOfBoundsException();
             }
-        //}else{
-          //  throw new IndexOutOfBoundsException();
-        //}
     }
 
-
-    public static void modelImportingforTesting(KnowledgeEstimateMatrix loMatrix, CohortConceptGraphs ccg) {
+    //TODO: Error in this function: does not run
+    public static double[][] getConfirmatoryMatrix(KnowledgeEstimateMatrix loMatrix, CohortConceptGraphs ccg){
+        int matrixSize = loMatrix.getStudentKnowledgeEstimates().length;
         try {
             String modelString = modelMaker(ccg);
 
-            //modelToFile(ccg);
+            modelToFile(ccg);
 
             RCaller rCaller = RCallerVariable();
             RCode code = loMatrix.getrMatrix();
             code.addRCode("library(sem)");
             code.addRCode("library(semPlot)");
-
+            code.addRCode("library(stringr)");
             code.addRCode("library(readr)");
 
-            code.addRCode("modelFile.txt <- read_file(file='/Users/bleblanc2/IdeaProjects/ConceptKnowledgeCalculator/model.txt')");
-            code.addRCode("modelString <- scan(modelFile.txt)");
-            code.addRCode("print(modelString)");
+            code.addRCode("model.txt <- readLines('/Users/bleblanc2/IdeaProjects/ConceptKnowledgeCalculator/model.txt')");
+            code.addRCode("data.dhp <- specifyModel(text=model.txt)");
+            //code.addRCode("data.dhp <- specifyModel(text=\"" + modelString + "\")");
+            code.addRCode("dataCorrelation <- cor(matrix)");
+            code.addRCode("rowCount <- nrow(matrix)");
+            code.addRCode("dataSem.dhp <- sem(data.dhp, dataCorrelation, rowCount)");
+
+            rCaller.setRCode(code);
+            rCaller.runAndReturnResult("dataSem.dhp");
+            double[][] confirmatoryMatrix = rCaller.getParser().getAsDoubleMatrix("dataSem.dhp");
+            return (confirmatoryMatrix);
         } catch (Exception e) {
             Logger.getLogger(RFunctions.class.getName()).log(Level.SEVERE, e.getMessage());
             throw new IndexOutOfBoundsException();
         }
     }
-
 
 
     /**
