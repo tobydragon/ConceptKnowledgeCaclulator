@@ -188,7 +188,7 @@ public class RFunctionsTest {
             CSVReader data = new CSVReader("test/testresources/ManuallyCreated/simpleAssessmentMoreUsers.csv");
             List<LearningObject> gotoMatrix = data.getManualGradedLearningObjects();
             KnowledgeEstimateMatrix newMatrix = new KnowledgeEstimateMatrix(gotoMatrix);
-            RFunctions.getConfirmatoryMatrix(newMatrix, ccg);
+            RFunctions.returnConfirmatoryMatrix(newMatrix, ccg);
             TimeUnit.SECONDS.sleep(5);
         } catch (Exception e) {
             Assert.fail("Unable to read assessment file");
@@ -245,7 +245,7 @@ public class RFunctionsTest {
         System.out.println(
                 "- R creates a graph displaying the confirmatory factor analysis");
         confirmatoryGraphTest();
-        //getConfirmatoryMatrixTest();
+        //returnConfirmatoryMatrixTest();
 
         //both returns a double[][] and a printout
         System.out.println("- R prints info on deleting invalid columns\n" +

@@ -152,6 +152,12 @@ public interface ConceptKnowledgeCalculatorAPI {
     void createConfirmatoryGraph();
 
     /**
+     * Takes connections stored in CohortConceptGraphs and creates a text file
+     * in the format readable for confirmatory graphing
+     */
+    void createModelFile();
+
+    /**
      * Calculates a list of conceptNode based on an individual graph , returns a the list of ConceptNodes
      * @param userID
      * @return List of Concept Nodes

@@ -293,19 +293,22 @@ public class RFunctions {
         return modelString;
     }
 
+    //TODO: Give full file path of model.txt
     public static void modelToFile(CohortConceptGraphs ccg){
         String modelString = modelMaker(ccg);
         try(  PrintWriter out = new PrintWriter( "model.txt" )  ){
+
             out.println( modelString );
             out.close();
+            System.out.println("File successfully created. File: model.txt");
         }catch (FileNotFoundException e){
             System.out.println("Error occurred in exporting data model to file.");
         }
     }
 
-
+    //TODO: change the readLines function so the file path works with wherever model.txt
     public static void confirmatoryGraph(KnowledgeEstimateMatrix loMatrix, CohortConceptGraphs ccg){
-        int matrixSize = loMatrix.getStudentKnowledgeEstimates().length;
+
             try {
                 String modelString = modelMaker(ccg);
 
@@ -328,6 +331,7 @@ public class RFunctions {
                 code.addRCode("dataCorrelation <- cor(matrix)");
                 code.addRCode("rowCount <- nrow(matrix)");
                 code.addRCode("dataSem.dhp <- sem(data.dhp, dataCorrelation, rowCount)");
+                rCaller.redirectROutputToStream(System.out);
                 code.addRCode("dataSem.dhp");
                 File file = code.startPlot();
                 code.addRCode("semPaths(dataSem.dhp, \"est\")");
@@ -342,8 +346,8 @@ public class RFunctions {
             }
     }
 
-    //TODO: Error in this function: does not run
-    public static double[][] getConfirmatoryMatrix(KnowledgeEstimateMatrix loMatrix, CohortConceptGraphs ccg){
+    //TODO: dataSem.dhp$A returns the values wanted but not in necessarily corect format. Also, many 0s are present
+    public static double[][] returnConfirmatoryMatrix(KnowledgeEstimateMatrix loMatrix, CohortConceptGraphs ccg){
         int matrixSize = loMatrix.getStudentKnowledgeEstimates().length;
         try {
             String modelString = modelMaker(ccg);
@@ -363,10 +367,12 @@ public class RFunctions {
             code.addRCode("dataCorrelation <- cor(matrix)");
             code.addRCode("rowCount <- nrow(matrix)");
             code.addRCode("dataSem.dhp <- sem(data.dhp, dataCorrelation, rowCount)");
+            //From R it comes as
+            code.addRCode("data <- dataSem.dhp$A");
 
             rCaller.setRCode(code);
-            rCaller.runAndReturnResult("dataSem.dhp");
-            double[][] confirmatoryMatrix = rCaller.getParser().getAsDoubleMatrix("dataSem.dhp");
+            rCaller.runAndReturnResult("data");
+            double[][] confirmatoryMatrix = rCaller.getParser().getAsDoubleMatrix("data");
             return (confirmatoryMatrix);
         } catch (Exception e) {
             Logger.getLogger(RFunctions.class.getName()).log(Level.SEVERE, e.getMessage());
