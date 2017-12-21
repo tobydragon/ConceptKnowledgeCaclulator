@@ -1,59 +1,59 @@
 [
-  {"learningObject":"Counting in binary to 10",
+  {"learningResourceId":"Counting in binary to 10",
   "conceptIds":[
     "Counting"
   ],
   "dataImportance": "1"
   },
-  {"learningObject":"Write an algorithm to change a list of ints to be a list of strings",
+  {"learningResourceId":"Write an algorithm to change a list of ints to be a list of strings",
   "conceptIds":[
     "Algorithms"
   ],
   "dataImportance": "1"
   },
-  {"learningObject":"What’s wrong with the following function definition?",
+  {"learningResourceId":"What’s wrong with the following function definition?",
   "conceptIds":[
     "Functions"
   ],
     "dataImportance": "1"
   },
-  {"learningObject":"What will the following function return?",
+  {"learningResourceId":"What will the following function return?",
     "conceptIds":[
       "Functions"
    ],
     "dataImportance": "1"
   },
-  {"learningObject":"Can a function be called several times by placing a function call in the body of a loop",
+  {"learningResourceId":"Can a function be called several times by placing a function call in the body of a loop",
     "conceptIds":[
       "Functions"
    ],
   "dataImportance": "1"
   },
-  {"learningObject":"How many parameters can you have?",
+  {"learningResourceId":"How many parameters can you have?",
   "conceptIds":[
     "Parameters"
   ],
   "dataImportance": "1"
   },
-  {"learningObject":"When do you want to cause a side effect?",
+  {"learningResourceId":"When do you want to cause a side effect?",
     "conceptIds":[
       "Parameters",
       "Values and Data Types"
     ],
     "dataImportance": "1"
   },
-  {"learningObject":"When do you want to allow side effects?",
+  {"learningResourceId":"When do you want to allow side effects?",
     "conceptIds":[
       "Lists",
       "Parameters"
     ],
     "dataImportance": "1"
-  },{"learningObject":"Describe how the following relate to a for loop: variable, terminating condition, loop body",
+  },{"learningResourceId":"Describe how the following relate to a for loop: variable, terminating condition, loop body",
     "conceptIds":[
       "For Loops"
     ],
     "dataImportance": "1"
-  }, {"learningObject": "What are the differences and similarities between for loops and while loops",
+  }, {"learningResourceId": "What are the differences and similarities between for loops and while loops",
     "conceptIds": [
     "For Loop",
     "While Loops"
@@ -61,7 +61,7 @@
     "dataImportance": "0"
   },
   {
-    "learningObject": "Describe how while loops can depend on booleans",
+    "learningResourceId": "Describe how while loops can depend on booleans",
     "conceptIds": [
       "While Loops",
       "Booleans"
@@ -69,105 +69,105 @@
     "dataImportance": "1"
   },
   {
-    "learningObject": "What is the proper while loop diction?",
+    "learningResourceId": "What is the proper while loop diction?",
     "conceptIds": [
       "While Loops"
     ],
     "dataImportance": "1"
   },
   {
-    "learningObject": "Describe the flow of a while loop?",
+    "learningResourceId": "Describe the flow of a while loop?",
     "conceptIds": [
       "While Loops"
     ],
     "dataImportance": "1"
   },
   {
-    "learningObject": "What’s the difference between a statement and an expression?",
+    "learningResourceId": "What’s the difference between a statement and an expression?",
     "conceptIds": [
       "Expressions and Statements"
     ],
     "dataImportance": "0"
   },
   {
-    "learningObject": "What are some of the statements we have already seen?",
+    "learningResourceId": "What are some of the statements we have already seen?",
     "conceptIds": [
       "Expressions and Statements"
     ],
     "dataImportance": "1"
   },
   {
-    "learningObject": "Write a function that will convert 645 mins into hours",
+    "learningResourceId": "Write a function that will convert 645 mins into hours",
     "conceptIds": [
       "Expressions and Statements"
     ],
     "dataImportance": "1"
   },
   {
-    "learningObject": "Write a function that will convert 645 mins into the whole hours",
+    "learningResourceId": "Write a function that will convert 645 mins into the whole hours",
     "conceptIds": [
       "Expressions and Statements"
     ],
     "dataImportance": "1"
   },
   {
-    "learningObject": "What does the modulus operator do?",
+    "learningResourceId": "What does the modulus operator do?",
     "conceptIds": [
       "Expressions and Statements"
     ],
     "dataImportance": "0"
   },
   {
-    "learningObject": "What is an assignment token?",
+    "learningResourceId": "What is an assignment token?",
     "conceptIds": [
       "Variables"
     ],
     "dataImportance": "1"
   },
   {
-    "learningObject": "What is a reference diagram?",
+    "learningResourceId": "What is a reference diagram?",
     "conceptIds": [
       "Variables"
     ],
     "dataImportance": "1"
   },
   {
-    "learningObject": "What is printed then the following statements execute?",
+    "learningResourceId": "What is printed then the following statements execute?",
     "conceptIds": [
       "Variables"
     ],
     "dataImportance": "1"
   },
   {
-    "learningObject": "Whats a key",
+    "learningResourceId": "Whats a key",
     "conceptIds": [
       "Dictionaries"
     ],
     "dataImportance": "1"
   },
   {
-    "learningObject": "What’s a value",
+    "learningResourceId": "What’s a value",
     "conceptIds": [
       "Dictionaries"
     ],
     "dataImportance": "1"
   },
   {
-    "learningObject": "What are values are accessed by?",
+    "learningResourceId": "What are values are accessed by?",
     "conceptIds": [
       "Dictionaries"
     ],
     "dataImportance": "0"
   },
   {
-    "learningObject": "Is a dictionary ordered?",
+    "learningResourceId": "Is a dictionary ordered?",
     "conceptIds": [
       "Dictionaries"
     ],
     "dataImportance": "1"
   },
   {
-    "learningObject": "Write a function that will calculate if the substring 'the' is in any user input",
+    "learningResourceId": "Write a function that will calculate if the substring 'the' is in any user input",
     "conceptIds": [
       "Strings"
     ],

@@ -1,12 +1,9 @@
 package edu.ithaca.dragonlab.ckc.learningobject;
 
-import edu.ithaca.dragonlab.ckc.io.LearningObjectLinkRecord;
+import edu.ithaca.dragonlab.ckc.io.LearningResourceRecord;
 import edu.ithaca.dragonlab.ckc.util.DataUtil;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  * @uathor tdragon
@@ -37,10 +34,17 @@ public class LearningObject {
         }
     }
 
-    public LearningObject(LearningObjectLinkRecord record) {
-        this.id = record.getLearningObject();
+//    public LearningObject(LearningObjectLinkRecord record) {
+//        this.id = record.getLearningObject();
+//        this.responses = new ArrayList<>();
+//        this.maxPossibleKnowledgeEstimate = 1;
+//    }
+
+    //temprary fucntion to get htings working before switching to LearningResourceRecords
+    public LearningObject(LearningResourceRecord record){
+        this.id = record.getLearningResourceId();
+        this.maxPossibleKnowledgeEstimate = record.getMaxPossibleKnowledgeEstimate();
         this.responses = new ArrayList<>();
-        this.maxPossibleKnowledgeEstimate = 1;
     }
 
     public void addResponse(LearningObjectResponse response){
@@ -113,5 +117,15 @@ public class LearningObject {
         return getId() + "   Est:" + DataUtil.format(calcKnowledgeEstimate()) + "  Imp:" + DataUtil.format(getDataImportance()) + "  ResponseCount:" + getResponses().size();
     }
 
+    public void setMatchingKnowledgeEstimates(Collection<LearningObject> learningObjects, Map<String, LearningObject> loMap){
+        List<LearningObject> loList= new ArrayList<LearningObject>(loMap.values());
+        for(LearningObject fromList: learningObjects){
+            for(LearningObject toList: loList){
+                if(fromList == toList){
+                    toList.setMaxPossibleKnowledgeEstimate(fromList.getMaxPossibleKnowledgeEstimate());
+                }
+            }
+        }
+    }
 
 }

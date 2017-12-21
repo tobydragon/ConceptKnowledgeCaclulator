@@ -2,6 +2,8 @@ package edu.ithaca.dragonlab.ckc;
 
 import edu.ithaca.dragonlab.ckc.conceptgraph.CohortConceptGraphs;
 import edu.ithaca.dragonlab.ckc.conceptgraph.ConceptGraph;
+import edu.ithaca.dragonlab.ckc.suggester.GroupSuggester.Group;
+import edu.ithaca.dragonlab.ckc.suggester.GroupSuggester.Suggester;
 import edu.ithaca.dragonlab.ckc.suggester.SuggestionResource;
 import java.io.IOException;
 import java.util.List;
@@ -112,7 +114,7 @@ public interface ConceptKnowledgeCalculatorAPI {
 
 
     /**
-     * Calculates suggestions specific to a certain concept for an individual graph
+     * Calculates suggestions specific to a certain Concept for an individual graph
      * @return Suggestion Resource object with two order resource lists
      */
     SuggestionResource calcIndividualSpecificConceptSuggestions(String userId, String conceptId) throws Exception;
@@ -164,6 +166,8 @@ public interface ConceptKnowledgeCalculatorAPI {
      */
     List<String> calcIndividualConceptNodesSuggestions(String userID) throws Exception;
 
+    List<Group> calcSmallGroups(List<Suggester> groupTypeList, int groupSize) throws Exception;
+
     /**
      * When in structure mode, the ckc will clear and create a new structure ckc with the proper file
      * @param file
@@ -180,7 +184,7 @@ public interface ConceptKnowledgeCalculatorAPI {
     List<String> currentAssessment();
 
     /**
-     * @return a copy of the resource file lsit
+     * @return a copy of the resource file list
      */
     List<String> currentResource();
 
@@ -188,7 +192,6 @@ public interface ConceptKnowledgeCalculatorAPI {
      * @return a copy of the structure file list
      */
     List<String> currentStructure();
-
 
     /**
      * Checks that a specified assessment file is valid.
@@ -202,15 +205,6 @@ public interface ConceptKnowledgeCalculatorAPI {
     boolean structureIsValid(String name) throws IOException;
 
     boolean resourceIsValid(String name) throws IOException;
-
-
-    List<List<String>> randomGroupSuggestions (int choice) throws Exception;
-
-    List<List<String>> conceptDiffGroupSuggestions (int choice, String subject) throws Exception;
-
-    List<List<String>> resourceGroupSuggestions(int choice) throws Exception;
-
-    List<List<String>> graphSumGroupSuggestions(int choice, String subject) throws Exception;
 
 
     //testing purposes

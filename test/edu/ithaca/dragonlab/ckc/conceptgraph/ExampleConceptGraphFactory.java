@@ -7,6 +7,7 @@ import edu.ithaca.dragonlab.ckc.io.*;
 import java.util.List;
 import edu.ithaca.dragonlab.ckc.learningobject.ExampleLearningObjectLinkRecordFactory;
 import edu.ithaca.dragonlab.ckc.learningobject.ExampleLearningObjectResponseFactory;
+import edu.ithaca.dragonlab.ckc.learningobject.LearningResource;
 
 /**
  * @author tdragon
@@ -102,9 +103,9 @@ public class ExampleConceptGraphFactory {
 
      public static ConceptGraph willExampleConceptGraphTestOneStudent() {
         try{
-        CSVReader csvReader = new CSVReader("test/testresources/ManuallyCreated/basicRealisticAssessment.csv");
+        CSVReader csvReader = new SakaiReader("test/testresources/ManuallyCreated/basicRealisticAssessment.csv");
             ConceptGraphRecord graphRecord = ConceptGraphRecord.buildFromJson("test/testresources/ManuallyCreated/basicRealisticConceptGraph.json");
-            List<LearningObjectLinkRecord> LOLRlist = LearningObjectLinkRecord.buildListFromJson("test/testresources/ManuallyCreated/basicRealisticResource.json");
+            List<LearningResourceRecord> LOLRlist = LearningResourceRecord.buildListFromJson("test/testresources/ManuallyCreated/basicRealisticResource.json");
 
             ConceptGraph graph = new ConceptGraph(graphRecord, LOLRlist, csvReader.getManualGradedResponses());
             graph.calcKnowledgeEstimates();
@@ -125,9 +126,9 @@ public class ExampleConceptGraphFactory {
 
         graphMapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
         try{
-        CSVReader csvReader = new CSVReader("test/testresources/ManuallyCreated/simpleAssessment.csv");
+        CSVReader csvReader = new SakaiReader("test/testresources/ManuallyCreated/simpleAssessment.csv");
             ConceptGraphRecord graphRecord = ConceptGraphRecord.buildFromJson("test/testresources/ManuallyCreated/simpleConceptGraph.json");
-            List<LearningObjectLinkRecord> LOLRlist = LearningObjectLinkRecord.buildListFromJson("test/testresources/ManuallyCreated/simpleResource.json");
+            List<LearningResourceRecord> LOLRlist = LearningResourceRecord.buildListFromJson("test/testresources/ManuallyCreated/simpleResource.json");
              ConceptGraph graph = new ConceptGraph(graphRecord, LOLRlist, csvReader.getManualGradedResponses());
 
             graph.calcKnowledgeEstimates();

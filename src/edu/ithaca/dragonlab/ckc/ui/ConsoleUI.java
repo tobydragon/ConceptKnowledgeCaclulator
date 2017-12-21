@@ -1,7 +1,9 @@
 package edu.ithaca.dragonlab.ckc.ui;
 
+import com.sun.org.apache.xpath.internal.SourceTree;
 import edu.ithaca.dragonlab.ckc.ConceptKnowledgeCalculator;
 import edu.ithaca.dragonlab.ckc.ConceptKnowledgeCalculatorAPI;
+import edu.ithaca.dragonlab.ckc.suggester.GroupSuggester.*;
 import edu.ithaca.dragonlab.ckc.suggester.SuggestionResource;
 
 import java.io.IOException;
@@ -27,6 +29,17 @@ public class ConsoleUI {
     public ConsoleUI(String structureFilename, String resourceFilename, String assessmentFilename) {
         try {
             ckc = new ConceptKnowledgeCalculator(structureFilename, resourceFilename, assessmentFilename);
+        } catch (Exception e) {
+            System.out.println("Unable to load default files, please choose files manually. Error follows:");
+            e.printStackTrace();
+            ckc = new ConceptKnowledgeCalculator();
+        }
+        run();
+    }
+
+    public ConsoleUI(List<String> structureFilenames, List<String> resourceFilenames, List<String> assessmentFilenames) {
+        try {
+            ckc = new ConceptKnowledgeCalculator(structureFilenames, resourceFilenames, assessmentFilenames);
         } catch (Exception e) {
             System.out.println("Unable to load default files, please choose files manually. Error follows:");
             e.printStackTrace();
@@ -166,12 +179,20 @@ public class ConsoleUI {
             //COHORTGRAPH MODE
             }else{
 
-                System.out.println("What do you want to do? \n 1 - calculate a list of concept nodes to work on \n 2 - calculate resources suggestions based on a specific concept \n 3 - automatically calculate suggestions \n 4 - View graph \n 5 - Create new graph \n 6 - Replace graph file \n 7 - Add another assessment file \n 8 - Remove assessment file \n 9 - Replace resource file \n 10 - View list of users \n 11 - Get Learning Object Average \n 12 - Get Student Average \n 13 - Link Learning Objects to similar factors \n 14 -  Graph strength of concept structure \n 15 - Create Groups of Random Students \n 16 - Create Groups of Students Based on Their Suggestions \n 17 - Create Group Of Students Based on Their Graph Sums \n 18 - Concept Difference Sum Group Suggestions \n 19 - View Structure Graph (switch to structure mode) \n 20 - Create model file \n 21 - Quit");
+                System.out.println("What do you want to do? \n 1 - calculate a list of concept nodes to work on \n 2 - calculate resources suggestions based on a specific concept \n 3 - automatically calculate suggestions \n 4 - View graph \n 5 - Create new graph \n 6 - Replace graph file \n 7 - Add another assessment file \n 8 - Remove assessment file \n 9 - Replace resource file \n 10 - View list of users \n 11 - Get Learning Object Average \n 12 - Get Student Average \n 13 - Link Learning Objects to similar factors \n 14 -  Graph strength of concept structure \n 15 - Create Groups of Random Students \n 16 - Create Groups of Students Based on Their Suggestions \n 17 - Create Group Of Students Based on Their Graph Sums \n 18 - Concept Difference Sum Group Suggestions \n 19 - View Structure Graph (switch to structure mode) \n 20 - Create model file \n 21 - Calc Groups\n 22 - Quit");
+
+                System.out.println("What do you want to do? \n 1 - calculate a list of Concept nodes to work on \n 2 - calculate resources suggestions based on a specific Concept \n 3 - automatically calculate suggestions \n 4 - View graph \n 5 - Create new graph \n 6 - Replace graph file \n 7 - Add another assessment file \n 8 - Remove assessment file \n 9 - Replace resource file \n 10 - View list of users \n 11 - Get Learning Object Average \n 12 - Get Student Average \n 13 - Link Learning Objects to similar factors \n 14 -  Graph strength of Concept structure \n 15 - Create Groups of BySizeSuggester Students \n 16 - Create Groups of Students Based on Their Suggestions \n 17 - Create Group Of Students Based on Their Graph Sums \n 18 - Concept Difference Sum Group Suggestions \n 19 - View Structure Graph (switch to structure mode) \n 20 - Create model file \n 21 - Calc Groups \n 22 - Quit");
+
+
                 Integer num = scanner.nextInt();
 
-                while (num < 1 || num > 21) {
+                while (num < 1 || num > 22) {
                     System.out.println("Out of bounds");
-                    System.out.println("What do you want to do? \n 1 - calculate a list of concept nodes to work on \n 2 - calculate resources suggestions based on a specific concept \n 3 - automatically calculate suggestions \n 4 - View graph \n 5 - Create new graph \n 6 - Replace graph file \n 7 - Add another assessment file \n 8 - Remove assessment file \n 9 - Replace resource file \n 10 - View list of users \n 11 - Get Learning Object Average \n 12 - Get Student Average \n 13 - Link Learning Objects to similar factors \n 14 -  Graph strength of concept structure \n 15 - Create Groups of Random Students \n 16 - Create Groups of Students Based on Their Suggestions \n 17 - Create Group Of Students Based on Their Graph Sums \n 18 - Concept Difference Sum Group Suggestions \n 19 - View Structure Graph (switch to structure mode) \n 20 - Create model file \n 21 - Quit");
+
+                    System.out.println("What do you want to do? \n 1 - calculate a list of concept nodes to work on \n 2 - calculate resources suggestions based on a specific concept \n 3 - automatically calculate suggestions \n 4 - View graph \n 5 - Create new graph \n 6 - Replace graph file \n 7 - Add another assessment file \n 8 - Remove assessment file \n 9 - Replace resource file \n 10 - View list of users \n 11 - Get Learning Object Average \n 12 - Get Student Average \n 13 - Link Learning Objects to similar factors \n 14 -  Graph strength of concept structure \n 15 - Create Groups of Random Students \n 16 - Create Groups of Students Based on Their Suggestions \n 17 - Create Group Of Students Based on Their Graph Sums \n 18 - Concept Difference Sum Group Suggestions \n 19 - View Structure Graph (switch to structure mode) \n 20 - Create model file \n 21 - Calc Groups\n 22 - Quit");
+
+                    System.out.println("What do you want to do? \n 1 - calculate a list of Concept nodes to work on \n 2 - calculate resources suggestions based on a specific Concept \n 3 - automatically calculate suggestions \n 4 - View graph \n 5 - Create new graph \n 6 - Replace graph file \n 7 - Add another assessment file \n 8 - Remove assessment file \n 9 - Replace resource file \n 10 - View list of users \n 11 - Get Learning Object Average \n 12 - Get Student Average \n 13 - Link Learning Objects to similar factors \n 14 -  Graph strength of Concept structure \n 15 - Create Groups of BySizeSuggester Students \n 16 - Create Groups of Students Based on Their Suggestions \n 17 - Create Group Of Students Based on Their Graph Sums \n 18 - Concept Difference Sum Group Suggestions \n 19 - View Structure Graph (switch to structure mode) \n 20 - Create model file \n 21 - Calc Groups \n 22 - Quit");
+
                     num = scanner.nextInt();
                 }
                 scanner.nextLine();
@@ -227,6 +248,8 @@ public class ConsoleUI {
                     switchToStructuremode();
                 }else if(num ==20){
                     createModelFile();
+                }else if(num ==21) {
+                    calculateSmallGroups(scanner);
                 }else{
                     contQuit=0;
                 }
@@ -237,7 +260,7 @@ public class ConsoleUI {
 
 
     public void createConceptDiffGroupSuggestions(Scanner scanner){
-        System.out.println("Get group suggestions based on the difference in concept node's");
+        System.out.println("Get group suggestions based on the difference in Concept node's");
 
         System.out.println("Do you want groups of 2 or 3? ");
         Integer choice = scanner.nextInt();
@@ -249,21 +272,21 @@ public class ConsoleUI {
 
         scanner.nextLine();
 
-        System.out.println("If you want to create groups on the entire graph type 'all' or type in the concept ID");
+        System.out.println("If you want to create groups on the entire graph type 'all' or type in the Concept ID");
         String concept = scanner.nextLine();
 
 
-        try {
-            List<List<String>> groupings = ckc.conceptDiffGroupSuggestions(choice, concept);
-
-            for(List<String> group: groupings) {
-                System.out.println(group);
-            }
-
-
-        } catch (Exception e) {
-            System.out.println("Wrong mode");
-        }
+//        try {
+//            List<List<String>> groupings = ckc.conceptDiffGroupSuggestions(choice, concept);
+//
+//            for(List<String> group: groupings) {
+//                System.out.println(group);
+//            }
+//
+//
+//        } catch (Exception e) {
+//            System.out.println("Wrong mode");
+//        }
     }
 
 
@@ -280,19 +303,19 @@ public class ConsoleUI {
 
         scanner.nextLine();
 
-        System.out.println("If you want to create groups on the entire graph type 'all' or type in the concept ID");
+        System.out.println("If you want to create groups on the entire graph type 'all' or type in the Concept ID");
         String concept = scanner.nextLine();
 
 
-        try {
-            List<List<String>> groupings = ckc.graphSumGroupSuggestions(choice, concept);
-
-            for(List<String> group: groupings){
-                System.out.println(group);
-            }
-        } catch (Exception e) {
-            System.out.println("Wrong mode");
-        }
+//        try {
+//            List<List<String>> groupings = ckc.graphSumGroupSuggestions(choice, concept);
+//
+//            for(List<String> group: groupings){
+//                System.out.println(group);
+//            }
+//        } catch (Exception e) {
+//            System.out.println("Wrong mode");
+//        }
     }
 
     public void createResourceGroupSuggestions(Scanner scanner){
@@ -306,15 +329,15 @@ public class ConsoleUI {
             choice = scanner.nextInt();
         }
 
-        try {
-            List<List<String>> groupings = ckc.resourceGroupSuggestions(choice);
-
-            for(List<String> group: groupings){
-                System.out.println(group);
-            }
-        } catch (Exception e) {
-            System.out.println("Wrong mode");
-        }
+//        try {
+//            List<List<String>> groupings = ckc.resourceGroupSuggestions(choice);
+//
+//            for(List<String> group: groupings){
+//                System.out.println(group);
+//            }
+//        } catch (Exception e) {
+//            System.out.println("Wrong mode");
+//        }
     }
 
 
@@ -325,17 +348,17 @@ public class ConsoleUI {
         System.out.println("What size groups do you want?");
         Integer choice = scanner.nextInt();
 
-        try {
-            List<List<String>> groupings = ckc.randomGroupSuggestions(choice);
-
-
-            for(List<String> group: groupings){
-                System.out.println(group);
-            }
-
-        } catch (Exception e) {
-            System.out.println(e);
-        }
+//        try {
+//            List<List<String>> groupings = ckc.randomGroupSuggestions(choice);
+//
+//
+//            for(List<String> group: groupings){
+//                System.out.println(group);
+//            }
+//
+//        } catch (Exception e) {
+//            System.out.println(e);
+//        }
 
     }
 
@@ -374,7 +397,7 @@ public class ConsoleUI {
 
 
     public void createLearningObjectList(Scanner scanner){
-        System.out.println("calculate a list of concept nodes to work on ");
+        System.out.println("calculate a list of Concept nodes to work on ");
         System.out.println("User ID");
         String userID = scanner.nextLine();
 
@@ -393,7 +416,7 @@ public class ConsoleUI {
 
 
     public void specificLearningObjectSuggestion(Scanner scanner){
-        System.out.println("calculate resource suggestions based on a specific concept");
+        System.out.println("calculate resource suggestions based on a specific Concept");
         System.out.println("User ID");
         String userID = scanner.nextLine();
 
@@ -473,7 +496,7 @@ public class ConsoleUI {
     public void createNewCohortGraph(Scanner scanner){
         System.out.println("create new cohort graphs");
 
-        System.out.println("Type concept graph path: ");
+        System.out.println("Type Concept graph path: ");
         String structure = scanner.nextLine();
 
         System.out.println("Type learning object record path: ");
@@ -658,6 +681,46 @@ public class ConsoleUI {
         }
 
     }
+
+    public void calculateSmallGroups(Scanner scanner){
+        System.out.println("Calculate Small Groups");
+        System.out.println("What size group: ");
+        int size = scanner.nextInt();
+
+        List<Suggester> listSuggester = new ArrayList<>();
+
+        //set up for buckets
+        List<List<Integer>> ranges = new ArrayList<>();
+        List<Integer> temp = new ArrayList<>();
+        temp.add(0);
+        temp.add(50);
+        List<Integer> temp2 = new ArrayList<>();
+        temp2.add(50);
+        temp2.add(80);
+        List<Integer> temp3 = new ArrayList<>();
+        temp3.add(80);
+        temp3.add(100);
+        ranges.add(temp);
+        ranges.add(temp2);
+        ranges.add(temp3);
+        try {
+            listSuggester.add(new BucketSuggester(ranges));
+            listSuggester.add(new ConceptSuggester());
+            listSuggester.add(new BySizeSuggester(size, true));
+//            listSuggester.add(new JigsawSuggester());
+
+            List<Group> groupings = ckc.calcSmallGroups(listSuggester, size);
+
+            for(Group gr: groupings){
+                System.out.println(gr);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+
+    }
+
 
 
 }

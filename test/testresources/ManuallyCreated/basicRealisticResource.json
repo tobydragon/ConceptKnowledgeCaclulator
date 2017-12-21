@@ -1,55 +1,55 @@
 [
-  {"learningObject":"Q1",
+  {"learningResourceId":"Q1",
   "conceptIds":[
     "If Statement"
   ],
   "dataImportance": "1"
   },
-  {"learningObject":"Q2",
+  {"learningResourceId":"Q2",
   "conceptIds":[
     "If Statement"
   ],
   "dataImportance": "1"
   },
-  {"learningObject":"Q3",
+  {"learningResourceId":"Q3",
   "conceptIds":[
     "If Statement",
     "For Loop"
   ],
   "dataImportance": "1"
   },
-  {"learningObject":"Q4",
+  {"learningResourceId":"Q4",
   "conceptIds":[
     "Boolean Expressions",
     "Boolean"
   ],
   "dataImportance": "1"
   },
-  {"learningObject":"Q5",
+  {"learningResourceId":"Q5",
   "conceptIds":[
     "Boolean Expressions",
     "Boolean"
   ],
   "dataImportance": "1"
   },
-  {"learningObject":"Q6",
+  {"learningResourceId":"Q6",
     "conceptIds":[
       "Boolean"
     ],
     "dataImportance": "1"
   },
-  {"learningObject":"Q7",
+  {"learningResourceId":"Q7",
     "conceptIds":[
       "Boolean"
     ],
     "dataImportance": "1"
   },
-  {"learningObject":"Q8",
+  {"learningResourceId":"Q8",
     "conceptIds":[
       "Boolean"
     ],
     "dataImportance": "1"
-  },{"learningObject":"Q9",
+  },{"learningResourceId":"Q9",
     "conceptIds":[
       "While Loop",
       "Boolean Expressions",
@@ -57,7 +57,7 @@
     ],
     "dataImportance": "1"
   },
-  {"learningObject":"Q10",
+  {"learningResourceId":"Q10",
     "conceptIds":[
       "While Loop",
       "If Statement",
@@ -66,35 +66,35 @@
     ],
     "dataImportance": "1"
   },
-  {"learningObject": "Q11",
+  {"learningResourceId": "Q11",
     "conceptIds": [
     "For Loop"
   ],
     "dataImportance": "1"
   },
   {
-    "learningObject": "Q12",
+    "learningResourceId": "Q12",
     "conceptIds": [
       "Counting"
     ],
     "dataImportance": "1"
   },
   {
-    "learningObject": "Q13",
+    "learningResourceId": "Q13",
     "conceptIds": [
       "Counting"
     ],
     "dataImportance": "1"
   },
   {
-    "learningObject": "Q14",
+    "learningResourceId": "Q14",
     "conceptIds": [
       "Counting"
     ],
     "dataImportance": "1"
   },
   {
-    "learningObject": "Q15",
+    "learningResourceId": "Q15",
     "conceptIds": [
       "Counting"
     ],

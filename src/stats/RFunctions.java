@@ -239,16 +239,16 @@ public class RFunctions {
     public static Collection<String> duplicateCheck(ConceptGraph graph, Collection<String> conceptStringList){
         List<String> removalList = new ArrayList<String>();
         Collection<String> newStringList = new ArrayList<String>();
-        //copy the collection of concept strings into the new collection
+        //copy the collection of Concept strings into the new collection
         for(String curString : conceptStringList){
             newStringList.add(curString);
         }
-        //Compare each concept string with a concept string
+        //Compare each Concept string with a Concept string
         for(String curString : conceptStringList){
             for(String otherString : newStringList){
 
-                //If the secondary concept list's concept is not already in the removal list and the list of LOs in
-                //the concept list are identical but the names of the concepts are different, add concept to removal list
+                //If the secondary Concept list's Concept is not already in the removal list and the list of LOs in
+                //the Concept list are identical but the names of the concepts are different, add Concept to removal list
                 if(!removalList.contains(curString) && !removalList.contains(otherString) && curString != otherString){
                     ConceptNode curNode = graph.findNodeById(curString);
                     ConceptNode otherNode = graph.findNodeById(otherString);
@@ -279,7 +279,7 @@ public class RFunctions {
 
 
 
-                //modelString += conceptString + " -> " + lo.getId() + ", " + lo.getId() + "To" + conceptString + ", NA \n";
+                //modelString += conceptString + " -> " + lo.getLearningResourceId() + ", " + lo.getLearningResourceId() + "To" + conceptString + ", NA \n";
                 modelString += conceptString + " -> " + lo.getId().replaceAll("\\s","") + ", " + lo.getId().replaceAll("\\s","") + "To" + conceptString + ", NA \n";
 
             }

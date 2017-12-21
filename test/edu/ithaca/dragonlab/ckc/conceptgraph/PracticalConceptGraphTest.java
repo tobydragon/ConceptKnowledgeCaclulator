@@ -22,12 +22,12 @@ public class PracticalConceptGraphTest {
 
         graphMapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
         try{
-        CSVReader csvReader = new CSVReader(TEST_DIR+"basicRealisticAssessment.csv");
+        CSVReader csvReader = new SakaiReader(TEST_DIR+"basicRealisticAssessment.csv");
 
 
             ConceptGraphRecord graphRecord = ConceptGraphRecord.buildFromJson(TEST_DIR+"mediumRealisticConceptGraph.json");
 
-            List<LearningObjectLinkRecord> LOLRlist = LearningObjectLinkRecord.buildListFromJson(TEST_DIR + "mediumRealisticResource.json");
+            List<LearningResourceRecord> LOLRlist = LearningResourceRecord.buildListFromJson(TEST_DIR + "mediumRealisticResource.json");
             ConceptGraph graph = new ConceptGraph(graphRecord, LOLRlist, csvReader.getManualGradedResponses());
 
             ObjectMapper mapper = new ObjectMapper();
@@ -58,12 +58,12 @@ public class PracticalConceptGraphTest {
 
         graphMapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
         try{
-        CSVReader csvReader = new CSVReader("test/testresources/ManuallyCreated/basicRealisticAssessment.csv");
+        CSVReader csvReader = new SakaiReader("test/testresources/ManuallyCreated/basicRealisticAssessment.csv");
 
 
             ConceptGraphRecord graphRecord = ConceptGraphRecord.buildFromJson("test/testresources/ManuallyCreated/basicRealisticConceptGraph.json");
 
-            List<LearningObjectLinkRecord> LOLRlist = LearningObjectLinkRecord.buildListFromJson("test/testresources/ManuallyCreated/basicRealisticResource.json");
+            List<LearningResourceRecord> LOLRlist = LearningResourceRecord.buildListFromJson("test/testresources/ManuallyCreated/basicRealisticResource.json");
             ConceptGraph graph = new ConceptGraph(graphRecord, LOLRlist);
 
             CohortConceptGraphs gcg = new CohortConceptGraphs(graph,csvReader.getManualGradedResponses());
@@ -98,12 +98,12 @@ public class PracticalConceptGraphTest {
 
         graphMapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
         try{
-        CSVReader csvReader = new CSVReader(TEST_DIR+"advancedRealisticAssessment.csv");
+        CSVReader csvReader = new SakaiReader(TEST_DIR+"advancedRealisticAssessment.csv");
 
 
             ConceptGraphRecord graphRecord = ConceptGraphRecord.buildFromJson(TEST_DIR+"mediumRealisticConceptGraph.json");
 
-            List<LearningObjectLinkRecord> LOLRlist = LearningObjectLinkRecord.buildListFromJson(TEST_DIR + "mediumRealisticResource.json");
+            List<LearningResourceRecord> LOLRlist = LearningResourceRecord.buildListFromJson(TEST_DIR + "mediumRealisticResource.json");
             ConceptGraph graph = new ConceptGraph(graphRecord, LOLRlist);
 
             CohortConceptGraphs gcg = new CohortConceptGraphs(graph,csvReader.getManualGradedResponses());
@@ -135,10 +135,10 @@ public class PracticalConceptGraphTest {
 
         graphMapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
         try{
-        CSVReader csvReader = new CSVReader(TEST_DIR+"singleStudentRealisticAssessment.csv");
+        CSVReader csvReader = new SakaiReader(TEST_DIR+"singleStudentRealisticAssessment.csv");
 
             ConceptGraphRecord graphRecord = ConceptGraphRecord.buildFromJson(TEST_DIR+"mediumRealisticConceptGraph.json");
-            List<LearningObjectLinkRecord> LOLRlist = LearningObjectLinkRecord.buildListFromJson(TEST_DIR+"mediumRealisticResource.json");
+            List<LearningResourceRecord> LOLRlist = LearningResourceRecord.buildListFromJson(TEST_DIR+"mediumRealisticResource.json");
             ConceptGraph graph = new ConceptGraph(graphRecord, LOLRlist, csvReader.getManualGradedResponses());
             graph.calcDataImportance();
             graph.calcKnowledgeEstimates();

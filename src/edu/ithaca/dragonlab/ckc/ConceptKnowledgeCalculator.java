@@ -1,12 +1,10 @@
 package edu.ithaca.dragonlab.ckc;
 
 import edu.ithaca.dragonlab.ckc.conceptgraph.*;
-import edu.ithaca.dragonlab.ckc.io.CSVReader;
-import edu.ithaca.dragonlab.ckc.io.CohortConceptGraphsRecord;
-import edu.ithaca.dragonlab.ckc.io.ConceptGraphRecord;
-import edu.ithaca.dragonlab.ckc.io.LearningObjectLinkRecord;
+import edu.ithaca.dragonlab.ckc.io.*;
 import edu.ithaca.dragonlab.ckc.learningobject.LearningObject;
 import edu.ithaca.dragonlab.ckc.learningobject.LearningObjectResponse;
+import edu.ithaca.dragonlab.ckc.learningobject.LearningResource;
 import edu.ithaca.dragonlab.ckc.suggester.GroupSuggester.*;
 import edu.ithaca.dragonlab.ckc.suggester.LearningObjectSuggester;
 import edu.ithaca.dragonlab.ckc.suggester.SuggestionResource;
@@ -23,7 +21,7 @@ import java.util.*;
  * Created by tdragon on 6/8/17.
  */
 public class ConceptKnowledgeCalculator implements ConceptKnowledgeCalculatorAPI{
-    private static final String OUTPUT_PATH = "out/";
+    private static final String OUTPUT_PATH = "ckcvisualizer/json/";
 
     //graphs
     private CohortConceptGraphs cohortConceptGraphs;
@@ -72,6 +70,11 @@ public class ConceptKnowledgeCalculator implements ConceptKnowledgeCalculatorAPI
         assessment.add(assessmentFilename);
 
         clearAndCreateCohortData(structure, resource, assessment);
+    }
+
+    public ConceptKnowledgeCalculator(List<String> structureFilenames, List<String> resourceFilenames, List<String> assessmentFilenames) throws IOException{
+        this();
+        clearAndCreateCohortData(structureFilenames, resourceFilenames, assessmentFilenames);
     }
 
 
@@ -126,16 +129,17 @@ public class ConceptKnowledgeCalculator implements ConceptKnowledgeCalculatorAPI
 
         structureFiles.add(structureFilename.get(0));
 
-        resourceFiles.add(resourceFilename.get(0));
+        //resourceFiles.add(resourceFilename.get(0));
 
 
         //create the graph structure to be copied for each user
         ConceptGraphRecord structureRecord = ConceptGraphRecord.buildFromJson(structureFiles.get(0));
 
-        List<LearningObjectLinkRecord> linkRecord = new ArrayList<>();
-        for (String rFiles : resourceFiles){
-            List<LearningObjectLinkRecord> temp = LearningObjectLinkRecord.buildListFromJson(rFiles);
+        List<LearningResourceRecord> linkRecord = new ArrayList<>();
+        for (String rFiles : resourceFilename){
+            List<LearningResourceRecord> temp = LearningResourceRecord.buildListFromJson(rFiles);
             linkRecord.addAll(temp);
+            resourceFiles.add(rFiles);
         }
 
         assessmentFiles.addAll(assessmentFilename);
@@ -146,7 +150,7 @@ public class ConceptKnowledgeCalculator implements ConceptKnowledgeCalculatorAPI
         List<LearningObjectResponse> assessments = new ArrayList<>();
 
         for (String aname: assessmentFiles){
-            CSVReader csvReader = new CSVReader(aname);
+            CSVReader csvReader = new SakaiReader(aname);
             List<LearningObjectResponse> temp = csvReader.getManualGradedResponses();
             assessments.addAll(temp);
         }
@@ -461,94 +465,19 @@ public class ConceptKnowledgeCalculator implements ConceptKnowledgeCalculatorAPI
         }
     }
 
-
-    @Override
-    public List<List<String>> randomGroupSuggestions (int choice) throws Exception {
-
-            if (currentMode == Mode.COHORTGRAPH) {
-
-                GroupSuggester obj = new RandomGroupSuggester();
-
-                return obj.suggestGroup(cohortConceptGraphs, choice);
-
-            } else {
-                throw new Exception("Wrong Mode");
-
-            }
-
-    }
-
-
-    @Override
-    public List<List<String>> conceptDiffGroupSuggestions (int choice, String subject) throws Exception {
-        if(choice>3 || choice<2){
-            throw  new Exception("invalid group size");
-        }else {
-
-            Collection<String> nodeList = cohortConceptGraphs.getAvgGraph().getAllNodeIds();
-
-            if (subject.equals("all") || nodeList.contains(subject)) {
-                if (currentMode == Mode.COHORTGRAPH) {
-                    ConceptDiffGroupSuggester sug = new ConceptDiffGroupSuggester();
-
-                    return sug.suggestGroup(cohortConceptGraphs, choice, subject);
-
-                } else {
-                    throw new Exception("Wrong Mode");
-
-                }
-
-            } else {
-                throw new Exception("Invalid subject");
-            }
-        }
-
-    }
-
-
-    @Override
-    public List<List<String>> graphSumGroupSuggestions (int choice, String subject) throws Exception {
-        if(choice>3 || choice<2){
-            throw  new Exception("invalid group size");
-        }else {
-
-            Collection<String> nodeList = cohortConceptGraphs.getAvgGraph().getAllNodeIds();
-
-            if (subject.equals("all") || nodeList.contains(subject)) {
-                if (currentMode == Mode.COHORTGRAPH) {
-                    GraphSumGroupSuggester sug = new GraphSumGroupSuggester();
-
-                    return sug.suggestGroup(cohortConceptGraphs, choice, subject);
-
-                } else {
-                    throw new Exception("Wrong Mode");
-
-                }
-
-            } else {
-                throw new Exception("Invalid subject");
-            }
-        }
-
-    }
-
-    @Override
-    public List<List<String>> resourceGroupSuggestions(int choice) throws Exception {
+    public List<Group> calcSmallGroups(List<Suggester> groupTypeList, int groupSize) throws Exception {
         if(currentMode==Mode.COHORTGRAPH) {
-
-            if(choice>3 || choice <2){
-                throw new Exception("invalid group size");
-            }else {
-                GroupSuggester obj = new ResourceNCubeGroupSuggester();
-
-                return obj.suggestGroup(cohortConceptGraphs, choice);
-
-            }
-        }else {
+            GroupSuggester sug = new GroupSuggester();
+            List<Group> initialGroup = sug.getGroupList(this.cohortConceptGraphs);
+            return sug.grouping(initialGroup, groupSize, groupTypeList);
+        }else{
             throw new Exception("Wrong Mode");
-
         }
+
     }
+
+
+
 
     public String csvToResource() throws Exception {
         if(currentMode==Mode.STRUCTUREGRAPHWITHASSESSMENT) {
@@ -564,9 +493,10 @@ public class ConceptKnowledgeCalculator implements ConceptKnowledgeCalculatorAPI
     }
 
     public static void csvToResource(List<String> assessmentFiles, String destinationFilepath) throws Exception{
-            List<LearningObject> fullLoList = CSVReader.learningObjectsFromCSVList(assessmentFiles);
-            List<LearningObjectLinkRecord> lolrList = LearningObjectLinkRecord.createLearningObjectLinkRecords(fullLoList, 10);
-            LearningObjectLinkRecord.lolrToJSON(lolrList, destinationFilepath);
+        //TODO: hardcoded to sakai csv, need to hold a list of CSVReaders, or the information about which kind of reader it is...
+        List<LearningObject> fullLoList = ReaderTools.learningObjectsFromCSVList(2, assessmentFiles);
+        List<LearningResourceRecord> lolrList = LearningResourceRecord.createLRecordsFromAssessments(fullLoList);
+        LearningResourceRecord.resourceRecordsToJSON(lolrList, destinationFilepath);
     }
 
     public static void conceptIdsToTextFile(Collection<String> conceptIds, String destinationFilepath) throws Exception{
@@ -611,7 +541,6 @@ public class ConceptKnowledgeCalculator implements ConceptKnowledgeCalculatorAPI
         }else {
             throw new Exception("Wrong Mode");
         }
-
     }
 
     public double getStudentAvg(String user)throws NullPointerException{
@@ -647,6 +576,7 @@ public class ConceptKnowledgeCalculator implements ConceptKnowledgeCalculatorAPI
         }else{
             throw new NullPointerException();
         }
+
     }
 
     public void createConfirmatoryGraph(){
@@ -654,9 +584,9 @@ public class ConceptKnowledgeCalculator implements ConceptKnowledgeCalculatorAPI
             ConceptGraph graph = cohortConceptGraphs.getAvgGraph();
             Map<String, LearningObject> loMap = graph.getLearningObjectMap();
             List<LearningObject> objList = new ArrayList<LearningObject>(loMap.values());
-            KnowledgeEstimateMatrix myMatrix = new KnowledgeEstimateMatrix(objList);
+//            KnowledgeEstimateMatrix myMatrix = new KnowledgeEstimateMatrix(objList);
             try {
-                RFunctions.confirmatoryGraph(myMatrix, cohortConceptGraphs);
+//                RFunctions.confirmatoryGraph(myMatrix, cohortConceptGraphs);
             }catch (IndexOutOfBoundsException e){
                 System.out.println("Insufficient data to perform task. Please refer to guidelines of the data below:\n" +
                         "- There must be more than 1 student\n" +
@@ -710,7 +640,7 @@ public class ConceptKnowledgeCalculator implements ConceptKnowledgeCalculatorAPI
 
     @Override
     public boolean resourceIsValid(String name) throws IOException {
-        List<LearningObjectLinkRecord> temp = LearningObjectLinkRecord.buildListFromJson(name);
+        List<LearningResourceRecord> temp = LearningResourceRecord.buildListFromJson(name);
         if(temp.size()>0){
             return true;
         }else{
@@ -720,7 +650,7 @@ public class ConceptKnowledgeCalculator implements ConceptKnowledgeCalculatorAPI
 
     @Override
     public boolean assessmentIsValid(String name) throws IOException {
-        CSVReader csvReader = new CSVReader(name);
+        CSVReader csvReader = new SakaiReader(name);
         if (csvReader.getManualGradedResponses().size()>0){
             return true;
         }else{
