@@ -241,7 +241,7 @@ public class RFunctionsTest {
                 "- R prints other info. Not very useful\n" +
                 "- R prints warning messages about the graph and should be disregarded\n" +
                 "- R creates a graph displaying the exploratory factor analysis");
-        getFactorMatrixTest();
+        //getFactorMatrixTest();
         System.out.println(
                 "- R creates a graph displaying the confirmatory factor analysis");
         confirmatoryGraphTest();
@@ -250,7 +250,7 @@ public class RFunctionsTest {
         //both returns a double[][] and a printout
         System.out.println("- R prints info on deleting invalid columns\n" +
                 "- The function returns a matrix of the factors seen from getMatrixTest()");
-        returnFactorMatrixTest();
+        //returnFactorMatrixTest();
 
 
     }
