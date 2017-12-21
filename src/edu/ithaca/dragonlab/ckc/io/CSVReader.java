@@ -33,7 +33,6 @@ public abstract class CSVReader {
      * @param filename
      * @param gradeStartCoulmnIndex
      */
-    // make integer to CSV to make index of grade start, Call it : GradeStartColumnIndex
     public CSVReader(String filename, int gradeStartCoulmnIndex)throws IOException{
         this.filename = filename;
         manualGradedResponseList = new ArrayList<>();
