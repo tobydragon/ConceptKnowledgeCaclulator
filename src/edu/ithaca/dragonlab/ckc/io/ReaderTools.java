@@ -43,7 +43,7 @@ public class ReaderTools {
      *
      * @param indexMark the column index point where the recording of assignments and  grades start for the rest of the file
      * @param singleList the line of the file that contains the list of assignments with the maximum grade
-     * @return loList - a list of each assignment and its maximum grade
+     * @return loList -> a list of each assignment and its maximum grade
      */
 
     public static List<LearningObject> learningObjectsFromList(int indexMark, List<String> singleList) {

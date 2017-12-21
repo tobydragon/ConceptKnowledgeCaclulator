@@ -82,8 +82,8 @@ public abstract class CSVReader {
 
     /**
      * This function takes a list of student data and creates a manual graded response for that user
-     * @param singleList a list with each line in the csv file holding LORs
-     * @param gradeMark  used to keep track of which index in the list of LORs the function is currently on
+     * @param singleList - a list with each line in the csv file holding LORs
+     * @param gradeMark - used to keep track of which index in the list of LORs the function is currently on
      * @throws NullPointerException if the ManualGradedResponse is null
      */
     public void lorLister(ArrayList<String> singleList,int gradeMark)throws NullPointerException{

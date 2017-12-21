@@ -20,8 +20,8 @@ public class ZybooksReader extends CSVReader{
      * the last and first name are added together and then compared to the list of current students, if
      * there is a repeat then a number is added to the end of the name
      *
-     * @param dataLine a row in the CSV file that has a students information and grades
-     * @param studentNames a list that holds all the currently read in list of students
+     * @param dataLine - a row in the CSV file that has a students information and grades
+     * @param studentNames - a list that holds all the currently read in list of students
      */
     @Override
     public String makeFullName(List<String> dataLine, List<String> studentNames){

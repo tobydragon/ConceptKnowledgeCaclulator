@@ -17,8 +17,8 @@ public class SakaiReader extends CSVReader{
      * This function takes in a line that holds all the info for a specific student and returns the
      * student name.
      *
-     * @param dataLine the line of the students info and grades
-     * @param studentNames the list of current students already read in
+     * @param dataLine - the line of the students info and grades
+     * @param studentNames - the list of current students already read in
      * @return the name of the student
      */
     @Override
