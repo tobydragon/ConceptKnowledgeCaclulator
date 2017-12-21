@@ -123,7 +123,7 @@ public class ReaderTools {
                 numbers += character;
             }
             else if (character == '-' && Character.isDigit(object.charAt(i+1)))
-                    numbers += character;
+                numbers += character;
             else if (character == '.'){
                 decimal += 1;
                 numbers += character;
