@@ -4,6 +4,7 @@ import edu.ithaca.dragonlab.ckc.conceptgraph.*;
 import edu.ithaca.dragonlab.ckc.io.*;
 import edu.ithaca.dragonlab.ckc.learningobject.LearningObject;
 import edu.ithaca.dragonlab.ckc.learningobject.LearningObjectResponse;
+import edu.ithaca.dragonlab.ckc.learningobject.LearningResource;
 import edu.ithaca.dragonlab.ckc.suggester.GroupSuggester.*;
 import edu.ithaca.dragonlab.ckc.suggester.LearningObjectSuggester;
 import edu.ithaca.dragonlab.ckc.suggester.SuggestionResource;
@@ -134,9 +135,9 @@ public class ConceptKnowledgeCalculator implements ConceptKnowledgeCalculatorAPI
         //create the graph structure to be copied for each user
         ConceptGraphRecord structureRecord = ConceptGraphRecord.buildFromJson(structureFiles.get(0));
 
-        List<LearningObjectLinkRecord> linkRecord = new ArrayList<>();
+        List<LearningResourceRecord> linkRecord = new ArrayList<>();
         for (String rFiles : resourceFilename){
-            List<LearningObjectLinkRecord> temp = LearningObjectLinkRecord.buildListFromJson(rFiles);
+            List<LearningResourceRecord> temp = LearningResourceRecord.buildListFromJson(rFiles);
             linkRecord.addAll(temp);
             resourceFiles.add(rFiles);
         }
@@ -492,9 +493,10 @@ public class ConceptKnowledgeCalculator implements ConceptKnowledgeCalculatorAPI
     }
 
     public static void csvToResource(List<String> assessmentFiles, String destinationFilepath) throws Exception{
-            List<LearningObject> fullLoList = ReaderTools.learningObjectsFromCSVList(2,assessmentFiles);
-            List<LearningObjectLinkRecord> lolrList = LearningObjectLinkRecord.createLearningObjectLinkRecords(fullLoList, 10);
-            LearningObjectLinkRecord.lolrToJSON(lolrList, destinationFilepath);
+        //TODO: hardcoded to sakai csv, need to hold a list of CSVReaders, or the information about which kind of reader it is...
+        List<LearningObject> fullLoList = ReaderTools.learningObjectsFromCSVList(2, assessmentFiles);
+        List<LearningResourceRecord> lolrList = LearningResourceRecord.createLRecordsFromAssessments(fullLoList);
+        LearningResourceRecord.resourceRecordsToJSON(lolrList, destinationFilepath);
     }
 
     public static void conceptIdsToTextFile(Collection<String> conceptIds, String destinationFilepath) throws Exception{
@@ -628,7 +630,7 @@ public class ConceptKnowledgeCalculator implements ConceptKnowledgeCalculatorAPI
 
     @Override
     public boolean resourceIsValid(String name) throws IOException {
-        List<LearningObjectLinkRecord> temp = LearningObjectLinkRecord.buildListFromJson(name);
+        List<LearningResourceRecord> temp = LearningResourceRecord.buildListFromJson(name);
         if(temp.size()>0){
             return true;
         }else{

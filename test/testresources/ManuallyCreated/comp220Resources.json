@@ -1,11 +1,11 @@
 [
-  {"learningObject":"Lab 1: Guess the Pattern",
+  {"learningResourceId":"Lab 1: Guess the Pattern",
     "conceptIds":[
       "Interfaces"
     ],
     "dataImportance": "1"
   },
-  {"learningObject":"Lab 2: Array Library",
+  {"learningResourceId":"Lab 2: Array Library",
     "conceptIds":[
       "Array",
       "Pointers",
@@ -13,7 +13,7 @@
     ],
     "dataImportance": "1"
   },
-  {"learningObject":"Lab 3: Comparing Array Library Efficiency",
+  {"learningResourceId":"Lab 3: Comparing Array Library Efficiency",
     "conceptIds":[
       "Array",
       "Pointers",
@@ -22,7 +22,7 @@
     ],
     "dataImportance": "1"
   },
-  {"learningObject":"Lab 4: Recursion",
+  {"learningResourceId":"Lab 4: Recursion",
     "conceptIds":[
       "Recursion",
       "Pointers",
@@ -30,7 +30,7 @@
     ],
     "dataImportance": "1"
   },
-  {"learningObject":"Lab 5: Comparing Searches",
+  {"learningResourceId":"Lab 5: Comparing Searches",
     "conceptIds":[
       "Search",
       "Sort",
@@ -39,14 +39,14 @@
     ],
     "dataImportance": "1"
   },
-  {"learningObject":"Lab 6: ArrayList and Testing",
+  {"learningResourceId":"Lab 6: ArrayList and Testing",
     "conceptIds":[
       "Array",
       "List"
     ],
     "dataImportance": "2"
   },
-  {"learningObject":"Lab 7: Linked List",
+  {"learningResourceId":"Lab 7: Linked List",
     "conceptIds":[
       "Linked Nodes",
       "List",
@@ -54,7 +54,7 @@
     ],
     "dataImportance": "1"
   },
-  {"learningObject":"Lab 8: Comparing Arrays and Linked Lists",
+  {"learningResourceId":"Lab 8: Comparing Arrays and Linked Lists",
     "conceptIds":[
       "List",
       "Array",
