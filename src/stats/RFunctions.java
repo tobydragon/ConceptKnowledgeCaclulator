@@ -346,7 +346,7 @@ public class RFunctions {
             }
     }
 
-    //TODO: dataSem.dhp$A returns the values wanted but not in necessarily correct format. Also, many 0s are present
+    //TODO: dataSem.dhp$A returns the values wanted but not in necessarily correct format. Also, many 0s are present.
     public static double[][] returnConfirmatoryMatrix(KnowledgeEstimateMatrix loMatrix, CohortConceptGraphs ccg){
         int matrixSize = loMatrix.getStudentKnowledgeEstimates().length;
         try {
