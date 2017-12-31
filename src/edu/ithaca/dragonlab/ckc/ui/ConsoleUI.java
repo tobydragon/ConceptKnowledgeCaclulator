@@ -707,12 +707,11 @@ public class ConsoleUI {
             listSuggester.add(new BucketSuggester(ranges));
             listSuggester.add(new ConceptSuggester());
             listSuggester.add(new BySizeSuggester(size, true));
-//            listSuggester.add(new JigsawSuggester());
-
+//            listSuggester.add(new ComplementaryKnowledgeSuggester());
             List<Group> groupings = ckc.calcSmallGroups(listSuggester, size);
 
             for(Group gr: groupings){
-                System.out.println(gr);
+                System.out.println(gr.toString(0));
             }
         } catch (Exception e) {
             e.printStackTrace();

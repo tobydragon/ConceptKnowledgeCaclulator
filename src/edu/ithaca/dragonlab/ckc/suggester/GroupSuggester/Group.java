@@ -11,17 +11,40 @@ public class Group {
 
     Map<String, ConceptGraph> studentGraphMap;
     String id;
+    String concept;
+    String rationale;
+    //rationale
+    //resource
 
-    public Group(Map<String, ConceptGraph> map, String id){
+    public Group(Map<String, ConceptGraph> map, String id) {
         this.studentGraphMap = map;
         this.id = id;
+        this.rationale= "";
 
+
+    }
+
+    public Group(Map<String, ConceptGraph> map, String id, String conceptID){
+        this.studentGraphMap= map;
+        this.id = id;
+        this.concept = conceptID;
+        this.rationale = "";
     }
 
     public Group(){
         this.studentGraphMap = new HashMap<>();
         this.id = "";
+        this.concept = "";
+        this.rationale = "";
+    }
 
+    public String getConcept(){
+        return this.concept;
+    }
+
+    public void setConcept(String conceptString){
+
+        this.concept = conceptString;
     }
 
     public Map<String, ConceptGraph> getStudents(){
@@ -37,6 +60,13 @@ public class Group {
         this.studentGraphMap.putAll(addedMem.getStudents());
 
     }
+
+    public void addRationale(String rationale){
+        this.rationale += (" " + rationale);
+    }
+
+
+
 
     public void addMember(Group gr){
         Map<String, ConceptGraph> list = gr.getStudents();
@@ -59,6 +89,10 @@ public class Group {
 
 
     ///////testing
+
+    public String getRationale(){
+        return this.rationale;
+    }
 
     public boolean contains(String name){
         if(this.studentGraphMap.containsKey(name)){
@@ -83,8 +117,22 @@ public class Group {
 
     }
 
-    public String toString (){
+    /**
+     * to print out the student group list and at the end the list of rationale
+     * @param type
+     * @return
+     */
+    public String toString(int type){
+        String list = "";
+        for(String name: studentGraphMap.keySet()){
+            list += name + " " ;
+        }
+        list += " rational:" + this.rationale;
+        return list;
+    }
 
+
+    public String toString (){
         String list = "";
 
         for(String name: studentGraphMap.keySet()){
