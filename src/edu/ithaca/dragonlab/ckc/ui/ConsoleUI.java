@@ -179,13 +179,19 @@ public class ConsoleUI {
             //COHORTGRAPH MODE
             }else{
 
-                System.out.println("What do you want to do? \n 1 - calculate a list of Concept nodes to work on \n 2 - calculate resources suggestions based on a specific Concept \n 3 - automatically calculate suggestions \n 4 - View graph \n 5 - Create new graph \n 6 - Replace graph file \n 7 - Add another assessment file \n 8 - Remove assessment file \n 9 - Replace resource file \n 10 - View list of users \n 11 - Get Learning Object Average \n 12 - Get Student Average \n 13 - Link Learning Objects to similar factors \n 14 -  Graph strength of Concept structure \n 15 - Create Groups of BySizeSuggester Students \n 16 - Create Groups of Students Based on Their Suggestions \n 17 - Create Group Of Students Based on Their Graph Sums \n 18 - Concept Difference Sum Group Suggestions \n 19 - View Structure Graph (switch to structure mode) \n 20 - Calc Groups \n 21 - Quit");
+                System.out.println("What do you want to do? \n 1 - calculate a list of concept nodes to work on \n 2 - calculate resources suggestions based on a specific concept \n 3 - automatically calculate suggestions \n 4 - View graph \n 5 - Create new graph \n 6 - Replace graph file \n 7 - Add another assessment file \n 8 - Remove assessment file \n 9 - Replace resource file \n 10 - View list of users \n 11 - Get Learning Object Average \n 12 - Get Student Average \n 13 - Link Learning Objects to similar factors \n 14 -  Graph strength of concept structure \n 15 - Create Groups of Random Students \n 16 - Create Groups of Students Based on Their Suggestions \n 17 - Create Group Of Students Based on Their Graph Sums \n 18 - Concept Difference Sum Group Suggestions \n 19 - View Structure Graph (switch to structure mode) \n 20 - Create model file \n 21 - Calc Groups\n 22 - Quit");
+
+                System.out.println("What do you want to do? \n 1 - calculate a list of Concept nodes to work on \n 2 - calculate resources suggestions based on a specific Concept \n 3 - automatically calculate suggestions \n 4 - View graph \n 5 - Create new graph \n 6 - Replace graph file \n 7 - Add another assessment file \n 8 - Remove assessment file \n 9 - Replace resource file \n 10 - View list of users \n 11 - Get Learning Object Average \n 12 - Get Student Average \n 13 - Link Learning Objects to similar factors \n 14 -  Graph strength of Concept structure \n 15 - Create Groups of BySizeSuggester Students \n 16 - Create Groups of Students Based on Their Suggestions \n 17 - Create Group Of Students Based on Their Graph Sums \n 18 - Concept Difference Sum Group Suggestions \n 19 - View Structure Graph (switch to structure mode) \n 20 - Create model file \n 21 - Calc Groups \n 22 - Quit");
+
 
                 Integer num = scanner.nextInt();
 
-                while (num < 1 || num > 21) {
+                while (num < 1 || num > 22) {
                     System.out.println("Out of bounds");
-                    System.out.println("What do you want to do? \n 1 - calculate a list of Concept nodes to work on \n 2 - calculate resources suggestions based on a specific Concept \n 3 - automatically calculate suggestions \n 4 - View graph \n 5 - Create new graph \n 6 - Replace graph file \n 7 - Add another assessment file \n 8 - Remove assessment file \n 9 - Replace resource file \n 10 - View list of users \n 11 - Get Learning Object Average \n 12 - Get Student Average \n 13 - Link Learning Objects to similar factors \n 14 -  Graph strength of Concept structure \n 15 - Create Groups of BySizeSuggester Students \n 16 - Create Groups of Students Based on Their Suggestions \n 17 - Create Group Of Students Based on Their Graph Sums \n 18 - Concept Difference Sum Group Suggestions \n 19 - View Structure Graph (switch to structure mode) \n 20 - Calc Groups \n 21 - Quit");
+
+                    System.out.println("What do you want to do? \n 1 - calculate a list of concept nodes to work on \n 2 - calculate resources suggestions based on a specific concept \n 3 - automatically calculate suggestions \n 4 - View graph \n 5 - Create new graph \n 6 - Replace graph file \n 7 - Add another assessment file \n 8 - Remove assessment file \n 9 - Replace resource file \n 10 - View list of users \n 11 - Get Learning Object Average \n 12 - Get Student Average \n 13 - Link Learning Objects to similar factors \n 14 -  Graph strength of concept structure \n 15 - Create Groups of Random Students \n 16 - Create Groups of Students Based on Their Suggestions \n 17 - Create Group Of Students Based on Their Graph Sums \n 18 - Concept Difference Sum Group Suggestions \n 19 - View Structure Graph (switch to structure mode) \n 20 - Create model file \n 21 - Calc Groups\n 22 - Quit");
+
+                    System.out.println("What do you want to do? \n 1 - calculate a list of Concept nodes to work on \n 2 - calculate resources suggestions based on a specific Concept \n 3 - automatically calculate suggestions \n 4 - View graph \n 5 - Create new graph \n 6 - Replace graph file \n 7 - Add another assessment file \n 8 - Remove assessment file \n 9 - Replace resource file \n 10 - View list of users \n 11 - Get Learning Object Average \n 12 - Get Student Average \n 13 - Link Learning Objects to similar factors \n 14 -  Graph strength of Concept structure \n 15 - Create Groups of BySizeSuggester Students \n 16 - Create Groups of Students Based on Their Suggestions \n 17 - Create Group Of Students Based on Their Graph Sums \n 18 - Concept Difference Sum Group Suggestions \n 19 - View Structure Graph (switch to structure mode) \n 20 - Create model file \n 21 - Calc Groups \n 22 - Quit");
 
                     num = scanner.nextInt();
                 }
@@ -238,10 +244,11 @@ public class ConsoleUI {
                     createGraphSumGroupSuggestions(scanner);
                 } else if(num ==18) {
                     createConceptDiffGroupSuggestions(scanner);
-                }else if( num ==19) { 
+                }else if( num ==19) {
                     switchToStructuremode();
-                }else if(num ==20) {
-
+                }else if(num ==20){
+                    createModelFile();
+                }else if(num ==21) {
                     calculateSmallGroups(scanner);
                 }else{
                     contQuit=0;
@@ -658,6 +665,11 @@ public class ConsoleUI {
     public void createConfirmatoryGraph(){
         System.out.println("Creating graphs showing strengths between questions and concepts user has specified\n");
         ckc.createConfirmatoryGraph();
+    }
+
+    public void createModelFile(){
+        System.out.println("Creating model file for graph making in confirmatoryScript.R");
+        ckc.createModelFile();
     }
 
 

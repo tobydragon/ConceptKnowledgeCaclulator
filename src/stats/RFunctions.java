@@ -8,7 +8,7 @@ import edu.ithaca.dragonlab.ckc.conceptgraph.ConceptNode;
 import edu.ithaca.dragonlab.ckc.conceptgraph.KnowledgeEstimateMatrix;
 import edu.ithaca.dragonlab.ckc.learningobject.LearningObject;
 
-import java.io.File;
+import java.io.*;
 import java.util.*;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -194,7 +194,7 @@ public class RFunctions {
     /**
      * creates a matrix of factors in java (factors=rows, LearningObjects=columns)
      * @param loMatrix
-     * @return statsMatrix the matrix of factors
+     * @return statsMatrix the matrix of strengths between a factor and LearningObject
      * @pre resource, assessment, structure files are all present and an R Matrix is created
      * @throws Exception
      */
@@ -285,24 +285,54 @@ public class RFunctions {
             }
         }
 
+
         modelString = modelString.replaceAll(":", "");
         modelString = modelString.replaceAll("\\.", "");
         return modelString;
     }
 
+
+
+    public static void modelToFile(CohortConceptGraphs ccg){
+        String modelString = modelMaker(ccg);
+        File file = new File("resources/stats/model.txt");
+        try{
+
+              // creates the file
+              file.createNewFile();
+
+              // creates a FileWriter Object
+              FileWriter writer = new FileWriter(file);
+
+              // Writes the content to the file
+              writer.write(modelString);
+              writer.flush();
+              writer.close();
+            System.out.println("File successfully created. File: ConceptKnowledgeCalculator/src/stats/model.txt");
+        }catch (IOException e){
+            e.printStackTrace();
+            System.out.println("Error occurred in exporting data model to file.");
+        }
+    }
+
     public static void confirmatoryGraph(KnowledgeEstimateMatrix loMatrix, CohortConceptGraphs ccg){
-        int matrixSize = loMatrix.getStudentKnowledgeEstimates().length;
-        //if((matrixSize/loMatrix.getObjList().size()) > 1) {
             try {
-                String modelString = modelMaker(ccg);
+                modelToFile(ccg);
+
                 RCaller rCaller = RCallerVariable();
                 RCode code = loMatrix.getrMatrix();
                 code.addRCode("library(sem)");
                 code.addRCode("library(semPlot)");
-                code.addRCode("data.dhp <- specifyModel(text=\"" + modelString + "\")");
+                code.addRCode("library(stringr)");
+                code.addRCode("library(readr)");
+
+                code.addRCode("model.txt <- readLines('resources/stats/model.txt')");
+                code.addRCode("data.dhp <- specifyModel(text=model.txt)");
                 code.addRCode("dataCorrelation <- cor(matrix)");
                 code.addRCode("rowCount <- nrow(matrix)");
                 code.addRCode("dataSem.dhp <- sem(data.dhp, dataCorrelation, rowCount)");
+                rCaller.redirectROutputToStream(System.out);
+                code.addRCode("dataSem.dhp");
                 File file = code.startPlot();
                 code.addRCode("semPaths(dataSem.dhp, \"est\")");
                 code.endPlot();
@@ -314,11 +344,41 @@ public class RFunctions {
                 Logger.getLogger(RFunctions.class.getName()).log(Level.SEVERE, e.getMessage());
                 throw new IndexOutOfBoundsException();
             }
-        //}else{
-          //  throw new IndexOutOfBoundsException();
-        //}
     }
 
+    //TODO: dataSem.dhp$A returns the values wanted but not in necessarily correct format. Also, many 0s are present.
+    public static double[][] returnConfirmatoryMatrix(KnowledgeEstimateMatrix loMatrix, CohortConceptGraphs ccg){
+        int matrixSize = loMatrix.getStudentKnowledgeEstimates().length;
+        try {
+            String modelString = modelMaker(ccg);
+
+            modelToFile(ccg);
+
+            RCaller rCaller = RCallerVariable();
+            RCode code = loMatrix.getrMatrix();
+            code.addRCode("library(sem)");
+            code.addRCode("library(semPlot)");
+            code.addRCode("library(stringr)");
+            code.addRCode("library(readr)");
+
+            code.addRCode("model.txt <- readLines('resources/stats/model.txt')");
+            code.addRCode("data.dhp <- specifyModel(text=model.txt)");
+            //code.addRCode("data.dhp <- specifyModel(text=\"" + modelString + "\")");
+            code.addRCode("dataCorrelation <- cor(matrix)");
+            code.addRCode("rowCount <- nrow(matrix)");
+            code.addRCode("dataSem.dhp <- sem(data.dhp, dataCorrelation, rowCount)");
+            //From R it comes as
+            code.addRCode("data <- dataSem.dhp$A");
+
+            rCaller.setRCode(code);
+            rCaller.runAndReturnResult("data");
+            double[][] confirmatoryMatrix = rCaller.getParser().getAsDoubleMatrix("data");
+            return (confirmatoryMatrix);
+        } catch (Exception e) {
+            Logger.getLogger(RFunctions.class.getName()).log(Level.SEVERE, e.getMessage());
+            throw new IndexOutOfBoundsException();
+        }
+    }
 
 
     /**

@@ -603,6 +603,16 @@ public class ConceptKnowledgeCalculator implements ConceptKnowledgeCalculatorAPI
         }
     }
 
+    public void createModelFile(){
+        if(currentMode==Mode.COHORTGRAPH){
+            try{
+                RFunctions.modelToFile(cohortConceptGraphs);
+            }catch (Exception e){
+                System.out.println("Error in creating file. Check links in structure file.");
+            }
+        }
+    }
+
 
     @Override
     public List<String> currentAssessment(){

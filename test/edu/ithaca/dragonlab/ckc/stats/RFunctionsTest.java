@@ -181,6 +181,24 @@ public class RFunctionsTest {
         }
 
     }
+    public static void getConfirmatoryMatrixTest() {
+        ConceptKnowledgeCalculatorAPI ckc = null;
+        try {
+            ckc = new ConceptKnowledgeCalculator("test/testresources/ManuallyCreated/simpleConceptGraph.json",
+                    "test/testresources/ManuallyCreated/simpleResource.json",
+                    "test/testresources/ManuallyCreated/simpleAssessmentMoreUsers.csv");
+            CohortConceptGraphs ccg = ckc.getCohortConceptGraphs();
+            CSVReader data = new CSVReader("test/testresources/ManuallyCreated/simpleAssessmentMoreUsers.csv");
+            List<LearningObject> gotoMatrix = data.getManualGradedLearningObjects();
+            KnowledgeEstimateMatrix newMatrix = new KnowledgeEstimateMatrix(gotoMatrix);
+            RFunctions.returnConfirmatoryMatrix(newMatrix, ccg);
+            TimeUnit.SECONDS.sleep(5);
+        } catch (Exception e) {
+            Assert.fail("Unable to read assessment file");
+        }
+
+    }
+
 
 
     @Test
@@ -196,25 +214,47 @@ public class RFunctionsTest {
         }
     }
 
+    @Test
+    public void modelToFileTest() {
+        ConceptKnowledgeCalculatorAPI ckc = null;
+        try {
+            ckc = new ConceptKnowledgeCalculator("resources/comp220/comp220Graph.json",
+                    "resources/comp220/comp220Resources.json",
+                    "localresources/comp220/comp220ExampleDataPortionCleaned.csv");
+//            ckc = new ConceptKnowledgeCalculator("test/testresources/ManuallyCreated/simpleConceptGraph.json",
+//                    "test/testresources/ManuallyCreated/simpleResource.json",
+//                    "test/testresources/ManuallyCreated/simpleAssessmentMoreUsers.csv");
+
+            CohortConceptGraphs ccg = ckc.getCohortConceptGraphs();
+            RFunctions.modelToFile(ccg);
+        } catch (IOException e) {
+            Assert.fail("Unable to load files");
+        }
+
+
+    }
+
     //@Test
     public static void main(String args[]){
-        //getFactorMatrixTest()
-        //confirmatoryGraphTest()
-        //returnFactorMatrixTest()
+        //getFactorMatrixTest();
+        //confirmatoryGraphTest();
+        //returnFactorMatrixTest();
         System.out.println("- R prints info on deleting invalid columns \n" +
                 "- R prints a matrix of factors with Learning Objects\n" +
                 "- R prints other info. Not very useful\n" +
                 "- R prints warning messages about the graph and should be disregarded\n" +
                 "- R creates a graph displaying the exploratory factor analysis");
-        getFactorMatrixTest();
+        //getFactorMatrixTest();
         System.out.println(
                 "- R creates a graph displaying the confirmatory factor analysis");
         confirmatoryGraphTest();
+        //returnConfirmatoryMatrixTest();
 
         //both returns a double[][] and a printout
         System.out.println("- R prints info on deleting invalid columns\n" +
                 "- The function returns a matrix of the factors seen from getMatrixTest()");
-        returnFactorMatrixTest();
+        //returnFactorMatrixTest();
+
 
     }
 
