@@ -181,23 +181,23 @@ public class RFunctionsTest {
         }
 
     }
-    public static void getConfirmatoryMatrixTest() {
-        ConceptKnowledgeCalculatorAPI ckc = null;
-        try {
-            ckc = new ConceptKnowledgeCalculator("test/testresources/ManuallyCreated/simpleConceptGraph.json",
-                    "test/testresources/ManuallyCreated/simpleResource.json",
-                    "test/testresources/ManuallyCreated/simpleAssessmentMoreUsers.csv");
-            CohortConceptGraphs ccg = ckc.getCohortConceptGraphs();
-            CSVReader data = new CSVReader("test/testresources/ManuallyCreated/simpleAssessmentMoreUsers.csv");
-            List<LearningObject> gotoMatrix = data.getManualGradedLearningObjects();
-            KnowledgeEstimateMatrix newMatrix = new KnowledgeEstimateMatrix(gotoMatrix);
-            RFunctions.returnConfirmatoryMatrix(newMatrix, ccg);
-            TimeUnit.SECONDS.sleep(5);
-        } catch (Exception e) {
-            Assert.fail("Unable to read assessment file");
-        }
-
-    }
+//    public static void getConfirmatoryMatrixTest() {
+//        ConceptKnowledgeCalculatorAPI ckc = null;
+//        try {
+//            ckc = new ConceptKnowledgeCalculator("test/testresources/ManuallyCreated/simpleConceptGraph.json",
+//                    "test/testresources/ManuallyCreated/simpleResource.json",
+//                    "test/testresources/ManuallyCreated/simpleAssessmentMoreUsers.csv");
+//            CohortConceptGraphs ccg = ckc.getCohortConceptGraphs();
+//            CSVReader data = new CSVReader("test/testresources/ManuallyCreated/simpleAssessmentMoreUsers.csv");
+//            List<LearningObject> gotoMatrix = data.getManualGradedLearningObjects();
+//            KnowledgeEstimateMatrix newMatrix = new KnowledgeEstimateMatrix(gotoMatrix);
+//            RFunctions.returnConfirmatoryMatrix(newMatrix, ccg);
+//            TimeUnit.SECONDS.sleep(5);
+//        } catch (Exception e) {
+//            Assert.fail("Unable to read assessment file");
+//        }
+//
+//    }
 
 
 
