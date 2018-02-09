@@ -275,6 +275,8 @@ public class GroupSuggesterTest {
 
     @Test
     public void conceptTest(){
+        //This assumes the suggested concepts by having each student's list of suggested concepts printed out to the screen
+
         ConceptKnowledgeCalculatorAPI ckc = null;
 
         try {

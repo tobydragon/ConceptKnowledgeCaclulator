@@ -122,6 +122,8 @@ public class LearningObjectSuggesterTest {
         Assert.assertEquals(concepts.size(), 0);
     }
 
+
+
     @Test
     public void buildSuggestionMapSimpleTest() {
         ConceptGraph orig = ExampleConceptGraphFactory.simpleTestGraphTest();
