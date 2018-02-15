@@ -188,7 +188,7 @@ public class RFunctionsTest {
                     "test/testresources/ManuallyCreated/simpleResource.json",
                     "test/testresources/ManuallyCreated/simpleAssessmentMoreUsers.csv");
             CohortConceptGraphs ccg = ckc.getCohortConceptGraphs();
-            CSVReader data = new CSVReader("test/testresources/ManuallyCreated/simpleAssessmentMoreUsers.csv");
+            SakaiReader data = new SakaiReader("test/testresources/ManuallyCreated/simpleAssessmentMoreUsers.csv");
             List<LearningObject> gotoMatrix = data.getManualGradedLearningObjects();
             KnowledgeEstimateMatrix newMatrix = new KnowledgeEstimateMatrix(gotoMatrix);
             RFunctions.returnConfirmatoryMatrix(newMatrix, ccg);
@@ -218,12 +218,12 @@ public class RFunctionsTest {
     public void modelToFileTest() {
         ConceptKnowledgeCalculatorAPI ckc = null;
         try {
-            ckc = new ConceptKnowledgeCalculator("resources/comp220/comp220Graph.json",
-                    "resources/comp220/comp220Resources.json",
-                    "localresources/comp220/comp220ExampleDataPortionCleaned.csv");
-//            ckc = new ConceptKnowledgeCalculator("test/testresources/ManuallyCreated/simpleConceptGraph.json",
-//                    "test/testresources/ManuallyCreated/simpleResource.json",
-//                    "test/testresources/ManuallyCreated/simpleAssessmentMoreUsers.csv");
+//            ckc = new ConceptKnowledgeCalculator("resources/comp220/comp220Graph.json",
+//                    "resources/comp220/comp220Resources.json",
+//                    "localresources/comp220/comp220ExampleDataPortionCleaned.csv");
+            ckc = new ConceptKnowledgeCalculator("test/testresources/ManuallyCreated/simpleConceptGraph.json",
+                    "test/testresources/ManuallyCreated/simpleResource.json",
+                    "test/testresources/ManuallyCreated/simpleAssessmentMoreUsers.csv");
 
             CohortConceptGraphs ccg = ckc.getCohortConceptGraphs();
             RFunctions.modelToFile(ccg);
