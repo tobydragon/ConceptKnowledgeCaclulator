@@ -1,18 +1,6 @@
-Recursion -> Lab4Recursion, Lab4RecursionToRecursion, NA 
-Recursion -> Lab5ComparingSearches, Lab5ComparingSearchesToRecursion, NA 
-Stack vs Heap -> Lab2ArrayLibrary, Lab2ArrayLibraryToStack vs Heap, NA 
-Stack vs Heap -> Lab3ComparingArrayLibraryEfficiency, Lab3ComparingArrayLibraryEfficiencyToStack vs Heap, NA 
-Array -> Lab4Recursion, Lab4RecursionToArray, NA 
-Array -> Lab8ComparingArraysandLinkedLists, Lab8ComparingArraysandLinkedListsToArray, NA 
-Array -> Lab2ArrayLibrary, Lab2ArrayLibraryToArray, NA 
-Array -> Lab6ArrayListandTesting, Lab6ArrayListandTestingToArray, NA 
-Array -> Lab3ComparingArrayLibraryEfficiency, Lab3ComparingArrayLibraryEfficiencyToArray, NA 
-Interfaces -> Lab1GuessthePattern, Lab1GuessthePatternToInterfaces, NA 
-Pointers -> Lab4Recursion, Lab4RecursionToPointers, NA 
-Pointers -> Lab2ArrayLibrary, Lab2ArrayLibraryToPointers, NA 
-Pointers -> Lab3ComparingArrayLibraryEfficiency, Lab3ComparingArrayLibraryEfficiencyToPointers, NA 
-Linked Nodes -> Lab7LinkedList, Lab7LinkedListToLinked Nodes, NA 
-Sort -> Lab5ComparingSearches, Lab5ComparingSearchesToSort, NA 
-List -> Lab8ComparingArraysandLinkedLists, Lab8ComparingArraysandLinkedListsToList, NA 
-List -> Lab6ArrayListandTesting, Lab6ArrayListandTestingToList, NA 
-List -> Lab7LinkedList, Lab7LinkedListToList, NA 
+B -> Q1, Q1ToB, NA 
+B -> Q2, Q2ToB, NA 
+C -> Q3, Q3ToC, NA 
+C -> Q4, Q4ToC, NA 
+C -> Q5, Q5ToC, NA 
+C -> Q6, Q6ToC, NA 
