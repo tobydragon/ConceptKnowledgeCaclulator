@@ -188,7 +188,9 @@ public class RFunctionsTest {
                     "test/testresources/ManuallyCreated/simpleResource.json",
                     "test/testresources/ManuallyCreated/simpleAssessmentMoreUsers.csv");
             CohortConceptGraphs ccg = ckc.getCohortConceptGraphs();
+
             CSVReader data = new SakaiReader("test/testresources/ManuallyCreated/simpleAssessmentMoreUsers.csv");
+
             List<LearningObject> gotoMatrix = data.getManualGradedLearningObjects();
             KnowledgeEstimateMatrix newMatrix = new KnowledgeEstimateMatrix(gotoMatrix);
             RFunctions.returnConfirmatoryMatrix(newMatrix, ccg);

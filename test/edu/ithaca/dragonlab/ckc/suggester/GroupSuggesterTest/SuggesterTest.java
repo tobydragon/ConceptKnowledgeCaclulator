@@ -240,8 +240,8 @@ public class SuggesterTest {
             Assert.assertEquals(groupings.get(2).contains("s1"), true);
 
         } catch (Exception e) {
-
             e.printStackTrace();
+            Assert.fail();
         }
 
     }
