@@ -1,6 +1,8 @@
 package edu.ithaca.dragonlab.ckc.io;
 
 /**
+ * CSVReader is the parent function that is responsible for the reading in CSV files, it is created when
+ * a child class calls to it giving file specific parameters
  * Created by willsuchanek on 3/6/17.
  */
 import java.io.*;
@@ -26,9 +28,11 @@ public abstract class CSVReader {
     /**
      * This function is passed a filename of a gradebook directly exported from Sakai's built in gradebook.
      * (See DataCSVExample.csv in test/testresources/io for proper file format example)
+     * this function also takes an index mark that will determine where grades are first recorded in the
+     * CSV file.
      * @param filename
+     * @param gradeStartCoulmnIndex
      */
-    // make integer to CSV to make index of grade start, Call it : GradeStartColumnIndex
     public CSVReader(String filename, int gradeStartCoulmnIndex)throws IOException{
         this.filename = filename;
         manualGradedResponseList = new ArrayList<>();
@@ -76,9 +80,9 @@ public abstract class CSVReader {
     public abstract String makeFullName(List<String> dataLine, List<String> studentNames);
 
     /**
-     *
-     * @param singleList a list with each line in the csv file holding LORs
-     * @param i used to keep track of which index in the list of LORs the function is currently on
+     * This function takes a list of student data and creates a manual graded response for that user
+     * @param singleList - a list with each line in the csv file holding LORs
+     * @param gradeMark - used to keep track of which index in the list of LORs the function is currently on
      * @throws NullPointerException if the ManualGradedResponse is null
      */
     public void lorLister(ArrayList<String> singleList,int gradeMark)throws NullPointerException{

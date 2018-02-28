@@ -5,25 +5,29 @@ import java.util.ArrayList;
 import java.util.List;
 
 import edu.ithaca.dragonlab.ckc.learningobject.LearningObject;
-import edu.ithaca.dragonlab.ckc.learningobject.LearningObjectResponse;
-import edu.ithaca.dragonlab.ckc.learningobject.ManualGradedResponse;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
-import org.apache.logging.log4j.core.config.plugins.convert.TypeConverters;
 
 /**
+ * This class is a tool box class for CSV reader, these static functions are called by CSVReader
+ * to to data specific and line reading tasks.
  * Created by Ryan on 10/25/2017.
  */
 public class ReaderTools {
 
 
+    /**
+     * staticLineToList takes a given CSV file and reads each line in the file and adds it to a list
+     * to be returned.
+     *
+     * @param filename the name of the file being read
+     * @return lineList, contains a list of each line in the file
+     */
     public static ArrayList<ArrayList<String>> staticLineToList(String filename){
         ArrayList<ArrayList<String>> lineList = new ArrayList<ArrayList<String>>();
         try {
             String line;
             BufferedReader csvBuffer = new BufferedReader(new FileReader(filename));
             //Takes the file being read in and calls a function to convert each line into a list split at
-            //every comma, then pust all the lists returned into a list of lists lineList[line][item in line]
+            //every comma, then push all the lists returned into a list of lists lineList[line][item in line]
             while ((line = csvBuffer.readLine()) != null) {
                 lineList.add(lineToList(line));
             }
@@ -32,6 +36,15 @@ public class ReaderTools {
         }
         return lineList;
     }
+
+    /**
+     * This function take the list of assignments in a given file with thier max grades in the title, This program takes
+     * the name of the assignment separate from the max grade and returns a list of the learning objects
+     *
+     * @param indexMark the column index point where the recording of assignments and  grades start for the rest of the file
+     * @param singleList the line of the file that contains the list of assignments with the maximum grade
+     * @return loList -> a list of each assignment and its maximum grade
+     */
 
     public static List<LearningObject> learningObjectsFromList(int indexMark, List<String> singleList) {
         int i = indexMark;
@@ -72,6 +85,7 @@ public class ReaderTools {
 
     /**
      * takes a list of csv files and creates a single list of LearningObjects from all files
+     *
      * @param csvfiles
      * @return a list of all LearningObjects across all files
      */
@@ -92,7 +106,13 @@ public class ReaderTools {
         return fullLoList;
     }
 
-
+    /**
+     * This function can take a string and pull a number with a decimal and retrun that number,
+     * if no valid number is found then the function will return an empty string
+     *
+     * @param object a passed in string that we want to find a number from (one decimal is valid)
+     * @return the number found in the string, or an empty string when a number isn't found or valid
+     */
     public static String pullNumber(String object) {
         String numbers = "";
         int decimal = 0;
@@ -103,7 +123,7 @@ public class ReaderTools {
                 numbers += character;
             }
             else if (character == '-' && Character.isDigit(object.charAt(i+1)))
-                    numbers += character;
+                numbers += character;
             else if (character == '.'){
                 decimal += 1;
                 numbers += character;
@@ -116,6 +136,13 @@ public class ReaderTools {
         return numbers;
     }
 
+    /**
+     * This function takes a string and separates them by commas and quotations and
+     * returns the list of the strings.
+     *
+     * @param line a line of strings that need separation by commas and quotations
+     * @return a properly separated list of strings
+     */
     public static ArrayList<String> lineToList(String line) {
         ArrayList<String> returnlist = new ArrayList<String>();
         String item = "";

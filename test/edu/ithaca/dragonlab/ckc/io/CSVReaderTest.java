@@ -1,7 +1,5 @@
 package edu.ithaca.dragonlab.ckc.io;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 import edu.ithaca.dragonlab.ckc.learningobject.LearningObject;
@@ -16,69 +14,6 @@ import edu.ithaca.dragonlab.ckc.learningobject.ManualGradedResponse;
 
 // make pull request from dev to commaTest
 public class CSVReaderTest {
-    @Test
-    public void titleCommasTest() {
-        String titles = "this is, a title to test. this, will not work";
-        List<String> myList = Arrays.asList("this is","a title to test. this","will not work");
-        try {
-            Assert.assertEquals(myList, ReaderTools.lineToList(titles));
-        }
-        catch(Exception e){
-            e.printStackTrace();
-            Assert.fail();
-        }
-    }
-    @Test
-    public void titleCommasTestTwo() {
-        String titles = "another test, to fail again, lets see how this goes";
-        List<String> myList = Arrays.asList("another test", "to fail again", "lets see how this goes");
-        try {
-            Assert.assertEquals(myList, ReaderTools.lineToList(titles));
-        }
-        catch(Exception e){
-            e.printStackTrace();
-            Assert.fail();
-        }
-    }
-    @Test
-    public void titleCommasTestThree() {
-        String titles = "hello, a third test, maybe \"this one will pass\". Probably not";
-        List<String> myList = Arrays.asList("hello", "a third test" , "maybe this one will pass. Probably not");
-        try {
-            Assert.assertEquals(myList, ReaderTools.lineToList(titles));
-        }
-        catch(Exception e){
-            e.printStackTrace();
-            Assert.fail();
-        }
-    }
-
-    @Test
-    public void titleStarTest () {
-        String titles = "hello, a \"fourth\" test, *Breaks here*";
-        List<String> myList = Arrays.asList("hello", "a fourth test" , "*Breaks here*");
-        try {
-            Assert.assertEquals(myList, ReaderTools.lineToList(titles));
-        }
-        catch(Exception e){
-            e.printStackTrace();
-            Assert.fail();
-        }
-    }
-
-    @Test
-    public void titleColonTest() {
-        String titles = "Test 5: another break, \"maybe, maybe-not?\"";
-        List<String> myList = Arrays.asList("Test 5: another break", "maybe, maybe-not?");
-        try {
-            Assert.assertEquals(myList, ReaderTools.lineToList(titles));
-        }
-        catch(Exception e){
-            e.printStackTrace();
-            Assert.fail();
-        }
-    }
-
     @Test
     public void createQuestionsTest() {
         String file = "test/testresources/ManuallyCreated/complexRealisticAssessment.csv";

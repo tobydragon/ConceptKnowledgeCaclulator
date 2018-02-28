@@ -380,7 +380,6 @@ public class RFunctions {
         }
     }
 
-
     /**
      * Must be called at the start of every function that uses RCaller methods in
      * order to properly run RCaller methods. The if statement checks whether the machine
