@@ -83,13 +83,13 @@ public class LearningObjectSuggesterTest {
         ConceptGraph graph = new ConceptGraph(structureRecord, linkRecord);
 
         //create the data to be used to create and populate the graph copies
-        CSVReader csvReader = new SakaiReader("localresources/comp220/comp220ExampleDataPortion.csv");
+        CSVReader csvReader = new SakaiReader("test/testresources/ManuallyCreated/exampleDataAssessment.csv");
         List<LearningObjectResponse> assessments = csvReader.getManualGradedResponses();
 
         //create the average and individual graphs
         cohortConceptGraphs = new CohortConceptGraphs(graph, assessments);
 
-        ConceptGraph userGraph = cohortConceptGraphs.getUserGraph("s13");
+        ConceptGraph userGraph = cohortConceptGraphs.getUserGraph("s04");
 
         List<ConceptNode> concepts = LearningObjectSuggester.conceptsToWorkOn(userGraph);
 
@@ -109,18 +109,20 @@ public class LearningObjectSuggesterTest {
         ConceptGraph graph = new ConceptGraph(structureRecord, linkRecord);
 
         //create the data to be used to create and populate the graph copies
-        CSVReader csvReader = new SakaiReader("localresources/comp220/comp220ExampleDataPortion.csv");
+        CSVReader csvReader = new SakaiReader("test/testresources/ManuallyCreated/exampleDataAssessment.csv");
         List<LearningObjectResponse> assessments = csvReader.getManualGradedResponses();
 
         //create the average and individual graphs
         cohortConceptGraphs = new CohortConceptGraphs(graph, assessments);
 
-        ConceptGraph userGraph = cohortConceptGraphs.getUserGraph("s11");
+        ConceptGraph userGraph = cohortConceptGraphs.getUserGraph("s03");
 
         List<ConceptNode> concepts = LearningObjectSuggester.conceptsToWorkOn(userGraph);
 
         Assert.assertEquals(concepts.size(), 0);
     }
+
+
 
     @Test
     public void buildSuggestionMapSimpleTest() {
@@ -233,7 +235,7 @@ public class LearningObjectSuggesterTest {
         ConceptGraph graph = new ConceptGraph(structureRecord, linkRecord);
 
         //create the data to be used to create and populate the graph copies
-        CSVReader csvReader = new SakaiReader("localresources/comp220/comp220ExampleDataPortion.csv");
+        CSVReader csvReader = new SakaiReader("test/testresources/ManuallyCreated/exampleDataAssessment.csv");
         List<LearningObjectResponse> assessments = csvReader.getManualGradedResponses();
 
         //create the average and individual graphs

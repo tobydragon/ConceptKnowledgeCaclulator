@@ -230,15 +230,15 @@ public class ConceptKnowledgeCalculatorTest {
         try {
             ckc =new ConceptKnowledgeCalculator("test/testresources/ManuallyCreated/comp220GraphExample.json",
                     "test/testresources/ManuallyCreated/comp220Resources.json",
-                    "localresources/comp220/comp220ExampleDataPortion.csv");
+                    "test/testresources/ManuallyCreated/exampleDataAssessment.csv");
 
-        } catch (IOException e) {
+         } catch (IOException e) {
             Assert.fail("Unable to load default files. Test unable to run");
         }
 
         SuggestionResource res = null;
         try {
-            res = ckc.calcIndividualGraphSuggestions("s13");
+            res = ckc.calcIndividualGraphSuggestions("s04");
             List<LearningObjectSuggestion> incomTest = res.incompleteList;
             List<LearningObjectSuggestion> wrongTest = res.wrongList;
 
@@ -265,7 +265,7 @@ public class ConceptKnowledgeCalculatorTest {
         try {
             ckc =new ConceptKnowledgeCalculator("test/testresources/ManuallyCreated/comp220GraphExample.json",
                     "test/testresources/ManuallyCreated/comp220Resources.json",
-                    "localresources/comp220/comp220ExampleDataPortion.csv");
+                    "test/testresources/ManuallyCreated/exampleDataAssessment.csv");
 
         } catch (IOException e) {
             Assert.fail("Unable to load default files. Test unable to run");
@@ -274,7 +274,7 @@ public class ConceptKnowledgeCalculatorTest {
         SuggestionResource res = null;
         try {
 
-            res = ckc.calcIndividualGraphSuggestions("s10");
+            res = ckc.calcIndividualGraphSuggestions("s02");
 
             List<LearningObjectSuggestion> incomTest = res.incompleteList;
             List<LearningObjectSuggestion> wrongTest = res.wrongList;
@@ -353,8 +353,8 @@ public class ConceptKnowledgeCalculatorTest {
     public void  calcIndividualGraphSuggestionsWIthEmptyListTest() throws Exception {
             ConceptKnowledgeCalculatorAPI ckc = null;
         try {
-            ckc = new ConceptKnowledgeCalculator("test/testresources/ManuallyCreated/comp220GraphExample.json","test/testresources/ManuallyCreated/comp220Resources.json", "localresources/comp220/comp220ExampleDataPortion.csv");
-            SuggestionResource res = ckc.calcIndividualGraphSuggestions("s17");
+            ckc = new ConceptKnowledgeCalculator("test/testresources/ManuallyCreated/comp220GraphExample.json","test/testresources/ManuallyCreated/comp220Resources.json", "test/testresources/ManuallyCreated/exampleDataAssessment.csv");
+            SuggestionResource res = ckc.calcIndividualGraphSuggestions("s05");
 
             List<LearningObjectSuggestion> incomTest = res.incompleteList;
             List<LearningObjectSuggestion> wrongTest = res.wrongList;

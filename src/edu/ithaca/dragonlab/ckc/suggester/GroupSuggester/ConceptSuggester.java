@@ -17,16 +17,12 @@ public class ConceptSuggester extends Suggester {
         List<Group> actualGroupings = new ArrayList<>();
         Map<String, Group> concept2StudentList= createConceptMap(groupSoFar);
 
-//        for(String concept: concept2StudentList.keySet()){
-//            Group gr = concept2StudentList.get(concept);
-//            System.out.println("conept " + concept + " " + gr);
-//        }
-
         for(String conceptName: concept2StudentList.keySet()){
 
             Group foundGroup = concept2StudentList.get(conceptName);
+            foundGroup.setConcept(conceptName);
+            foundGroup.addRationale(groupSoFar.getRationale() + " ,Concept: " + conceptName);
             actualGroupings.add(foundGroup);
-
         }
 
         return actualGroupings;
@@ -53,7 +49,6 @@ public class ConceptSuggester extends Suggester {
             }
 
             if (conceptMap.containsKey(firstConcept)){
-
                 //the group of students associated to the already found concept
                 Group foundGroup = conceptMap.get(firstConcept);
                 foundGroup.addMember(name, totalStudents.get(name));

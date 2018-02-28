@@ -246,6 +246,9 @@ public class ConceptNode {
 		}
 	}
 
+
+
+
     /**
     checks to see if the called on ConceptNode is a parents (grandparent, ect.) to the parameter
     @param possibleDescendent node

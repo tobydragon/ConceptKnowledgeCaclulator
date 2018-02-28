@@ -1,5 +1,7 @@
 package edu.ithaca.dragonlab.ckc.conceptgraph;
 
+import edu.ithaca.dragonlab.ckc.ConceptKnowledgeCalculator;
+import edu.ithaca.dragonlab.ckc.ConceptKnowledgeCalculatorAPI;
 import edu.ithaca.dragonlab.ckc.io.ConceptGraphRecord;
 import edu.ithaca.dragonlab.ckc.io.LearningResourceRecord;
 import edu.ithaca.dragonlab.ckc.learningobject.*;
@@ -9,6 +11,7 @@ import org.apache.logging.log4j.Logger;
 import org.junit.Assert;
 import org.junit.Test;
 
+import java.io.IOException;
 import java.util.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -237,6 +240,68 @@ public class ConceptGraphTest {
     }
 
     @Test
+    public void isComplementaryTest() {
+
+        ConceptKnowledgeCalculatorAPI ckc = null;
+
+        try {
+            ckc = new ConceptKnowledgeCalculator("test/testresources/ManuallyCreated/simpleConceptGraphTest.json", "test/testresources/ManuallyCreated/simpleResourceTest.json", "test/testresources/ManuallyCreated/simpleAssessmentTest.csv");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        CohortConceptGraphs graphs = ckc.getCohortConceptGraphs();
+
+        ConceptGraph gr = graphs.getUserGraph("s1");
+        ConceptNode node1 = gr.findNodeById("A");
+
+        ConceptGraph gr2 = graphs.getUserGraph("s2");
+        ConceptNode node2 = gr2.findNodeById("A");
+
+        ConceptGraph gr3 = graphs.getUserGraph("s3");
+        ConceptNode node3 = gr3.findNodeById("A");
+
+        ConceptGraph gr4 = graphs.getUserGraph("s4");
+        ConceptNode node4 = gr4.findNodeById("A");
+
+        try {
+            Assert.assertEquals(gr.isComplementary(node1, node2), true);
+            Assert.assertEquals(gr.isComplementary(node1, node3), false);
+            Assert.assertEquals(gr.isComplementary(node1, node4), false);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+    }
+
+
+    @Test
+    public void calcTotalKnowledgeEstimateTest(){
+        ConceptKnowledgeCalculatorAPI ckc = null;
+        try {
+            ckc = new ConceptKnowledgeCalculator("test/testresources/ManuallyCreated/simpleConceptGraphTest.json", "test/testresources/ManuallyCreated/simpleResourceTest.json", "test/testresources/ManuallyCreated/simpleAssessmentTest.csv");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        CohortConceptGraphs graphs = ckc.getCohortConceptGraphs();
+
+        ConceptGraph gr = graphs.getUserGraph("s1");
+        Assert.assertEquals(1.7999999999999998, gr.calcTotalKnowledgeEstimate("all"), DataUtil.OK_FLOAT_MARGIN);
+
+        ConceptGraph gr2 = graphs.getUserGraph("s2");
+        Assert.assertEquals(1.7999999999999998, gr2.calcTotalKnowledgeEstimate("all"), DataUtil.OK_FLOAT_MARGIN);
+
+
+        ConceptGraph gr3 = graphs.getUserGraph("s3");
+        Assert.assertEquals(1.7999999999999998, gr3.calcTotalKnowledgeEstimate("all"), DataUtil.OK_FLOAT_MARGIN);
+
+        ConceptGraph gr4 = graphs.getUserGraph("s4");
+        Assert.assertEquals(1.7999999999999998, gr4.calcTotalKnowledgeEstimate("all"), DataUtil.OK_FLOAT_MARGIN);
+
+    }
+
+        @Test
     public void buildDirectConceptLinkCountTest() {
 
         ConceptGraph orig = ExampleConceptGraphFactory.willExampleConceptGraphTestOneStudent();
