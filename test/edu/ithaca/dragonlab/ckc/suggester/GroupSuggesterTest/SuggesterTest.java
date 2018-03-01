@@ -226,15 +226,15 @@ public class SuggesterTest {
 
             Assert.assertEquals(groupings.size(), 3);
             Assert.assertEquals(groupings.get(0).getSize(), 0);
-            Assert.assertEquals(groupings.get(9).getRationale(), " bucket: 0 - 50");
+            Assert.assertEquals(groupings.get(0).getRationale(), "  ,Bucket: 0 - 50");
 
             Assert.assertEquals(groupings.get(1).getSize(), 2);
-            Assert.assertEquals(groupings.get(1).getRationale(), " bucket: 51 - 80");
+            Assert.assertEquals(groupings.get(1).getRationale(), "  ,Bucket: 51 - 80");
             Assert.assertEquals(groupings.get(1).contains("s3"), true);
             Assert.assertEquals(groupings.get(1).contains("s2"), true);
 
             Assert.assertEquals(groupings.get(2).getSize(), 3);
-            Assert.assertEquals(groupings.get(2).getRationale(), " bucket: 81 - 100");
+            Assert.assertEquals(groupings.get(2).getRationale(), "  ,Bucket: 81 - 100");
             Assert.assertEquals(groupings.get(2).contains("s4"), true);
             Assert.assertEquals(groupings.get(2).contains("s5"), true);
             Assert.assertEquals(groupings.get(2).contains("s1"), true);
