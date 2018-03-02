@@ -1,15 +1,12 @@
-package edu.ithaca.dragonlab.ckc.conceptgraph;
+package edu.ithaca.dragonlab.ckc.conceptgraph.eval;
 
 import com.github.rcaller.rstuff.RCode;
 import edu.ithaca.dragonlab.ckc.learningobject.LearningObject;
 import edu.ithaca.dragonlab.ckc.learningobject.LearningObjectResponse;
-import stats.JavaToRConversion;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
-import java.util.Map;
 
 
 /**
@@ -126,7 +123,7 @@ public class KnowledgeEstimateMatrix {
         }
 
 
-        RCode rMatrix = JavaToRConversion.JavaToR(studentKnowledgeEstimates, objStr);
+        RCode rMatrix = RFunctions.JavaToR(studentKnowledgeEstimates, objStr);
         return rMatrix;
     }
 

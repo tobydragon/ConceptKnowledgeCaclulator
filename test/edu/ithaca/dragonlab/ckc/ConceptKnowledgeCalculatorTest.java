@@ -1,21 +1,17 @@
 package edu.ithaca.dragonlab.ckc;
 
-import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import edu.ithaca.dragonlab.ckc.conceptgraph.CohortConceptGraphs;
 import edu.ithaca.dragonlab.ckc.conceptgraph.ConceptGraph;
-import edu.ithaca.dragonlab.ckc.conceptgraph.KnowledgeEstimateMatrix;
 import edu.ithaca.dragonlab.ckc.io.*;
 import edu.ithaca.dragonlab.ckc.learningobject.LearningObject;
 import edu.ithaca.dragonlab.ckc.learningobject.LearningObjectResponse;
 import edu.ithaca.dragonlab.ckc.suggester.GroupSuggester.*;
-import edu.ithaca.dragonlab.ckc.suggester.LearningObjectSuggester;
 import edu.ithaca.dragonlab.ckc.suggester.LearningObjectSuggestion;
 import edu.ithaca.dragonlab.ckc.suggester.SuggestionResource;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.junit.Assert;
 import org.junit.Test;
-import stats.RFunctions;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -23,7 +19,6 @@ import java.util.Collection;
 import java.util.List;
 import java.util.Map;
 
-import static edu.ithaca.dragonlab.ckc.util.DataUtil.OK_FLOAT_MARGIN;
 import static org.hamcrest.CoreMatchers.is;
 
 /**

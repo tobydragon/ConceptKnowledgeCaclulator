@@ -1,20 +1,18 @@
-package edu.ithaca.dragonlab.ckc.stats;
+package edu.ithaca.dragonlab.ckc.conceptgraph.eval;
 
 import edu.ithaca.dragonlab.ckc.ConceptKnowledgeCalculator;
 import edu.ithaca.dragonlab.ckc.ConceptKnowledgeCalculatorAPI;
 import edu.ithaca.dragonlab.ckc.conceptgraph.CohortConceptGraphs;
-import edu.ithaca.dragonlab.ckc.conceptgraph.KnowledgeEstimateMatrix;
+import edu.ithaca.dragonlab.ckc.conceptgraph.eval.KnowledgeEstimateMatrix;
 import edu.ithaca.dragonlab.ckc.io.CSVReader;
 import edu.ithaca.dragonlab.ckc.io.SakaiReader;
 import edu.ithaca.dragonlab.ckc.learningobject.LearningObject;
-import edu.ithaca.dragonlab.ckc.ui.ConsoleUI;
+import edu.ithaca.dragonlab.ckc.util.ErrorUtil;
 import org.junit.Assert;
 import org.junit.Test;
-import stats.RFunctions;
+import edu.ithaca.dragonlab.ckc.conceptgraph.eval.RFunctions;
 
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
@@ -177,7 +175,7 @@ public class RFunctionsTest {
             RFunctions.confirmatoryGraph(newMatrix, ccg);
             TimeUnit.SECONDS.sleep(5);
         } catch (Exception e) {
-            Assert.fail("Unable to read assessment file");
+            Assert.fail("Failed in confirmatoryGraphTest:" + ErrorUtil.errorToStr(e));
         }
 
     }

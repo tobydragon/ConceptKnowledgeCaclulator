@@ -1,14 +1,14 @@
 package edu.ithaca.dragonlab.ckc;
 
 import edu.ithaca.dragonlab.ckc.conceptgraph.*;
+import edu.ithaca.dragonlab.ckc.conceptgraph.eval.KnowledgeEstimateMatrix;
 import edu.ithaca.dragonlab.ckc.io.*;
 import edu.ithaca.dragonlab.ckc.learningobject.LearningObject;
 import edu.ithaca.dragonlab.ckc.learningobject.LearningObjectResponse;
-import edu.ithaca.dragonlab.ckc.learningobject.LearningResource;
 import edu.ithaca.dragonlab.ckc.suggester.GroupSuggester.*;
 import edu.ithaca.dragonlab.ckc.suggester.LearningObjectSuggester;
 import edu.ithaca.dragonlab.ckc.suggester.SuggestionResource;
-import stats.RFunctions;
+import edu.ithaca.dragonlab.ckc.conceptgraph.eval.RFunctions;
 
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;

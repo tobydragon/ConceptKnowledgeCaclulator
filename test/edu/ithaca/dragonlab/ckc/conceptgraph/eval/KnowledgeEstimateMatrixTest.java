@@ -1,5 +1,6 @@
-package edu.ithaca.dragonlab.ckc.conceptgraph;
+package edu.ithaca.dragonlab.ckc.conceptgraph.eval;
 
+import edu.ithaca.dragonlab.ckc.conceptgraph.eval.KnowledgeEstimateMatrix;
 import edu.ithaca.dragonlab.ckc.io.CSVReader;
 import edu.ithaca.dragonlab.ckc.io.SakaiReader;
 import edu.ithaca.dragonlab.ckc.learningobject.LearningObject;
@@ -7,8 +8,6 @@ import org.junit.Assert;
 import org.junit.Test;
 
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
 

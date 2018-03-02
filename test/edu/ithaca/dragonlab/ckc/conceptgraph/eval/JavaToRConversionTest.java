@@ -1,17 +1,16 @@
-package edu.ithaca.dragonlab.ckc.stats;
+package edu.ithaca.dragonlab.ckc.conceptgraph.eval;
 
 import com.github.rcaller.rstuff.*;
 import com.github.rcaller.util.Globals;
-import edu.ithaca.dragonlab.ckc.conceptgraph.KnowledgeEstimateMatrix;
+import edu.ithaca.dragonlab.ckc.conceptgraph.eval.KnowledgeEstimateMatrix;
 import edu.ithaca.dragonlab.ckc.io.CSVReader;
 import edu.ithaca.dragonlab.ckc.io.SakaiReader;
 import edu.ithaca.dragonlab.ckc.learningobject.LearningObject;
 import org.junit.Assert;
 import org.junit.Test;
-import stats.JavaToRConversion;
+import edu.ithaca.dragonlab.ckc.conceptgraph.eval.RFunctions;
 
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.List;
 
 
@@ -47,7 +46,7 @@ public class JavaToRConversionTest {
                 i++;
             }
             try {
-                RCode mycode = JavaToRConversion.JavaToR(struct, objStr);
+                RCode mycode = RFunctions.JavaToR(struct, objStr);
 
                 mycode.addRCode("classAvg <- mean(matrix[, 3])");
 
