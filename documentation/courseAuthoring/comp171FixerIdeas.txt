@@ -1,0 +1,7 @@
+need recognition of:
+
+parts of design
+calling external code
+using methods
+rationale for functions
+"String Manipulation" separate from Strings

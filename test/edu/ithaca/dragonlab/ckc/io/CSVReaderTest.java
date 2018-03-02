@@ -1,6 +1,5 @@
 package edu.ithaca.dragonlab.ckc.io;
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.List;
 
 import edu.ithaca.dragonlab.ckc.learningobject.LearningObject;
@@ -12,15 +11,17 @@ import edu.ithaca.dragonlab.ckc.learningobject.ManualGradedResponse;
 /**
  * Created by willsuchanek on 3/6/17.
  */
+
+// make pull request from dev to commaTest
 public class CSVReaderTest {
     @Test
     public void createQuestionsTest() {
         String file = "test/testresources/ManuallyCreated/complexRealisticAssessment.csv";
         try {
-            CSVReader readfile = new CSVReader(file);
+            SakaiReader readfile = new SakaiReader(file);
             List<LearningObjectResponse> manualGradedResponseList = readfile.getManualGradedResponses();
             List<LearningObject> manualGradedLearningObjectList = readfile.getManualGradedLearningObjects();
-
+            //testing title entries from the csv files
 
             //Testing for first entry in the CSV
             Assert.assertEquals(25 * 9, manualGradedResponseList.size());

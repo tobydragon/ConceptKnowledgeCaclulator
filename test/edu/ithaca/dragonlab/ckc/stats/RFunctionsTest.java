@@ -5,6 +5,7 @@ import edu.ithaca.dragonlab.ckc.ConceptKnowledgeCalculatorAPI;
 import edu.ithaca.dragonlab.ckc.conceptgraph.CohortConceptGraphs;
 import edu.ithaca.dragonlab.ckc.conceptgraph.KnowledgeEstimateMatrix;
 import edu.ithaca.dragonlab.ckc.io.CSVReader;
+import edu.ithaca.dragonlab.ckc.io.SakaiReader;
 import edu.ithaca.dragonlab.ckc.learningobject.LearningObject;
 import edu.ithaca.dragonlab.ckc.ui.ConsoleUI;
 import org.junit.Assert;
@@ -27,7 +28,7 @@ public class RFunctionsTest {
     public void studentKnowledgeEstAvgTest(){
         String file = "test/testresources/ManuallyCreated/partialComplexRealitsticAssessment.csv";
         try {
-            CSVReader data = new CSVReader(file);
+            CSVReader data = new SakaiReader(file);
             List<LearningObject> gotoMatrix = data.getManualGradedLearningObjects();
             KnowledgeEstimateMatrix newMatrix = new KnowledgeEstimateMatrix(gotoMatrix);
             double avg = RFunctions.StudentKnowledgeEstAvg(newMatrix, "stu1");
@@ -37,6 +38,7 @@ public class RFunctionsTest {
             avg = RFunctions.StudentKnowledgeEstAvg(newMatrix, "stu3");
             Assert.assertEquals(.995, avg, 0.001);
         }catch (Exception e){
+            e.printStackTrace();
             Assert.fail();
         }
     }
@@ -49,7 +51,7 @@ public class RFunctionsTest {
     @Test
     public void findFactorCountTest(){
         try {
-            CSVReader data = new CSVReader("test/testresources/ManuallyCreated/complexRealisticAssessment.csv");
+            CSVReader data = new SakaiReader("test/testresources/ManuallyCreated/complexRealisticAssessment.csv");
             List<LearningObject> gotoMatrix = data.getManualGradedLearningObjects();
             KnowledgeEstimateMatrix newMatrix = new KnowledgeEstimateMatrix(gotoMatrix);
 
@@ -66,7 +68,7 @@ public class RFunctionsTest {
     public static void getFactorMatrixTest(){
 
         try{
-            CSVReader data = new CSVReader("test/testresources/ManuallyCreated/complexRealisticAssessment.csv");
+            CSVReader data = new SakaiReader("test/testresources/ManuallyCreated/complexRealisticAssessment.csv");
             List<LearningObject> gotoMatrix = data.getManualGradedLearningObjects();
             KnowledgeEstimateMatrix newMatrix = new KnowledgeEstimateMatrix(gotoMatrix);
             RFunctions.getFactorMatrix(newMatrix);
@@ -82,7 +84,7 @@ public class RFunctionsTest {
     //@Test
     public static void returnFactorMatrixTest(){
         try {
-            CSVReader data = new CSVReader("test/testresources/ManuallyCreated/complexRealisticAssessment.csv");
+            CSVReader data = new SakaiReader("test/testresources/ManuallyCreated/complexRealisticAssessment.csv");
             List<LearningObject> gotoMatrix = data.getManualGradedLearningObjects();
             KnowledgeEstimateMatrix newMatrix = new KnowledgeEstimateMatrix(gotoMatrix);
 
@@ -132,11 +134,13 @@ public class RFunctionsTest {
                 "C -> Q6, Q6ToC, NA \n", RFunctions.modelMaker(ccg));
 
         try{
-            ckc = new ConceptKnowledgeCalculator("resources/comp220/comp220Graph.json",
-                    "resources/comp220/comp220Resources.json",
-                    "localresources/comp220/comp220ExampleDataPortionCleaned.csv");
+            ckc = new ConceptKnowledgeCalculator("test/testresources/ManuallyCreated/comp220GraphExample.json",
+                    "test/testresources/ManuallyCreated/comp220Resources.json",
+                    "localresources/comp220/comp220ExampleDataPortion.csv");
         }catch (IOException e){
+            e.printStackTrace();
             Assert.fail("Unable to load files");
+
         }
         ccg = ckc.getCohortConceptGraphs();
         Assert.assertEquals("Recursion -> Lab4Recursion, Lab4RecursionToRecursion, NA \n" +
@@ -167,7 +171,7 @@ public class RFunctionsTest {
                     "test/testresources/ManuallyCreated/simpleResource.json",
                     "test/testresources/ManuallyCreated/simpleAssessmentMoreUsers.csv");
         CohortConceptGraphs ccg = ckc.getCohortConceptGraphs();
-            CSVReader data = new CSVReader("test/testresources/ManuallyCreated/simpleAssessmentMoreUsers.csv");
+            CSVReader data = new SakaiReader("test/testresources/ManuallyCreated/simpleAssessmentMoreUsers.csv");
             List<LearningObject> gotoMatrix = data.getManualGradedLearningObjects();
             KnowledgeEstimateMatrix newMatrix = new KnowledgeEstimateMatrix(gotoMatrix);
             RFunctions.confirmatoryGraph(newMatrix, ccg);
@@ -177,12 +181,32 @@ public class RFunctionsTest {
         }
 
     }
+    public static void getConfirmatoryMatrixTest() {
+        ConceptKnowledgeCalculatorAPI ckc = null;
+        try {
+            ckc = new ConceptKnowledgeCalculator("test/testresources/ManuallyCreated/simpleConceptGraph.json",
+                    "test/testresources/ManuallyCreated/simpleResource.json",
+                    "test/testresources/ManuallyCreated/simpleAssessmentMoreUsers.csv");
+            CohortConceptGraphs ccg = ckc.getCohortConceptGraphs();
+
+            CSVReader data = new SakaiReader("test/testresources/ManuallyCreated/simpleAssessmentMoreUsers.csv");
+
+            List<LearningObject> gotoMatrix = data.getManualGradedLearningObjects();
+            KnowledgeEstimateMatrix newMatrix = new KnowledgeEstimateMatrix(gotoMatrix);
+            RFunctions.returnConfirmatoryMatrix(newMatrix, ccg);
+            TimeUnit.SECONDS.sleep(5);
+        } catch (Exception e) {
+            Assert.fail("Unable to read assessment file");
+        }
+
+    }
+
 
 
     @Test
     public void getColumnCountTest(){
         try {
-            CSVReader data = new CSVReader("test/testresources/ManuallyCreated/complexRealisticAssessment.csv");
+            CSVReader data = new SakaiReader("test/testresources/ManuallyCreated/complexRealisticAssessment.csv");
             List<LearningObject> gotoMatrix = data.getManualGradedLearningObjects();
             KnowledgeEstimateMatrix newMatrix = new KnowledgeEstimateMatrix(gotoMatrix);
             Assert.assertEquals(7, RFunctions.getColumnCount(newMatrix), 0);
@@ -192,25 +216,47 @@ public class RFunctionsTest {
         }
     }
 
+    @Test
+    public void modelToFileTest() {
+        ConceptKnowledgeCalculatorAPI ckc = null;
+        try {
+//            ckc = new ConceptKnowledgeCalculator("resources/comp220/comp220Graph.json",
+//                    "resources/comp220/comp220Resources.json",
+//                    "localresources/comp220/comp220ExampleDataPortionCleaned.csv");
+            ckc = new ConceptKnowledgeCalculator("test/testresources/ManuallyCreated/simpleConceptGraph.json",
+                    "test/testresources/ManuallyCreated/simpleResource.json",
+                    "test/testresources/ManuallyCreated/simpleAssessmentMoreUsers.csv");
+
+            CohortConceptGraphs ccg = ckc.getCohortConceptGraphs();
+            RFunctions.modelToFile(ccg);
+        } catch (IOException e) {
+            Assert.fail("Unable to load files");
+        }
+
+
+    }
+
     //@Test
     public static void main(String args[]){
-        //getFactorMatrixTest()
-        //confirmatoryGraphTest()
-        //returnFactorMatrixTest()
+        //getFactorMatrixTest();
+        //confirmatoryGraphTest();
+        //returnFactorMatrixTest();
         System.out.println("- R prints info on deleting invalid columns \n" +
                 "- R prints a matrix of factors with Learning Objects\n" +
                 "- R prints other info. Not very useful\n" +
                 "- R prints warning messages about the graph and should be disregarded\n" +
                 "- R creates a graph displaying the exploratory factor analysis");
-        getFactorMatrixTest();
+        //getFactorMatrixTest();
         System.out.println(
                 "- R creates a graph displaying the confirmatory factor analysis");
         confirmatoryGraphTest();
+        //returnConfirmatoryMatrixTest();
 
         //both returns a double[][] and a printout
         System.out.println("- R prints info on deleting invalid columns\n" +
                 "- The function returns a matrix of the factors seen from getMatrixTest()");
-        returnFactorMatrixTest();
+        //returnFactorMatrixTest();
+
 
     }
 

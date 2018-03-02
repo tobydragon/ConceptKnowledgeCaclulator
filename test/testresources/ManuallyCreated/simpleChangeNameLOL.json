@@ -1,91 +1,88 @@
 [
-  {"learningObject":"resource1",
+  {"learningResourceId":"resource1",
     "conceptIds":[
       "For Loop"
     ],
     "dataImportance": "1"
   },
-  {"learningObject":"Q1",
+  {"learningResourceId":"Q1",
   "conceptIds":[
     "For Loop"
   ],
   "dataImportance": "1"
   },
-  {"learningObject":"Q2",
+  {"learningResourceId":"Q2",
   "conceptIds":[
     "For Loop"
   ],
   "dataImportance": "1"
   },
-  {"learningObject":"resource2",
+  {"learningResourceId":"resource2",
   "conceptIds":[
     "For Loop"
   ],
   "dataImportance": "1"
   },
-  {"learningObject":"resource3",
+  {"learningResourceId":"resource3",
   "conceptIds":[
     "For Loop"
   ],
   "dataImportance": "1"
   },
-  {"learningObject":"Q5",
+  {"learningResourceId":"Q5",
   "conceptIds":[
     "For Loop"
   ],
   "dataImportance": "1"
   },
-  {"learningObject":"resource4",
+  {"learningResourceId":"resource4",
     "conceptIds":[
       "For Loop"
     ],
     "dataImportance": "1"
   },
-  {"learningObject":"Q7",
+  {"learningResourceId":"Q7",
     "conceptIds":[
       "For Loop"
     ],
     "dataImportance": "1"
   },
-  {"learningObject":"Q8",
+  {"learningResourceId":"Q8",
     "conceptIds":[
       "For Loop"
     ],
     "dataImportance": "1"
-  },{"learningObject":"Q9",
-    "conceptIds":[
-      "For Loop"
-    ],
-    "dataImportance": "1"
-  },
-  {"learningObject":"Q10",
+  },{"learningResourceId":"Q9",
     "conceptIds":[
       "For Loop"
     ],
     "dataImportance": "1"
   },
-  {"learningObject": "resource5",
+  {"learningResourceId":"Q10",
+    "conceptIds":[
+      "For Loop"
+    ],
+    "dataImportance": "1"
+  },
+  {"learningResourceId": "resource5",
     "conceptIds": [
     "For Loop"
   ],
     "dataImportance": "1"
   },
-  {
-    "learningObject": "Q12",
+  {"learningResourceId": "Q12",
     "conceptIds": [
       "For Loop"
     ],
     "dataImportance": "1"
   },
-  {
-    "learningObject": "Q13",
+  {"learningResourceId": "Q13",
     "conceptIds": [
       "For Loop"
     ],
     "dataImportance": "1"
   },
-  {
-    "learningObject": "Q14",
+  {"learningResourceId": "Q14",
     "conceptIds": [
       "For Loop"
     ],

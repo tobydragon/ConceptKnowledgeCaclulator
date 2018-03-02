@@ -1,0 +1,169 @@
+{
+  "name" : "COMP 171",
+  "concepts" : [
+
+    {"id" : "Designing Solutions"},
+    {"id" : "Stack Traces"},
+
+    {"id" : "Code Structure"},
+    {"id" : "Scope"},
+    {"id" : "Functions"},
+    {"id" : "Calling Functions"},
+    {"id" : "Arguments"},
+    {"id" : "Holding Return Values"},
+    {"id" : "Defining Functions"},
+    {"id" : "Returning Values"},
+    {"id" : "Defining and Using Parameters"},
+
+    {"id" : "Data"},
+    {"id" : "Assignment"},
+    {"id" : "Literals"},
+    {"id" : "Variables"},
+    {"id" : "Expressions"},
+    {"id" : "Boolean Expressions"},
+    {"id" : "Math Expressions"},
+
+    {"id" : "Data Types"},
+    {"id" : "Booleans"},
+    {"id" : "Integers"},
+    {"id" : "Floats"},
+    {"id" : "Collections"},
+    {"id" : "Strings"},
+    {"id" : "Lists"},
+    {"id" : "Collections of Collections"},
+
+    {"id" : "Control Structures"},
+    {"id" : "If Statements"},
+    {"id" : "Loops"},
+    {"id" : "While Loops"},
+    {"id" : "For Loops"}
+
+
+
+  ],
+  "links" : [
+  {
+      "parent" : "Code Structure",
+      "child" : "Functions"
+    }, {
+      "parent" : "Code Structure",
+      "child" : "Expressions"
+    }, {
+      "parent" : "Code Structure",
+      "child" : "Scope"
+    }, {
+      "parent" : "Scope",
+      "child" : "Functions"
+    }, {
+      "parent" : "Functions",
+      "child" : "Calling Functions"
+    }, {
+      "parent" : "Calling Functions",
+      "child" : "Arguments"
+    }, {
+      "parent" : "Calling Functions",
+      "child" : "Holding Return Values"
+    }, {
+      "parent" : "Functions",
+      "child" : "Defining Functions"
+    }, {
+      "parent" : "Defining Functions",
+      "child" : "Defining and Using Parameters"
+    }, {
+      "parent" : "Defining Functions",
+      "child" : "Returning Values"
+    },
+
+    {
+      "parent" : "Data",
+      "child" : "Data Types"
+    }, {
+      "parent" : "Data Types",
+      "child" : "Integers"
+    }, {
+      "parent" : "Data Types",
+      "child" : "Strings"
+    }, {
+      "parent" : "Data Types",
+      "child" : "Floats"
+    }, {
+      "parent" : "Data Types",
+      "child" : "Booleans"
+    }, {
+      "parent" : "Data Types",
+      "child" : "Collections"
+    }, {
+      "parent" : "Collections",
+      "child" : "Lists"
+    }, {
+      "parent" : "Collections",
+      "child" : "Strings"
+    }, {
+      "parent" : "Collections",
+      "child" : "Collections of Collections"
+    }, {
+      "parent" : "Data",
+      "child" : "Literals"
+    },  {
+      "parent" : "Data",
+      "child" : "Variables"
+    }, {
+      "parent" : "Data",
+      "child" : "Assignment"
+    }, {
+      "parent" : "Assignment",
+      "child" : "Literals"
+    }, {
+      "parent" : "Assignment",
+      "child" : "Variables"
+    },
+
+    {
+      "parent" : "Assignment",
+      "child" : "Expressions"
+    }, {
+      "parent" : "Expressions",
+      "child" : "Math Expressions"
+    }, {
+      "parent" : "Expressions",
+      "child" : "Literals"
+    }, {
+      "parent" : "Expressions",
+      "child" : "Variables"
+    }, {
+      "parent" : "Expressions",
+      "child" : "Boolean Expressions"
+    }, {
+      "parent" : "Boolean Expressions",
+      "child" : "Booleans"
+    }, {
+      "parent" : "Math Expressions",
+      "child" : "Integers"
+    }, {
+      "parent" : "Math Expressions",
+      "child" : "Floats"
+    },
+
+    {
+      "parent" : "Control Structures",
+      "child" : "If Statements"
+    }, {
+      "parent" : "Control Structures",
+      "child" : "Loops"
+    }, {
+      "parent" : "If Statements",
+      "child" : "Boolean Expressions"
+    }, {
+      "parent" : "Loops",
+      "child" : "While Loops"
+    }, {
+      "parent" : "While Loops",
+      "child" : "Boolean Expressions"
+    }, {
+      "parent" : "Loops",
+      "child" : "For Loops"
+    }, {
+      "parent" : "For Loops",
+      "child" : "Collections"
+    } ]
+}

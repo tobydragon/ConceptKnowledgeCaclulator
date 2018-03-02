@@ -1,49 +1,49 @@
 [ {
   "learningObject" : "Final Project - Grade",
-  "conceptIds" : [ ],
+  "conceptIds" : [ "Content Outline", "Design", "Code", "Presentation", "Validation", "Asset Management" ],
   "dataImportance" : 1.0
 }, {
   "learningObject" : "Reflection1 – Then and Now",
-  "conceptIds" : [ ],
+  "conceptIds" : [ "Presentation" ],
   "dataImportance" : 1.0
 }, {
   "learningObject" : "Lab1 - Page One",
-  "conceptIds" : [ ],
+  "conceptIds" : [ "Content Outline", "Validation", "Asset Management" ],
   "dataImportance" : 1.0
 }, {
   "learningObject" : "Lab2 – Profile – HTML",
-  "conceptIds" : [ ],
+  "conceptIds" : [ "Content Outline", "Validation", "Asset Management", "HTML"],
   "dataImportance" : 1.0
 }, {
   "learningObject" : "Lab3 – Profile – Style and Layout ",
-  "conceptIds" : [ ],
+  "conceptIds" : [ "Content Outline", "Validation", "Asset Management", "Design", "HTML", "CSS", "Grid System"],
   "dataImportance" : 1.0
 }, {
   "learningObject" : "Reflection #2 – Mid-Term Project Postmortem",
-  "conceptIds" : [ ],
+  "conceptIds" : [ "Presentation" ],
   "dataImportance" : 1.0
 }, {
   "learningObject" : "Lab4 – Interactive Components",
-  "conceptIds" : [ ],
+  "conceptIds" : [ "Validation", "Asset Management", "Layout Sketchups", "HTML", "CSS", "Bootstrap Framework"],
   "dataImportance" : 1.0
 }, {
   "learningObject" : "Lab5 – Site Theme",
-  "conceptIds" : [ ],
+  "conceptIds" : [ "Validation", "Asset Management", "Design", "HTML", "CSS", "Bootstrap Framework"],
   "dataImportance" : 1.0
 }, {
   "learningObject" : "Lab6 – Responsive Elements",
-  "conceptIds" : [ ],
+  "conceptIds" : [ "Validation", "Asset Management", "Design", "Code", "Responsiveness"],
   "dataImportance" : 1.0
 }, {
   "learningObject" : "Reflection#3 – Course Reflection",
-  "conceptIds" : [ ],
+  "conceptIds" : [ "Presentation" ],
   "dataImportance" : 1.0
 }, {
   "learningObject" : "Mid-Term - Project Grade",
-  "conceptIds" : [ ],
+  "conceptIds" : [ "Content Outline", "Design", "HTML", "CSS", "Grid System", "Presentation", "Validation", "Asset Management"],
   "dataImportance" : 1.0
 }, {
   "learningObject" : "Course Grade",
-  "conceptIds" : [ ],
+  "conceptIds" : [ "Content Outline", "Design", "Code", "Presentation", "Validation", "Asset Management" ],
   "dataImportance" : 1.0
 } ]

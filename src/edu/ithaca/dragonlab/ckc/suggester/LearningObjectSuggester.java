@@ -14,7 +14,10 @@ public class LearningObjectSuggester {
 
     public static double MAX= .85;
     public static double MIN = .60;
+    //MIN and MAX are used for suggesting concept nodes. For a concept node to be considered for giving suggestions it must between MIN and MAX.
 
+    //MAX is used to figure out if a LearningObjectSuggestion is RIGHT or WRONG. (Assuming we already know it's not incomplete)
+    //For a LearningObjectSuggestion to be wrong it has to be less than MAX
 
     /**
      * Creates a list of ConceptNodes that are between the knowledge range and are not ancestors
@@ -90,7 +93,7 @@ public class LearningObjectSuggester {
     }
 
     /**
-    *takes a map of strings and creates a list of learningObjectSuggestion that holds if the learningObject was incomplete, wrong, or right, the pathNum, and the concept that caused the LearningObject to be suggested
+    *takes a map of strings and creates a list of learningObjectSuggestion that holds if the learningObject was incomplete, wrong, or right, the pathNum, and the Concept that caused the LearningObject to be suggested
     *@param summaryList- map of the summaryList (map of the LearningObjects and the pathNum from a certain start)
     *@param  learningObjectMap- map of all of the learningObjects
     *@param causedConcept- the ID of ConceptNode that the learningObject came from

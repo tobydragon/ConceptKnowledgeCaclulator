@@ -1,0 +1,14 @@
+[
+  {"learningResourceId":"Q1",
+  "conceptIds":[
+    "B"
+  ],
+  "dataImportance": "1"
+  },
+  {"learningResourceId":"Q2",
+  "conceptIds":[
+    "C"
+  ],
+  "dataImportance": "1"
+  }
+]

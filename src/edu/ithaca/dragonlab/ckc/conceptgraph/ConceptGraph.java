@@ -1,8 +1,10 @@
 package edu.ithaca.dragonlab.ckc.conceptgraph;
 
 import edu.ithaca.dragonlab.ckc.io.*;
+import edu.ithaca.dragonlab.ckc.learningobject.LearningMaterial;
 import edu.ithaca.dragonlab.ckc.learningobject.LearningObject;
 import edu.ithaca.dragonlab.ckc.learningobject.LearningObjectResponse;
+import edu.ithaca.dragonlab.ckc.learningobject.LearningResource;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -20,22 +22,24 @@ public class  ConceptGraph {
 
 	//This information will be duplicated, nodes and learning objects will be found within other nodes,
     // but also can be quickly looked up here (also allows checks for duplicates).
-	Map<String, LearningObject> learningObjectMap;
 	Map<String, ConceptNode> nodeMap;
+    Map<String, LearningObject> learningObjectMap;
+    Map<String, LearningMaterial> learningMaterialMap;
 
 
     public ConceptGraph(ConceptGraphRecord structureDef){
         this.name = structureDef.getName();
         buildStructureFromGraphRecord(structureDef);
         this.learningObjectMap = new HashMap<>();
+        this.learningMaterialMap = new HashMap<>();
     }
 
-    public ConceptGraph(ConceptGraphRecord structureDef, List<LearningObjectLinkRecord> lolRecords){
+    public ConceptGraph(ConceptGraphRecord structureDef, List<LearningResourceRecord> lolRecords){
         this(structureDef);
-        addLearningObjectsFromLearningObjectLinkRecords(lolRecords);
+        addLearningResourcesFromRecords(lolRecords);
     }
 
-    public ConceptGraph(ConceptGraphRecord structureDef, List<LearningObjectLinkRecord> lolRecords, List<LearningObjectResponse> learningObjectsResponses){
+    public ConceptGraph(ConceptGraphRecord structureDef, List<LearningResourceRecord> lolRecords, List<LearningObjectResponse> learningObjectsResponses){
         this(structureDef, lolRecords);
         addLearningObjectResponses(learningObjectsResponses);
     }
@@ -48,7 +52,7 @@ public class  ConceptGraph {
      * @param newName the new name of the graph
      */
     public ConceptGraph(ConceptGraph other, String newName){
-        this(other, newName, new HashMap<>());
+        this(other, newName, new HashMap<>(), new HashMap<>());
     }
 
     /**
@@ -61,15 +65,16 @@ public class  ConceptGraph {
      * @param loMap a map of learning objects, which can be in any state of populated/not populated. This function will
      *              connect the existing learning obejcts, or add any new ones necessary
      */
-    public ConceptGraph(ConceptGraph other, String newName, HashMap<String, LearningObject> loMap){
+    public ConceptGraph(ConceptGraph other, String newName, HashMap<String, LearningObject> loMap, HashMap<String, LearningMaterial> lmMap){
         this.name = newName;
         this.roots = new ArrayList<>();
         nodeMap = new HashMap<>();
         learningObjectMap = loMap;
+        learningMaterialMap = lmMap;
 
         //recursively copy entire graph
         for (ConceptNode otherRoot : other.roots) {
-            ConceptNode newRoot = new ConceptNode(otherRoot, nodeMap, learningObjectMap);
+            ConceptNode newRoot = new ConceptNode(otherRoot, nodeMap, learningObjectMap, learningMaterialMap);
             nodeMap.put(newRoot.getID(), newRoot);
             this.roots.add(newRoot);
         }
@@ -79,9 +84,10 @@ public class  ConceptGraph {
      * used only by TreeConverter, does not have proper learningObjectMap or nodeMap
      * @param rootsIn
      */
-    public ConceptGraph(List<ConceptNode> rootsIn, String name, Map<String, LearningObject> learningObjectMap, Map<String, ConceptNode> nodeMap){
+    public ConceptGraph(List<ConceptNode> rootsIn, String name, Map<String, LearningObject> learningObjectMap, Map<String, LearningMaterial> learningMaterialMap, Map<String, ConceptNode> nodeMap){
         this.name = name;
         this.learningObjectMap = learningObjectMap;
+        this.learningMaterialMap = learningMaterialMap;
         this.nodeMap = nodeMap;
         this.roots = rootsIn;
     }
@@ -89,6 +95,7 @@ public class  ConceptGraph {
     public ConceptGraph(){
         this.name = " ";
         learningObjectMap = new HashMap<>();
+        learningMaterialMap = new HashMap<>();
         nodeMap= new HashMap<>();
         this.roots= new LinkedList<>();
     }
@@ -141,14 +148,14 @@ public class  ConceptGraph {
     }
 
     /**
-     * Takes a Learning Object and a list of concept Id's it connects to. Adds the learning object to the graph and to the corresponding concepts
+     * Takes a Learning Object and a list of Concept Id's it connects to. Adds the learning object to the graph and to the corresponding concepts
      * If the learning Object already exists in the graph that is recorded in the logger and nothing happens
-     * @param toLink - the learning object that is going to be linked to the incoming concept IDs (cannot already be part of the graph)
-     * @param conceptIds - list of strings of the concept IDs the learning object will be linked to
-     * @post   the learningObject is added to the graph's map, and to all associated concept's maps
+     * @param toLink - the learning object that is going to be linked to the incoming Concept IDs (cannot already be part of the graph)
+     * @param conceptIds - list of strings of the Concept IDs the learning object will be linked to
+     * @post   the learningObject is added to the graph's map, and to all associated Concept's maps
      * @return the number of concepts the learning object was added to, or -1 if the learning object already exists
      */
-    public int linkLearningObjects(LearningObject toLink, List<String> conceptIds){
+    public int linkLearningObjects(LearningObject toLink, Collection<String> conceptIds){
         int numAdded = 0;
         if (learningObjectMap.get(toLink.getId()) != null){
             logger.warn(toLink.getId()+" already exists in this graph. Nothing was added.");
@@ -161,22 +168,60 @@ public class  ConceptGraph {
                 ConceptNode current = nodeMap.get(id);
                 current.addLearningObject(toLink);
             } else{
-                logger.warn("Authoring Warning: Concept '"+id+"' is not in your concept map. "+toLink.getId()+" was not added to the map under the concept ID "+id);
+                logger.warn("Authoring Warning: Concept '"+id+"' is not in your Concept map. "+toLink.getId()+" was not added to the map under the Concept ID "+id);
             }
         }
         return numAdded;
     }
 
     /**
-     * creates learningObjects and links them to concepts based on a list of learningObjectLinkRecords
-     * @param learningObjectLinkRecords - list of learningObjectLinkRecords
+     * Takes a Learning Object and a list of Concept Id's it connects to. Adds the learning object to the graph and to the corresponding concepts
+     * If the learning Object already exists in the graph that is recorded in the logger and nothing happens
+     * @param toLink - the learning object that is going to be linked to the incoming Concept IDs (cannot already be part of the graph)
+     * @param conceptIds - list of strings of the Concept IDs the learning object will be linked to
+     * @post   the learningObject is added to the graph's map, and to all associated Concept's maps
+     * @return the number of concepts the learning object was added to, or -1 if the learning object already exists
      */
-    public void addLearningObjectsFromLearningObjectLinkRecords(List<LearningObjectLinkRecord> learningObjectLinkRecords){
+    public int linkLearningMaterials(LearningMaterial toLink, Collection<String> conceptIds){
+        int numAdded = 0;
+        if (learningMaterialMap.get(toLink.getId()) != null){
+            logger.warn(toLink.getId()+" already exists in this graph. Nothing was added.");
+            return -1;
+        }
+        learningMaterialMap.put(toLink.getId(), toLink);
+        for (String id: conceptIds){
+            if(nodeMap.get(id) != null){
+                numAdded++;
+                ConceptNode current = nodeMap.get(id);
+                current.addLearningMaterial(toLink);
+            } else{
+                logger.warn("Authoring Warning: Concept '"+id+"' is not in your Concept map. "+toLink.getId()+" was not added to the map under the Concept ID "+id);
+            }
+        }
+        return numAdded;
+    }
 
-        for (LearningObjectLinkRecord record: learningObjectLinkRecords){
+    public void addLearningResourcesFromRecords(List<LearningResourceRecord> learningObjectLinkRecords){
+
+        for (LearningResourceRecord record: learningObjectLinkRecords){
             linkLearningObjects(new LearningObject(record), record.getConceptIds());
+
+            //set defaults if there aren't any resources
+            if (record.getResourceTypes().size() == 0){
+                record.setResourceTypes(LearningResource.DEFAULT_RESOURCE_TYPES);
+            }
+            //may create duplicate records if one resource is both an assessment and a material
+            if (record.isType(LearningResource.Type.ASSESSMENT)){
+                linkLearningObjects(new LearningObject(record), record.getConceptIds());
+            }
+            if (record.isType(LearningResource.Type.INFORMATION) || record.isType(LearningResource.Type.PRACTICE)){
+                //since we've already added possibly an assessment for this record, remove it (if it were there) so the list can be used to create the material directly from the list
+                record.getResourceTypes().remove(LearningResource.Type.ASSESSMENT);
+                linkLearningMaterials(new LearningMaterial(record), record.getConceptIds());
+            }
         }
     }
+
 
     /**
      * connects LearningObjectResponse to the appropriate LearningObject in this graph
@@ -197,8 +242,9 @@ public class  ConceptGraph {
     }
 
 
+
     /**
-     * updates a list of the suggested concept node list so that there are ancestors of nodes already in the list.
+     * updates a list of the suggested Concept node list so that there are ancestors of nodes already in the list.
      * You need to iterate nodes to add and then call this function.
      * @param node
      * @param suggestedList
@@ -225,15 +271,81 @@ public class  ConceptGraph {
             suggestedList.removeAll(ancesList);
             suggestedList.add(node);
         }
+    }
 
+    public double calcTotalKnowledgeEstimate( String startingSubject){
+        if(startingSubject.equals("all")){
+            double ex = 0;
+            for(ConceptNode roots: this.getRoots()){
+                double total = roots.countTotalKnowledgeEstimate(new ArrayList<>());
+                ex+= total;
 
+            }
+            return ex;
+        }else{
+
+            ConceptNode node = this.findNodeById(startingSubject);
+            return node.countTotalKnowledgeEstimate(new ArrayList<>());
+        }
     }
 
 
+    /**
+     * Checks to see if the two student's ConceptNodes (and partial graph) are equal and if the children concept nodes are at a specific distance (complementary)
+     * @param node1 Student one's concept node
+     * @param node2 Student two's concept node
+     * @return boolean if the two students concept nodes (and partial) graphs' knowledge estimates are complementary.
+     */
+    public boolean isComplementary(ConceptNode node1, ConceptNode node2) throws Exception {
+        List<ConceptNode> childOne = node1.getChildren();
+        List<ConceptNode> childTwo = node2.getChildren();
+
+        if(childOne.size()==childTwo.size()){
+            //if the children have the same size concept node lists. This is the first step to ensure that the two students graphs that are being
+            // compared are the same
+
+            int complementaryFlag = 0;
+            for(int i=0; i<childOne.size(); i++){
+                //to iterate through the children concept nodes
+
+                if(childOne.get(i).getID().equals(childTwo.get(i).getID())){
+                    //compares if the concept for childOne's current child concept is the same as childTwo's.
+
+                    double value = Math.abs(childOne.get(i).getKnowledgeEstimate() - childTwo.get(i).getKnowledgeEstimate());
+
+                    if(value < 0.1){
+                        //if the all the children are the same, but the difference between the current conceptNodes is less than 0.1 (this value can change)
+                        //then, break from the loop because if one concept isn't complementary, then the students are not complementary
+                        complementaryFlag =1;
+                        break;
+                    }
+                }else{
+                    throw new Exception();
+
+                    //if the current concept for childOne and childTwo are not the same, then they cannot be complementary students
+//                    complementaryFlag=1;
+//                    break;
+                }
+            }
+
+            if(complementaryFlag==0){
+                return true;
+            }else{
+                return false;
+            }
+        }else{
+            //if the two students' list of concept node's children are not the same size, then they cannot be complementary students
+            return false;
+        }
+    }
+
+
+
+    //TODO: should use materials, not assessments (I think)
     public HashMap<String, Integer> buildDirectConceptLinkCount(){
         HashMap<String, Integer> directConceptLinkCountMap = new HashMap<>();
 
-                //resources , concept links
+                //resources , Concept links
 
         ////These same LearningObjects might also be held by other nodes
         for (ConceptNode node: nodeMap.values()){
@@ -329,6 +441,9 @@ public class  ConceptGraph {
 	}
     public Map<String, LearningObject> getLearningObjectMap() {
 	    return learningObjectMap;
+    }
+    public Map<String, LearningMaterial> getLearningMaterialMap() {
+        return learningMaterialMap;
     }
 
     public List<ConceptNode> getRoots() {return roots;}

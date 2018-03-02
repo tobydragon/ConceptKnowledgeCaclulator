@@ -6,7 +6,9 @@ import java.util.*;
 
 import edu.ithaca.dragonlab.ckc.io.ConceptRecord;
 import edu.ithaca.dragonlab.ckc.io.LinkRecord;
+import edu.ithaca.dragonlab.ckc.learningobject.LearningMaterial;
 import edu.ithaca.dragonlab.ckc.learningobject.LearningObject;
+import edu.ithaca.dragonlab.ckc.learningobject.LearningResource;
 
 public class ConceptNode {
 
@@ -18,10 +20,12 @@ public class ConceptNode {
 	private double dataImportance;
 
 	Map<String, LearningObject> learningObjectMap;  //These same LearningObjects might also be held by other nodes
+    Map<String, LearningMaterial> learningMaterialMap;  //These same LearningObjects might also be held by other nodes
+
 	List<ConceptNode> children;
 
 	/**
-	 * builds a node from a concept record
+	 * builds a node from a Concept record
 	 * @param conceptRecord
 	 */
 	public ConceptNode(ConceptRecord conceptRecord) {
@@ -39,6 +43,7 @@ public class ConceptNode {
 
         this.children = new ArrayList<>();
         this.learningObjectMap = new HashMap<>();
+        this.learningMaterialMap = new HashMap<>();
 	}
 
 	/**
@@ -47,8 +52,9 @@ public class ConceptNode {
 	 * @param other
 	 * @param graphNodeMap
 	 * @param graphLearningObjectMap
+     *
 	 */
-	public ConceptNode(ConceptNode other, Map<String, ConceptNode> graphNodeMap, Map<String, LearningObject> graphLearningObjectMap){
+	public ConceptNode(ConceptNode other, Map<String, ConceptNode> graphNodeMap, Map<String, LearningObject> graphLearningObjectMap, Map<String, LearningMaterial> graphLearningMaterialMap){
 		this.id = other.id;
 		this.label = other.label;
 		this.knowledgeEstimate = other.knowledgeEstimate;
@@ -59,7 +65,7 @@ public class ConceptNode {
 		//Complicated because it is a graph, so it should only recurse when a child hasn't already been created, which we can only tell from graphNodeMap
 
 		this.learningObjectMap = new HashMap<>();
-		for (Map.Entry<String, LearningObject> entry: other.getLearningObjectMap().entrySet()){
+		for (Map.Entry<String, LearningObject> entry: other.learningObjectMap.entrySet()){
 
 			//check the graphMap first to see if that learning object has already been created
 			LearningObject newLearningObject = graphLearningObjectMap.get(entry.getKey());
@@ -69,6 +75,17 @@ public class ConceptNode {
 			}
 			this.learningObjectMap.put(entry.getKey(), newLearningObject);
 		}
+        this.learningMaterialMap = new HashMap<>();
+        for (Map.Entry<String, LearningMaterial> entry: other.learningMaterialMap.entrySet()){
+
+            //check the graphMap first to see if that learning object has already been created
+            LearningMaterial newLearningObject = graphLearningMaterialMap.get(entry.getKey());
+            if (newLearningObject == null) {
+                newLearningObject = new LearningMaterial(entry.getValue());
+                graphLearningMaterialMap.put(entry.getKey(), newLearningObject);
+            }
+            this.learningMaterialMap.put(entry.getKey(), newLearningObject);
+        }
 
 		this.children = new ArrayList<>();
 		for (ConceptNode otherChild : other.children){
@@ -78,7 +95,7 @@ public class ConceptNode {
 				this.addChild(alreadyCopiedNode);
 			}
 			else {
-				ConceptNode newChild = new ConceptNode(otherChild, graphNodeMap, graphLearningObjectMap);
+				ConceptNode newChild = new ConceptNode(otherChild, graphNodeMap, graphLearningObjectMap, graphLearningMaterialMap);
 				graphNodeMap.put(newChild.getID(), newChild);
 				this.addChild(newChild);
 			}
@@ -91,7 +108,7 @@ public class ConceptNode {
 	 * @param other
 	 * @param graphLearningObjectMap
 	 */
-	public ConceptNode(String newId, ConceptNode other, Map<String, LearningObject> graphLearningObjectMap){
+	public ConceptNode(String newId, ConceptNode other, Map<String, LearningObject> graphLearningObjectMap, Map<String, LearningMaterial> graphLearningMaterialMap){
 		this.id = newId;
 		this.label = other.label;
 		this.knowledgeEstimate = other.knowledgeEstimate;
@@ -102,7 +119,7 @@ public class ConceptNode {
 		//Complicated because it is a graph, so it should only recurse when a child hasn't already been created, which we can only tell from graphNodeMap
 
 		this.learningObjectMap = new HashMap<>();
-		for (Map.Entry<String, LearningObject> entry: other.getLearningObjectMap().entrySet()){
+		for (Map.Entry<String, LearningObject> entry: other.learningObjectMap.entrySet()){
 
 			//check the graphMap first to see if that learning object has already been created
 			LearningObject newLearningObject = graphLearningObjectMap.get(entry.getKey());
@@ -112,6 +129,17 @@ public class ConceptNode {
 			}
 			this.learningObjectMap.put(entry.getKey(), newLearningObject);
 		}
+        this.learningMaterialMap = new HashMap<>();
+        for (Map.Entry<String, LearningMaterial> entry: other.learningMaterialMap.entrySet()){
+
+            //check the graphMap first to see if that learning object has already been created
+            LearningMaterial newLearningObject = graphLearningMaterialMap.get(entry.getKey());
+            if (newLearningObject == null) {
+                newLearningObject = new LearningMaterial(entry.getValue());
+                graphLearningMaterialMap.put(entry.getKey(), newLearningObject);
+            }
+            this.learningMaterialMap.put(entry.getKey(), newLearningObject);
+        }
 
 		this.children = new ArrayList<>();
 	}
@@ -124,6 +152,7 @@ public class ConceptNode {
 		knowledgeDistanceFromAvg=0;
 		dataImportance=0;
 		learningObjectMap = new HashMap<>();
+		learningMaterialMap = new HashMap<>();
 		children= new LinkedList<>();
 
 	}
@@ -192,14 +221,15 @@ public class ConceptNode {
      *fills up a hashmap with the LearningObjects IDs and the amount of ways to get to the learning object from the root (which is how importance is measured)
      *@param learningObjectSummary map>
      */
+	//TODO: Check if this works with materials,as opposed to assessments
 	public void buildLearningObjectSummaryList(HashMap <String, Integer> learningObjectSummary){
 
 		//add the current questions.
-		Iterator <String> itr = this.learningObjectMap.keySet().iterator();
+		Iterator <String> itr = this.learningMaterialMap.keySet().iterator();
 
-		for (int i =0; i< this.learningObjectMap.size(); i++){
+		for (int i =0; i< this.learningMaterialMap.size(); i++){
 			//need to get each of the values in the learningObjectMap
-			LearningObject label = this.learningObjectMap.get(itr.next());
+			LearningMaterial label = this.learningMaterialMap.get(itr.next());
 
 			if (learningObjectSummary.containsKey(label.getId())){
                 learningObjectSummary.put(label.getId() ,learningObjectSummary.get(label.getId())+1);
@@ -215,6 +245,9 @@ public class ConceptNode {
 
 		}
 	}
+
+
+
 
     /**
     checks to see if the called on ConceptNode is a parents (grandparent, ect.) to the parameter
@@ -308,6 +341,10 @@ public class ConceptNode {
 	public void addLearningObject(LearningObject learningObject) {
 			learningObjectMap.put(learningObject.getId(), learningObject);
 	}
+
+    public void addLearningMaterial(LearningMaterial learningObject) {
+        learningMaterialMap.put(learningObject.getId(), learningObject);
+    }
 
 	public void addChild(ConceptNode child){
 		children.add(child);
