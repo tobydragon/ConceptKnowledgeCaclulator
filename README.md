@@ -1,4 +1,5 @@
-# TECMap - Technology Enhanced Concept Mapping for Curriculum Organization and Support 
+# TECMap
+## Technology Enhanced Concept Mapping for Curriculum Organization and Support 
 Current Build Status:
 
 Master
