@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/ConceptKnowledgeCalculator.iml" filepath="$PROJECT_DIR$/ConceptKnowledgeCalculator.iml" />
+      <module fileurl="file://$PROJECT_DIR$/tecmap.iml" filepath="$PROJECT_DIR$/tecmap.iml" />
     </modules>
   </component>
 </project>

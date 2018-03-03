@@ -1,0 +1,85 @@
+[ {
+  "learningResourceId" : "Final Project Design Concept  Part 1",
+  "conceptIds" : [ ],
+  "dataImportance" : 1.0
+}, {
+  "learningResourceId" : "Final Project Implementation  Part 2",
+  "conceptIds" : [ ],
+  "dataImportance" : 1.0
+}, {
+  "learningResourceId" : "Browsers Editors and Tutorials",
+  "conceptIds" : [ ],
+  "dataImportance" : 1.0
+}, {
+  "learningResourceId" : "Lab1 Interaction  Zero",
+  "conceptIds" : [ ],
+  "dataImportance" : 1.0
+}, {
+  "learningResourceId" : "Lab2 Interaction Text   Survey",
+  "conceptIds" : [ ],
+  "dataImportance" : 1.0
+}, {
+  "learningResourceId" : "Lab3 Interaction Multimedia  Choose Your Own Adventure",
+  "conceptIds" : [ ],
+  "dataImportance" : 1.0
+}, {
+  "learningResourceId" : "Lab4 Canvas  Drawing Primitives ",
+  "conceptIds" : [ ],
+  "dataImportance" : 1.0
+}, {
+  "learningResourceId" : "Lab5 Canvas  Poster",
+  "conceptIds" : [ ],
+  "dataImportance" : 1.0
+}, {
+  "learningResourceId" : "Lab6 Mouse Events",
+  "conceptIds" : [ ],
+  "dataImportance" : 1.0
+}, {
+  "learningResourceId" : "Lab7  Keyboard Events",
+  "conceptIds" : [ ],
+  "dataImportance" : 1.0
+}, {
+  "learningResourceId" : "Lab8 Button Events",
+  "conceptIds" : [ ],
+  "dataImportance" : 1.0
+}, {
+  "learningResourceId" : "Lab9 Animated Artwork",
+  "conceptIds" : [ ],
+  "dataImportance" : 1.0
+}, {
+  "learningResourceId" : "Lab10 Collision  Bounding Box",
+  "conceptIds" : [ ],
+  "dataImportance" : 1.0
+}, {
+  "learningResourceId" : "Course Reflection",
+  "conceptIds" : [ ],
+  "dataImportance" : 1.0
+}, {
+  "learningResourceId" : "Quiz 1  Interaction Basics",
+  "conceptIds" : [ ],
+  "dataImportance" : 1.0
+}, {
+  "learningResourceId" : "Quiz 2  JS Basics",
+  "conceptIds" : [ ],
+  "dataImportance" : 1.0
+}, {
+  "learningResourceId" : "Quiz 3  Canvas Drawing",
+  "conceptIds" : [ ],
+  "dataImportance" : 1.0
+}, {
+  "learningResourceId" : "Quiz 4  Array Basics",
+  "conceptIds" : [ ],
+  "dataImportance" : 1.0
+}, {
+  "learningResourceId" : "Quiz 5  Event Handler Basics",
+  "conceptIds" : [ ],
+  "dataImportance" : 1.0
+}, {
+  "learningResourceId" : "Quiz 6  Functions For Loops",
+  "conceptIds" : [ ],
+  "dataImportance" : 1.0
+}, {
+  "learningResourceId" : "Course Grade",
+  "conceptIds" : [ ],
+  "dataImportance" : 1.0
+} ]

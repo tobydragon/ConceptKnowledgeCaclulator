@@ -1,0 +1,169 @@
+[ {
+  "learningResourceId" : "HW01",
+  "conceptIds" : [ "Designing Solutions"],
+  "dataImportance" : 1.0
+}, {
+  "learningResourceId" : "HW02",
+  "conceptIds" : ["Designing Solutions" ],
+  "dataImportance" : 1.0
+}, {
+  "learningResourceId" : "HW03",
+  "conceptIds" : [ "Designing Solutions"],
+  "dataImportance" : 1.0
+}, {
+  "learningResourceId" : "HW04",
+  "conceptIds" : [ "Designing Solutions"],
+  "dataImportance" : 1.0
+}, {
+  "learningResourceId" : "HW05",
+  "conceptIds" : ["Expressions", "Assignment", "Literals", "Integers", "Floats", "Strings" ],
+  "dataImportance" : 1.0
+}, {
+  "learningResourceId" : "HW-quiz2",
+  "conceptIds" : [ ],
+  "dataImportance" : 1.0
+}, {
+  "learningResourceId" : "HW06",
+  "conceptIds" : [ "Booleans", "Boolean Expressions", "Assignment", "Stack Traces"],
+  "dataImportance" : 1.0
+}, {
+  "learningResourceId" : "HW07",
+  "conceptIds" : [ "If Statements", "Boolean Expressions"],
+  "dataImportance" : 1.0
+}, {
+  "learningResourceId" : "HW08",
+  "conceptIds" : ["While Loops", "Stack Traces" ],
+  "dataImportance" : 1.0
+}, {
+  "learningResourceId" : "HW09",
+  "conceptIds" : ["While Loops" ],
+  "dataImportance" : 1.0
+}, {
+  "learningResourceId" : "HW10",
+  "conceptIds" : ["While Loops" ],
+  "dataImportance" : 1.0
+}, {
+  "learningResourceId" : "HW11",
+  "conceptIds" : ["Functions" ],
+  "dataImportance" : 1.0
+}, {
+  "learningResourceId" : "HW11.5",
+  "conceptIds" : ["Defining Functions", "Calling Functions", "Stack Traces" ],
+  "dataImportance" : 1.0
+}, {
+  "learningResourceId" : "HW12",
+  "conceptIds" : [ "For Loops"],
+  "dataImportance" : 1.0
+}, {
+  "learningResourceId" : "HW13",
+  "conceptIds" : [  "Stack Traces", "Functions", "For Loops"],
+  "dataImportance" : 1.0
+}, {
+  "learningResourceId" : "HW14",
+  "conceptIds" : [ "Functions", "For Loops", "Calling Functions"],
+  "dataImportance" : 1.0
+}, {
+  "learningResourceId" : "HW15",
+  "conceptIds" : [  "Lists", "For Loops", "Stack Traces"],
+  "dataImportance" : 1.0
+}, {
+  "learningResourceId" : "HW16",
+  "conceptIds" : ["Strings", "Lists", "Calling Functions" ],
+  "dataImportance" : 1.0
+}, {
+  "learningResourceId" : "HW17",
+  "conceptIds" : [ "Collections of Collections", "Lists", "Strings"],
+  "dataImportance" : 1.0
+}, {
+  "learningResourceId" : "HW18",
+  "conceptIds" : ["Collections of Collections", "Stack Traces" ],
+  "dataImportance" : 1.0
+}, {
+  "learningResourceId" : "lab02design",
+  "conceptIds" : [ "Designing Solutions"],
+  "dataImportance" : 1.0
+}, {
+  "learningResourceId" : "lab03design",
+  "conceptIds" : [ "Designing Solutions"],
+  "dataImportance" : 1.0
+}, {
+  "learningResourceId" : "lab04design",
+  "conceptIds" : [ "Designing Solutions"],
+  "dataImportance" : 1.0
+}, {
+  "learningResourceId" : "lab05design",
+  "conceptIds" : [ "Designing Solutions"],
+  "dataImportance" : 1.0
+}, {
+  "learningResourceId" : "lab06design",
+  "conceptIds" : [ "Designing Solutions"],
+  "dataImportance" : 1.0
+}, {
+  "learningResourceId" : "lab07design",
+  "conceptIds" : [ "Designing Solutions"],
+  "dataImportance" : 1.0
+}, {
+  "learningResourceId" : "lab08design",
+  "conceptIds" : [ "Designing Solutions"],
+  "dataImportance" : 1.0
+}, {
+  "learningResourceId" : "project01design",
+  "conceptIds" : [ "Designing Solutions"],
+  "dataImportance" : 1.0
+}, {
+  "learningResourceId" : "project02design",
+  "conceptIds" : [ "Designing Solutions"],
+  "dataImportance" : 1.0
+}, {
+  "learningResourceId" : "project03design",
+  "conceptIds" : [ "Designing Solutions"],
+  "dataImportance" : 1.0
+}, {
+  "learningResourceId" : "project01implementation",
+  "conceptIds" : [ "While Loops", "If Statements", "Expressions", "Floats"],
+  "dataImportance" : 1.0
+}, {
+  "learningResourceId" : "project02implementation",
+  "conceptIds" : [ "Collections", "Loops", "Functions"],
+  "dataImportance" : 1.0
+}, {
+  "learningResourceId" : "project03implementation",
+  "conceptIds" : [ "Collections", "Loops", "Calling Functions"],
+  "dataImportance" : 1.0
+}, {
+  "learningResourceId" : "Quiz01",
+  "conceptIds" : [ "Designing Solutions"],
+  "dataImportance" : 1.0
+}, {
+  "learningResourceId" : "Quiz02",
+  "conceptIds" : [ "Expressions", "Assignment", "Literals", "Integers", "Floats", "Strings"],
+  "dataImportance" : 1.0
+}, {
+  "learningResourceId" : "Quiz03",
+  "conceptIds" : [ "Boolean Expressions", "If Statements"],
+  "dataImportance" : 1.0
+}, {
+  "learningResourceId" : "Quiz04",
+  "conceptIds" : [ "While Loops", "Strings", "Stack Traces"],
+  "dataImportance" : 1.0
+}, {
+  "learningResourceId" : "Quiz05",
+  "conceptIds" : [ "Arguments", "Defining and Using Parameters", "Functions"],
+  "dataImportance" : 1.0
+}, {
+  "learningResourceId" : "Quiz06",
+  "conceptIds" : [ "Functions", "Arguments", "Defining and Using Parameters", "Stack Traces"],
+  "dataImportance" : 1.0
+}, {
+  "learningResourceId" : "Quiz07",
+  "conceptIds" : [ "Lists", "Functions"],
+  "dataImportance" : 1.0
+}, {
+  "learningResourceId" : "Quiz08",
+  "conceptIds" : [ "Strings", "Lists", "For Loops", "Stack Traces"],
+  "dataImportance" : 1.0
+}, {
+  "learningResourceId" : "Quiz09",
+  "conceptIds" : ["Collections of Collections", "Lists", "Strings" ],
+  "dataImportance" : 1.0
+} ]

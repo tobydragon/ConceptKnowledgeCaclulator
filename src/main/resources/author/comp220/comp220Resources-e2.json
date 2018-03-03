@@ -1,0 +1,57 @@
+[ {
+  "learningResourceId" : "e2-1",
+  "conceptIds" : [ "Abstract Data Types", "Abstract Classes and Inheritance"],
+  "dataImportance" : 1.0
+}, {
+  "learningResourceId" : "e2-2",
+  "conceptIds" : ["Pass by Reference", "Pass by Pointer" ],
+  "dataImportance" : 1.0
+}, {
+  "learningResourceId" : "e2-3",
+  "conceptIds" : ["Object Memory Management: Deep vs. Shallow Copies", "Destructor", "Default Constructor, Copy Constructor, Assignment Operator" ],
+  "dataImportance" : 1.0
+}, {
+  "learningResourceId" : "e2-4",
+  "conceptIds" : ["Comparing Data Structures", "Arrays", "Linked Nodes" ],
+  "dataImportance" : 1.0
+}, {
+  "learningResourceId" : "e2-5",
+  "conceptIds" : [],
+  "dataImportance" : 1.0
+}, {
+  "learningResourceId" : "e2-6",
+  "conceptIds" : [ "Stacks and Queues", "Comparing Data Structures", "Arrays", "Linked Nodes" ],
+  "dataImportance" : 1.0
+}, {
+  "learningResourceId" : "e2-Trace",
+  "conceptIds" : ["Memory Diagrams" ],
+  "dataImportance" : 1.0
+}, {
+  "learningResourceId" : "e2-C-3",
+  "conceptIds" : ["Destructor" ],
+  "dataImportance" : 1.0
+}, {
+  "learningResourceId" : "e2-C-4",
+  "conceptIds" : ["Linked Nodes", "Object Oriented Programming in C++" ],
+  "dataImportance" : 1.0
+}, {
+  "learningResourceId" : "e2-CA-1",
+  "conceptIds" : [ "Object Oriented Programming in C++", "Pointers"],
+  "dataImportance" : 1.0
+}, {
+  "learningResourceId" : "e2-CA-2",
+  "conceptIds" : [ "Object Oriented Programming in C++", "Arrays"],
+  "dataImportance" : 1.0
+}, {
+  "learningResourceId" : "e2-CA-3",
+  "conceptIds" : [ "Object Oriented Programming in C++", "Arrays"],
+  "dataImportance" : 1.0
+}, {
+  "learningResourceId" : "e2-CA-4",
+  "conceptIds" : ["Big-O Notation", "Comparing Algorithms" ],
+  "dataImportance" : 1.0
+}, {
+  "learningResourceId" : "e2-CA-5",
+  "conceptIds" : ["Object Memory Management: Deep vs. Shallow Copies", "Default Constructor, Copy Constructor, Assignment Operator" ],
+  "dataImportance" : 1.0
+} ]
