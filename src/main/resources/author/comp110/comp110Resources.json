@@ -1,0 +1,137 @@
+[ {
+  "learningResourceId" : "Exam 1",
+  "conceptIds" : [ ],
+  "dataImportance" : 1.0
+}, {
+  "learningResourceId" : "Exam 2",
+  "conceptIds" : [ ],
+  "dataImportance" : 1.0
+}, {
+  "learningResourceId" : "Week 1 - Quiz 1",
+  "conceptIds" : [ ],
+  "dataImportance" : 1.0
+}, {
+  "learningResourceId" : "Week 2 - Quiz 1",
+  "conceptIds" : [ ],
+  "dataImportance" : 1.0
+}, {
+  "learningResourceId" : "Week 2 - Quiz 2",
+  "conceptIds" : [ ],
+  "dataImportance" : 1.0
+}, {
+  "learningResourceId" : "Week 3 - Quiz 1",
+  "conceptIds" : [ ],
+  "dataImportance" : 1.0
+}, {
+  "learningResourceId" : "Week 3 - Quiz 2",
+  "conceptIds" : [ ],
+  "dataImportance" : 1.0
+}, {
+  "learningResourceId" : "Week 4 - Quiz 1",
+  "conceptIds" : [ ],
+  "dataImportance" : 1.0
+}, {
+  "learningResourceId" : "Week 5 - Quiz 1",
+  "conceptIds" : [ ],
+  "dataImportance" : 1.0
+}, {
+  "learningResourceId" : "Week 4 - Quiz 2",
+  "conceptIds" : [ ],
+  "dataImportance" : 1.0
+}, {
+  "learningResourceId" : "Week 6 - Quiz 1",
+  "conceptIds" : [ ],
+  "dataImportance" : 1.0
+}, {
+  "learningResourceId" : "Week 6 - Quiz 2",
+  "conceptIds" : [ ],
+  "dataImportance" : 1.0
+}, {
+  "learningResourceId" : "Week 10 - Quiz 1",
+  "conceptIds" : [ ],
+  "dataImportance" : 1.0
+}, {
+  "learningResourceId" : "Week 11 - Quiz 1",
+  "conceptIds" : [ ],
+  "dataImportance" : 1.0
+}, {
+  "learningResourceId" : "Week 11 - Quiz 2",
+  "conceptIds" : [ ],
+  "dataImportance" : 1.0
+}, {
+  "learningResourceId" : "Week 10 - Quiz 2",
+  "conceptIds" : [ ],
+  "dataImportance" : 1.0
+}, {
+  "learningResourceId" : "Week 5 - Quiz 2",
+  "conceptIds" : [ ],
+  "dataImportance" : 1.0
+}, {
+  "learningResourceId" : "Week 8 - Quiz 1",
+  "conceptIds" : [ ],
+  "dataImportance" : 1.0
+}, {
+  "learningResourceId" : "Week 9 - Quiz 1",
+  "conceptIds" : [ ],
+  "dataImportance" : 1.0
+}, {
+  "learningResourceId" : "Week 9 - Quiz 2",
+  "conceptIds" : [ ],
+  "dataImportance" : 1.0
+}, {
+  "learningResourceId" : "Participation",
+  "conceptIds" : [ ],
+  "dataImportance" : 1.0
+}, {
+  "learningResourceId" : "Project 1",
+  "conceptIds" : [ ],
+  "dataImportance" : 1.0
+}, {
+  "learningResourceId" : "Project 2",
+  "conceptIds" : [ ],
+  "dataImportance" : 1.0
+}, {
+  "learningResourceId" : "Project 3",
+  "conceptIds" : [ ],
+  "dataImportance" : 1.0
+}, {
+  "learningResourceId" : "Week 1 - Weekly Assignment",
+  "conceptIds" : [ ],
+  "dataImportance" : 1.0
+}, {
+  "learningResourceId" : "Week 2 - Weekly Assignment",
+  "conceptIds" : [ ],
+  "dataImportance" : 1.0
+}, {
+  "learningResourceId" : "Week 3 - Weekly Assignment",
+  "conceptIds" : [ ],
+  "dataImportance" : 1.0
+}, {
+  "learningResourceId" : "Week 4 - Weekly Assignment",
+  "conceptIds" : [ ],
+  "dataImportance" : 1.0
+}, {
+  "learningResourceId" : "Week 5 - Weekly Assignment",
+  "conceptIds" : [ ],
+  "dataImportance" : 1.0
+}, {
+  "learningResourceId" : "Week 6 - Weekly Assignment",
+  "conceptIds" : [ ],
+  "dataImportance" : 1.0
+}, {
+  "learningResourceId" : "Week 8 - Weekly Assignment",
+  "conceptIds" : [ ],
+  "dataImportance" : 1.0
+}, {
+  "learningResourceId" : "Week 9 - Weekly Assignment",
+  "conceptIds" : [ ],
+  "dataImportance" : 1.0
+}, {
+  "learningResourceId" : "Week 10 - Weekly Assignment",
+  "conceptIds" : [ ],
+  "dataImportance" : 1.0
+}, {
+  "learningResourceId" : "Week 11 - Weekly Assignment",
+  "conceptIds" : [ ],
+  "dataImportance" : 1.0
+} ]
