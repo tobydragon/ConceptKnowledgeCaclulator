@@ -52,10 +52,13 @@ public class ConsoleUI {
     public void run(){
         Scanner scanner = new Scanner(System.in);
 
+        //have to change this
+        ckc.setCurrentSuggestMode(ConceptKnowledgeCalculator.SuggestMode.LISTEVERYTHING);
+//        ckc.setCurrentSuggestMode(ConceptKnowledgeCalculator.SuggestMode.LISTOPTIONS);
+
         int contQuit = 1;
         while (contQuit == 1) {
             ConceptKnowledgeCalculator.Mode mode = ckc.getCurrentMode();
-            System.out.println("Current Mode: "+ ckc.getCurrentMode());
 
             if(mode == ConceptKnowledgeCalculator.Mode.NODATA){
                 System.out.println("What do you want to do? \n 1 - Switch to Cohort Graph Mode \n 2 - Switch to Structure Graph Mode \n 3 - quit");
@@ -426,25 +429,44 @@ public class ConsoleUI {
         try {
             sugRes = ckc.calcIndividualSpecificConceptSuggestions(userID, conceptID);
 
-            System.out.println(" 1- Try something new 2- try something again");
-            Integer option = scanner.nextInt();
-            while (option > 2 || option < 1) {
-                System.out.println(" 1- Try something new 2- try something again");
-                option = scanner.nextInt();
-            }
-            if (option == 1) {
-                if(sugRes.incompleteList.size()==0){
-                    System.out.println("There are no incomplete resources");
-                }else {
+            if(ckc.getCurrentSuggestMode() == ConceptKnowledgeCalculator.SuggestMode.LISTEVERYTHING){
+
+                if(sugRes.incompleteList.size()>0){
+                    System.out.println("Resources you haven't completed yet \n_____________________________________");
                     System.out.println(sugRes.toString(0));
                 }
-            } else {
-                if(sugRes.wrongList.size()==0){
-                    System.out.println("There are no wrong resources");
-                }else{
+                if(sugRes.wrongList.size()>0){
+                    System.out.println("\nResources you have already completed \n_____________________________________");
                     System.out.println(sugRes.toString(1));
                 }
+
+
+            }else{
+                System.out.println(" 1- Try something new 2- try something again");
+                Integer option = scanner.nextInt();
+                while (option > 2 || option < 1) {
+                    System.out.println(" 1- Try something new 2- try something again");
+                    option = scanner.nextInt();
+                }
+                if (option == 1) {
+                    if (sugRes.incompleteList.size() == 0) {
+                        System.out.println("There are no incomplete resources");
+                    } else {
+                        System.out.println(sugRes.toString(0));
+                    }
+                } else {
+                    if (sugRes.wrongList.size() == 0) {
+                        System.out.println("There are no wrong resources");
+                    } else {
+                        System.out.println(sugRes.toString(1));
+                    }
+                }
+
+
             }
+
+
+
         } catch (Exception e) {
             System.out.println(e);
         }
@@ -457,25 +479,45 @@ public class ConsoleUI {
         String userID = scanner.nextLine();
         try {
             SuggestionResource sugRes = ckc.calcIndividualGraphSuggestions(userID);
-            System.out.println(" 1- Try something new 2- try something again");
-            Integer option = scanner.nextInt();
-            while (option > 2 || option < 1) {
-                System.out.println(" 1- Try something new 2- try something again");
-                option = scanner.nextInt();
-            }
-            if (option == 1) {
-                if(sugRes.incompleteList.size()==0){
-                    System.out.println("There are no incomplete resources to work on");
-                }else {
+
+            if(ckc.getCurrentSuggestMode() == ConceptKnowledgeCalculator.SuggestMode.LISTEVERYTHING) {
+                if(sugRes.incompleteList.size()>0){
+                    System.out.println("Resources you haven't completed yet \n_____________________________________");
                     System.out.println(sugRes.toString(0));
                 }
-            } else {
-                if(sugRes.wrongList.size()==0){
-                    System.out.println("There are no wrong resources to work on");
-                }else{
+                if(sugRes.wrongList.size()>0){
+                    System.out.println("\nResources you have already completed \n_____________________________________");
                     System.out.println(sugRes.toString(1));
                 }
+
+
+
+            }else{
+
+
+                System.out.println(" 1- Try something new 2- try something again");
+                Integer option = scanner.nextInt();
+                while (option > 2 || option < 1) {
+                    System.out.println(" 1- Try something new 2- try something again");
+                    option = scanner.nextInt();
+                }
+                if (option == 1) {
+                    if(sugRes.incompleteList.size()==0){
+                        System.out.println("There are no incomplete resources to work on");
+                    }else {
+                        System.out.println(sugRes.toString(0));
+                    }
+                } else {
+                    if(sugRes.wrongList.size()==0){
+                        System.out.println("There are no wrong resources to work on");
+                    }else{
+                        System.out.println(sugRes.toString(1));
+                    }
+                }
+
             }
+
+
         }catch (Exception e){
             System.out.println(e);
         }

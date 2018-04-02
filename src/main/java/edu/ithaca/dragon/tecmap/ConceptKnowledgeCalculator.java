@@ -32,6 +32,12 @@ public class ConceptKnowledgeCalculator implements ConceptKnowledgeCalculatorAPI
         STRUCTUREGRAPH, COHORTGRAPH, STRUCTUREGRAPHWITHRESOURCE, STRUCTUREGRAPHWITHASSESSMENT, NODATA
     }
 
+    public enum SuggestMode{
+        LISTEVERYTHING, LISTOPTIONS
+    }
+
+    private SuggestMode suggestMode;
+
     private Mode currentMode;
 
     //is only one file for structure and one for resource files.
@@ -677,4 +683,11 @@ public class ConceptKnowledgeCalculator implements ConceptKnowledgeCalculatorAPI
         return structureGraph;
     }
 
+    public SuggestMode getCurrentSuggestMode(){
+        return suggestMode;
+    }
+
+    public void setCurrentSuggestMode(SuggestMode mode){
+        suggestMode = mode;
+    }
 }

@@ -179,6 +179,9 @@ public interface ConceptKnowledgeCalculatorAPI {
 
     ConceptKnowledgeCalculator.Mode getCurrentMode();
 
+    ConceptKnowledgeCalculator.SuggestMode getCurrentSuggestMode();
+    void setCurrentSuggestMode(ConceptKnowledgeCalculator.SuggestMode mode);
+
     /**
      * @return a copy of the assessment file list
      */

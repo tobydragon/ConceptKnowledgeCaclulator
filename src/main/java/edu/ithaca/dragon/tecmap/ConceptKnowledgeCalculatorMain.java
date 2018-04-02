@@ -35,9 +35,9 @@ public class ConceptKnowledgeCalculatorMain {
 //                    Settings.RESOURCE_DIR + "comp220/comp220Resources-e1.json",
 //                    Settings.PRIVATE_RESOURCE_DIR +"/comp220/comp220-e1.csv");
 //
-//            new ConsoleUI(Settings.TEST_RESOURCE_DIR + "ManuallyCreated/researchConceptGraph.json",
-//                    Settings.TEST_RESOURCE_DIR + "ManuallyCreated/researchResource1.json",
-//                    Settings.TEST_RESOURCE_DIR + "ManuallyCreated/researchAssessment1.csv");
+            new ConsoleUI(Settings.TEST_RESOURCE_DIR + "ManuallyCreated/researchConceptGraph.json",
+                    Settings.TEST_RESOURCE_DIR + "ManuallyCreated/researchResource1.json",
+                    Settings.TEST_RESOURCE_DIR + "ManuallyCreated/researchAssessment1.csv");
 
 //            new ConsoleUI(Settings.TEST_RESOURCE_DIR + "ManuallyCreated/researchConceptGraph.json",
 //                    Settings.TEST_RESOURCE_DIR + "ManuallyCreated/researchResource2.json",
