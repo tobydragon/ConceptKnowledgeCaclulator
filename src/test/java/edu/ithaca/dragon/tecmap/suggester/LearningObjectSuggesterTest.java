@@ -50,15 +50,17 @@ public class LearningObjectSuggesterTest {
 
         List<LearningObjectSuggestion> incomTest = res.incompleteList;
         List<LearningObjectSuggestion> wrongTest = res.wrongList;
-        Assert.assertEquals(incomTest.size(), 2);
+
+        Assert.assertEquals(incomTest.size(), 3);
         Assert.assertEquals(incomTest.get(0).getId(), "Q6");
-        Assert.assertEquals(incomTest.get(1).getId(), "Q10");
+        Assert.assertEquals(incomTest.get(1).getId(), "Q13");
+        Assert.assertEquals(incomTest.get(2).getId(), "Q10");
 
-
-        Assert.assertEquals(wrongTest.size(), 2);
+        Assert.assertEquals(wrongTest.size(), 4);
         Assert.assertEquals(wrongTest.get(0).getId(), "Q7");
-        Assert.assertEquals(wrongTest.get(1).getId(), "Q9");
-
+        Assert.assertEquals(wrongTest.get(1).getId(), "Q15");
+        Assert.assertEquals(wrongTest.get(2).getId(), "Q9");
+        Assert.assertEquals(wrongTest.get(3).getId(), "Q14");
 
     }
 
@@ -68,8 +70,10 @@ public class LearningObjectSuggesterTest {
 
         List<ConceptNode> concepts = LearningObjectSuggester.conceptsToWorkOn(orig);
 
-        Assert.assertEquals(concepts.size(), 1);
+        Assert.assertEquals(concepts.size(), 2);
+
         Assert.assertEquals(concepts.get(0).getID(), "Boolean");
+        Assert.assertEquals(concepts.get(1).getID(), "Counting");
 
     }
 
@@ -94,8 +98,16 @@ public class LearningObjectSuggesterTest {
 
         List<ConceptNode> concepts = LearningObjectSuggester.conceptsToWorkOn(userGraph);
 
-        Assert.assertEquals(concepts.get(0).getID(), "Pointers");
-
+        Assert.assertEquals(concepts.size(), 9);
+        Assert.assertEquals(concepts.get(0).getID(), "Pass by Value");
+        Assert.assertEquals(concepts.get(1).getID(), "Dangling Pointers");
+        Assert.assertEquals(concepts.get(2).getID(), "Recursion");
+        Assert.assertEquals(concepts.get(3).getID(), "Pass by Pointer");
+        Assert.assertEquals(concepts.get(4).getID(), "Stack");
+        Assert.assertEquals(concepts.get(5).getID(), "Testing Time Efficiency");
+        Assert.assertEquals(concepts.get(6).getID(), "Memory Leak");
+        Assert.assertEquals(concepts.get(7).getID(), "List");
+        Assert.assertEquals(concepts.get(8).getID(), "Queue");
     }
 
 
@@ -119,8 +131,14 @@ public class LearningObjectSuggesterTest {
         ConceptGraph userGraph = cohortConceptGraphs.getUserGraph("s03");
 
         List<ConceptNode> concepts = LearningObjectSuggester.conceptsToWorkOn(userGraph);
-
-        Assert.assertEquals(concepts.size(), 0);
+        Assert.assertEquals(concepts.size(), 7);
+        Assert.assertEquals(concepts.get(0).getID(), "Pass by Value");
+        Assert.assertEquals(concepts.get(1).getID(), "Dangling Pointers");
+        Assert.assertEquals(concepts.get(2).getID(), "Pass by Pointer");
+        Assert.assertEquals(concepts.get(3).getID(), "Stack");
+        Assert.assertEquals(concepts.get(4).getID(), "Testing Time Efficiency");
+        Assert.assertEquals(concepts.get(5).getID(), "Memory Leak");
+        Assert.assertEquals(concepts.get(6).getID(), "Queue");
     }
 
 
@@ -147,10 +165,11 @@ public class LearningObjectSuggesterTest {
         List<ConceptNode> concepts = LearningObjectSuggester.conceptsToWorkOn(orig);
         HashMap<String, List<LearningObjectSuggestion>> objectSuggestionMap = LearningObjectSuggester.buildSuggestionMap(concepts, 1, orig);
 
-        Assert.assertEquals(1, objectSuggestionMap.size());
+        Assert.assertEquals(2, objectSuggestionMap.size());
 
         Assert.assertEquals(objectSuggestionMap.get("Boolean").get(0).getId(), "Q6");
         Assert.assertEquals(objectSuggestionMap.get("Boolean").get(1).getId(), "Q10");
+        Assert.assertEquals(objectSuggestionMap.get("Counting").get(0).getId(), "Q13");
 
     }
 
@@ -219,9 +238,15 @@ public class LearningObjectSuggesterTest {
         String wrongString = res.toString(1);
 
 
-        Assert.assertEquals(incomString, "Resource: Q6\t Concepts it relates to: Boolean\t Importance: 1\t Direct Concept Links: 1\nResource: Q10\t Concepts it relates to: Boolean\t Importance: 1\t Direct Concept Links: 4\n");
+        Assert.assertEquals(incomString, "Resource: Q6\t Concepts it relates to: Boolean\t Importance: 1\t Direct Concept Links: 1" +
+                "\nResource: Q13\t Concepts it relates to: Counting\t Importance: 1\t Direct Concept Links: 1"+
+                "\nResource: Q10\t Concepts it relates to: Boolean\t Importance: 1\t Direct Concept Links: 4\n");
 
-        Assert.assertEquals(wrongString, "Resource: Q7\t Concepts it relates to: Boolean\t Importance: 1\t Direct Concept Links: 1\nResource: Q9\t Concepts it relates to: Boolean\t Importance: 1\t Direct Concept Links: 3\n");
+
+        Assert.assertEquals(wrongString, "Resource: Q7\t Concepts it relates to: Boolean\t Importance: 1\t Direct Concept Links: 1" +
+                "\nResource: Q15\t Concepts it relates to: Counting\t Importance: 1\t Direct Concept Links: 1"+
+                "\nResource: Q9\t Concepts it relates to: Boolean\t Importance: 1\t Direct Concept Links: 3"+
+                "\nResource: Q14\t Concepts it relates to: Counting\t Importance: 1\t Direct Concept Links: 1\n");
 
     }
 
@@ -256,7 +281,11 @@ public class LearningObjectSuggesterTest {
 
 
         Assert.assertEquals(incomString, "");
-        Assert.assertEquals(wrongString, "Resource: Lab 3: Comparing Array Library Efficiency\t Concepts it relates to: Abstract Data Types & Array & Linked Nodes\t Importance: 5\t Direct Concept Links: 3\nResource: Lab 7: Linked List\t Concepts it relates to: Linked Nodes & Abstract Data Types\t Importance: 1\t Direct Concept Links: 2\nResource: Lab 8: Comparing Arrays and Linked Lists\t Concepts it relates to: Abstract Data Types & Array\t Importance: 1\t Direct Concept Links: 2\nResource: Lab 6: ArrayList and Testing\t Concepts it relates to: Abstract Data Types & Array\t Importance: 1\t Direct Concept Links: 2\nResource: Lab 5: Comparing Searches\t Concepts it relates to: Linked Nodes\t Importance: 1\t Direct Concept Links: 3\n");
+
+        Assert.assertEquals(wrongString,"Resource: Lab 8: Comparing Arrays and Linked Lists\t Concepts it relates to: List\t Importance: 1\t Direct Concept Links: 2" +
+                "\nResource: Lab 5: Comparing Searches\t Concepts it relates to: Recursion\t Importance: 1\t Direct Concept Links: 3"+
+                "\nResource: Lab 6: ArrayList and Testing\t Concepts it relates to: List\t Importance: 1\t Direct Concept Links: 2" +
+                "\nResource: Lab 7: Linked List\t Concepts it relates to: List\t Importance: 1\t Direct Concept Links: 2\n");
 
     }
 }

@@ -1,5 +1,6 @@
 package edu.ithaca.dragon.tecmap;
 
+import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import edu.ithaca.dragon.tecmap.conceptgraph.CohortConceptGraphs;
 import edu.ithaca.dragon.tecmap.conceptgraph.ConceptGraph;
 import edu.ithaca.dragon.tecmap.io.*;
@@ -64,8 +65,9 @@ public class ConceptKnowledgeCalculatorTest {
         try {
             concepts = ckc.calcIndividualConceptNodesSuggestions("bspinache1");
 
-            Assert.assertEquals(concepts.size(), 1);
+            Assert.assertEquals(concepts.size(), 2);
             Assert.assertEquals(concepts.get(0), "Boolean");
+            Assert.assertEquals(concepts.get(1), "Counting");
 
 
         } catch (Exception e) {
@@ -202,14 +204,16 @@ public class ConceptKnowledgeCalculatorTest {
             List<LearningObjectSuggestion> incomTest = res.incompleteList;
             List<LearningObjectSuggestion> wrongTest = res.wrongList;
 
-            Assert.assertEquals(incomTest.size(),2);
+            Assert.assertEquals(incomTest.size(),3);
             Assert.assertEquals(incomTest.get(0).getId(),"Q6");
 
-            Assert.assertEquals(incomTest.get(1).getId(),"Q10");
+            Assert.assertEquals(incomTest.get(1).getId(),"Q13");
 
-            Assert.assertEquals(wrongTest.size(),2);
+            Assert.assertEquals(wrongTest.size(),4);
             Assert.assertEquals(wrongTest.get(0).getId(), "Q7");
-            Assert.assertEquals(wrongTest.get(1).getId(), "Q9");
+            Assert.assertEquals(wrongTest.get(1).getId(), "Q15");
+            Assert.assertEquals(wrongTest.get(2).getId(), "Q9");
+            Assert.assertEquals(wrongTest.get(3).getId(), "Q14");
 
         } catch (Exception e) {
             Assert.fail("Unable to find user");
@@ -239,10 +243,12 @@ public class ConceptKnowledgeCalculatorTest {
             Assert.assertEquals(incomTest.size(), 0);
             Assert.assertEquals(incomTest, new ArrayList<>());
 
-            Assert.assertEquals(wrongTest.size(), 3);
-            Assert.assertEquals(wrongTest.get(0).getId(), "Lab 4: Recursion");
-            Assert.assertEquals(wrongTest.get(1).getId(), "Lab 2: Array Library");
-            Assert.assertEquals(wrongTest.get(2).getId(), "Lab 3: Comparing Array Library Efficiency");
+            Assert.assertEquals(wrongTest.size(), 5);
+            Assert.assertEquals(wrongTest.get(0).getId(), "Lab 8: Comparing Arrays and Linked Lists");
+            Assert.assertEquals(wrongTest.get(1).getId(), "Lab 4: Recursion");
+            Assert.assertEquals(wrongTest.get(2).getId(), "Lab 6: ArrayList and Testing");
+            Assert.assertEquals(wrongTest.get(3).getId(), "Lab 5: Comparing Searches");
+            Assert.assertEquals(wrongTest.get(4).getId(), "Lab 7: Linked List");
 
 
         } catch (Exception e) {
@@ -276,14 +282,11 @@ public class ConceptKnowledgeCalculatorTest {
             Assert.assertEquals(incomTest.size(), 0);
             Assert.assertEquals(incomTest, new ArrayList<>());
 
-            Assert.assertEquals(wrongTest.size(), 7);
-            Assert.assertEquals(wrongTest.get(0).getId(), "Lab 4: Recursion");
-            Assert.assertEquals(wrongTest.get(1).getId(), "Lab 8: Comparing Arrays and Linked Lists");
-            Assert.assertEquals(wrongTest.get(2).getId(), "Lab 4: Recursion");
-            Assert.assertEquals(wrongTest.get(3).getId(), "Lab 2: Array Library");
-            Assert.assertEquals(wrongTest.get(4).getId(), "Lab 7: Linked List");
-            Assert.assertEquals(wrongTest.get(5).getId(), "Lab 5: Comparing Searches");
-            Assert.assertEquals(wrongTest.get(6).getId(), "Lab 3: Comparing Array Library Efficiency");
+            Assert.assertEquals(wrongTest.size(), 4);
+            Assert.assertEquals(wrongTest.get(0).getId(), "Lab 8: Comparing Arrays and Linked Lists");
+            Assert.assertEquals(wrongTest.get(1).getId(), "Lab 4: Recursion");
+            Assert.assertEquals(wrongTest.get(2).getId(), "Lab 7: Linked List");
+            Assert.assertEquals(wrongTest.get(3).getId(), "Lab 5: Comparing Searches");
 
 
         } catch (Exception e) {
@@ -334,12 +337,11 @@ public class ConceptKnowledgeCalculatorTest {
 
         Assert.assertEquals(groupings.get(0).getStudentNames().get(0), "s4" );
 
-        Assert.assertEquals(groupings.get(1).getStudentNames().get(0), "s6" );
-        Assert.assertEquals(groupings.get(1).getStudentNames().get(1), "s2" );
+        Assert.assertEquals(groupings.get(1).getStudentNames().get(0), "s2" );
 
         Assert.assertEquals(groupings.get(2).getStudentNames().get(0), "s3" );
         Assert.assertEquals(groupings.get(2).getStudentNames().get(1), "s5" );
-        Assert.assertEquals(groupings.get(2).getStudentNames().get(2), "s1" );
+        Assert.assertEquals(groupings.get(2).getStudentNames().get(2), "s6" );
     }
 
 
@@ -355,12 +357,11 @@ public class ConceptKnowledgeCalculatorTest {
 
             Assert.assertEquals(incomTest,new ArrayList<>());
 
-            Assert.assertEquals(wrongTest.get(0).getId(), "Lab 4: Recursion");
-            Assert.assertEquals(wrongTest.get(1).getId(), "Lab 8: Comparing Arrays and Linked Lists");
-            Assert.assertEquals(wrongTest.get(2).getId(), "Lab 4: Recursion");
-            Assert.assertEquals(wrongTest.get(3).getId(), "Lab 6: ArrayList and Testing");
-            Assert.assertEquals(wrongTest.get(4).getId(), "Lab 5: Comparing Searches");
-            Assert.assertEquals(wrongTest.get(5).getId(), "Lab 7: Linked List");
+            Assert.assertEquals(wrongTest.get(0).getId(), "Lab 8: Comparing Arrays and Linked Lists");
+            Assert.assertEquals(wrongTest.get(1).getId(), "Lab 4: Recursion");
+            Assert.assertEquals(wrongTest.get(2).getId(), "Lab 6: ArrayList and Testing");
+            Assert.assertEquals(wrongTest.get(3).getId(), "Lab 5: Comparing Searches");
+            Assert.assertEquals(wrongTest.get(4).getId(), "Lab 7: Linked List");
         } catch (IOException e) {
             Assert.fail("Unable to load default files. Test unable to run");
         }
@@ -997,16 +998,11 @@ public class ConceptKnowledgeCalculatorTest {
             ckc.getCohortGraphsUrl();
 
             Assert.assertEquals(incomTest2.size(), 1);
-            Assert.assertEquals(incomTest2.get(0).getId(), "What are values are accessed by?");
+            Assert.assertEquals(incomTest2.get(0).getId(), "Describe how the following relate to a for loop: variable, terminating condition, loop body");
 
-            Assert.assertEquals(wrongTest2.size(), 5);
-            Assert.assertEquals(wrongTest2.get(0).getId(), "What’s a value");
+            Assert.assertEquals(wrongTest2.size(), 2);
+            Assert.assertEquals(wrongTest2.get(0).getId(), "Describe how while loops can depend on booleans");
             Assert.assertEquals(wrongTest2.get(1).getId(), "Write a function that will calculate if the substring 'the' is in any user input");
-            Assert.assertEquals(wrongTest2.get(2).getId(), "Is a dictionary ordered?");
-            Assert.assertEquals(wrongTest2.get(3).getId(), "When do you want to allow side effects?");
-            Assert.assertEquals(wrongTest2.get(4).getId(), "Write a function that will calculate if the substring 'the' is in any user input");
-
-
 
 
         }catch (Exception e){

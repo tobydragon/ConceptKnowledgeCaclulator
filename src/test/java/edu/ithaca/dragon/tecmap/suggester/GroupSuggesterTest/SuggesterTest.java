@@ -169,24 +169,19 @@ public class SuggesterTest {
         ConceptSuggester sug  = new ConceptSuggester();
         List<Group> groupings2 = sug.suggestGroup(actualGroupings.get(0), new Group());
 
-        Assert.assertEquals(groupings2.size(), 2);
-        Assert.assertEquals(groupings2.get(0).getSize(),2);
-        Assert.assertEquals(groupings2.get(1).getSize(),3);
+        Assert.assertEquals(groupings2.size(), 1);
+        Assert.assertEquals(groupings2.get(0).getSize(),5);
 
         //        groups of 2
         List<Suggester> suggesterList = new ArrayList<>();
         suggesterList.add(new ConceptSuggester());
 
         List<Group> groupings = sug.suggestGroup(list.get(0), new Group());
-        Assert.assertEquals(groupings.get(0).getRationale(), "  ,Concept: Dictionaries");
+        Assert.assertEquals(groupings.get(0).getRationale(), "  ,Concept: For Loops");
         List<String> three = groupings.get(0).getStudentNames();
         Assert.assertEquals(three.get(0),"s3");
-        Assert.assertEquals(three.get(1),"s2");
-        Assert.assertEquals(groupings.get(1).getRationale(), "  ,Concept: no suggestions");
-        List<String> four = groupings.get(1).getStudentNames();
-        Assert.assertEquals(four.get(0),"s4");
-        Assert.assertEquals(four.get(1),"s5");
-        Assert.assertEquals(four.get(2),"s1");
+        Assert.assertEquals(three.get(1),"s4");
+
     }
 
 
