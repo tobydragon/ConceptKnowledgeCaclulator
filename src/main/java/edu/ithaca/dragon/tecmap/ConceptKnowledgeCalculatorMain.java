@@ -7,8 +7,8 @@ import java.util.Arrays;
 public class ConceptKnowledgeCalculatorMain {
 
     public static void main(String[] args) {
-        ConceptKnowledgeCalculator.Mode startMode = ConceptKnowledgeCalculator.Mode.STRUCTUREGRAPH;
-//        ConceptKnowledgeCalculator.Mode startMode = ConceptKnowledgeCalculator.Mode.COHORTGRAPH;
+//        ConceptKnowledgeCalculator.Mode startMode = ConceptKnowledgeCalculator.Mode.STRUCTUREGRAPH;
+        ConceptKnowledgeCalculator.Mode startMode = ConceptKnowledgeCalculator.Mode.COHORTGRAPH;
 
 
         if (startMode == ConceptKnowledgeCalculator.Mode.STRUCTUREGRAPH) {
