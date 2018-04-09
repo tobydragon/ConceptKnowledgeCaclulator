@@ -687,7 +687,11 @@ public class ConceptKnowledgeCalculator implements ConceptKnowledgeCalculatorAPI
         return suggestMode;
     }
 
-    public void setCurrentSuggestMode(SuggestMode mode){
-        suggestMode = mode;
+    public void toggleCurrentSuggestMode(){
+        if(suggestMode== SuggestMode.LISTEVERYTHING){
+            suggestMode = SuggestMode.LISTOPTIONS;
+        }else{
+            suggestMode = SuggestMode.LISTEVERYTHING;
+        }
     }
 }
