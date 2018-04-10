@@ -348,11 +348,11 @@ public class ConsoleUI {
             if(ckc.getCurrentSuggestMode() == ConceptKnowledgeCalculator.SuggestMode.LISTEVERYTHING){
 
                 if(sugRes.incompleteList.size()>0){
-                    System.out.println("Resources you haven't completed yet \n_____________________________________");
+                    System.out.println("Try something new \n_____________________________________");
                     System.out.println(sugRes.toString(0));
                 }
                 if(sugRes.wrongList.size()>0){
-                    System.out.println("\nResources you have already completed \n_____________________________________");
+                    System.out.println("\nTry something again \n_____________________________________");
                     System.out.println(sugRes.toString(1));
                 }
 
@@ -398,11 +398,11 @@ public class ConsoleUI {
 
             if(ckc.getCurrentSuggestMode() == ConceptKnowledgeCalculator.SuggestMode.LISTEVERYTHING) {
                 if(sugRes.incompleteList.size()>0){
-                    System.out.println("Resources you haven't completed yet \n_____________________________________");
+                    System.out.println("Try something new \n_____________________________________");
                     System.out.println(sugRes.toString(0));
                 }
                 if(sugRes.wrongList.size()>0){
-                    System.out.println("\nResources you have already completed \n_____________________________________");
+                    System.out.println("\n Try something again \n_____________________________________");
                     System.out.println(sugRes.toString(1));
                 }
 
@@ -411,7 +411,7 @@ public class ConsoleUI {
             }else{
 
 
-                System.out.println(" 1- Try something new 2- try something again");
+                System.out.println(" 1- Try a new resource 2- try a resource again");
                 Integer option = scanner.nextInt();
                 while (option > 2 || option < 1) {
                     System.out.println(" 1- Try something new 2- try something again");
@@ -679,6 +679,7 @@ public class ConsoleUI {
     }
 
     public void changeSuggestionView(){
+
         ckc.toggleCurrentSuggestMode();
     }
 
