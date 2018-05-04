@@ -31,7 +31,7 @@ public class LearningObjectSuggester {
         for (String key : graph.getAllNodeIds()) {
             ConceptNode node = graph.findNodeById(key);
 
-            if (node.getKnowledgeEstimate() >= 0 && node.getKnowledgeEstimate() <= MAX) {
+            if (node.getKnowledgeEstimate() > 0 && node.getKnowledgeEstimate() <= MAX) {
                 graph.updateSuggestionList(node, suggestedConceptList);
             }
         }
