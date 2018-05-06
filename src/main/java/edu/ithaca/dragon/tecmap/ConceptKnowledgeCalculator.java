@@ -480,7 +480,6 @@ public class ConceptKnowledgeCalculator implements ConceptKnowledgeCalculatorAPI
 
 
 //            List<Group> initialGroup = sug.getGroupList(this.cohortConceptGraphs);
-            System.out.println("DLSKJDFL " + initialGroup);
 
             return sug.grouping(initialGroup, groupSize, groupTypeList);
         }else{

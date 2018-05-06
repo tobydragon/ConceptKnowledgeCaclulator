@@ -87,11 +87,11 @@ public class GroupSuggesterTest {
 
         Assert.assertEquals(groupings.size(), 2);
         Assert.assertEquals(groupings.get(0).getSize(), 2);
-        Assert.assertEquals(groupings.get(0).getRationale(), "   ,Concept: For Loops ,Complementary Knowledge");
+        Assert.assertEquals(groupings.get(0).getRationale(), "   ,Concept: Booleans ,Complementary Knowledge");
         Assert.assertEquals(groupings.get(0).getStudentNames().get(0), "s3");
         Assert.assertEquals(groupings.get(0).getStudentNames().get(1), "s4");
         Assert.assertEquals(groupings.get(1).getSize(), 3);
-        Assert.assertEquals(groupings.get(1).getRationale(), "   ,Concept: For Loops ,Complementary Knowledge  ,Extra Members");
+        Assert.assertEquals(groupings.get(1).getRationale(), "   ,Concept: Booleans ,Complementary Knowledge  ,Extra Members");
         Assert.assertEquals(groupings.get(1).getStudentNames().get(0), "s5");
         Assert.assertEquals(groupings.get(1).getStudentNames().get(1), "s1");
         Assert.assertEquals(groupings.get(1).getStudentNames().get(2), "s2");
@@ -303,9 +303,11 @@ public class GroupSuggesterTest {
         List<Group> groupings = sug.grouping(groupings1, 2, suggesterList);
 
         List<String> three = groupings.get(0).getStudentNames();
-        Assert.assertEquals(groupings.get(0).getRationale(), "  ,Concept: For Loops");
-        Assert.assertEquals(three.get(0),"s3");
-        Assert.assertEquals(three.get(1),"s4");
+        Assert.assertEquals(groupings.get(0).getRationale(), "  ,Concept: no suggestions");
+        Assert.assertEquals(three.size(), 3);
+        Assert.assertEquals(three.get(0),"s4");
+        Assert.assertEquals(three.get(1),"s5");
+        Assert.assertEquals(three.get(2),"s1");
 
 
 
@@ -328,10 +330,16 @@ public class GroupSuggesterTest {
 
         List<Group> groupings2 = sug.grouping(actualGroupings, 2, suggesterList2);
 
-        Assert.assertEquals(groupings2.size(), 2);
-        Assert.assertEquals(groupings2.get(0).getSize(),3);
-        Assert.assertEquals(groupings2.get(0).getRationale(), "  ,Concept: For Loops");
-        Assert.assertEquals(groupings2.get(1).getSize(),2);
+        Assert.assertEquals(groupings2.size(), 4);
+        Assert.assertEquals(groupings2.get(0).getSize(),2);
+        Assert.assertEquals(groupings2.get(0).getRationale(), "  ,Concept: no suggestions");
+        Assert.assertEquals(groupings2.get(1).getSize(),1);
+        Assert.assertEquals(groupings2.get(1).getRationale(), "  ,Concept: Booleans");
+        Assert.assertEquals(groupings2.get(2).getSize(),1);
+        Assert.assertEquals(groupings2.get(2).getRationale(), "  ,Concept: no suggestions");
+        Assert.assertEquals(groupings2.get(3).getSize(),1);
+        Assert.assertEquals(groupings2.get(3).getRationale(), "  ,Concept: Booleans");
+
 
     }
 
@@ -493,21 +501,18 @@ public class GroupSuggesterTest {
 
             List<Group> groupings1 = sug.grouping(actualGroupings, 2, suggesterList);
 
-
             Assert.assertEquals(groupings1.size(), 3);
             Assert.assertEquals(groupings1.get(0).getSize(), 2);
-            Assert.assertEquals(groupings1.get(0).getRationale(), "    ,Bucket: 51 - 80 ,Concept: For Loops ,By Size: 2");
+            Assert.assertEquals(groupings1.get(0).getRationale(), "    ,Bucket: 51 - 80 ,Concept: Booleans ,By Size: 2");
             Assert.assertEquals(groupings1.get(1).getSize(), 2);
-            Assert.assertEquals(groupings1.get(1).getRationale(), "    ,Bucket: 51 - 80 ,Concept: For Loops ,By Size: 2");
+            Assert.assertEquals(groupings1.get(1).getRationale(), "    ,Bucket: 51 - 80 ,Concept: Booleans ,By Size: 2");
             Assert.assertEquals(groupings1.get(2).getSize(), 2);
-            Assert.assertEquals(groupings1.get(2).getRationale(), "    ,Bucket: 81 - 100 ,Concept: For Loops ,By Size: 2");
+            Assert.assertEquals(groupings1.get(2).getRationale(), "    ,Bucket: 81 - 100 ,Concept: no suggestions ,By Size: 2");
 
 
         }catch (Exception e){
             e.printStackTrace();
         }
-
-
     }
 
 }
