@@ -69,25 +69,18 @@ public class ConceptKnowledgeCalculatorTest {
             e.printStackTrace();
         }
 
-        System.out.println("grouings " + groupings);
         Assert.assertEquals(groupings.get(0).getSize(), 1);
         Assert.assertEquals(groupings.get(0).getStudentNames().get(0), "s4" );
 
-        System.out.println("first " + groupings.get(0));
-        System.out.println("second " + groupings.get(1));
+        Assert.assertEquals(groupings.get(1).getSize(), 2);
+        Assert.assertEquals(groupings.get(1).getStudentNames().get(0), "s7" );
+        Assert.assertEquals(groupings.get(1).getStudentNames().get(1), "s2" );
 
-
-//        Assert.assertEquals(groupings.get(1).getSize(), 3);
-//        Assert.assertEquals(groupings.get(1).getStudentNames().get(0), "s6" );
-//        Assert.assertEquals(groupings.get(1).getStudentNames().get(1), "s7" );
-//        Assert.assertEquals(groupings.get(1).getStudentNames().get(2), "s2" );
-//
-        System.out.println("thurd " + groupings.get(2));
-
-        Assert.assertEquals(groupings.get(2).getSize(), 3);
+        Assert.assertEquals(groupings.get(2).getSize(), 4);
         Assert.assertEquals(groupings.get(2).getStudentNames().get(0), "s3" );
         Assert.assertEquals(groupings.get(2).getStudentNames().get(1), "s5" );
-        Assert.assertEquals(groupings.get(2).getStudentNames().get(2), "s1" );
+        Assert.assertEquals(groupings.get(2).getStudentNames().get(2), "s6" );
+        Assert.assertEquals(groupings.get(2).getStudentNames().get(3), "s1" );
     }
 
     @Test
@@ -349,7 +342,6 @@ public class ConceptKnowledgeCalculatorTest {
             Assert.assertEquals(incomTest.size(), 0);
             Assert.assertEquals(incomTest, new ArrayList<>());
 
-            //ToDO handle repeating resource suggestion
             Assert.assertEquals(wrongTest.size(), 7);
             Assert.assertEquals(wrongTest.get(0).getId(), "Lab 4: Recursion");
             Assert.assertEquals(wrongTest.get(1).getId(), "Lab 8: Comparing Arrays and Linked Lists");

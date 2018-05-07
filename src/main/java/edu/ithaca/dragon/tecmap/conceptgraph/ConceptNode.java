@@ -194,6 +194,8 @@ public class ConceptNode {
             return 0;
         } else {
 
+			System.out.println(this.getID() + " " + this.getKnowledgeEstimate());
+
             viewedNodes.add(this.getID());
 
             if (this.children.size() == 0) {
@@ -204,7 +206,8 @@ public class ConceptNode {
 
                 for (ConceptNode child : this.children) {
                     sum += child.countTotalKnowledgeEstimate(viewedNodes);
-                }
+
+				}
 
             return (this.getKnowledgeEstimate() + sum);
             }
