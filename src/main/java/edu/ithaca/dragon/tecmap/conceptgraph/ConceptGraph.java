@@ -275,10 +275,8 @@ public class  ConceptGraph {
     public double calcTotalKnowledgeEstimate( String startingSubject){
         if(startingSubject.equals("all")){
             double ex = 0;
-            System.out.println("total " + ex);
             for(ConceptNode roots: this.getRoots()){
                 double total = roots.countTotalKnowledgeEstimate(new ArrayList<>());
-                System.out.println("root total:  " + total);
                 ex+= total;
 
             }

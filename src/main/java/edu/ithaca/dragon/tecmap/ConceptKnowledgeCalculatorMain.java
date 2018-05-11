@@ -14,7 +14,10 @@ public class ConceptKnowledgeCalculatorMain {
         if (startMode == ConceptKnowledgeCalculator.Mode.STRUCTUREGRAPH) {
 //            new ConsoleUI(Settings.RESOURCE_DIR + "exampleGraph.json");
 //            new ConsoleUI(Settings.RESOURCE_DIR + "comp171/comp171Graph.json");
-            new ConsoleUI(Settings.RESOURCE_DIR+"comp171/comp171GraphStudy.json");
+//            new ConsoleUI(Settings.RESOURCE_DIR+"comp171/comp171GraphStudy.json");
+            new ConsoleUI(Settings.TEST_RESOURCE_DIR+ "ManuallyCreated/exampleConceptGraph.json");
+
+            //src/test/resources/author/
 //            new ConsoleUI(Settings.RESOURCE_DIR + "comp220/comp220Graph.json");
 //            new ConsoleUI(Settings.RESOURCE_DIR + "comp115/comp115Graph.json");
 //            new ConsoleUI(Settings.RESOURCE_DIR + "comp171/comp171Graph-PaulNate-V1.json");
@@ -36,9 +39,14 @@ public class ConceptKnowledgeCalculatorMain {
 //                    Settings.RESOURCE_DIR + "comp220/comp220Resources-e1.json",
 //                    Settings.PRIVATE_RESOURCE_DIR +"/comp220/comp220-e1.csv");
 //
-            new ConsoleUI(Settings.TEST_RESOURCE_DIR + "ManuallyCreated/researchConceptGraph.json",
-                    Settings.TEST_RESOURCE_DIR + "ManuallyCreated/researchResource1.json",
-                    Settings.TEST_RESOURCE_DIR + "ManuallyCreated/researchAssessment1.csv");
+            new ConsoleUI(Settings.TEST_RESOURCE_DIR+ "ManuallyCreated/exampleConceptGraph.json",
+                    Settings.TEST_RESOURCE_DIR + "ManuallyCreated/exampleResource.json",
+                    Settings.TEST_RESOURCE_DIR + "ManuallyCreated/exampleAssessment.csv");
+
+
+//            new ConsoleUI(Settings.TEST_RESOURCE_DIR + "ManuallyCreated/researchConceptGraph.json",
+//                    Settings.TEST_RESOURCE_DIR + "ManuallyCreated/researchResource1.json",
+//                    Settings.TEST_RESOURCE_DIR + "ManuallyCreated/researchAssessment1.csv");
 
 //            new ConsoleUI(Settings.TEST_RESOURCE_DIR + "ManuallyCreated/researchConceptGraph.json",
 //                    Settings.TEST_RESOURCE_DIR + "ManuallyCreated/researchResource2.json",

@@ -308,6 +308,22 @@ public class ConceptGraphTest {
 
     @Test
     public void calcTotalKnowledgeEstimate2(){
+//                ConceptKnowledgeCalculatorAPI ckc = null;
+//        try {
+//            ckc = new ConceptKnowledgeCalculator(Settings.TEST_RESOURCE_DIR+ "ManuallyCreated/exampleConceptGraph.json",
+//                    Settings.TEST_RESOURCE_DIR + "ManuallyCreated/exampleResource.json",
+//                    Settings.TEST_RESOURCE_DIR + "ManuallyCreated/exampleAssessment.csv");
+//        } catch (IOException e) {
+//            Assert.fail("Unable to load default files. Test unable to run");
+//        }
+//
+//        CohortConceptGraphs graphs = ckc.getCohortConceptGraphs();
+//
+//        ConceptGraph gr = graphs.getUserGraph("s01");
+//        Assert.assertEquals(13.580, gr.calcTotalKnowledgeEstimate("all"), DataUtil.OK_FLOAT_MARGIN);
+
+
+
         ConceptKnowledgeCalculatorAPI ckc = null;
         try {
             ckc = new ConceptKnowledgeCalculator(Settings.TEST_RESOURCE_DIR + "ManuallyCreated/researchConceptGraph.json",
@@ -322,27 +338,27 @@ public class ConceptGraphTest {
         ConceptGraph gr = graphs.getUserGraph("s1");
         Assert.assertEquals(13.580, gr.calcTotalKnowledgeEstimate("all"), DataUtil.OK_FLOAT_MARGIN);
 
-//        ConceptGraph gr2 = graphs.getUserGraph("s2");
-//        Assert.assertEquals(11.477, gr2.calcTotalKnowledgeEstimate("all"), DataUtil.OK_FLOAT_MARGIN);
-//
-//
-//        ConceptGraph gr3 = graphs.getUserGraph("s3");
-//        Assert.assertEquals(12.8326, gr3.calcTotalKnowledgeEstimate("all"), DataUtil.OK_FLOAT_MARGIN);
-//
-//        ConceptGraph gr4 = graphs.getUserGraph("s4");
-//        Assert.assertEquals(1.0, gr4.calcTotalKnowledgeEstimate("all"), DataUtil.OK_FLOAT_MARGIN);
-//
-//
-//        ConceptGraph gr5 = graphs.getUserGraph("s5");
-//        Assert.assertEquals(12.872, gr5.calcTotalKnowledgeEstimate("all"), DataUtil.OK_FLOAT_MARGIN);
-//
-//
-//        ConceptGraph gr6 = graphs.getUserGraph("s6");
-//        Assert.assertEquals(12.7884, gr6.calcTotalKnowledgeEstimate("all"), DataUtil.OK_FLOAT_MARGIN);
-//
-//
-//        ConceptGraph gr7 = graphs.getUserGraph("s7");
-//        Assert.assertEquals(10.953, gr7.calcTotalKnowledgeEstimate("all"), DataUtil.OK_FLOAT_MARGIN);
+        ConceptGraph gr2 = graphs.getUserGraph("s2");
+        Assert.assertEquals(11.477, gr2.calcTotalKnowledgeEstimate("all"), DataUtil.OK_FLOAT_MARGIN);
+
+
+        ConceptGraph gr3 = graphs.getUserGraph("s3");
+        Assert.assertEquals(12.8326, gr3.calcTotalKnowledgeEstimate("all"), DataUtil.OK_FLOAT_MARGIN);
+
+        ConceptGraph gr4 = graphs.getUserGraph("s4");
+        Assert.assertEquals(1.0, gr4.calcTotalKnowledgeEstimate("all"), DataUtil.OK_FLOAT_MARGIN);
+
+
+        ConceptGraph gr5 = graphs.getUserGraph("s5");
+        Assert.assertEquals(12.872, gr5.calcTotalKnowledgeEstimate("all"), DataUtil.OK_FLOAT_MARGIN);
+
+
+        ConceptGraph gr6 = graphs.getUserGraph("s6");
+        Assert.assertEquals(12.7884, gr6.calcTotalKnowledgeEstimate("all"), DataUtil.OK_FLOAT_MARGIN);
+
+
+        ConceptGraph gr7 = graphs.getUserGraph("s7");
+        Assert.assertEquals(10.953, gr7.calcTotalKnowledgeEstimate("all"), DataUtil.OK_FLOAT_MARGIN);
 
 
     }

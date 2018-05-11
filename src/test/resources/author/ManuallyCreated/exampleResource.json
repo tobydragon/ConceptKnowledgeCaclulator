@@ -1,0 +1,123 @@
+[
+  {"learningResourceId":"Q1",
+  "conceptIds":[
+    "intro to cs"
+  ],
+  "dataImportance": "1"
+  },
+  {"learningResourceId":"Q2",
+  "conceptIds":[
+    "variable assignment"
+  ],
+  "dataImportance": "1"
+  },
+  {"learningResourceId":"Q3",
+  "conceptIds":[
+    "data types"
+  ],
+  "dataImportance": "1"
+  },
+  {"learningResourceId":"Q4",
+  "conceptIds":[
+    "control"
+  ],
+  "dataImportance": "1"
+  },
+  {"learningResourceId":"Q5",
+  "conceptIds":[
+    "literals"
+  ],
+  "dataImportance": "1"
+  },
+  {"learningResourceId":"Q6",
+    "conceptIds":[
+      "expressions"
+    ],
+    "dataImportance": "1"
+  },
+  {"learningResourceId":"Q7",
+    "conceptIds":[
+      "booleans"
+    ],
+    "dataImportance": "1"
+  },
+  {"learningResourceId":"Q8",
+    "conceptIds":[
+      "integers"
+    ],
+    "dataImportance": "1"
+  },{"learningResourceId":"Q9",
+    "conceptIds":[
+      "strings"
+    ],
+    "dataImportance": "1"
+  },
+  {"learningResourceId":"Q10",
+    "conceptIds":[
+      "if statement"
+    ],
+    "dataImportance": "1"
+  },
+  {"learningResourceId": "Q11",
+    "conceptIds": [
+    "while loops"
+  ],
+    "dataImportance": "1"
+  },
+  {
+    "learningResourceId": "Q12",
+    "conceptIds": [
+      "functions"
+    ],
+    "dataImportance": "1"
+  },
+  {
+    "learningResourceId": "Q13",
+    "conceptIds": [
+      "loops"
+    ],
+    "dataImportance": "1"
+  },
+  {
+    "learningResourceId": "Q14",
+    "conceptIds": [
+      "for loops"
+    ],
+    "dataImportance": "1"
+  },
+  {
+    "learningResourceId": "Q15",
+    "conceptIds": [
+      "calling functions"
+    ],
+    "dataImportance": "1"
+  },
+  {
+    "learningResourceId": "Q16",
+    "conceptIds": [
+      "returning values"
+    ],
+    "dataImportance": "1"
+  },
+  {
+    "learningResourceId": "Q17",
+    "conceptIds": [
+      "parameters"
+    ],
+    "dataImportance": "1"
+  },
+  {
+    "learningResourceId": "Q18",
+    "conceptIds": [
+      "defining functions"
+    ],
+    "dataImportance": "1"
+  },
+  {
+    "learningResourceId": "Q19",
+    "conceptIds": [
+      "sending arguments"
+    ],
+    "dataImportance": "1"
+  }
+]
