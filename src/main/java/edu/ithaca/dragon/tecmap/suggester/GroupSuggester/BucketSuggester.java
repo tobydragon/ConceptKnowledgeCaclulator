@@ -16,7 +16,7 @@ public class BucketSuggester extends Suggester {
     List<List<Integer>> ranges;
 
     public BucketSuggester(List<List<Integer>> ranges) throws Exception {
-        if(ranges.size()<0){
+        if(ranges.size()<=0){
             throw new Exception();
 
         }else{
@@ -38,8 +38,8 @@ public class BucketSuggester extends Suggester {
                 ConceptGraph userGraph = group.get(name);
                 String subject = "all";
                 double sum = calcSum(userGraph,subject);
-
                 knowledgeSums.put(name, (sum/userGraph.getAllNodeIds().size())*100);
+
             }
 
 
@@ -49,6 +49,8 @@ public class BucketSuggester extends Suggester {
                 for(String student:knowledgeSums.keySet()){
 
                     if ( knowledgeSums.get(student)>r.get(0) && knowledgeSums.get(student) < r.get(1) ){
+                        System.out.println("name "+ student + " knowledge " + knowledgeSums.get(student) +" range " + r.get(0) + " to " + r.get(1));
+
                         map.put(student,group.get(student));
                     }
 

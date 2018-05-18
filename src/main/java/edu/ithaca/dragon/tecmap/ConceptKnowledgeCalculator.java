@@ -32,6 +32,12 @@ public class ConceptKnowledgeCalculator implements ConceptKnowledgeCalculatorAPI
         STRUCTUREGRAPH, COHORTGRAPH, STRUCTUREGRAPHWITHRESOURCE, STRUCTUREGRAPHWITHASSESSMENT, NODATA
     }
 
+    public enum SuggestMode{
+        LISTEVERYTHING, LISTOPTIONS
+    }
+
+    private SuggestMode suggestMode;
+
     private Mode currentMode;
 
     //is only one file for structure and one for resource files.
@@ -372,13 +378,13 @@ public class ConceptKnowledgeCalculator implements ConceptKnowledgeCalculatorAPI
             CohortConceptGraphsRecord toFile = cohortConceptGraphs.buildCohortConceptTreeRecord();
             String file = Settings.WEB_JSON_DIR + "cohortTreesCurrent.json";
             toFile.writeToJson(file);
-            return "To view graph, right-click \""+file +"\" choose \"open in Browser\".";
+            return "To view graph, right-click \"src/main/web/CohortGraph.html\" choose \"open in Browser\".";
 
         }else if(currentMode== Mode.STRUCTUREGRAPH || currentMode== Mode.STRUCTUREGRAPHWITHASSESSMENT || currentMode== Mode.STRUCTUREGRAPHWITHRESOURCE){
             ConceptGraphRecord toFile = TreeConverter.makeTreeCopy(structureGraph).buildConceptGraphRecord();
             String file = Settings.WEB_JSON_DIR + "structureTreeCurrent.json";
             toFile.writeToJson(file);
-            return "To view graph, right-click \""+file +"\" choose \"open in Browser\".";
+            return "To view graph, right-click \"src/main/web/StructureGraph.html\" choose \"open in Browser\".";
         }else{
             throw new Exception("Wrong mode");
         }
@@ -474,7 +480,6 @@ public class ConceptKnowledgeCalculator implements ConceptKnowledgeCalculatorAPI
 
 
 //            List<Group> initialGroup = sug.getGroupList(this.cohortConceptGraphs);
-            System.out.println("DLSKJDFL " + initialGroup);
 
             return sug.grouping(initialGroup, groupSize, groupTypeList);
         }else{
@@ -677,4 +682,15 @@ public class ConceptKnowledgeCalculator implements ConceptKnowledgeCalculatorAPI
         return structureGraph;
     }
 
+    public SuggestMode getCurrentSuggestMode(){
+        return suggestMode;
+    }
+
+    public void toggleCurrentSuggestMode(){
+        if(suggestMode== SuggestMode.LISTEVERYTHING){
+            suggestMode = SuggestMode.LISTOPTIONS;
+        }else{
+            suggestMode = SuggestMode.LISTEVERYTHING;
+        }
+    }
 }

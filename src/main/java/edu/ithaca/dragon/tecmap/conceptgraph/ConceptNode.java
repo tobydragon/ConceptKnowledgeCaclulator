@@ -204,7 +204,8 @@ public class ConceptNode {
 
                 for (ConceptNode child : this.children) {
                     sum += child.countTotalKnowledgeEstimate(viewedNodes);
-                }
+
+				}
 
             return (this.getKnowledgeEstimate() + sum);
             }

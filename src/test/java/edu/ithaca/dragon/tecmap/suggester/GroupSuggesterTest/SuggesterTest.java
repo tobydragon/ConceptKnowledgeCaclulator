@@ -170,23 +170,27 @@ public class SuggesterTest {
         List<Group> groupings2 = sug.suggestGroup(actualGroupings.get(0), new Group());
 
         Assert.assertEquals(groupings2.size(), 2);
-        Assert.assertEquals(groupings2.get(0).getSize(),2);
-        Assert.assertEquals(groupings2.get(1).getSize(),3);
+        Assert.assertEquals(groupings2.get(0).getSize(),3);
+        Assert.assertEquals(groupings2.get(0).getStudentNames().get(0),"dan");
+        Assert.assertEquals(groupings2.get(0).getStudentNames().get(1),"mia");
+        Assert.assertEquals(groupings2.get(0).getStudentNames().get(2),"bob");
+
+        Assert.assertEquals(groupings2.get(1).getSize(),2);
+        Assert.assertEquals(groupings2.get(1).getStudentNames().get(0),"kayli");
+        Assert.assertEquals(groupings2.get(1).getStudentNames().get(1),"don");
+
 
         //        groups of 2
         List<Suggester> suggesterList = new ArrayList<>();
         suggesterList.add(new ConceptSuggester());
 
         List<Group> groupings = sug.suggestGroup(list.get(0), new Group());
-        Assert.assertEquals(groupings.get(0).getRationale(), "  ,Concept: Dictionaries");
+        Assert.assertEquals(groupings.get(0).getRationale(), "  ,Concept: no suggestions");
         List<String> three = groupings.get(0).getStudentNames();
-        Assert.assertEquals(three.get(0),"s3");
-        Assert.assertEquals(three.get(1),"s2");
-        Assert.assertEquals(groupings.get(1).getRationale(), "  ,Concept: no suggestions");
-        List<String> four = groupings.get(1).getStudentNames();
-        Assert.assertEquals(four.get(0),"s4");
-        Assert.assertEquals(four.get(1),"s5");
-        Assert.assertEquals(four.get(2),"s1");
+        Assert.assertEquals(three.size(), 3);
+        Assert.assertEquals(three.get(0),"s4");
+        Assert.assertEquals(three.get(1),"s5");
+        Assert.assertEquals(three.get(2),"s1");
     }
 
 

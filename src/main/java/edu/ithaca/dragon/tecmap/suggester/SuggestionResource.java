@@ -168,18 +168,5 @@ public class SuggestionResource {
         return st;
     }
 
-//    public String toString(int choice){
-//        List<LearningObjectSuggestion> list;
-//        if (choice==0){
-//            list = incompleteList;
-//        }else{
-//            list = wrongList;
-//        }
-//
-//        String st = "";
-//        for (LearningObjectSuggestion los: list){
-//                st += los.toString();
-//        }
-//        return st;
-//    }
+
 }

@@ -14,6 +14,7 @@ public class LearningObjectSuggester {
 
     public static double MAX= .85;
     public static double MIN = .60;
+    //this now
     //MIN and MAX are used for suggesting concept nodes. For a concept node to be considered for giving suggestions it must between MIN and MAX.
 
     //MAX is used to figure out if a LearningObjectSuggestion is RIGHT or WRONG. (Assuming we already know it's not incomplete)
@@ -30,7 +31,7 @@ public class LearningObjectSuggester {
         for (String key : graph.getAllNodeIds()) {
             ConceptNode node = graph.findNodeById(key);
 
-            if (node.getKnowledgeEstimate() >= MIN && node.getKnowledgeEstimate() <= MAX) {
+            if (node.getKnowledgeEstimate() > 0 && node.getKnowledgeEstimate() <= MAX) {
                 graph.updateSuggestionList(node, suggestedConceptList);
             }
         }

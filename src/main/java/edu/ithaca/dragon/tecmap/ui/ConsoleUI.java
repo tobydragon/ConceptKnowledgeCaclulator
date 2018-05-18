@@ -52,10 +52,11 @@ public class ConsoleUI {
     public void run(){
         Scanner scanner = new Scanner(System.in);
 
+        boolean studentView = true;
+
         int contQuit = 1;
         while (contQuit == 1) {
             ConceptKnowledgeCalculator.Mode mode = ckc.getCurrentMode();
-            System.out.println("Current Mode: "+ ckc.getCurrentMode());
 
             if(mode == ConceptKnowledgeCalculator.Mode.NODATA){
                 System.out.println("What do you want to do? \n 1 - Switch to Cohort Graph Mode \n 2 - Switch to Structure Graph Mode \n 3 - quit");
@@ -68,7 +69,6 @@ public class ConsoleUI {
                     num = scanner.nextInt();
                 }
                 scanner.nextLine();
-
 
                 if(num==1){
                     createNewCohortGraph(scanner );
@@ -177,190 +177,109 @@ public class ConsoleUI {
                 }
 
             //COHORTGRAPH MODE
-            }else{
-
-                System.out.println("What do you want to do? \n 1 - calculate a list of concept nodes to work on \n 2 - calculate resources suggestions based on a specific concept \n 3 - automatically calculate suggestions \n 4 - View graph \n 5 - Create new graph \n 6 - Replace graph file \n 7 - Add another assessment file \n 8 - Remove assessment file \n 9 - Replace resource file \n 10 - View list of users \n 11 - Get Learning Object Average \n 12 - Get Student Average \n 13 - Link Learning Objects to similar factors \n 14 -  Graph strength of concept structure \n 15 - Create Groups of Random Students \n 16 - Create Groups of Students Based on Their Suggestions \n 17 - Create Group Of Students Based on Their Graph Sums \n 18 - Concept Difference Sum Group Suggestions \n 19 - View Structure Graph (switch to structure mode) \n 20 - Create model file \n 21 - Calc Groups\n 22 - Quit");
-
-                System.out.println("What do you want to do? \n 1 - calculate a list of Concept nodes to work on \n 2 - calculate resources suggestions based on a specific Concept \n 3 - automatically calculate suggestions \n 4 - View graph \n 5 - Create new graph \n 6 - Replace graph file \n 7 - Add another assessment file \n 8 - Remove assessment file \n 9 - Replace resource file \n 10 - View list of users \n 11 - Get Learning Object Average \n 12 - Get Student Average \n 13 - Link Learning Objects to similar factors \n 14 -  Graph strength of Concept structure \n 15 - Create Groups of BySizeSuggester Students \n 16 - Create Groups of Students Based on Their Suggestions \n 17 - Create Group Of Students Based on Their Graph Sums \n 18 - Concept Difference Sum Group Suggestions \n 19 - View Structure Graph (switch to structure mode) \n 20 - Create model file \n 21 - Calc Groups \n 22 - Quit");
+            }else {
 
 
-                Integer num = scanner.nextInt();
+                if (studentView) {
+                    System.out.println("What do you want to do? \n 1 - calculate a list of Concept nodes to work on \n 2 - calculate resources suggestions based on a specific Concept \n 3 - automatically calculate suggestions \n 4 - View graph \n 5 - Change Suggestion View \n 6 - More Options \n 7 - Quit");
 
-                while (num < 1 || num > 22) {
-                    System.out.println("Out of bounds");
 
-                    System.out.println("What do you want to do? \n 1 - calculate a list of concept nodes to work on \n 2 - calculate resources suggestions based on a specific concept \n 3 - automatically calculate suggestions \n 4 - View graph \n 5 - Create new graph \n 6 - Replace graph file \n 7 - Add another assessment file \n 8 - Remove assessment file \n 9 - Replace resource file \n 10 - View list of users \n 11 - Get Learning Object Average \n 12 - Get Student Average \n 13 - Link Learning Objects to similar factors \n 14 -  Graph strength of concept structure \n 15 - Create Groups of Random Students \n 16 - Create Groups of Students Based on Their Suggestions \n 17 - Create Group Of Students Based on Their Graph Sums \n 18 - Concept Difference Sum Group Suggestions \n 19 - View Structure Graph (switch to structure mode) \n 20 - Create model file \n 21 - Calc Groups\n 22 - Quit");
+                    Integer num = scanner.nextInt();
 
-                    System.out.println("What do you want to do? \n 1 - calculate a list of Concept nodes to work on \n 2 - calculate resources suggestions based on a specific Concept \n 3 - automatically calculate suggestions \n 4 - View graph \n 5 - Create new graph \n 6 - Replace graph file \n 7 - Add another assessment file \n 8 - Remove assessment file \n 9 - Replace resource file \n 10 - View list of users \n 11 - Get Learning Object Average \n 12 - Get Student Average \n 13 - Link Learning Objects to similar factors \n 14 -  Graph strength of Concept structure \n 15 - Create Groups of BySizeSuggester Students \n 16 - Create Groups of Students Based on Their Suggestions \n 17 - Create Group Of Students Based on Their Graph Sums \n 18 - Concept Difference Sum Group Suggestions \n 19 - View Structure Graph (switch to structure mode) \n 20 - Create model file \n 21 - Calc Groups \n 22 - Quit");
+                    while (num < 1 || num > 7) {
+                        System.out.println("Out of bounds");
+                        System.out.println("What do you want to do? \n 1 - calculate a list of Concept nodes to work on \n 2 - calculate resources suggestions based on a specific Concept \n 3 - automatically calculate suggestions \n 4 - View graph \n 5 - Change Suggestion View \n 6 - More Options \n 7 - Quit");
+                        num = scanner.nextInt();
+                    }
+                    scanner.nextLine();
 
-                    num = scanner.nextInt();
-                }
-                scanner.nextLine();
+                    if (num == 1) {
+                        createLearningObjectList(scanner);
+                    } else if (num == 2) {
+                        specificLearningObjectSuggestion(scanner);
+                    } else if (num == 3) {
+                        graphSuggestions(scanner);
+                    } else if (num == 4) {
+                        viewgraph();
+                    } else if (num ==5) {
 
-                if (num == 1) {
-                    createLearningObjectList(scanner);
-                }
-                else if (num == 2) {
-                    specificLearningObjectSuggestion( scanner);
-                }
-                else if (num == 3) {
-                    graphSuggestions(scanner);
-                }
-                else if (num == 4) {
-                    viewgraph();
-                }
-                else  if(num ==5){
-                    createNewCohortGraph(scanner );
-                }
-                else if(num ==6){
-                    replaceCohortGraphFile(scanner);
-                }
-                else if(num ==7){
-                    addAssignment(scanner);
-                }
-                else if (num ==8) {
-                    removeAssessment(scanner);
+                        changeSuggestionView();
+                    }else if(num ==6 ){
+                        studentView = false;
+                    } else{
+                      contQuit = 0;
+                    }
 
-                }else if(num ==9) {
-                    replaceResourceFile(scanner);
 
-                }else if(num ==10){
-                    getUserList();
 
-                }else if(num==11){
-                    resourceAverage(scanner);
+                } else {
 
-                }else if(num ==12) {
-                    studentAverage(scanner);
-                }else if(num == 13) {
-                    getFactorMatrix();
-                }else if(num == 14) {
-                    createConfirmatoryGraph();
-                }else if (num == 15) {
-                    createRandomGroupSuggestions(scanner);
-                }else if(num ==16){
-                    createResourceGroupSuggestions(scanner);
-                }else if(num ==17){
-                    createGraphSumGroupSuggestions(scanner);
-                } else if(num ==18) {
-                    createConceptDiffGroupSuggestions(scanner);
-                }else if( num ==19) {
-                    switchToStructuremode();
-                }else if(num ==20){
-                    createModelFile();
-                }else if(num ==21) {
-                    calculateSmallGroups(scanner);
-                }else{
-                    contQuit=0;
+                    System.out.println("What do you want to do? \n 1 - calculate a list of Concept nodes to work on \n 2 - calculate resources suggestions based on a specific Concept \n 3 - automatically calculate suggestions \n 4 - View graph \n 5 - Create new graph \n 6 - Replace graph file \n 7 - Add another assessment file \n 8 - Remove assessment file \n 9 - Replace resource file \n 10 - View list of users \n 11 - Get Learning Object Average \n 12 - Get Student Average \n 13 - Link Learning Objects to similar factors \n 14 -  Graph strength of Concept structure \n 15 - View Structure Graph (switch to structure mode) \n 16 - Create model file \n 17 - Calc Groups \n 18 - Change Suggestion View \n 19 - Quit");
+
+
+                    Integer num = scanner.nextInt();
+
+                    while (num < 1 || num > 19) {
+                        System.out.println("Out of bounds");
+
+                        System.out.println("What do you want to do? \n 1 - calculate a list of Concept nodes to work on \n 2 - calculate resources suggestions based on a specific Concept \n 3 - automatically calculate suggestions \n 4 - View graph \n 5 - Create new graph \n 6 - Replace graph file \n 7 - Add another assessment file \n 8 - Remove assessment file \n 9 - Replace resource file \n 10 - View list of users \n 11 - Get Learning Object Average \n 12 - Get Student Average \n 13 - Link Learning Objects to similar factors \n 14 -  Graph strength of Concept structure \n 15 - View Structure Graph (switch to structure mode) \n 16 - Create model file \n 17 - Calc Groups \n 18 - Change Suggestion View \n 19 - Quit");
+
+
+                        num = scanner.nextInt();
+                    }
+                    scanner.nextLine();
+
+                    if (num == 1) {
+                        createLearningObjectList(scanner);
+                    } else if (num == 2) {
+                        specificLearningObjectSuggestion(scanner);
+                    } else if (num == 3) {
+                        graphSuggestions(scanner);
+                    } else if (num == 4) {
+                        viewgraph();
+                    } else if (num == 5) {
+                        createNewCohortGraph(scanner);
+                    } else if (num == 6) {
+                        replaceCohortGraphFile(scanner);
+                    } else if (num == 7) {
+                        addAssignment(scanner);
+                    } else if (num == 8) {
+                        removeAssessment(scanner);
+
+                    } else if (num == 9) {
+                        replaceResourceFile(scanner);
+
+                    } else if (num == 10) {
+                        getUserList();
+
+                    } else if (num == 11) {
+                        resourceAverage(scanner);
+
+                    } else if (num == 12) {
+                        studentAverage(scanner);
+                    } else if (num == 13) {
+                        getFactorMatrix();
+                    } else if (num == 14) {
+                        createConfirmatoryGraph();
+                    } else if (num == 15) {
+                        switchToStructuremode();
+                    } else if (num == 16) {
+
+                        createModelFile();
+
+                    } else if (num == 17) {
+                        calculateSmallGroups(scanner);
+                    } else if (num == 18) {
+                        changeSuggestionView();
+                    } else {
+                        contQuit = 0;
+                    }
                 }
             }
             System.out.println("\n");
         }
     }
 
-
-    public void createConceptDiffGroupSuggestions(Scanner scanner){
-        System.out.println("Get group suggestions based on the difference in Concept node's");
-
-        System.out.println("Do you want groups of 2 or 3? ");
-        Integer choice = scanner.nextInt();
-
-        while(choice > 3 || choice <2){
-            System.out.println("Do you want groups of 2 or 3? ");
-            choice = scanner.nextInt();
-        }
-
-        scanner.nextLine();
-
-        System.out.println("If you want to create groups on the entire graph type 'all' or type in the Concept ID");
-        String concept = scanner.nextLine();
-
-
-//        try {
-//            List<List<String>> groupings = ckc.conceptDiffGroupSuggestions(choice, concept);
-//
-//            for(List<String> group: groupings) {
-//                System.out.println(group);
-//            }
-//
-//
-//        } catch (Exception e) {
-//            System.out.println("Wrong mode");
-//        }
-    }
-
-
-    public void createGraphSumGroupSuggestions(Scanner scanner){
-        System.out.println("Get group suggestions based on the sum of students' graphs");
-
-        System.out.println("Do you want groups of 2 or 3? ");
-        Integer choice = scanner.nextInt();
-
-        while(choice > 3 || choice <2){
-            System.out.println("Do you want groups of 2 or 3? ");
-            choice = scanner.nextInt();
-        }
-
-        scanner.nextLine();
-
-        System.out.println("If you want to create groups on the entire graph type 'all' or type in the Concept ID");
-        String concept = scanner.nextLine();
-
-
-//        try {
-//            List<List<String>> groupings = ckc.graphSumGroupSuggestions(choice, concept);
-//
-//            for(List<String> group: groupings){
-//                System.out.println(group);
-//            }
-//        } catch (Exception e) {
-//            System.out.println("Wrong mode");
-//        }
-    }
-
-    public void createResourceGroupSuggestions(Scanner scanner){
-        System.out.println("Get group suggestions based on students resource suggestions");
-
-        System.out.println("Do you want groups of 2 or 3? ");
-        Integer choice = scanner.nextInt();
-
-        while(choice > 3 || choice <2){
-            System.out.println("Do you want groups of 2 or 3? ");
-            choice = scanner.nextInt();
-        }
-
-//        try {
-//            List<List<String>> groupings = ckc.resourceGroupSuggestions(choice);
-//
-//            for(List<String> group: groupings){
-//                System.out.println(group);
-//            }
-//        } catch (Exception e) {
-//            System.out.println("Wrong mode");
-//        }
-    }
-
-
-
-    public void createRandomGroupSuggestions(Scanner scanner){
-        System.out.println("Get random group suggestions");
-
-        System.out.println("What size groups do you want?");
-        Integer choice = scanner.nextInt();
-
-//        try {
-//            List<List<String>> groupings = ckc.randomGroupSuggestions(choice);
-//
-//
-//            for(List<String> group: groupings){
-//                System.out.println(group);
-//            }
-//
-//        } catch (Exception e) {
-//            System.out.println(e);
-//        }
-
-    }
 
     public void editStructureGraph(Scanner scanner){
         System.out.println("Edit structure graph");
@@ -426,25 +345,44 @@ public class ConsoleUI {
         try {
             sugRes = ckc.calcIndividualSpecificConceptSuggestions(userID, conceptID);
 
-            System.out.println(" 1- Try something new 2- try something again");
-            Integer option = scanner.nextInt();
-            while (option > 2 || option < 1) {
-                System.out.println(" 1- Try something new 2- try something again");
-                option = scanner.nextInt();
-            }
-            if (option == 1) {
-                if(sugRes.incompleteList.size()==0){
-                    System.out.println("There are no incomplete resources");
-                }else {
+            if(ckc.getCurrentSuggestMode() == ConceptKnowledgeCalculator.SuggestMode.LISTEVERYTHING){
+
+                if(sugRes.incompleteList.size()>0){
+                    System.out.println("Try something new \n_____________________________________");
                     System.out.println(sugRes.toString(0));
                 }
-            } else {
-                if(sugRes.wrongList.size()==0){
-                    System.out.println("There are no wrong resources");
-                }else{
+                if(sugRes.wrongList.size()>0){
+                    System.out.println("\nTry something again \n_____________________________________");
                     System.out.println(sugRes.toString(1));
                 }
+
+
+            }else{
+                System.out.println(" 1- Try something new 2- try something again");
+                Integer option = scanner.nextInt();
+                while (option > 2 || option < 1) {
+                    System.out.println(" 1- Try something new 2- try something again");
+                    option = scanner.nextInt();
+                }
+                if (option == 1) {
+                    if (sugRes.incompleteList.size() == 0) {
+                        System.out.println("There are no incomplete resources");
+                    } else {
+                        System.out.println(sugRes.toString(0));
+                    }
+                } else {
+                    if (sugRes.wrongList.size() == 0) {
+                        System.out.println("There are no wrong resources");
+                    } else {
+                        System.out.println(sugRes.toString(1));
+                    }
+                }
+
+
             }
+
+
+
         } catch (Exception e) {
             System.out.println(e);
         }
@@ -457,25 +395,45 @@ public class ConsoleUI {
         String userID = scanner.nextLine();
         try {
             SuggestionResource sugRes = ckc.calcIndividualGraphSuggestions(userID);
-            System.out.println(" 1- Try something new 2- try something again");
-            Integer option = scanner.nextInt();
-            while (option > 2 || option < 1) {
-                System.out.println(" 1- Try something new 2- try something again");
-                option = scanner.nextInt();
-            }
-            if (option == 1) {
-                if(sugRes.incompleteList.size()==0){
-                    System.out.println("There are no incomplete resources to work on");
-                }else {
+
+            if(ckc.getCurrentSuggestMode() == ConceptKnowledgeCalculator.SuggestMode.LISTEVERYTHING) {
+                if(sugRes.incompleteList.size()>0){
+                    System.out.println("Try something new \n_____________________________________");
                     System.out.println(sugRes.toString(0));
                 }
-            } else {
-                if(sugRes.wrongList.size()==0){
-                    System.out.println("There are no wrong resources to work on");
-                }else{
+                if(sugRes.wrongList.size()>0){
+                    System.out.println("\n Try something again \n_____________________________________");
                     System.out.println(sugRes.toString(1));
                 }
+
+
+
+            }else{
+
+
+                System.out.println(" 1- Try a new resource 2- try a resource again");
+                Integer option = scanner.nextInt();
+                while (option > 2 || option < 1) {
+                    System.out.println(" 1- Try something new 2- try something again");
+                    option = scanner.nextInt();
+                }
+                if (option == 1) {
+                    if(sugRes.incompleteList.size()==0){
+                        System.out.println("There are no incomplete resources to work on");
+                    }else {
+                        System.out.println(sugRes.toString(0));
+                    }
+                } else {
+                    if(sugRes.wrongList.size()==0){
+                        System.out.println("There are no wrong resources to work on");
+                    }else{
+                        System.out.println(sugRes.toString(1));
+                    }
+                }
+
             }
+
+
         }catch (Exception e){
             System.out.println(e);
         }
@@ -720,6 +678,9 @@ public class ConsoleUI {
 
     }
 
+    public void changeSuggestionView(){
 
+        ckc.toggleCurrentSuggestMode();
+    }
 
 }
