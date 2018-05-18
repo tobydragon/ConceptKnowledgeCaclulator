@@ -1,6 +1,0 @@
-B -> Q1, Q1ToB, NA 
-B -> Q2, Q2ToB, NA 
-C -> Q3, Q3ToC, NA 
-C -> Q4, Q4ToC, NA 
-C -> Q5, Q5ToC, NA 
-C -> Q6, Q6ToC, NA 

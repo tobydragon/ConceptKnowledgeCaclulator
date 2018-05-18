@@ -1,0 +1,15 @@
+student ID,Name,Counting in binary to 10 [100],What’s an algorithm? [100],What’s a function? [100],What’s the purpose of a function? [100],What are the parameters in the function? [100],What data types can be passed as a parameter? [100], Overwrite each element in the list with it’s double value using two functions [100], What is a side effect? [100], What is the proper for loop diction? [100],What are the three things you need for a for loop [100], What are the differences and similarities between for loops and while loops? [100], How are while loops and booleans related? [100], What is the proper while loop diction? [100], What are the things you need for a while loop [100], What is a statement? [100], What are some of the statements we have seen already? [100], What is 5%7?[100], What is an assignment statement? [100], What’s camel case? [100], What are the important rules for variables names? [100],What makes up a dictionary [100], What’s key-value pairs [100], Are strings mutable? [100]
+
+s1,s1,50,75,80,67,,95,90,92,78,90,67,99,70,71,69,,,,74,77,,99,80
+
+s2,s1,50,75,80,67,,95,90,92,78,53,67,,70,71,69,,99,,74,77,,,71
+
+s3,s1,50,75,80,67,80,95,55,92,78,90,67,,70,71,69,,66,,74,77,,,90
+
+s4,s1,50,,,,,,,,,,,,,,,,,,,,,71
+
+s5,s1,50,75,80,76,,95,90,100,78,90,100,,70,71,69,100,,99,100,77,,100,79
+
+s6,s1,50,75,58,67,,95,55,79,78,47,67,55,35,71,69,60,55,,74,77,99,90,100
+
+s7,s7,100,100,71,80,100,20,71,69,65,90,70,75,80,60,81,79,71,81,100,100,75,85,70
