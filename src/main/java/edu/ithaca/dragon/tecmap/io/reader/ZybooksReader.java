@@ -1,4 +1,6 @@
-package edu.ithaca.dragon.tecmap.io;
+package edu.ithaca.dragon.tecmap.io.reader;
+
+import edu.ithaca.dragon.tecmap.io.reader.CSVReader;
 
 import java.io.IOException;
 import java.util.List;
@@ -10,7 +12,7 @@ import java.util.List;
  * Created by Ryan on 10/4/2017.
  */
 
-public class ZybooksReader extends CSVReader{
+public class ZybooksReader extends CSVReader {
     public ZybooksReader(String filename)throws IOException{
         super(filename, 5);
     }

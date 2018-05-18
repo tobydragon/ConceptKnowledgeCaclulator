@@ -1,6 +1,6 @@
 package edu.ithaca.dragon.tecmap.learningobject;
 
-import edu.ithaca.dragon.tecmap.io.LearningResourceRecord;
+import edu.ithaca.dragon.tecmap.io.record.LearningResourceRecord;
 import edu.ithaca.dragon.tecmap.util.DataUtil;
 
 import java.util.*;

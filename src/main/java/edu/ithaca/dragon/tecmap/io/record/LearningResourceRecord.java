@@ -1,4 +1,4 @@
-package edu.ithaca.dragon.tecmap.io;
+package edu.ithaca.dragon.tecmap.io.record;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.DeserializationFeature;
@@ -42,20 +42,11 @@ public class LearningResourceRecord {
         this("", new ArrayList<>(), new ArrayList<>(), 1, 0);
     }
 
-    //should not be needed because it is used for writing out after reading csv, and we already should have maxKnowledgeEstimate
-//    public LearningResourceRecord(String learningObject, double maxPossibleKnowledgeEstimate){
-//        this.learningResourceId = learningObject;
-//        conceptIds = new ArrayList<>();
-//        this.dataImportance = 1;
-//        this.maxPossibleKnowledgeEstimate = maxPossibleKnowledgeEstimate;
-//    }
-
 
     public static List<LearningResourceRecord> buildListFromJson(String fullFileName) throws IOException {
         ObjectMapper mapper = new ObjectMapper();
         mapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
-        List<LearningResourceRecord> LORLList = mapper.readValue(new File(fullFileName), new TypeReference<List<LearningResourceRecord>>(){});
-        return LORLList;
+        return mapper.readValue(new File(fullFileName), new TypeReference<List<LearningResourceRecord>>(){});
     }
 
     public static List<LearningResourceRecord> createLRecordsFromAssessments(Collection<LearningObject> learningObjects){

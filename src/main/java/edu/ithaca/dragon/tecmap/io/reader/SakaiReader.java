@@ -1,4 +1,6 @@
-package edu.ithaca.dragon.tecmap.io;
+package edu.ithaca.dragon.tecmap.io.reader;
+
+import edu.ithaca.dragon.tecmap.io.reader.CSVReader;
 
 import java.io.IOException;
 import java.util.List;
@@ -8,7 +10,7 @@ import java.util.List;
  * it will call super to the parent class, CSVReader, and pass the filename and the specific gradeColumnIndexMark.
  * Created by Ryan on 11/9/2017.
  */
-public class SakaiReader extends CSVReader{
+public class SakaiReader extends CSVReader {
     public SakaiReader(String filename)throws IOException{
         super(filename, 2);
     }
