@@ -1,4 +1,4 @@
-package edu.ithaca.dragon.tecmap.io;
+package edu.ithaca.dragon.tecmap.io.reader;
 
 /**
  * CSVReader is the parent function that is responsible for the reading in CSV files, it is created when

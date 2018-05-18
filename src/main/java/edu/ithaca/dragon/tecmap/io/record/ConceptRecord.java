@@ -1,4 +1,4 @@
-package edu.ithaca.dragon.tecmap.io;
+package edu.ithaca.dragon.tecmap.io.record;
 
 import edu.ithaca.dragon.tecmap.conceptgraph.ConceptNode;
 import edu.ithaca.dragon.tecmap.learningobject.LearningObject;

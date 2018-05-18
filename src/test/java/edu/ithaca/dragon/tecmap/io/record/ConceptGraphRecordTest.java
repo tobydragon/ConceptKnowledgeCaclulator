@@ -1,10 +1,12 @@
-package edu.ithaca.dragon.tecmap.io;
+package edu.ithaca.dragon.tecmap.io.record;
 
 import edu.ithaca.dragon.tecmap.Settings;
 import edu.ithaca.dragon.tecmap.conceptgraph.ConceptGraph;
 import edu.ithaca.dragon.tecmap.conceptgraph.ConceptNode;
 import edu.ithaca.dragon.tecmap.conceptgraph.ExampleConceptGraphFactory;
 import edu.ithaca.dragon.tecmap.conceptgraph.ExampleConceptGraphRecordFactory;
+import edu.ithaca.dragon.tecmap.io.record.ConceptGraphRecord;
+import edu.ithaca.dragon.tecmap.io.record.ConceptRecord;
 import org.junit.Assert;
 import org.junit.Test;
 

@@ -1,4 +1,4 @@
-package edu.ithaca.dragon.tecmap.io;
+package edu.ithaca.dragon.tecmap.io.reader;
 
 import edu.ithaca.dragon.tecmap.learningobject.LearningObject;
 

@@ -1,8 +1,8 @@
 package edu.ithaca.dragon.tecmap.conceptgraph;
 
-import edu.ithaca.dragon.tecmap.io.ConceptGraphRecord;
-import edu.ithaca.dragon.tecmap.io.ConceptRecord;
-import edu.ithaca.dragon.tecmap.io.LinkRecord;
+import edu.ithaca.dragon.tecmap.io.record.ConceptGraphRecord;
+import edu.ithaca.dragon.tecmap.io.record.ConceptRecord;
+import edu.ithaca.dragon.tecmap.io.record.LinkRecord;
 
 import java.util.ArrayList;
 import java.util.List;

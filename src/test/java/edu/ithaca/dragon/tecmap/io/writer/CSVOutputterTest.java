@@ -1,5 +1,6 @@
-package edu.ithaca.dragon.tecmap.io;
+package edu.ithaca.dragon.tecmap.io.writer;
 
+import edu.ithaca.dragon.tecmap.io.writer.CSVOutputter;
 import edu.ithaca.dragon.tecmap.learningobject.ExampleLearningObjectResponseFactory;
 import edu.ithaca.dragon.tecmap.learningobject.LearningObjectResponse;
 import org.junit.Assert;

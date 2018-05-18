@@ -1,7 +1,7 @@
 package edu.ithaca.dragon.tecmap.conceptgraph;
 
-import edu.ithaca.dragon.tecmap.io.ConceptGraphRecord;
-import edu.ithaca.dragon.tecmap.io.ConceptRecord;
+import edu.ithaca.dragon.tecmap.io.record.ConceptGraphRecord;
+import edu.ithaca.dragon.tecmap.io.record.ConceptRecord;
 import edu.ithaca.dragon.tecmap.learningobject.LearningObject;
 import edu.ithaca.dragon.tecmap.util.DataUtil;
 import org.junit.Assert;

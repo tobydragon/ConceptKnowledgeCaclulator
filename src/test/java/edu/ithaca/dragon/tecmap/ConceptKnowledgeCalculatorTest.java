@@ -1,9 +1,8 @@
 package edu.ithaca.dragon.tecmap;
 
-import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import edu.ithaca.dragon.tecmap.conceptgraph.CohortConceptGraphs;
 import edu.ithaca.dragon.tecmap.conceptgraph.ConceptGraph;
-import edu.ithaca.dragon.tecmap.io.*;
+import edu.ithaca.dragon.tecmap.io.record.LearningResourceRecord;
 import edu.ithaca.dragon.tecmap.learningobject.LearningObject;
 import edu.ithaca.dragon.tecmap.learningobject.LearningObjectResponse;
 import edu.ithaca.dragon.tecmap.suggester.GroupSuggester.*;

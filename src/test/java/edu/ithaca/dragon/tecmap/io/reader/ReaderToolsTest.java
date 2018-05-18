@@ -1,5 +1,6 @@
-package edu.ithaca.dragon.tecmap.io;
+package edu.ithaca.dragon.tecmap.io.reader;
 
+import edu.ithaca.dragon.tecmap.io.reader.ReaderTools;
 import org.junit.Assert;
 import org.junit.Test;
 
@@ -15,7 +16,7 @@ public class ReaderToolsTest {
         String object = "total Score - 25";
         String outCome = "25";
         try {
-            Assert.assertEquals(outCome,ReaderTools.pullNumber(object));
+            Assert.assertEquals(outCome, ReaderTools.pullNumber(object));
         }
         catch (Exception e){
             e.printStackTrace();

@@ -1,8 +1,8 @@
 package edu.ithaca.dragon.tecmap.conceptgraph.eval;
 
 import edu.ithaca.dragon.tecmap.Settings;
-import edu.ithaca.dragon.tecmap.io.CSVReader;
-import edu.ithaca.dragon.tecmap.io.SakaiReader;
+import edu.ithaca.dragon.tecmap.io.reader.CSVReader;
+import edu.ithaca.dragon.tecmap.io.reader.SakaiReader;
 import edu.ithaca.dragon.tecmap.learningobject.LearningObject;
 import org.junit.Assert;
 import org.junit.Test;

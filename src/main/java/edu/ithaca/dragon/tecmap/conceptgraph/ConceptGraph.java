@@ -1,6 +1,9 @@
 package edu.ithaca.dragon.tecmap.conceptgraph;
 
-import edu.ithaca.dragon.tecmap.io.*;
+import edu.ithaca.dragon.tecmap.io.record.ConceptGraphRecord;
+import edu.ithaca.dragon.tecmap.io.record.ConceptRecord;
+import edu.ithaca.dragon.tecmap.io.record.LearningResourceRecord;
+import edu.ithaca.dragon.tecmap.io.record.LinkRecord;
 import edu.ithaca.dragon.tecmap.learningobject.LearningMaterial;
 import edu.ithaca.dragon.tecmap.learningobject.LearningObject;
 import edu.ithaca.dragon.tecmap.learningobject.LearningObjectResponse;

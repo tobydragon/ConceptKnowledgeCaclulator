@@ -4,12 +4,11 @@ import edu.ithaca.dragon.tecmap.ConceptKnowledgeCalculator;
 import edu.ithaca.dragon.tecmap.ConceptKnowledgeCalculatorAPI;
 import edu.ithaca.dragon.tecmap.Settings;
 import edu.ithaca.dragon.tecmap.conceptgraph.CohortConceptGraphs;
-import edu.ithaca.dragon.tecmap.io.CSVReader;
-import edu.ithaca.dragon.tecmap.io.SakaiReader;
+import edu.ithaca.dragon.tecmap.io.reader.CSVReader;
+import edu.ithaca.dragon.tecmap.io.reader.SakaiReader;
 import edu.ithaca.dragon.tecmap.learningobject.LearningObject;
 import edu.ithaca.dragon.tecmap.util.ErrorUtil;
 import org.junit.Assert;
-import org.junit.Test;
 
 import java.io.IOException;
 import java.util.List;

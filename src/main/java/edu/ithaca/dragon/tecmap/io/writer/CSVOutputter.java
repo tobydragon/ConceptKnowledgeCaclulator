@@ -1,4 +1,4 @@
-package edu.ithaca.dragon.tecmap.io;
+package edu.ithaca.dragon.tecmap.io.writer;
 
 /**
  * Created by willsuchanek on 2/28/17.
