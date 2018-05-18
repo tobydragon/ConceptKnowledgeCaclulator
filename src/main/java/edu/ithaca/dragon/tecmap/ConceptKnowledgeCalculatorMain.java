@@ -56,15 +56,15 @@ public class ConceptKnowledgeCalculatorMain {
 //                    Settings.RESOURCE_DIR + "comp105/comp105Resources.json",
 //                    Settings.PRIVATE_RESOURCE_DIR +"/comp105/COMP105-gradebook.csv");
 
-            new ConsoleUI(Arrays.asList(Settings.RESOURCE_DIR + "comp220/comp220Graph.json"),
-                    Arrays.asList(Settings.RESOURCE_DIR + "comp220/comp220Resources-courseWork.json",
-                            Settings.RESOURCE_DIR + "comp220/comp220Resources-e1.json",
-                            Settings.RESOURCE_DIR + "comp220/comp220Resources-e2.json",
-                            Settings.RESOURCE_DIR + "comp220/comp220Resources-finalExam.json"),
-                    Arrays.asList(Settings.PRIVATE_RESOURCE_DIR +"/comp220/comp220-courseWork.csv",
-                            Settings.PRIVATE_RESOURCE_DIR +"/comp220/comp220-e1.csv",
-                            Settings.PRIVATE_RESOURCE_DIR +"/comp220/comp220-e2.csv",
-                            Settings.PRIVATE_RESOURCE_DIR +"/comp220/comp220-finalExam.csv") );
+//            new ConsoleUI(Arrays.asList(Settings.RESOURCE_DIR + "comp220/comp220Graph.json"),
+//                    Arrays.asList(Settings.RESOURCE_DIR + "comp220/comp220Resources-courseWork.json",
+//                            Settings.RESOURCE_DIR + "comp220/comp220Resources-e1.json",
+//                            Settings.RESOURCE_DIR + "comp220/comp220Resources-e2.json",
+//                            Settings.RESOURCE_DIR + "comp220/comp220Resources-finalExam.json"),
+//                    Arrays.asList(Settings.PRIVATE_RESOURCE_DIR +"/comp220/comp220-courseWork.csv",
+//                            Settings.PRIVATE_RESOURCE_DIR +"/comp220/comp220-e1.csv",
+//                            Settings.PRIVATE_RESOURCE_DIR +"/comp220/comp220-e2.csv",
+//                            Settings.PRIVATE_RESOURCE_DIR +"/comp220/comp220-finalExam.csv") );
 
 //            new ConsoleUI(Arrays.asList(Settings.RESOURCE_DIR + "comp171/comp171Graph.json"),
 //                    Arrays.asList(Settings.RESOURCE_DIR + "comp171/comp171Resources-courseWork.json"),
