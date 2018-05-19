@@ -14,7 +14,6 @@ public class ConceptNode {
 	private String id; 		//unique to each node
 	private String label; 	//can be the same as id, or different if you want displayed different
 	private double knowledgeEstimate;
-	private double knowledgePrediction;
 	private double knowledgeDistanceFromAvg;
 	private double dataImportance;
 
@@ -35,7 +34,6 @@ public class ConceptNode {
         else {
 		    this.label = this.id;
         }
-        this.knowledgePrediction = conceptRecord.getKnowledgePrediction();
         this.knowledgeEstimate = conceptRecord.getKnowledgeEstimate();
 		this.knowledgeDistanceFromAvg = conceptRecord.getKnowledgeDistFromAvg();
 		this.dataImportance = conceptRecord.getDataImportance();
@@ -51,7 +49,7 @@ public class ConceptNode {
      *  the maps are not altered
 	 * @param nodeToCopy
      * @param graphNodeMap the map of all nodes in the current graph that this node will be a part of
-     * @param graphLearningObjectMap the current learningObjectMap for the graph that this node will be a part of
+     * @param graphLearningObjectMap the current assessmentItemMap for the graph that this node will be a part of
      * @param graphLearningMaterialMap  the current learningMaterialMap for the graph that this node will be a part of
      * @post all contents of this new node are set to new copies of the data from , and all children are also copied
 	 */
@@ -79,7 +77,7 @@ public class ConceptNode {
      * *  maps from the graph level are needed to ensure we only make copies of things once, even if the node occurs mutliple times
      *  the maps are not altered
      * @param nodeToCopy
-     * @param graphLearningObjectMap the current learningObjectMap for the graph that this node will be a part of
+     * @param graphLearningObjectMap the current assessmentItemMap for the graph that this node will be a part of
      * @param graphLearningMaterialMap  the current learningMaterialMap for the graph that this node will be a part of
      * @post all contents of this new node are set to new copies of the data from nodeToCopy
      */
@@ -91,7 +89,7 @@ public class ConceptNode {
     /**
      * copies all contents of another node into this node
      * @param nodeToCopy the node to copy contents from
-     * @param graphLearningObjectMap the current learningObjectMap for the graph that this node is a part of
+     * @param graphLearningObjectMap the current assessmentItemMap for the graph that this node is a part of
      *                               this is needed to make sure we only copy learningObjects once
      * @param graphLearningMaterialMap  the current learningMaterialMap for the graph that this node is a part of
      *                                  this is needed to make sure we only copy learningObjects
@@ -101,7 +99,6 @@ public class ConceptNode {
         this.id = nodeToCopy.id;
 	    this.label = nodeToCopy.label;
         this.knowledgeEstimate = nodeToCopy.knowledgeEstimate;
-        this.knowledgePrediction = nodeToCopy.knowledgePrediction;
         this.knowledgeDistanceFromAvg = nodeToCopy.knowledgeDistanceFromAvg;
         this.dataImportance = nodeToCopy.dataImportance;
 
@@ -298,14 +295,6 @@ public class ConceptNode {
 		return knowledgeDistanceFromAvg;
 	}
 
-	public double getKnowledgePrediction() {
-		return Math.round(knowledgePrediction *10000)/1000.0;
-	}
-
-	public void setKnowledgePrediction(double knowledgePrediction) {
-		this.knowledgePrediction = knowledgePrediction;
-	}
-
 	public double getDataImportance() { return dataImportance; }
 
     public Map<String, AssessmentItem> getLearningObjectMap() {
@@ -313,7 +302,7 @@ public class ConceptNode {
     }
 
 	public String toString(String indent) {
-		String stringToReturn = indent + getLabel() +  "\t actual: " + getKnowledgeEstimate() + " pred: " + getKnowledgePrediction();
+		String stringToReturn = indent + getLabel() +  "\t actual: " + getKnowledgeEstimate();
 		for (ConceptNode child :getChildren()){
 			stringToReturn += child.toString(indent + "\t");
 		}

@@ -104,14 +104,14 @@ public class ConceptGraphTest {
         Assert.assertEquals(1, graph.findNodeById("B").getChildren().size());
         Assert.assertEquals(0, graph.findNodeById("C").getChildren().size());
 
-        Assert.assertEquals(6, graph.getLearningObjectMap().size());
+        Assert.assertEquals(6, graph.getAssessmentItemMap().size());
         Assert.assertEquals(0, graph.findNodeById("A").getLearningObjectMap().size());
         Assert.assertEquals(2, graph.findNodeById("B").getLearningObjectMap().size());
         Assert.assertEquals(4, graph.findNodeById("C").getLearningObjectMap().size());
 
-        Assert.assertEquals(3, graph.getLearningObjectMap().get("Q1").getResponses().size());
-        Assert.assertEquals(3, graph.getLearningObjectMap().get("Q4").getResponses().size());
-        Assert.assertEquals(2, graph.getLearningObjectMap().get("Q6").getResponses().size());
+        Assert.assertEquals(3, graph.getAssessmentItemMap().get("Q1").getResponses().size());
+        Assert.assertEquals(3, graph.getAssessmentItemMap().get("Q4").getResponses().size());
+        Assert.assertEquals(2, graph.getAssessmentItemMap().get("Q6").getResponses().size());
     }
 
     @Test
@@ -176,9 +176,9 @@ public class ConceptGraphTest {
         Assert.assertEquals(3,graph.findNodeById("B").getLearningObjectMap().size());
         // If adding learning object to multiple different Concepts, it points to the same learning object
         Assert.assertEquals(true, graph.findNodeById("B").getLearningObjectMap().get("Q7") == graph.findNodeById("C").getLearningObjectMap().get("Q7"));
-        Assert.assertEquals("Q7",graph.getLearningObjectMap().get("Q7").getId());
+        Assert.assertEquals("Q7",graph.getAssessmentItemMap().get("Q7").getId());
         // Makes sure the new question was only added once to Learning Object map (previously had 6 questions, now 7)
-        Assert.assertEquals(7,graph.getLearningObjectMap().size());
+        Assert.assertEquals(7,graph.getAssessmentItemMap().size());
     }
 
     @Test
@@ -210,9 +210,9 @@ public class ConceptGraphTest {
         Assert.assertEquals(3,graph.findNodeById("B").getLearningObjectMap().size());
         // If adding learning object to multiple different Concepts, it points to the same learning object
         Assert.assertEquals(true, graph.findNodeById("B").getLearningObjectMap().get("Q7") == graph.findNodeById("C").getLearningObjectMap().get("Q7"));
-        Assert.assertEquals("Q7",graph.getLearningObjectMap().get("Q7").getId());
+        Assert.assertEquals("Q7",graph.getAssessmentItemMap().get("Q7").getId());
         // Makes sure the new question was only added once to Learning Object map (previously had 6 questions, now 7)
-        Assert.assertEquals(7,graph.getLearningObjectMap().size());
+        Assert.assertEquals(7,graph.getAssessmentItemMap().size());
     }
 
 	@Test

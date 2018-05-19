@@ -68,13 +68,13 @@ public class TreeConverterTest {
 
         //Resources and responses are not nodes in the tree, and so their objects are linked to multiple nodes, and so
         //there should be the same number in both graphs
-        Assert.assertEquals(expectedResourcesCount, graphToTest.getLearningObjectMap().size());
+        Assert.assertEquals(expectedResourcesCount, graphToTest.getAssessmentItemMap().size());
         Assert.assertEquals(expectedResponsesCount, graphToTest.responsesCount());
-        Assert.assertEquals(expectedResourcesCount, tree.getLearningObjectMap().size());
+        Assert.assertEquals(expectedResourcesCount, tree.getAssessmentItemMap().size());
         Assert.assertEquals(expectedResponsesCount, tree.responsesCount());
         //but they should be different, equivalent objects across tree and graph
-        for (Map.Entry<String, AssessmentItem> entry: graphToTest.learningObjectMap.entrySet()){
-            AssessmentItem treeCopy = tree.getLearningObjectMap().get(entry.getKey());
+        for (Map.Entry<String, AssessmentItem> entry: graphToTest.assessmentItemMap.entrySet()){
+            AssessmentItem treeCopy = tree.getAssessmentItemMap().get(entry.getKey());
             Assert.assertEquals(entry.getValue(), treeCopy);
             Assert.assertTrue(entry.getValue() != treeCopy);
         }

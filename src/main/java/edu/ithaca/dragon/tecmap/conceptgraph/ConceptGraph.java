@@ -16,23 +16,21 @@ import java.util.*;
 
 public class  ConceptGraph {
     private static final Logger logger = LogManager.getLogger(ConceptGraph.class);
-    public static final Integer DIVISION_FACTOR = 2;
-
 
 	String name;
 	List<ConceptNode> roots;
 
-	//This information will be duplicated, nodes and learning objects will be found within other nodes,
+	//This information is a duplicate, nodes and learning objects will be found within other nodes,
     // but also can be quickly looked up here (also allows checks for duplicates).
 	Map<String, ConceptNode> nodeMap;
-    Map<String, AssessmentItem> learningObjectMap;
+    Map<String, AssessmentItem> assessmentItemMap;
     Map<String, LearningMaterial> learningMaterialMap;
 
 
     public ConceptGraph(ConceptGraphRecord structureDef){
         this.name = structureDef.getName();
         buildStructureFromGraphRecord(structureDef);
-        this.learningObjectMap = new HashMap<>();
+        this.assessmentItemMap = new HashMap<>();
         this.learningMaterialMap = new HashMap<>();
     }
 
@@ -71,24 +69,24 @@ public class  ConceptGraph {
         this.name = newName;
         this.roots = new ArrayList<>();
         nodeMap = new HashMap<>();
-        learningObjectMap = loMap;
+        assessmentItemMap = loMap;
         learningMaterialMap = lmMap;
 
         //recursively copy entire graph
         for (ConceptNode otherRoot : other.roots) {
-            ConceptNode newRoot = new ConceptNode(otherRoot, nodeMap, learningObjectMap, learningMaterialMap);
+            ConceptNode newRoot = new ConceptNode(otherRoot, nodeMap, assessmentItemMap, learningMaterialMap);
             nodeMap.put(newRoot.getID(), newRoot);
             this.roots.add(newRoot);
         }
     }
 
     /**
-     * used only by TreeConverter, does not have proper learningObjectMap or nodeMap
+     * used only by TreeConverter, does not have proper assessmentItemMap or nodeMap
      * @param rootsIn
      */
-    public ConceptGraph(List<ConceptNode> rootsIn, String name, Map<String, AssessmentItem> learningObjectMap, Map<String, LearningMaterial> learningMaterialMap, Map<String, ConceptNode> nodeMap){
+    public ConceptGraph(List<ConceptNode> rootsIn, String name, Map<String, AssessmentItem> AssessmentItemMap, Map<String, LearningMaterial> learningMaterialMap, Map<String, ConceptNode> nodeMap){
         this.name = name;
-        this.learningObjectMap = learningObjectMap;
+        this.assessmentItemMap = AssessmentItemMap;
         this.learningMaterialMap = learningMaterialMap;
         this.nodeMap = nodeMap;
         this.roots = rootsIn;
@@ -96,7 +94,7 @@ public class  ConceptGraph {
 
     public ConceptGraph(){
         this.name = " ";
-        learningObjectMap = new HashMap<>();
+        assessmentItemMap = new HashMap<>();
         learningMaterialMap = new HashMap<>();
         nodeMap= new HashMap<>();
         this.roots= new LinkedList<>();
@@ -159,11 +157,11 @@ public class  ConceptGraph {
      */
     public int linkLearningObjects(AssessmentItem toLink, Collection<String> conceptIds){
         int numAdded = 0;
-        if (learningObjectMap.get(toLink.getId()) != null){
+        if (assessmentItemMap.get(toLink.getId()) != null){
             logger.warn(toLink.getId()+" already exists in this graph. Nothing was added.");
             return -1;
         }
-        learningObjectMap.put(toLink.getId(), toLink);
+        assessmentItemMap.put(toLink.getId(), toLink);
         for (String id: conceptIds){
             if(nodeMap.get(id) != null){
                 numAdded++;
@@ -233,7 +231,7 @@ public class  ConceptGraph {
      */
     public void addLearningObjectResponses(List<AssessmentItemResponse> learningObjectsResponses) {
         for (AssessmentItemResponse response : learningObjectsResponses){
-            AssessmentItem resource = learningObjectMap.get(response.getLearningObjectId());
+            AssessmentItem resource = assessmentItemMap.get(response.getLearningObjectId());
             if (resource != null){
                 resource.addResponse(response);
             }
@@ -330,7 +328,7 @@ public class  ConceptGraph {
 	////////////////////////////////////////////  Simple Functions    //////////////////////////////////////
     public int responsesCount(){
 	    int total = 0;
-	    for (AssessmentItem lo : learningObjectMap.values()){
+	    for (AssessmentItem lo : assessmentItemMap.values()){
 	        total += lo.getResponses().size();
         }
         return total;
@@ -365,13 +363,6 @@ public class  ConceptGraph {
 			root.calcDataImportance();
 		}
 	}
-
-	public void calcPredictedScores() {
-		for(ConceptNode root : this.roots){
-			calcPredictedScores(root);
-		}
-		
-	}
 	
 	public ConceptNode findNodeById(String id){
 	    return nodeMap.get(id);
@@ -380,8 +371,8 @@ public class  ConceptGraph {
 	public Collection<String> getAllNodeIds(){
 		return nodeMap.keySet();
 	}
-    public Map<String, AssessmentItem> getLearningObjectMap() {
-	    return learningObjectMap;
+    public Map<String, AssessmentItem> getAssessmentItemMap() {
+	    return assessmentItemMap;
     }
     public Map<String, LearningMaterial> getLearningMaterialMap() {
         return learningMaterialMap;
@@ -396,41 +387,6 @@ public class  ConceptGraph {
     public String toString(){
         ConceptGraphRecord thisGraph = this.buildConceptGraphRecord();
         return "Nodes:\n"+thisGraph.getConcepts()+"\nLinks:\n"+thisGraph.getLinks();
-    }
-
-
-    //TODO update this defunct code
-    //currentRoot.getKnowledgeEstimate used to be this.root.getKnowledgeEstimate, analyze how this changed things
-    private void calcPredictedScores(ConceptNode currentRoot) {
-        calcPredictedScores(currentRoot, currentRoot.getKnowledgeEstimate(), currentRoot);
-    }
-
-    // pre order traversal
-    private static void calcPredictedScores(ConceptNode current, double passedDown, ConceptNode currentRoot) {
-
-        // simple check for if we"re dealing with the root, which has its own rule
-        if (current == currentRoot) {
-            current.setKnowledgePrediction(current.getKnowledgeEstimate());
-        } else {
-//            current.setNumParents(current.getNumParents() + 1);
-
-            // Calculating the new predicted, take the the old predicted with the weight it has based off of the number of parents
-            // calculate the new pred from the new information passed down and the adding it to old pred
-//            double oldPred = current.getKnowledgePrediction() * (1.0 - (1.0/current.getNumParents()));
-//            double newPred = (passedDown * (1.0/current.getNumParents())) + oldPred;
-
-//            current.setKnowledgePrediction(newPred);
-        }
-
-        for (ConceptNode child : current.getChildren()) {
-            if (current.getKnowledgeEstimate() == 0) {
-
-                calcPredictedScores(child, current.getKnowledgePrediction() / DIVISION_FACTOR, currentRoot);
-            } else {
-                calcPredictedScores(child, current.getKnowledgeEstimate(), currentRoot);
-            }
-        }
-
     }
 
     public Map<String, List<String>> createSameLabelMap(){

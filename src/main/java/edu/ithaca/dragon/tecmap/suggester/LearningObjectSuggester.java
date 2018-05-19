@@ -59,7 +59,7 @@ public class LearningObjectSuggester {
             HashMap<String, Integer> map = graph.buildLearningObjectSummaryList(concept.getID());
             HashMap<String, Integer> linkMap = graph.buildDirectConceptLinkCount();
 
-            List<LearningObjectSuggestion> list = buildLearningObjectSuggestionList(map, graph.getLearningObjectMap(), concept.getID(), linkMap);
+            List<LearningObjectSuggestion> list = buildLearningObjectSuggestionList(map, graph.getAssessmentItemMap(), concept.getID(), linkMap);
 
             sortSuggestions(list);
 

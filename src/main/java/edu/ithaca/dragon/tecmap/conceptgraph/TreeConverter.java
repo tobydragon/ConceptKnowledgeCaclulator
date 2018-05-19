@@ -16,7 +16,7 @@ public class TreeConverter {
     private static final String symbol = "-";
 
     public static ConceptGraph makeTreeCopy(ConceptGraph graphToCopy){
-        Map<String, AssessmentItem> resourceMap = AssessmentItem.deepCopyLearningObjectMap(graphToCopy.getLearningObjectMap());
+        Map<String, AssessmentItem> resourceMap = AssessmentItem.deepCopyLearningObjectMap(graphToCopy.getAssessmentItemMap());
         Map<String, LearningMaterial> materialMap = LearningMaterial.deepCopyLearningMaterialMap(graphToCopy.getLearningMaterialMap());
 
         Map<String, ConceptNode> nodeMap = new HashMap<>();

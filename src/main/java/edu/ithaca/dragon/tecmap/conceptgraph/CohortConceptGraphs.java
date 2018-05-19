@@ -37,7 +37,6 @@ public class CohortConceptGraphs {
 			structureCopy.addLearningObjectResponses(userIdToResponses.get(user));
 			structureCopy.calcDataImportance();
 			structureCopy.calcKnowledgeEstimates();
-			structureCopy.calcPredictedScores();
 			userToGraph.put(user, structureCopy);
 		}
 

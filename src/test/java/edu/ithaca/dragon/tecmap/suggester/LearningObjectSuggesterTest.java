@@ -195,7 +195,7 @@ public class LearningObjectSuggesterTest {
         Assert.assertEquals(testCompareA, learningSummaryFromA);
 
         //build the suggested learning object list
-        List<LearningObjectSuggestion> suggestedList = LearningObjectSuggester.buildLearningObjectSuggestionList(learningSummaryFromA, orig.getLearningObjectMap(), "A", linkMap);
+        List<LearningObjectSuggestion> suggestedList = LearningObjectSuggester.buildLearningObjectSuggestionList(learningSummaryFromA, orig.getAssessmentItemMap(), "A", linkMap);
 
 
         //this is ordered based on "level"

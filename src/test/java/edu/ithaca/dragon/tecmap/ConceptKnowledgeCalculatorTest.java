@@ -422,7 +422,7 @@ public class ConceptKnowledgeCalculatorTest {
 
             CohortConceptGraphs originalGraphs = ckc.getCohortConceptGraphs();
             ConceptGraph conGraph = originalGraphs.getAvgGraph();
-            Map<String, AssessmentItem> origLearningMap =  conGraph.getLearningObjectMap();
+            Map<String, AssessmentItem> origLearningMap =  conGraph.getAssessmentItemMap();
 
             Collection<AssessmentItem> origLearningObList = origLearningMap.values();
             for (AssessmentItem origLearningOb: origLearningObList){
@@ -460,7 +460,7 @@ public class ConceptKnowledgeCalculatorTest {
 
             CohortConceptGraphs postGraphs = ckc.getCohortConceptGraphs();
             ConceptGraph postCG = postGraphs.getAvgGraph();
-            Map<String, AssessmentItem> postLOMap =  postCG.getLearningObjectMap();
+            Map<String, AssessmentItem> postLOMap =  postCG.getAssessmentItemMap();
 
 
             Collection<AssessmentItem> postLOList = postLOMap.values();
@@ -503,7 +503,7 @@ public class ConceptKnowledgeCalculatorTest {
 
             CohortConceptGraphs postGraphs2 = ckc.getCohortConceptGraphs();
             ConceptGraph postCG2 = postGraphs2.getAvgGraph();
-            Map<String, AssessmentItem> postLOMap2 =  postCG2.getLearningObjectMap();
+            Map<String, AssessmentItem> postLOMap2 =  postCG2.getAssessmentItemMap();
 
             Collection<AssessmentItem> postLOList2 = postLOMap2.values();
             for (AssessmentItem postlearningObject2: postLOList2){
@@ -610,7 +610,7 @@ public class ConceptKnowledgeCalculatorTest {
 
             CohortConceptGraphs originalGraphs = ckc.getCohortConceptGraphs();
             ConceptGraph conGraph = originalGraphs.getAvgGraph();
-            Map<String, AssessmentItem> origLearningMap =  conGraph.getLearningObjectMap();
+            Map<String, AssessmentItem> origLearningMap =  conGraph.getAssessmentItemMap();
 
             Collection<AssessmentItem> origLearningObList = origLearningMap.values();
 
@@ -649,7 +649,7 @@ public class ConceptKnowledgeCalculatorTest {
 
             CohortConceptGraphs postGraphs = ckc.getCohortConceptGraphs();
             ConceptGraph postCG = postGraphs.getAvgGraph();
-            Map<String, AssessmentItem> postLOMap =  postCG.getLearningObjectMap();
+            Map<String, AssessmentItem> postLOMap =  postCG.getAssessmentItemMap();
             Collection<AssessmentItem> postLOList = postLOMap.values();
             postMasterList.addAll(postLOList);
 
