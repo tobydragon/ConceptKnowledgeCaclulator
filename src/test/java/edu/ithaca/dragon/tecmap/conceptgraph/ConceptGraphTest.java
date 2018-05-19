@@ -96,7 +96,7 @@ public class ConceptGraphTest {
     public void buildGraphConstructorTest(){
         ConceptGraphRecord structure = ExampleConceptGraphRecordFactory.makeSimple();
         List<LearningResourceRecord> lolinks = ExampleLearningObjectLinkRecordFactory.makeSimpleLOLRecords();
-        List<LearningObjectResponse> responses = ExampleLearningObjectResponseFactory.makeSimpleResponses();
+        List<AssessmentItemResponse> responses = ExampleLearningObjectResponseFactory.makeSimpleResponses();
 
         ConceptGraph graph = new ConceptGraph(structure, lolinks, responses);
 
@@ -147,8 +147,8 @@ public class ConceptGraphTest {
         //TODO: Did this line matter, because it can't work like that anymore...
         //graph.addLearningObjects(ExampleLearningObjectLinkRecordFactory.makeSimpleLearningObjectDef());
 
-        LearningObject duplicateObject = new LearningObject("Q1");
-        LearningObjectResponse duplicateResponse = new LearningObjectResponse("user1","Q1",1);
+        AssessmentItem duplicateObject = new AssessmentItem("Q1");
+        AssessmentItemResponse duplicateResponse = new AssessmentItemResponse("user1","Q1",1);
 
         // Tries to add Q1 but it already exists so it does not get added and returns false
         duplicateObject.addResponse(duplicateResponse);
@@ -159,8 +159,8 @@ public class ConceptGraphTest {
 
 
         // New question to be linked in to the existing graph
-        LearningObject myObject = new LearningObject("Q7");
-        LearningObjectResponse myResponse = new LearningObjectResponse("user1","Q7",1);
+        AssessmentItem myObject = new AssessmentItem("Q7");
+        AssessmentItemResponse myResponse = new AssessmentItemResponse("user1","Q7",1);
 
         concepts.add("D");
         myObject.addResponse(myResponse);
@@ -186,10 +186,10 @@ public class ConceptGraphTest {
         //Creating graph
         ConceptGraph graph = ExampleConceptGraphFactory.makeSimpleCompleteWithData();
 
-        List<LearningObjectResponse> responses = new ArrayList<>();
+        List<AssessmentItemResponse> responses = new ArrayList<>();
 
-        responses.add( new LearningObjectResponse("user1","Q1",1));
-        responses.add( new LearningObjectResponse("user1","Q7",1));
+        responses.add( new AssessmentItemResponse("user1","Q1",1));
+        responses.add( new AssessmentItemResponse("user1","Q7",1));
 
         //Creating learningObjectLinkedRecord list
         List<LearningResourceRecord> learningObjectLinkRecords = new ArrayList<>();
@@ -240,14 +240,6 @@ public class ConceptGraphTest {
         Assert.assertEquals(0.575, orig.findNodeById("For Loop").getKnowledgeEstimate(), DataUtil.OK_FLOAT_MARGIN);
 
     }
-
-    @Test
-    public void isComplementaryTest() {
-
-
-
-    }
-
 
     @Test
     public void calcTotalKnowledgeEstimateTest(){

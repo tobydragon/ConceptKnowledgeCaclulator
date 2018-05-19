@@ -6,9 +6,9 @@ import edu.ithaca.dragon.tecmap.io.reader.CSVReader;
 import edu.ithaca.dragon.tecmap.io.record.ConceptGraphRecord;
 import edu.ithaca.dragon.tecmap.io.record.LearningResourceRecord;
 import edu.ithaca.dragon.tecmap.io.reader.SakaiReader;
+import edu.ithaca.dragon.tecmap.learningobject.AssessmentItemResponse;
 import edu.ithaca.dragon.tecmap.learningobject.ExampleLearningObjectLinkRecordFactory;
 import edu.ithaca.dragon.tecmap.learningobject.ExampleLearningObjectResponseFactory;
-import edu.ithaca.dragon.tecmap.learningobject.LearningObjectResponse;
 import edu.ithaca.dragon.tecmap.learningobject.LearningResource;
 import org.junit.Assert;
 import org.junit.Test;
@@ -89,7 +89,7 @@ public class LearningObjectSuggesterTest {
 
         //create the data to be used to create and populate the graph copies
         CSVReader csvReader = new SakaiReader(Settings.TEST_RESOURCE_DIR + "ManuallyCreated/exampleDataAssessment.csv");
-        List<LearningObjectResponse> assessments = csvReader.getManualGradedResponses();
+        List<AssessmentItemResponse> assessments = csvReader.getManualGradedResponses();
 
         //create the average and individual graphs
         cohortConceptGraphs = new CohortConceptGraphs(graph, assessments);
@@ -117,7 +117,7 @@ public class LearningObjectSuggesterTest {
 
         //create the data to be used to create and populate the graph copies
         CSVReader csvReader = new SakaiReader(Settings.TEST_RESOURCE_DIR + "ManuallyCreated/exampleDataAssessment.csv");
-        List<LearningObjectResponse> assessments = csvReader.getManualGradedResponses();
+        List<AssessmentItemResponse> assessments = csvReader.getManualGradedResponses();
 
         //create the average and individual graphs
         cohortConceptGraphs = new CohortConceptGraphs(graph, assessments);
@@ -259,7 +259,7 @@ public class LearningObjectSuggesterTest {
 
         //create the data to be used to create and populate the graph copies
         CSVReader csvReader = new SakaiReader(Settings.TEST_RESOURCE_DIR + "ManuallyCreated/exampleDataAssessment.csv");
-        List<LearningObjectResponse> assessments = csvReader.getManualGradedResponses();
+        List<AssessmentItemResponse> assessments = csvReader.getManualGradedResponses();
 
         //create the average and individual graphs
         cohortConceptGraphs = new CohortConceptGraphs(graph, assessments);

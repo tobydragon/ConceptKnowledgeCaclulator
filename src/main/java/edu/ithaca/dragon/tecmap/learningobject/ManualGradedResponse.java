@@ -5,7 +5,7 @@ import edu.ithaca.dragon.tecmap.util.GraphConstants;
 /**
  * Created by willsuchanek on 3/6/17.
  */
-public class ManualGradedResponse extends LearningObjectResponse {
+public class ManualGradedResponse extends AssessmentItemResponse {
 
     double maxPossibleScore;
     double studentScore;

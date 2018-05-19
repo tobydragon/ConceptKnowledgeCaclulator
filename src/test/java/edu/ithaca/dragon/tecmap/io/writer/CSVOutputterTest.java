@@ -1,8 +1,7 @@
 package edu.ithaca.dragon.tecmap.io.writer;
 
-import edu.ithaca.dragon.tecmap.io.writer.CSVOutputter;
+import edu.ithaca.dragon.tecmap.learningobject.AssessmentItemResponse;
 import edu.ithaca.dragon.tecmap.learningobject.ExampleLearningObjectResponseFactory;
-import edu.ithaca.dragon.tecmap.learningobject.LearningObjectResponse;
 import org.junit.Assert;
 import org.junit.Test;
 
@@ -17,7 +16,7 @@ public class CSVOutputterTest {
 
     @Test
     public void questionsToSortedSetTest(){
-        List<LearningObjectResponse> responses = ExampleLearningObjectResponseFactory.makeSimpleResponses();
+        List<AssessmentItemResponse> responses = ExampleLearningObjectResponseFactory.makeSimpleResponses();
 
         CSVOutputter outputter = new CSVOutputter(responses);
 
@@ -40,7 +39,7 @@ public class CSVOutputterTest {
 
     @Test
     public void makeCSVTest(){
-        List<LearningObjectResponse> responses = ExampleLearningObjectResponseFactory.makeSimpleResponses();
+        List<AssessmentItemResponse> responses = ExampleLearningObjectResponseFactory.makeSimpleResponses();
 
         CSVOutputter outputter = new CSVOutputter(responses);
 

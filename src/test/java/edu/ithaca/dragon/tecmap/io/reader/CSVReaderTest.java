@@ -1,9 +1,8 @@
 package edu.ithaca.dragon.tecmap.io.reader;
 
 import edu.ithaca.dragon.tecmap.Settings;
-import edu.ithaca.dragon.tecmap.io.reader.SakaiReader;
-import edu.ithaca.dragon.tecmap.learningobject.LearningObject;
-import edu.ithaca.dragon.tecmap.learningobject.LearningObjectResponse;
+import edu.ithaca.dragon.tecmap.learningobject.AssessmentItem;
+import edu.ithaca.dragon.tecmap.learningobject.AssessmentItemResponse;
 import edu.ithaca.dragon.tecmap.learningobject.ManualGradedResponse;
 import org.junit.Assert;
 import org.junit.Test;
@@ -22,8 +21,8 @@ public class CSVReaderTest {
         String file = Settings.TEST_RESOURCE_DIR + "ManuallyCreated/complexRealisticAssessment.csv";
         try {
             SakaiReader readfile = new SakaiReader(file);
-            List<LearningObjectResponse> manualGradedResponseList = readfile.getManualGradedResponses();
-            List<LearningObject> manualGradedLearningObjectList = readfile.getManualGradedLearningObjects();
+            List<AssessmentItemResponse> manualGradedResponseList = readfile.getManualGradedResponses();
+            List<AssessmentItem> manualGradedAssessmentItemList = readfile.getManualGradedLearningObjects();
             //testing title entries from the csv files
 
             //Testing for first entry in the CSV
@@ -45,15 +44,15 @@ public class CSVReaderTest {
             Assert.assertEquals(testQ2.getLearningObjectId(), manualGradedResponseList.get(lastIndex).getLearningObjectId());
 
             //Testing for the Learning Objects
-            Assert.assertEquals(9, manualGradedLearningObjectList.size());
-            Assert.assertEquals(25, manualGradedLearningObjectList.get(0).getResponses().size());
+            Assert.assertEquals(9, manualGradedAssessmentItemList.size());
+            Assert.assertEquals(25, manualGradedAssessmentItemList.get(0).getResponses().size());
             //Making sure the first item in the ManualGradedResponses list is the first item in the first learning object of the learning object list
-            Assert.assertEquals(manualGradedResponseList.get(0).calcKnowledgeEstimate(), manualGradedLearningObjectList.get(0).getResponses().get(0).calcKnowledgeEstimate(), 0);
-            Assert.assertEquals(manualGradedResponseList.get(0).getUserId(), manualGradedLearningObjectList.get(0).getResponses().get(0).getUserId());
-            Assert.assertEquals(manualGradedResponseList.get(0).getLearningObjectId(), manualGradedLearningObjectList.get(0).getResponses().get(0).getLearningObjectId());
+            Assert.assertEquals(manualGradedResponseList.get(0).calcKnowledgeEstimate(), manualGradedAssessmentItemList.get(0).getResponses().get(0).calcKnowledgeEstimate(), 0);
+            Assert.assertEquals(manualGradedResponseList.get(0).getUserId(), manualGradedAssessmentItemList.get(0).getResponses().get(0).getUserId());
+            Assert.assertEquals(manualGradedResponseList.get(0).getLearningObjectId(), manualGradedAssessmentItemList.get(0).getResponses().get(0).getLearningObjectId());
             //Can't access these but they are tested above
-            //Assert.assertEquals(manualGradedResponseList.get(0).getNonNormalizedScore(),manualGradedLearningObjectList.get(0).getResponses().get(0).getNonNormalizedScore(),0);
-            //Assert.assertEquals(manualGradedResponseList.get(0).getMaxPossibleScore(),manualGradedLearningObjectList.get(0).getResponses().get(0).getMaxPossibleScore(),0);
+            //Assert.assertEquals(manualGradedResponseList.get(0).getNonNormalizedScore(),manualGradedAssessmentItemList.get(0).getResponses().get(0).getNonNormalizedScore(),0);
+            //Assert.assertEquals(manualGradedResponseList.get(0).getMaxPossibleScore(),manualGradedAssessmentItemList.get(0).getResponses().get(0).getMaxPossibleScore(),0);
         } catch (IOException e) {
             Assert.fail();
         }

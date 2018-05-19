@@ -9,8 +9,8 @@ import edu.ithaca.dragon.tecmap.io.reader.SakaiReader;
 import edu.ithaca.dragon.tecmap.io.record.CohortConceptGraphsRecord;
 import edu.ithaca.dragon.tecmap.io.record.ConceptGraphRecord;
 import edu.ithaca.dragon.tecmap.io.record.LearningResourceRecord;
-import edu.ithaca.dragon.tecmap.learningobject.LearningObject;
-import edu.ithaca.dragon.tecmap.learningobject.LearningObjectResponse;
+import edu.ithaca.dragon.tecmap.learningobject.AssessmentItem;
+import edu.ithaca.dragon.tecmap.learningobject.AssessmentItemResponse;
 import edu.ithaca.dragon.tecmap.suggester.GroupSuggester.*;
 import edu.ithaca.dragon.tecmap.suggester.LearningObjectSuggester;
 import edu.ithaca.dragon.tecmap.suggester.SuggestionResource;
@@ -159,11 +159,11 @@ public class ConceptKnowledgeCalculator implements ConceptKnowledgeCalculatorAPI
         ConceptGraph graph = new ConceptGraph(structureRecord, linkRecord);
 
         //create the data to be used to create and populate the graph copies
-        List<LearningObjectResponse> assessments = new ArrayList<>();
+        List<AssessmentItemResponse> assessments = new ArrayList<>();
 
         for (String aname: assessmentFiles){
             CSVReader csvReader = new SakaiReader(aname);
-            List<LearningObjectResponse> temp = csvReader.getManualGradedResponses();
+            List<AssessmentItemResponse> temp = csvReader.getManualGradedResponses();
             assessments.addAll(temp);
         }
 
@@ -511,7 +511,7 @@ public class ConceptKnowledgeCalculator implements ConceptKnowledgeCalculatorAPI
 
     public static void csvToResource(List<String> assessmentFiles, String destinationFilepath) throws Exception{
         //TODO: hardcoded to sakai csv, need to hold a list of CSVReaders, or the information about which kind of reader it is...
-        List<LearningObject> fullLoList = ReaderTools.learningObjectsFromCSVList(2, assessmentFiles);
+        List<AssessmentItem> fullLoList = ReaderTools.learningObjectsFromCSVList(2, assessmentFiles);
         List<LearningResourceRecord> lolrList = LearningResourceRecord.createLRecordsFromAssessments(fullLoList);
         LearningResourceRecord.resourceRecordsToJSON(lolrList, destinationFilepath);
     }
@@ -542,12 +542,12 @@ public class ConceptKnowledgeCalculator implements ConceptKnowledgeCalculatorAPI
     public double getLearningObjectAvg(String learningObject) throws Exception {
         if(currentMode== Mode.COHORTGRAPH) {
             ConceptGraph graph = cohortConceptGraphs.getAvgGraph();
-            Map<String, LearningObject> loMap = graph.getLearningObjectMap();
-            Collection<LearningObject> objList = loMap.values();
-            ArrayList<LearningObject> list;
-            list = new ArrayList<LearningObject>(objList);
+            Map<String, AssessmentItem> loMap = graph.getLearningObjectMap();
+            Collection<AssessmentItem> objList = loMap.values();
+            ArrayList<AssessmentItem> list;
+            list = new ArrayList<AssessmentItem>(objList);
             KnowledgeEstimateMatrix myMatrix = new KnowledgeEstimateMatrix(list);
-            LearningObject concept = loMap.get(learningObject);
+            AssessmentItem concept = loMap.get(learningObject);
 
             if (concept != null) {
                 double result = RFunctions.LearningObjectAvg(myMatrix, concept);
@@ -562,8 +562,8 @@ public class ConceptKnowledgeCalculator implements ConceptKnowledgeCalculatorAPI
 
     public double getStudentAvg(String user)throws NullPointerException{
         ConceptGraph graph = cohortConceptGraphs.getAvgGraph();
-        Map<String, LearningObject> loMap = graph.getLearningObjectMap();
-        List<LearningObject> objList = new ArrayList<LearningObject>(loMap.values());
+        Map<String, AssessmentItem> loMap = graph.getLearningObjectMap();
+        List<AssessmentItem> objList = new ArrayList<AssessmentItem>(loMap.values());
         KnowledgeEstimateMatrix myMatrix = new KnowledgeEstimateMatrix(objList);
         List<String> userIdList = myMatrix.getUserIdList();
 
@@ -577,8 +577,8 @@ public class ConceptKnowledgeCalculator implements ConceptKnowledgeCalculatorAPI
     public void getFactorMatrix(){
         if(currentMode== Mode.COHORTGRAPH){
             ConceptGraph graph = cohortConceptGraphs.getAvgGraph();
-            Map<String, LearningObject> loMap = graph.getLearningObjectMap();
-            List<LearningObject> objList = new ArrayList<LearningObject>(loMap.values());
+            Map<String, AssessmentItem> loMap = graph.getLearningObjectMap();
+            List<AssessmentItem> objList = new ArrayList<AssessmentItem>(loMap.values());
             KnowledgeEstimateMatrix myMatrix = new KnowledgeEstimateMatrix(objList);
 
             try {
@@ -599,8 +599,8 @@ public class ConceptKnowledgeCalculator implements ConceptKnowledgeCalculatorAPI
     public void createConfirmatoryGraph(){
         if(currentMode== Mode.COHORTGRAPH){
             ConceptGraph graph = cohortConceptGraphs.getAvgGraph();
-            Map<String, LearningObject> loMap = graph.getLearningObjectMap();
-            List<LearningObject> objList = new ArrayList<LearningObject>(loMap.values());
+            Map<String, AssessmentItem> loMap = graph.getLearningObjectMap();
+            List<AssessmentItem> objList = new ArrayList<AssessmentItem>(loMap.values());
 //            KnowledgeEstimateMatrix myMatrix = new KnowledgeEstimateMatrix(objList);
             try {
 //                RFunctions.confirmatoryGraph(myMatrix, cohortConceptGraphs);

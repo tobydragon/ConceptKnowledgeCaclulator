@@ -9,8 +9,8 @@ import edu.ithaca.dragon.tecmap.io.record.ConceptRecord;
 import edu.ithaca.dragon.tecmap.io.record.LearningResourceRecord;
 import edu.ithaca.dragon.tecmap.learningobject.ExampleLearningObjectLinkRecordFactory;
 import edu.ithaca.dragon.tecmap.learningobject.ExampleLearningObjectResponseFactory;
-import edu.ithaca.dragon.tecmap.learningobject.LearningObject;
-import edu.ithaca.dragon.tecmap.learningobject.LearningObjectResponse;
+import edu.ithaca.dragon.tecmap.learningobject.AssessmentItem;
+import edu.ithaca.dragon.tecmap.learningobject.AssessmentItemResponse;
 import edu.ithaca.dragon.tecmap.util.DataUtil;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -57,8 +57,8 @@ public class CohortConceptGraphsTest {
 
         //test that learningObjectResponses don't get mixed between users
         for (Map.Entry<String, ConceptGraph> entry : group.getUserToGraph().entrySet()){
-            for (LearningObject learningObject: entry.getValue().getLearningObjectMap().values()){
-                for (LearningObjectResponse response : learningObject.getResponses()){
+            for (AssessmentItem assessmentItem : entry.getValue().getLearningObjectMap().values()){
+                for (AssessmentItemResponse response : assessmentItem.getResponses()){
                     Assert.assertEquals(entry.getKey(), response.getUserId());
                 }
             }

@@ -5,9 +5,8 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import edu.ithaca.dragon.tecmap.Settings;
 import edu.ithaca.dragon.tecmap.io.reader.CSVReader;
 import edu.ithaca.dragon.tecmap.io.reader.SakaiReader;
-import edu.ithaca.dragon.tecmap.io.record.LearningResourceRecord;
+import edu.ithaca.dragon.tecmap.learningobject.AssessmentItem;
 import edu.ithaca.dragon.tecmap.learningobject.LearningMaterial;
-import edu.ithaca.dragon.tecmap.learningobject.LearningObject;
 import edu.ithaca.dragon.tecmap.learningobject.LearningResource;
 import edu.ithaca.dragon.tecmap.util.DataUtil;
 import org.junit.Assert;
@@ -22,7 +21,7 @@ public class LearningResourceRecordTest {
 
     @Test
     public void testBuildingResourcesFromRecords(){
-        Collection<LearningObject> assessments = new ArrayList<>();
+        Collection<AssessmentItem> assessments = new ArrayList<>();
         Collection<LearningMaterial> materials = new ArrayList<>();
         try {
             Collection<LearningResourceRecord> fromFile = LearningResourceRecord.buildListFromJson(Settings.TEST_RESOURCE_DIR + "ManuallyCreated/LearningRecordResourceTest-MissingFields.json");
@@ -34,7 +33,7 @@ public class LearningResourceRecordTest {
                 }
                 //may create duplicate records if one resource is both an assessment and a material
                 if (record.isType(LearningResource.Type.ASSESSMENT)){
-                    assessments.add(new LearningObject(record));
+                    assessments.add(new AssessmentItem(record));
                 }
                 if (record.isType(LearningResource.Type.INFORMATION) || record.isType(LearningResource.Type.PRACTICE)){
                     //since we've already added an assessment for this record, remove it so the list can be used to create the material directly from the list
@@ -184,8 +183,8 @@ public class LearningResourceRecordTest {
     public void createLearningObjectLinkRecordsTest(){
         try {
             CSVReader test = new SakaiReader(Settings.TEST_RESOURCE_DIR + "ManuallyCreated/complexRealisticAssessment.csv");
-            Collection<LearningObject> list = test.getManualGradedLearningObjects();
-            List<LearningObject> list2 = test.getManualGradedLearningObjects();
+            Collection<AssessmentItem> list = test.getManualGradedLearningObjects();
+            List<AssessmentItem> list2 = test.getManualGradedLearningObjects();
             List<LearningResourceRecord> lolrList = LearningResourceRecord.createLRecordsFromAssessments(list);
             List<String> resultString = new ArrayList<String>();
             for (LearningResourceRecord lolr : lolrList) {
@@ -193,7 +192,7 @@ public class LearningResourceRecordTest {
             }
 
             List<String> list2string = new ArrayList<String>();
-            for (LearningObject lo : list2) {
+            for (AssessmentItem lo : list2) {
                 list2string.add(lo.getId());
             }
             Assert.assertEquals(list2string.toString(), resultString.toString());

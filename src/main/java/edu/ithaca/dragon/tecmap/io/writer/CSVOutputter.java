@@ -4,7 +4,7 @@ package edu.ithaca.dragon.tecmap.io.writer;
  * Created by willsuchanek on 2/28/17.
  */
 
-import edu.ithaca.dragon.tecmap.learningobject.LearningObjectResponse;
+import edu.ithaca.dragon.tecmap.learningobject.AssessmentItemResponse;
 
 import java.io.IOException;
 import java.nio.charset.Charset;
@@ -25,7 +25,7 @@ public class CSVOutputter {
      * @param summaries - List of PerUserPerProblemSummaries
      * @throws IOException
      */
-    public CSVOutputter(String filename, List<LearningObjectResponse> summaries) throws IOException{
+    public CSVOutputter(String filename, List<AssessmentItemResponse> summaries) throws IOException{
         this(summaries);
         toCSV(filename);
     }
@@ -34,13 +34,13 @@ public class CSVOutputter {
      * correctly. Read functions to find out more about the formatting (makeCSV())
      * @param summaries takes a list of Per User Per Problem Summaries
      */
-    public CSVOutputter(List<LearningObjectResponse> summaries){
+    public CSVOutputter(List<AssessmentItemResponse> summaries){
         studentsToQuestions = new HashMap<String, Map<String, Double>>();
 
         //Go through all summaries, find the student, call get on the HashMap with the student ID, if returns null then make a new HashMap
         //and put it in for the student
 
-        for(LearningObjectResponse summary: summaries){
+        for(AssessmentItemResponse summary: summaries){
 
             Map<String, Double> questionsToAnswer = studentsToQuestions.get(summary.getUserId());
             //creates the student if it does not exist in the map yet

@@ -3,8 +3,8 @@ package edu.ithaca.dragon.tecmap.conceptgraph;
 
 import edu.ithaca.dragon.tecmap.io.record.ConceptRecord;
 import edu.ithaca.dragon.tecmap.io.record.LinkRecord;
+import edu.ithaca.dragon.tecmap.learningobject.AssessmentItem;
 import edu.ithaca.dragon.tecmap.learningobject.LearningMaterial;
-import edu.ithaca.dragon.tecmap.learningobject.LearningObject;
 
 import java.util.*;
 
@@ -18,7 +18,7 @@ public class ConceptNode {
 	private double knowledgeDistanceFromAvg;
 	private double dataImportance;
 
-	private Map<String, LearningObject> learningObjectMap;  //These same LearningObjects might also be held by other nodes
+	private Map<String, AssessmentItem> learningObjectMap;  //These same LearningObjects might also be held by other nodes
     private Map<String, LearningMaterial> learningMaterialMap;  //These same LearningObjects might also be held by other nodes
 
 	List<ConceptNode> children;
@@ -55,7 +55,7 @@ public class ConceptNode {
      * @param graphLearningMaterialMap  the current learningMaterialMap for the graph that this node will be a part of
      * @post all contents of this new node are set to new copies of the data from , and all children are also copied
 	 */
-	public ConceptNode(ConceptNode nodeToCopy, Map<String, ConceptNode> graphNodeMap, Map<String, LearningObject> graphLearningObjectMap, Map<String, LearningMaterial> graphLearningMaterialMap){
+	public ConceptNode(ConceptNode nodeToCopy, Map<String, ConceptNode> graphNodeMap, Map<String, AssessmentItem> graphLearningObjectMap, Map<String, LearningMaterial> graphLearningMaterialMap){
 		copyContents(nodeToCopy, graphLearningObjectMap, graphLearningMaterialMap);
 
 		//recursively copy children
@@ -83,7 +83,7 @@ public class ConceptNode {
      * @param graphLearningMaterialMap  the current learningMaterialMap for the graph that this node will be a part of
      * @post all contents of this new node are set to new copies of the data from nodeToCopy
      */
-	public ConceptNode(String newId, ConceptNode nodeToCopy, Map<String, LearningObject> graphLearningObjectMap, Map<String, LearningMaterial> graphLearningMaterialMap){
+	public ConceptNode(String newId, ConceptNode nodeToCopy, Map<String, AssessmentItem> graphLearningObjectMap, Map<String, LearningMaterial> graphLearningMaterialMap){
 		copyContents(nodeToCopy, graphLearningObjectMap, graphLearningMaterialMap);
         this.id = newId;
 	}
@@ -97,7 +97,7 @@ public class ConceptNode {
      *                                  this is needed to make sure we only copy learningObjects
      * @post all contents of this node are set to new copies of the data from nodeToCopy
      */
-	private void copyContents( ConceptNode nodeToCopy, Map<String, LearningObject> graphLearningObjectMap, Map<String, LearningMaterial> graphLearningMaterialMap){
+	private void copyContents(ConceptNode nodeToCopy, Map<String, AssessmentItem> graphLearningObjectMap, Map<String, LearningMaterial> graphLearningMaterialMap){
         this.id = nodeToCopy.id;
 	    this.label = nodeToCopy.label;
         this.knowledgeEstimate = nodeToCopy.knowledgeEstimate;
@@ -107,15 +107,15 @@ public class ConceptNode {
 
         //Complicated because it is a graph, so it should only copy LearningObjects if they haven't already been created
         this.learningObjectMap = new HashMap<>();
-        for (Map.Entry<String, LearningObject> entry: nodeToCopy.learningObjectMap.entrySet()){
+        for (Map.Entry<String, AssessmentItem> entry: nodeToCopy.learningObjectMap.entrySet()){
 
             //check the map first to see if that learningObject has already been created
-            LearningObject newLearningObject = graphLearningObjectMap.get(entry.getKey());
-            if (newLearningObject == null) {
-                newLearningObject = new LearningObject(entry.getValue());
-                graphLearningObjectMap.put(entry.getKey(), newLearningObject);
+            AssessmentItem newAssessmentItem = graphLearningObjectMap.get(entry.getKey());
+            if (newAssessmentItem == null) {
+                newAssessmentItem = new AssessmentItem(entry.getValue());
+                graphLearningObjectMap.put(entry.getKey(), newAssessmentItem);
             }
-            this.learningObjectMap.put(entry.getKey(), newLearningObject);
+            this.learningObjectMap.put(entry.getKey(), newAssessmentItem);
         }
         this.learningMaterialMap = new HashMap<>();
         for (Map.Entry<String, LearningMaterial> entry: nodeToCopy.learningMaterialMap.entrySet()){
@@ -201,8 +201,8 @@ public class ConceptNode {
 	 */
 	public void calcDataImportance(){
 		double tempDI=0;
-		for(LearningObject learningObject: learningObjectMap.values()){
-			tempDI+=learningObject.getDataImportance();
+		for(AssessmentItem assessmentItem : learningObjectMap.values()){
+			tempDI+= assessmentItem.getDataImportance();
 		}
 
 		for (ConceptNode child: children){
@@ -219,8 +219,8 @@ public class ConceptNode {
 	public void calcKnowledgeEstimate() {
 		//calculate estimate from learning objects directly connected to this node
         double currentConceptEstimate = 0;
-		for (LearningObject learningObject : learningObjectMap.values()){
-			currentConceptEstimate += learningObject.calcKnowledgeEstimate()*learningObject.getDataImportance();
+		for (AssessmentItem assessmentItem : learningObjectMap.values()){
+			currentConceptEstimate += assessmentItem.calcKnowledgeEstimate()* assessmentItem.getDataImportance();
 		}
 
         //calculate estimate from children
@@ -258,8 +258,8 @@ public class ConceptNode {
 	}
 
 	//////////////////  Simple Methods  //////////////////////
-	public void addLearningObject(LearningObject learningObject) {
-		learningObjectMap.put(learningObject.getId(), learningObject);
+	public void addLearningObject(AssessmentItem assessmentItem) {
+		learningObjectMap.put(assessmentItem.getId(), assessmentItem);
 	}
 
 	public void addLearningMaterial(LearningMaterial learningObject) {
@@ -308,7 +308,7 @@ public class ConceptNode {
 
 	public double getDataImportance() { return dataImportance; }
 
-    public Map<String, LearningObject> getLearningObjectMap() {
+    public Map<String, AssessmentItem> getLearningObjectMap() {
         return learningObjectMap;
     }
 

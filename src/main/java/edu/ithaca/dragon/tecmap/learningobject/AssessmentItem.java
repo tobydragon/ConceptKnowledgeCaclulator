@@ -9,45 +9,45 @@ import java.util.*;
  * @uathor tdragon
  * 2/14/17.
  */
-public class LearningObject {
+public class AssessmentItem {
 
     String id;
-    List<LearningObjectResponse> responses;
+    List<AssessmentItemResponse> responses;
     double maxPossibleKnowledgeEstimate;
 
-    public LearningObject(String id){
+    public AssessmentItem(String id){
         this (id, 1);
     }
 
-    public LearningObject(String id, double maxPossibleKnowledgeEstimate){
+    public AssessmentItem(String id, double maxPossibleKnowledgeEstimate){
         this.id = id;
         this.responses = new ArrayList<>();
         this.maxPossibleKnowledgeEstimate = maxPossibleKnowledgeEstimate;
     }
 
-    public LearningObject(LearningObject other){
+    public AssessmentItem(AssessmentItem other){
         this.id = other.id;
         this.maxPossibleKnowledgeEstimate = other.maxPossibleKnowledgeEstimate;
         this.responses = new ArrayList<>();
-        for (LearningObjectResponse response : other.responses){
-            this.responses.add(new LearningObjectResponse(response));
+        for (AssessmentItemResponse response : other.responses){
+            this.responses.add(new AssessmentItemResponse(response));
         }
     }
 
-//    public LearningObject(LearningObjectLinkRecord record) {
+//    public AssessmentItem(LearningObjectLinkRecord record) {
 //        this.id = record.getLearningObject();
 //        this.responses = new ArrayList<>();
 //        this.maxPossibleKnowledgeEstimate = 1;
 //    }
 
     //temprary fucntion to get htings working before switching to LearningResourceRecords
-    public LearningObject(LearningResourceRecord record){
+    public AssessmentItem(LearningResourceRecord record){
         this.id = record.getLearningResourceId();
         this.maxPossibleKnowledgeEstimate = record.getMaxPossibleKnowledgeEstimate();
         this.responses = new ArrayList<>();
     }
 
-    public void addResponse(LearningObjectResponse response){
+    public void addResponse(AssessmentItemResponse response){
         if (id.equals(response.getLearningObjectId())) {
             responses.add(response);
         }
@@ -63,7 +63,7 @@ public class LearningObject {
 
     public double calcKnowledgeEstimate(){
         double estimate = 0;
-        for (LearningObjectResponse response : responses){
+        for (AssessmentItemResponse response : responses){
             estimate += response.calcKnowledgeEstimate();
         }
         if (responses.size() > 0){
@@ -73,10 +73,10 @@ public class LearningObject {
         return estimate;
     }
 
-    public static Map<String, LearningObject> deepCopyLearningObjectMap(Map<String, LearningObject> mapToCopy){
-        Map<String, LearningObject> newMap = new HashMap<>();
-        for (Map.Entry<String, LearningObject> entryToCopy : mapToCopy.entrySet()){
-            newMap.put(entryToCopy.getKey(), new LearningObject(entryToCopy.getValue()));
+    public static Map<String, AssessmentItem> deepCopyLearningObjectMap(Map<String, AssessmentItem> mapToCopy){
+        Map<String, AssessmentItem> newMap = new HashMap<>();
+        for (Map.Entry<String, AssessmentItem> entryToCopy : mapToCopy.entrySet()){
+            newMap.put(entryToCopy.getKey(), new AssessmentItem(entryToCopy.getValue()));
         }
         return newMap;
     }
@@ -90,7 +90,7 @@ public class LearningObject {
         return id;
     }
 
-    public List<LearningObjectResponse> getResponses() {
+    public List<AssessmentItemResponse> getResponses() {
         return responses;
     }
 
@@ -98,10 +98,10 @@ public class LearningObject {
         if(other == null){
             return false;
         }
-        if(!LearningObject.class.isAssignableFrom(other.getClass())){
+        if(!AssessmentItem.class.isAssignableFrom(other.getClass())){
             return false;
         }
-        LearningObject otherNode = (LearningObject) other;
+        AssessmentItem otherNode = (AssessmentItem) other;
         if(this.id.equals(otherNode.id) && this.responses.equals(otherNode.responses)){
             return true;
         } else {
@@ -117,10 +117,10 @@ public class LearningObject {
         return getId() + "   Est:" + DataUtil.format(calcKnowledgeEstimate()) + "  Imp:" + DataUtil.format(getDataImportance()) + "  ResponseCount:" + getResponses().size();
     }
 
-    public void setMatchingKnowledgeEstimates(Collection<LearningObject> learningObjects, Map<String, LearningObject> loMap){
-        List<LearningObject> loList= new ArrayList<LearningObject>(loMap.values());
-        for(LearningObject fromList: learningObjects){
-            for(LearningObject toList: loList){
+    public void setMatchingKnowledgeEstimates(Collection<AssessmentItem> assessmentItems, Map<String, AssessmentItem> loMap){
+        List<AssessmentItem> loList= new ArrayList<AssessmentItem>(loMap.values());
+        for(AssessmentItem fromList: assessmentItems){
+            for(AssessmentItem toList: loList){
                 if(fromList == toList){
                     toList.setMaxPossibleKnowledgeEstimate(fromList.getMaxPossibleKnowledgeEstimate());
                 }

@@ -4,7 +4,7 @@ import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
-import edu.ithaca.dragon.tecmap.learningobject.LearningObject;
+import edu.ithaca.dragon.tecmap.learningobject.AssessmentItem;
 import edu.ithaca.dragon.tecmap.learningobject.LearningResource;
 
 import java.io.File;
@@ -33,7 +33,7 @@ public class LearningResourceRecord {
         this.maxPossibleKnowledgeEstimate = maxPossibleKnowledgeEstimate;
     }
 
-    public LearningResourceRecord(LearningObject assessment){
+    public LearningResourceRecord(AssessmentItem assessment){
         this( assessment.getId(), Arrays.asList(LearningResource.Type.ASSESSMENT), new ArrayList<>(), assessment.getDataImportance(), assessment.getMaxPossibleKnowledgeEstimate());
     }
 
@@ -49,10 +49,10 @@ public class LearningResourceRecord {
         return mapper.readValue(new File(fullFileName), new TypeReference<List<LearningResourceRecord>>(){});
     }
 
-    public static List<LearningResourceRecord> createLRecordsFromAssessments(Collection<LearningObject> learningObjects){
+    public static List<LearningResourceRecord> createLRecordsFromAssessments(Collection<AssessmentItem> assessmentItems){
         List<LearningResourceRecord> lolrList = new ArrayList<LearningResourceRecord>();
-        for(LearningObject learningObject: learningObjects){
-            lolrList.add( new LearningResourceRecord(learningObject));
+        for(AssessmentItem assessmentItem : assessmentItems){
+            lolrList.add( new LearningResourceRecord(assessmentItem));
         }
         return lolrList;
     }
