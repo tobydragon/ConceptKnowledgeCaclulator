@@ -17,14 +17,14 @@ import java.util.*;
 public class  ConceptGraph {
     private static final Logger logger = LogManager.getLogger(ConceptGraph.class);
 
-	String name;
-	List<ConceptNode> roots;
+	private String name;
+	private List<ConceptNode> roots;
 
 	//This information is a duplicate, nodes and learning objects will be found within other nodes,
     // but also can be quickly looked up here (also allows checks for duplicates).
-	Map<String, ConceptNode> nodeMap;
-    Map<String, AssessmentItem> assessmentItemMap;
-    Map<String, LearningMaterial> learningMaterialMap;
+	private Map<String, ConceptNode> nodeMap;
+    private Map<String, AssessmentItem> assessmentItemMap;
+    private Map<String, LearningMaterial> learningMaterialMap;
 
 
     public ConceptGraph(ConceptGraphRecord structureDef){
@@ -39,9 +39,9 @@ public class  ConceptGraph {
         addLearningResourcesFromRecords(lolRecords);
     }
 
-    public ConceptGraph(ConceptGraphRecord structureDef, List<LearningResourceRecord> lolRecords, List<AssessmentItemResponse> learningObjectsResponses){
+    public ConceptGraph(ConceptGraphRecord structureDef, List<LearningResourceRecord> lolRecords, List<AssessmentItemResponse> AssessmentItemResponses){
         this(structureDef, lolRecords);
-        addLearningObjectResponses(learningObjectsResponses);
+        addAssessmentItemResponses(AssessmentItemResponses);
     }
 
     /**
@@ -81,7 +81,8 @@ public class  ConceptGraph {
     }
 
     /**
-     * used only by TreeConverter, does not have proper assessmentItemMap or nodeMap
+     * Copies only graph structure, ** DOES NOT have proper assessmentItemMap or nodeMap **
+     * Used only by TreeConverter
      * @param rootsIn
      */
     public ConceptGraph(List<ConceptNode> rootsIn, String name, Map<String, AssessmentItem> AssessmentItemMap, Map<String, LearningMaterial> learningMaterialMap, Map<String, ConceptNode> nodeMap){
@@ -92,18 +93,10 @@ public class  ConceptGraph {
         this.roots = rootsIn;
     }
 
-    public ConceptGraph(){
-        this.name = " ";
-        assessmentItemMap = new HashMap<>();
-        learningMaterialMap = new HashMap<>();
-        nodeMap= new HashMap<>();
-        this.roots= new LinkedList<>();
-    }
-
     /**
-     * Initializes a graph studentKnowledgeEstimates only (no learningObjects)
+     * Initializes a graph only (no assessments or materials)
      * @param graphRecord
-     * @post sets, roots and nodeMap, completely overwrite any previous graph studentKnowledgeEstimates
+     * @post sets roots and nodeMap, completely overwrite any previous graph
      */
     private void buildStructureFromGraphRecord(ConceptGraphRecord graphRecord){
         this.roots = new ArrayList<>();
@@ -123,10 +116,10 @@ public class  ConceptGraph {
     }
 
     /**
-     * initializes nodes child lists
-     * @pre nodes must already exist for all ids listed in links
+     * initializes nodes' child lists
+     * @pre nodes must already exist for all ids listed in links (need to call buildStructureFromGraphRecord first)
      * @param links
-     * @post the ConceptNodes themselves are altered to include the new links
+     * @post this graph's ConceptNodes are altered to include the new links
      */
     private void linkConceptsToEachOther(List<LinkRecord> links){
         for( LinkRecord currLink : links){
@@ -148,14 +141,38 @@ public class  ConceptGraph {
     }
 
     /**
-     * Takes a Learning Object and a list of Concept Id's it connects to. Adds the learning object to the graph and to the corresponding concepts
-     * If the learning Object already exists in the graph that is recorded in the logger and nothing happens
-     * @param toLink - the learning object that is going to be linked to the incoming Concept IDs (cannot already be part of the graph)
-     * @param conceptIds - list of strings of the Concept IDs the learning object will be linked to
-     * @post   the learningObject is added to the graph's map, and to all associated Concept's maps
-     * @return the number of concepts the learning object was added to, or -1 if the learning object already exists
+     * adds materials and assessments to the graph
+     * @param learningResourceRecords
+     * @post all given resources are added to either the materials or the assessments maps for the appropriate nodes
      */
-    public int linkLearningObjects(AssessmentItem toLink, Collection<String> conceptIds){
+    public void addLearningResourcesFromRecords(List<LearningResourceRecord> learningResourceRecords){
+        for (LearningResourceRecord record: learningResourceRecords){
+            //set defaults if there aren't any resource types
+            if (record.getResourceTypes().size() == 0){
+                record.setResourceTypes(LearningResourceType.getDefaultResourceTypes());
+            }
+
+            //Create duplicate objects (a material and an assessment) if one resource is both
+            if (record.isType(LearningResourceType.ASSESSMENT)){
+                linkAssessmentItem(new AssessmentItem(record), record.getConceptIds());
+            }
+            if (record.isType(LearningResourceType.INFORMATION) || record.isType(LearningResourceType.PRACTICE)){
+                //since we've already added possibly an assessment for this record, remove it (if it were there) so the list can be used to create the material directly from the list
+                record.getResourceTypes().remove(LearningResourceType.ASSESSMENT);
+                linkLearningMaterials(new LearningMaterial(record), record.getConceptIds());
+            }
+        }
+    }
+
+    /**
+     * Takes an AssessmentItem and a list of Concept Id's it connects to. Adds the AssessmentItem to the graph and to the corresponding concepts
+     * If the AssessmentItem already exists in the graph then a warning is logged and nothing happens
+     * @param toLink - the AssessmentItem that is going to be linked to the incoming Concept IDs (cannot already be part of the graph)
+     * @param conceptIds - list of strings of the Concept IDs the AssessmentItem will be linked to
+     * @post   the AssessmentItem is added to the graph's map, and to all associated Concept's AssessmentItem maps
+     * @return the number of concepts the AssessmentItem was added to, or -1 if the AssessmentItem already exists
+     */
+    public int linkAssessmentItem (AssessmentItem toLink, Collection<String> conceptIds){
         int numAdded = 0;
         if (assessmentItemMap.get(toLink.getId()) != null){
             logger.warn(toLink.getId()+" already exists in this graph. Nothing was added.");
@@ -166,7 +183,7 @@ public class  ConceptGraph {
             if(nodeMap.get(id) != null){
                 numAdded++;
                 ConceptNode current = nodeMap.get(id);
-                current.addLearningObject(toLink);
+                current.addAssessmentItem(toLink);
             } else{
                 logger.warn("Authoring Warning: Concept '"+id+"' is not in your Concept map. "+toLink.getId()+" was not added to the map under the Concept ID "+id);
             }
@@ -175,12 +192,12 @@ public class  ConceptGraph {
     }
 
     /**
-     * Takes a Learning Object and a list of Concept Id's it connects to. Adds the learning object to the graph and to the corresponding concepts
-     * If the learning Object already exists in the graph that is recorded in the logger and nothing happens
-     * @param toLink - the learning object that is going to be linked to the incoming Concept IDs (cannot already be part of the graph)
-     * @param conceptIds - list of strings of the Concept IDs the learning object will be linked to
-     * @post   the learningObject is added to the graph's map, and to all associated Concept's maps
-     * @return the number of concepts the learning object was added to, or -1 if the learning object already exists
+     * Adds the LearningMaterial to the graph and to the corresponding concepts
+     * If the LearningMaterial already exists in the graph then a warning is logged and nothing happens
+     * @param toLink - the LearningMaterial that is going to be linked to the incoming Concept IDs (cannot already be part of the graph)
+     * @param conceptIds - list of strings of the Concept IDs the LearningMaterial will be linked to
+     * @post   the LearningMaterial is added to the graph's map, and to all associated Concept's AssessmentItem maps
+     * @return the number of concepts the LearningMaterial was added to, or -1 if the LearningMaterial already exists
      */
     public int linkLearningMaterials(LearningMaterial toLink, Collection<String> conceptIds){
         int numAdded = 0;
@@ -201,105 +218,37 @@ public class  ConceptGraph {
         return numAdded;
     }
 
-    public void addLearningResourcesFromRecords(List<LearningResourceRecord> learningObjectLinkRecords){
-
-        for (LearningResourceRecord record: learningObjectLinkRecords){
-            linkLearningObjects(new AssessmentItem(record), record.getConceptIds());
-
-            //set defaults if there aren't any resource types
-            if (record.getResourceTypes().size() == 0){
-                record.setResourceTypes(LearningResourceType.getDefaultResourceTypes());
-            }
-
-            //Create duplicate objects (a material and an assessment) if one resource is both
-            if (record.isType(LearningResourceType.ASSESSMENT)){
-                linkLearningObjects(new AssessmentItem(record), record.getConceptIds());
-            }
-            if (record.isType(LearningResourceType.INFORMATION) || record.isType(LearningResourceType.PRACTICE)){
-                //since we've already added possibly an assessment for this record, remove it (if it were there) so the list can be used to create the material directly from the list
-                record.getResourceTypes().remove(LearningResourceType.ASSESSMENT);
-                linkLearningMaterials(new LearningMaterial(record), record.getConceptIds());
-            }
-        }
-    }
-
 
     /**
      * connects AssessmentItemResponse to the appropriate AssessmentItem in this graph
      * Can be called multiple times with different lists of responses
-     * @param learningObjectsResponses
+     * @param assessmentItemResponses
      */
-    public void addLearningObjectResponses(List<AssessmentItemResponse> learningObjectsResponses) {
-        for (AssessmentItemResponse response : learningObjectsResponses){
+    public void addAssessmentItemResponses(List<AssessmentItemResponse> assessmentItemResponses) {
+        for (AssessmentItemResponse response : assessmentItemResponses){
             AssessmentItem resource = assessmentItemMap.get(response.getLearningObjectId());
             if (resource != null){
                 resource.addResponse(response);
             }
             else {
-                logger.warn("No learning object:" + response.getLearningObjectId() + " for response: " + response.toString());
+                logger.warn("No AssessmentItem:" + response.getLearningObjectId() + " for response: " + response.toString());
                 //TODO: maybe make a new list of unconnected learning objects???
             }
         }
     }
 
-
-
     /**
-     * updates a list of the suggested Concept node list so that there are ancestors of nodes already in the list.
-     * You need to iterate nodes to add and then call this function.
-     * @param node
-     * @param suggestedList
+     * for each LearningMaterial, calculates the number of times that LearningMaterial is linked to a concept
+     * @return a map from id -> count of connections to concepts
      */
-    public static void updateSuggestionList (ConceptNode node, List<ConceptNode> suggestedList){
-        //exclude nodes that are ancestors of the node already in the suggestion list
-        //when we suggest a descendant. remove any ancestors of that node from the list.
-
-        boolean nodeIsAnc = false;
-        List<ConceptNode> ancesList= new ArrayList<>();
-        for(ConceptNode ancNode: suggestedList){
-            if (node.isAncestorOf(ancNode)){
-                nodeIsAnc=true;
-                break;
-            }
-        }
-
-        if(!nodeIsAnc) { //if the node is a descendant
-            for (ConceptNode trackNode : suggestedList) {
-                if (trackNode.isAncestorOf(node)) {
-                    ancesList.add(trackNode);
-                }
-            }
-            suggestedList.removeAll(ancesList);
-            suggestedList.add(node);
-        }
-    }
-
-    public double calcTotalKnowledgeEstimate( String startingSubject){
-        if(startingSubject.equals("all")){
-            double ex = 0;
-            for(ConceptNode roots: this.getRoots()){
-                double total = roots.totalKnowledgeEstimateForThisAndAllDescendants(new ArrayList<>());
-                ex+= total;
-
-            }
-            return ex;
-        }else{
-
-            ConceptNode node = this.findNodeById(startingSubject);
-            return node.totalKnowledgeEstimateForThisAndAllDescendants(new ArrayList<>());
-        }
-    }
-
-    //TODO: should use materials, not assessments (I think)
-    public HashMap<String, Integer> buildDirectConceptLinkCount(){
-        HashMap<String, Integer> directConceptLinkCountMap = new HashMap<>();
+    public Map<String, Integer> buildDirectConceptLinkCount(){
+        Map<String, Integer> directConceptLinkCountMap = new HashMap<>();
         for (ConceptNode node: nodeMap.values()){
-            for (AssessmentItem lo : node.getLearningObjectMap().values()){
-                if(directConceptLinkCountMap.containsKey(lo.getId())){
-                    directConceptLinkCountMap.put(lo.getId(),directConceptLinkCountMap.get(lo.getId())+1);
-
+            for (LearningMaterial learningMaterial : node.getLearningMaterialMap().values()){
+                if(directConceptLinkCountMap.containsKey(learningMaterial.getId())){
+                    directConceptLinkCountMap.put(learningMaterial.getId(),directConceptLinkCountMap.get(learningMaterial.getId())+1);
                 }else{
-                    directConceptLinkCountMap.put(lo.getId(), 1);
+                    directConceptLinkCountMap.put(learningMaterial.getId(), 1);
                 }
             }
         }
@@ -307,25 +256,64 @@ public class  ConceptGraph {
     }
 
     /**
-    *Finds where to start building the summaryList via the parameter and creates a empty hashmap to pass with it to buildLearningObjectSummaryList
-    *@param node name that is used to find a ConceptNode
-    *@return filled hashmap from other buildLearningobjectSummaryList.
+     * for each LearningMaterial, calculates the number of paths to that learning material from the given node
+     * @return a map from id -> pathCount to the given conceptNode
      */
-	public HashMap<String,Integer> buildLearningObjectSummaryList(String node) {
+	public Map<String,Integer> buildLearningMaterialPathCount(String node) {
 
 		ConceptNode findNode = findNodeById(node);
 		if (findNode != null) {
-			HashMap<String, Integer> learningObjectSummary = new HashMap<>();
-			findNode.buildLearningObjectSummaryList(learningObjectSummary);
-
-            return learningObjectSummary;
+			Map<String, Integer> idToPathCount = new HashMap<>();
+			findNode.buildLearningMaterialPathCount(idToPathCount);
+            return idToPathCount;
 		}else{
-			logger.warn("Building learningObjectSummaryList:" + node + " is not found in the graph");
+			logger.warn("buildLearningMaterialPathCount:" + node + " is not found in the graph");
 			return null;
 		}
 	}
 
-	////////////////////////////////////////////  Simple Functions    //////////////////////////////////////
+    /**
+     * creates a mapping of labels to all of the ids that share that label
+     * @return a map of label -> list of ids for all labels present
+     */
+    public Map<String, List<String>> createSameLabelMap(){
+        Map<String, List<String>> labelMap = new HashMap<>();
+        for (ConceptNode curConcept : nodeMap.values()){
+            List<String> currList = labelMap.get(curConcept.getLabel());
+            if (currList == null){
+                currList = new ArrayList<>();
+                labelMap.put(curConcept.getLabel(), currList);
+            }
+            currList.add(curConcept.getID());
+        }
+        return labelMap;
+    }
+
+
+    /**
+     * calculates the sum of all knowledge estimates for all nodes in the graph
+     * @return the sum
+     */
+    public double calcTotalKnowledgeEstimate() {
+        double ex = 0;
+        for(ConceptNode roots: this.getRoots()){
+            double total = roots.totalKnowledgeEstimateForThisAndAllDescendants(new ArrayList<>());
+            ex+= total;
+
+        }
+        return ex;
+    }
+
+    /**
+     * calculates the sum of all knowledge estimates for all nodes below a certain node in the graph
+     * @param startingNodeId the id of the node to start with
+     * @return the sum
+     */
+    public double calcTotalKnowledgeEstimate(String startingNodeId){
+        ConceptNode node = this.findNodeById(startingNodeId);
+        return node.totalKnowledgeEstimateForThisAndAllDescendants(new ArrayList<>());
+    }
+
     public int responsesCount(){
 	    int total = 0;
 	    for (AssessmentItem lo : assessmentItemMap.values()){
@@ -363,17 +351,21 @@ public class  ConceptGraph {
 			root.calcDataImportance();
 		}
 	}
-	
-	public ConceptNode findNodeById(String id){
+
+    ////////////////////////////////////////////  Simple Functions    //////////////////////////////////////
+
+    public ConceptNode findNodeById(String id){
 	    return nodeMap.get(id);
 	}
 
 	public Collection<String> getAllNodeIds(){
 		return nodeMap.keySet();
 	}
+
     public Map<String, AssessmentItem> getAssessmentItemMap() {
 	    return assessmentItemMap;
     }
+
     public Map<String, LearningMaterial> getLearningMaterialMap() {
         return learningMaterialMap;
     }
@@ -388,20 +380,4 @@ public class  ConceptGraph {
         ConceptGraphRecord thisGraph = this.buildConceptGraphRecord();
         return "Nodes:\n"+thisGraph.getConcepts()+"\nLinks:\n"+thisGraph.getLinks();
     }
-
-    public Map<String, List<String>> createSameLabelMap(){
-        Map<String, List<String>> labelMap = new HashMap<>();
-        for (ConceptNode curConcept : nodeMap.values()){
-            List<String> currList = labelMap.get(curConcept.getLabel());
-            if (currList == null){
-                currList = new ArrayList<>();
-                labelMap.put(curConcept.getLabel(), currList);
-            }
-            currList.add(curConcept.getID());
-        }
-        return labelMap;
-    }
-
-
-
 }

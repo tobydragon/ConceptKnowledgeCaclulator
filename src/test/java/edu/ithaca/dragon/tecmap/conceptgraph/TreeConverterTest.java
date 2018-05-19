@@ -73,7 +73,7 @@ public class TreeConverterTest {
         Assert.assertEquals(expectedResourcesCount, tree.getAssessmentItemMap().size());
         Assert.assertEquals(expectedResponsesCount, tree.responsesCount());
         //but they should be different, equivalent objects across tree and graph
-        for (Map.Entry<String, AssessmentItem> entry: graphToTest.assessmentItemMap.entrySet()){
+        for (Map.Entry<String, AssessmentItem> entry: graphToTest.getAssessmentItemMap().entrySet()){
             AssessmentItem treeCopy = tree.getAssessmentItemMap().get(entry.getKey());
             Assert.assertEquals(entry.getValue(), treeCopy);
             Assert.assertTrue(entry.getValue() != treeCopy);
@@ -85,7 +85,7 @@ public class TreeConverterTest {
             for (String nodeCopyId : nodeCopies){
                 ConceptNode next = tree.findNodeById(nodeCopyId);
                 Assert.assertEquals(first.getKnowledgeEstimate() , next.getKnowledgeEstimate(), DataUtil.OK_FLOAT_MARGIN);
-                Assert.assertEquals(first.getLearningObjectMap().size() , next.getLearningObjectMap().size());
+                Assert.assertEquals(first.getAssessmentItemMap().size() , next.getAssessmentItemMap().size());
             }
         }
 

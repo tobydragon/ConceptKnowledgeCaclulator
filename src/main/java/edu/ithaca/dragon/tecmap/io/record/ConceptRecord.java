@@ -35,7 +35,7 @@ public class ConceptRecord {
         this.knowledgeDistFromAvg = conceptToRecord.getKnowledgeDistanceFromAvg();
         this.dataImportance = conceptToRecord.getDataImportance();
         resourceSummaries = new ArrayList<>();
-        for (AssessmentItem objectToSummarize : conceptToRecord.getLearningObjectMap().values()){
+        for (AssessmentItem objectToSummarize : conceptToRecord.getAssessmentItemMap().values()){
             resourceSummaries.add(objectToSummarize.getSummaryString());
         }
     }

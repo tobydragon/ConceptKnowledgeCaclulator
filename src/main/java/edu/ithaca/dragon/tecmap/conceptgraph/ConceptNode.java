@@ -153,24 +153,22 @@ public class ConceptNode {
         }
     }
 
-    //TODO: Check if this works with materials,as opposed to assessments
     /**
-     *fills up a hashmap with the LearningObjects IDs and the amount of ways to get to the learning object from the root (which is how importance is measured)
-     *@param summary a hashmap with the labels... TODO
+     * for each LearningMaterial, calculates the number of paths to that learning material from the given node
+     * @param idToPathCount a map of id -> countOfPaths to be added to recursively (empty when recursion starts)
+     * @post the map with this node and all children with updated counts
      */
-	public void buildLearningObjectSummaryList(HashMap <String, Integer> summary){
+	public void buildLearningMaterialPathCount(Map <String, Integer> idToPathCount){
         for (LearningMaterial material : this.learningMaterialMap.values()) {
-			if (summary.containsKey(material.getId())){
-                summary.put(material.getId() ,summary.get(material.getId())+1);
+			if (idToPathCount.containsKey(material.getId())){
+                idToPathCount.put(material.getId() ,idToPathCount.get(material.getId())+1);
 			}else{
-                summary.put(material.getId(), 1);
-
+                idToPathCount.put(material.getId(), 1);
 			}
 		}
 		//go to each of the children and call on child so that the child node's learning objects will be added.
 		for(ConceptNode child: children){
-			child.buildLearningObjectSummaryList(summary);
-
+			child.buildLearningMaterialPathCount(idToPathCount);
 		}
 	}
 
@@ -255,7 +253,7 @@ public class ConceptNode {
 	}
 
 	//////////////////  Simple Methods  //////////////////////
-	public void addLearningObject(AssessmentItem assessmentItem) {
+	public void addAssessmentItem(AssessmentItem assessmentItem) {
 		learningObjectMap.put(assessmentItem.getId(), assessmentItem);
 	}
 
@@ -297,8 +295,12 @@ public class ConceptNode {
 
 	public double getDataImportance() { return dataImportance; }
 
-    public Map<String, AssessmentItem> getLearningObjectMap() {
+    public Map<String, AssessmentItem> getAssessmentItemMap() {
         return learningObjectMap;
+    }
+
+    public Map<String, LearningMaterial> getLearningMaterialMap() {
+        return learningMaterialMap;
     }
 
 	public String toString(String indent) {

@@ -34,14 +34,14 @@ public class CohortConceptGraphs {
 
 		for(String user: userIdToResponses.keySet()){
 			ConceptGraph structureCopy = new ConceptGraph(structureGraph, user);
-			structureCopy.addLearningObjectResponses(userIdToResponses.get(user));
+			structureCopy.addAssessmentItemResponses(userIdToResponses.get(user));
 			structureCopy.calcDataImportance();
 			structureCopy.calcKnowledgeEstimates();
 			userToGraph.put(user, structureCopy);
 		}
 
 		//Add data to average Graph after all other graphs have been created.
-		averageGraph.addLearningObjectResponses(summaries);
+		averageGraph.addAssessmentItemResponses(summaries);
 		averageGraph.calcKnowledgeEstimates();
 
 		calcDistanceFromAvg();

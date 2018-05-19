@@ -41,7 +41,7 @@ public class PracticalConceptGraphTest {
             graph.calcKnowledgeEstimates();
 
             Assert.assertEquals("Intro CS", graph.findNodeById("Intro CS").getID());
-            Assert.assertEquals(5,graph.findNodeById("Boolean").getLearningObjectMap().size());
+            Assert.assertEquals(5,graph.findNodeById("Boolean").getAssessmentItemMap().size());
             Assert.assertEquals(15,graph.getAssessmentItemMap().size());
 
             ConceptGraphRecord tree = TreeConverter.makeTreeCopy(graph).buildConceptGraphRecord();
@@ -76,7 +76,7 @@ public class PracticalConceptGraphTest {
 
 
             Assert.assertEquals("Intro CS", testGraph.findNodeById("Intro CS").getID());
-            Assert.assertEquals(7, testGraph.findNodeById("Boolean").getLearningObjectMap().size());
+            Assert.assertEquals(7, testGraph.findNodeById("Boolean").getAssessmentItemMap().size());
             Assert.assertEquals(15,testGraph.getAssessmentItemMap().size());
 
 
@@ -116,7 +116,7 @@ public class PracticalConceptGraphTest {
 
 
             Assert.assertEquals("Intro CS", graph.findNodeById("Intro CS").getID());
-            Assert.assertEquals(5, graph.findNodeById("Boolean").getLearningObjectMap().size());
+            Assert.assertEquals(5, graph.findNodeById("Boolean").getAssessmentItemMap().size());
             Assert.assertEquals(15,graph.getAssessmentItemMap().size());
 
 
@@ -149,7 +149,7 @@ public class PracticalConceptGraphTest {
 
 
             Assert.assertEquals("Intro CS", graph.findNodeById("Intro CS").getID());
-            Assert.assertEquals(5, graph.findNodeById("Boolean").getLearningObjectMap().size());
+            Assert.assertEquals(5, graph.findNodeById("Boolean").getAssessmentItemMap().size());
             Assert.assertEquals(15, graph.getAssessmentItemMap().size());
             Assert.assertEquals(-.5,graph.findNodeById("Sequence Types").getKnowledgeEstimate(), DataUtil.OK_FLOAT_MARGIN);
             Assert.assertEquals(-0.545,graph.findNodeById("For Loop").getKnowledgeEstimate(), DataUtil.OK_FLOAT_MARGIN);

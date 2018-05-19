@@ -14,10 +14,7 @@ import org.junit.Assert;
 import org.junit.Test;
 
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.List;
+import java.util.*;
 
 /**
  * Created by home on 5/20/17.
@@ -187,11 +184,11 @@ public class LearningObjectSuggesterTest {
         testCompareA.put("Q2", 1);
         testCompareA.put("Q10", 1);
 
-        HashMap<String, Integer> learningSummaryFromA = orig.buildLearningObjectSummaryList("A");
-        HashMap<String, Integer> linkMap = orig.buildDirectConceptLinkCount();
+        Map<String, Integer> learningSummaryFromA = orig.buildLearningMaterialPathCount("A");
+        Map<String, Integer> linkMap = orig.buildDirectConceptLinkCount();
 
 
-        //makes sure that buildLearningObjectSummaryList works
+        //makes sure that buildLearningMaterialPathCount works
         Assert.assertEquals(testCompareA, learningSummaryFromA);
 
         //build the suggested learning object list

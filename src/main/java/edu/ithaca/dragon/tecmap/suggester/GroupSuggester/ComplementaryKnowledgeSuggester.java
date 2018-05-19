@@ -88,8 +88,6 @@ public class ComplementaryKnowledgeSuggester extends Suggester{
      * @return
      */
     private boolean isComplementary(Map<String, ConceptGraph> map, String name1, String name2, Group groupSoFar) throws Exception {
-        ConceptGraph graph = new ConceptGraph();
-
         // if the current first student's concept isn't equal to "no suggestions" and the current second student isn't equal to "no suggestions"
         //"no suggestions" as a the concept resource in the current group will return null because there is never a concept in the graph called "no suggestions"
         if(map.get(name1).findNodeById(groupSoFar.getConcept()) != null && map.get(name2).findNodeById(groupSoFar.getConcept()) != null){

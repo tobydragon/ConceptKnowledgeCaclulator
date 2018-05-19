@@ -257,7 +257,7 @@ public class RFunctions {
                 if(!removalList.contains(curString) && !removalList.contains(otherString) && curString != otherString){
                     ConceptNode curNode = graph.findNodeById(curString);
                     ConceptNode otherNode = graph.findNodeById(otherString);
-                    if(curNode.getLearningObjectMap().equals(otherNode.getLearningObjectMap())){
+                    if(curNode.getAssessmentItemMap().equals(otherNode.getAssessmentItemMap())){
                         removalList.add(curString);
                     }
                 }
@@ -278,7 +278,7 @@ public class RFunctions {
 
         for(String conceptString : conceptStringList){
             ConceptNode concept = graph.findNodeById(conceptString);
-            Map<String, AssessmentItem> loMap = concept.getLearningObjectMap();
+            Map<String, AssessmentItem> loMap = concept.getAssessmentItemMap();
             Collection<AssessmentItem> loList = loMap.values();
             for(AssessmentItem lo : loList){
 

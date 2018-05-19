@@ -36,8 +36,7 @@ public class BucketSuggester extends Suggester {
 
             for(String name: group.keySet()){
                 ConceptGraph userGraph = group.get(name);
-                String subject = "all";
-                double sum = calcSum(userGraph,subject);
+                double sum = userGraph.calcTotalKnowledgeEstimate();
                 knowledgeSums.put(name, (sum/userGraph.getAllNodeIds().size())*100);
 
             }
@@ -72,9 +71,7 @@ public class BucketSuggester extends Suggester {
      * @return double the sum of the estimates
      */
     public double calcSum (ConceptGraph s1, String subject){
-
         return s1.calcTotalKnowledgeEstimate(subject);
-
     }
 
 

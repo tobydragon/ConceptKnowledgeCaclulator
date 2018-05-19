@@ -170,7 +170,7 @@ public class CohortConceptGraphsTest {
             ConceptGraph testGraph = gcg.getAvgGraph();
 
             ConceptNode groupNode = testGraph.findNodeById("Boolean");
-            Assert.assertSame(testGraph.getAssessmentItemMap().get("Q9"), groupNode.getLearningObjectMap().get("Q9"));
+            Assert.assertSame(testGraph.getAssessmentItemMap().get("Q9"), groupNode.getAssessmentItemMap().get("Q9"));
         }
         catch (Exception e){
             e.printStackTrace();

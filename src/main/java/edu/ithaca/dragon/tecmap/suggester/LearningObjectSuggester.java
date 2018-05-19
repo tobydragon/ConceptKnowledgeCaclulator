@@ -32,12 +32,38 @@ public class LearningObjectSuggester {
             ConceptNode node = graph.findNodeById(key);
 
             if (node.getKnowledgeEstimate() > 0 && node.getKnowledgeEstimate() <= MAX) {
-                graph.updateSuggestionList(node, suggestedConceptList);
+                addIfLowestDescendant(node, suggestedConceptList);
             }
         }
 
 
         return suggestedConceptList;
+    }
+
+    /**
+     * adds the nodeToPotentiallyAdd to the suggestedList if it is not an ancestor of one already suggested,
+     * if it adds, it also removes any ancestors
+     * @param nodeToPotentiallyAdd
+     * @param suggestedList
+     * @post the node might be added to the suggestedList (if lowest descendant), and then ancestors of the node might be removed
+     */
+    public static void addIfLowestDescendant(ConceptNode nodeToPotentiallyAdd, List<ConceptNode> suggestedList){
+        //if this nodeToPotentiallyAdd is an ancestor of the nodeToPotentiallyAdd already in the suggestion list, skip it
+        for(ConceptNode ancNode: suggestedList){
+            if (nodeToPotentiallyAdd.isAncestorOf(ancNode)){
+                return;
+            }
+        }
+
+        //when we suggest a descendant, remove any ancestors of that nodeToPotentiallyAdd from the list.
+        List<ConceptNode> ancesList= new ArrayList<>();
+        for (ConceptNode trackNode : suggestedList) {
+            if (trackNode.isAncestorOf(nodeToPotentiallyAdd)) {
+                ancesList.add(trackNode);
+            }
+        }
+        suggestedList.removeAll(ancesList);
+        suggestedList.add(nodeToPotentiallyAdd);
     }
 
 
@@ -56,8 +82,8 @@ public class LearningObjectSuggester {
 
             List<LearningObjectSuggestion> testList = new ArrayList<>();
 
-            HashMap<String, Integer> map = graph.buildLearningObjectSummaryList(concept.getID());
-            HashMap<String, Integer> linkMap = graph.buildDirectConceptLinkCount();
+            Map<String, Integer> map = graph.buildLearningMaterialPathCount(concept.getID());
+            Map<String, Integer> linkMap = graph.buildDirectConceptLinkCount();
 
             List<LearningObjectSuggestion> list = buildLearningObjectSuggestionList(map, graph.getAssessmentItemMap(), concept.getID(), linkMap);
 

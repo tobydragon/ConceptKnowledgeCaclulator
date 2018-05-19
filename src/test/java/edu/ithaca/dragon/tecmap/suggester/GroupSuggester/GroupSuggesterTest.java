@@ -250,14 +250,14 @@ public class GroupSuggesterTest {
         List<Group> actualGroupings = new ArrayList<>();
 
         Group group = new Group();
-        group.addMember("mia", new ConceptGraph());
-        group.addMember("don", new ConceptGraph());
-        group.addMember("bob", new ConceptGraph());
+        group.addMember("mia", null);
+        group.addMember("don", null);
+        group.addMember("bob", null);
         actualGroupings.add(group);
 
         Group group2 = new Group();
-        group2.addMember("kayli",new ConceptGraph());
-        group2.addMember("dan", new ConceptGraph());
+        group2.addMember("kayli",null);
+        group2.addMember("dan", null);
         actualGroupings.add(group2);
 
         List<Suggester> suggesterList = new ArrayList<>();
