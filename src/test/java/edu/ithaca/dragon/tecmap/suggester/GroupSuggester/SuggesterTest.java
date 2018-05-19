@@ -1,4 +1,4 @@
-package edu.ithaca.dragon.tecmap.suggester.GroupSuggesterTest;
+package edu.ithaca.dragon.tecmap.suggester.GroupSuggester;
 
 import edu.ithaca.dragon.tecmap.ConceptKnowledgeCalculator;
 import edu.ithaca.dragon.tecmap.ConceptKnowledgeCalculatorAPI;
