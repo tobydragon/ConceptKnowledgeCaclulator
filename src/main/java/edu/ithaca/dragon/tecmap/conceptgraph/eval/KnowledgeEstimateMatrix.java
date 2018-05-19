@@ -1,8 +1,8 @@
 package edu.ithaca.dragon.tecmap.conceptgraph.eval;
 
 import com.github.rcaller.rstuff.RCode;
-import edu.ithaca.dragon.tecmap.learningobject.AssessmentItem;
-import edu.ithaca.dragon.tecmap.learningobject.AssessmentItemResponse;
+import edu.ithaca.dragon.tecmap.learningresource.AssessmentItem;
+import edu.ithaca.dragon.tecmap.learningresource.AssessmentItemResponse;
 
 import java.util.ArrayList;
 import java.util.Collection;

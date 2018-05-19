@@ -5,7 +5,7 @@ import com.github.rcaller.util.Globals;
 import edu.ithaca.dragon.tecmap.Settings;
 import edu.ithaca.dragon.tecmap.io.reader.CSVReader;
 import edu.ithaca.dragon.tecmap.io.reader.SakaiReader;
-import edu.ithaca.dragon.tecmap.learningobject.AssessmentItem;
+import edu.ithaca.dragon.tecmap.learningresource.AssessmentItem;
 import org.junit.Assert;
 import org.junit.Test;
 

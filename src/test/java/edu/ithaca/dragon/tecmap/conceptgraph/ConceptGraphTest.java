@@ -5,7 +5,7 @@ import edu.ithaca.dragon.tecmap.ConceptKnowledgeCalculatorAPI;
 import edu.ithaca.dragon.tecmap.Settings;
 import edu.ithaca.dragon.tecmap.io.record.ConceptGraphRecord;
 import edu.ithaca.dragon.tecmap.io.record.LearningResourceRecord;
-import edu.ithaca.dragon.tecmap.learningobject.*;
+import edu.ithaca.dragon.tecmap.learningresource.*;
 import edu.ithaca.dragon.tecmap.util.DataUtil;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -197,7 +197,7 @@ public class ConceptGraphTest {
         List<String> concepts = new ArrayList<>();
         concepts.add("B");
         concepts.add("C");
-        LearningResourceRecord question7Record = new LearningResourceRecord("Q7", Arrays.asList(LearningResource.Type.ASSESSMENT, LearningResource.Type.PRACTICE),concepts, 1, 1);
+        LearningResourceRecord question7Record = new LearningResourceRecord("Q7", Arrays.asList(LearningResourceType.ASSESSMENT, LearningResourceType.PRACTICE),concepts, 1, 1);
         learningObjectLinkRecords.add(question7Record);
 
         graph.addLearningResourcesFromRecords(learningObjectLinkRecords);

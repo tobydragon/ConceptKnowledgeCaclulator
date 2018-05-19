@@ -3,8 +3,8 @@ package edu.ithaca.dragon.tecmap.conceptgraph;
 
 import edu.ithaca.dragon.tecmap.io.record.ConceptRecord;
 import edu.ithaca.dragon.tecmap.io.record.LinkRecord;
-import edu.ithaca.dragon.tecmap.learningobject.AssessmentItem;
-import edu.ithaca.dragon.tecmap.learningobject.LearningMaterial;
+import edu.ithaca.dragon.tecmap.learningresource.AssessmentItem;
+import edu.ithaca.dragon.tecmap.learningresource.LearningMaterial;
 
 import java.util.*;
 

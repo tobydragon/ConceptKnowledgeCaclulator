@@ -4,10 +4,10 @@ import edu.ithaca.dragon.tecmap.io.record.ConceptGraphRecord;
 import edu.ithaca.dragon.tecmap.io.record.ConceptRecord;
 import edu.ithaca.dragon.tecmap.io.record.LearningResourceRecord;
 import edu.ithaca.dragon.tecmap.io.record.LinkRecord;
-import edu.ithaca.dragon.tecmap.learningobject.AssessmentItem;
-import edu.ithaca.dragon.tecmap.learningobject.AssessmentItemResponse;
-import edu.ithaca.dragon.tecmap.learningobject.LearningMaterial;
-import edu.ithaca.dragon.tecmap.learningobject.LearningResource;
+import edu.ithaca.dragon.tecmap.learningresource.AssessmentItem;
+import edu.ithaca.dragon.tecmap.learningresource.AssessmentItemResponse;
+import edu.ithaca.dragon.tecmap.learningresource.LearningMaterial;
+import edu.ithaca.dragon.tecmap.learningresource.LearningResourceType;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -210,16 +210,16 @@ public class  ConceptGraph {
 
             //set defaults if there aren't any resource types
             if (record.getResourceTypes().size() == 0){
-                record.setResourceTypes(LearningResource.DEFAULT_RESOURCE_TYPES);
+                record.setResourceTypes(LearningResourceType.getDefaultResourceTypes());
             }
 
             //Create duplicate objects (a material and an assessment) if one resource is both
-            if (record.isType(LearningResource.Type.ASSESSMENT)){
+            if (record.isType(LearningResourceType.ASSESSMENT)){
                 linkLearningObjects(new AssessmentItem(record), record.getConceptIds());
             }
-            if (record.isType(LearningResource.Type.INFORMATION) || record.isType(LearningResource.Type.PRACTICE)){
+            if (record.isType(LearningResourceType.INFORMATION) || record.isType(LearningResourceType.PRACTICE)){
                 //since we've already added possibly an assessment for this record, remove it (if it were there) so the list can be used to create the material directly from the list
-                record.getResourceTypes().remove(LearningResource.Type.ASSESSMENT);
+                record.getResourceTypes().remove(LearningResourceType.ASSESSMENT);
                 linkLearningMaterials(new LearningMaterial(record), record.getConceptIds());
             }
         }

@@ -4,8 +4,8 @@ import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
-import edu.ithaca.dragon.tecmap.learningobject.AssessmentItem;
-import edu.ithaca.dragon.tecmap.learningobject.LearningResource;
+import edu.ithaca.dragon.tecmap.learningresource.AssessmentItem;
+import edu.ithaca.dragon.tecmap.learningresource.LearningResourceType;
 
 import java.io.File;
 import java.io.IOException;
@@ -20,12 +20,12 @@ import java.util.List;
 public class LearningResourceRecord {
 
     private String learningResourceId;
-    private Collection <LearningResource.Type> resourceTypes;
+    private Collection <LearningResourceType> resourceTypes;
     private Collection<String> conceptIds;
     private double dataImportance;
     private double maxPossibleKnowledgeEstimate;
 
-    public LearningResourceRecord(String learningResourceId, Collection<LearningResource.Type> resourceTypes, Collection<String> conceptIds, double maxPossibleKnowledgeEstimate, double dataImportance){
+    public LearningResourceRecord(String learningResourceId, Collection<LearningResourceType> resourceTypes, Collection<String> conceptIds, double maxPossibleKnowledgeEstimate, double dataImportance){
         this.learningResourceId = learningResourceId;
         this.resourceTypes = new ArrayList<>(resourceTypes);
         this.conceptIds = new ArrayList<>(conceptIds);
@@ -34,7 +34,7 @@ public class LearningResourceRecord {
     }
 
     public LearningResourceRecord(AssessmentItem assessment){
-        this( assessment.getId(), Arrays.asList(LearningResource.Type.ASSESSMENT), new ArrayList<>(), assessment.getDataImportance(), assessment.getMaxPossibleKnowledgeEstimate());
+        this( assessment.getId(), Arrays.asList(LearningResourceType.ASSESSMENT), new ArrayList<>(), assessment.getDataImportance(), assessment.getMaxPossibleKnowledgeEstimate());
     }
 
     // default constructor for JSON
@@ -63,7 +63,7 @@ public class LearningResourceRecord {
         mapper.writeValue(new File(filename), lolrList);
     }
 
-    public boolean isType(LearningResource.Type typeToCheck){
+    public boolean isType(LearningResourceType typeToCheck){
         return resourceTypes.contains(typeToCheck);
     }
 
@@ -80,11 +80,11 @@ public class LearningResourceRecord {
         this.conceptIds.add(conceptId);
     }
 
-    public Collection<LearningResource.Type> getResourceTypes() {
+    public Collection<LearningResourceType> getResourceTypes() {
         return resourceTypes;
     }
 
-    public void setResourceTypes(Collection<LearningResource.Type> resourceTypes) {
+    public void setResourceTypes(Collection<LearningResourceType> resourceTypes) {
         this.resourceTypes = new ArrayList<>(resourceTypes);
     }
 

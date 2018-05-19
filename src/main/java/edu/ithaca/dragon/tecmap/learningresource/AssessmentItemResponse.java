@@ -1,4 +1,4 @@
-package edu.ithaca.dragon.tecmap.learningobject;
+package edu.ithaca.dragon.tecmap.learningresource;
 
 import edu.ithaca.dragon.tecmap.util.DataUtil;
 

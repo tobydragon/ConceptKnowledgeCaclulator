@@ -6,7 +6,7 @@ import edu.ithaca.dragon.tecmap.Settings;
 import edu.ithaca.dragon.tecmap.conceptgraph.CohortConceptGraphs;
 import edu.ithaca.dragon.tecmap.conceptgraph.ConceptGraph;
 import edu.ithaca.dragon.tecmap.conceptgraph.ConceptNode;
-import edu.ithaca.dragon.tecmap.learningobject.AssessmentItem;
+import edu.ithaca.dragon.tecmap.learningresource.AssessmentItem;
 
 import java.io.File;
 import java.io.FileWriter;

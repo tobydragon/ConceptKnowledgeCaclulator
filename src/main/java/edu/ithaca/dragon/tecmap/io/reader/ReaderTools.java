@@ -1,6 +1,6 @@
 package edu.ithaca.dragon.tecmap.io.reader;
 
-import edu.ithaca.dragon.tecmap.learningobject.AssessmentItem;
+import edu.ithaca.dragon.tecmap.learningresource.AssessmentItem;
 
 import java.io.BufferedReader;
 import java.io.FileReader;

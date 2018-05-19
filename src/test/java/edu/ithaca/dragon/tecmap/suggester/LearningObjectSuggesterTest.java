@@ -6,10 +6,10 @@ import edu.ithaca.dragon.tecmap.io.reader.CSVReader;
 import edu.ithaca.dragon.tecmap.io.record.ConceptGraphRecord;
 import edu.ithaca.dragon.tecmap.io.record.LearningResourceRecord;
 import edu.ithaca.dragon.tecmap.io.reader.SakaiReader;
-import edu.ithaca.dragon.tecmap.learningobject.AssessmentItemResponse;
-import edu.ithaca.dragon.tecmap.learningobject.ExampleLearningObjectLinkRecordFactory;
-import edu.ithaca.dragon.tecmap.learningobject.ExampleLearningObjectResponseFactory;
-import edu.ithaca.dragon.tecmap.learningobject.LearningResource;
+import edu.ithaca.dragon.tecmap.learningresource.AssessmentItemResponse;
+import edu.ithaca.dragon.tecmap.learningresource.ExampleLearningObjectLinkRecordFactory;
+import edu.ithaca.dragon.tecmap.learningresource.ExampleLearningObjectResponseFactory;
+import edu.ithaca.dragon.tecmap.learningresource.LearningResourceType;
 import org.junit.Assert;
 import org.junit.Test;
 
@@ -173,7 +173,7 @@ public class LearningObjectSuggesterTest {
     @Test
     public void suggestedOrderBuildLearningObjectListTest() {
         List<LearningResourceRecord> myList = ExampleLearningObjectLinkRecordFactory.makeSimpleLOLRecords();
-        myList.add(new LearningResourceRecord("Q10", Arrays.asList(LearningResource.Type.ASSESSMENT, LearningResource.Type.PRACTICE), Arrays.asList("A"), 1, 1));
+        myList.add(new LearningResourceRecord("Q10", Arrays.asList(LearningResourceType.ASSESSMENT, LearningResourceType.PRACTICE), Arrays.asList("A"), 1, 1));
         ConceptGraph orig = new ConceptGraph(ExampleConceptGraphRecordFactory.makeSimple(),
                 myList, ExampleLearningObjectResponseFactory.makeSimpleResponses());
 

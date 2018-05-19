@@ -4,7 +4,7 @@ package edu.ithaca.dragon.tecmap.io.writer;
  * Created by willsuchanek on 2/28/17.
  */
 
-import edu.ithaca.dragon.tecmap.learningobject.AssessmentItemResponse;
+import edu.ithaca.dragon.tecmap.learningresource.AssessmentItemResponse;
 
 import java.io.IOException;
 import java.nio.charset.Charset;

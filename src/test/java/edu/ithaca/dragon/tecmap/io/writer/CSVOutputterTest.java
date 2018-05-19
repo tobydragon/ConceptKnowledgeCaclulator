@@ -1,7 +1,7 @@
 package edu.ithaca.dragon.tecmap.io.writer;
 
-import edu.ithaca.dragon.tecmap.learningobject.AssessmentItemResponse;
-import edu.ithaca.dragon.tecmap.learningobject.ExampleLearningObjectResponseFactory;
+import edu.ithaca.dragon.tecmap.learningresource.AssessmentItemResponse;
+import edu.ithaca.dragon.tecmap.learningresource.ExampleLearningObjectResponseFactory;
 import org.junit.Assert;
 import org.junit.Test;
 

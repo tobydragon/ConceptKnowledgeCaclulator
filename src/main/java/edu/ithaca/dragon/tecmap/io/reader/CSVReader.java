@@ -6,9 +6,9 @@ package edu.ithaca.dragon.tecmap.io.reader;
  * Created by willsuchanek on 3/6/17.
  */
 
-import edu.ithaca.dragon.tecmap.learningobject.AssessmentItem;
-import edu.ithaca.dragon.tecmap.learningobject.AssessmentItemResponse;
-import edu.ithaca.dragon.tecmap.learningobject.ManualGradedResponse;
+import edu.ithaca.dragon.tecmap.learningresource.AssessmentItem;
+import edu.ithaca.dragon.tecmap.learningresource.AssessmentItemResponse;
+import edu.ithaca.dragon.tecmap.learningresource.ManualGradedResponse;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 

@@ -2,7 +2,7 @@ package edu.ithaca.dragon.tecmap.conceptgraph;
 
 import edu.ithaca.dragon.tecmap.io.record.CohortConceptGraphsRecord;
 import edu.ithaca.dragon.tecmap.io.record.ConceptGraphRecord;
-import edu.ithaca.dragon.tecmap.learningobject.AssessmentItemResponse;
+import edu.ithaca.dragon.tecmap.learningresource.AssessmentItemResponse;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 

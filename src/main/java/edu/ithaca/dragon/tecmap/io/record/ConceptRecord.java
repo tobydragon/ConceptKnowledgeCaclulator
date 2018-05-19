@@ -1,7 +1,7 @@
 package edu.ithaca.dragon.tecmap.io.record;
 
 import edu.ithaca.dragon.tecmap.conceptgraph.ConceptNode;
-import edu.ithaca.dragon.tecmap.learningobject.AssessmentItem;
+import edu.ithaca.dragon.tecmap.learningresource.AssessmentItem;
 import edu.ithaca.dragon.tecmap.util.DataUtil;
 
 import java.util.ArrayList;

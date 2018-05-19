@@ -5,9 +5,9 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import edu.ithaca.dragon.tecmap.Settings;
 import edu.ithaca.dragon.tecmap.io.reader.CSVReader;
 import edu.ithaca.dragon.tecmap.io.reader.SakaiReader;
-import edu.ithaca.dragon.tecmap.learningobject.AssessmentItem;
-import edu.ithaca.dragon.tecmap.learningobject.LearningMaterial;
-import edu.ithaca.dragon.tecmap.learningobject.LearningResource;
+import edu.ithaca.dragon.tecmap.learningresource.AssessmentItem;
+import edu.ithaca.dragon.tecmap.learningresource.LearningMaterial;
+import edu.ithaca.dragon.tecmap.learningresource.LearningResourceType;
 import edu.ithaca.dragon.tecmap.util.DataUtil;
 import org.junit.Assert;
 import org.junit.Test;
@@ -29,15 +29,15 @@ public class LearningResourceRecordTest {
             for (LearningResourceRecord record : fromFile){
                 //set defaults if there aren't any resources
                 if (record.getResourceTypes().size() == 0){
-                    record.setResourceTypes(LearningResource.DEFAULT_RESOURCE_TYPES);
+                    record.setResourceTypes(LearningResourceType.getDefaultResourceTypes());
                 }
                 //may create duplicate records if one resource is both an assessment and a material
-                if (record.isType(LearningResource.Type.ASSESSMENT)){
+                if (record.isType(LearningResourceType.ASSESSMENT)){
                     assessments.add(new AssessmentItem(record));
                 }
-                if (record.isType(LearningResource.Type.INFORMATION) || record.isType(LearningResource.Type.PRACTICE)){
+                if (record.isType(LearningResourceType.INFORMATION) || record.isType(LearningResourceType.PRACTICE)){
                     //since we've already added an assessment for this record, remove it so the list can be used to create the material directly from the list
-                    record.getResourceTypes().remove(LearningResource.Type.ASSESSMENT);
+                    record.getResourceTypes().remove(LearningResourceType.ASSESSMENT);
                     materials.add(new LearningMaterial(record));
                 }
             }
@@ -54,7 +54,7 @@ public class LearningResourceRecordTest {
 
         list.add( new LearningResourceRecord(
                 "variableHiddenQuizQuestion",
-                Arrays.asList(LearningResource.Type.ASSESSMENT),
+                Arrays.asList(LearningResourceType.ASSESSMENT),
                 Arrays.asList("Variables", "Assignments"),
                 1,
                 1
@@ -62,7 +62,7 @@ public class LearningResourceRecordTest {
 
         list.add( new LearningResourceRecord(
                 "reassignReturnedQuizQuestion",
-                Arrays.asList(LearningResource.Type.ASSESSMENT, LearningResource.Type.PRACTICE),
+                Arrays.asList(LearningResourceType.ASSESSMENT, LearningResourceType.PRACTICE),
                 Arrays.asList("Variables", "Assignments"),
                 1,
                 1
@@ -70,7 +70,7 @@ public class LearningResourceRecordTest {
 
         list.add( new LearningResourceRecord(
                 "VariablesChapter",
-                Arrays.asList(LearningResource.Type.INFORMATION),
+                Arrays.asList(LearningResourceType.INFORMATION),
                 Arrays.asList("Variables", "Assignments"),
                 1,
                 1
@@ -78,7 +78,7 @@ public class LearningResourceRecordTest {
 
         list.add( new LearningResourceRecord(
                 "reassignQuizQuestion",
-                Arrays.asList(LearningResource.Type.INFORMATION, LearningResource.Type.PRACTICE),
+                Arrays.asList(LearningResourceType.INFORMATION, LearningResourceType.PRACTICE),
                 Arrays.asList("Variables", "Assignments"),
                 1,
                 1
@@ -103,7 +103,7 @@ public class LearningResourceRecordTest {
         ArrayList<String> concepts = new ArrayList<>();
         concepts.add("Concept 1");
         String id = "id 1";
-        LearningResourceRecord loObject = new LearningResourceRecord(id,Arrays.asList(LearningResource.Type.ASSESSMENT, LearningResource.Type.PRACTICE), concepts, 1, 1);
+        LearningResourceRecord loObject = new LearningResourceRecord(id,Arrays.asList(LearningResourceType.ASSESSMENT, LearningResourceType.PRACTICE), concepts, 1, 1);
         Assert.assertEquals("Concept 1",loObject.getConceptIds().iterator().next());
         Assert.assertEquals(1,loObject.getConceptIds().size());
         Assert.assertEquals("id 1", loObject.getLearningResourceId());
@@ -120,7 +120,7 @@ public class LearningResourceRecordTest {
         concepts.add("Concept 1");
         concepts.add("Concept 2");
         String id = "id 1";
-        LearningResourceRecord loObject = new LearningResourceRecord(id,Arrays.asList(LearningResource.Type.ASSESSMENT, LearningResource.Type.PRACTICE), concepts, 1, 1);
+        LearningResourceRecord loObject = new LearningResourceRecord(id,Arrays.asList(LearningResourceType.ASSESSMENT, LearningResourceType.PRACTICE), concepts, 1, 1);
         Assert.assertEquals("(Learning Resource ID: id 1 Concept IDs: Concept 1, Concept 2)",loObject.toString());
     }
 
@@ -130,7 +130,7 @@ public class LearningResourceRecordTest {
         concepts.add("Concept 1");
         concepts.add("Concept 2");
         String id = "id 1";
-        LearningResourceRecord loObject = new LearningResourceRecord(id,Arrays.asList(LearningResource.Type.ASSESSMENT, LearningResource.Type.PRACTICE), concepts, 1, 1);
+        LearningResourceRecord loObject = new LearningResourceRecord(id,Arrays.asList(LearningResourceType.ASSESSMENT, LearningResourceType.PRACTICE), concepts, 1, 1);
 
         ObjectMapper mapper = new ObjectMapper();
         try {
