@@ -1,8 +1,8 @@
 package edu.ithaca.dragon.tecmap.conceptgraph.eval;
 
 import com.github.rcaller.rstuff.RCode;
-import edu.ithaca.dragon.tecmap.learningobject.LearningObject;
-import edu.ithaca.dragon.tecmap.learningobject.LearningObjectResponse;
+import edu.ithaca.dragon.tecmap.learningresource.AssessmentItem;
+import edu.ithaca.dragon.tecmap.learningresource.AssessmentItemResponse;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -19,12 +19,12 @@ public class KnowledgeEstimateMatrix {
 
     String id;
     double[][] studentKnowledgeEstimates;
-    public List<LearningObject> objList;
+    public List<AssessmentItem> objList;
     List<String> userIdList;
     RCode rMatrix;
 
 
-    public KnowledgeEstimateMatrix(List<LearningObject> lo){
+    public KnowledgeEstimateMatrix(List<AssessmentItem> lo){
         this.id = id;
         this.objList = lo;
         this.userIdList = new ArrayList<String>();
@@ -38,17 +38,17 @@ public class KnowledgeEstimateMatrix {
      * Creates a 2D array from a list of LearningObjects and their responses held within the objects.
      * The columns are sorted by LearningObjects. The rows are sorted by the userId held within the responses.
      * A userIdList is also created to track the userIds to the correct row.
-     * @param learningObjects collection of learningObjects
-     * @return a 2D Array of learningObjectResponses based on the list of learningObjects
+     * @param assessmentItems collection of assessmentItems
+     * @return a 2D Array of learningObjectResponses based on the list of assessmentItems
      * @post userListId is changed to add each new user found within the LORs
      */
 
-    public double[][] createMatrix(Collection<LearningObject> learningObjects){
+    public double[][] createMatrix(Collection<AssessmentItem> assessmentItems){
         //number of rows and columns needed check
-        int columns = learningObjects.size();
+        int columns = assessmentItems.size();
         int rows = 0;
-        for(LearningObject obj: learningObjects){
-            List<LearningObjectResponse> responses = obj.getResponses();
+        for(AssessmentItem obj: assessmentItems){
+            List<AssessmentItemResponse> responses = obj.getResponses();
             if(responses.size() > rows){
                 rows = responses.size();
             }
@@ -59,11 +59,11 @@ public class KnowledgeEstimateMatrix {
         int currentColumn = 0;
         int currentRow = 0;
 
-        for(LearningObject obj: learningObjects) {
-            List<LearningObjectResponse> responses = obj.getResponses();
+        for(AssessmentItem obj: assessmentItems) {
+            List<AssessmentItemResponse> responses = obj.getResponses();
             //first column of LearningObjectResponses cannot compare to anything to keep userid in same row as any previous columns of LearningObjectResponses
             if (currentColumn == 0) {
-                for (LearningObjectResponse ans : responses) {
+                for (AssessmentItemResponse ans : responses) {
                         newMatrix[currentColumn][currentRow] = ans.calcKnowledgeEstimate();
                         userIdList.add(ans.getUserId());
                         numOfIds++;
@@ -74,8 +74,8 @@ public class KnowledgeEstimateMatrix {
                 //these columns must have response's userid matching across all rows
                 //and make a new row if it does not match with anything
 
-                //for each response in a LearningObject
-                for (LearningObjectResponse ans : responses) {
+                //for each response in a AssessmentItem
+                for (AssessmentItemResponse ans : responses) {
                     boolean isPlaced = false;
                     //cycle through each index of the userIdList
                     for (String user: userIdList){
@@ -117,7 +117,7 @@ public class KnowledgeEstimateMatrix {
 
         int i = 0;
         String[] objStr = new String[objLength];
-        for(LearningObject obj: objList){
+        for(AssessmentItem obj: objList){
             objStr[i] = obj.getId();
             i++;
         }
@@ -132,7 +132,7 @@ public class KnowledgeEstimateMatrix {
      * @param lo learningObject
      * @return the index of the learningObject
      */
-    public int getloIndex(LearningObject lo){
+    public int getloIndex(AssessmentItem lo){
         int loIndex = -1;
         loIndex = objList.indexOf(lo);
         return loIndex;
@@ -143,7 +143,7 @@ public class KnowledgeEstimateMatrix {
 
     public List<String> getUserIdList(){return this.userIdList;}
 
-    public List<LearningObject> getObjList(){return this.objList;}
+    public List<AssessmentItem> getObjList(){return this.objList;}
 
     public RCode getrMatrix() {return rMatrix;}
 }

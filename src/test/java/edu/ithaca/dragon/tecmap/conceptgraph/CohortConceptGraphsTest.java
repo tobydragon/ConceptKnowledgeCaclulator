@@ -1,11 +1,16 @@
 package edu.ithaca.dragon.tecmap.conceptgraph;
 
 import edu.ithaca.dragon.tecmap.Settings;
-import edu.ithaca.dragon.tecmap.io.*;
-import edu.ithaca.dragon.tecmap.learningobject.ExampleLearningObjectLinkRecordFactory;
-import edu.ithaca.dragon.tecmap.learningobject.ExampleLearningObjectResponseFactory;
-import edu.ithaca.dragon.tecmap.learningobject.LearningObject;
-import edu.ithaca.dragon.tecmap.learningobject.LearningObjectResponse;
+import edu.ithaca.dragon.tecmap.io.reader.CSVReader;
+import edu.ithaca.dragon.tecmap.io.reader.SakaiReader;
+import edu.ithaca.dragon.tecmap.io.record.CohortConceptGraphsRecord;
+import edu.ithaca.dragon.tecmap.io.record.ConceptGraphRecord;
+import edu.ithaca.dragon.tecmap.io.record.ConceptRecord;
+import edu.ithaca.dragon.tecmap.io.record.LearningResourceRecord;
+import edu.ithaca.dragon.tecmap.learningresource.ExampleLearningObjectLinkRecordFactory;
+import edu.ithaca.dragon.tecmap.learningresource.ExampleLearningObjectResponseFactory;
+import edu.ithaca.dragon.tecmap.learningresource.AssessmentItem;
+import edu.ithaca.dragon.tecmap.learningresource.AssessmentItemResponse;
 import edu.ithaca.dragon.tecmap.util.DataUtil;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -32,16 +37,16 @@ public class CohortConceptGraphsTest {
         ConceptGraph graph = new ConceptGraph(ExampleConceptGraphRecordFactory.makeSimple(), ExampleLearningObjectLinkRecordFactory.makeSimpleLOLRecords());
         CohortConceptGraphs group = new CohortConceptGraphs(graph, ExampleLearningObjectResponseFactory.makeSimpleResponses());
 
-        Assert.assertEquals(6,group.getAvgGraph().getLearningObjectMap().size());
-		Assert.assertEquals(6,group.getUserGraph("student1").getLearningObjectMap().size());
-        Assert.assertEquals(6,group.getUserGraph("student2").getLearningObjectMap().size());
-        Assert.assertEquals(6,group.getUserGraph("student3").getLearningObjectMap().size());
+        Assert.assertEquals(6,group.getAvgGraph().getAssessmentItemMap().size());
+		Assert.assertEquals(6,group.getUserGraph("student1").getAssessmentItemMap().size());
+        Assert.assertEquals(6,group.getUserGraph("student2").getAssessmentItemMap().size());
+        Assert.assertEquals(6,group.getUserGraph("student3").getAssessmentItemMap().size());
 
-        Assert.assertEquals(3,group.getAvgGraph().getLearningObjectMap().get("Q1").getResponses().size());
-        Assert.assertEquals(2,group.getAvgGraph().getLearningObjectMap().get("Q5").getResponses().size());
+        Assert.assertEquals(3,group.getAvgGraph().getAssessmentItemMap().get("Q1").getResponses().size());
+        Assert.assertEquals(2,group.getAvgGraph().getAssessmentItemMap().get("Q5").getResponses().size());
 
-        Assert.assertEquals(1,group.getUserGraph("student1").getLearningObjectMap().get("Q1").getResponses().size());
-        Assert.assertEquals(0,group.getUserGraph("student3").getLearningObjectMap().get("Q5").getResponses().size());
+        Assert.assertEquals(1,group.getUserGraph("student1").getAssessmentItemMap().get("Q1").getResponses().size());
+        Assert.assertEquals(0,group.getUserGraph("student3").getAssessmentItemMap().get("Q5").getResponses().size());
     }
 
     //particular attention to what is copied in LearningObjects
@@ -52,8 +57,8 @@ public class CohortConceptGraphsTest {
 
         //test that learningObjectResponses don't get mixed between users
         for (Map.Entry<String, ConceptGraph> entry : group.getUserToGraph().entrySet()){
-            for (LearningObject learningObject: entry.getValue().getLearningObjectMap().values()){
-                for (LearningObjectResponse response : learningObject.getResponses()){
+            for (AssessmentItem assessmentItem : entry.getValue().getAssessmentItemMap().values()){
+                for (AssessmentItemResponse response : assessmentItem.getResponses()){
                     Assert.assertEquals(entry.getKey(), response.getUserId());
                 }
             }
@@ -165,7 +170,7 @@ public class CohortConceptGraphsTest {
             ConceptGraph testGraph = gcg.getAvgGraph();
 
             ConceptNode groupNode = testGraph.findNodeById("Boolean");
-            Assert.assertSame(testGraph.getLearningObjectMap().get("Q9"), groupNode.getLearningObjectMap().get("Q9"));
+            Assert.assertSame(testGraph.getAssessmentItemMap().get("Q9"), groupNode.getAssessmentItemMap().get("Q9"));
         }
         catch (Exception e){
             e.printStackTrace();

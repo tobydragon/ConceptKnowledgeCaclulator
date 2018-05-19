@@ -1,8 +1,8 @@
 package edu.ithaca.dragon.tecmap.conceptgraph;
 
-import edu.ithaca.dragon.tecmap.io.ConceptGraphRecord;
-import edu.ithaca.dragon.tecmap.io.ConceptRecord;
-import edu.ithaca.dragon.tecmap.learningobject.LearningObject;
+import edu.ithaca.dragon.tecmap.io.record.ConceptGraphRecord;
+import edu.ithaca.dragon.tecmap.io.record.ConceptRecord;
+import edu.ithaca.dragon.tecmap.learningresource.AssessmentItem;
 import edu.ithaca.dragon.tecmap.util.DataUtil;
 import org.junit.Assert;
 import org.junit.Test;
@@ -68,13 +68,13 @@ public class TreeConverterTest {
 
         //Resources and responses are not nodes in the tree, and so their objects are linked to multiple nodes, and so
         //there should be the same number in both graphs
-        Assert.assertEquals(expectedResourcesCount, graphToTest.getLearningObjectMap().size());
+        Assert.assertEquals(expectedResourcesCount, graphToTest.getAssessmentItemMap().size());
         Assert.assertEquals(expectedResponsesCount, graphToTest.responsesCount());
-        Assert.assertEquals(expectedResourcesCount, tree.getLearningObjectMap().size());
+        Assert.assertEquals(expectedResourcesCount, tree.getAssessmentItemMap().size());
         Assert.assertEquals(expectedResponsesCount, tree.responsesCount());
         //but they should be different, equivalent objects across tree and graph
-        for (Map.Entry<String, LearningObject> entry: graphToTest.learningObjectMap.entrySet()){
-            LearningObject treeCopy = tree.getLearningObjectMap().get(entry.getKey());
+        for (Map.Entry<String, AssessmentItem> entry: graphToTest.getAssessmentItemMap().entrySet()){
+            AssessmentItem treeCopy = tree.getAssessmentItemMap().get(entry.getKey());
             Assert.assertEquals(entry.getValue(), treeCopy);
             Assert.assertTrue(entry.getValue() != treeCopy);
         }
@@ -85,7 +85,7 @@ public class TreeConverterTest {
             for (String nodeCopyId : nodeCopies){
                 ConceptNode next = tree.findNodeById(nodeCopyId);
                 Assert.assertEquals(first.getKnowledgeEstimate() , next.getKnowledgeEstimate(), DataUtil.OK_FLOAT_MARGIN);
-                Assert.assertEquals(first.getLearningObjectMap().size() , next.getLearningObjectMap().size());
+                Assert.assertEquals(first.getAssessmentItemMap().size() , next.getAssessmentItemMap().size());
             }
         }
 

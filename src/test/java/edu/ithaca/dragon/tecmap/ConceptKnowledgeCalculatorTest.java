@@ -1,11 +1,10 @@
 package edu.ithaca.dragon.tecmap;
 
-import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import edu.ithaca.dragon.tecmap.conceptgraph.CohortConceptGraphs;
 import edu.ithaca.dragon.tecmap.conceptgraph.ConceptGraph;
-import edu.ithaca.dragon.tecmap.io.*;
-import edu.ithaca.dragon.tecmap.learningobject.LearningObject;
-import edu.ithaca.dragon.tecmap.learningobject.LearningObjectResponse;
+import edu.ithaca.dragon.tecmap.io.record.LearningResourceRecord;
+import edu.ithaca.dragon.tecmap.learningresource.AssessmentItem;
+import edu.ithaca.dragon.tecmap.learningresource.AssessmentItemResponse;
 import edu.ithaca.dragon.tecmap.suggester.GroupSuggester.*;
 import edu.ithaca.dragon.tecmap.suggester.LearningObjectSuggestion;
 import edu.ithaca.dragon.tecmap.suggester.SuggestionResource;
@@ -419,15 +418,15 @@ public class ConceptKnowledgeCalculatorTest {
         try {
             ckc = new ConceptKnowledgeCalculator(Settings.TEST_RESOURCE_DIR + "ManuallyCreated/basicRealisticConceptGraph.json", Settings.TEST_RESOURCE_DIR + "ManuallyCreated/basicRealisticResource.json", Settings.TEST_RESOURCE_DIR + "ManuallyCreated/basicRealisticAssessment.csv");
 
-            List<LearningObjectResponse> originalMasterList = new ArrayList<>();
+            List<AssessmentItemResponse> originalMasterList = new ArrayList<>();
 
             CohortConceptGraphs originalGraphs = ckc.getCohortConceptGraphs();
             ConceptGraph conGraph = originalGraphs.getAvgGraph();
-            Map<String, LearningObject> origLearningMap =  conGraph.getLearningObjectMap();
+            Map<String, AssessmentItem> origLearningMap =  conGraph.getAssessmentItemMap();
 
-            Collection<LearningObject> origLearningObList = origLearningMap.values();
-            for (LearningObject origLearningOb: origLearningObList){
-                List<LearningObjectResponse> origLOR= origLearningOb.getResponses();
+            Collection<AssessmentItem> origLearningObList = origLearningMap.values();
+            for (AssessmentItem origLearningOb: origLearningObList){
+                List<AssessmentItemResponse> origLOR= origLearningOb.getResponses();
                 originalMasterList.addAll(origLOR);
             }
 
@@ -457,16 +456,16 @@ public class ConceptKnowledgeCalculatorTest {
         try {
             ckc.addAssessement(Settings.TEST_RESOURCE_DIR + "ManuallyCreated/mediumAssessment.csv");
 
-            List<LearningObjectResponse> postMasterList1 = new ArrayList<>();
+            List<AssessmentItemResponse> postMasterList1 = new ArrayList<>();
 
             CohortConceptGraphs postGraphs = ckc.getCohortConceptGraphs();
             ConceptGraph postCG = postGraphs.getAvgGraph();
-            Map<String, LearningObject> postLOMap =  postCG.getLearningObjectMap();
+            Map<String, AssessmentItem> postLOMap =  postCG.getAssessmentItemMap();
 
 
-            Collection<LearningObject> postLOList = postLOMap.values();
-            for (LearningObject postlearningObject: postLOList){
-                List<LearningObjectResponse> postLOR = postlearningObject.getResponses();
+            Collection<AssessmentItem> postLOList = postLOMap.values();
+            for (AssessmentItem postlearningObject: postLOList){
+                List<AssessmentItemResponse> postLOR = postlearningObject.getResponses();
                 postMasterList1.addAll(postLOR);
             }
 
@@ -500,15 +499,15 @@ public class ConceptKnowledgeCalculatorTest {
 
         try {
             ckc.addAssessement(Settings.TEST_RESOURCE_DIR + "ManuallyCreated/simpleAssessment.csv");
-            List<LearningObjectResponse> postMasterList2 = new ArrayList<>();
+            List<AssessmentItemResponse> postMasterList2 = new ArrayList<>();
 
             CohortConceptGraphs postGraphs2 = ckc.getCohortConceptGraphs();
             ConceptGraph postCG2 = postGraphs2.getAvgGraph();
-            Map<String, LearningObject> postLOMap2 =  postCG2.getLearningObjectMap();
+            Map<String, AssessmentItem> postLOMap2 =  postCG2.getAssessmentItemMap();
 
-            Collection<LearningObject> postLOList2 = postLOMap2.values();
-            for (LearningObject postlearningObject2: postLOList2){
-                List<LearningObjectResponse> postLOR2 = postlearningObject2.getResponses();
+            Collection<AssessmentItem> postLOList2 = postLOMap2.values();
+            for (AssessmentItem postlearningObject2: postLOList2){
+                List<AssessmentItemResponse> postLOR2 = postlearningObject2.getResponses();
                 postMasterList2.addAll(postLOR2);
             }
 
@@ -607,13 +606,13 @@ public class ConceptKnowledgeCalculatorTest {
         try {
             ckc = new ConceptKnowledgeCalculator(Settings.TEST_RESOURCE_DIR + "ManuallyCreated/basicRealisticConceptGraph.json", Settings.TEST_RESOURCE_DIR + "ManuallyCreated/basicRealisticResource.json", Settings.TEST_RESOURCE_DIR + "ManuallyCreated/basicRealisticAssessment.csv");
 
-            List<LearningObject> originalMasterList = new ArrayList<>();
+            List<AssessmentItem> originalMasterList = new ArrayList<>();
 
             CohortConceptGraphs originalGraphs = ckc.getCohortConceptGraphs();
             ConceptGraph conGraph = originalGraphs.getAvgGraph();
-            Map<String, LearningObject> origLearningMap =  conGraph.getLearningObjectMap();
+            Map<String, AssessmentItem> origLearningMap =  conGraph.getAssessmentItemMap();
 
-            Collection<LearningObject> origLearningObList = origLearningMap.values();
+            Collection<AssessmentItem> origLearningObList = origLearningMap.values();
 
             originalMasterList.addAll(origLearningObList);
 
@@ -646,12 +645,12 @@ public class ConceptKnowledgeCalculatorTest {
         try {
             ckc.addResource(Settings.TEST_RESOURCE_DIR + "ManuallyCreated/simpleChangeNameLOL.json");
 
-            List<LearningObject> postMasterList = new ArrayList<>();
+            List<AssessmentItem> postMasterList = new ArrayList<>();
 
             CohortConceptGraphs postGraphs = ckc.getCohortConceptGraphs();
             ConceptGraph postCG = postGraphs.getAvgGraph();
-            Map<String, LearningObject> postLOMap =  postCG.getLearningObjectMap();
-            Collection<LearningObject> postLOList = postLOMap.values();
+            Map<String, AssessmentItem> postLOMap =  postCG.getAssessmentItemMap();
+            Collection<AssessmentItem> postLOList = postLOMap.values();
             postMasterList.addAll(postLOList);
 
 

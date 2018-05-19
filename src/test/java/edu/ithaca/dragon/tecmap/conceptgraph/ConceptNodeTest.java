@@ -52,15 +52,15 @@ public class ConceptNodeTest {
         ConceptGraph graph = ExampleConceptGraphFactory.makeSimpleCompleteWithData();
 
         HashMap<String, Integer> testA = new HashMap<String, Integer>();
-        graph.findNodeById("A").buildLearningObjectSummaryList(testA);
+        graph.findNodeById("A").buildLearningMaterialPathCount(testA);
         Assert.assertEquals(6, testA.size());
 
         HashMap<String, Integer> testB = new HashMap<String, Integer>();
-        graph.findNodeById("B").buildLearningObjectSummaryList(testB);
+        graph.findNodeById("B").buildLearningMaterialPathCount(testB);
         Assert.assertEquals(6,testB.size());
 
         HashMap<String, Integer> testC = new HashMap<String, Integer>();
-        graph.findNodeById("C").buildLearningObjectSummaryList(testC);
+        graph.findNodeById("C").buildLearningMaterialPathCount(testC);
         Assert.assertEquals(4, testC.size());
 //
     }

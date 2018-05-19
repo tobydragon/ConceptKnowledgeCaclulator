@@ -2,22 +2,19 @@ package edu.ithaca.dragon.tecmap.suggester;
 
 import edu.ithaca.dragon.tecmap.Settings;
 import edu.ithaca.dragon.tecmap.conceptgraph.*;
-import edu.ithaca.dragon.tecmap.io.CSVReader;
-import edu.ithaca.dragon.tecmap.io.ConceptGraphRecord;
-import edu.ithaca.dragon.tecmap.io.LearningResourceRecord;
-import edu.ithaca.dragon.tecmap.io.SakaiReader;
-import edu.ithaca.dragon.tecmap.learningobject.ExampleLearningObjectLinkRecordFactory;
-import edu.ithaca.dragon.tecmap.learningobject.ExampleLearningObjectResponseFactory;
-import edu.ithaca.dragon.tecmap.learningobject.LearningObjectResponse;
-import edu.ithaca.dragon.tecmap.learningobject.LearningResource;
+import edu.ithaca.dragon.tecmap.io.reader.CSVReader;
+import edu.ithaca.dragon.tecmap.io.record.ConceptGraphRecord;
+import edu.ithaca.dragon.tecmap.io.record.LearningResourceRecord;
+import edu.ithaca.dragon.tecmap.io.reader.SakaiReader;
+import edu.ithaca.dragon.tecmap.learningresource.AssessmentItemResponse;
+import edu.ithaca.dragon.tecmap.learningresource.ExampleLearningObjectLinkRecordFactory;
+import edu.ithaca.dragon.tecmap.learningresource.ExampleLearningObjectResponseFactory;
+import edu.ithaca.dragon.tecmap.learningresource.LearningResourceType;
 import org.junit.Assert;
 import org.junit.Test;
 
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.List;
+import java.util.*;
 
 /**
  * Created by home on 5/20/17.
@@ -89,7 +86,7 @@ public class LearningObjectSuggesterTest {
 
         //create the data to be used to create and populate the graph copies
         CSVReader csvReader = new SakaiReader(Settings.TEST_RESOURCE_DIR + "ManuallyCreated/exampleDataAssessment.csv");
-        List<LearningObjectResponse> assessments = csvReader.getManualGradedResponses();
+        List<AssessmentItemResponse> assessments = csvReader.getManualGradedResponses();
 
         //create the average and individual graphs
         cohortConceptGraphs = new CohortConceptGraphs(graph, assessments);
@@ -117,7 +114,7 @@ public class LearningObjectSuggesterTest {
 
         //create the data to be used to create and populate the graph copies
         CSVReader csvReader = new SakaiReader(Settings.TEST_RESOURCE_DIR + "ManuallyCreated/exampleDataAssessment.csv");
-        List<LearningObjectResponse> assessments = csvReader.getManualGradedResponses();
+        List<AssessmentItemResponse> assessments = csvReader.getManualGradedResponses();
 
         //create the average and individual graphs
         cohortConceptGraphs = new CohortConceptGraphs(graph, assessments);
@@ -173,7 +170,7 @@ public class LearningObjectSuggesterTest {
     @Test
     public void suggestedOrderBuildLearningObjectListTest() {
         List<LearningResourceRecord> myList = ExampleLearningObjectLinkRecordFactory.makeSimpleLOLRecords();
-        myList.add(new LearningResourceRecord("Q10", Arrays.asList(LearningResource.Type.ASSESSMENT, LearningResource.Type.PRACTICE), Arrays.asList("A"), 1, 1));
+        myList.add(new LearningResourceRecord("Q10", Arrays.asList(LearningResourceType.ASSESSMENT, LearningResourceType.PRACTICE), Arrays.asList("A"), 1, 1));
         ConceptGraph orig = new ConceptGraph(ExampleConceptGraphRecordFactory.makeSimple(),
                 myList, ExampleLearningObjectResponseFactory.makeSimpleResponses());
 
@@ -187,15 +184,15 @@ public class LearningObjectSuggesterTest {
         testCompareA.put("Q2", 1);
         testCompareA.put("Q10", 1);
 
-        HashMap<String, Integer> learningSummaryFromA = orig.buildLearningObjectSummaryList("A");
-        HashMap<String, Integer> linkMap = orig.buildDirectConceptLinkCount();
+        Map<String, Integer> learningSummaryFromA = orig.buildLearningMaterialPathCount("A");
+        Map<String, Integer> linkMap = orig.buildDirectConceptLinkCount();
 
 
-        //makes sure that buildLearningObjectSummaryList works
+        //makes sure that buildLearningMaterialPathCount works
         Assert.assertEquals(testCompareA, learningSummaryFromA);
 
         //build the suggested learning object list
-        List<LearningObjectSuggestion> suggestedList = LearningObjectSuggester.buildLearningObjectSuggestionList(learningSummaryFromA, orig.getLearningObjectMap(), "A", linkMap);
+        List<LearningObjectSuggestion> suggestedList = LearningObjectSuggester.buildLearningObjectSuggestionList(learningSummaryFromA, orig.getAssessmentItemMap(), "A", linkMap);
 
 
         //this is ordered based on "level"
@@ -259,7 +256,7 @@ public class LearningObjectSuggesterTest {
 
         //create the data to be used to create and populate the graph copies
         CSVReader csvReader = new SakaiReader(Settings.TEST_RESOURCE_DIR + "ManuallyCreated/exampleDataAssessment.csv");
-        List<LearningObjectResponse> assessments = csvReader.getManualGradedResponses();
+        List<AssessmentItemResponse> assessments = csvReader.getManualGradedResponses();
 
         //create the average and individual graphs
         cohortConceptGraphs = new CohortConceptGraphs(graph, assessments);

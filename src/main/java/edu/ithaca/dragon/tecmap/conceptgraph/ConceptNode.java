@@ -1,40 +1,39 @@
 
 package edu.ithaca.dragon.tecmap.conceptgraph;
 
-import edu.ithaca.dragon.tecmap.io.ConceptRecord;
-import edu.ithaca.dragon.tecmap.io.LinkRecord;
-import edu.ithaca.dragon.tecmap.learningobject.LearningMaterial;
-import edu.ithaca.dragon.tecmap.learningobject.LearningObject;
+import edu.ithaca.dragon.tecmap.io.record.ConceptRecord;
+import edu.ithaca.dragon.tecmap.io.record.LinkRecord;
+import edu.ithaca.dragon.tecmap.learningresource.AssessmentItem;
+import edu.ithaca.dragon.tecmap.learningresource.LearningMaterial;
 
 import java.util.*;
 
+
 public class ConceptNode {
 
-	String id; 		//unique to each node
-	String label; 	//can be the same as id, or different if you want displayed different
+	private String id; 		//unique to each node
+	private String label; 	//can be the same as id, or different if you want displayed different
 	private double knowledgeEstimate;
-	private double knowledgePrediction;
 	private double knowledgeDistanceFromAvg;
 	private double dataImportance;
 
-	Map<String, LearningObject> learningObjectMap;  //These same LearningObjects might also be held by other nodes
-    Map<String, LearningMaterial> learningMaterialMap;  //These same LearningObjects might also be held by other nodes
+	private Map<String, AssessmentItem> learningObjectMap;  //These same LearningObjects might also be held by other nodes
+    private Map<String, LearningMaterial> learningMaterialMap;  //These same LearningObjects might also be held by other nodes
 
 	List<ConceptNode> children;
 
 	/**
-	 * builds a node from a Concept record
-	 * @param conceptRecord
+	 * constructor to build a node from a Concept record
+	 * @param conceptRecord to build from
 	 */
 	public ConceptNode(ConceptRecord conceptRecord) {
 		this.id = conceptRecord.getId();
-		if (conceptRecord.getLabel() != null && conceptRecord.getLabel() != "") {
+		if (conceptRecord.getLabel() != null && (! "".equals(conceptRecord.getLabel()) )) {
             this.label = conceptRecord.getLabel();
         }
         else {
 		    this.label = this.id;
         }
-        this.knowledgePrediction = conceptRecord.getKnowledgePrediction();
         this.knowledgeEstimate = conceptRecord.getKnowledgeEstimate();
 		this.knowledgeDistanceFromAvg = conceptRecord.getKnowledgeDistFromAvg();
 		this.dataImportance = conceptRecord.getDataImportance();
@@ -45,48 +44,20 @@ public class ConceptNode {
 	}
 
 	/**
-	 *  Recursive copy constructor to copy entire sub-graph, so it also takes maps to be updated for the entire graph,
-	 *  Used with ConceptGraph copy constructor
-	 * @param other
-	 * @param graphNodeMap
-	 * @param graphLearningObjectMap
-     *
+	 *  Recursive copy constructor to copy entire sub-graph, used with ConceptGraph copy constructor
+     *  maps from the graph level are needed to ensure we only make copies of things once, even if the node occurs mutliple times
+     *  the maps are not altered
+	 * @param nodeToCopy
+     * @param graphNodeMap the map of all nodes in the current graph that this node will be a part of
+     * @param graphLearningObjectMap the current assessmentItemMap for the graph that this node will be a part of
+     * @param graphLearningMaterialMap  the current learningMaterialMap for the graph that this node will be a part of
+     * @post all contents of this new node are set to new copies of the data from , and all children are also copied
 	 */
-	public ConceptNode(ConceptNode other, Map<String, ConceptNode> graphNodeMap, Map<String, LearningObject> graphLearningObjectMap, Map<String, LearningMaterial> graphLearningMaterialMap){
-		this.id = other.id;
-		this.label = other.label;
-		this.knowledgeEstimate = other.knowledgeEstimate;
-		this.knowledgePrediction = other.knowledgePrediction;
-		this.knowledgeDistanceFromAvg = other.knowledgeDistanceFromAvg;
-		this.dataImportance = other.dataImportance;
+	public ConceptNode(ConceptNode nodeToCopy, Map<String, ConceptNode> graphNodeMap, Map<String, AssessmentItem> graphLearningObjectMap, Map<String, LearningMaterial> graphLearningMaterialMap){
+		copyContents(nodeToCopy, graphLearningObjectMap, graphLearningMaterialMap);
 
-		//Complicated because it is a graph, so it should only recurse when a child hasn't already been created, which we can only tell from graphNodeMap
-
-		this.learningObjectMap = new HashMap<>();
-		for (Map.Entry<String, LearningObject> entry: other.learningObjectMap.entrySet()){
-
-			//check the graphMap first to see if that learning object has already been created
-			LearningObject newLearningObject = graphLearningObjectMap.get(entry.getKey());
-			if (newLearningObject == null) {
-				newLearningObject = new LearningObject(entry.getValue());
-				graphLearningObjectMap.put(entry.getKey(), newLearningObject);
-			}
-			this.learningObjectMap.put(entry.getKey(), newLearningObject);
-		}
-        this.learningMaterialMap = new HashMap<>();
-        for (Map.Entry<String, LearningMaterial> entry: other.learningMaterialMap.entrySet()){
-
-            //check the graphMap first to see if that learning object has already been created
-            LearningMaterial newLearningObject = graphLearningMaterialMap.get(entry.getKey());
-            if (newLearningObject == null) {
-                newLearningObject = new LearningMaterial(entry.getValue());
-                graphLearningMaterialMap.put(entry.getKey(), newLearningObject);
-            }
-            this.learningMaterialMap.put(entry.getKey(), newLearningObject);
-        }
-
-		this.children = new ArrayList<>();
-		for (ConceptNode otherChild : other.children){
+		//recursively copy children
+		for (ConceptNode otherChild : nodeToCopy.children){
 			//if this node has already been copied (due to graph studentKnowledgeEstimates), just link it in new graph studentKnowledgeEstimates
 			ConceptNode alreadyCopiedNode = graphNodeMap.get(otherChild.getID());
 			if (alreadyCopiedNode != null){
@@ -101,36 +72,52 @@ public class ConceptNode {
 	}
 
 	/**
-	 * Copy constructor used to copy a single ConceptNode, it does not recurse
+	 * Copy constructor used to copy a single ConceptNode and give it a new name, it does not recurse
 	 * Used when another entity will recursively create children (e.g., TreeConverter.makeTreeNodeCopy)
-	 * @param other
-	 * @param graphLearningObjectMap
-	 */
-	public ConceptNode(String newId, ConceptNode other, Map<String, LearningObject> graphLearningObjectMap, Map<String, LearningMaterial> graphLearningMaterialMap){
-		this.id = newId;
-		this.label = other.label;
-		this.knowledgeEstimate = other.knowledgeEstimate;
-		this.knowledgePrediction = other.knowledgePrediction;
-		this.knowledgeDistanceFromAvg = other.knowledgeDistanceFromAvg;
-		this.dataImportance = other.dataImportance;
+     * *  maps from the graph level are needed to ensure we only make copies of things once, even if the node occurs mutliple times
+     *  the maps are not altered
+     * @param nodeToCopy
+     * @param graphLearningObjectMap the current assessmentItemMap for the graph that this node will be a part of
+     * @param graphLearningMaterialMap  the current learningMaterialMap for the graph that this node will be a part of
+     * @post all contents of this new node are set to new copies of the data from nodeToCopy
+     */
+	public ConceptNode(String newId, ConceptNode nodeToCopy, Map<String, AssessmentItem> graphLearningObjectMap, Map<String, LearningMaterial> graphLearningMaterialMap){
+		copyContents(nodeToCopy, graphLearningObjectMap, graphLearningMaterialMap);
+        this.id = newId;
+	}
 
-		//Complicated because it is a graph, so it should only recurse when a child hasn't already been created, which we can only tell from graphNodeMap
+    /**
+     * copies all contents of another node into this node
+     * @param nodeToCopy the node to copy contents from
+     * @param graphLearningObjectMap the current assessmentItemMap for the graph that this node is a part of
+     *                               this is needed to make sure we only copy learningObjects once
+     * @param graphLearningMaterialMap  the current learningMaterialMap for the graph that this node is a part of
+     *                                  this is needed to make sure we only copy learningObjects
+     * @post all contents of this node are set to new copies of the data from nodeToCopy
+     */
+	private void copyContents(ConceptNode nodeToCopy, Map<String, AssessmentItem> graphLearningObjectMap, Map<String, LearningMaterial> graphLearningMaterialMap){
+        this.id = nodeToCopy.id;
+	    this.label = nodeToCopy.label;
+        this.knowledgeEstimate = nodeToCopy.knowledgeEstimate;
+        this.knowledgeDistanceFromAvg = nodeToCopy.knowledgeDistanceFromAvg;
+        this.dataImportance = nodeToCopy.dataImportance;
 
-		this.learningObjectMap = new HashMap<>();
-		for (Map.Entry<String, LearningObject> entry: other.learningObjectMap.entrySet()){
+        //Complicated because it is a graph, so it should only copy LearningObjects if they haven't already been created
+        this.learningObjectMap = new HashMap<>();
+        for (Map.Entry<String, AssessmentItem> entry: nodeToCopy.learningObjectMap.entrySet()){
 
-			//check the graphMap first to see if that learning object has already been created
-			LearningObject newLearningObject = graphLearningObjectMap.get(entry.getKey());
-			if (newLearningObject == null) {
-				newLearningObject = new LearningObject(entry.getValue());
-				graphLearningObjectMap.put(entry.getKey(), newLearningObject);
-			}
-			this.learningObjectMap.put(entry.getKey(), newLearningObject);
-		}
+            //check the map first to see if that learningObject has already been created
+            AssessmentItem newAssessmentItem = graphLearningObjectMap.get(entry.getKey());
+            if (newAssessmentItem == null) {
+                newAssessmentItem = new AssessmentItem(entry.getValue());
+                graphLearningObjectMap.put(entry.getKey(), newAssessmentItem);
+            }
+            this.learningObjectMap.put(entry.getKey(), newAssessmentItem);
+        }
         this.learningMaterialMap = new HashMap<>();
-        for (Map.Entry<String, LearningMaterial> entry: other.learningMaterialMap.entrySet()){
+        for (Map.Entry<String, LearningMaterial> entry: nodeToCopy.learningMaterialMap.entrySet()){
 
-            //check the graphMap first to see if that learning object has already been created
+            //check the map first to see if that learningMaterial has already been created
             LearningMaterial newLearningObject = graphLearningMaterialMap.get(entry.getKey());
             if (newLearningObject == null) {
                 newLearningObject = new LearningMaterial(entry.getValue());
@@ -138,128 +125,65 @@ public class ConceptNode {
             }
             this.learningMaterialMap.put(entry.getKey(), newLearningObject);
         }
+        this.children = new ArrayList<>();
+    }
 
-		this.children = new ArrayList<>();
-	}
-
-	public ConceptNode(){
-		this.id="";
-		this.label="";
-		knowledgeEstimate=0;
-		knowledgePrediction=0;
-		knowledgeDistanceFromAvg=0;
-		dataImportance=0;
-		learningObjectMap = new HashMap<>();
-		learningMaterialMap = new HashMap<>();
-		children= new LinkedList<>();
-
-	}
-
-	public double calcDiff( List<String> allNode, ConceptGraph graph2) {
-        ConceptNode node2 = graph2.findNodeById(this.getID());
-
-
-        if (allNode.contains(this.getID())) {
-
-
-            return 0;
-
-
-		} else {
-
-
-            allNode.add(this.getID());
-
-			if (this.children.size() == 0) {
-
-                return (Math.abs(this.getKnowledgeEstimate()- node2.getKnowledgeEstimate()));
-
-			} else {
-				double sum = 0;
-
-				for (ConceptNode child : this.children) {
-					sum += child.calcDiff(allNode, graph2);
-				}
-
-                return (Math.abs(this.getKnowledgeEstimate()- node2.getKnowledgeEstimate())+ sum);
-			}
-
-		}
-
-	}
-
-
-	public double countTotalKnowledgeEstimate( List<String> viewedNodes) {
-        if (viewedNodes.contains(this.getID())) {
+    /**
+     * sums the total of all knowledge estimates including this node and all below it that haven't already been included
+     * @param nodesAlreadyIncluded a list of nodes already included in the count
+     * @post this node is added to nodesAlreadyIncluded, if it wasn't in the list already
+     * @return the sum of all knoweldge estimates for this node and all children that weren't in nodesAlreadyIncluded
+     */
+	public double totalKnowledgeEstimateForThisAndAllDescendants(List<String> nodesAlreadyIncluded) {
+        if (nodesAlreadyIncluded.contains(this.getID())) {
             return 0;
         } else {
-
-            viewedNodes.add(this.getID());
-
+            nodesAlreadyIncluded.add(this.getID());
             if (this.children.size() == 0) {
                 return (this.getKnowledgeEstimate());
 
             } else {
                 double sum = 0;
-
                 for (ConceptNode child : this.children) {
-                    sum += child.countTotalKnowledgeEstimate(viewedNodes);
+                    sum += child.totalKnowledgeEstimateForThisAndAllDescendants(nodesAlreadyIncluded);
 
 				}
-
-            return (this.getKnowledgeEstimate() + sum);
+                return (this.getKnowledgeEstimate() + sum);
             }
-
         }
-
     }
 
-
-
-	/**
-     *fills up a hashmap with the LearningObjects IDs and the amount of ways to get to the learning object from the root (which is how importance is measured)
-     *@param learningObjectSummary map>
+    /**
+     * for each LearningMaterial, calculates the number of paths to that learning material from the given node
+     * @param idToPathCount a map of id -> countOfPaths to be added to recursively (empty when recursion starts)
+     * @post the map with this node and all children with updated counts
      */
-	//TODO: Check if this works with materials,as opposed to assessments
-	public void buildLearningObjectSummaryList(HashMap <String, Integer> learningObjectSummary){
-
-		//add the current questions.
-		Iterator <String> itr = this.learningMaterialMap.keySet().iterator();
-
-		for (int i =0; i< this.learningMaterialMap.size(); i++){
-			//need to get each of the values in the learningObjectMap
-			LearningMaterial label = this.learningMaterialMap.get(itr.next());
-
-			if (learningObjectSummary.containsKey(label.getId())){
-                learningObjectSummary.put(label.getId() ,learningObjectSummary.get(label.getId())+1);
-
+	public void buildLearningMaterialPathCount(Map <String, Integer> idToPathCount){
+        for (LearningMaterial material : this.learningMaterialMap.values()) {
+			if (idToPathCount.containsKey(material.getId())){
+                idToPathCount.put(material.getId() ,idToPathCount.get(material.getId())+1);
 			}else{
-                learningObjectSummary.put(label.getId(), 1);
-
+                idToPathCount.put(material.getId(), 1);
 			}
 		}
 		//go to each of the children and call on child so that the child node's learning objects will be added.
 		for(ConceptNode child: children){
-			child.buildLearningObjectSummaryList(learningObjectSummary);
-
+			child.buildLearningMaterialPathCount(idToPathCount);
 		}
 	}
 
-
-
-
     /**
-    checks to see if the called on ConceptNode is a parents (grandparent, ect.) to the parameter
-    @param possibleDescendent node
-    @returns true of the called node is in the lineage of the parameter
+    checks to see if the this ConceptNode is an ancestor (parent, grandparent, ect.) to the parameter possibleDescendant
+    @param possibleDescendant node that may be below the current node
+    @return true of the possibleDescendant node is somewhere below this node
      */
-	public boolean isAncestorOf(ConceptNode possibleDescendent){
+	public boolean isAncestorOf(ConceptNode possibleDescendant){
 		boolean isAncestor =false;
-        if (this.children.contains(possibleDescendent)){
+        if (this.children.contains(possibleDescendant)){
             isAncestor = true;
         }else {
             for (ConceptNode child : children) {
-                if(child.isAncestorOf(possibleDescendent)){
+                if(child.isAncestorOf(possibleDescendant)){
                     isAncestor=true;
                 }
             }
@@ -272,8 +196,8 @@ public class ConceptNode {
 	 */
 	public void calcDataImportance(){
 		double tempDI=0;
-		for(LearningObject learningObject: learningObjectMap.values()){
-			tempDI+=learningObject.getDataImportance();
+		for(AssessmentItem assessmentItem : learningObjectMap.values()){
+			tempDI+= assessmentItem.getDataImportance();
 		}
 
 		for (ConceptNode child: children){
@@ -288,29 +212,23 @@ public class ConceptNode {
 	 * @pre calcDataImportance must have already been called
 	 */
 	public void calcKnowledgeEstimate() {
-
 		//calculate estimate from learning objects directly connected to this node
         double currentConceptEstimate = 0;
-
-		for (LearningObject learningObject : learningObjectMap.values()){
-			currentConceptEstimate += learningObject.calcKnowledgeEstimate()*learningObject.getDataImportance();
+		for (AssessmentItem assessmentItem : learningObjectMap.values()){
+			currentConceptEstimate += assessmentItem.calcKnowledgeEstimate()* assessmentItem.getDataImportance();
 		}
 
         //calculate estimate from children
 		for (ConceptNode child : children){
 			child.calcKnowledgeEstimate();
-
             currentConceptEstimate +=  child.getKnowledgeEstimate()*child.getDataImportance();
 		}
-
 		if (dataImportance > 0){
 			this.knowledgeEstimate = currentConceptEstimate / dataImportance;
-
         } else {
 			//in this case, this node has no data and can't be estimated
 			this.knowledgeEstimate = 0;
 		}
-
 	}
 
 	/**
@@ -334,23 +252,19 @@ public class ConceptNode {
 		}
 	}
 
-	/**
-	 * @param learningObject
-	 */
-	public void addLearningObject(LearningObject learningObject) {
-			learningObjectMap.put(learningObject.getId(), learningObject);
+	//////////////////  Simple Methods  //////////////////////
+	public void addAssessmentItem(AssessmentItem assessmentItem) {
+		learningObjectMap.put(assessmentItem.getId(), assessmentItem);
 	}
 
-    public void addLearningMaterial(LearningMaterial learningObject) {
-        learningMaterialMap.put(learningObject.getId(), learningObject);
-    }
+	public void addLearningMaterial(LearningMaterial learningObject) {
+		learningMaterialMap.put(learningObject.getId(), learningObject);
+	}
 
 	public void addChild(ConceptNode child){
 		children.add(child);
 	}
 
-
-	//////////////////  GETTERS and SETTERS  //////////////////////
 	public List<ConceptNode> getChildren(){
 		return children;
 	}
@@ -379,22 +293,18 @@ public class ConceptNode {
 		return knowledgeDistanceFromAvg;
 	}
 
-	public double getKnowledgePrediction() {
-		return Math.round(knowledgePrediction *10000)/1000.0;
-	}
-
-	public void setKnowledgePrediction(double knowledgePrediction) {
-		this.knowledgePrediction = knowledgePrediction;
-	}
-
 	public double getDataImportance() { return dataImportance; }
 
-    public Map<String, LearningObject> getLearningObjectMap() {
+    public Map<String, AssessmentItem> getAssessmentItemMap() {
         return learningObjectMap;
     }
 
+    public Map<String, LearningMaterial> getLearningMaterialMap() {
+        return learningMaterialMap;
+    }
+
 	public String toString(String indent) {
-		String stringToReturn = indent + getLabel() +  "\t actual: " + getKnowledgeEstimate() + " pred: " + getKnowledgePrediction();
+		String stringToReturn = indent + getLabel() +  "\t actual: " + getKnowledgeEstimate();
 		for (ConceptNode child :getChildren()){
 			stringToReturn += child.toString(indent + "\t");
 		}

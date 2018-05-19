@@ -1,8 +1,8 @@
 package edu.ithaca.dragon.tecmap.conceptgraph;
 
-import edu.ithaca.dragon.tecmap.io.CohortConceptGraphsRecord;
-import edu.ithaca.dragon.tecmap.io.ConceptGraphRecord;
-import edu.ithaca.dragon.tecmap.learningobject.LearningObjectResponse;
+import edu.ithaca.dragon.tecmap.io.record.CohortConceptGraphsRecord;
+import edu.ithaca.dragon.tecmap.io.record.ConceptGraphRecord;
+import edu.ithaca.dragon.tecmap.learningresource.AssessmentItemResponse;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -22,34 +22,33 @@ public class CohortConceptGraphs {
 	 * @param structureGraph
 	 * @param summaries
 	 */
-	public CohortConceptGraphs(ConceptGraph structureGraph, List<LearningObjectResponse> summaries){
+	public CohortConceptGraphs(ConceptGraph structureGraph, List<AssessmentItemResponse> summaries){
 		if (structureGraph.responsesCount()>0){
 			logger.warn("StructureGraph contains responses that will be copied to all CohortGraphs");
 		}
 		averageGraph = new ConceptGraph(structureGraph, "Average Graph");
 //		averageGraph.calcPredictedScores();
 
-		Map<String, List<LearningObjectResponse>> userIdToResponses = LearningObjectResponse.getUserResponseMap(summaries);
+		Map<String, List<AssessmentItemResponse>> userIdToResponses = AssessmentItemResponse.getUserResponseMap(summaries);
 		userToGraph = new HashMap<>();
 
 		for(String user: userIdToResponses.keySet()){
 			ConceptGraph structureCopy = new ConceptGraph(structureGraph, user);
-			structureCopy.addLearningObjectResponses(userIdToResponses.get(user));
+			structureCopy.addAssessmentItemResponses(userIdToResponses.get(user));
 			structureCopy.calcDataImportance();
 			structureCopy.calcKnowledgeEstimates();
-			structureCopy.calcPredictedScores();
 			userToGraph.put(user, structureCopy);
 		}
 
 		//Add data to average Graph after all other graphs have been created.
-		averageGraph.addLearningObjectResponses(summaries);
+		averageGraph.addAssessmentItemResponses(summaries);
 		averageGraph.calcKnowledgeEstimates();
 
 		calcDistanceFromAvg();
 
 	}
 	
-	public CohortConceptGraphs(String filename, ConceptGraph structureGraph, List<LearningObjectResponse> summaries){
+	public CohortConceptGraphs(String filename, ConceptGraph structureGraph, List<AssessmentItemResponse> summaries){
 		this(structureGraph,summaries);
 		//TODO: call CohortConceptGraphsRecord
 	}
