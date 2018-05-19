@@ -346,26 +346,16 @@ public class  ConceptGraph {
     //TODO: should use materials, not assessments (I think)
     public HashMap<String, Integer> buildDirectConceptLinkCount(){
         HashMap<String, Integer> directConceptLinkCountMap = new HashMap<>();
-
-                //resources , Concept links
-
-        ////These same LearningObjects might also be held by other nodes
         for (ConceptNode node: nodeMap.values()){
-
-
-            for (LearningObject lo : node.learningObjectMap.values()){
-
+            for (LearningObject lo : node.getLearningObjectMap().values()){
                 if(directConceptLinkCountMap.containsKey(lo.getId())){
                     directConceptLinkCountMap.put(lo.getId(),directConceptLinkCountMap.get(lo.getId())+1);
 
                 }else{
                     directConceptLinkCountMap.put(lo.getId(), 1);
                 }
-
             }
-
         }
-
         return directConceptLinkCountMap;
     }
 
@@ -502,7 +492,7 @@ public class  ConceptGraph {
                 currList = new ArrayList<>();
                 labelMap.put(curConcept.getLabel(), currList);
             }
-            currList.add(curConcept.id);
+            currList.add(curConcept.getID());
         }
         return labelMap;
     }
