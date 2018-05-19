@@ -188,37 +188,38 @@ public class ConceptNode {
 
 	}
 
-
-	public double countTotalKnowledgeEstimate( List<String> viewedNodes) {
-        if (viewedNodes.contains(this.getID())) {
+    /**
+     * sums the total of all knowledge estimates including this node and all below it that haven't already been included
+     * @param nodesAlreadyIncluded a list of nodes already included in the count
+     * @post this node is added to nodesAlreadyIncluded, if it wasn't in the list already
+     * @return the sum of all knoweldge estimates for this node and all children that weren't in nodesAlreadyIncluded
+     */
+	public double totalKnowledgeEstimateForThisAndAllDescendants(List<String> nodesAlreadyIncluded) {
+        if (nodesAlreadyIncluded.contains(this.getID())) {
             return 0;
         } else {
-
-            viewedNodes.add(this.getID());
-
+            nodesAlreadyIncluded.add(this.getID());
             if (this.children.size() == 0) {
                 return (this.getKnowledgeEstimate());
 
             } else {
                 double sum = 0;
-
                 for (ConceptNode child : this.children) {
-                    sum += child.countTotalKnowledgeEstimate(viewedNodes);
+                    sum += child.totalKnowledgeEstimateForThisAndAllDescendants(nodesAlreadyIncluded);
 
 				}
-
-            return (this.getKnowledgeEstimate() + sum);
+                return (this.getKnowledgeEstimate() + sum);
             }
-
         }
-
     }
 
 
 
 	/**
      *fills up a hashmap with the LearningObjects IDs and the amount of ways to get to the learning object from the root (which is how importance is measured)
-     *@param learningObjectSummary map>
+     *@param learningObjectSummary a hashmap with the labels... TODO
+	 *
+	 *
      */
 	//TODO: Check if this works with materials,as opposed to assessments
 	public void buildLearningObjectSummaryList(HashMap <String, Integer> learningObjectSummary){
@@ -245,21 +246,18 @@ public class ConceptNode {
 		}
 	}
 
-
-
-
     /**
-    checks to see if the called on ConceptNode is a parents (grandparent, ect.) to the parameter
-    @param possibleDescendent node
-    @returns true of the called node is in the lineage of the parameter
+    checks to see if the this ConceptNode is an ancestor (parent, grandparent, ect.) to the parameter possibleDescendant
+    @param possibleDescendant node that may be below the current node
+    @returns true of the possibleDescendant node is somewhere below this node
      */
-	public boolean isAncestorOf(ConceptNode possibleDescendent){
+	public boolean isAncestorOf(ConceptNode possibleDescendant){
 		boolean isAncestor =false;
-        if (this.children.contains(possibleDescendent)){
+        if (this.children.contains(possibleDescendant)){
             isAncestor = true;
         }else {
             for (ConceptNode child : children) {
-                if(child.isAncestorOf(possibleDescendent)){
+                if(child.isAncestorOf(possibleDescendant)){
                     isAncestor=true;
                 }
             }
@@ -334,23 +332,20 @@ public class ConceptNode {
 		}
 	}
 
-	/**
-	 * @param learningObject
-	 */
+	//////////////////  Simple Methods  //////////////////////
+
 	public void addLearningObject(LearningObject learningObject) {
-			learningObjectMap.put(learningObject.getId(), learningObject);
+		learningObjectMap.put(learningObject.getId(), learningObject);
 	}
 
-    public void addLearningMaterial(LearningMaterial learningObject) {
-        learningMaterialMap.put(learningObject.getId(), learningObject);
-    }
+	public void addLearningMaterial(LearningMaterial learningObject) {
+		learningMaterialMap.put(learningObject.getId(), learningObject);
+	}
 
 	public void addChild(ConceptNode child){
 		children.add(child);
 	}
 
-
-	//////////////////  GETTERS and SETTERS  //////////////////////
 	public List<ConceptNode> getChildren(){
 		return children;
 	}

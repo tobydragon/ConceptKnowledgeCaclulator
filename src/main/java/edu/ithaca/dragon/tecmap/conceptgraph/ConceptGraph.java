@@ -279,7 +279,7 @@ public class  ConceptGraph {
         if(startingSubject.equals("all")){
             double ex = 0;
             for(ConceptNode roots: this.getRoots()){
-                double total = roots.countTotalKnowledgeEstimate(new ArrayList<>());
+                double total = roots.totalKnowledgeEstimateForThisAndAllDescendants(new ArrayList<>());
                 ex+= total;
 
             }
@@ -287,7 +287,7 @@ public class  ConceptGraph {
         }else{
 
             ConceptNode node = this.findNodeById(startingSubject);
-            return node.countTotalKnowledgeEstimate(new ArrayList<>());
+            return node.totalKnowledgeEstimateForThisAndAllDescendants(new ArrayList<>());
         }
     }
 
