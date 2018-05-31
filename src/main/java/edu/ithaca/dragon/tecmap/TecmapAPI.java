@@ -4,6 +4,7 @@ import edu.ithaca.dragon.tecmap.io.record.CohortConceptGraphsRecord;
 import edu.ithaca.dragon.tecmap.io.record.ConceptGraphRecord;
 import edu.ithaca.dragon.tecmap.io.record.LearningResourceRecord;
 
+import java.util.Collection;
 import java.util.List;
 
 public interface TecmapAPI {
@@ -19,7 +20,7 @@ public interface TecmapAPI {
      * Creates a list all conceptIds in the graph
      * @return a list of strings, one for each conceptId, each surrounded by quotes
      */
-    List<String> createConceptIdList();
+    List<String> createConceptIdListToPrint();
 
     //TODO
 //    /**
