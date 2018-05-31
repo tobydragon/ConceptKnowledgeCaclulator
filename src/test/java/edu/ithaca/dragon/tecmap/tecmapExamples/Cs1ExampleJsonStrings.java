@@ -2,6 +2,8 @@ package edu.ithaca.dragon.tecmap.tecmapExamples;
 
 public class Cs1ExampleJsonStrings {
 
+    //Diagram: https://drive.google.com/file/d/1tAXGvSwgYHSx2LS4ZZ57muEyUeVWJa0c/view?usp=sharing
+
     public static final String structureAsTreeString = "{\n" +
             "  \"name\" : \"Cs1ExampleGraph\",\n" +
             "  \"concepts\" : [ {\n" +
