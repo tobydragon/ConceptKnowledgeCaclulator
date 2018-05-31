@@ -178,10 +178,5 @@ public class Cs1ExampleJsonStrings {
             "  \"maxPossibleKnowledgeEstimate\" : 1.0\n" +
             "} ]"
             ;
-    public static String allConceptsString = "\"While Loops\"\n" +
-            "\"For Loops\"\n" +
-            "\"Boolean Expressions\"\n" +
-            "\"Intro CS\"\n" +
-            "\"Loops\"\n" +
-            "\"If Statements\"\n";
+    public static String allConceptsString = "[\"While Loops\", \"For Loops\", \"Boolean Expressions\", \"Intro CS\", \"Loops\", \"If Statements\"]";
 }
