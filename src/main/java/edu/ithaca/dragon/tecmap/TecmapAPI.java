@@ -22,6 +22,13 @@ public interface TecmapAPI {
      */
     List<String> createConceptIdListToPrint();
 
+    /**
+     * Creates a list of LearningResourceRecords, one for each of the current AssessmentItems associated with this tecmap
+     * These objects will contain all default values, meaning that have no connections to concepts
+     * @return the list of LearningResourceRecords
+     */
+    List<LearningResourceRecord> createBlankLearningResourceRecordsFromAssessment();
+
     //TODO
 //    /**
 //     * Creates a list of graphs: One average graph, and one for each student for which there is data
@@ -31,12 +38,7 @@ public interface TecmapAPI {
 //    CohortConceptGraphsRecord createCohortTree();
 //
 //
-//    /**
-//     * Creates a list of LearningResourceRecords, one for each of the current AssessmentItems associated with this tecmap
-//     * These objects will contain all default values, meaning that have no connections to concepts
-//     * @return the list of LearningResourceRecords
-//     */
-//    List<LearningResourceRecord> createBlankLearningResourceRecordsFromAssessment();
+
 
 //    suggestConceptsForSingleUser,               //calcIndividualConceptNodesSuggestions​
 //    suggestResourcesForSingleUser,              //calcIndividualGraphSuggestions

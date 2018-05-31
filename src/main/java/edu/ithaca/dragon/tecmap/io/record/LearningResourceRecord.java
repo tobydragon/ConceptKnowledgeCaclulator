@@ -34,7 +34,7 @@ public class LearningResourceRecord {
     }
 
     public LearningResourceRecord(AssessmentItem assessment){
-        this( assessment.getId(), Arrays.asList(LearningResourceType.ASSESSMENT), new ArrayList<>(), assessment.getDataImportance(), assessment.getMaxPossibleKnowledgeEstimate());
+        this( assessment.getId(), Arrays.asList(LearningResourceType.ASSESSMENT), new ArrayList<>(), assessment.getMaxPossibleKnowledgeEstimate(), assessment.getDataImportance());
     }
 
     // default constructor for JSON

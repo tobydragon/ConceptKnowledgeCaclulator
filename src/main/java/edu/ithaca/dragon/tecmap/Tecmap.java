@@ -4,6 +4,8 @@ import edu.ithaca.dragon.tecmap.conceptgraph.ConceptGraph;
 import edu.ithaca.dragon.tecmap.conceptgraph.TreeConverter;
 import edu.ithaca.dragon.tecmap.io.record.ConceptGraphRecord;
 import edu.ithaca.dragon.tecmap.io.record.LearningResourceRecord;
+import edu.ithaca.dragon.tecmap.tecmapstate.AssessmentItemsAddedState;
+import edu.ithaca.dragon.tecmap.tecmapstate.BaseState;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -12,25 +14,34 @@ import java.util.List;
 
 public class Tecmap implements TecmapAPI {
 
-    private ConceptGraph graph;
+    private BaseState state;
 
     public Tecmap(String structureFileName) throws IOException {
-        graph = new ConceptGraph(ConceptGraphRecord.buildFromJson(structureFileName));
+        state = new BaseState(structureFileName);
+    }
+
+    public Tecmap(String structureFileName, List<String> assessmentFilenames) throws IOException {
+        state = new AssessmentItemsAddedState(structureFileName, assessmentFilenames);
     }
 
     @Override
     public ConceptGraphRecord createStructureTree() {
-        return TreeConverter.makeTreeCopy(graph).buildConceptGraphRecord();
+        return state.createStructureTree();
     }
 
     @Override
     public List<String> createConceptIdListToPrint() {
-        Collection<String> ids =  graph.getAllNodeIds();
-        List<String> idsToPrint = new ArrayList<>();
-        for (String id : ids){
-            idsToPrint.add("\""+id+"\"");
+        return state.createConceptIdListToPrint();
+    }
+
+    @Override
+    public List<LearningResourceRecord> createBlankLearningResourceRecordsFromAssessment() {
+        if (state instanceof AssessmentItemsAddedState) {
+            return ((AssessmentItemsAddedState)state).createBlankLearningResourceRecordsFromAssessment();
         }
-        return idsToPrint;
+        else {
+            return new ArrayList<>();
+        }
     }
 
 }
