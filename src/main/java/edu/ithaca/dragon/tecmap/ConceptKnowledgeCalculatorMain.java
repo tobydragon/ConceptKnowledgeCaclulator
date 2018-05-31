@@ -2,8 +2,6 @@ package edu.ithaca.dragon.tecmap;
 
 import edu.ithaca.dragon.tecmap.ui.ConsoleUI;
 
-import java.util.Arrays;
-
 public class ConceptKnowledgeCalculatorMain {
 
     public static void main(String[] args) {
