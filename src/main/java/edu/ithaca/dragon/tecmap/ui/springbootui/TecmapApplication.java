@@ -1,4 +1,4 @@
-package edu.ithaca.dragon.tecmap;
+package edu.ithaca.dragon.tecmap.ui.springbootui;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

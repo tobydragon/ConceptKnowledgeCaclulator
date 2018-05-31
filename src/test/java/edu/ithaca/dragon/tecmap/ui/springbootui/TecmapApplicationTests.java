@@ -1,4 +1,4 @@
-package edu.ithaca.dragon.tecmap;
+package edu.ithaca.dragon.tecmap.ui.springbootui;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
