@@ -3,7 +3,6 @@ package edu.ithaca.dragon.tecmap;
 import edu.ithaca.dragon.tecmap.conceptgraph.ConceptGraph;
 import edu.ithaca.dragon.tecmap.conceptgraph.TreeConverter;
 import edu.ithaca.dragon.tecmap.io.record.ConceptGraphRecord;
-import edu.ithaca.dragon.tecmap.io.record.LearningResourceRecord;
 
 import java.io.IOException;
 import java.util.ArrayList;
