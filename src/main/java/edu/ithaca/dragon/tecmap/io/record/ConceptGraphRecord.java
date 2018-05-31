@@ -1,5 +1,6 @@
 package edu.ithaca.dragon.tecmap.io.record;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
@@ -29,6 +30,12 @@ public class ConceptGraphRecord {
 		mapper.enable(SerializationFeature.INDENT_OUTPUT);
 		mapper.writeValue(new File(filename), this);
 
+	}
+
+	public String toJsonString() throws JsonProcessingException {
+		ObjectMapper mapper = new ObjectMapper();
+		mapper.enable(SerializationFeature.INDENT_OUTPUT);
+		return mapper.writeValueAsString(this);
 	}
 
 	//needed for json creation
