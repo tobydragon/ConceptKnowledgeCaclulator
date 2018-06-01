@@ -60,7 +60,7 @@ public class TecmapControllerTest {
                  MediaType.APPLICATION_JSON);
         MvcResult result = mockMvc.perform(requestBuilder).andReturn();
 
-        String expected = Cs1ExampleJsonStrings.allConceptsString;
+        String expected = Cs1ExampleJsonStrings.allConceptsStringAsJson;
 
         assertEquals(expected, result.getResponse().getContentAsString());
     }
