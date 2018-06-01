@@ -11,11 +11,11 @@ import java.util.Arrays;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-class AssessmentItemsAddedStateTest {
+class AssessmentAddedStateTest {
 
     @Test
     void createBlankLearningResourceRecordsFromAssessment1File() throws IOException {
-        AssessmentItemsAddedState state = new AssessmentItemsAddedState(
+        AssessmentAddedState state = new AssessmentAddedState(
                 Settings.TEST_RESOURCE_DIR + "tecmapExamples/Cs1ExampleGraph.json",
                 new ArrayList<>(Arrays.asList(Settings.TEST_RESOURCE_DIR + "tecmapExamples/Cs1ExampleAssessment1.csv"))
         );
@@ -24,12 +24,13 @@ class AssessmentItemsAddedStateTest {
 
     @Test
     void createBlankLearningResourceRecordsFromAssessment2Files() throws IOException {
-        AssessmentItemsAddedState state = new AssessmentItemsAddedState(
+        AssessmentAddedState state = new AssessmentAddedState(
                 Settings.TEST_RESOURCE_DIR + "tecmapExamples/Cs1ExampleGraph.json",
                 new ArrayList<>(Arrays.asList(Settings.TEST_RESOURCE_DIR + "tecmapExamples/Cs1ExampleAssessment1.csv",
                         Settings.TEST_RESOURCE_DIR + "tecmapExamples/Cs1ExampleAssessment2.csv")
                 )
         );
+        //System.out.println(Json.toJsonString(state.createBlankLearningResourceRecordsFromAssessment()));
         assertEquals(Cs1ExampleJsonStrings.assessment1And2Str, Json.toJsonString(state.createBlankLearningResourceRecordsFromAssessment()));
     }
 

@@ -1,27 +1,30 @@
 package edu.ithaca.dragon.tecmap;
 
-import edu.ithaca.dragon.tecmap.conceptgraph.ConceptGraph;
-import edu.ithaca.dragon.tecmap.conceptgraph.TreeConverter;
+import edu.ithaca.dragon.tecmap.io.record.CohortConceptGraphsRecord;
 import edu.ithaca.dragon.tecmap.io.record.ConceptGraphRecord;
 import edu.ithaca.dragon.tecmap.io.record.LearningResourceRecord;
-import edu.ithaca.dragon.tecmap.tecmapstate.AssessmentItemsAddedState;
-import edu.ithaca.dragon.tecmap.tecmapstate.BaseState;
+import edu.ithaca.dragon.tecmap.tecmapstate.AssessmentAddedState;
+import edu.ithaca.dragon.tecmap.tecmapstate.AssessmentConnectedState;
+import edu.ithaca.dragon.tecmap.tecmapstate.NoAssessmentState;
 
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
 
 public class Tecmap implements TecmapAPI {
 
-    private BaseState state;
+    private NoAssessmentState state;
 
     public Tecmap(String structureFileName) throws IOException {
-        state = new BaseState(structureFileName);
+        state = new NoAssessmentState(structureFileName);
     }
 
     public Tecmap(String structureFileName, List<String> assessmentFilenames) throws IOException {
-        state = new AssessmentItemsAddedState(structureFileName, assessmentFilenames);
+        state = new AssessmentAddedState(structureFileName, assessmentFilenames);
+    }
+
+    public Tecmap(String structureFileName, List<String> resourceConnectionFiles, List<String> assessmentFilenames) throws IOException {
+        state = new AssessmentConnectedState(structureFileName, resourceConnectionFiles, assessmentFilenames);
     }
 
     @Override
@@ -36,11 +39,21 @@ public class Tecmap implements TecmapAPI {
 
     @Override
     public List<LearningResourceRecord> createBlankLearningResourceRecordsFromAssessment() {
-        if (state instanceof AssessmentItemsAddedState) {
-            return ((AssessmentItemsAddedState)state).createBlankLearningResourceRecordsFromAssessment();
+        if (state instanceof AssessmentAddedState) {
+            return ((AssessmentAddedState)state).createBlankLearningResourceRecordsFromAssessment();
         }
         else {
             return new ArrayList<>();
+        }
+    }
+
+    @Override
+    public CohortConceptGraphsRecord createCohortTree() {
+        if (state instanceof AssessmentConnectedState) {
+            return ((AssessmentConnectedState)state).createCohortTree();
+        }
+        else {
+            return null;
         }
     }
 

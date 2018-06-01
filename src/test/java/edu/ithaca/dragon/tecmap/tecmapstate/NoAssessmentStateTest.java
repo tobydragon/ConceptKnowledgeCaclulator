@@ -11,23 +11,24 @@ import java.util.Collection;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-class StructureStateTest {
+class NoAssessmentStateTest {
 
-    BaseState baseState;
+    NoAssessmentState noAssessmentState;
 
     @BeforeEach
     void setup() throws IOException {
-        baseState = new BaseState(Settings.TEST_RESOURCE_DIR + "tecmapExamples/Cs1ExampleGraph.json");
+        noAssessmentState = new NoAssessmentState(Settings.TEST_RESOURCE_DIR + "tecmapExamples/Cs1ExampleGraph.json");
     }
 
     @Test
     void createStructureTree() throws JsonProcessingException {
-        assertEquals(Cs1ExampleJsonStrings.structureAsTreeString, baseState.createStructureTree().toJsonString());
+        assertEquals(Cs1ExampleJsonStrings.structureAsTreeString, noAssessmentState.createStructureTree().toJsonString());
     }
 
     @Test
     void createConceptIdListToPrint() {
-        Collection<String> concepts = baseState.createConceptIdListToPrint();
+        Collection<String> concepts = noAssessmentState.createConceptIdListToPrint();
+        //System.out.println(concepts.toString());
         assertEquals(Cs1ExampleJsonStrings.allConceptsString, concepts.toString());
     }
 

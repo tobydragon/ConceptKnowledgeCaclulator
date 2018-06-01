@@ -9,11 +9,11 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
-public class BaseState {
+public class NoAssessmentState {
 
-    private ConceptGraph graph;
+    protected ConceptGraph graph;
 
-    public BaseState(String structureFilename) throws IOException {
+    public NoAssessmentState(String structureFilename) throws IOException {
         graph = new ConceptGraph(ConceptGraphRecord.buildFromJson(structureFilename));
     }
 
