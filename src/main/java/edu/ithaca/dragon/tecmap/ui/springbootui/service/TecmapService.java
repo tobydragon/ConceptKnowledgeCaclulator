@@ -8,6 +8,8 @@ import edu.ithaca.dragon.tecmap.io.record.LearningResourceRecord;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 @Service
@@ -16,7 +18,13 @@ public class TecmapService {
     private Tecmap tecmap;
 
     public TecmapService() throws IOException{
-        tecmap = new Tecmap(Settings.TEST_RESOURCE_DIR + "tecmapExamples/Cs1ExampleGraph.json");
+        tecmap = new Tecmap(
+                Settings.TEST_RESOURCE_DIR + "tecmapExamples/Cs1ExampleGraph.json",
+                new ArrayList<>(Arrays.asList(Settings.TEST_RESOURCE_DIR + "tecmapExamples/Cs1ExampleResources.json")),
+                new ArrayList<>(Arrays.asList(Settings.TEST_RESOURCE_DIR + "tecmapExamples/Cs1ExampleAssessment1.csv",
+                        Settings.TEST_RESOURCE_DIR + "tecmapExamples/Cs1ExampleAssessment2.csv")
+                )
+        );
     }
 
     public TecmapService(Tecmap newTecmap) {

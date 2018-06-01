@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.List;
 
 @RestController
-@RequestMapping("/map")
+@RequestMapping("/api")
 public class TecmapController {
 
     private TecmapService tecmapService;

@@ -108,12 +108,12 @@ function stripTitle(title) {
 
 
 //reads in JSON file and parses it to objectsArray
-function readJson(fileName){
+function readJson(url){
     var request = new XMLHttpRequest();
-    request.open("GET", fileName, false);
-    request.send(null)
+    request.open("GET", url, false);
+    request.send(null);
 
-    return JSON.parse(request.responseText);
+    return JSON.parse(request.response);
 }
 
 function convertToSingleString(listOfStrings){
