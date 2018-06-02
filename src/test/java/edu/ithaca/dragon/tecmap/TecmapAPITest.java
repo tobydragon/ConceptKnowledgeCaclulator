@@ -2,9 +2,8 @@ package edu.ithaca.dragon.tecmap;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import edu.ithaca.dragon.tecmap.io.record.ConceptGraphRecord;
-import edu.ithaca.dragon.tecmap.io.writer.Json;
+import edu.ithaca.dragon.tecmap.io.Json;
 import edu.ithaca.dragon.tecmap.tecmapExamples.Cs1ExampleJsonStrings;
-import edu.ithaca.dragon.tecmap.tecmapstate.AssessmentConnectedState;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 

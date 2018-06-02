@@ -1,9 +1,12 @@
 package edu.ithaca.dragon.tecmap.data;
 
-import edu.ithaca.dragon.tecmap.Tecmap;
+import edu.ithaca.dragon.tecmap.TecmapAPI;
 
 public interface TecmapDatastore {
-    enum Id { Cs1Example}
 
-    Tecmap retrieveTecmapForId(TecmapDatastore.Id idToRetrieve);
+    /**
+     * @param idToRetrieve
+     * @return the Tecmap associated with the idToRetrieve, or null if not found
+     */
+    TecmapAPI retrieveTecmapForId(String idToRetrieve);
 }

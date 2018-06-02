@@ -6,6 +6,7 @@ import edu.ithaca.dragon.tecmap.io.record.LearningResourceRecord;
 import edu.ithaca.dragon.tecmap.tecmapstate.AssessmentAddedState;
 import edu.ithaca.dragon.tecmap.tecmapstate.AssessmentConnectedState;
 import edu.ithaca.dragon.tecmap.tecmapstate.NoAssessmentState;
+import edu.ithaca.dragon.tecmap.tecmapstate.TecmapState;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -16,15 +17,28 @@ public class Tecmap implements TecmapAPI {
     private NoAssessmentState state;
 
     public Tecmap(String structureFileName) throws IOException {
-        state = new NoAssessmentState(structureFileName);
+        this(structureFileName, null, null);
     }
 
     public Tecmap(String structureFileName, List<String> assessmentFilenames) throws IOException {
-        state = new AssessmentAddedState(structureFileName, assessmentFilenames);
+        this(structureFileName, null, assessmentFilenames);
     }
 
     public Tecmap(String structureFileName, List<String> resourceConnectionFiles, List<String> assessmentFilenames) throws IOException {
-        state = new AssessmentConnectedState(structureFileName, resourceConnectionFiles, assessmentFilenames);
+        TecmapState stateEnum = TecmapState.checkAvailableState(resourceConnectionFiles, assessmentFilenames);
+        if (stateEnum == TecmapState.noAssessment){
+            state = new NoAssessmentState(structureFileName);
+        }
+        else if (stateEnum == TecmapState.assessmentAdded){
+            state = new AssessmentAddedState(structureFileName, assessmentFilenames);
+        }
+        else if (stateEnum == TecmapState.assessmentConnected){
+            state = new AssessmentConnectedState(structureFileName, resourceConnectionFiles, assessmentFilenames);
+        }
+        else {
+            throw new RuntimeException("State not recognized, cannot build");
+        }
+
     }
 
     @Override

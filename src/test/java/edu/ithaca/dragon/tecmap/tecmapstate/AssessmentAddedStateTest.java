@@ -1,7 +1,7 @@
 package edu.ithaca.dragon.tecmap.tecmapstate;
 
 import edu.ithaca.dragon.tecmap.Settings;
-import edu.ithaca.dragon.tecmap.io.writer.Json;
+import edu.ithaca.dragon.tecmap.io.Json;
 import edu.ithaca.dragon.tecmap.tecmapExamples.Cs1ExampleJsonStrings;
 import org.junit.jupiter.api.Test;
 

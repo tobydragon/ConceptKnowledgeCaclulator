@@ -1,0 +1,16 @@
+{
+  "allRecords" : [
+    {
+    "id" : "Cs1Example",
+    "graphFile" : "src/test/resources/author/tecmapExamples/Cs1ExampleGraph.json",
+    "resourceFiles" : [ "src/test/resources/author/tecmapExamples/Cs1ExampleResources.json" ],
+    "assessmentFiles" : [ "src/test/resources/author/tecmapExamples/Cs1ExampleAssessment1.csv", "src/test/resources/author/tecmapExamples/Cs1ExampleAssessment2.csv" ]
+    },
+    {
+      "id" : "BadPaths",
+      "graphFile" : "badPath",
+      "resourceFiles" : ["badPath" ],
+      "assessmentFiles" : [ "badPath" ]
+    }
+  ]
+}
