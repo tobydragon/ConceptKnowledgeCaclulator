@@ -55,9 +55,9 @@ class TecmapAPITest {
     void createConceptIdListToPrint() {
         Collection<String> onlyStructureConcepts = onlyStructureTecmap.createConceptIdListToPrint();
         assertEquals(Cs1ExampleJsonStrings.allConceptsString, onlyStructureConcepts.toString());
-        Collection<String> twoAssessmentsAddedConcepts = onlyStructureTecmap.createConceptIdListToPrint();
+        Collection<String> twoAssessmentsAddedConcepts = twoAssessmentsAddedTecmap.createConceptIdListToPrint();
         assertEquals(Cs1ExampleJsonStrings.allConceptsString, twoAssessmentsAddedConcepts.toString());
-        Collection<String> twoAssessmentsConnectedConcepts = onlyStructureTecmap.createConceptIdListToPrint();
+        Collection<String> twoAssessmentsConnectedConcepts = twoAssessmentsConnectedTecmap.createConceptIdListToPrint();
         assertEquals(Cs1ExampleJsonStrings.allConceptsString, twoAssessmentsConnectedConcepts.toString());
     }
 
