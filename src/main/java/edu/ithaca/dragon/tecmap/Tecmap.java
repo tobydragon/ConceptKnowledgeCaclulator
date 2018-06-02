@@ -70,4 +70,19 @@ public class Tecmap implements TecmapAPI {
             return null;
         }
     }
+
+    @Override
+    public TecmapState getCurrentState() {
+        if (state instanceof AssessmentConnectedState) {
+            return TecmapState.assessmentConnected;
+        }
+        else if (state instanceof AssessmentAddedState) {
+            return TecmapState.assessmentAdded;
+        }
+        else {
+            return TecmapState.noAssessment;
+        }
+    }
+
+
 }
