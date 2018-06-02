@@ -1,7 +1,6 @@
 package edu.ithaca.dragon.tecmap.data;
 
 import edu.ithaca.dragon.tecmap.Tecmap;
-import edu.ithaca.dragon.tecmap.conceptgraph.ConceptGraph;
 import edu.ithaca.dragon.tecmap.io.Json;
 import edu.ithaca.dragon.tecmap.io.record.TecmapDataFilesRecord;
 import edu.ithaca.dragon.tecmap.io.record.TecmapFileDatastoreRecord;
@@ -14,18 +13,18 @@ import java.util.*;
 public class TecmapFileDatastore implements TecmapDatastore {
     private static final Logger logger = LogManager.getLogger(TecmapFileDatastore.class);
 
-    Map<String, TecmapDataFiles> idToMap;
+    Map<String, TecmapFileData> idToMap;
 
     public TecmapFileDatastore(TecmapFileDatastoreRecord recordIn){
         idToMap = new TreeMap<>();
         for (TecmapDataFilesRecord dataFiles : recordIn.getAllRecords()){
-            idToMap.put(dataFiles.getId(), new TecmapDataFiles(dataFiles));
+            idToMap.put(dataFiles.getId(), new TecmapFileData(dataFiles));
         }
     }
 
     @Override
     public Tecmap retrieveTecmapForId(String idToRetrieve) {
-        TecmapDataFiles files = idToMap.get(idToRetrieve);
+        TecmapFileData files = idToMap.get(idToRetrieve);
         if (files != null){
             try {
                 return new Tecmap(files.getGraphFile(), files.getResourceFiles(), files.getAssessmentFiles());

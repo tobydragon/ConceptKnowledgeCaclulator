@@ -20,9 +20,10 @@ class TecmapDatastoreTest {
     void retrieveTecmapForId() throws IOException {
         TecmapFileDatastore ds = TecmapFileDatastore.buildFromJsonFile(Settings.DEFAULT_TEST_DATASTORE_FILE);
 
-
+        //check invalid options
         assertNull(ds.retrieveTecmapForId("noSuchId"));
         assertNull(ds.retrieveTecmapForId("BadPaths"));
+
         //check a valid TecmapAPI
         TecmapAPI cs1ExampleMap = ds.retrieveTecmapForId("Cs1Example");
         assertEquals(Cs1ExampleJsonStrings.structureWithResourceConnectionsAsTree, cs1ExampleMap.createStructureTree().toJsonString());

@@ -5,7 +5,7 @@ import edu.ithaca.dragon.tecmap.tecmapstate.TecmapState;
 
 import java.util.List;
 
-public class TecmapDataFiles {
+public class TecmapFileData {
 
     private String id;
     private TecmapState availableState;
@@ -13,7 +13,7 @@ public class TecmapDataFiles {
     private List<String> resourceFiles;
     private List<String> assessmentFiles;
 
-    public TecmapDataFiles(String id, String graphFile, List<String> resourceFiles, List<String> assessmentFiles) {
+    public TecmapFileData(String id, String graphFile, List<String> resourceFiles, List<String> assessmentFiles) {
         this.id = id;
         this.graphFile = graphFile;
         this.resourceFiles = resourceFiles;
@@ -21,7 +21,7 @@ public class TecmapDataFiles {
         this.availableState = TecmapState.checkAvailableState(resourceFiles, assessmentFiles);
     }
 
-    public TecmapDataFiles(TecmapDataFilesRecord recordIn){
+    public TecmapFileData(TecmapDataFilesRecord recordIn){
         this(recordIn.getId(), recordIn.getGraphFile(), recordIn.getResourceFiles(), recordIn.getAssessmentFiles());
     }
 

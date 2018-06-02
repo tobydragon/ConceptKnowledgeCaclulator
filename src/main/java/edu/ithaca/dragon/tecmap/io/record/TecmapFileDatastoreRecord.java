@@ -1,7 +1,5 @@
 package edu.ithaca.dragon.tecmap.io.record;
 
-import edu.ithaca.dragon.tecmap.data.TecmapDataFiles;
-
 import java.util.List;
 
 public class TecmapFileDatastoreRecord {
