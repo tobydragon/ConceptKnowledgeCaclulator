@@ -61,13 +61,15 @@ public class TecmapService {
         return null;
     }
 
-    public void chooseTecmap(String id) {
+    public TecmapAPI chooseTecmap(String id) {
         datastoreId = id;
         tecmap = tecmapDatastore.retrieveTecmapForId(datastoreId);
+        return tecmap;
     }
 
-    public void chooseTecmap(String id, TecmapState tecmapState) {
+    public TecmapAPI chooseTecmap(String id, TecmapState tecmapState) {
         datastoreId = id;
         tecmap = tecmapDatastore.retrieveTecmapForId(datastoreId, tecmapState);
+        return tecmap;
     }
 }

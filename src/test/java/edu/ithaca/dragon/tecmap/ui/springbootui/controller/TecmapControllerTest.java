@@ -25,6 +25,7 @@ import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import java.io.IOException;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @RunWith(SpringRunner.class)
 @WebMvcTest(TecmapController.class)
@@ -110,5 +111,21 @@ public class TecmapControllerTest {
         String expected = Json.toJsonString(twoAssessmentsConnectedTecmapService.retrieveCohortTree());
 
         JSONAssert.assertEquals(expected, result.getResponse().getContentAsString(), false);
+    }
+
+    @Test
+    //TODO: Fix tests to get them to work, everything is not found
+    public void selectTecmap() throws Exception {
+        RequestBuilder requestBuilder = MockMvcRequestBuilders
+                .get("/api/BadPaths");
+
+        mockMvc.perform(requestBuilder)
+                .andExpect(status().isNotFound());
+
+        requestBuilder = MockMvcRequestBuilders
+                .get("/api/Cs1Example");
+
+        mockMvc.perform(requestBuilder)
+                .andExpect(status().isOk());
     }
 }

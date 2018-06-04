@@ -1,13 +1,13 @@
 package edu.ithaca.dragon.tecmap.ui.springbootui.controller;
 
+import edu.ithaca.dragon.tecmap.TecmapAPI;
 import edu.ithaca.dragon.tecmap.io.record.CohortConceptGraphsRecord;
 import edu.ithaca.dragon.tecmap.io.record.ConceptGraphRecord;
 import edu.ithaca.dragon.tecmap.io.record.LearningResourceRecord;
 import edu.ithaca.dragon.tecmap.ui.springbootui.service.TecmapService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -21,6 +21,16 @@ public class TecmapController {
     public TecmapController(TecmapService tecmapService) {
         super();
         this.tecmapService = tecmapService;
+    }
+
+    @GetMapping("/{courseId}")
+    public ResponseEntity<Void> selectTecmap(@PathVariable("courseId") String courseId) {
+        TecmapAPI tecmap = tecmapService.chooseTecmap(courseId);
+        if (tecmap == null) {
+            return ResponseEntity.notFound().build();
+        } else {
+            return ResponseEntity.ok().build();
+        }
     }
 
     @GetMapping("/structureTree")
