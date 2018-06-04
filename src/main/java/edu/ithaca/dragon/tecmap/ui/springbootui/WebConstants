@@ -1,0 +1,4 @@
+All naming conventions used in WebController to link to resources/templates/*
+
+1.) StructureGraph.html viewed by "StructureGraph" in WebController.viewStructureGraph
+2.) CohortGraph.html viewed by "CohortGraph" in WebController.viewCohortGraph

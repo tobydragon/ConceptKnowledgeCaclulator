@@ -39,7 +39,6 @@ class TecmapAPITest {
         assertEquals(Cs1ExampleJsonStrings.structureAsTreeString, onlyStructureTecmap.createStructureTree().toJsonString());
         assertEquals(Cs1ExampleJsonStrings.structureAsTreeString, twoAssessmentsAddedTecmap.createStructureTree().toJsonString());
         assertEquals(Cs1ExampleJsonStrings.structureWithResourceConnectionsAsTree, twoAssessmentsConnectedTecmap.createStructureTree().toJsonString());
-
     }
 
     @Test
