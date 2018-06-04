@@ -74,4 +74,13 @@ public class TecmapServiceTest {
             }
         }
     }
+
+    @Test
+    public void chooseTecmap() throws JsonProcessingException{
+        onlyStructureTecmapService.chooseTecmap("BadPaths");
+        assertNull(onlyStructureTecmapService.retrieveStructureTree());
+
+        onlyStructureTecmapService.chooseTecmap("Cs1Example", TecmapState.noAssessment);
+        assertEquals(Cs1ExampleJsonStrings.structureAsTreeString, Json.toJsonString(onlyStructureTecmapService.retrieveStructureTree()));
+    }
 }

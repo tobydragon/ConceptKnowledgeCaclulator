@@ -17,25 +17,57 @@ import java.util.List;
 public class TecmapService {
 
     private TecmapAPI tecmap;
+    private String datastoreId;
+    private TecmapDatastore tecmapDatastore;
 
     public TecmapService() throws IOException{
 
-        TecmapDatastore tecmapDatastore = TecmapFileDatastore.buildFromJsonFile(Settings.DEFAULT_TEST_DATASTORE_FILE);
-        tecmap = tecmapDatastore.retrieveTecmapForId("Cs1Example", TecmapState.assessmentConnected);
+        tecmapDatastore = TecmapFileDatastore.buildFromJsonFile(Settings.DEFAULT_MAIN_DATASTORE_FILE);
+        tecmap = tecmapDatastore.retrieveTecmapForId("comp171Dragon", TecmapState.assessmentConnected);
 
     }
 
     public TecmapService(TecmapDatastore tecmapDatastore, String id, TecmapState tecmapState) {
-        tecmap = tecmapDatastore.retrieveTecmapForId(id, tecmapState);
+        this.tecmapDatastore = tecmapDatastore;
+        datastoreId = id;
+        tecmap = tecmapDatastore.retrieveTecmapForId(datastoreId, tecmapState);
     }
 
-    public ConceptGraphRecord retrieveStructureTree() { return tecmap.createStructureTree(); }
+    public ConceptGraphRecord retrieveStructureTree() {
+        if (tecmap != null) {
+            return tecmap.createStructureTree();
+        }
+        return null;
+    }
 
     public List<String> retrieveConceptIdList() {
-        return tecmap.createConceptIdListToPrint();
+        if (tecmap != null) {
+            return tecmap.createConceptIdListToPrint();
+        }
+        return null;
     }
 
-    public List<LearningResourceRecord> retrieveBlankLearningResourceRecordsFromAssessment() { return tecmap.createBlankLearningResourceRecordsFromAssessment(); }
+    public List<LearningResourceRecord> retrieveBlankLearningResourceRecordsFromAssessment() {
+        if (tecmap != null) {
+            return tecmap.createBlankLearningResourceRecordsFromAssessment();
+        }
+        return null;
+    }
 
-    public CohortConceptGraphsRecord retrieveCohortTree() { return tecmap.createCohortTree(); }
+    public CohortConceptGraphsRecord retrieveCohortTree() {
+        if (tecmap != null) {
+            return tecmap.createCohortTree();
+        }
+        return null;
+    }
+
+    public void chooseTecmap(String id) {
+        datastoreId = id;
+        tecmap = tecmapDatastore.retrieveTecmapForId(datastoreId);
+    }
+
+    public void chooseTecmap(String id, TecmapState tecmapState) {
+        datastoreId = id;
+        tecmap = tecmapDatastore.retrieveTecmapForId(datastoreId, tecmapState);
+    }
 }
