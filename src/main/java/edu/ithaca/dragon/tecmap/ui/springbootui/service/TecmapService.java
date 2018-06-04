@@ -19,16 +19,10 @@ public class TecmapService {
     private TecmapAPI tecmap;
 
     public TecmapService() throws IOException{
-//        tecmap = new Tecmap(
-//                Settings.TEST_RESOURCE_DIR + "tecmapExamples/Cs1ExampleGraph.json",
-//                new ArrayList<>(Arrays.asList(Settings.TEST_RESOURCE_DIR + "tecmapExamples/Cs1ExampleResources.json")),
-//                new ArrayList<>(Arrays.asList(Settings.TEST_RESOURCE_DIR + "tecmapExamples/Cs1ExampleAssessment1.csv",
-//                        Settings.TEST_RESOURCE_DIR + "tecmapExamples/Cs1ExampleAssessment2.csv")
-//                )
-//        );
 
         TecmapDatastore tecmapDatastore = TecmapFileDatastore.buildFromJsonFile(Settings.DEFAULT_TEST_DATASTORE_FILE);
         tecmap = tecmapDatastore.retrieveTecmapForId("Cs1Example", TecmapState.assessmentConnected);
+
     }
 
     public TecmapService(TecmapDatastore tecmapDatastore, String id, TecmapState tecmapState) {
