@@ -1,9 +1,13 @@
 package edu.ithaca.dragon.tecmap;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
+import edu.ithaca.dragon.tecmap.data.TecmapDatastore;
+import edu.ithaca.dragon.tecmap.data.TecmapFileDatastore;
 import edu.ithaca.dragon.tecmap.io.record.ConceptGraphRecord;
-import edu.ithaca.dragon.tecmap.io.writer.Json;
+import edu.ithaca.dragon.tecmap.io.Json;
 import edu.ithaca.dragon.tecmap.tecmapExamples.Cs1ExampleJsonStrings;
+import edu.ithaca.dragon.tecmap.tecmapstate.TecmapState;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -13,8 +17,7 @@ import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.*;
 
 class TecmapAPITest {
 
@@ -23,24 +26,12 @@ class TecmapAPITest {
     private TecmapAPI twoAssessmentsConnectedTecmap;
 
     @BeforeEach
-    void setup() throws IOException {
-        onlyStructureTecmap = new Tecmap(Settings.TEST_RESOURCE_DIR + "tecmapExamples/Cs1ExampleGraph.json");
-        twoAssessmentsAddedTecmap = new Tecmap(
-                Settings.TEST_RESOURCE_DIR + "tecmapExamples/Cs1ExampleGraph.json",
-                new ArrayList<>(Arrays.asList(Settings.TEST_RESOURCE_DIR + "tecmapExamples/Cs1ExampleAssessment1.csv",
-                        Settings.TEST_RESOURCE_DIR + "tecmapExamples/Cs1ExampleAssessment2.csv")
-                )
-        );
+    void setup()throws IOException {
+        TecmapDatastore tecmapDatastore = TecmapFileDatastore.buildFromJsonFile(Settings.DEFAULT_TEST_DATASTORE_FILE);
 
-        twoAssessmentsConnectedTecmap = new Tecmap(
-                Settings.TEST_RESOURCE_DIR + "tecmapExamples/Cs1ExampleGraph.json",
-                new ArrayList<>(Arrays.asList(Settings.TEST_RESOURCE_DIR + "tecmapExamples/Cs1ExampleResources.json")),
-                new ArrayList<>(Arrays.asList(Settings.TEST_RESOURCE_DIR + "tecmapExamples/Cs1ExampleAssessment1.csv",
-                        Settings.TEST_RESOURCE_DIR + "tecmapExamples/Cs1ExampleAssessment2.csv")
-                )
-        );
-
-
+        onlyStructureTecmap = tecmapDatastore.retrieveTecmapForId("Cs1Example", TecmapState.noAssessment);
+        twoAssessmentsAddedTecmap = tecmapDatastore.retrieveTecmapForId("Cs1Example", TecmapState.assessmentAdded);
+        twoAssessmentsConnectedTecmap = tecmapDatastore.retrieveTecmapForId("Cs1Example", TecmapState.assessmentConnected);
     }
 
     @Test
@@ -54,9 +45,9 @@ class TecmapAPITest {
     void createConceptIdListToPrint() {
         Collection<String> onlyStructureConcepts = onlyStructureTecmap.createConceptIdListToPrint();
         assertEquals(Cs1ExampleJsonStrings.allConceptsString, onlyStructureConcepts.toString());
-        Collection<String> twoAssessmentsAddedConcepts = onlyStructureTecmap.createConceptIdListToPrint();
+        Collection<String> twoAssessmentsAddedConcepts = twoAssessmentsAddedTecmap.createConceptIdListToPrint();
         assertEquals(Cs1ExampleJsonStrings.allConceptsString, twoAssessmentsAddedConcepts.toString());
-        Collection<String> twoAssessmentsConnectedConcepts = onlyStructureTecmap.createConceptIdListToPrint();
+        Collection<String> twoAssessmentsConnectedConcepts = twoAssessmentsConnectedTecmap.createConceptIdListToPrint();
         assertEquals(Cs1ExampleJsonStrings.allConceptsString, twoAssessmentsConnectedConcepts.toString());
     }
 

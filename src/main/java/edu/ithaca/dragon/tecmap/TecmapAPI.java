@@ -3,6 +3,7 @@ package edu.ithaca.dragon.tecmap;
 import edu.ithaca.dragon.tecmap.io.record.CohortConceptGraphsRecord;
 import edu.ithaca.dragon.tecmap.io.record.ConceptGraphRecord;
 import edu.ithaca.dragon.tecmap.io.record.LearningResourceRecord;
+import edu.ithaca.dragon.tecmap.tecmapstate.TecmapState;
 
 import java.util.List;
 
@@ -28,7 +29,6 @@ public interface TecmapAPI {
      */
     List<LearningResourceRecord> createBlankLearningResourceRecordsFromAssessment();
 
-
     /**
      * Creates a list of graphs: One average graph, and one for each student for which there is data
      * each graph is a tree representation of that graph. All nodes that have multiple parents are duplicated to create the tree structure
@@ -36,6 +36,11 @@ public interface TecmapAPI {
      * //TODO: what if there is not data for it?
      */
     CohortConceptGraphsRecord createCohortTree();
+
+    /**
+     * @return the current state of the object, denoted as a TecmapState enum
+     */
+    TecmapState getCurrentState();
 
 
 //    suggestConceptsForSingleUser,               //calcIndividualConceptNodesSuggestions​
