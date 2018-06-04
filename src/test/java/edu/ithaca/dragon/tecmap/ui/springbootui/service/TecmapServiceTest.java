@@ -2,19 +2,19 @@ package edu.ithaca.dragon.tecmap.ui.springbootui.service;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import edu.ithaca.dragon.tecmap.Settings;
-import edu.ithaca.dragon.tecmap.Tecmap;
+import edu.ithaca.dragon.tecmap.data.TecmapDatastore;
+import edu.ithaca.dragon.tecmap.data.TecmapFileDatastore;
+import edu.ithaca.dragon.tecmap.io.Json;
 import edu.ithaca.dragon.tecmap.io.record.CohortConceptGraphsRecord;
 import edu.ithaca.dragon.tecmap.io.record.ConceptGraphRecord;
-import edu.ithaca.dragon.tecmap.io.writer.Json;
 import edu.ithaca.dragon.tecmap.tecmapExamples.Cs1ExampleJsonStrings;
+import edu.ithaca.dragon.tecmap.tecmapstate.TecmapState;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -29,24 +29,11 @@ public class TecmapServiceTest {
 
     @Before
     public void setup() throws IOException {
-        Tecmap onlyStructureTecmap = new Tecmap(Settings.TEST_RESOURCE_DIR + "tecmapExamples/Cs1ExampleGraph.json");
-        Tecmap twoAssessmentsAddedTecmap = new Tecmap(
-                Settings.TEST_RESOURCE_DIR + "tecmapExamples/Cs1ExampleGraph.json",
-                new ArrayList<>(Arrays.asList(Settings.TEST_RESOURCE_DIR + "tecmapExamples/Cs1ExampleAssessment1.csv",
-                        Settings.TEST_RESOURCE_DIR + "tecmapExamples/Cs1ExampleAssessment2.csv")
-                )
-        );
+        TecmapDatastore tecmapDatastore = TecmapFileDatastore.buildFromJsonFile(Settings.DEFAULT_TEST_DATASTORE_FILE);
 
-        Tecmap twoAssessmentsConnectedTecmap = new Tecmap(
-                Settings.TEST_RESOURCE_DIR + "tecmapExamples/Cs1ExampleGraph.json",
-                new ArrayList<>(Arrays.asList(Settings.TEST_RESOURCE_DIR + "tecmapExamples/Cs1ExampleResources.json")),
-                new ArrayList<>(Arrays.asList(Settings.TEST_RESOURCE_DIR + "tecmapExamples/Cs1ExampleAssessment1.csv",
-                        Settings.TEST_RESOURCE_DIR + "tecmapExamples/Cs1ExampleAssessment2.csv")
-                )
-        );
-        onlyStructureTecmapService = new TecmapService(onlyStructureTecmap);
-        twoAssessmentsAddedTecmapService = new TecmapService(twoAssessmentsAddedTecmap);
-        twoAssessmentsConnectedTecmapService = new TecmapService(twoAssessmentsConnectedTecmap);
+        onlyStructureTecmapService = new TecmapService(tecmapDatastore, "Cs1Example", TecmapState.noAssessment);
+        twoAssessmentsAddedTecmapService = new TecmapService(tecmapDatastore, "Cs1Example", TecmapState.assessmentAdded);
+        twoAssessmentsConnectedTecmapService = new TecmapService(tecmapDatastore, "Cs1Example", TecmapState.assessmentConnected);
     }
 
     @Test

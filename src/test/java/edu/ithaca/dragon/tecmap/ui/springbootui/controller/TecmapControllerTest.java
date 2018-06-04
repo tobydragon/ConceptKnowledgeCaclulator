@@ -1,9 +1,11 @@
 package edu.ithaca.dragon.tecmap.ui.springbootui.controller;
 
 import edu.ithaca.dragon.tecmap.Settings;
-import edu.ithaca.dragon.tecmap.Tecmap;
-import edu.ithaca.dragon.tecmap.io.writer.Json;
+import edu.ithaca.dragon.tecmap.data.TecmapDatastore;
+import edu.ithaca.dragon.tecmap.data.TecmapFileDatastore;
+import edu.ithaca.dragon.tecmap.io.Json;
 import edu.ithaca.dragon.tecmap.tecmapExamples.Cs1ExampleJsonStrings;
+import edu.ithaca.dragon.tecmap.tecmapstate.TecmapState;
 import edu.ithaca.dragon.tecmap.ui.springbootui.service.TecmapService;
 import org.junit.Before;
 import org.junit.Test;
@@ -21,8 +23,6 @@ import org.springframework.test.web.servlet.RequestBuilder;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Arrays;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
@@ -42,24 +42,11 @@ public class TecmapControllerTest {
 
     @Before
     public void setup() throws IOException {
-        Tecmap onlyStructureTecmap = new Tecmap(Settings.TEST_RESOURCE_DIR + "tecmapExamples/Cs1ExampleGraph.json");
-        Tecmap twoAssessmentsAddedTecmap = new Tecmap(
-                Settings.TEST_RESOURCE_DIR + "tecmapExamples/Cs1ExampleGraph.json",
-                new ArrayList<>(Arrays.asList(Settings.TEST_RESOURCE_DIR + "tecmapExamples/Cs1ExampleAssessment1.csv",
-                        Settings.TEST_RESOURCE_DIR + "tecmapExamples/Cs1ExampleAssessment2.csv")
-                )
-        );
+        TecmapDatastore tecmapDatastore = TecmapFileDatastore.buildFromJsonFile(Settings.DEFAULT_TEST_DATASTORE_FILE);
 
-        Tecmap twoAssessmentsConnectedTecmap = new Tecmap(
-                Settings.TEST_RESOURCE_DIR + "tecmapExamples/Cs1ExampleGraph.json",
-                new ArrayList<>(Arrays.asList(Settings.TEST_RESOURCE_DIR + "tecmapExamples/Cs1ExampleResources.json")),
-                new ArrayList<>(Arrays.asList(Settings.TEST_RESOURCE_DIR + "tecmapExamples/Cs1ExampleAssessment1.csv",
-                        Settings.TEST_RESOURCE_DIR + "tecmapExamples/Cs1ExampleAssessment2.csv")
-                )
-        );
-        onlyStructureTecmapService = new TecmapService(onlyStructureTecmap);
-        twoAssessmentsAddedTecmapService = new TecmapService(twoAssessmentsAddedTecmap);
-        twoAssessmentsConnectedTecmapService = new TecmapService(twoAssessmentsConnectedTecmap);
+        onlyStructureTecmapService = new TecmapService(tecmapDatastore, "Cs1Example", TecmapState.noAssessment);
+        twoAssessmentsAddedTecmapService = new TecmapService(tecmapDatastore, "Cs1Example", TecmapState.assessmentAdded);
+        twoAssessmentsConnectedTecmapService = new TecmapService(tecmapDatastore, "Cs1Example", TecmapState.assessmentConnected);
     }
 
     @Test
@@ -68,7 +55,7 @@ public class TecmapControllerTest {
                 .thenReturn(onlyStructureTecmapService.retrieveStructureTree());
 
         RequestBuilder requestBuilder = MockMvcRequestBuilders.get(
-                "/map/structureTree").accept(
+                "/api/structureTree").accept(
                  MediaType.APPLICATION_JSON);
 
         MvcResult result = mockMvc.perform(requestBuilder).andReturn();
@@ -84,7 +71,7 @@ public class TecmapControllerTest {
                 thenReturn(onlyStructureTecmapService.retrieveConceptIdList());
 
         RequestBuilder requestBuilder = MockMvcRequestBuilders.get(
-                "/map/conceptList").accept(
+                "/api/conceptList").accept(
                  MediaType.APPLICATION_JSON);
         MvcResult result = mockMvc.perform(requestBuilder).andReturn();
 
@@ -99,7 +86,7 @@ public class TecmapControllerTest {
                 thenReturn(twoAssessmentsAddedTecmapService.retrieveBlankLearningResourceRecordsFromAssessment());
 
         RequestBuilder requestBuilder = MockMvcRequestBuilders.get(
-                "/map/blankLRRecords").accept(
+                "/api/blankLRRecords").accept(
                  MediaType.APPLICATION_JSON);
 
         MvcResult result = mockMvc.perform(requestBuilder).andReturn();
@@ -115,7 +102,7 @@ public class TecmapControllerTest {
                 thenReturn(twoAssessmentsConnectedTecmapService.retrieveCohortTree());
 
         RequestBuilder requestBuilder = MockMvcRequestBuilders.get(
-                "/map/cohortTree").accept(
+                "/api/cohortTree").accept(
                  MediaType.APPLICATION_JSON);
 
         MvcResult result = mockMvc.perform(requestBuilder).andReturn();
