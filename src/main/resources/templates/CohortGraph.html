@@ -1,6 +1,6 @@
-<html>
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
-    <link rel="stylesheet" type="text/css" href="/static/GraphStyle.css">
+    <link rel="stylesheet" type="text/css" th:href="@{/css/GraphStyle.css}">
 </head>
 <body>
     
@@ -9,7 +9,7 @@
     </div>
     
     <div id="menu"></div>
-    <img src="/static/tecmapColorCoding.jpg"  width="300" height="300">
+    <img th:src="@{/tecmapColorCoding.jpg}"  width="300" height="300">
 
 
     <h3 id="title"></h3>
@@ -24,13 +24,13 @@
 
 </body>
     <!-- Load the google charts loader JS, and the google ajax libraries -->
-    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>    
+    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
 
     <!-- Local Imports -->
-    <script type="text/javascript" src="/static/org.js"></script>
-    <script type="text/javascript" src="/static/GraphFunctions.js"></script>
+    <script type="text/javascript" th:src="@{/js/org.js}"></script>
+    <script type="text/javascript" th:src="@{/js/GraphFunctions.js}"></script>
     
     <!-- File that starts execution -->
-    <script src="/static/CohortGraph.js"></script>
+    <script th:src="@{/js/CohortGraph.js}"></script>
 </html>
