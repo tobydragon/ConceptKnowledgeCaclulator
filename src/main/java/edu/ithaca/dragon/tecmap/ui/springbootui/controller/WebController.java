@@ -21,4 +21,8 @@ public class WebController {
     public String viewCohortTree() {
         return "CohortGraph";
     }
+
+    @GetMapping("/connectResources")
+    public String viewConnectResources() { return "ConnectResources"; }
+
 }
