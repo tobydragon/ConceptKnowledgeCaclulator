@@ -1,0 +1,10 @@
+{
+  "allRecords" : [
+    {
+    "id" : "comp171Dragon",
+    "graphFile" : "src/main/resources/datastore/comp171Dragon/comp171DragonGraph.json",
+    "resourceFiles" : [  ],
+    "assessmentFiles" : [  ]
+    }
+  ]
+}

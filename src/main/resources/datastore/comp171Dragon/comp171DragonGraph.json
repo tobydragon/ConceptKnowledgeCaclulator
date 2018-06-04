@@ -1,0 +1,195 @@
+{
+  "name" : "COMP 171",
+  "concepts" : [
+
+    {"id" : "Using Programs to Solve Problems"},
+    {"id" : "Creating High Quality Solutions"},
+    {"id" : "Understanding Using Fixing and Integrating with Others Programs"},
+    {"id" : "Documenting Code"},
+    {"id" : "Test Driven Development"},
+    {"id" : "Designing Abstract Solutions"},
+    {"id" : "Programming Fundamentals"},
+    {"id" : "Tracing Program Execution"},
+    {"id" : "Using External Libraries"},
+    {"id" : "Understanding others Documentation"},
+    {"id" : "Defining Problem Statements"},
+    {"id" : "Choosing Algorithms and Data Structures"},
+    {"id" : "Control Structures"},
+    {"id" : "Variables Assignment"},
+    {"id" : "Data Types"},
+    {"id" : "If Statements"},
+    {"id" : "Loops"},
+    {"id" : "Functions"},
+    {"id" : "Literals"},
+    {"id" : "Expressions"},
+    {"id" : "While Loops"},
+    {"id" : "For Loops"},
+    {"id" : "Calling Functions"},
+    {"id" : "Defining Functions"},
+    {"id" : "Scope Side Effects"},
+    {"id" : "Math Expressions"},
+    {"id" : "Boolean Expressions"},
+    {"id" : "Collections"},
+    {"id" : "Returning Values"},
+    {"id" : "Parameters"},
+    {"id" : "Sending Arguments"},
+    {"id" : "Catching Return Values"},
+    {"id" : "Integers"},
+    {"id" : "Floats"},
+    {"id" : "Booleans"},
+    {"id" : "Strings"},
+    {"id" : "Lists"},
+    {"id" : "Maps"}
+
+
+
+
+  ],
+  "links" : [
+  {
+      "parent" : "Using Programs to Solve Problems",
+      "child" : "Creating High Quality Solutions"
+    }, {
+      "parent" : "Using Programs to Solve Problems",
+      "child" : "Understanding Using Fixing and Integrating with Others Programs"
+    }, {
+      "parent" : "Creating High Quality Solutions",
+      "child" : "Documenting Code"
+    }, {
+      "parent" : "Creating High Quality Solutions",
+      "child" : "Test Driven Development"
+    }, {
+      "parent" : "Creating High Quality Solutions",
+      "child" : "Designing Abstract Solutions"
+    }, {
+      "parent" : "Using Programs to Solve Problems",
+      "child" : "Programming Fundamentals"
+    }, {
+      "parent" : "Understanding Using Fixing and Integrating with Others Programs",
+      "child" : "Tracing Program Execution"
+    }, {
+      "parent" : "Understanding Using Fixing and Integrating with Others Programs",
+      "child" : "Using External Libraries"
+    }, {
+      "parent" : "Understanding Using Fixing and Integrating with Others Programs",
+      "child" : "Understanding others Documentation"
+    }, {
+      "parent" : "Designing Abstract Solutions",
+      "child" : "Defining Problem Statements"
+    }, {
+      "parent" : "Designing Abstract Solutions",
+      "child" : "Choosing Algorithms and Data Structures"
+    }, {
+      "parent" : "Programming Fundamentals",
+      "child" : "Variables Assignment"
+    }, {
+      "parent" : "Programming Fundamentals",
+      "child" : "Data Types"
+    }, {
+      "parent" : "Programming Fundamentals",
+      "child" : "Control Structures"
+    }, {
+      "parent" : "Variables Assignment",
+      "child" : "Literals"
+    }, {
+      "parent" : "Variables Assignment",
+      "child" : "Expressions"
+    }, {
+      "parent" : "Data Types",
+      "child" : "Integers"
+    }, {
+      "parent" : "Data Types",
+      "child" : "Floats"
+    }, {
+      "parent" : "Data Types",
+      "child" : "Booleans"
+    }, {
+      "parent" : "Data Types",
+      "child" : "Strings"
+    },  {
+      "parent" : "Data Types",
+      "child" : "Lists"
+    }, {
+      "parent" : "Data Types",
+      "child" : "Maps"
+    }, {
+      "parent" : "Data Types",
+      "child" : "Collections"
+    }, {
+      "parent" : "Control Structures",
+      "child" : "If Statements"
+    }, {
+      "parent" : "Control Structures",
+      "child" : "Loops"
+    }, {
+      "parent" : "Control Structures",
+      "child" : "Functions"
+    }, {
+      "parent" : "If Statements",
+      "child" : "Boolean Expressions"
+    }, {
+      "parent" : "Loops",
+      "child" : "While Loops"
+    }, {
+      "parent" : "Loops",
+      "child" : "For Loops"
+    }, {
+      "parent" : "Functions",
+      "child" : "Calling Functions"
+    }, {
+      "parent" : "Functions",
+      "child" : "Defining Functions"
+    }, {
+      "parent" : "Functions",
+      "child" : "Scope Side Effects"
+    }, {
+      "parent" : "Expressions",
+      "child" : "Math Expressions"
+    }, {
+      "parent" : "Expressions",
+      "child" : "Boolean Expressions"
+    }, {
+      "parent" : "While Loops",
+      "child" : "Boolean Expressions"
+    }, {
+      "parent" : "For Loops",
+      "child" : "Collections"
+    }, {
+      "parent" : "Calling Functions",
+      "child" : "Returning Values"
+    }, {
+      "parent" : "Calling Functions",
+      "child" : "Parameters"
+    }, {
+      "parent" : "Defining Functions",
+      "child" : "Sending Arguments"
+    }, {
+      "parent" : "Defining Functions",
+      "child" : "Catching Return Values"
+
+    }, {
+      "parent" : "Math Expressions",
+      "child" : "Integers"
+
+    }, {
+      "parent" : "Math Expressions",
+      "child" : "Floats"
+
+    }, {
+      "parent" : "Boolean Expressions",
+      "child" : "Booleans"
+
+    }, {
+      "parent" : "Collections",
+      "child" : "Strings"
+
+    }, {
+      "parent" : "Collections",
+      "child" : "Lists"
+
+    }, {
+      "parent" : "Collections",
+      "child" : "Maps"
+
+    }]
+}
