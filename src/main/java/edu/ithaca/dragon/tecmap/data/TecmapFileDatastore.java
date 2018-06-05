@@ -58,6 +58,12 @@ public class TecmapFileDatastore implements TecmapDatastore {
         }
     }
 
+    @Override
+    public Map<String, List<String>> retrieveValidIdsAndStates() {
+        return null;
+
+    }
+
     public static TecmapFileDatastore buildFromJsonFile(String filename) throws IOException {
         return new TecmapFileDatastore(Json.fromJsonString(filename, TecmapFileDatastoreRecord.class));
     }

@@ -12,10 +12,12 @@ import org.junit.jupiter.api.Test;
 import java.io.IOException;
 import java.util.Collection;
 import java.util.List;
+import java.util.Map;
 
 import static org.junit.Assert.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.springframework.test.util.AssertionErrors.fail;
 
 class TecmapDatastoreTest {
 
@@ -72,5 +74,13 @@ class TecmapDatastoreTest {
         assertNotNull(assessmentConnectedModeMap.createStructureTree());
         assertEquals(10, assessmentConnectedModeMap.createBlankLearningResourceRecordsFromAssessment().size());
         assertNotNull(assessmentConnectedModeMap.createCohortTree());
+    }
+
+    @Test
+    void retrieveValidIdsAndStates(){
+        Map<String, List<String>> validMap = tecmapDatastore.retrieveValidIdsAndStates();
+        assertEquals(2, validMap.size());
+        fail("TODO");
+        //assertEquals(());
     }
 }

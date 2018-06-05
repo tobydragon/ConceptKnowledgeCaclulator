@@ -27,8 +27,10 @@ public class TecmapService {
 //                )
 //        );
 
-        TecmapDatastore tecmapDatastore = TecmapFileDatastore.buildFromJsonFile(Settings.DEFAULT_TEST_DATASTORE_FILE);
-        tecmap = tecmapDatastore.retrieveTecmapForId("Cs1Example", TecmapState.assessmentConnected);
+        TecmapDatastore tecmapDatastore = TecmapFileDatastore.buildFromJsonFile(Settings.DEFAULT_MAIN_DATASTORE_FILE);
+//        tecmap = tecmapDatastore.retrieveTecmapForId("Cs1Example", TecmapState.assessmentConnected);
+        tecmap = tecmapDatastore.retrieveTecmapForId("comp220Dragon", TecmapState.assessmentConnected);
+
     }
 
     public TecmapService(TecmapDatastore tecmapDatastore, String id, TecmapState tecmapState) {
