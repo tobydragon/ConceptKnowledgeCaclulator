@@ -2,6 +2,7 @@ package edu.ithaca.dragon.tecmap.data;
 
 import edu.ithaca.dragon.tecmap.Settings;
 import edu.ithaca.dragon.tecmap.TecmapAPI;
+import edu.ithaca.dragon.tecmap.TecmapAction;
 import edu.ithaca.dragon.tecmap.io.Json;
 import edu.ithaca.dragon.tecmap.io.record.ConceptGraphRecord;
 import edu.ithaca.dragon.tecmap.tecmapExamples.Cs1ExampleJsonStrings;
@@ -14,10 +15,11 @@ import java.util.Collection;
 import java.util.List;
 import java.util.Map;
 
+import static org.hamcrest.Matchers.containsInAnyOrder;
 import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertThat;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNull;
-import static org.springframework.test.util.AssertionErrors.fail;
 
 class TecmapDatastoreTest {
 
@@ -88,9 +90,13 @@ class TecmapDatastoreTest {
 
     @Test
     void retrieveValidIdsAndActions(){
-        Map<String, List<String>> validMap = tecmapDatastore.retrieveValidIdsAndActions();
-        assertEquals(2, validMap.size());
-        fail("TODO");
-        //assertEquals(());
+        Map<String, List<TecmapAction>> validMap = tecmapDatastore.retrieveValidIdsAndActions();
+        assertEquals(4, validMap.size());
+        assertEquals(1, validMap.get("Cs1ExampleNoAssessment").size());
+        assertThat(validMap.get("Cs1ExampleNoAssessment"), containsInAnyOrder(TecmapAction.structureTree));
+        assertEquals(1, validMap.get("Cs1ExampleNoResources").size());
+        assertThat(validMap.get("Cs1ExampleNoResources"), containsInAnyOrder(TecmapAction.structureTree));
+        assertEquals(2, validMap.get("Cs1Example").size());
+        assertThat(validMap.get("Cs1Example"), containsInAnyOrder(TecmapAction.structureTree, TecmapAction.cohortTree));
     }
 }
