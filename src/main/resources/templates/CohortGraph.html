@@ -32,5 +32,8 @@
     <script type="text/javascript" th:src="@{/js/GraphFunctions.js}"></script>
     
     <!-- File that starts execution -->
+    <script th:inline="javascript">
+        cohortGraphs = readJson("/api/cohortTree/" + [[${courseId}]]);
+    </script>
     <script th:src="@{/js/CohortGraph.js}"></script>
 </html>

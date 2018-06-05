@@ -1,7 +1,9 @@
 package edu.ithaca.dragon.tecmap.ui.springbootui.controller;
 
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
@@ -12,17 +14,21 @@ public class WebController {
         super();
     }
 
-    @GetMapping("/structureTree")
-    public String viewStructureTree() {
+    @GetMapping("/structureTree/{courseId}")
+    public String viewStructureTree(@PathVariable("courseId") String courseId, Model model) {
+        model.addAttribute("courseId", courseId);
         return "StructureGraph";
     }
 
-    @GetMapping("/cohortTree")
-    public String viewCohortTree() {
+    @GetMapping("/cohortTree/{courseId}")
+    public String viewCohortTree(@PathVariable("courseId") String courseId, Model model) {
+        model.addAttribute("courseId", courseId);
         return "CohortGraph";
     }
 
-    @GetMapping("/connectResources")
-    public String viewConnectResources() { return "ConnectResources"; }
-
+    @GetMapping("/connectResources/{courseId}")
+    public String viewConnectResources(@PathVariable("courseId") String courseId, Model model) {
+        model.addAttribute("courseId", courseId);
+        return "ConnectResources";
+    }
 }

@@ -7,6 +7,18 @@
     "assessmentFiles" : [ "src/test/resources/datastore/Cs1Example/Cs1ExampleAssessment1.csv", "src/test/resources/author/tecmapExamples/Cs1ExampleAssessment2.csv" ]
     },
     {
+      "id" : "Cs1ExampleStructure",
+      "graphFile" : "src/test/resources/datastore/Cs1Example/Cs1ExampleGraph.json",
+      "resourceFiles" : [],
+      "assessmentFiles" : []
+    },
+    {
+      "id" : "Cs1ExampleAssessmentAdded",
+      "graphFile" : "src/test/resources/datastore/Cs1Example/Cs1ExampleGraph.json",
+      "resourceFiles" : [],
+      "assessmentFiles" : ["src/test/resources/datastore/Cs1Example/Cs1ExampleAssessment1.csv", "src/test/resources/author/tecmapExamples/Cs1ExampleAssessment2.csv" ]
+    },
+    {
       "id" : "BadPaths",
       "graphFile" : "badPath",
       "resourceFiles" : ["badPath" ],
