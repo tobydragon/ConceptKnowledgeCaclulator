@@ -5,7 +5,6 @@ import edu.ithaca.dragon.tecmap.data.TecmapDatastore;
 import edu.ithaca.dragon.tecmap.data.TecmapFileDatastore;
 import edu.ithaca.dragon.tecmap.io.Json;
 import edu.ithaca.dragon.tecmap.tecmapExamples.Cs1ExampleJsonStrings;
-import edu.ithaca.dragon.tecmap.tecmapstate.TecmapState;
 import edu.ithaca.dragon.tecmap.ui.springbootui.service.TecmapService;
 import org.junit.Before;
 import org.junit.Test;
@@ -25,7 +24,7 @@ import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import java.io.IOException;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+import static org.mockito.ArgumentMatchers.anyString;
 
 @RunWith(SpringRunner.class)
 @WebMvcTest(TecmapController.class)
@@ -37,95 +36,186 @@ public class TecmapControllerTest {
     @MockBean
     private TecmapService tecmapServiceMock;
 
-    private TecmapService onlyStructureTecmapService;
-    private TecmapService twoAssessmentsAddedTecmapService;
-    private TecmapService twoAssessmentsConnectedTecmapService;
+    private TecmapService tecmapService;
 
     @Before
     public void setup() throws IOException {
         TecmapDatastore tecmapDatastore = TecmapFileDatastore.buildFromJsonFile(Settings.DEFAULT_TEST_DATASTORE_FILE);
 
-        onlyStructureTecmapService = new TecmapService(tecmapDatastore, "Cs1Example", TecmapState.noAssessment);
-        twoAssessmentsAddedTecmapService = new TecmapService(tecmapDatastore, "Cs1Example", TecmapState.assessmentAdded);
-        twoAssessmentsConnectedTecmapService = new TecmapService(tecmapDatastore, "Cs1Example", TecmapState.assessmentConnected);
+        tecmapService = new TecmapService(tecmapDatastore);
     }
 
     @Test
     public void getStructureTree() throws Exception {
-        Mockito.when(tecmapServiceMock.retrieveStructureTree())
-                .thenReturn(onlyStructureTecmapService.retrieveStructureTree());
+        String courseId = "Cs1ExampleStructure";
+        Mockito.when(tecmapServiceMock.retrieveStructureTree(anyString()))
+                .thenReturn(tecmapService.retrieveStructureTree(courseId));
 
         RequestBuilder requestBuilder = MockMvcRequestBuilders.get(
-                "/api/structureTree").accept(
+                "/api/structureTree/Cs1Example").accept(
                  MediaType.APPLICATION_JSON);
 
+        //Test Structure
         MvcResult result = mockMvc.perform(requestBuilder).andReturn();
 
         String expected = Cs1ExampleJsonStrings.structureAsTreeString;
 
         JSONAssert.assertEquals(expected, result.getResponse().getContentAsString(), false);
+
+        //Test Assessment Added
+        courseId = "Cs1ExampleAssessmentAdded";
+        Mockito.when(tecmapServiceMock.retrieveStructureTree(anyString()))
+                .thenReturn(tecmapService.retrieveStructureTree(courseId));
+
+        result = mockMvc.perform(requestBuilder).andReturn();
+        expected = Cs1ExampleJsonStrings.structureAsTreeString;
+
+        JSONAssert.assertEquals(expected, result.getResponse().getContentAsString(), false);
+
+        //Test Assessment Connected
+        courseId = "Cs1Example";
+        Mockito.when(tecmapServiceMock.retrieveStructureTree(anyString()))
+                .thenReturn(tecmapService.retrieveStructureTree(courseId));
+
+        result = mockMvc.perform(requestBuilder).andReturn();
+
+        expected = Cs1ExampleJsonStrings.structureWithResourceConnectionsAsTree;
+        JSONAssert.assertEquals(expected, result.getResponse().getContentAsString(), false);
+
+        courseId = "NoPath";
+        Mockito.when(tecmapServiceMock.retrieveStructureTree(anyString()))
+                .thenReturn(tecmapService.retrieveStructureTree(courseId));
+
+        result = mockMvc.perform(requestBuilder).andReturn();
+        assertEquals("", result.getResponse().getContentAsString());
     }
 
     @Test
     public void getConceptIdList() throws Exception {
-        Mockito.when(tecmapServiceMock.retrieveConceptIdList()).
-                thenReturn(onlyStructureTecmapService.retrieveConceptIdList());
+        String courseId = "Cs1ExampleStructure";
+        Mockito.when(tecmapServiceMock.retrieveConceptIdList(anyString())).
+                thenReturn(tecmapService.retrieveConceptIdList(courseId));
 
         RequestBuilder requestBuilder = MockMvcRequestBuilders.get(
-                "/api/conceptList").accept(
+                "/api/conceptList/thisIsACourse").accept(
                  MediaType.APPLICATION_JSON);
+
+        //Test Structure
         MvcResult result = mockMvc.perform(requestBuilder).andReturn();
 
         String expected = Cs1ExampleJsonStrings.allConceptsStringAsJson;
 
         assertEquals(expected, result.getResponse().getContentAsString());
+
+        //Test Assessment Added
+        courseId = "Cs1ExampleAssessmentAdded";
+        Mockito.when(tecmapServiceMock.retrieveConceptIdList(anyString())).
+                thenReturn(tecmapService.retrieveConceptIdList(courseId));
+
+        result = mockMvc.perform(requestBuilder).andReturn();
+        assertEquals(expected, result.getResponse().getContentAsString());
+
+        //Test Assessment Connected
+        courseId = "Cs1ExampleAssessmentAdded";
+        Mockito.when(tecmapServiceMock.retrieveConceptIdList(anyString())).
+                thenReturn(tecmapService.retrieveConceptIdList(courseId));
+
+        result = mockMvc.perform(requestBuilder).andReturn();
+        assertEquals(expected, result.getResponse().getContentAsString());
+
+        //Test Null
+        courseId = "NoPath";
+        Mockito.when(tecmapServiceMock.retrieveConceptIdList(anyString())).
+                thenReturn(tecmapService.retrieveConceptIdList(courseId));
+
+        result = mockMvc.perform(requestBuilder).andReturn();
+        assertEquals("", result.getResponse().getContentAsString());
     }
 
     @Test
     public void getBlankLearningResourceRecordsFromAssessment() throws Exception {
-        Mockito.when(tecmapServiceMock.retrieveBlankLearningResourceRecordsFromAssessment()).
-                thenReturn(twoAssessmentsAddedTecmapService.retrieveBlankLearningResourceRecordsFromAssessment());
+        String courseId = "Cs1ExampleStructure";
+        Mockito.when(tecmapServiceMock.retrieveBlankLearningResourceRecordsFromAssessment(anyString())).
+                thenReturn(tecmapService.retrieveBlankLearningResourceRecordsFromAssessment(courseId));
 
         RequestBuilder requestBuilder = MockMvcRequestBuilders.get(
-                "/api/blankLRRecords").accept(
+                "/api/blankLRRecords/thisIsACourse").accept(
                  MediaType.APPLICATION_JSON);
 
+        //Test Structure
         MvcResult result = mockMvc.perform(requestBuilder).andReturn();
+        assertEquals("[]", result.getResponse().getContentAsString());
 
+
+        //Test Assessment Added
+        courseId = "Cs1ExampleAssessmentAdded";
+        Mockito.when(tecmapServiceMock.retrieveBlankLearningResourceRecordsFromAssessment(anyString())).
+                thenReturn(tecmapService.retrieveBlankLearningResourceRecordsFromAssessment(courseId));
+
+        result = mockMvc.perform(requestBuilder).andReturn();
         String expected = Cs1ExampleJsonStrings.assessment1And2Str;
 
         JSONAssert.assertEquals(expected, result.getResponse().getContentAsString(), false);
+
+        //Test Assessment Connected
+        courseId = "Cs1Example";
+        Mockito.when(tecmapServiceMock.retrieveBlankLearningResourceRecordsFromAssessment(anyString())).
+                thenReturn(tecmapService.retrieveBlankLearningResourceRecordsFromAssessment(courseId));
+
+        result = mockMvc.perform(requestBuilder).andReturn();
+
+        JSONAssert.assertEquals(expected, result.getResponse().getContentAsString(), false);
+
+        //Test Null
+        courseId = "NoPath";
+        Mockito.when(tecmapServiceMock.retrieveBlankLearningResourceRecordsFromAssessment(anyString())).
+                thenReturn(tecmapService.retrieveBlankLearningResourceRecordsFromAssessment(courseId));
+
+        result = mockMvc.perform(requestBuilder).andReturn();
+        assertEquals("", result.getResponse().getContentAsString());
     }
 
     @Test
     public void getCohortTree() throws Exception {
-        Mockito.when(tecmapServiceMock.retrieveCohortTree()).
-                thenReturn(twoAssessmentsConnectedTecmapService.retrieveCohortTree());
+        String courseId = "Cs1ExampleStructure";
+        Mockito.when(tecmapServiceMock.retrieveCohortTree(anyString())).
+                thenReturn(tecmapService.retrieveCohortTree(courseId));
 
         RequestBuilder requestBuilder = MockMvcRequestBuilders.get(
-                "/api/cohortTree").accept(
+                "/api/cohortTree/thisIsACourse").accept(
                  MediaType.APPLICATION_JSON);
 
+        //Test Structure
         MvcResult result = mockMvc.perform(requestBuilder).andReturn();
 
-        String expected = Json.toJsonString(twoAssessmentsConnectedTecmapService.retrieveCohortTree());
+        String expected = "";
 
+        assertEquals(expected, result.getResponse().getContentAsString());
+
+        //Test Assessment Added
+        courseId = "Cs1ExampleAssessmentAdded";
+        Mockito.when(tecmapServiceMock.retrieveCohortTree(anyString())).
+                thenReturn(tecmapService.retrieveCohortTree(courseId));
+
+        result = mockMvc.perform(requestBuilder).andReturn();
+        assertEquals(expected, result.getResponse().getContentAsString());
+
+        //Test Assessment Connected
+        courseId = "Cs1Example";
+        Mockito.when(tecmapServiceMock.retrieveCohortTree(anyString())).
+                thenReturn(tecmapService.retrieveCohortTree(courseId));
+
+        result = mockMvc.perform(requestBuilder).andReturn();
+        expected = Json.toJsonString(tecmapService.retrieveCohortTree(courseId));
         JSONAssert.assertEquals(expected, result.getResponse().getContentAsString(), false);
-    }
 
-    @Test
-    //TODO: Fix tests to get them to work, everything is not found
-    public void selectTecmap() throws Exception {
-        RequestBuilder requestBuilder = MockMvcRequestBuilders
-                .get("/api/BadPaths");
+        //Test Null
+        courseId = "NoPath";
+        Mockito.when(tecmapServiceMock.retrieveCohortTree(anyString())).
+                thenReturn(tecmapService.retrieveCohortTree(courseId));
 
-        mockMvc.perform(requestBuilder)
-                .andExpect(status().isNotFound());
-
-        requestBuilder = MockMvcRequestBuilders
-                .get("/api/Cs1Example");
-
-        mockMvc.perform(requestBuilder)
-                .andExpect(status().isOk());
+        result = mockMvc.perform(requestBuilder).andReturn();
+        expected = "";
+        assertEquals(expected, result.getResponse().getContentAsString());
     }
 }

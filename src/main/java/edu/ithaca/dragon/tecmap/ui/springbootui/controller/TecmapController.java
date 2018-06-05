@@ -1,13 +1,14 @@
 package edu.ithaca.dragon.tecmap.ui.springbootui.controller;
 
-import edu.ithaca.dragon.tecmap.TecmapAPI;
 import edu.ithaca.dragon.tecmap.io.record.CohortConceptGraphsRecord;
 import edu.ithaca.dragon.tecmap.io.record.ConceptGraphRecord;
 import edu.ithaca.dragon.tecmap.io.record.LearningResourceRecord;
 import edu.ithaca.dragon.tecmap.ui.springbootui.service.TecmapService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 
@@ -23,33 +24,23 @@ public class TecmapController {
         this.tecmapService = tecmapService;
     }
 
-    @GetMapping("/{courseId}")
-    public ResponseEntity<Void> selectTecmap(@PathVariable("courseId") String courseId) {
-        TecmapAPI tecmap = tecmapService.chooseTecmap(courseId);
-        if (tecmap == null) {
-            return ResponseEntity.notFound().build();
-        } else {
-            return ResponseEntity.ok().build();
-        }
+    @GetMapping("/structureTree/{courseId}")
+    public ConceptGraphRecord getStructureTree(@PathVariable("courseId") String courseId) {
+        return tecmapService.retrieveStructureTree(courseId);
     }
 
-    @GetMapping("/structureTree")
-    public ConceptGraphRecord getStructureTree() {
-        return tecmapService.retrieveStructureTree();
+    @GetMapping("/conceptList/{courseId}")
+    public List<String> getConceptIdList(@PathVariable("courseId") String courseId) {
+        return tecmapService.retrieveConceptIdList(courseId);
     }
 
-    @GetMapping("/conceptList")
-    public List<String> getConceptIdList() {
-        return tecmapService.retrieveConceptIdList();
+    @GetMapping("/blankLRRecords/{courseId}")
+    public List<LearningResourceRecord> getBlankLearningResourceRecordsFromAssessment(@PathVariable("courseId") String courseId) {
+        return tecmapService.retrieveBlankLearningResourceRecordsFromAssessment(courseId);
     }
 
-    @GetMapping("/blankLRRecords")
-    public List<LearningResourceRecord> getBlankLearningResourceRecordsFromAssessment() {
-        return tecmapService.retrieveBlankLearningResourceRecordsFromAssessment();
-    }
-
-    @GetMapping("/cohortTree")
-    public CohortConceptGraphsRecord getcohortTree() {
-        return tecmapService.retrieveCohortTree();
+    @GetMapping("/cohortTree/{courseId}")
+    public CohortConceptGraphsRecord getcohortTree(@PathVariable("courseId") String courseId) {
+        return tecmapService.retrieveCohortTree(courseId);
     }
 }
