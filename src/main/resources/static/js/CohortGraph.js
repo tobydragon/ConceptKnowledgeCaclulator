@@ -49,6 +49,5 @@ function writeMenu(){
     }
 }
 
-cohortGraphs = readJson("/api/cohortTree");
 writeMenu();
 

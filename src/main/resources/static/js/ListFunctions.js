@@ -1,15 +1,6 @@
 var conceptList;
 var blankRecords;
 
-//reads in JSON file and parses it to objectsArray
-function readJson(url){
-    var request = new XMLHttpRequest();
-    request.open("GET", url, false);
-    request.send(null);
-
-    return JSON.parse(request.response);
-}
-
 function displayConcepts() {
     var conceptTableCode = "";
 
@@ -26,8 +17,5 @@ function displayBlankLRRecords() {
     }
 }
 
-conceptList = readJson("/api/conceptList");
-blankRecords = readJson("/api/blankLRRecords");
-console.log(blankRecords);
 displayConcepts();
 displayBlankLRRecords();
