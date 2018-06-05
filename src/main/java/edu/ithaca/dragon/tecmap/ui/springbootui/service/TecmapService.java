@@ -15,7 +15,6 @@ import java.util.List;
 @Service
 public class TecmapService {
 
-    private TecmapAPI tecmap;
     private TecmapDatastore tecmapDatastore;
 
     public TecmapService() throws IOException{
@@ -33,63 +32,33 @@ public class TecmapService {
         return tecmapDatastore.retrieveTecmapForId(id);
     }
 
-//
-//    public ConceptGraphRecord retrieveStructureTree() {
-//        if (tecmap != null) {
-//            return tecmap.createStructureTree();
-//        }
-//        return null;
-//    }
-
     public ConceptGraphRecord retrieveStructureTree(String id) {
-        tecmap = retrieveTecmapAPI(id);
+        TecmapAPI tecmap = retrieveTecmapAPI(id);
         if (tecmap != null) {
             return tecmap.createStructureTree();
         }
         return null;
     }
 
-//    public List<String> retrieveConceptIdList() {
-//        if (tecmap != null) {
-//            return tecmap.createConceptIdListToPrint();
-//        }
-//        return null;
-//    }
-
     public List<String> retrieveConceptIdList(String id) {
-        tecmap = retrieveTecmapAPI(id);
+        TecmapAPI tecmap = retrieveTecmapAPI(id);
         if (tecmap != null) {
             return tecmap.createConceptIdListToPrint();
         }
         return null;
     }
 
-//    public List<LearningResourceRecord> retrieveBlankLearningResourceRecordsFromAssessment() {
-//        if (tecmap != null) {
-//            return tecmap.createBlankLearningResourceRecordsFromAssessment();
-//        }
-//        return null;
-//    }
-
     public List<LearningResourceRecord> retrieveBlankLearningResourceRecordsFromAssessment(String id) {
-        tecmap = retrieveTecmapAPI(id);
+        TecmapAPI tecmap = retrieveTecmapAPI(id);
         if (tecmap != null) {
             return tecmap.createBlankLearningResourceRecordsFromAssessment();
         }
         return null;
     }
 
-//    //TODO add another null check
-//    public CohortConceptGraphsRecord retrieveCohortTree() {
-//        if (tecmap != null) {
-//            return tecmap.createCohortTree();
-//        }
-//        return null;
-//    }
-
     //TODO add another null check
     public CohortConceptGraphsRecord retrieveCohortTree(String id) {
-        tecmap = retrieveTecmapAPI(id);
+        TecmapAPI tecmap = retrieveTecmapAPI(id);
         if (tecmap != null) {
             return tecmap.createCohortTree();
         }
