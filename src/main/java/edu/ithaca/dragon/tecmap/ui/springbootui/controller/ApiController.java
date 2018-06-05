@@ -14,12 +14,12 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api")
-public class TecmapController {
+public class ApiController {
 
     private TecmapService tecmapService;
 
     @Autowired
-    public TecmapController(TecmapService tecmapService) {
+    public ApiController(TecmapService tecmapService) {
         super();
         this.tecmapService = tecmapService;
     }

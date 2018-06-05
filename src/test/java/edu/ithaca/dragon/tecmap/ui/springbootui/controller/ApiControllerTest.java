@@ -27,8 +27,8 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.ArgumentMatchers.anyString;
 
 @RunWith(SpringRunner.class)
-@WebMvcTest(TecmapController.class)
-public class TecmapControllerTest {
+@WebMvcTest(ApiController.class)
+public class ApiControllerTest {
 
     @Autowired
     private MockMvc mockMvc;
