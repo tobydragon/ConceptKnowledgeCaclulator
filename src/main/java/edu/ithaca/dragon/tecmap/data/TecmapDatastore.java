@@ -9,7 +9,8 @@ import java.util.Map;
 public interface TecmapDatastore {
 
     /**
-     * assumes that you want the assessmentConnected state
+     * finds and builds the tecmap in the most advanced state possible
+     * from the data associated with the given ID
      * @param idToRetrieve
      * @return the Tecmap associated with the idToRetrieve, or null if not found
      */
@@ -26,5 +27,5 @@ public interface TecmapDatastore {
      * finds all the valid ids, and the states that are valid to load for that ID
      * @return a map where each key is a valid TecmapID, and the corresponding value is a list of valid states for that Tecmap
      */
-    Map<String, List<String>> retrieveValidIdsAndStates();
+    Map<String, List<String>> retrieveValidIdsAndActions();
 }

@@ -55,6 +55,16 @@ class TecmapDatastoreTest {
     }
 
     @Test
+    void retrieveTecmapForIdTestForDifferentStates() {
+        TecmapAPI cs1ExampleMap = tecmapDatastore.retrieveTecmapForId("Cs1Example");
+        assertEquals(TecmapState.assessmentConnected, cs1ExampleMap.getCurrentState());
+        TecmapAPI cs1ExampleMapNoResources = tecmapDatastore.retrieveTecmapForId("Cs1ExampleNoResources");
+        assertEquals(TecmapState.assessmentAdded, cs1ExampleMapNoResources.getCurrentState());
+        TecmapAPI cs1ExampleMapNoAssessment = tecmapDatastore.retrieveTecmapForId("Cs1ExampleNoAssessment");
+        assertEquals(TecmapState.noAssessment, cs1ExampleMapNoAssessment.getCurrentState());
+    }
+
+    @Test
     void retrieveTecmapForIdExtraParameter(){
         TecmapAPI noAssessmentModeMap = tecmapDatastore.retrieveTecmapForId("Cs1Example", TecmapState.noAssessment);
         TecmapAPI assessmentAddedModeMap = tecmapDatastore.retrieveTecmapForId("Cs1Example", TecmapState.assessmentAdded);
@@ -77,8 +87,8 @@ class TecmapDatastoreTest {
     }
 
     @Test
-    void retrieveValidIdsAndStates(){
-        Map<String, List<String>> validMap = tecmapDatastore.retrieveValidIdsAndStates();
+    void retrieveValidIdsAndActions(){
+        Map<String, List<String>> validMap = tecmapDatastore.retrieveValidIdsAndActions();
         assertEquals(2, validMap.size());
         fail("TODO");
         //assertEquals(());

@@ -26,7 +26,14 @@ public class TecmapFileDatastore implements TecmapDatastore {
 
     @Override
     public TecmapAPI retrieveTecmapForId(String idToRetrieve) {
-        return retrieveTecmapForId(idToRetrieve, TecmapState.assessmentConnected);
+        TecmapFileData files = idToMap.get(idToRetrieve);
+        if (files != null) {
+            return retrieveTecmapForId(idToRetrieve, files.getAvailableState());
+        }
+        else{
+            logger.info("Map not found in fileDatastore for id: "+ idToRetrieve);
+            return null;
+        }
     }
 
     @Override
@@ -59,7 +66,7 @@ public class TecmapFileDatastore implements TecmapDatastore {
     }
 
     @Override
-    public Map<String, List<String>> retrieveValidIdsAndStates() {
+    public Map<String, List<String>> retrieveValidIdsAndActions() {
         return null;
 
     }
