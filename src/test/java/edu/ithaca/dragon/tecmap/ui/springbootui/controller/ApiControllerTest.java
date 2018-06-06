@@ -218,4 +218,19 @@ public class ApiControllerTest {
         expected = "";
         assertEquals(expected, result.getResponse().getContentAsString());
     }
+
+    @Test
+    public void getValidIdsandActions() throws Exception {
+        Mockito.when(tecmapServiceMock.retrieveValidIdsAndActions())
+                .thenReturn(tecmapService.retrieveValidIdsAndActions());
+
+        RequestBuilder requestBuilder = MockMvcRequestBuilders.get(
+                "/api/actions").accept(MediaType.APPLICATION_JSON);
+
+        MvcResult result = mockMvc.perform(requestBuilder).andReturn();
+
+        String expected = Cs1ExampleJsonStrings.validIdsAndActionsJsonString;
+
+        assertEquals(expected, result.getResponse().getContentAsString());
+    }
 }

@@ -2,6 +2,7 @@ package edu.ithaca.dragon.tecmap.ui.springbootui.service;
 
 import edu.ithaca.dragon.tecmap.Settings;
 import edu.ithaca.dragon.tecmap.TecmapAPI;
+import edu.ithaca.dragon.tecmap.TecmapAction;
 import edu.ithaca.dragon.tecmap.data.TecmapDatastore;
 import edu.ithaca.dragon.tecmap.data.TecmapFileDatastore;
 import edu.ithaca.dragon.tecmap.io.record.CohortConceptGraphsRecord;
@@ -11,6 +12,7 @@ import org.springframework.stereotype.Service;
 
 import java.io.IOException;
 import java.util.List;
+import java.util.Map;
 
 @Service
 public class TecmapService {
@@ -22,6 +24,7 @@ public class TecmapService {
 //        tecmapDatastore = TecmapFileDatastore.buildFromJsonFile(Settings.DEFAULT_TEST_DATASTORE_FILE);
     }
 
+    //For Tests
     public TecmapService(TecmapDatastore tecmapDatastore) {
         this.tecmapDatastore = tecmapDatastore;
     }
@@ -61,5 +64,9 @@ public class TecmapService {
             return tecmap.createCohortTree();
         }
         return null;
+    }
+
+    public Map<String, List<TecmapAction>> retrieveValidIdsAndActions() {
+        return tecmapDatastore.retrieveValidIdsAndActions();
     }
 }
