@@ -42,6 +42,14 @@ public class LearningResourceRecord {
         this("", new ArrayList<>(), new ArrayList<>(), 1, 0);
     }
 
+    public static List<LearningResourceRecord> createLinksFromResourceFiles(List<String> resourceConnectionRecords) throws IOException {
+        List<LearningResourceRecord> linkRecord = new ArrayList<>();
+        for (String rFiles : resourceConnectionRecords){
+            List<LearningResourceRecord> temp = LearningResourceRecord.buildListFromJson(rFiles);
+            linkRecord.addAll(temp);
+        }
+        return linkRecord;
+    }
 
     public static List<LearningResourceRecord> buildListFromJson(String fullFileName) throws IOException {
         ObjectMapper mapper = new ObjectMapper();

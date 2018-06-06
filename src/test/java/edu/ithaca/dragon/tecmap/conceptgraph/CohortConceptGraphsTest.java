@@ -2,6 +2,7 @@ package edu.ithaca.dragon.tecmap.conceptgraph;
 
 import edu.ithaca.dragon.tecmap.Settings;
 import edu.ithaca.dragon.tecmap.io.reader.CSVReader;
+import edu.ithaca.dragon.tecmap.io.reader.ReaderTools;
 import edu.ithaca.dragon.tecmap.io.reader.SakaiReader;
 import edu.ithaca.dragon.tecmap.io.record.CohortConceptGraphsRecord;
 import edu.ithaca.dragon.tecmap.io.record.ConceptGraphRecord;
@@ -11,6 +12,8 @@ import edu.ithaca.dragon.tecmap.learningresource.ExampleLearningObjectLinkRecord
 import edu.ithaca.dragon.tecmap.learningresource.ExampleLearningObjectResponseFactory;
 import edu.ithaca.dragon.tecmap.learningresource.AssessmentItem;
 import edu.ithaca.dragon.tecmap.learningresource.AssessmentItemResponse;
+import edu.ithaca.dragon.tecmap.legacy.ConceptKnowledgeCalculator;
+import edu.ithaca.dragon.tecmap.legacy.ConceptKnowledgeCalculatorAPI;
 import edu.ithaca.dragon.tecmap.util.DataUtil;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -18,7 +21,9 @@ import org.junit.Assert;
 import org.junit.Test;
 
 import java.io.IOException;
+import java.util.Arrays;
 import java.util.Collection;
+import java.util.List;
 import java.util.Map;
 
 public class CohortConceptGraphsTest {
@@ -206,6 +211,67 @@ public class CohortConceptGraphsTest {
         }
     }
 
+    @Test
+    public void calcTotalKnowledgeEstimateTest() throws IOException {
+        ConceptGraph graph = new ConceptGraph(ConceptGraphRecord.buildFromJson(Settings.TEST_RESOURCE_DIR + "ManuallyCreated/simpleConceptGraphTest.json"));
+        List<AssessmentItemResponse> assessmentItemResponses = AssessmentItemResponse.createAssessmentItemResponses(Arrays.asList(Settings.TEST_RESOURCE_DIR + "ManuallyCreated/simpleAssessmentTest.csv"));
+        List<LearningResourceRecord> links = LearningResourceRecord.createLinksFromResourceFiles(Arrays.asList(Settings.TEST_RESOURCE_DIR + "ManuallyCreated/simpleResourceTest.json"));
+        graph.addLearningResourcesFromRecords(links);
+        CohortConceptGraphs graphs = new CohortConceptGraphs(graph, assessmentItemResponses);
+
+        ConceptGraph gr = graphs.getUserGraph("s1");
+        Assert.assertEquals(1.7999999999999998, gr.calcTotalKnowledgeEstimate(), DataUtil.OK_FLOAT_MARGIN);
+
+        ConceptGraph gr2 = graphs.getUserGraph("s2");
+        Assert.assertEquals(1.7999999999999998, gr2.calcTotalKnowledgeEstimate(), DataUtil.OK_FLOAT_MARGIN);
+
+
+        ConceptGraph gr3 = graphs.getUserGraph("s3");
+        Assert.assertEquals(1.7999999999999998, gr3.calcTotalKnowledgeEstimate(), DataUtil.OK_FLOAT_MARGIN);
+
+        ConceptGraph gr4 = graphs.getUserGraph("s4");
+        Assert.assertEquals(1.7999999999999998, gr4.calcTotalKnowledgeEstimate(), DataUtil.OK_FLOAT_MARGIN);
+
+    }
+
+
+
+
+    @Test
+    public void calcTotalKnowledgeEstimate2() throws IOException {
+        ConceptGraph graph = new ConceptGraph(ConceptGraphRecord.buildFromJson(Settings.TEST_RESOURCE_DIR + "ManuallyCreated/researchConceptGraph.json"));
+        List<AssessmentItemResponse> assessmentItemResponses = AssessmentItemResponse.createAssessmentItemResponses(Arrays.asList(Settings.TEST_RESOURCE_DIR + "ManuallyCreated/researchAssessment1.csv"));
+        List<LearningResourceRecord> links = LearningResourceRecord.createLinksFromResourceFiles(Arrays.asList(Settings.TEST_RESOURCE_DIR + "ManuallyCreated/researchResource1.json"));
+        graph.addLearningResourcesFromRecords(links);
+        CohortConceptGraphs graphs = new CohortConceptGraphs(graph, assessmentItemResponses);
+
+        ConceptGraph gr = graphs.getUserGraph("s1");
+        Assert.assertEquals(13.580, gr.calcTotalKnowledgeEstimate(), DataUtil.OK_FLOAT_MARGIN);
+
+        ConceptGraph gr2 = graphs.getUserGraph("s2");
+        Assert.assertEquals(11.477, gr2.calcTotalKnowledgeEstimate(), DataUtil.OK_FLOAT_MARGIN);
+
+
+        ConceptGraph gr3 = graphs.getUserGraph("s3");
+        Assert.assertEquals(12.8326, gr3.calcTotalKnowledgeEstimate(), DataUtil.OK_FLOAT_MARGIN);
+
+        ConceptGraph gr4 = graphs.getUserGraph("s4");
+        Assert.assertEquals(1.0, gr4.calcTotalKnowledgeEstimate(), DataUtil.OK_FLOAT_MARGIN);
+
+
+        ConceptGraph gr5 = graphs.getUserGraph("s5");
+        Assert.assertEquals(12.872, gr5.calcTotalKnowledgeEstimate(), DataUtil.OK_FLOAT_MARGIN);
+
+
+        ConceptGraph gr6 = graphs.getUserGraph("s6");
+        Assert.assertEquals(12.7884, gr6.calcTotalKnowledgeEstimate(), DataUtil.OK_FLOAT_MARGIN);
+
+
+        ConceptGraph gr7 = graphs.getUserGraph("s7");
+        Assert.assertEquals(10.953, gr7.calcTotalKnowledgeEstimate(), DataUtil.OK_FLOAT_MARGIN);
+
+
+    }
 
 }
 

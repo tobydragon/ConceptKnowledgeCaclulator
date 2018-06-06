@@ -1,5 +1,6 @@
-package edu.ithaca.dragon.tecmap;
+package edu.ithaca.dragon.tecmap.legacy;
 
+import edu.ithaca.dragon.tecmap.Settings;
 import edu.ithaca.dragon.tecmap.conceptgraph.*;
 import edu.ithaca.dragon.tecmap.conceptgraph.eval.KnowledgeEstimateMatrix;
 import edu.ithaca.dragon.tecmap.conceptgraph.eval.RFunctions;

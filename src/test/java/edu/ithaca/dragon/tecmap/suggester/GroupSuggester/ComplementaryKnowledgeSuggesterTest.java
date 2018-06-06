@@ -1,31 +1,28 @@
 package edu.ithaca.dragon.tecmap.suggester.GroupSuggester;
 
-import edu.ithaca.dragon.tecmap.ConceptKnowledgeCalculator;
-import edu.ithaca.dragon.tecmap.ConceptKnowledgeCalculatorAPI;
 import edu.ithaca.dragon.tecmap.Settings;
 import edu.ithaca.dragon.tecmap.conceptgraph.CohortConceptGraphs;
 import edu.ithaca.dragon.tecmap.conceptgraph.ConceptGraph;
 import edu.ithaca.dragon.tecmap.conceptgraph.ConceptNode;
+import edu.ithaca.dragon.tecmap.io.record.ConceptGraphRecord;
+import edu.ithaca.dragon.tecmap.io.record.LearningResourceRecord;
+import edu.ithaca.dragon.tecmap.learningresource.AssessmentItemResponse;
 import org.junit.Assert;
 import org.junit.jupiter.api.Test;
 
 import java.io.IOException;
-
-import static org.junit.jupiter.api.Assertions.*;
+import java.util.Arrays;
+import java.util.List;
 
 class ComplementaryKnowledgeSuggesterTest {
 
     @Test
-    void isComplementary() {
-        ConceptKnowledgeCalculatorAPI ckc = null;
-
-        try {
-            ckc = new ConceptKnowledgeCalculator(Settings.TEST_RESOURCE_DIR + "ManuallyCreated/simpleConceptGraphTest.json", Settings.TEST_RESOURCE_DIR + "ManuallyCreated/simpleResourceTest.json", Settings.TEST_RESOURCE_DIR + "ManuallyCreated/simpleAssessmentTest.csv");
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
-        CohortConceptGraphs graphs = ckc.getCohortConceptGraphs();
+    void isComplementary() throws IOException {
+        ConceptGraph graph = new ConceptGraph(ConceptGraphRecord.buildFromJson(Settings.TEST_RESOURCE_DIR + "ManuallyCreated/simpleConceptGraphTest.json"));
+        List<AssessmentItemResponse> assessmentItemResponses = AssessmentItemResponse.createAssessmentItemResponses(Arrays.asList(Settings.TEST_RESOURCE_DIR + "ManuallyCreated/simpleAssessmentTest.csv"));
+        List<LearningResourceRecord> links = LearningResourceRecord.createLinksFromResourceFiles(Arrays.asList(Settings.TEST_RESOURCE_DIR + "ManuallyCreated/simpleResourceTest.json"));
+        graph.addLearningResourcesFromRecords(links);
+        CohortConceptGraphs graphs = new CohortConceptGraphs(graph, assessmentItemResponses);
 
         ConceptGraph gr = graphs.getUserGraph("s1");
         ConceptNode node1 = gr.findNodeById("A");

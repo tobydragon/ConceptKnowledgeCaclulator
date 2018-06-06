@@ -1,4 +1,4 @@
-package edu.ithaca.dragon.tecmap;
+package edu.ithaca.dragon.tecmap.legacy;
 
 import edu.ithaca.dragon.tecmap.conceptgraph.CohortConceptGraphs;
 import edu.ithaca.dragon.tecmap.conceptgraph.ConceptGraph;
