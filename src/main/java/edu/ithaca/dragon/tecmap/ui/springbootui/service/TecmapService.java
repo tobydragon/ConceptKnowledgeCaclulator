@@ -7,7 +7,6 @@ import edu.ithaca.dragon.tecmap.data.TecmapFileDatastore;
 import edu.ithaca.dragon.tecmap.io.record.CohortConceptGraphsRecord;
 import edu.ithaca.dragon.tecmap.io.record.ConceptGraphRecord;
 import edu.ithaca.dragon.tecmap.io.record.LearningResourceRecord;
-import edu.ithaca.dragon.tecmap.tecmapstate.TecmapState;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;
@@ -16,34 +15,50 @@ import java.util.List;
 @Service
 public class TecmapService {
 
-    private TecmapAPI tecmap;
+    private TecmapDatastore tecmapDatastore;
 
     public TecmapService() throws IOException{
-//        tecmap = new Tecmap(
-//                Settings.TEST_RESOURCE_DIR + "tecmapExamples/Cs1ExampleGraph.json",
-//                new ArrayList<>(Arrays.asList(Settings.TEST_RESOURCE_DIR + "tecmapExamples/Cs1ExampleResources.json")),
-//                new ArrayList<>(Arrays.asList(Settings.TEST_RESOURCE_DIR + "tecmapExamples/Cs1ExampleAssessment1.csv",
-//                        Settings.TEST_RESOURCE_DIR + "tecmapExamples/Cs1ExampleAssessment2.csv")
-//                )
-//        );
-
-        TecmapDatastore tecmapDatastore = TecmapFileDatastore.buildFromJsonFile(Settings.DEFAULT_MAIN_DATASTORE_FILE);
-//        tecmap = tecmapDatastore.retrieveTecmapForId("Cs1Example", TecmapState.assessmentConnected);
-        tecmap = tecmapDatastore.retrieveTecmapForId("comp220Dragon", TecmapState.assessmentConnected);
-
+        tecmapDatastore = TecmapFileDatastore.buildFromJsonFile(Settings.DEFAULT_MAIN_DATASTORE_FILE);
     }
 
-    public TecmapService(TecmapDatastore tecmapDatastore, String id, TecmapState tecmapState) {
-        tecmap = tecmapDatastore.retrieveTecmapForId(id, tecmapState);
+    public TecmapService(TecmapDatastore tecmapDatastore) {
+        this.tecmapDatastore = tecmapDatastore;
     }
 
-    public ConceptGraphRecord retrieveStructureTree() { return tecmap.createStructureTree(); }
-
-    public List<String> retrieveConceptIdList() {
-        return tecmap.createConceptIdListToPrint();
+    public TecmapAPI retrieveTecmapAPI(String id) {
+        return tecmapDatastore.retrieveTecmapForId(id);
     }
 
-    public List<LearningResourceRecord> retrieveBlankLearningResourceRecordsFromAssessment() { return tecmap.createBlankLearningResourceRecordsFromAssessment(); }
+    public ConceptGraphRecord retrieveStructureTree(String id) {
+        TecmapAPI tecmap = retrieveTecmapAPI(id);
+        if (tecmap != null) {
+            return tecmap.createStructureTree();
+        }
+        return null;
+    }
 
-    public CohortConceptGraphsRecord retrieveCohortTree() { return tecmap.createCohortTree(); }
+    public List<String> retrieveConceptIdList(String id) {
+        TecmapAPI tecmap = retrieveTecmapAPI(id);
+        if (tecmap != null) {
+            return tecmap.createConceptIdListToPrint();
+        }
+        return null;
+    }
+
+    public List<LearningResourceRecord> retrieveBlankLearningResourceRecordsFromAssessment(String id) {
+        TecmapAPI tecmap = retrieveTecmapAPI(id);
+        if (tecmap != null) {
+            return tecmap.createBlankLearningResourceRecordsFromAssessment();
+        }
+        return null;
+    }
+
+    //TODO add another null check
+    public CohortConceptGraphsRecord retrieveCohortTree(String id) {
+        TecmapAPI tecmap = retrieveTecmapAPI(id);
+        if (tecmap != null) {
+            return tecmap.createCohortTree();
+        }
+        return null;
+    }
 }

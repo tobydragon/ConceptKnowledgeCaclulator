@@ -60,9 +60,9 @@ class TecmapDatastoreTest {
     void retrieveTecmapForIdTestForDifferentStates() {
         TecmapAPI cs1ExampleMap = tecmapDatastore.retrieveTecmapForId("Cs1Example");
         assertEquals(TecmapState.assessmentConnected, cs1ExampleMap.getCurrentState());
-        TecmapAPI cs1ExampleMapNoResources = tecmapDatastore.retrieveTecmapForId("Cs1ExampleNoResources");
+        TecmapAPI cs1ExampleMapNoResources = tecmapDatastore.retrieveTecmapForId("Cs1ExampleAssessmentAdded");
         assertEquals(TecmapState.assessmentAdded, cs1ExampleMapNoResources.getCurrentState());
-        TecmapAPI cs1ExampleMapNoAssessment = tecmapDatastore.retrieveTecmapForId("Cs1ExampleNoAssessment");
+        TecmapAPI cs1ExampleMapNoAssessment = tecmapDatastore.retrieveTecmapForId("Cs1ExampleStructure");
         assertEquals(TecmapState.noAssessment, cs1ExampleMapNoAssessment.getCurrentState());
     }
 
@@ -92,10 +92,10 @@ class TecmapDatastoreTest {
     void retrieveValidIdsAndActions(){
         Map<String, List<TecmapAction>> validMap = tecmapDatastore.retrieveValidIdsAndActions();
         assertEquals(4, validMap.size());
-        assertEquals(1, validMap.get("Cs1ExampleNoAssessment").size());
-        assertThat(validMap.get("Cs1ExampleNoAssessment"), containsInAnyOrder(TecmapAction.structureTree));
-        assertEquals(1, validMap.get("Cs1ExampleNoResources").size());
-        assertThat(validMap.get("Cs1ExampleNoResources"), containsInAnyOrder(TecmapAction.structureTree));
+        assertEquals(1, validMap.get("Cs1ExampleStructure").size());
+        assertThat(validMap.get("Cs1ExampleStructure"), containsInAnyOrder(TecmapAction.structureTree));
+        assertEquals(1, validMap.get("Cs1ExampleAssessmentAdded").size());
+        assertThat(validMap.get("Cs1ExampleAssessmentAdded"), containsInAnyOrder(TecmapAction.structureTree));
         assertEquals(2, validMap.get("Cs1Example").size());
         assertThat(validMap.get("Cs1Example"), containsInAnyOrder(TecmapAction.structureTree, TecmapAction.cohortTree));
     }
