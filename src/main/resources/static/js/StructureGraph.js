@@ -1,3 +1,4 @@
+//defined in StructureGraph.html
 var graph;
 
 if (graph === undefined || graph === null) {

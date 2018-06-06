@@ -1,17 +1,19 @@
 package edu.ithaca.dragon.tecmap.data;
 
-import edu.ithaca.dragon.tecmap.Tecmap;
-import edu.ithaca.dragon.tecmap.TecmapAPI;
-import edu.ithaca.dragon.tecmap.ui.TecmapUserAction;
+import edu.ithaca.dragon.tecmap.SuggestingTecmap;
+import edu.ithaca.dragon.tecmap.SuggestingTecmapAPI;
 import edu.ithaca.dragon.tecmap.io.Json;
 import edu.ithaca.dragon.tecmap.io.record.TecmapDataFilesRecord;
 import edu.ithaca.dragon.tecmap.io.record.TecmapFileDatastoreRecord;
 import edu.ithaca.dragon.tecmap.tecmapstate.TecmapState;
+import edu.ithaca.dragon.tecmap.ui.TecmapUserAction;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import java.io.IOException;
-import java.util.*;
+import java.util.List;
+import java.util.Map;
+import java.util.TreeMap;
 
 public class TecmapFileDatastore implements TecmapDatastore {
     private static final Logger logger = LogManager.getLogger(TecmapFileDatastore.class);

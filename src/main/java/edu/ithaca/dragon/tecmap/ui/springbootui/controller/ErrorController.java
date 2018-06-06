@@ -13,7 +13,7 @@ class ErrorController implements org.springframework.boot.web.servlet.error.Erro
 
     @RequestMapping(PATH)
     public String redirect404() {
-        return "404";
+        return "Error";
     }
 
     public String getErrorPath() {

@@ -1,3 +1,4 @@
+//Both vars defined in ConnectResources.html
 var conceptList;
 var blankRecords;
 
