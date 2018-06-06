@@ -2,6 +2,7 @@ package edu.ithaca.dragon.tecmap.data;
 
 import edu.ithaca.dragon.tecmap.Tecmap;
 import edu.ithaca.dragon.tecmap.TecmapAPI;
+import edu.ithaca.dragon.tecmap.TecmapAction;
 import edu.ithaca.dragon.tecmap.io.Json;
 import edu.ithaca.dragon.tecmap.io.record.TecmapDataFilesRecord;
 import edu.ithaca.dragon.tecmap.io.record.TecmapFileDatastoreRecord;
@@ -26,7 +27,14 @@ public class TecmapFileDatastore implements TecmapDatastore {
 
     @Override
     public TecmapAPI retrieveTecmapForId(String idToRetrieve) {
-        return retrieveTecmapForId(idToRetrieve, TecmapState.assessmentConnected);
+        TecmapFileData files = idToMap.get(idToRetrieve);
+        if (files != null) {
+            return retrieveTecmapForId(idToRetrieve, files.getAvailableState());
+        }
+        else{
+            logger.info("Map not found in fileDatastore for id: "+ idToRetrieve);
+            return null;
+        }
     }
 
     @Override
@@ -56,6 +64,16 @@ public class TecmapFileDatastore implements TecmapDatastore {
             logger.info("Map not found in fileDatastore for id: "+ idToRetrieve);
             return null;
         }
+    }
+
+    @Override
+    public Map<String, List<TecmapAction>> retrieveValidIdsAndActions() {
+        //TODO: make functional style to allow parallelism
+        Map<String, List<TecmapAction>> idToActions = new TreeMap<>();
+        for (TecmapFileData fileData : idToMap.values()){
+            idToActions.put(fileData.getId(), fileData.getAvailableState().getAvailableActions());
+        }
+        return idToActions;
     }
 
     public static TecmapFileDatastore buildFromJsonFile(String filename) throws IOException {

@@ -1,0 +1,77 @@
+[ {
+  "learningResourceId" : "final-1",
+  "conceptIds" : ["Pass by Value", "Object Memory Management: Deep vs. Shallow Copies" ],
+  "dataImportance" : 1.0
+}, {
+  "learningResourceId" : "final-2",
+  "conceptIds" : [ "Dangling Pointers"],
+  "dataImportance" : 1.0
+}, {
+  "learningResourceId" : "final-3",
+  "conceptIds" : [ "Memory Leaks", "Object Oriented Programming in C++", "Destructor"],
+  "dataImportance" : 1.0
+}, {
+  "learningResourceId" : "final-4",
+  "conceptIds" : [ "Recursion"],
+  "dataImportance" : 1.0
+}, {
+  "learningResourceId" : "final-5",
+  "conceptIds" : [ "Comparing Data Structures", "Linked Nodes", "Arrays"],
+  "dataImportance" : 1.0
+}, {
+  "learningResourceId" : "final-6",
+  "conceptIds" : [ "Comparing Algorithms", "Merge Sort", "Bubble, Selection, Insert Sort", "Big-O Notation"],
+  "dataImportance" : 1.0
+}, {
+  "learningResourceId" : "final-Trace",
+  "conceptIds" : [ "Memory Diagrams", "Recursion"],
+  "dataImportance" : 1.0
+}, {
+  "learningResourceId" : "final-8",
+  "conceptIds" : ["Linked Nodes" ],
+  "dataImportance" : 1.0
+}, {
+  "learningResourceId" : "final-9",
+  "conceptIds" : [ "Stacks and Queues"],
+  "dataImportance" : 1.0
+}, {
+  "learningResourceId" : "final-10",
+  "conceptIds" : [ "Default Constructor, Copy Constructor, Assignment Operator"],
+  "dataImportance" : 1.0
+}, {
+  "learningResourceId" : "final-11",
+  "conceptIds" : ["Default Constructor, Copy Constructor, Assignment Operator", "Object Memory Management: Deep vs. Shallow Copies" ],
+  "dataImportance" : 1.0
+}, {
+  "learningResourceId" : "Tree-1",
+  "conceptIds" : ["Trees" ],
+  "dataImportance" : 1.0
+}, {
+  "learningResourceId" : "Tree-2-a",
+  "conceptIds" : ["Trees" ],
+  "dataImportance" : 1.0
+}, {
+  "learningResourceId" : "Tree-2-b",
+  "conceptIds" : ["Trees"],
+  "dataImportance" : 1.0
+}, {
+  "learningResourceId" : "Tree-2-c",
+  "conceptIds" : ["Trees", "Timing Efficiency" ],
+  "dataImportance" : 1.0
+}, {
+  "learningResourceId" : "Tree-code-1",
+  "conceptIds" : ["Trees", "Recursion" ],
+  "dataImportance" : 1.0
+}, {
+  "learningResourceId" : "Tree-code-1-1",
+  "conceptIds" : ["Trees", "Big-O Notation", "Timing Efficiency" ],
+  "dataImportance" : 1.0
+}, {
+  "learningResourceId" : "tree-code-2",
+  "conceptIds" : ["Trees", "Recursion" ],
+  "dataImportance" : 1.0
+}, {
+  "learningResourceId" : "Tree-code-2-2",
+  "conceptIds" : ["Trees", "Big-O Notation", "Timing Efficiency" ],
+  "dataImportance" : 1.0
+} ]
