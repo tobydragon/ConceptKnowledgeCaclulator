@@ -1,8 +1,6 @@
 // variable that holds the json of the CohortGraphRecord
 var cohortGraphs;
 
-
-
 function findAndMakeChart(name, type){
     var currentGraph = null;
     //iterates through the master array of objects and assigns the matching student object to dataObject
@@ -49,5 +47,8 @@ function writeMenu(){
     }
 }
 
+if (cohortGraphs === undefined || cohortGraphs === null) {
+    window.location.replace("/error")
+}
 writeMenu();
 
