@@ -1,5 +1,6 @@
 package edu.ithaca.dragon.tecmap.ui.springbootui.controller;
 
+import edu.ithaca.dragon.tecmap.TecmapAction;
 import edu.ithaca.dragon.tecmap.io.record.CohortConceptGraphsRecord;
 import edu.ithaca.dragon.tecmap.io.record.ConceptGraphRecord;
 import edu.ithaca.dragon.tecmap.io.record.LearningResourceRecord;
@@ -11,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/api")
@@ -42,5 +44,10 @@ public class ApiController {
     @GetMapping("/cohortTree/{courseId}")
     public CohortConceptGraphsRecord getcohortTree(@PathVariable("courseId") String courseId) {
         return tecmapService.retrieveCohortTree(courseId);
+    }
+
+    @GetMapping("/actions")
+    public Map<String, List<TecmapAction>> getValidIdsAndActions() {
+        return tecmapService.retrieveValidIdsAndActions();
     }
 }

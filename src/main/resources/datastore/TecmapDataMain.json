@@ -27,6 +27,12 @@
         "src/main/resources/datastore/comp220Dragon/private/comp220Assessment-e2.csv",
         "src/main/resources/datastore/comp220Dragon/private/comp220Assessment-finalExam.csv"
       ]
+    },
+    {
+      "id" : "comp220DragonStructure",
+      "graphFile" : "src/main/resources/datastore/comp220Dragon/comp220DragonGraph.json",
+      "resourceFiles" : [],
+      "assessmentFiles" : []
     }
   ]
 }
