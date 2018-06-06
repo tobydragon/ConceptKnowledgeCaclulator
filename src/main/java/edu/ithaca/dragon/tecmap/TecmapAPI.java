@@ -48,7 +48,7 @@ public interface TecmapAPI {
      * @param userID
      * @return List of Concept Nodes
      */
-//    List<String> suggestConceptsForSingleUser(String userID) throws Exception;  //calcIndividualConceptNodesSuggestions​
+//    List<String> suggestConceptsForUser(String userID);  //calcIndividualConceptNodesSuggestions​
 
     /**
      * Calculates all suggestions for the individual graph, returns an object containing two ordered lists:
@@ -57,13 +57,13 @@ public interface TecmapAPI {
      *
      * @return OrganizedLearningResourceSuggestions
      */
-//    OrganizedLearningResourceSuggestions suggestResourcesForSingleUser (String userId);              //calcIndividualGraphSuggestions
+//    OrganizedLearningResourceSuggestions suggestResourcesForUser (String userId);              //calcIndividualGraphSuggestions
 
     /**
      * Calculates suggestions specific to a certain Concept for an individual graph
      * @return Suggestion Resource object with two order resource lists
      */
-//    OrganizedLearningResourceSuggestions suggestResourcesForSingleUserSingleConcept(String userId, String conceptId)   ; //calcIndividualSpecificConceptSuggestions
+//    OrganizedLearningResourceSuggestions suggestResourcesForSpecificConceptForUser(String userId, String conceptId)   ; //calcIndividualSpecificConceptSuggestions
 
 
 //    List<Group> suggestGroups (List<Suggester> groupTypeList, int groupSize)  //calcSmallGroups
