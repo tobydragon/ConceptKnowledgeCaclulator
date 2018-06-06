@@ -13,7 +13,7 @@ import edu.ithaca.dragon.tecmap.io.record.LearningResourceRecord;
 import edu.ithaca.dragon.tecmap.learningresource.AssessmentItem;
 import edu.ithaca.dragon.tecmap.learningresource.AssessmentItemResponse;
 import edu.ithaca.dragon.tecmap.suggester.GroupSuggester.*;
-import edu.ithaca.dragon.tecmap.suggester.LearningObjectSuggester;
+import edu.ithaca.dragon.tecmap.suggester.ConceptGraphSuggesterLibrary;
 import edu.ithaca.dragon.tecmap.suggester.SuggestionResource;
 
 import java.io.IOException;
@@ -405,7 +405,7 @@ public class ConceptKnowledgeCalculator implements ConceptKnowledgeCalculatorAPI
                 if (userGraph != null) {
                     List<ConceptNode> concepts;
 
-                    concepts = LearningObjectSuggester.conceptsToWorkOn(userGraph);
+                    concepts = ConceptGraphSuggesterLibrary.suggestConcepts(userGraph);
 
                     return new SuggestionResource(userGraph, concepts);
 
@@ -459,7 +459,7 @@ public class ConceptKnowledgeCalculator implements ConceptKnowledgeCalculatorAPI
                 userGraph = cohortConceptGraphs.getUserGraph(userID);
 
                 if (userGraph != null) {
-                    List<ConceptNode> nodeList = LearningObjectSuggester.conceptsToWorkOn(userGraph);
+                    List<ConceptNode> nodeList = ConceptGraphSuggesterLibrary.suggestConcepts(userGraph);
 
                     List<String> suggestedConceptIDList = new ArrayList<>();
                     for (ConceptNode node : nodeList) {

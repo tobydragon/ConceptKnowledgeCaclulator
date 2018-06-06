@@ -7,36 +7,26 @@ import edu.ithaca.dragon.tecmap.learningresource.AssessmentItemResponse;
 
 import java.util.*;
 
-/**
- * Created by home on 5/19/17.
- */
-public class LearningObjectSuggester {
+public class ConceptGraphSuggesterLibrary {
 
     public static double MAX= .85;
-    public static double MIN = .60;
-    //this now
-    //MIN and MAX are used for suggesting concept nodes. For a concept node to be considered for giving suggestions it must between MIN and MAX.
-
     //MAX is used to figure out if a LearningResourceSuggestion is RIGHT or WRONG. (Assuming we already know it's not incomplete)
     //For a LearningResourceSuggestion to be wrong it has to be less than MAX
 
     /**
-     * Creates a list of ConceptNodes that are between the knowledge range and are not ancestors
-     * @param graph
-     * @return
+     * Suggest the concepts on which to focus, by finding the lowest children with  knowledge estimate is less than MAX
+     * @param graphforSuggestions
+     * @return a list of references to the actual ConceptNodes for the graphforSuggestions
      */
-    public static List<ConceptNode> conceptsToWorkOn(ConceptGraph graph){
-        List<ConceptNode> suggestedConceptList = new ArrayList<ConceptNode>();
-
-        for (String key : graph.getAllNodeIds()) {
-            ConceptNode node = graph.findNodeById(key);
-
+    public static List<ConceptNode> suggestConcepts(ConceptGraph graphforSuggestions){
+        List<ConceptNode> suggestedConceptList = new ArrayList<>();
+        //TODO: convert to functional style for parallelism
+        for (String key : graphforSuggestions.getAllNodeIds()) {
+            ConceptNode node = graphforSuggestions.findNodeById(key);
             if (node.getKnowledgeEstimate() > 0 && node.getKnowledgeEstimate() <= MAX) {
                 addIfLowestDescendant(node, suggestedConceptList);
             }
         }
-
-
         return suggestedConceptList;
     }
 
@@ -47,14 +37,13 @@ public class LearningObjectSuggester {
      * @param suggestedList
      * @post the node might be added to the suggestedList (if lowest descendant), and then ancestors of the node might be removed
      */
-    public static void addIfLowestDescendant(ConceptNode nodeToPotentiallyAdd, List<ConceptNode> suggestedList){
+    private static void addIfLowestDescendant(ConceptNode nodeToPotentiallyAdd, List<ConceptNode> suggestedList){
         //if this nodeToPotentiallyAdd is an ancestor of the nodeToPotentiallyAdd already in the suggestion list, skip it
         for(ConceptNode ancNode: suggestedList){
             if (nodeToPotentiallyAdd.isAncestorOf(ancNode)){
                 return;
             }
         }
-
         //when we suggest a descendant, remove any ancestors of that nodeToPotentiallyAdd from the list.
         List<ConceptNode> ancesList= new ArrayList<>();
         for (ConceptNode trackNode : suggestedList) {

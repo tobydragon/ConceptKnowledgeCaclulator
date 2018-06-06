@@ -88,10 +88,10 @@ public class SuggestionResource {
 
         if (choice == 1) {
 //            incomplete
-            suggestionMap = LearningObjectSuggester.buildSuggestionMap(concepts, 1,graph);
+            suggestionMap = ConceptGraphSuggesterLibrary.buildSuggestionMap(concepts, 1,graph);
         } else {
 //            //wrong
-            suggestionMap = LearningObjectSuggester.buildSuggestionMap(concepts,0,graph);
+            suggestionMap = ConceptGraphSuggesterLibrary.buildSuggestionMap(concepts,0,graph);
         }
 
         int max = 0;
