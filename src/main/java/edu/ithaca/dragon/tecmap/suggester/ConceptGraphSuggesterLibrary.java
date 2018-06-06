@@ -14,15 +14,15 @@ public class ConceptGraphSuggesterLibrary {
     //For a LearningResourceSuggestion to be wrong it has to be less than MAX
 
     /**
-     * Suggest the concepts on which to focus, by finding the lowest children with  knowledge estimate is less than MAX
-     * @param graphforSuggestions
-     * @return a list of references to the actual ConceptNodes for the graphforSuggestions
+     * Suggest the concepts on which to focus, by finding the lowest children with knowledge estimate is less than MAX
+     * @param graphForSuggestions
+     * @return a list of references to the actual ConceptNodes for the graphForSuggestions
      */
-    public static List<ConceptNode> suggestConcepts(ConceptGraph graphforSuggestions){
+    public static List<ConceptNode> suggestConcepts(ConceptGraph graphForSuggestions){
         List<ConceptNode> suggestedConceptList = new ArrayList<>();
         //TODO: convert to functional style for parallelism
-        for (String key : graphforSuggestions.getAllNodeIds()) {
-            ConceptNode node = graphforSuggestions.findNodeById(key);
+        for (String key : graphForSuggestions.getAllNodeIds()) {
+            ConceptNode node = graphForSuggestions.findNodeById(key);
             if (node.getKnowledgeEstimate() > 0 && node.getKnowledgeEstimate() <= MAX) {
                 addIfLowestDescendant(node, suggestedConceptList);
             }

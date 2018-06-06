@@ -43,12 +43,6 @@ public interface TecmapAPI {
     TecmapState getCurrentState();
 
     //------------------ Suggestion Functionality ------------- //
-    /**
-     * Calculates a list of conceptNode based on an individual graph , returns a the list of ConceptNodes
-     * @param userID
-     * @return List of Concept Nodes
-     */
-//    List<String> suggestConceptsForUser(String userID);  //calcIndividualConceptNodesSuggestions​
 
     /**
      * Calculates all suggestions for the individual graph, returns an object containing two ordered lists:
