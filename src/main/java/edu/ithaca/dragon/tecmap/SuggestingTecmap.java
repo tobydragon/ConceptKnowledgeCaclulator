@@ -8,6 +8,7 @@ import edu.ithaca.dragon.tecmap.tecmapstate.AssessmentConnectedState;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 public class SuggestingTecmap extends Tecmap implements SuggestingTecmapAPI{
@@ -16,9 +17,9 @@ public class SuggestingTecmap extends Tecmap implements SuggestingTecmapAPI{
         super(structureFileName, resourceConnectionFiles, assessmentFilenames);
     }
 
-    public List<String> suggestConceptsForUser(String userID){
+    public List<String> suggestConceptsForUser(String userId){
         if (state instanceof AssessmentConnectedState){
-            ConceptGraph userGraph = ((AssessmentConnectedState)state).getGraphForUser(userID);
+            ConceptGraph userGraph = ((AssessmentConnectedState)state).getGraphForUser(userId);
             if (userGraph != null){
                 List<ConceptNode> nodeList = ConceptGraphSuggesterLibrary.suggestConcepts(userGraph);
 
@@ -34,10 +35,28 @@ public class SuggestingTecmap extends Tecmap implements SuggestingTecmapAPI{
     }
 
     public OrganizedLearningResourceSuggestions suggestResourcesForUser (String userId){
+        if (state instanceof AssessmentConnectedState){
+            ConceptGraph userGraph = ((AssessmentConnectedState)state).getGraphForUser(userId);
+            if (userGraph != null){
+                List<ConceptNode> concepts = ConceptGraphSuggesterLibrary.suggestConcepts(userGraph);
+                return new OrganizedLearningResourceSuggestions(userGraph, concepts);
+            }
+        }
         return null;
     } // //calcIndividualGraphSuggestions
 
     public OrganizedLearningResourceSuggestions suggestResourcesForSpecificConceptForUser(String userId, String conceptId){
+        if (state instanceof AssessmentConnectedState){
+            ConceptGraph userGraph = ((AssessmentConnectedState)state).getGraphForUser(userId);
+            if (userGraph != null){
+                ConceptNode node = userGraph.findNodeById(conceptId);
+                if (node != null) {
+                    List<ConceptNode> concepts = new ArrayList<>(Arrays.asList(node));
+                    return new OrganizedLearningResourceSuggestions(userGraph, concepts);
+                }
+            }
+        }
         return null;
     } //calcIndividualSpecificConceptSuggestions
+
 }

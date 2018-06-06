@@ -1,7 +1,9 @@
 package edu.ithaca.dragon.tecmap;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import edu.ithaca.dragon.tecmap.data.TecmapDatastore;
 import edu.ithaca.dragon.tecmap.data.TecmapFileDatastore;
+import edu.ithaca.dragon.tecmap.io.Json;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -31,6 +33,7 @@ class SuggestingTecmapAPITest {
         List<String> s03Suggestions = cs1Example.suggestConceptsForUser("s03");
         assertThat(s03Suggestions, containsInAnyOrder("While Loops"));
         assertEquals(1, s03Suggestions.size());
+
         List<String> s01Suggestions = cs1Example.suggestConceptsForUser("s01");
         assertThat(s01Suggestions, containsInAnyOrder( "For Loops", "If Statements", "While Loops"));
         assertEquals(3, s01Suggestions.size());
@@ -43,10 +46,12 @@ class SuggestingTecmapAPITest {
     }
 
 //    @Test
-//    void suggestResourcesForUser() {
-//    }
-//
+    void suggestResourcesForUser() throws JsonProcessingException {
+        System.out.println(Json.toJsonString(cs1Example.suggestResourcesForUser("s01")));
+    }
+
 //    @Test
-//    void suggestResourcesForSpecificConceptForUser() {
-//    }
+    void suggestResourcesForSpecificConceptForUser() throws JsonProcessingException {
+        System.out.println(Json.toJsonString(cs1Example.suggestResourcesForSpecificConceptForUser("s01", "Loops")));
+    }
 }
