@@ -29,6 +29,10 @@ public class TecmapService {
         this.tecmapDatastore = tecmapDatastore;
     }
 
+    /**
+     * @param id
+     * @return Tecmap that corresponds to a given id in the Datastore
+     */
     public TecmapAPI retrieveTecmapAPI(String id) {
         return tecmapDatastore.retrieveTecmapForId(id);
     }
@@ -57,11 +61,13 @@ public class TecmapService {
         return null;
     }
 
-    //TODO add another null check
     public CohortConceptGraphsRecord retrieveCohortTree(String id) {
         TecmapAPI tecmap = retrieveTecmapAPI(id);
         if (tecmap != null) {
-            return tecmap.createCohortTree();
+            CohortConceptGraphsRecord cohortTree = tecmap.createCohortTree();
+            if (cohortTree != null) {
+                return cohortTree;
+            }
         }
         return null;
     }
