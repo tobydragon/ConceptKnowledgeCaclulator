@@ -2,7 +2,7 @@ package edu.ithaca.dragon.tecmap.data;
 
 import edu.ithaca.dragon.tecmap.Tecmap;
 import edu.ithaca.dragon.tecmap.TecmapAPI;
-import edu.ithaca.dragon.tecmap.TecmapAction;
+import edu.ithaca.dragon.tecmap.ui.TecmapUserAction;
 import edu.ithaca.dragon.tecmap.io.Json;
 import edu.ithaca.dragon.tecmap.io.record.TecmapDataFilesRecord;
 import edu.ithaca.dragon.tecmap.io.record.TecmapFileDatastoreRecord;
@@ -67,9 +67,9 @@ public class TecmapFileDatastore implements TecmapDatastore {
     }
 
     @Override
-    public Map<String, List<TecmapAction>> retrieveValidIdsAndActions() {
+    public Map<String, List<TecmapUserAction>> retrieveValidIdsAndActions() {
         //TODO: make functional style to allow parallelism
-        Map<String, List<TecmapAction>> idToActions = new TreeMap<>();
+        Map<String, List<TecmapUserAction>> idToActions = new TreeMap<>();
         for (TecmapFileData fileData : idToMap.values()){
             idToActions.put(fileData.getId(), fileData.getAvailableState().getAvailableActions());
         }

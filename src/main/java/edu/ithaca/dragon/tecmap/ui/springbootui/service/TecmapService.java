@@ -2,7 +2,7 @@ package edu.ithaca.dragon.tecmap.ui.springbootui.service;
 
 import edu.ithaca.dragon.tecmap.Settings;
 import edu.ithaca.dragon.tecmap.TecmapAPI;
-import edu.ithaca.dragon.tecmap.TecmapAction;
+import edu.ithaca.dragon.tecmap.ui.TecmapUserAction;
 import edu.ithaca.dragon.tecmap.data.TecmapDatastore;
 import edu.ithaca.dragon.tecmap.data.TecmapFileDatastore;
 import edu.ithaca.dragon.tecmap.io.record.CohortConceptGraphsRecord;
@@ -72,7 +72,7 @@ public class TecmapService {
         return null;
     }
 
-    public Map<String, List<TecmapAction>> retrieveValidIdsAndActions() {
+    public Map<String, List<TecmapUserAction>> retrieveValidIdsAndActions() {
         return tecmapDatastore.retrieveValidIdsAndActions();
     }
 }

@@ -1,6 +1,6 @@
 package edu.ithaca.dragon.tecmap.ui.springbootui.controller;
 
-import edu.ithaca.dragon.tecmap.TecmapAction;
+import edu.ithaca.dragon.tecmap.ui.TecmapUserAction;
 import edu.ithaca.dragon.tecmap.io.record.CohortConceptGraphsRecord;
 import edu.ithaca.dragon.tecmap.io.record.ConceptGraphRecord;
 import edu.ithaca.dragon.tecmap.io.record.LearningResourceRecord;
@@ -47,7 +47,7 @@ public class ApiController {
     }
 
     @GetMapping("/actions")
-    public Map<String, List<TecmapAction>> getValidIdsAndActions() {
+    public Map<String, List<TecmapUserAction>> getValidIdsAndActions() {
         return tecmapService.retrieveValidIdsAndActions();
     }
 }

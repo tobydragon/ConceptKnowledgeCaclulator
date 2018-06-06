@@ -3,7 +3,7 @@ package edu.ithaca.dragon.tecmap.ui.springbootui.service;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import edu.ithaca.dragon.tecmap.Settings;
 import edu.ithaca.dragon.tecmap.TecmapAPI;
-import edu.ithaca.dragon.tecmap.TecmapAction;
+import edu.ithaca.dragon.tecmap.ui.TecmapUserAction;
 import edu.ithaca.dragon.tecmap.data.TecmapDatastore;
 import edu.ithaca.dragon.tecmap.data.TecmapFileDatastore;
 import edu.ithaca.dragon.tecmap.io.Json;
@@ -96,13 +96,13 @@ public class TecmapServiceTest {
     @Test
     public void retrieveValidIdsAndActions() {
         //Will be the same for all of the Services, because they all use the same datastore
-        Map<String, List<TecmapAction>> validMap = onlyStructureTecmapService.retrieveValidIdsAndActions();
+        Map<String, List<TecmapUserAction>> validMap = onlyStructureTecmapService.retrieveValidIdsAndActions();
         assertEquals(4, validMap.size());
         assertEquals(1, validMap.get("Cs1ExampleStructure").size());
-        assertThat(validMap.get("Cs1ExampleStructure"), containsInAnyOrder(TecmapAction.structureTree));
-        assertEquals(1, validMap.get("Cs1ExampleAssessmentAdded").size());
-        assertThat(validMap.get("Cs1ExampleAssessmentAdded"), containsInAnyOrder(TecmapAction.structureTree));
-        assertEquals(2, validMap.get("Cs1Example").size());
-        assertThat(validMap.get("Cs1Example"), containsInAnyOrder(TecmapAction.structureTree, TecmapAction.cohortTree));
+        assertThat(validMap.get("Cs1ExampleStructure"), containsInAnyOrder(TecmapUserAction.structureTree));
+        assertEquals(2, validMap.get("Cs1ExampleAssessmentAdded").size());
+        assertThat(validMap.get("Cs1ExampleAssessmentAdded"), containsInAnyOrder(TecmapUserAction.structureTree, TecmapUserAction.connectResources));
+        assertEquals(3, validMap.get("Cs1Example").size());
+        assertThat(validMap.get("Cs1Example"), containsInAnyOrder(TecmapUserAction.structureTree, TecmapUserAction.connectResources, TecmapUserAction.cohortTree));
     }
 }

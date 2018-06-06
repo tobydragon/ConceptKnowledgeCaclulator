@@ -345,9 +345,9 @@ public class Cs1ExampleJsonStrings {
 
     public static final String validIdsAndActionsJsonString =
     "{" +
-    "\"BadPaths\":[\"structureTree\",\"cohortTree\"]," +
-    "\"Cs1Example\":[\"structureTree\",\"cohortTree\"]," +
-    "\"Cs1ExampleAssessmentAdded\":[\"structureTree\"]," +
+    "\"BadPaths\":[\"structureTree\",\"connectResources\",\"cohortTree\"]," +
+    "\"Cs1Example\":[\"structureTree\",\"connectResources\",\"cohortTree\"]," +
+    "\"Cs1ExampleAssessmentAdded\":[\"structureTree\",\"connectResources\"]," +
     "\"Cs1ExampleStructure\":[\"structureTree\"]" +
     "}";
 }
