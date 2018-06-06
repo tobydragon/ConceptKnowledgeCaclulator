@@ -5,6 +5,8 @@ import edu.ithaca.dragon.tecmap.conceptgraph.ConceptGraph;
 import edu.ithaca.dragon.tecmap.io.record.LearningResourceRecord;
 import edu.ithaca.dragon.tecmap.learningresource.AssessmentItem;
 import edu.ithaca.dragon.tecmap.learningresource.AssessmentItemResponse;
+import edu.ithaca.dragon.tecmap.legacy.ConceptKnowledgeCalculator;
+import edu.ithaca.dragon.tecmap.legacy.ConceptKnowledgeCalculatorAPI;
 import edu.ithaca.dragon.tecmap.suggester.GroupSuggester.*;
 import edu.ithaca.dragon.tecmap.suggester.LearningObjectSuggestion;
 import edu.ithaca.dragon.tecmap.suggester.SuggestionResource;

@@ -1,6 +1,6 @@
-package edu.ithaca.dragon.tecmap;
+package edu.ithaca.dragon.tecmap.legacy;
 
-import edu.ithaca.dragon.tecmap.ui.ConsoleUI;
+import edu.ithaca.dragon.tecmap.Settings;
 
 public class ConceptKnowledgeCalculatorMain {
 

@@ -1,16 +1,19 @@
 package edu.ithaca.dragon.tecmap.conceptgraph.eval;
 
-import edu.ithaca.dragon.tecmap.ConceptKnowledgeCalculator;
-import edu.ithaca.dragon.tecmap.ConceptKnowledgeCalculatorAPI;
+
 import edu.ithaca.dragon.tecmap.Settings;
 import edu.ithaca.dragon.tecmap.conceptgraph.CohortConceptGraphs;
+import edu.ithaca.dragon.tecmap.conceptgraph.ConceptGraph;
 import edu.ithaca.dragon.tecmap.io.reader.CSVReader;
 import edu.ithaca.dragon.tecmap.io.reader.SakaiReader;
+import edu.ithaca.dragon.tecmap.io.record.ConceptGraphRecord;
+import edu.ithaca.dragon.tecmap.io.record.LearningResourceRecord;
 import edu.ithaca.dragon.tecmap.learningresource.AssessmentItem;
-import edu.ithaca.dragon.tecmap.util.ErrorUtil;
+import edu.ithaca.dragon.tecmap.learningresource.AssessmentItemResponse;
 import org.junit.Assert;
 
 import java.io.IOException;
+import java.util.Arrays;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
@@ -112,16 +115,12 @@ public class RFunctionsTest {
 
 
     //@Test
-    public void modelMakerTest() {
-        ConceptKnowledgeCalculatorAPI ckc = null;
-        try {
-            ckc = new ConceptKnowledgeCalculator(Settings.TEST_RESOURCE_DIR + "ManuallyCreated/simpleConceptGraph.json",
-                    Settings.TEST_RESOURCE_DIR + "ManuallyCreated/simpleResource.json",
-                    Settings.TEST_RESOURCE_DIR + "ManuallyCreated/simpleAssessmentMoreUsers.csv");
-        } catch (IOException e) {
-            Assert.fail("Unable to load default files");
-        }
-        CohortConceptGraphs ccg = ckc.getCohortConceptGraphs();
+    public void modelMakerTest() throws IOException{
+        ConceptGraph graph = new ConceptGraph(ConceptGraphRecord.buildFromJson(Settings.TEST_RESOURCE_DIR + "ManuallyCreated/simpleConceptGraph.json"));
+        List<AssessmentItemResponse> assessmentItemResponses = AssessmentItemResponse.createAssessmentItemResponses(Arrays.asList(Settings.TEST_RESOURCE_DIR + "ManuallyCreated/simpleAssessmentMoreUsers.csv"));
+        List<LearningResourceRecord> links = LearningResourceRecord.createLinksFromResourceFiles(Arrays.asList(Settings.TEST_RESOURCE_DIR + "ManuallyCreated/simpleResource.json"));
+        graph.addLearningResourcesFromRecords(links);
+        CohortConceptGraphs ccg = new CohortConceptGraphs(graph, assessmentItemResponses);
         Assert.assertEquals("B -> Q1, Q1ToB, NA \n" +
                 "B -> Q2, Q2ToB, NA \n" +
                 "C -> Q3, Q3ToC, NA \n" +
@@ -129,16 +128,12 @@ public class RFunctionsTest {
                 "C -> Q5, Q5ToC, NA \n" +
                 "C -> Q6, Q6ToC, NA \n", RFunctions.modelMaker(ccg));
 
-        try{
-            ckc = new ConceptKnowledgeCalculator(Settings.TEST_RESOURCE_DIR + "ManuallyCreated/comp220GraphExample.json",
-                    Settings.TEST_RESOURCE_DIR + "ManuallyCreated/comp220Resources.json",
-                    Settings.PRIVATE_RESOURCE_DIR +"/comp220/comp220ExampleDataPortion.csv");
-        }catch (IOException e){
-            e.printStackTrace();
-            Assert.fail("Unable to load files");
+        graph = new ConceptGraph(ConceptGraphRecord.buildFromJson(Settings.TEST_RESOURCE_DIR + "ManuallyCreated/comp220GraphExample.json"));
+        assessmentItemResponses = AssessmentItemResponse.createAssessmentItemResponses(Arrays.asList(Settings.TEST_RESOURCE_DIR + "/comp220/comp220ExampleDataPortion.csv"));
+        links = LearningResourceRecord.createLinksFromResourceFiles(Arrays.asList(Settings.TEST_RESOURCE_DIR + "ManuallyCreated/comp220Resources.json"));
+        graph.addLearningResourcesFromRecords(links);
+        ccg = new CohortConceptGraphs(graph, assessmentItemResponses);
 
-        }
-        ccg = ckc.getCohortConceptGraphs();
         Assert.assertEquals("Recursion -> Lab4Recursion, Lab4RecursionToRecursion, NA \n" +
                 "Recursion -> Lab5ComparingSearches, Lab5ComparingSearchesToRecursion, NA \n" +
                 "Stack vs Heap -> Lab2ArrayLibrary, Lab2ArrayLibraryToStack vs Heap, NA \n" +
@@ -160,41 +155,32 @@ public class RFunctionsTest {
     }
 
 
-    public static void confirmatoryGraphTest() {
-        ConceptKnowledgeCalculatorAPI ckc = null;
-        try {
-            ckc = new ConceptKnowledgeCalculator(Settings.TEST_RESOURCE_DIR + "ManuallyCreated/simpleConceptGraph.json",
-                    Settings.TEST_RESOURCE_DIR + "ManuallyCreated/simpleResource.json",
-                    Settings.TEST_RESOURCE_DIR + "ManuallyCreated/simpleAssessmentMoreUsers.csv");
-        CohortConceptGraphs ccg = ckc.getCohortConceptGraphs();
-            CSVReader data = new SakaiReader(Settings.TEST_RESOURCE_DIR + "ManuallyCreated/simpleAssessmentMoreUsers.csv");
-            List<AssessmentItem> gotoMatrix = data.getManualGradedLearningObjects();
-            KnowledgeEstimateMatrix newMatrix = new KnowledgeEstimateMatrix(gotoMatrix);
-            RFunctions.confirmatoryGraph(newMatrix, ccg);
-            TimeUnit.SECONDS.sleep(5);
-        } catch (Exception e) {
-            Assert.fail("Failed in confirmatoryGraphTest:" + ErrorUtil.errorToStr(e));
-        }
+    public static void confirmatoryGraphTest() throws IOException, InterruptedException {
+        ConceptGraph graph = new ConceptGraph(ConceptGraphRecord.buildFromJson(Settings.TEST_RESOURCE_DIR + "ManuallyCreated/simpleConceptGraph.json"));
+        List<AssessmentItemResponse> assessmentItemResponses = AssessmentItemResponse.createAssessmentItemResponses(Arrays.asList(Settings.TEST_RESOURCE_DIR + "ManuallyCreated/simpleAssessmentMoreUsers.csv"));
+        List<LearningResourceRecord> links = LearningResourceRecord.createLinksFromResourceFiles(Arrays.asList(Settings.TEST_RESOURCE_DIR + "ManuallyCreated/simpleResource.json"));
+        graph.addLearningResourcesFromRecords(links);
+        CohortConceptGraphs ccg = new CohortConceptGraphs(graph, assessmentItemResponses);
 
+        CSVReader data = new SakaiReader(Settings.TEST_RESOURCE_DIR + "ManuallyCreated/simpleAssessmentMoreUsers.csv");
+        List<AssessmentItem> gotoMatrix = data.getManualGradedLearningObjects();
+        KnowledgeEstimateMatrix newMatrix = new KnowledgeEstimateMatrix(gotoMatrix);
+        RFunctions.confirmatoryGraph(newMatrix, ccg);
+        TimeUnit.SECONDS.sleep(5);
     }
-    public static void getConfirmatoryMatrixTest() {
-        ConceptKnowledgeCalculatorAPI ckc = null;
-        try {
-            ckc = new ConceptKnowledgeCalculator(Settings.TEST_RESOURCE_DIR + "ManuallyCreated/simpleConceptGraph.json",
-                    Settings.TEST_RESOURCE_DIR + "ManuallyCreated/simpleResource.json",
-                    Settings.TEST_RESOURCE_DIR + "ManuallyCreated/simpleAssessmentMoreUsers.csv");
-            CohortConceptGraphs ccg = ckc.getCohortConceptGraphs();
 
-            CSVReader data = new SakaiReader(Settings.TEST_RESOURCE_DIR + "ManuallyCreated/simpleAssessmentMoreUsers.csv");
+    public static void getConfirmatoryMatrixTest() throws IOException, InterruptedException {
+        ConceptGraph graph = new ConceptGraph(ConceptGraphRecord.buildFromJson(Settings.TEST_RESOURCE_DIR + "ManuallyCreated/simpleConceptGraph.json"));
+        List<AssessmentItemResponse> assessmentItemResponses = AssessmentItemResponse.createAssessmentItemResponses(Arrays.asList(Settings.TEST_RESOURCE_DIR + "ManuallyCreated/simpleAssessmentMoreUsers.csv"));
+        List<LearningResourceRecord> links = LearningResourceRecord.createLinksFromResourceFiles(Arrays.asList(Settings.TEST_RESOURCE_DIR + "ManuallyCreated/simpleResource.json"));
+        graph.addLearningResourcesFromRecords(links);
+        CohortConceptGraphs ccg = new CohortConceptGraphs(graph, assessmentItemResponses);
 
-            List<AssessmentItem> gotoMatrix = data.getManualGradedLearningObjects();
-            KnowledgeEstimateMatrix newMatrix = new KnowledgeEstimateMatrix(gotoMatrix);
-            RFunctions.returnConfirmatoryMatrix(newMatrix, ccg);
-            TimeUnit.SECONDS.sleep(5);
-        } catch (Exception e) {
-            Assert.fail("Unable to read assessment file");
-        }
-
+        CSVReader data = new SakaiReader(Settings.TEST_RESOURCE_DIR + "ManuallyCreated/simpleAssessmentMoreUsers.csv");
+        List<AssessmentItem> gotoMatrix = data.getManualGradedLearningObjects();
+        KnowledgeEstimateMatrix newMatrix = new KnowledgeEstimateMatrix(gotoMatrix);
+        RFunctions.returnConfirmatoryMatrix(newMatrix, ccg);
+        TimeUnit.SECONDS.sleep(5);
     }
 
 
@@ -213,23 +199,14 @@ public class RFunctionsTest {
     }
 
     //@Test
-    public void modelToFileTest() {
-        ConceptKnowledgeCalculatorAPI ckc = null;
-        try {
-//            ckc = new ConceptKnowledgeCalculator(Settings.RESOURCE_DIR + "comp220/comp220Graph.json",
-//                    Settings.RESOURCE_DIR + "comp220/comp220Resources.json",
-//                    Settings.PRIVATE_RESOURCE_DIR +"/comp220/comp220ExampleDataPortionCleaned.csv");
-            ckc = new ConceptKnowledgeCalculator(Settings.TEST_RESOURCE_DIR + "ManuallyCreated/simpleConceptGraph.json",
-                    Settings.TEST_RESOURCE_DIR + "ManuallyCreated/simpleResource.json",
-                    Settings.TEST_RESOURCE_DIR + "ManuallyCreated/simpleAssessmentMoreUsers.csv");
+    public void modelToFileTest() throws IOException{
+        ConceptGraph graph = new ConceptGraph(ConceptGraphRecord.buildFromJson(Settings.TEST_RESOURCE_DIR + "ManuallyCreated/simpleConceptGraph.json"));
+        List<AssessmentItemResponse> assessmentItemResponses = AssessmentItemResponse.createAssessmentItemResponses(Arrays.asList(Settings.TEST_RESOURCE_DIR + "ManuallyCreated/simpleAssessmentMoreUsers.csv"));
+        List<LearningResourceRecord> links = LearningResourceRecord.createLinksFromResourceFiles(Arrays.asList(Settings.TEST_RESOURCE_DIR + "ManuallyCreated/simpleResource.json"));
+        graph.addLearningResourcesFromRecords(links);
+        CohortConceptGraphs ccg = new CohortConceptGraphs(graph, assessmentItemResponses);
 
-            CohortConceptGraphs ccg = ckc.getCohortConceptGraphs();
-            RFunctions.modelToFile(ccg);
-        } catch (IOException e) {
-            Assert.fail("Unable to load files");
-        }
-
-
+        RFunctions.modelToFile(ccg);
     }
 
     //@Test
@@ -245,7 +222,12 @@ public class RFunctionsTest {
         //getFactorMatrixTest();
         System.out.println(
                 "- R creates a graph displaying the confirmatory factor analysis");
-        confirmatoryGraphTest();
+        try {
+            confirmatoryGraphTest();
+        }
+        catch (Exception e){
+            System.out.println("ERROR: \t in confirmatoryGraphTest");
+        }
         //returnConfirmatoryMatrixTest();
 
         //both returns a double[][] and a printout

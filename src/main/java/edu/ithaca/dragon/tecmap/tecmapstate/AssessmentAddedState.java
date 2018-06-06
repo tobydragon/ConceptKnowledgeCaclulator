@@ -21,21 +21,11 @@ public class AssessmentAddedState extends NoAssessmentState {
         super(structureFile);
         //TODO: hardcoded to sakai csv, need to hold a list of CSVReaders, or the information about which kind of reader it is...
         assessmentItems = ReaderTools.learningObjectsFromCSVList(2, assessmentFiles);
-        assessmentItemResponses = createAssessmentItemResponses(assessmentFiles);
+        assessmentItemResponses = AssessmentItemResponse.createAssessmentItemResponses(assessmentFiles);
     }
 
     public List<LearningResourceRecord> createBlankLearningResourceRecordsFromAssessment() {
         return LearningResourceRecord.createLRecordsFromAssessments(assessmentItems);
-    }
-
-    private static List<AssessmentItemResponse> createAssessmentItemResponses(List<String> assessmentFiles) throws IOException{
-        List<AssessmentItemResponse> assessments = new ArrayList<>();
-        for (String aname: assessmentFiles){
-            CSVReader csvReader = new SakaiReader(aname);
-            List<AssessmentItemResponse> temp = csvReader.getManualGradedResponses();
-            assessments.addAll(temp);
-        }
-        return assessments;
     }
 
 }

@@ -1,7 +1,7 @@
-package edu.ithaca.dragon.tecmap.ui;
+package edu.ithaca.dragon.tecmap.legacy;
 
-import edu.ithaca.dragon.tecmap.ConceptKnowledgeCalculator;
-import edu.ithaca.dragon.tecmap.ConceptKnowledgeCalculatorAPI;
+import edu.ithaca.dragon.tecmap.legacy.ConceptKnowledgeCalculator;
+import edu.ithaca.dragon.tecmap.legacy.ConceptKnowledgeCalculatorAPI;
 import edu.ithaca.dragon.tecmap.suggester.GroupSuggester.*;
 import edu.ithaca.dragon.tecmap.suggester.SuggestionResource;
 
