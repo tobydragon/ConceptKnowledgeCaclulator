@@ -55,15 +55,15 @@ public interface TecmapAPI {
      * an ordered list of new resources to try
      * an ordered list of resources that have had unsuccessful assessments in the past
      *
-     * @return SuggestionResource
+     * @return OrganizedLearningResourceSuggestions
      */
-//    SuggestionResource suggestResourcesForSingleUser (String userId);              //calcIndividualGraphSuggestions
+//    OrganizedLearningResourceSuggestions suggestResourcesForSingleUser (String userId);              //calcIndividualGraphSuggestions
 
     /**
      * Calculates suggestions specific to a certain Concept for an individual graph
      * @return Suggestion Resource object with two order resource lists
      */
-//    SuggestionResource suggestResourcesForSingleUserSingleConcept(String userId, String conceptId)   ; //calcIndividualSpecificConceptSuggestions
+//    OrganizedLearningResourceSuggestions suggestResourcesForSingleUserSingleConcept(String userId, String conceptId)   ; //calcIndividualSpecificConceptSuggestions
 
 
 //    List<Group> suggestGroups (List<Suggester> groupTypeList, int groupSize)  //calcSmallGroups

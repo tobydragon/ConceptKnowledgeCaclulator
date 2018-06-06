@@ -26,7 +26,7 @@ public class ConceptGraphSuggesterLibraryTest {
         ConceptGraph orig = ExampleConceptGraphFactory.simpleTestGraphTest();
 
         List<ConceptNode> concepts = ConceptGraphSuggesterLibrary.suggestConcepts(orig);
-        SuggestionResource res = new SuggestionResource(orig, concepts);
+        OrganizedLearningResourceSuggestions res = new OrganizedLearningResourceSuggestions(orig, concepts);
         List<LearningResourceSuggestion> incomTest = res.incompleteList;
         List<LearningResourceSuggestion> wrongTest = res.wrongList;
 
@@ -43,7 +43,7 @@ public class ConceptGraphSuggesterLibraryTest {
         ConceptGraph orig = ExampleConceptGraphFactory.willExampleConceptGraphTestOneStudent();
 
         List<ConceptNode> concepts = ConceptGraphSuggesterLibrary.suggestConcepts(orig);
-        SuggestionResource res = new SuggestionResource(orig, concepts);
+        OrganizedLearningResourceSuggestions res = new OrganizedLearningResourceSuggestions(orig, concepts);
 
         List<LearningResourceSuggestion> incomTest = res.incompleteList;
         List<LearningResourceSuggestion> wrongTest = res.wrongList;
@@ -224,7 +224,7 @@ public class ConceptGraphSuggesterLibraryTest {
         ConceptGraph orig = ExampleConceptGraphFactory.willExampleConceptGraphTestOneStudent();
 
         List<ConceptNode> concepts = ConceptGraphSuggesterLibrary.suggestConcepts(orig);
-        SuggestionResource res = new SuggestionResource(orig, concepts);
+        OrganizedLearningResourceSuggestions res = new OrganizedLearningResourceSuggestions(orig, concepts);
 
 
         String incomString = res.toString(0);
@@ -266,7 +266,7 @@ public class ConceptGraphSuggesterLibraryTest {
         List<ConceptNode> concepts = ConceptGraphSuggesterLibrary.suggestConcepts(userGraph);
 
 
-        SuggestionResource res = new SuggestionResource(userGraph, concepts);
+        OrganizedLearningResourceSuggestions res = new OrganizedLearningResourceSuggestions(userGraph, concepts);
 
 
         String incomString = res.toString(0);

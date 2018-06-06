@@ -105,7 +105,7 @@ public class ConceptGraphSuggesterLibrary {
 
 
     public static void sortSuggestions(List<LearningResourceSuggestion> myList){
-        Collections.sort(myList, new LearningObjectSuggestionComparator());
+        Collections.sort(myList, new LearningResourceSuggestionComparator());
     }
 
     /**

@@ -1,9 +1,7 @@
 package edu.ithaca.dragon.tecmap.legacy;
 
-import edu.ithaca.dragon.tecmap.legacy.ConceptKnowledgeCalculator;
-import edu.ithaca.dragon.tecmap.legacy.ConceptKnowledgeCalculatorAPI;
 import edu.ithaca.dragon.tecmap.suggester.GroupSuggester.*;
-import edu.ithaca.dragon.tecmap.suggester.SuggestionResource;
+import edu.ithaca.dragon.tecmap.suggester.OrganizedLearningResourceSuggestions;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -341,7 +339,7 @@ public class ConsoleUI {
 
         System.out.println("Concept ID");
         String conceptID = scanner.nextLine();
-        SuggestionResource sugRes;
+        OrganizedLearningResourceSuggestions sugRes;
         try {
             sugRes = ckc.calcIndividualSpecificConceptSuggestions(userID, conceptID);
 
@@ -394,7 +392,7 @@ public class ConsoleUI {
         System.out.println("User ID");
         String userID = scanner.nextLine();
         try {
-            SuggestionResource sugRes = ckc.calcIndividualGraphSuggestions(userID);
+            OrganizedLearningResourceSuggestions sugRes = ckc.calcIndividualGraphSuggestions(userID);
 
             if(ckc.getCurrentSuggestMode() == ConceptKnowledgeCalculator.SuggestMode.LISTEVERYTHING) {
                 if(sugRes.incompleteList.size()>0){

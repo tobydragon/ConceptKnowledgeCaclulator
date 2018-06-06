@@ -10,20 +10,20 @@ import java.util.List;
 /**
  * Created by Mia Kimmich Mitchell on 6/6/2017.
  */
-public class SuggestionResource {
+public class OrganizedLearningResourceSuggestions {
 
     public List<LearningResourceSuggestion> wrongList;
     public List<LearningResourceSuggestion> incompleteList;
     public HashMap<String, List<LearningResourceSuggestion>> suggestionMap;
 
 
-    public SuggestionResource(ConceptGraph graph, List<ConceptNode> concepts){
+    public OrganizedLearningResourceSuggestions(ConceptGraph graph, List<ConceptNode> concepts){
         this();
         completeList(graph, 0, concepts );
         completeList(graph,1, concepts);
     }
 
-    public SuggestionResource(){
+    public OrganizedLearningResourceSuggestions(){
         this.incompleteList= new ArrayList<LearningResourceSuggestion>();
         this.wrongList= new ArrayList<LearningResourceSuggestion>();
         this.suggestionMap= new HashMap<>();

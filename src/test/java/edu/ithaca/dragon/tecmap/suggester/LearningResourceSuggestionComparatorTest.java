@@ -5,8 +5,6 @@ package edu.ithaca.dragon.tecmap.suggester;
  */
 
 import edu.ithaca.dragon.tecmap.conceptgraph.ConceptGraphTest;
-import edu.ithaca.dragon.tecmap.suggester.LearningResourceSuggestion;
-import edu.ithaca.dragon.tecmap.suggester.LearningObjectSuggestionComparator;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.junit.Assert;
@@ -16,7 +14,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-public class LearningObjectSuggestionComparatorTest {
+public class LearningResourceSuggestionComparatorTest {
     static Logger logger = LogManager.getLogger(ConceptGraphTest.class);
 
     //order them: right, wrong, incomplete
@@ -28,8 +26,8 @@ public class LearningObjectSuggestionComparatorTest {
         suggestList.add(new LearningResourceSuggestion("Q1", 1, LearningResourceSuggestion.Level.RIGHT, "A",1) );
         suggestList.add(new LearningResourceSuggestion("Q4", 1, LearningResourceSuggestion.Level.RIGHT, "A",1) );
 
-        new LearningObjectSuggestionComparator();
-        Collections.sort(suggestList, new LearningObjectSuggestionComparator());
+        new LearningResourceSuggestionComparator();
+        Collections.sort(suggestList, new LearningResourceSuggestionComparator());
 
         List<LearningResourceSuggestion> suggestListTest = new ArrayList<>();
         suggestListTest.add(new LearningResourceSuggestion("Q1", 1, LearningResourceSuggestion.Level.RIGHT, "A",1) );
@@ -51,7 +49,7 @@ public class LearningObjectSuggestionComparatorTest {
         suggestList.add(new LearningResourceSuggestion("Q1", 1, LearningResourceSuggestion.Level.WRONG, "A",4) );
         suggestList.add(new LearningResourceSuggestion("Q4", 2, LearningResourceSuggestion.Level.WRONG, "A",3) );
 
-        Collections.sort(suggestList, new LearningObjectSuggestionComparator());
+        Collections.sort(suggestList, new LearningResourceSuggestionComparator());
 
         List<LearningResourceSuggestion> suggestListTest = new ArrayList<>();
         suggestListTest.add(new LearningResourceSuggestion("Q4", 2, LearningResourceSuggestion.Level.WRONG, "A",3) );
@@ -73,7 +71,7 @@ public class LearningObjectSuggestionComparatorTest {
         suggestList.add(new LearningResourceSuggestion("Q1", 5, LearningResourceSuggestion.Level.RIGHT, "A",1) );
         suggestList.add(new LearningResourceSuggestion("Q4", 1, LearningResourceSuggestion.Level.RIGHT, "A",1) );
 
-        Collections.sort(suggestList, new LearningObjectSuggestionComparator());
+        Collections.sort(suggestList, new LearningResourceSuggestionComparator());
 
         List<LearningResourceSuggestion> suggestListTest = new ArrayList<>();
         suggestListTest.add(new LearningResourceSuggestion("Q1", 5, LearningResourceSuggestion.Level.RIGHT, "A",1) );
@@ -95,7 +93,7 @@ public class LearningObjectSuggestionComparatorTest {
         suggestList.add(new LearningResourceSuggestion("Q1", 1, LearningResourceSuggestion.Level.INCOMPLETE, "A",2) );
         suggestList.add(new LearningResourceSuggestion("Q4", 1, LearningResourceSuggestion.Level.RIGHT, "A",1) );
 
-        Collections.sort(suggestList, new LearningObjectSuggestionComparator());
+        Collections.sort(suggestList, new LearningResourceSuggestionComparator());
 
         List<LearningResourceSuggestion> suggestListTest = new ArrayList<>();
         suggestListTest.add(new LearningResourceSuggestion("Q4", 1, LearningResourceSuggestion.Level.RIGHT, "A",1) );
@@ -117,7 +115,7 @@ public class LearningObjectSuggestionComparatorTest {
         suggestList.add(new LearningResourceSuggestion("Q4", 1, LearningResourceSuggestion.Level.RIGHT, "A",1) );
         suggestList.add(new LearningResourceSuggestion("Q1", 1, LearningResourceSuggestion.Level.INCOMPLETE, "A",1) );
 
-        Collections.sort(suggestList, new LearningObjectSuggestionComparator());
+        Collections.sort(suggestList, new LearningResourceSuggestionComparator());
 
         List<LearningResourceSuggestion> suggestListTest = new ArrayList<>();
         suggestListTest.add(new LearningResourceSuggestion("Q4", 1, LearningResourceSuggestion.Level.RIGHT, "A",1) );
@@ -139,7 +137,7 @@ public class LearningObjectSuggestionComparatorTest {
         suggestList.add(new LearningResourceSuggestion("Q4", 1, LearningResourceSuggestion.Level.WRONG, "A",1) );
         suggestList.add(new LearningResourceSuggestion("Q1", 1, LearningResourceSuggestion.Level.INCOMPLETE, "A",5) );
 
-        Collections.sort(suggestList, new LearningObjectSuggestionComparator());
+        Collections.sort(suggestList, new LearningResourceSuggestionComparator());
 
         List<LearningResourceSuggestion> suggestListTest = new ArrayList<>();
         suggestListTest.add(new LearningResourceSuggestion("Q4", 1, LearningResourceSuggestion.Level.WRONG, "A",1) );
@@ -165,7 +163,7 @@ public class LearningObjectSuggestionComparatorTest {
         suggestList.add(new LearningResourceSuggestion("Q3", 1, LearningResourceSuggestion.Level.RIGHT, "A",2) );
 
 
-        Collections.sort(suggestList, new LearningObjectSuggestionComparator());
+        Collections.sort(suggestList, new LearningResourceSuggestionComparator());
 
         List<LearningResourceSuggestion> suggestListTest = new ArrayList<>();
         suggestListTest.add(new LearningResourceSuggestion("Q3", 1, LearningResourceSuggestion.Level.RIGHT, "A",2) );
@@ -192,7 +190,7 @@ public class LearningObjectSuggestionComparatorTest {
         List<LearningResourceSuggestion> suggestList = new ArrayList<>();
         suggestList.add(new LearningResourceSuggestion("Q1", 2, LearningResourceSuggestion.Level.INCOMPLETE, "A",3) );
         suggestList.add(new LearningResourceSuggestion("Q2", 1, LearningResourceSuggestion.Level.WRONG, "A",1) );
-        Collections.sort(suggestList, new LearningObjectSuggestionComparator());
+        Collections.sort(suggestList, new LearningResourceSuggestionComparator());
 
 
         List<LearningResourceSuggestion> suggestListTest = new ArrayList<>();
@@ -221,7 +219,7 @@ public class LearningObjectSuggestionComparatorTest {
         suggestList.add(new LearningResourceSuggestion("Q1", 2, LearningResourceSuggestion.Level.INCOMPLETE, "A",5) );
         suggestList.add(new LearningResourceSuggestion("Q4", 2, LearningResourceSuggestion.Level.INCOMPLETE, "A",1) );
 
-        Collections.sort(suggestList, new LearningObjectSuggestionComparator());
+        Collections.sort(suggestList, new LearningResourceSuggestionComparator());
 
         List<LearningResourceSuggestion> suggestListTest = new ArrayList<>();
         suggestListTest.add(new LearningResourceSuggestion("Q4", 2, LearningResourceSuggestion.Level.INCOMPLETE, "A",1) );
@@ -243,7 +241,7 @@ public class LearningObjectSuggestionComparatorTest {
         suggestList.add(new LearningResourceSuggestion("Q1", 2, LearningResourceSuggestion.Level.INCOMPLETE, "C",3) );
         suggestList.add(new LearningResourceSuggestion("Q4", 2, LearningResourceSuggestion.Level.INCOMPLETE, "C",6) );
 
-        Collections.sort(suggestList, new LearningObjectSuggestionComparator());
+        Collections.sort(suggestList, new LearningResourceSuggestionComparator());
 
         List<LearningResourceSuggestion> suggestListTest = new ArrayList<>();
         suggestListTest.add(new LearningResourceSuggestion("Q1", 2, LearningResourceSuggestion.Level.INCOMPLETE, "C",3) );
@@ -266,7 +264,7 @@ public class LearningObjectSuggestionComparatorTest {
         suggestList.add(new LearningResourceSuggestion("Q1", 4, LearningResourceSuggestion.Level.INCOMPLETE, "A",4) );
         suggestList.add(new LearningResourceSuggestion("Q4", 4, LearningResourceSuggestion.Level.INCOMPLETE, "A",4) );
 
-        Collections.sort(suggestList, new LearningObjectSuggestionComparator());
+        Collections.sort(suggestList, new LearningResourceSuggestionComparator());
 
         List<LearningResourceSuggestion> suggestListTest = new ArrayList<>();
         suggestListTest.add(new LearningResourceSuggestion("Q1", 4, LearningResourceSuggestion.Level.INCOMPLETE, "A",4) );
@@ -294,8 +292,8 @@ public class LearningObjectSuggestionComparatorTest {
 
 
 
-        new LearningObjectSuggestionComparator();
-        Collections.sort(suggestList, new LearningObjectSuggestionComparator());
+        new LearningResourceSuggestionComparator();
+        Collections.sort(suggestList, new LearningResourceSuggestionComparator());
 
         List<LearningResourceSuggestion> suggestListTest = new ArrayList<>();
         suggestListTest.add(new LearningResourceSuggestion("Q5", 3, LearningResourceSuggestion.Level.RIGHT, "A",1) );

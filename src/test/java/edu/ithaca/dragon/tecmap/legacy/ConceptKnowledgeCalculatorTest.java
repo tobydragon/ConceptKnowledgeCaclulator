@@ -8,7 +8,7 @@ import edu.ithaca.dragon.tecmap.learningresource.AssessmentItem;
 import edu.ithaca.dragon.tecmap.learningresource.AssessmentItemResponse;
 import edu.ithaca.dragon.tecmap.suggester.GroupSuggester.*;
 import edu.ithaca.dragon.tecmap.suggester.LearningResourceSuggestion;
-import edu.ithaca.dragon.tecmap.suggester.SuggestionResource;
+import edu.ithaca.dragon.tecmap.suggester.OrganizedLearningResourceSuggestions;
 import edu.ithaca.dragon.tecmap.util.ErrorUtil;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -253,7 +253,7 @@ public class ConceptKnowledgeCalculatorTest {
             Assert.fail("Unable to load default files. Test unable to run");
         }
 
-        SuggestionResource res = null;
+        OrganizedLearningResourceSuggestions res = null;
         try {
             res = ckc.calcIndividualGraphSuggestions("bspinache1");
             List<LearningResourceSuggestion> incomTest = res.incompleteList;
@@ -289,7 +289,7 @@ public class ConceptKnowledgeCalculatorTest {
             Assert.fail("Unable to load default files. Test unable to run");
         }
 
-        SuggestionResource res = null;
+        OrganizedLearningResourceSuggestions res = null;
         try {
             res = ckc.calcIndividualGraphSuggestions("s04");
             List<LearningResourceSuggestion> incomTest = res.incompleteList;
@@ -331,7 +331,7 @@ public class ConceptKnowledgeCalculatorTest {
             Assert.fail("Unable to load default files. Test unable to run");
         }
 
-        SuggestionResource res = null;
+        OrganizedLearningResourceSuggestions res = null;
         try {
 
             res = ckc.calcIndividualGraphSuggestions("s02");
@@ -364,7 +364,7 @@ public class ConceptKnowledgeCalculatorTest {
             ConceptKnowledgeCalculatorAPI ckc = null;
         try {
             ckc = new ConceptKnowledgeCalculator(Settings.TEST_RESOURCE_DIR + "ManuallyCreated/comp220GraphExample.json",Settings.TEST_RESOURCE_DIR + "ManuallyCreated/comp220Resources.json", Settings.TEST_RESOURCE_DIR + "ManuallyCreated/exampleDataAssessment.csv");
-            SuggestionResource res = ckc.calcIndividualGraphSuggestions("s05");
+            OrganizedLearningResourceSuggestions res = ckc.calcIndividualGraphSuggestions("s05");
 
             List<LearningResourceSuggestion> incomTest = res.incompleteList;
             List<LearningResourceSuggestion> wrongTest = res.wrongList;
@@ -396,7 +396,7 @@ public class ConceptKnowledgeCalculatorTest {
 
         }
 
-        SuggestionResource resource = null;
+        OrganizedLearningResourceSuggestions resource = null;
         try {
             resource = ckc.calcIndividualSpecificConceptSuggestions("bspinache1", "If Statement");
 
@@ -974,7 +974,7 @@ public class ConceptKnowledgeCalculatorTest {
 
             ckc.getCohortGraphsUrl();
 
-            SuggestionResource sug = ckc.calcIndividualGraphSuggestions("s1");
+            OrganizedLearningResourceSuggestions sug = ckc.calcIndividualGraphSuggestions("s1");
 
             List<LearningResourceSuggestion> wrongTest = sug.wrongList;
             List<LearningResourceSuggestion> incomTest = sug.incompleteList;
@@ -1003,7 +1003,7 @@ public class ConceptKnowledgeCalculatorTest {
         try {
             ckc = new ConceptKnowledgeCalculator(Settings.TEST_RESOURCE_DIR + "ManuallyCreated/researchConceptGraph.json", Settings.TEST_RESOURCE_DIR + "ManuallyCreated/researchResource2.json", Settings.TEST_RESOURCE_DIR + "ManuallyCreated/researchAssessment2.csv");
 
-            SuggestionResource sug2 = ckc.calcIndividualGraphSuggestions("s2") ;
+            OrganizedLearningResourceSuggestions sug2 = ckc.calcIndividualGraphSuggestions("s2") ;
 
             List<LearningResourceSuggestion> wrongTest2 = sug2.wrongList;
             List<LearningResourceSuggestion> incomTest2 = sug2.incompleteList;

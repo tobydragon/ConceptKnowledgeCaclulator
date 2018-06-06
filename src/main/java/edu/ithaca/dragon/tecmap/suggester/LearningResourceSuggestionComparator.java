@@ -5,7 +5,7 @@ import java.util.Comparator;
 /**
  * Created by Mia Kimmich Mitchell on 4/10/2017.
  */
-public class LearningObjectSuggestionComparator implements Comparator<LearningResourceSuggestion> {
+public class LearningResourceSuggestionComparator implements Comparator<LearningResourceSuggestion> {
 
     /**
      * compares first by level (will be in order of right, wrong, incomplete)
