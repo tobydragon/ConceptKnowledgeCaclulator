@@ -7,8 +7,9 @@ function listActions() {
         if (courseActions.length > 0) {
             var codeList = "<ul><strong>" + courseName + ":" + "</strong>";
             for (var i = 0; i < courseActions.length; i++) {
+                var dest = prefix + courseActions[i] + "/" + courseName;
                 var listItem = "<li>";
-                listItem += prefix + courseActions[i] + "/" + courseName;
+                listItem += '<a href="' + dest + '">' + dest + "</a>";
                 listItem += "</li>";
                 codeList += listItem;
             }
