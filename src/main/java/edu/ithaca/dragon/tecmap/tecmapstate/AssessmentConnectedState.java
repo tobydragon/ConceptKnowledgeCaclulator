@@ -1,6 +1,7 @@
 package edu.ithaca.dragon.tecmap.tecmapstate;
 
 import edu.ithaca.dragon.tecmap.conceptgraph.CohortConceptGraphs;
+import edu.ithaca.dragon.tecmap.conceptgraph.ConceptGraph;
 import edu.ithaca.dragon.tecmap.io.record.CohortConceptGraphsRecord;
 import edu.ithaca.dragon.tecmap.io.record.LearningResourceRecord;
 
@@ -10,8 +11,8 @@ import java.util.List;
 
 public class AssessmentConnectedState extends AssessmentAddedState {
 
-    CohortConceptGraphs cohortConceptGraphs;
-    List<LearningResourceRecord> links;
+    protected CohortConceptGraphs cohortConceptGraphs;
+    private List<LearningResourceRecord> links;
 
     public AssessmentConnectedState(String structureFile, List<String> resourceConnectionFiles, List<String> assessmentFiles) throws IOException {
         super(structureFile, assessmentFiles);
@@ -22,6 +23,10 @@ public class AssessmentConnectedState extends AssessmentAddedState {
 
     public CohortConceptGraphsRecord createCohortTree(){
         return cohortConceptGraphs.buildCohortConceptTreeRecord();
+    }
+
+    public ConceptGraph getGraphForUser(String userId){
+        return cohortConceptGraphs.getUserGraph(userId);
     }
 
 }

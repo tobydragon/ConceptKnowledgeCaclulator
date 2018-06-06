@@ -10,22 +10,22 @@ import java.util.List;
 /**
  * Created by Mia Kimmich Mitchell on 6/6/2017.
  */
-public class SuggestionResource {
+public class OrganizedLearningResourceSuggestions {
 
-    public List<LearningObjectSuggestion> wrongList;
-    public List<LearningObjectSuggestion> incompleteList;
-    public HashMap<String, List<LearningObjectSuggestion>> suggestionMap;
+    public List<LearningResourceSuggestion> wrongList;
+    public List<LearningResourceSuggestion> incompleteList;
+    public HashMap<String, List<LearningResourceSuggestion>> suggestionMap;
 
 
-    public SuggestionResource(ConceptGraph graph, List<ConceptNode> concepts){
+    public OrganizedLearningResourceSuggestions(ConceptGraph graph, List<ConceptNode> concepts){
         this();
         completeList(graph, 0, concepts );
         completeList(graph,1, concepts);
     }
 
-    public SuggestionResource(){
-        this.incompleteList= new ArrayList<LearningObjectSuggestion>();
-        this.wrongList= new ArrayList<LearningObjectSuggestion>();
+    public OrganizedLearningResourceSuggestions(){
+        this.incompleteList= new ArrayList<LearningResourceSuggestion>();
+        this.wrongList= new ArrayList<LearningResourceSuggestion>();
         this.suggestionMap= new HashMap<>();
     }
 
@@ -35,7 +35,7 @@ public class SuggestionResource {
      *@param suggestionMap - suggested Concept Nodes and a list of LearningObjectSuggestions
      *@return a list of strings of ordered names
      */
-    public static List<String> sortHighToLow(HashMap<String, List<LearningObjectSuggestion>> suggestionMap){
+    public static List<String> sortHighToLow(HashMap<String, List<LearningResourceSuggestion>> suggestionMap){
         List<String> workingList = new ArrayList<>();
         List<String> orderedNames = new ArrayList<>();
 
@@ -88,14 +88,14 @@ public class SuggestionResource {
 
         if (choice == 1) {
 //            incomplete
-            suggestionMap = LearningObjectSuggester.buildSuggestionMap(concepts, 1,graph);
+            suggestionMap = ConceptGraphSuggesterLibrary.buildSuggestionMap(concepts, 1,graph);
         } else {
 //            //wrong
-            suggestionMap = LearningObjectSuggester.buildSuggestionMap(concepts,0,graph);
+            suggestionMap = ConceptGraphSuggesterLibrary.buildSuggestionMap(concepts,0,graph);
         }
 
         int max = 0;
-        for (List<LearningObjectSuggestion> lists : suggestionMap.values()) {
+        for (List<LearningResourceSuggestion> lists : suggestionMap.values()) {
             max += lists.size();
         }
         if (max != 0) {
@@ -104,9 +104,9 @@ public class SuggestionResource {
             int itr = 0;
             while (itr < max) {
                 for (int i = 0; i < suggestionOrder.size(); i++) {
-                    List<LearningObjectSuggestion> LOSList = suggestionMap.get(suggestionOrder.get(i));
+                    List<LearningResourceSuggestion> LOSList = suggestionMap.get(suggestionOrder.get(i));
                     if (itr < LOSList.size()) {
-                        LearningObjectSuggestion sug = LOSList.get(itr);
+                        LearningResourceSuggestion sug = LOSList.get(itr);
 
                         if (choice == 1) {
                             incompleteList.add(sug);
@@ -126,7 +126,7 @@ public class SuggestionResource {
      * @return
      */
     public String toString(int choice){
-        List<LearningObjectSuggestion> list;
+        List<LearningResourceSuggestion> list;
         if (choice==0){
             list = incompleteList;
         }else{
@@ -136,7 +136,7 @@ public class SuggestionResource {
         //Hashmap<learning suggestion resource, Concept>
         HashMap<String, String> repeatList = new HashMap<>();
 
-        for (LearningObjectSuggestion los: list){
+        for (LearningResourceSuggestion los: list){
             if(repeatList.keySet().contains(los.getId())){
                 String name = repeatList.get(los.getId());
                 repeatList.put(los.getId(), name += " & " +los.getReasoning());
@@ -150,7 +150,7 @@ public class SuggestionResource {
         //So repeated resources don't get added to the string multiple times
         List<String>  list2 = new ArrayList<>();
         String st = "";
-        for (LearningObjectSuggestion los: list){
+        for (LearningResourceSuggestion los: list){
             if(list2.contains(los.getId())){
 
             }else{

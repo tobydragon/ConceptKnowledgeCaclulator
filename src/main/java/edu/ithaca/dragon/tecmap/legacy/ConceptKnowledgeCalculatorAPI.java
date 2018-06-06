@@ -4,7 +4,7 @@ import edu.ithaca.dragon.tecmap.conceptgraph.CohortConceptGraphs;
 import edu.ithaca.dragon.tecmap.conceptgraph.ConceptGraph;
 import edu.ithaca.dragon.tecmap.suggester.GroupSuggester.Group;
 import edu.ithaca.dragon.tecmap.suggester.GroupSuggester.Suggester;
-import edu.ithaca.dragon.tecmap.suggester.SuggestionResource;
+import edu.ithaca.dragon.tecmap.suggester.OrganizedLearningResourceSuggestions;
 
 import java.io.IOException;
 import java.util.List;
@@ -109,16 +109,16 @@ public interface ConceptKnowledgeCalculatorAPI {
      * an ordered list of new resources to try
      * an ordered list of resources that have had unsuccessful assessments in the past
      *
-     * @return SuggestionResource
+     * @return OrganizedLearningResourceSuggestions
      */
-    SuggestionResource calcIndividualGraphSuggestions(String userId) throws Exception;
+    OrganizedLearningResourceSuggestions calcIndividualGraphSuggestions(String userId) throws Exception;
 
 
     /**
      * Calculates suggestions specific to a certain Concept for an individual graph
      * @return Suggestion Resource object with two order resource lists
      */
-    SuggestionResource calcIndividualSpecificConceptSuggestions(String userId, String conceptId) throws Exception;
+    OrganizedLearningResourceSuggestions calcIndividualSpecificConceptSuggestions(String userId, String conceptId) throws Exception;
 
     /**
      * Calculates average knowledgeEstimates of a AssessmentItem across all students

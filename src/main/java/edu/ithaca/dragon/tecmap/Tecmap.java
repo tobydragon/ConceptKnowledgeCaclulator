@@ -14,16 +14,15 @@ import java.util.List;
 
 public class Tecmap implements TecmapAPI {
 
-    private NoAssessmentState state;
+    protected NoAssessmentState state;
 
-    public Tecmap(String structureFileName) throws IOException {
-        this(structureFileName, null, null);
-    }
-
-    public Tecmap(String structureFileName, List<String> assessmentFilenames) throws IOException {
-        this(structureFileName, null, assessmentFilenames);
-    }
-
+    /**
+     * creates a tecmap in the appropriate state, depending on what files are given
+     * @param structureFileName must be a valid json file for graph structure
+     * @param resourceConnectionFiles can be a list of filenames, or null if there are no resource connections
+     * @param assessmentFilenames can be a list of filenames, or null if there are no assessments
+     * @throws IOException
+     */
     public Tecmap(String structureFileName, List<String> resourceConnectionFiles, List<String> assessmentFilenames) throws IOException {
         TecmapState stateEnum = TecmapState.checkAvailableState(resourceConnectionFiles, assessmentFilenames);
         if (stateEnum == TecmapState.noAssessment){

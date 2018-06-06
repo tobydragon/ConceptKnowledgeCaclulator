@@ -13,8 +13,8 @@ import edu.ithaca.dragon.tecmap.io.record.LearningResourceRecord;
 import edu.ithaca.dragon.tecmap.learningresource.AssessmentItem;
 import edu.ithaca.dragon.tecmap.learningresource.AssessmentItemResponse;
 import edu.ithaca.dragon.tecmap.suggester.GroupSuggester.*;
-import edu.ithaca.dragon.tecmap.suggester.LearningObjectSuggester;
-import edu.ithaca.dragon.tecmap.suggester.SuggestionResource;
+import edu.ithaca.dragon.tecmap.suggester.ConceptGraphSuggesterLibrary;
+import edu.ithaca.dragon.tecmap.suggester.OrganizedLearningResourceSuggestions;
 
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
@@ -397,7 +397,7 @@ public class ConceptKnowledgeCalculator implements ConceptKnowledgeCalculatorAPI
     }
 
     @Override
-    public SuggestionResource calcIndividualGraphSuggestions(String userId) throws Exception {
+    public OrganizedLearningResourceSuggestions calcIndividualGraphSuggestions(String userId) throws Exception {
         if(currentMode== Mode.COHORTGRAPH) {
             if (cohortConceptGraphs != null) {
                 ConceptGraph userGraph;
@@ -405,16 +405,16 @@ public class ConceptKnowledgeCalculator implements ConceptKnowledgeCalculatorAPI
                 if (userGraph != null) {
                     List<ConceptNode> concepts;
 
-                    concepts = LearningObjectSuggester.conceptsToWorkOn(userGraph);
+                    concepts = ConceptGraphSuggesterLibrary.suggestConcepts(userGraph);
 
-                    return new SuggestionResource(userGraph, concepts);
+                    return new OrganizedLearningResourceSuggestions(userGraph, concepts);
 
                 } else {
                     throw new Exception("Invalid User ID");
                 }
 
             } else {
-                return new SuggestionResource();
+                return new OrganizedLearningResourceSuggestions();
             }
         }else{
             throw new Exception("Wrong mode");
@@ -422,7 +422,7 @@ public class ConceptKnowledgeCalculator implements ConceptKnowledgeCalculatorAPI
     }
 
     @Override
-    public SuggestionResource calcIndividualSpecificConceptSuggestions(String userId, String conceptId) throws Exception {
+    public OrganizedLearningResourceSuggestions calcIndividualSpecificConceptSuggestions(String userId, String conceptId) throws Exception {
         if(currentMode== Mode.COHORTGRAPH) {
             if (cohortConceptGraphs != null) {
                 ConceptGraph userGraph;
@@ -434,7 +434,7 @@ public class ConceptKnowledgeCalculator implements ConceptKnowledgeCalculatorAPI
                         List<ConceptNode> concepts = new ArrayList<ConceptNode>();
                         concepts.add(node);
 
-                        return new SuggestionResource(userGraph, concepts);
+                        return new OrganizedLearningResourceSuggestions(userGraph, concepts);
 
                     } else {
                         throw new Exception("Invalid Concept");
@@ -443,7 +443,7 @@ public class ConceptKnowledgeCalculator implements ConceptKnowledgeCalculatorAPI
                     throw new Exception("Invalid User ID");
                 }
             } else {
-                return new SuggestionResource();
+                return new OrganizedLearningResourceSuggestions();
             }
         }else{
             throw new Exception("Wrong mode");
@@ -459,7 +459,7 @@ public class ConceptKnowledgeCalculator implements ConceptKnowledgeCalculatorAPI
                 userGraph = cohortConceptGraphs.getUserGraph(userID);
 
                 if (userGraph != null) {
-                    List<ConceptNode> nodeList = LearningObjectSuggester.conceptsToWorkOn(userGraph);
+                    List<ConceptNode> nodeList = ConceptGraphSuggesterLibrary.suggestConcepts(userGraph);
 
                     List<String> suggestedConceptIDList = new ArrayList<>();
                     for (ConceptNode node : nodeList) {
