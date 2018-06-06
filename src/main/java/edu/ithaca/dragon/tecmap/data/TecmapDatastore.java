@@ -1,5 +1,6 @@
 package edu.ithaca.dragon.tecmap.data;
 
+import edu.ithaca.dragon.tecmap.SuggestingTecmapAPI;
 import edu.ithaca.dragon.tecmap.TecmapAPI;
 import edu.ithaca.dragon.tecmap.ui.TecmapUserAction;
 import edu.ithaca.dragon.tecmap.tecmapstate.TecmapState;
@@ -15,14 +16,14 @@ public interface TecmapDatastore {
      * @param idToRetrieve
      * @return the Tecmap associated with the idToRetrieve, or null if not found
      */
-    TecmapAPI retrieveTecmapForId(String idToRetrieve);
+    SuggestingTecmapAPI retrieveTecmapForId(String idToRetrieve);
 
     /**
      * finds and builds a tecmap from data in this datastore
      * @param idToRetrieve
      * @return the Tecmap associated with the idToRetrieve, or null if not found
      */
-    TecmapAPI retrieveTecmapForId(String idToRetrieve, TecmapState desiredState);
+    SuggestingTecmapAPI retrieveTecmapForId(String idToRetrieve, TecmapState desiredState);
 
     /**
      * finds all the valid ids, and the states that are valid to load for that ID

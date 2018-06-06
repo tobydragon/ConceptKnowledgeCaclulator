@@ -3,7 +3,7 @@ package edu.ithaca.dragon.tecmap.suggester;
 /**
  * Created by Mia Kimmich Mitchell on 3/28/2017.
  */
-public class LearningObjectSuggestion {
+public class LearningResourceSuggestion {
     private String id;
     private int pathNum;
     private String reasoning;
@@ -16,42 +16,13 @@ public class LearningObjectSuggestion {
 
     }
 
-
-    public LearningObjectSuggestion() {
-        this.id = null;
-        this.pathNum= 0;
-        this.reasoning= null;
-        this.level = Level.INCOMPLETE;
-        this.directConceptLinkCount= 0;
-
-    }
-
-    public LearningObjectSuggestion(String id, int path, Level lev, String caused, int directConceptLinkCount) {
-        this();
+    public LearningResourceSuggestion(String id, int path, Level lev, String caused, int directConceptLinkCount) {
         this.id = id;
         this.pathNum= path;
         this.level = lev;
         this.reasoning= caused;
         this.directConceptLinkCount = directConceptLinkCount;
     }
-
-
-
-    public void setId(String name){
-        id = name;
-    }
-
-    public void setPathNum(int num){
-        pathNum= num;
-    }
-
-    public void setLevel(Level lev){
-        level = lev;
-    }
-    public void setDirectConceptLinkCount (int num ){
-        directConceptLinkCount= num;
-    }
-
 
     public String getId(){
         return id;
