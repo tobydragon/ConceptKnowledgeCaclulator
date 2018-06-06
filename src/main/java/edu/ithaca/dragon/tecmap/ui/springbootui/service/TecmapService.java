@@ -19,6 +19,7 @@ public class TecmapService {
 
     public TecmapService() throws IOException{
         tecmapDatastore = TecmapFileDatastore.buildFromJsonFile(Settings.DEFAULT_MAIN_DATASTORE_FILE);
+//        tecmapDatastore = TecmapFileDatastore.buildFromJsonFile(Settings.DEFAULT_TEST_DATASTORE_FILE);
     }
 
     public TecmapService(TecmapDatastore tecmapDatastore) {
