@@ -5,7 +5,7 @@ import java.util.Comparator;
 /**
  * Created by Mia Kimmich Mitchell on 4/10/2017.
  */
-public class LearningObjectSuggestionComparator implements Comparator<LearningObjectSuggestion> {
+public class LearningObjectSuggestionComparator implements Comparator<LearningResourceSuggestion> {
 
     /**
      * compares first by level (will be in order of right, wrong, incomplete)
@@ -15,7 +15,7 @@ public class LearningObjectSuggestionComparator implements Comparator<LearningOb
      * @param two
      * @return int
      */
-    public int compare(LearningObjectSuggestion one, LearningObjectSuggestion two){
+    public int compare(LearningResourceSuggestion one, LearningResourceSuggestion two){
 
         if (one.getLevel().compareTo(two.getLevel()) == 0) {
             if (one.getPathNum() < two.getPathNum()) {

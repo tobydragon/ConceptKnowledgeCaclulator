@@ -27,8 +27,8 @@ public class LearningObjectSuggesterTest {
 
         List<ConceptNode> concepts = LearningObjectSuggester.conceptsToWorkOn(orig);
         SuggestionResource res = new SuggestionResource(orig, concepts);
-        List<LearningObjectSuggestion> incomTest = res.incompleteList;
-        List<LearningObjectSuggestion> wrongTest = res.wrongList;
+        List<LearningResourceSuggestion> incomTest = res.incompleteList;
+        List<LearningResourceSuggestion> wrongTest = res.wrongList;
 
         Assert.assertEquals(wrongTest.size(), 3);
         Assert.assertEquals(wrongTest.get(0).getId(), "Q3");
@@ -45,8 +45,8 @@ public class LearningObjectSuggesterTest {
         List<ConceptNode> concepts = LearningObjectSuggester.conceptsToWorkOn(orig);
         SuggestionResource res = new SuggestionResource(orig, concepts);
 
-        List<LearningObjectSuggestion> incomTest = res.incompleteList;
-        List<LearningObjectSuggestion> wrongTest = res.wrongList;
+        List<LearningResourceSuggestion> incomTest = res.incompleteList;
+        List<LearningResourceSuggestion> wrongTest = res.wrongList;
 
         Assert.assertEquals(incomTest.size(), 3);
         Assert.assertEquals(incomTest.get(0).getId(), "Q6");
@@ -143,10 +143,10 @@ public class LearningObjectSuggesterTest {
         //what it is
 
         List<ConceptNode> concepts = LearningObjectSuggester.conceptsToWorkOn(orig);
-        HashMap<String, List<LearningObjectSuggestion>> objectSuggestionMap = LearningObjectSuggester.buildSuggestionMap(concepts, 1, orig);
+        HashMap<String, List<LearningResourceSuggestion>> objectSuggestionMap = LearningObjectSuggester.buildSuggestionMap(concepts, 1, orig);
 
         //what it should be
-        List<LearningObjectSuggestion> testList3 = new ArrayList<>();
+        List<LearningResourceSuggestion> testList3 = new ArrayList<>();
         Assert.assertEquals(1, objectSuggestionMap.size());
         Assert.assertEquals(testList3, objectSuggestionMap.get("C"));
 
@@ -157,7 +157,7 @@ public class LearningObjectSuggesterTest {
         ConceptGraph orig = ExampleConceptGraphFactory.willExampleConceptGraphTestOneStudent();
 
         List<ConceptNode> concepts = LearningObjectSuggester.conceptsToWorkOn(orig);
-        HashMap<String, List<LearningObjectSuggestion>> objectSuggestionMap = LearningObjectSuggester.buildSuggestionMap(concepts, 1, orig);
+        HashMap<String, List<LearningResourceSuggestion>> objectSuggestionMap = LearningObjectSuggester.buildSuggestionMap(concepts, 1, orig);
 
         Assert.assertEquals(2, objectSuggestionMap.size());
 
@@ -192,18 +192,18 @@ public class LearningObjectSuggesterTest {
         Assert.assertEquals(testCompareA, learningSummaryFromA);
 
         //build the suggested learning object list
-        List<LearningObjectSuggestion> suggestedList = LearningObjectSuggester.buildLearningObjectSuggestionList(learningSummaryFromA, orig.getAssessmentItemMap(), "A", linkMap);
+        List<LearningResourceSuggestion> suggestedList = LearningObjectSuggester.buildLearningObjectSuggestionList(learningSummaryFromA, orig.getAssessmentItemMap(), "A", linkMap);
 
 
         //this is ordered based on "level"
-        List<LearningObjectSuggestion> suggestListTest = new ArrayList<>();
-        suggestListTest.add(new LearningObjectSuggestion("Q1", 1, LearningObjectSuggestion.Level.RIGHT, "A", 1));
-        suggestListTest.add(new LearningObjectSuggestion("Q2", 1, LearningObjectSuggestion.Level.RIGHT, "A", 1));
-        suggestListTest.add(new LearningObjectSuggestion("Q3", 2, LearningObjectSuggestion.Level.WRONG, "A", 1));
-        suggestListTest.add(new LearningObjectSuggestion("Q4", 2, LearningObjectSuggestion.Level.WRONG, "A", 1));
-        suggestListTest.add(new LearningObjectSuggestion("Q5", 2, LearningObjectSuggestion.Level.WRONG, "A", 1));
-        suggestListTest.add(new LearningObjectSuggestion("Q6", 2, LearningObjectSuggestion.Level.WRONG, "A", 1));
-        suggestListTest.add(new LearningObjectSuggestion("Q10", 1, LearningObjectSuggestion.Level.INCOMPLETE, "A", 1));
+        List<LearningResourceSuggestion> suggestListTest = new ArrayList<>();
+        suggestListTest.add(new LearningResourceSuggestion("Q1", 1, LearningResourceSuggestion.Level.RIGHT, "A", 1));
+        suggestListTest.add(new LearningResourceSuggestion("Q2", 1, LearningResourceSuggestion.Level.RIGHT, "A", 1));
+        suggestListTest.add(new LearningResourceSuggestion("Q3", 2, LearningResourceSuggestion.Level.WRONG, "A", 1));
+        suggestListTest.add(new LearningResourceSuggestion("Q4", 2, LearningResourceSuggestion.Level.WRONG, "A", 1));
+        suggestListTest.add(new LearningResourceSuggestion("Q5", 2, LearningResourceSuggestion.Level.WRONG, "A", 1));
+        suggestListTest.add(new LearningResourceSuggestion("Q6", 2, LearningResourceSuggestion.Level.WRONG, "A", 1));
+        suggestListTest.add(new LearningResourceSuggestion("Q10", 1, LearningResourceSuggestion.Level.INCOMPLETE, "A", 1));
 
         //orders the list based off of "level"
         LearningObjectSuggester.sortSuggestions(suggestedList);

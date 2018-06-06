@@ -17,8 +17,8 @@ public class LearningObjectSuggester {
     //this now
     //MIN and MAX are used for suggesting concept nodes. For a concept node to be considered for giving suggestions it must between MIN and MAX.
 
-    //MAX is used to figure out if a LearningObjectSuggestion is RIGHT or WRONG. (Assuming we already know it's not incomplete)
-    //For a LearningObjectSuggestion to be wrong it has to be less than MAX
+    //MAX is used to figure out if a LearningResourceSuggestion is RIGHT or WRONG. (Assuming we already know it's not incomplete)
+    //For a LearningResourceSuggestion to be wrong it has to be less than MAX
 
     /**
      * Creates a list of ConceptNodes that are between the knowledge range and are not ancestors
@@ -73,19 +73,19 @@ public class LearningObjectSuggester {
      *@param choice: 1= incomplete, 0 = wrong
      *@return the map of incomplete learningObjectSuggestions in order of highest importance value to lowest
      */
-    public static HashMap<String, List<LearningObjectSuggestion>> buildSuggestionMap(List<ConceptNode> suggestedConceptList, Integer choice, ConceptGraph graph){
+    public static HashMap<String, List<LearningResourceSuggestion>> buildSuggestionMap(List<ConceptNode> suggestedConceptList, Integer choice, ConceptGraph graph){
 
-        HashMap<String, List<LearningObjectSuggestion>> suggestedConceptNodeMap = new HashMap<>();
+        HashMap<String, List<LearningResourceSuggestion>> suggestedConceptNodeMap = new HashMap<>();
 
         for (int x =0; x< suggestedConceptList.size(); x++) {
             ConceptNode concept = suggestedConceptList.get(x);
 
-            List<LearningObjectSuggestion> testList = new ArrayList<>();
+            List<LearningResourceSuggestion> testList = new ArrayList<>();
 
             Map<String, Integer> map = graph.buildLearningMaterialPathCount(concept.getID());
             Map<String, Integer> linkMap = graph.buildDirectConceptLinkCount();
 
-            List<LearningObjectSuggestion> list = buildLearningObjectSuggestionList(map, graph.getAssessmentItemMap(), concept.getID(), linkMap);
+            List<LearningResourceSuggestion> list = buildLearningObjectSuggestionList(map, graph.getAssessmentItemMap(), concept.getID(), linkMap);
 
             sortSuggestions(list);
 
@@ -95,12 +95,12 @@ public class LearningObjectSuggester {
 
                 //if it is incomplete
                 if (choice.equals(1)) {
-                    if (list.get(i).getLevel().equals(LearningObjectSuggestion.Level.INCOMPLETE)) {
+                    if (list.get(i).getLevel().equals(LearningResourceSuggestion.Level.INCOMPLETE)) {
                         //then add it
                         testList.add(list.get(i));
                     }
                 } else {
-                    if (list.get(i).getLevel().equals(LearningObjectSuggestion.Level.WRONG)) {
+                    if (list.get(i).getLevel().equals(LearningResourceSuggestion.Level.WRONG)) {
                         //then add it
 
                         testList.add(list.get(i));
@@ -115,7 +115,7 @@ public class LearningObjectSuggester {
 
 
 
-    public static void sortSuggestions(List<LearningObjectSuggestion> myList){
+    public static void sortSuggestions(List<LearningResourceSuggestion> myList){
         Collections.sort(myList, new LearningObjectSuggestionComparator());
     }
 
@@ -126,8 +126,8 @@ public class LearningObjectSuggester {
     *@param causedConcept- the ID of ConceptNode that the learningObject came from
     *@returns a list of the created LearningObjectSuggestions
     */
-    public static List<LearningObjectSuggestion> buildLearningObjectSuggestionList(Map<String, Integer> summaryList, Map<String, AssessmentItem> learningObjectMap, String causedConcept, Map<String, Integer> directLinkMap){
-        List<LearningObjectSuggestion> myList = new ArrayList<LearningObjectSuggestion>();
+    public static List<LearningResourceSuggestion> buildLearningObjectSuggestionList(Map<String, Integer> summaryList, Map<String, AssessmentItem> learningObjectMap, String causedConcept, Map<String, Integer> directLinkMap){
+        List<LearningResourceSuggestion> myList = new ArrayList<LearningResourceSuggestion>();
         for (String key : summaryList.keySet()){
             int lineNum = summaryList.get(key);
             AssessmentItem node = learningObjectMap.get(key);
@@ -135,24 +135,24 @@ public class LearningObjectSuggester {
 
             int directConceptLinkCount = directLinkMap.get(node.getId());
 
-            LearningObjectSuggestion.Level level;
+            LearningResourceSuggestion.Level level;
             //fix to fit preconditions
-            LearningObjectSuggestion.Level levelIn;
+            LearningResourceSuggestion.Level levelIn;
             List<AssessmentItemResponse> resList = node.getResponses();
 
             if(resList.size()==0){
-                levelIn = LearningObjectSuggestion.Level.INCOMPLETE;
-                LearningObjectSuggestion suggestionNode = new LearningObjectSuggestion(key,lineNum,levelIn, causedConcept, directConceptLinkCount);
+                levelIn = LearningResourceSuggestion.Level.INCOMPLETE;
+                LearningResourceSuggestion suggestionNode = new LearningResourceSuggestion(key,lineNum,levelIn, causedConcept, directConceptLinkCount);
                 myList.add(suggestionNode);
 
             }else{
 
                 if(estimate>= 0 && estimate<= MAX){
-                    level = LearningObjectSuggestion.Level.WRONG;
+                    level = LearningResourceSuggestion.Level.WRONG;
                 }else{
-                    level = LearningObjectSuggestion.Level.RIGHT;
+                    level = LearningResourceSuggestion.Level.RIGHT;
                 }
-                LearningObjectSuggestion suggestionNode = new LearningObjectSuggestion(key,lineNum,level,causedConcept, directConceptLinkCount);
+                LearningResourceSuggestion suggestionNode = new LearningResourceSuggestion(key,lineNum,level,causedConcept, directConceptLinkCount);
                 myList.add(suggestionNode);
 
             }

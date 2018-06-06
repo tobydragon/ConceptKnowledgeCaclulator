@@ -1,14 +1,13 @@
-package edu.ithaca.dragon.tecmap;
+package edu.ithaca.dragon.tecmap.legacy;
 
+import edu.ithaca.dragon.tecmap.Settings;
 import edu.ithaca.dragon.tecmap.conceptgraph.CohortConceptGraphs;
 import edu.ithaca.dragon.tecmap.conceptgraph.ConceptGraph;
 import edu.ithaca.dragon.tecmap.io.record.LearningResourceRecord;
 import edu.ithaca.dragon.tecmap.learningresource.AssessmentItem;
 import edu.ithaca.dragon.tecmap.learningresource.AssessmentItemResponse;
-import edu.ithaca.dragon.tecmap.legacy.ConceptKnowledgeCalculator;
-import edu.ithaca.dragon.tecmap.legacy.ConceptKnowledgeCalculatorAPI;
 import edu.ithaca.dragon.tecmap.suggester.GroupSuggester.*;
-import edu.ithaca.dragon.tecmap.suggester.LearningObjectSuggestion;
+import edu.ithaca.dragon.tecmap.suggester.LearningResourceSuggestion;
 import edu.ithaca.dragon.tecmap.suggester.SuggestionResource;
 import edu.ithaca.dragon.tecmap.util.ErrorUtil;
 import org.apache.logging.log4j.LogManager;
@@ -257,8 +256,8 @@ public class ConceptKnowledgeCalculatorTest {
         SuggestionResource res = null;
         try {
             res = ckc.calcIndividualGraphSuggestions("bspinache1");
-            List<LearningObjectSuggestion> incomTest = res.incompleteList;
-            List<LearningObjectSuggestion> wrongTest = res.wrongList;
+            List<LearningResourceSuggestion> incomTest = res.incompleteList;
+            List<LearningResourceSuggestion> wrongTest = res.wrongList;
 
             Assert.assertEquals(incomTest.size(),3);
             Assert.assertEquals(incomTest.get(0).getId(),"Q6");
@@ -293,8 +292,8 @@ public class ConceptKnowledgeCalculatorTest {
         SuggestionResource res = null;
         try {
             res = ckc.calcIndividualGraphSuggestions("s04");
-            List<LearningObjectSuggestion> incomTest = res.incompleteList;
-            List<LearningObjectSuggestion> wrongTest = res.wrongList;
+            List<LearningResourceSuggestion> incomTest = res.incompleteList;
+            List<LearningResourceSuggestion> wrongTest = res.wrongList;
 
             Assert.assertEquals(incomTest.size(), 0);
             Assert.assertEquals(incomTest, new ArrayList<>());
@@ -337,8 +336,8 @@ public class ConceptKnowledgeCalculatorTest {
 
             res = ckc.calcIndividualGraphSuggestions("s02");
 
-            List<LearningObjectSuggestion> incomTest = res.incompleteList;
-            List<LearningObjectSuggestion> wrongTest = res.wrongList;
+            List<LearningResourceSuggestion> incomTest = res.incompleteList;
+            List<LearningResourceSuggestion> wrongTest = res.wrongList;
 
             Assert.assertEquals(incomTest.size(), 0);
             Assert.assertEquals(incomTest, new ArrayList<>());
@@ -367,8 +366,8 @@ public class ConceptKnowledgeCalculatorTest {
             ckc = new ConceptKnowledgeCalculator(Settings.TEST_RESOURCE_DIR + "ManuallyCreated/comp220GraphExample.json",Settings.TEST_RESOURCE_DIR + "ManuallyCreated/comp220Resources.json", Settings.TEST_RESOURCE_DIR + "ManuallyCreated/exampleDataAssessment.csv");
             SuggestionResource res = ckc.calcIndividualGraphSuggestions("s05");
 
-            List<LearningObjectSuggestion> incomTest = res.incompleteList;
-            List<LearningObjectSuggestion> wrongTest = res.wrongList;
+            List<LearningResourceSuggestion> incomTest = res.incompleteList;
+            List<LearningResourceSuggestion> wrongTest = res.wrongList;
 
             Assert.assertEquals(incomTest,new ArrayList<>());
 
@@ -977,8 +976,8 @@ public class ConceptKnowledgeCalculatorTest {
 
             SuggestionResource sug = ckc.calcIndividualGraphSuggestions("s1");
 
-            List<LearningObjectSuggestion> wrongTest = sug.wrongList;
-            List<LearningObjectSuggestion> incomTest = sug.incompleteList;
+            List<LearningResourceSuggestion> wrongTest = sug.wrongList;
+            List<LearningResourceSuggestion> incomTest = sug.incompleteList;
 
             Assert.assertEquals(incomTest.size(), 1);
             Assert.assertEquals(incomTest.get(0).getId(), "What are the things you need for a while loop?");
@@ -1006,8 +1005,8 @@ public class ConceptKnowledgeCalculatorTest {
 
             SuggestionResource sug2 = ckc.calcIndividualGraphSuggestions("s2") ;
 
-            List<LearningObjectSuggestion> wrongTest2 = sug2.wrongList;
-            List<LearningObjectSuggestion> incomTest2 = sug2.incompleteList;
+            List<LearningResourceSuggestion> wrongTest2 = sug2.wrongList;
+            List<LearningResourceSuggestion> incomTest2 = sug2.incompleteList;
 
 
             ckc.getCohortGraphsUrl();
