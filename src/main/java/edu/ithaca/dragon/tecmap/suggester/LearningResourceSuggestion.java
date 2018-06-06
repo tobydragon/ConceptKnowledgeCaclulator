@@ -24,24 +24,6 @@ public class LearningResourceSuggestion {
         this.directConceptLinkCount = directConceptLinkCount;
     }
 
-
-
-    public void setId(String name){
-        id = name;
-    }
-
-    public void setPathNum(int num){
-        pathNum= num;
-    }
-
-    public void setLevel(Level lev){
-        level = lev;
-    }
-    public void setDirectConceptLinkCount (int num ){
-        directConceptLinkCount= num;
-    }
-
-
     public String getId(){
         return id;
     }
