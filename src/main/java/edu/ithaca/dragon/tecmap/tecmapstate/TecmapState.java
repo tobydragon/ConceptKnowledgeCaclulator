@@ -1,6 +1,6 @@
 package edu.ithaca.dragon.tecmap.tecmapstate;
 
-import edu.ithaca.dragon.tecmap.TecmapAction;
+import edu.ithaca.dragon.tecmap.ui.TecmapUserAction;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -25,15 +25,15 @@ public enum TecmapState {
     }
 
 
-    public List<TecmapAction> getAvailableActions(){
+    public List<TecmapUserAction> getAvailableActions(){
         if (this == noAssessment){
-            return(new ArrayList<>(Collections.singletonList(TecmapAction.structureTree)));
+            return(new ArrayList<>(Collections.singletonList(TecmapUserAction.structureTree)));
         }
         else if (this == assessmentAdded){
-            return(new ArrayList<>(Collections.singletonList(TecmapAction.structureTree)));
+            return(new ArrayList<>(Arrays.asList(TecmapUserAction.structureTree, TecmapUserAction.connectResources)));
         }
         else if (this == assessmentConnected){
-            return(new ArrayList<>(Arrays.asList(TecmapAction.structureTree, TecmapAction.cohortTree)));
+            return(new ArrayList<>(Arrays.asList(TecmapUserAction.structureTree, TecmapUserAction.connectResources, TecmapUserAction.cohortTree)));
         }
         else{
             throw new RuntimeException("Unrecognized state: " + this.toString());

@@ -342,12 +342,4 @@ public class Cs1ExampleJsonStrings {
             "    \"child\" : \"If Statements-1\"\n" +
             "  } ]\n" +
             "}";
-
-    public static final String validIdsAndActionsJsonString =
-    "{" +
-    "\"BadPaths\":[\"structureTree\",\"cohortTree\"]," +
-    "\"Cs1Example\":[\"structureTree\",\"cohortTree\"]," +
-    "\"Cs1ExampleAssessmentAdded\":[\"structureTree\"]," +
-    "\"Cs1ExampleStructure\":[\"structureTree\"]" +
-    "}";
 }

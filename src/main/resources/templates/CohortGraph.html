@@ -33,6 +33,7 @@
     
     <!-- File that starts execution -->
     <script th:inline="javascript">
+        //could read from a static Json file by changing the argument to readJson here
         cohortGraphs = readJson("/api/cohortTree/" + [[${courseId}]]);
     </script>
     <script th:src="@{/js/CohortGraph.js}"></script>

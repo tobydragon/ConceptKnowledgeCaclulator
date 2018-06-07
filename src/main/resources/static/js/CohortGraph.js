@@ -1,4 +1,4 @@
-// variable that holds the json of the CohortGraphRecord
+// variable that holds the json of the CohortGraphRecord, defined in CohortGraph.html
 var cohortGraphs;
 
 function findAndMakeChart(name, type){

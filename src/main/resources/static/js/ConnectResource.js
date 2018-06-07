@@ -1,3 +1,4 @@
+//Both vars defined in ConnectResources.html
 var conceptList;
 var blankRecords;
 
@@ -17,5 +18,8 @@ function displayBlankLRRecords() {
     }
 }
 
+if (conceptList === undefined || conceptList === null || blankRecords === undefined || blankRecords === null) {
+    window.location.replace("/error");
+}
 displayConcepts();
 displayBlankLRRecords();

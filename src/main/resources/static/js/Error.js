@@ -1,3 +1,4 @@
+//Defined in Error.html
 var actions;
 
 function listActions() {

@@ -2,7 +2,7 @@ package edu.ithaca.dragon.tecmap.data;
 
 import edu.ithaca.dragon.tecmap.Settings;
 import edu.ithaca.dragon.tecmap.TecmapAPI;
-import edu.ithaca.dragon.tecmap.TecmapAction;
+import edu.ithaca.dragon.tecmap.ui.TecmapUserAction;
 import edu.ithaca.dragon.tecmap.io.Json;
 import edu.ithaca.dragon.tecmap.io.record.ConceptGraphRecord;
 import edu.ithaca.dragon.tecmap.tecmapExamples.Cs1ExampleJsonStrings;
@@ -90,13 +90,13 @@ class TecmapDatastoreTest {
 
     @Test
     void retrieveValidIdsAndActions(){
-        Map<String, List<TecmapAction>> validMap = tecmapDatastore.retrieveValidIdsAndActions();
+        Map<String, List<TecmapUserAction>> validMap = tecmapDatastore.retrieveValidIdsAndActions();
         assertEquals(4, validMap.size());
         assertEquals(1, validMap.get("Cs1ExampleStructure").size());
-        assertThat(validMap.get("Cs1ExampleStructure"), containsInAnyOrder(TecmapAction.structureTree));
-        assertEquals(1, validMap.get("Cs1ExampleAssessmentAdded").size());
-        assertThat(validMap.get("Cs1ExampleAssessmentAdded"), containsInAnyOrder(TecmapAction.structureTree));
-        assertEquals(2, validMap.get("Cs1Example").size());
-        assertThat(validMap.get("Cs1Example"), containsInAnyOrder(TecmapAction.structureTree, TecmapAction.cohortTree));
+        assertThat(validMap.get("Cs1ExampleStructure"), containsInAnyOrder(TecmapUserAction.structureTree));
+        assertEquals(2, validMap.get("Cs1ExampleAssessmentAdded").size());
+        assertThat(validMap.get("Cs1ExampleAssessmentAdded"), containsInAnyOrder(TecmapUserAction.structureTree, TecmapUserAction.connectResources));
+        assertEquals(3, validMap.get("Cs1Example").size());
+        assertThat(validMap.get("Cs1Example"), containsInAnyOrder(TecmapUserAction.structureTree, TecmapUserAction.connectResources, TecmapUserAction.cohortTree));
     }
 }
