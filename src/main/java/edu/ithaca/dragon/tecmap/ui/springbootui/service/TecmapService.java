@@ -1,7 +1,8 @@
 package edu.ithaca.dragon.tecmap.ui.springbootui.service;
 
 import edu.ithaca.dragon.tecmap.Settings;
-import edu.ithaca.dragon.tecmap.TecmapAPI;
+import edu.ithaca.dragon.tecmap.SuggestingTecmapAPI;
+import edu.ithaca.dragon.tecmap.suggester.OrganizedLearningResourceSuggestions;
 import edu.ithaca.dragon.tecmap.ui.TecmapUserAction;
 import edu.ithaca.dragon.tecmap.data.TecmapDatastore;
 import edu.ithaca.dragon.tecmap.data.TecmapFileDatastore;
@@ -30,15 +31,16 @@ public class TecmapService {
     }
 
     /**
-     * @param id
-     * @return Tecmap that corresponds to a given id in the Datastore
+     * is public for sole reason of testing
+     * @param id from datastore
+     * @return SuggestingTecmap that corresponds to a given id in the Datastore
      */
-    public TecmapAPI retrieveTecmapAPI(String id) {
+    public SuggestingTecmapAPI retrieveSuggestingTecmapAPI(String id) {
         return tecmapDatastore.retrieveTecmapForId(id);
     }
 
     public ConceptGraphRecord retrieveStructureTree(String id) {
-        TecmapAPI tecmap = retrieveTecmapAPI(id);
+        SuggestingTecmapAPI tecmap = retrieveSuggestingTecmapAPI(id);
         if (tecmap != null) {
             return tecmap.createStructureTree();
         }
@@ -46,7 +48,7 @@ public class TecmapService {
     }
 
     public List<String> retrieveConceptIdList(String id) {
-        TecmapAPI tecmap = retrieveTecmapAPI(id);
+        SuggestingTecmapAPI tecmap = retrieveSuggestingTecmapAPI(id);
         if (tecmap != null) {
             return tecmap.createConceptIdListToPrint();
         }
@@ -54,7 +56,7 @@ public class TecmapService {
     }
 
     public List<LearningResourceRecord> retrieveBlankLearningResourceRecordsFromAssessment(String id) {
-        TecmapAPI tecmap = retrieveTecmapAPI(id);
+        SuggestingTecmapAPI tecmap = retrieveSuggestingTecmapAPI(id);
         if (tecmap != null) {
             return tecmap.createBlankLearningResourceRecordsFromAssessment();
         }
@@ -62,12 +64,39 @@ public class TecmapService {
     }
 
     public CohortConceptGraphsRecord retrieveCohortTree(String id) {
-        TecmapAPI tecmap = retrieveTecmapAPI(id);
+        SuggestingTecmapAPI tecmap = retrieveSuggestingTecmapAPI(id);
         if (tecmap != null) {
             CohortConceptGraphsRecord cohortTree = tecmap.createCohortTree();
             if (cohortTree != null) {
                 return cohortTree;
             }
+        }
+        return null;
+    }
+
+    public List<String> retrieveConceptSuggestionsForUser(String courseId, String userId) {
+        SuggestingTecmapAPI tecmap = retrieveSuggestingTecmapAPI(courseId);
+        if (tecmap != null) {
+            return tecmap.suggestConceptsForUser(userId);
+        }
+        return null;
+    }
+
+
+    //TODO: UNTESTED
+    public OrganizedLearningResourceSuggestions retrieveResourceSuggestionsForUser(String courseId, String userId) {
+        SuggestingTecmapAPI tecmap = tecmapDatastore.retrieveTecmapForId(courseId);
+        if (tecmap != null) {
+            return tecmap.suggestResourcesForUser(userId);
+        }
+        return null;
+    }
+
+    //TODO: UNTESTED
+    public OrganizedLearningResourceSuggestions retrieveResourceSuggestionsForSpecificConceptForUser(String courseId, String userId, String conceptId) {
+        SuggestingTecmapAPI tecmap = tecmapDatastore.retrieveTecmapForId(courseId);
+        if (tecmap != null) {
+            return tecmap.suggestResourcesForSpecificConceptForUser(userId, conceptId);
         }
         return null;
     }

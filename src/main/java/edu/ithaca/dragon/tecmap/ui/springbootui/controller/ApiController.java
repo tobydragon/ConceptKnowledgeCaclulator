@@ -1,5 +1,6 @@
 package edu.ithaca.dragon.tecmap.ui.springbootui.controller;
 
+import edu.ithaca.dragon.tecmap.suggester.OrganizedLearningResourceSuggestions;
 import edu.ithaca.dragon.tecmap.ui.TecmapUserAction;
 import edu.ithaca.dragon.tecmap.io.record.CohortConceptGraphsRecord;
 import edu.ithaca.dragon.tecmap.io.record.ConceptGraphRecord;
@@ -44,6 +45,21 @@ public class ApiController {
     @GetMapping("/cohortTree/{courseId}")
     public CohortConceptGraphsRecord getcohortTree(@PathVariable("courseId") String courseId) {
         return tecmapService.retrieveCohortTree(courseId);
+    }
+
+    @GetMapping("/suggestConcepts/{courseId}/{userId}")
+    public List<String> getConceptSuggestionsForUser(@PathVariable("courseId") String courseId, @PathVariable("userId") String userId) {
+        return tecmapService.retrieveConceptSuggestionsForUser(courseId, userId);
+    }
+
+    @GetMapping("/suggestResources/{courseId}/{userId}")
+    public OrganizedLearningResourceSuggestions getResourceSuggestionsForUser(@PathVariable("courseId") String courseId, @PathVariable("userId") String userId) {
+        return tecmapService.retrieveResourceSuggestionsForUser(courseId, userId);
+    }
+
+    @GetMapping("/suggestResources/{courseId}/{userId}/{conceptId}")
+    public OrganizedLearningResourceSuggestions getResourceSuggestionsForSpecificConceptForUser(@PathVariable("courseId") String courseId, @PathVariable("userId") String userId, @PathVariable("conceptId") String conceptId) {
+        return tecmapService.retrieveResourceSuggestionsForSpecificConceptForUser(courseId, userId, conceptId);
     }
 
     @GetMapping("/actions")

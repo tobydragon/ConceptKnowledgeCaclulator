@@ -2,7 +2,7 @@ package edu.ithaca.dragon.tecmap.ui.springbootui.service;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import edu.ithaca.dragon.tecmap.Settings;
-import edu.ithaca.dragon.tecmap.TecmapAPI;
+import edu.ithaca.dragon.tecmap.SuggestingTecmapAPI;
 import edu.ithaca.dragon.tecmap.ui.TecmapUserAction;
 import edu.ithaca.dragon.tecmap.data.TecmapDatastore;
 import edu.ithaca.dragon.tecmap.data.TecmapFileDatastore;
@@ -28,62 +28,58 @@ import static org.junit.jupiter.api.Assertions.assertNull;
 @RunWith(SpringRunner.class)
 public class TecmapServiceTest {
 
-    private TecmapService onlyStructureTecmapService;
-    private TecmapService twoAssessmentsAddedTecmapService;
-    private TecmapService twoAssessmentsConnectedTecmapService;
+    private TecmapService tecmapService;
 
     @Before
     public void setup() throws IOException {
         TecmapDatastore tecmapDatastore = TecmapFileDatastore.buildFromJsonFile(Settings.DEFAULT_TEST_DATASTORE_FILE);
 
-        onlyStructureTecmapService = new TecmapService(tecmapDatastore);
-        twoAssessmentsAddedTecmapService = new TecmapService(tecmapDatastore);
-        twoAssessmentsConnectedTecmapService = new TecmapService(tecmapDatastore);
+        tecmapService = new TecmapService(tecmapDatastore);
     }
 
     @Test
-    public void retreiveTecmapAPI() {
-        TecmapAPI structureTecmap = onlyStructureTecmapService.retrieveTecmapAPI("Cs1ExampleStructure");
-        TecmapAPI addedTecmap = onlyStructureTecmapService.retrieveTecmapAPI("Cs1ExampleAssessmentAdded");
-        TecmapAPI connectedTecmap = twoAssessmentsConnectedTecmapService.retrieveTecmapAPI("Cs1Example");
+    public void retreiveSuggestingTecmapAPI() {
+        SuggestingTecmapAPI structureTecmap = tecmapService.retrieveSuggestingTecmapAPI("Cs1ExampleStructure");
+        SuggestingTecmapAPI addedTecmap = tecmapService.retrieveSuggestingTecmapAPI("Cs1ExampleAssessmentAdded");
+        SuggestingTecmapAPI connectedTecmap = tecmapService.retrieveSuggestingTecmapAPI("Cs1Example");
         assertNotNull(structureTecmap);
         assertNotNull(addedTecmap);
         assertNotNull(connectedTecmap);
 
-        TecmapAPI nullTecmap = twoAssessmentsConnectedTecmapService.retrieveTecmapAPI("NoPath");
+        SuggestingTecmapAPI nullTecmap = tecmapService.retrieveSuggestingTecmapAPI("NoPath");
         assertNull(nullTecmap);
     }
 
     @Test
     public void retrieveStructureTreeWithIds() throws JsonProcessingException{
-        assertEquals(Cs1ExampleJsonStrings.structureAsTreeString, onlyStructureTecmapService.retrieveStructureTree("Cs1ExampleStructure").toJsonString());
-        assertEquals(Cs1ExampleJsonStrings.structureAsTreeString, twoAssessmentsAddedTecmapService.retrieveStructureTree("Cs1ExampleAssessmentAdded").toJsonString());
-        assertEquals(Cs1ExampleJsonStrings.structureWithResourceConnectionsAsTree, twoAssessmentsConnectedTecmapService.retrieveStructureTree("Cs1Example").toJsonString());
+        assertEquals(Cs1ExampleJsonStrings.structureAsTreeString, tecmapService.retrieveStructureTree("Cs1ExampleStructure").toJsonString());
+        assertEquals(Cs1ExampleJsonStrings.structureAsTreeString, tecmapService.retrieveStructureTree("Cs1ExampleAssessmentAdded").toJsonString());
+        assertEquals(Cs1ExampleJsonStrings.structureWithResourceConnectionsAsTree, tecmapService.retrieveStructureTree("Cs1Example").toJsonString());
     }
 
     @Test
     public void retrieveConceptIdListWithIds() {
-        List<String> onlyStructureConcepts = onlyStructureTecmapService.retrieveConceptIdList("Cs1ExampleStructure");
+        List<String> onlyStructureConcepts = tecmapService.retrieveConceptIdList("Cs1ExampleStructure");
         assertEquals(Cs1ExampleJsonStrings.allConceptsString, onlyStructureConcepts.toString());
-        List<String> twoAssessmentsAddedConcepts = twoAssessmentsAddedTecmapService.retrieveConceptIdList("Cs1ExampleAssessmentAdded");
+        List<String> twoAssessmentsAddedConcepts = tecmapService.retrieveConceptIdList("Cs1ExampleAssessmentAdded");
         assertEquals(Cs1ExampleJsonStrings.allConceptsString, twoAssessmentsAddedConcepts.toString());
-        List<String> twoAssessmentsConnectedConcepts = twoAssessmentsConnectedTecmapService.retrieveConceptIdList("Cs1Example");
+        List<String> twoAssessmentsConnectedConcepts = tecmapService.retrieveConceptIdList("Cs1Example");
         assertEquals(Cs1ExampleJsonStrings.allConceptsString, twoAssessmentsConnectedConcepts.toString());
     }
 
     @Test
     public void retrieveBlankLearningResourceRecordsFromAssessmentWithIds() throws JsonProcessingException{
-        assertEquals(0, onlyStructureTecmapService.retrieveBlankLearningResourceRecordsFromAssessment("Cs1ExampleStructure").size());
-        assertEquals(Cs1ExampleJsonStrings.assessment1And2Str, Json.toJsonString(twoAssessmentsAddedTecmapService.retrieveBlankLearningResourceRecordsFromAssessment("Cs1ExampleAssessmentAdded")));
-        assertEquals(Cs1ExampleJsonStrings.assessment1And2Str, Json.toJsonString(twoAssessmentsConnectedTecmapService.retrieveBlankLearningResourceRecordsFromAssessment("Cs1Example")));
+        assertEquals(0, tecmapService.retrieveBlankLearningResourceRecordsFromAssessment("Cs1ExampleStructure").size());
+        assertEquals(Cs1ExampleJsonStrings.assessment1And2Str, Json.toJsonString(tecmapService.retrieveBlankLearningResourceRecordsFromAssessment("Cs1ExampleAssessmentAdded")));
+        assertEquals(Cs1ExampleJsonStrings.assessment1And2Str, Json.toJsonString(tecmapService.retrieveBlankLearningResourceRecordsFromAssessment("Cs1Example")));
     }
 
     @Test
     public void retrieveCohortTreeWithIds() throws JsonProcessingException{
-        assertNull(onlyStructureTecmapService.retrieveCohortTree("Cs1ExampleStructure"));
-        assertNull(twoAssessmentsAddedTecmapService.retrieveCohortTree("Cs1ExampleAssessmentAdded"));
+        assertNull(tecmapService.retrieveCohortTree("Cs1ExampleStructure"));
+        assertNull(tecmapService.retrieveCohortTree("Cs1ExampleAssessmentAdded"));
 
-        CohortConceptGraphsRecord cohortRecord = twoAssessmentsConnectedTecmapService.retrieveCohortTree("Cs1Example");
+        CohortConceptGraphsRecord cohortRecord = tecmapService.retrieveCohortTree("Cs1Example");
         List<ConceptGraphRecord> records = cohortRecord.getGraphRecords();
         assertEquals(4, records.size());
         for (ConceptGraphRecord record : records ) {
@@ -94,9 +90,40 @@ public class TecmapServiceTest {
     }
 
     @Test
+    public void retrieveConceptSuggestionsForUser() {
+        //These 2 can't have suggestions since they don't have resources connected
+        assertNull(tecmapService.retrieveConceptSuggestionsForUser("Cs1ExampleStructure", "s01"));
+        assertNull(tecmapService.retrieveConceptSuggestionsForUser("Cs1ExampleAssessmentAdded", "s01"));
+
+        assertEquals(0, tecmapService.retrieveConceptSuggestionsForUser("Cs1Example", "s02").size());
+        List<String> s03Suggestions = tecmapService.retrieveConceptSuggestionsForUser("Cs1Example", "s03");
+        assertThat(s03Suggestions, containsInAnyOrder("While Loops"));
+        assertEquals(1, s03Suggestions.size());
+        List<String> s01Suggestions = tecmapService.retrieveConceptSuggestionsForUser("Cs1Example", "s01");
+        assertThat(s01Suggestions, containsInAnyOrder("For Loops", "If Statements", "While Loops"));
+        assertEquals(3, s01Suggestions.size());
+        //TODO this should suggest below, but doesn't because ConceptGraphSuggesterLibrary.suggestConcepts doesn't suggest things with 0 estimate
+//        assertThat(s01Suggestions, containsInAnyOrder( "For Loops", "Boolean Expressions"));
+
+        assertNull(tecmapService.retrieveConceptSuggestionsForUser("Cs1Example", "badStudentID"));
+    }
+
+//    @Test
+    //TODO: FIX TESTS ONCE METHOD IS FINALIZED
+    public void retrieveResourceSuggestionsForUser() throws JsonProcessingException {
+        System.out.println(Json.toJsonString(tecmapService.retrieveResourceSuggestionsForUser("Cs1Example", "s01")));
+    }
+
+//    @Test
+    //TODO: FIX TESTS ONCE METHOD IS FINALIZED
+    public void retrieveResourceSuggestionsForSpecificConceptForUser() throws JsonProcessingException {
+        System.out.println(Json.toJsonString(tecmapService.retrieveResourceSuggestionsForSpecificConceptForUser("Cs1Example", "s01", "Loops")));
+    }
+
+    @Test
     public void retrieveValidIdsAndActions() {
         //Will be the same for all of the Services, because they all use the same datastore
-        Map<String, List<TecmapUserAction>> validMap = onlyStructureTecmapService.retrieveValidIdsAndActions();
+        Map<String, List<TecmapUserAction>> validMap = tecmapService.retrieveValidIdsAndActions();
         assertEquals(4, validMap.size());
         assertEquals(1, validMap.get("Cs1ExampleStructure").size());
         assertThat(validMap.get("Cs1ExampleStructure"), containsInAnyOrder(TecmapUserAction.structureTree));
