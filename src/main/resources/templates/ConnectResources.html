@@ -6,19 +6,17 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 </head>
 <body>
+    <h1 class="text-center"> Connect Resources to Concepts </h1>
+    <br>
     <div class="container-fluid">
-        <div class="row">
-            <div class="col-xs-6" th:id="conceptList">
-                <table class='table-bordered' th:id="conceptTable">
-                    <tr><th> Concepts </th></tr>
+        <div class="row>">
+            <div class="col-xs-6 col-xs-offset-3" th:id="authoring">
+                <table class="table-bordered table-striped" th:id="authoringTable">
+
                 </table>
-            </div>
-            <div class="col-xs-6" th:id="blankLRRecords">
-                <pre th:id="json"></pre>
             </div>
         </div>
     </div>
-
 
     <!--Files That Starts the calls  -->
     <script type="text/javascript" th:src="@{/js/GraphFunctions.js}"></script>

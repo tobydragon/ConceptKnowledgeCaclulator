@@ -16,6 +16,11 @@ class ErrorController implements org.springframework.boot.web.servlet.error.Erro
         return "Error";
     }
 
+    @RequestMapping("")
+    public String redirectLanding() {
+        return "Landing";
+    }
+
     public String getErrorPath() {
         return PATH;
     }
