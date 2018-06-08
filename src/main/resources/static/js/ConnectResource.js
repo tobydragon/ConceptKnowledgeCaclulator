@@ -1,13 +1,13 @@
 //These 2 vars defined in ConnectResources.html
 var conceptList;
-var blankRecords;
+var resourceRecords;
 
 var resourceNames; //List of Resource Names for
 
 function getResourceNames() {
     resourceNames = [];
-    for (var i=0 ; i<blankRecords.length; i++) {
-        resourceNames.push(blankRecords[i].learningResourceId)
+    for (var i=0 ; i<resourceRecords.length; i++) {
+        resourceNames.push(resourceRecords[i].learningResourceId)
     }
 }
 
@@ -16,9 +16,9 @@ function writeToJson(event) {
     var concept = id.split("_")[0];
     var resource = id.split("_")[1];
     var toChange;
-    for (var i = 0; i < blankRecords.length; i++) {
-        if (blankRecords[i].learningResourceId === resource) {
-            toChange = blankRecords[i].conceptIds;
+    for (var i = 0; i < resourceRecords.length; i++) {
+        if (resourceRecords[i].learningResourceId === resource) {
+            toChange = resourceRecords[i].conceptIds;
             if (toChange.includes(concept)) {
                 toChange.pop(concept);
             } else {
@@ -26,12 +26,20 @@ function writeToJson(event) {
             }
         }
     }
-    displayBlankLRRecords();
 }
 
-//TODO: Write this tomorrow
-function submit() {
-
+function submitToAPI(url) {
+    var request = new XMLHttpRequest();
+    request.open("POST", url);
+    request.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
+    request.send(JSON.stringify(resourceRecords));
+    request.onreadystatechange = function() {
+        if (request.status === 200) {
+            window.location.replace("/view");
+        } else {
+            window.location.replace("/error");
+        }
+    };
 }
 
 function buildTable() {
@@ -54,12 +62,9 @@ function buildTable() {
     }
     tableHTML += "</tbody>";
     document.getElementById("authoringTable").innerHTML += tableHTML;
-
-    var submitButton = "<br><br><button class='center-block btn btn-primary' type='submit' onclick='submit()'> Submit </button>";
-    document.getElementById("authoring").innerHTML += submitButton;
 }
 
-if (conceptList === undefined || conceptList === null || blankRecords === undefined || blankRecords === null) {
+if (conceptList === undefined || conceptList === null || resourceRecords === undefined || resourceRecords === null) {
     window.location.replace("/error");
 }
 getResourceNames();

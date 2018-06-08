@@ -14,6 +14,9 @@
                 <table class="table-bordered table-striped" th:id="authoringTable">
 
                 </table>
+                <br>
+                <br>
+                <button class='center-block btn btn-primary' type='submit' onclick='submit()'> Submit </button>
             </div>
         </div>
     </div>
@@ -22,7 +25,10 @@
     <script type="text/javascript" th:src="@{/js/GraphFunctions.js}"></script>
     <script th:inline="javascript">
         conceptList = readJson("/api/conceptList/" + [[${courseId}]]);
-        blankRecords = readJson("/api/blankLRRecords/" + [[${courseId}]]);
+        resourceRecords = readJson("/api/blankLRRecords/" + [[${courseId}]]);
+        function submit() {
+            submitToAPI("/api/connectResources/" + [[${courseId}]])
+        }
     </script>
     <script th:src="@{/js/ConnectResource.js}"></script>
 
