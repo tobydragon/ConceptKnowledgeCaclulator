@@ -1,9 +1,9 @@
 package edu.ithaca.dragon.tecmap.data;
 
 import edu.ithaca.dragon.tecmap.SuggestingTecmapAPI;
-import edu.ithaca.dragon.tecmap.TecmapAPI;
-import edu.ithaca.dragon.tecmap.ui.TecmapUserAction;
+import edu.ithaca.dragon.tecmap.io.record.LearningResourceRecord;
 import edu.ithaca.dragon.tecmap.tecmapstate.TecmapState;
+import edu.ithaca.dragon.tecmap.ui.TecmapUserAction;
 
 import java.util.List;
 import java.util.Map;
@@ -24,6 +24,15 @@ public interface TecmapDatastore {
      * @return the Tecmap associated with the idToRetrieve, or null if not found
      */
     SuggestingTecmapAPI retrieveTecmapForId(String idToRetrieve, TecmapState desiredState);
+
+    /**
+     * updates the resource files for a tecmap with a new file from the learning resource records
+     * being added
+     * @param idToUpdate
+     * @param learningResourceRecords
+     * @return the json filename if update successful, or null if fail
+     */
+    String updateTecmapResources(String idToUpdate, List<LearningResourceRecord> learningResourceRecords);
 
     /**
      * finds all the valid ids, and the states that are valid to load for that ID

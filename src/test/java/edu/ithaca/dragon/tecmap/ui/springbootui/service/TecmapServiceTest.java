@@ -3,19 +3,21 @@ package edu.ithaca.dragon.tecmap.ui.springbootui.service;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import edu.ithaca.dragon.tecmap.Settings;
 import edu.ithaca.dragon.tecmap.SuggestingTecmapAPI;
-import edu.ithaca.dragon.tecmap.ui.TecmapUserAction;
 import edu.ithaca.dragon.tecmap.data.TecmapDatastore;
 import edu.ithaca.dragon.tecmap.data.TecmapFileDatastore;
 import edu.ithaca.dragon.tecmap.io.Json;
 import edu.ithaca.dragon.tecmap.io.record.CohortConceptGraphsRecord;
 import edu.ithaca.dragon.tecmap.io.record.ConceptGraphRecord;
+import edu.ithaca.dragon.tecmap.io.record.LearningResourceRecord;
 import edu.ithaca.dragon.tecmap.tecmapExamples.Cs1ExampleJsonStrings;
+import edu.ithaca.dragon.tecmap.ui.TecmapUserAction;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -72,6 +74,14 @@ public class TecmapServiceTest {
         assertEquals(0, tecmapService.retrieveBlankLearningResourceRecordsFromAssessment("Cs1ExampleStructure").size());
         assertEquals(Cs1ExampleJsonStrings.assessment1And2Str, Json.toJsonString(tecmapService.retrieveBlankLearningResourceRecordsFromAssessment("Cs1ExampleAssessmentAdded")));
         assertEquals(Cs1ExampleJsonStrings.assessment1And2Str, Json.toJsonString(tecmapService.retrieveBlankLearningResourceRecordsFromAssessment("Cs1Example")));
+    }
+
+    @Test
+    public void postConnectedResources() {
+        assertEquals("src/test/resources/datastore/Cs1ExampleAssessmentAdded/Cs1ExampleAssessmentAddedResources.json", tecmapService.postConnectedResources("Cs1ExampleAssessmentAdded", tecmapService.retrieveBlankLearningResourceRecordsFromAssessment("Cs1ExampleAssessmentAdded")));
+        assertNull(tecmapService.postConnectedResources("notAValidID", null));
+        assertNull(tecmapService.postConnectedResources("Cs1ExampleAssessmentAdded", null));
+        assertNull(tecmapService.postConnectedResources("Cs1ExampleAssessmentAdded", new ArrayList<LearningResourceRecord>()));
     }
 
     @Test

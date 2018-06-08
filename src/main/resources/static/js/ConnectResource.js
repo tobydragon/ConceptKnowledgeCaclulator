@@ -35,6 +35,7 @@ function submitToAPI(url) {
     request.send(JSON.stringify(resourceRecords));
     request.onreadystatechange = function() {
         if (request.status === 200) {
+            window.alert("Submission Successful!");
             window.location.replace("/view");
         } else {
             window.location.replace("/error");

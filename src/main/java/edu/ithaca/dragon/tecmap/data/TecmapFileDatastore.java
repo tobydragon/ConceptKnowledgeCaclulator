@@ -3,6 +3,7 @@ package edu.ithaca.dragon.tecmap.data;
 import edu.ithaca.dragon.tecmap.SuggestingTecmap;
 import edu.ithaca.dragon.tecmap.SuggestingTecmapAPI;
 import edu.ithaca.dragon.tecmap.io.Json;
+import edu.ithaca.dragon.tecmap.io.record.LearningResourceRecord;
 import edu.ithaca.dragon.tecmap.io.record.TecmapDataFilesRecord;
 import edu.ithaca.dragon.tecmap.io.record.TecmapFileDatastoreRecord;
 import edu.ithaca.dragon.tecmap.tecmapstate.TecmapState;
@@ -68,8 +69,6 @@ public class TecmapFileDatastore implements TecmapDatastore {
         }
     }
 
-
-
     @Override
     public Map<String, List<TecmapUserAction>> retrieveValidIdsAndActions() {
         //TODO: make functional style to allow parallelism
@@ -78,6 +77,27 @@ public class TecmapFileDatastore implements TecmapDatastore {
             idToActions.put(fileData.getId(), fileData.getAvailableState().getAvailableActions());
         }
         return idToActions;
+    }
+
+    @Override
+    //TODO: FIX HARDCODED PATH NAME for STRING filename =
+    public String updateTecmapResources(String idToUpdate, List<LearningResourceRecord> learningResourceRecords) {
+        if (idToMap.containsKey(idToUpdate)) {
+            if (learningResourceRecords != null && learningResourceRecords.size() > 0) {
+                try {
+                    //Write To A New Resource File
+                    String filename = "src/test/resources/datastore/" + idToUpdate + "/" + idToUpdate + "Resources.json";
+                    LearningResourceRecord.resourceRecordsToJSON(learningResourceRecords, filename);
+                    idToMap.get(idToUpdate).addResourceFiles(filename);
+
+                    //TODO: FIND A WAY TO UPDATE THE PERMANENT DATASTORE
+                    return filename;
+                } catch (IOException exception) {
+                    return null;
+                }
+            }
+        }
+        return null;
     }
 
     public static TecmapFileDatastore buildFromJsonFile(String filename) throws IOException {

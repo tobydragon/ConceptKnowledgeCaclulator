@@ -7,6 +7,7 @@ import edu.ithaca.dragon.tecmap.suggester.OrganizedLearningResourceSuggestions;
 import edu.ithaca.dragon.tecmap.ui.TecmapUserAction;
 import edu.ithaca.dragon.tecmap.ui.springbootui.service.TecmapService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletResponse;
@@ -41,9 +42,14 @@ public class ApiController {
     }
 
     @PostMapping("/connectResources/{courseId}")
-    public void postConnectedResources(@PathVariable("courseId") String courseId, @RequestBody List<LearningResourceRecord> filledLearningResourceRecords, HttpServletResponse response) {
-        System.out.println(filledLearningResourceRecords);
-        response.setStatus(200);
+    public ResponseEntity<Void> postConnectedResources(@PathVariable("courseId") String courseId, @RequestBody List<LearningResourceRecord> filledLearningResourceRecords, HttpServletResponse response) {
+        String updated = tecmapService.postConnectedResources(courseId, filledLearningResourceRecords);
+        if (updated != null) {
+            return ResponseEntity.ok().build();
+        } else {
+            return ResponseEntity.notFound().build();
+        }
+
     }
 
     @GetMapping("/cohortTree/{courseId}")
