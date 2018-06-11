@@ -21,7 +21,7 @@ class SuggestingTecmapAPITest {
 
     @BeforeEach
     void setup() throws IOException {
-        TecmapDatastore tecmapDatastore = TecmapFileDatastore.buildFromJsonFile(Settings.DEFAULT_TEST_DATASTORE_FILE);
+        TecmapDatastore tecmapDatastore = TecmapFileDatastore.buildFromJsonFile(Settings.DEFAULT_TEST_DATASTORE_FILE, Settings.TEST_ROOT_PATH);
         cs1Example = tecmapDatastore.retrieveTecmapForId("Cs1Example");
         notConnectedExample = tecmapDatastore.retrieveTecmapForId("Cs1ExampleAssessmentAdded");
 

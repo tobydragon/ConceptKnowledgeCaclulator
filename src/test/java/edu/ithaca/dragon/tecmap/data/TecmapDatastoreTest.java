@@ -30,7 +30,7 @@ class TecmapDatastoreTest {
 
     @BeforeEach
     void setup() throws IOException {
-        tecmapDatastore = TecmapFileDatastore.buildFromJsonFile(Settings.DEFAULT_TEST_DATASTORE_FILE);
+        tecmapDatastore = TecmapFileDatastore.buildFromJsonFile(Settings.DEFAULT_TEST_DATASTORE_FILE, Settings.TEST_ROOT_PATH);
     }
 
     @Test

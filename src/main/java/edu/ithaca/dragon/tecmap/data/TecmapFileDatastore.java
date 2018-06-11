@@ -20,8 +20,10 @@ public class TecmapFileDatastore implements TecmapDatastore {
     private static final Logger logger = LogManager.getLogger(TecmapFileDatastore.class);
 
     Map<String, TecmapFileData> idToMap;
+    String rootPath;
 
-    public TecmapFileDatastore(TecmapFileDatastoreRecord recordIn){
+    public TecmapFileDatastore(TecmapFileDatastoreRecord recordIn, String rootPath){
+        this.rootPath = rootPath;
         idToMap = new TreeMap<>();
         for (TecmapDataFilesRecord dataFiles : recordIn.getAllRecords()){
             idToMap.put(dataFiles.getId(), new TecmapFileData(dataFiles));
@@ -80,13 +82,12 @@ public class TecmapFileDatastore implements TecmapDatastore {
     }
 
     @Override
-    //TODO: FIX HARDCODED PATH NAME for STRING filename =
     public String updateTecmapResources(String idToUpdate, List<LearningResourceRecord> learningResourceRecords) {
         if (idToMap.containsKey(idToUpdate)) {
             if (learningResourceRecords != null && learningResourceRecords.size() > 0) {
                 try {
                     //Write To A New Resource File
-                    String filename = "src/test/resources/datastore/" + idToUpdate + "/" + idToUpdate + "Resources.json";
+                    String filename = rootPath + "resources/datastore/" + idToUpdate + "/" + idToUpdate + "Resources.json";
                     LearningResourceRecord.resourceRecordsToJSON(learningResourceRecords, filename);
                     idToMap.get(idToUpdate).addResourceFiles(filename);
 
@@ -100,7 +101,7 @@ public class TecmapFileDatastore implements TecmapDatastore {
         return null;
     }
 
-    public static TecmapFileDatastore buildFromJsonFile(String filename) throws IOException {
-        return new TecmapFileDatastore(Json.fromJsonString(filename, TecmapFileDatastoreRecord.class));
+    public static TecmapFileDatastore buildFromJsonFile(String filename, String rootPath) throws IOException {
+        return new TecmapFileDatastore(Json.fromJsonString(filename, TecmapFileDatastoreRecord.class), rootPath);
     }
 }

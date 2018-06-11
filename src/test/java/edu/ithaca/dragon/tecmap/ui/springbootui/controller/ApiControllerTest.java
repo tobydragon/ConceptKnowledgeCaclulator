@@ -44,7 +44,7 @@ public class ApiControllerTest {
 
     @Before
     public void setup() throws IOException {
-        TecmapDatastore tecmapDatastore = TecmapFileDatastore.buildFromJsonFile(Settings.DEFAULT_TEST_DATASTORE_FILE);
+        TecmapDatastore tecmapDatastore = TecmapFileDatastore.buildFromJsonFile(Settings.DEFAULT_TEST_DATASTORE_FILE, Settings.TEST_ROOT_PATH);
 
         tecmapService = new TecmapService(tecmapDatastore);
     }

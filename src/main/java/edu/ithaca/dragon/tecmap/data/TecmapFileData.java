@@ -49,6 +49,7 @@ public class TecmapFileData {
 
     public void addResourceFiles(String filename) {
         resourceFiles.add(filename);
+        this.availableState = TecmapState.checkAvailableState(resourceFiles, assessmentFiles);
     }
 
     public TecmapDataFilesRecord createTecmapDataFilesRecord() {
