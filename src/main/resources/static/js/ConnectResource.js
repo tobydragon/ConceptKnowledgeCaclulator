@@ -11,6 +11,7 @@ function getResourceNames() {
     }
 }
 
+//CONCEPT CANNOT INCLUDE THE QUOTES, FORCED TO BE TRUE IN ID BUILT IN buildTable()
 function writeToJson(event) {
     var id = event.id;
     var concept = id.split("_")[0];
@@ -57,7 +58,9 @@ function buildTable() {
     for (var r = 0; r < conceptList.length; r++) {
         tableHTML += "<tr><th scope='row'>" + conceptList[r] + "</th>";
         for (var c = 0; c < resourceNames.length; c++) {
-            tableHTML += "<td class='text-center'><input id='" + conceptList[r] + "_" + resourceNames[c] + "' type='checkbox' onclick='writeToJson(this)'></td>";
+            var concept = conceptList[r].split("\"");
+            console.log(concept);
+            tableHTML += "<td class='text-center'><input id='" + concept[1] + "_" + resourceNames[c] + "' type='checkbox' onclick='writeToJson(this)'></td>";
         }
         tableHTML += "</tr>";
     }
