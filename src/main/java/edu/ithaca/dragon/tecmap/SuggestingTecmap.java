@@ -1,8 +1,12 @@
 package edu.ithaca.dragon.tecmap;
 
+import edu.ithaca.dragon.tecmap.conceptgraph.CohortConceptGraphs;
 import edu.ithaca.dragon.tecmap.conceptgraph.ConceptGraph;
 import edu.ithaca.dragon.tecmap.conceptgraph.ConceptNode;
 import edu.ithaca.dragon.tecmap.suggester.ConceptGraphSuggesterLibrary;
+import edu.ithaca.dragon.tecmap.suggester.GroupSuggester.Group;
+import edu.ithaca.dragon.tecmap.suggester.GroupSuggester.GroupSuggester;
+import edu.ithaca.dragon.tecmap.suggester.GroupSuggester.Suggester;
 import edu.ithaca.dragon.tecmap.suggester.OrganizedLearningResourceSuggestions;
 import edu.ithaca.dragon.tecmap.tecmapstate.AssessmentConnectedState;
 
@@ -59,4 +63,15 @@ public class SuggestingTecmap extends Tecmap implements SuggestingTecmapAPI{
         return null;
     } //calcIndividualSpecificConceptSuggestions
 
+    public List<Group> suggestGroups(List<Suggester> groupTypeList, int groupSize) {
+        if (state instanceof AssessmentConnectedState) {
+            CohortConceptGraphs userGraphs = ((AssessmentConnectedState)state).getCohortConceptGraphs();
+            GroupSuggester sug = new GroupSuggester();
+
+            List<Group> initialGroup = GroupSuggester.getGroupList(userGraphs);
+
+            return sug.grouping(initialGroup, groupSize, groupTypeList);
+        }
+        return null;
+    }
 }

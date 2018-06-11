@@ -6,7 +6,6 @@ import edu.ithaca.dragon.tecmap.io.record.CohortConceptGraphsRecord;
 import edu.ithaca.dragon.tecmap.io.record.LearningResourceRecord;
 
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.List;
 
 public class AssessmentConnectedState extends AssessmentAddedState {
@@ -28,5 +27,7 @@ public class AssessmentConnectedState extends AssessmentAddedState {
     public ConceptGraph getGraphForUser(String userId){
         return cohortConceptGraphs.getUserGraph(userId);
     }
+
+    public CohortConceptGraphs getCohortConceptGraphs() {return cohortConceptGraphs;}
 
 }
