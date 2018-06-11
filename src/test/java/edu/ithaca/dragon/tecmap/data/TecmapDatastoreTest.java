@@ -2,15 +2,18 @@ package edu.ithaca.dragon.tecmap.data;
 
 import edu.ithaca.dragon.tecmap.Settings;
 import edu.ithaca.dragon.tecmap.TecmapAPI;
-import edu.ithaca.dragon.tecmap.ui.TecmapUserAction;
 import edu.ithaca.dragon.tecmap.io.Json;
 import edu.ithaca.dragon.tecmap.io.record.ConceptGraphRecord;
+import edu.ithaca.dragon.tecmap.io.record.LearningResourceRecord;
 import edu.ithaca.dragon.tecmap.tecmapExamples.Cs1ExampleJsonStrings;
 import edu.ithaca.dragon.tecmap.tecmapstate.TecmapState;
+import edu.ithaca.dragon.tecmap.ui.TecmapUserAction;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 import java.util.Map;
@@ -27,7 +30,7 @@ class TecmapDatastoreTest {
 
     @BeforeEach
     void setup() throws IOException {
-        tecmapDatastore = TecmapFileDatastore.buildFromJsonFile(Settings.DEFAULT_TEST_DATASTORE_FILE);
+        tecmapDatastore = TecmapFileDatastore.buildFromJsonFile(Settings.DEFAULT_TEST_DATASTORE_FILE, Settings.TEST_ROOT_PATH);
     }
 
     @Test
@@ -98,5 +101,22 @@ class TecmapDatastoreTest {
         assertThat(validMap.get("Cs1ExampleAssessmentAdded"), containsInAnyOrder(TecmapUserAction.structureTree, TecmapUserAction.connectResources));
         assertEquals(3, validMap.get("Cs1Example").size());
         assertThat(validMap.get("Cs1Example"), containsInAnyOrder(TecmapUserAction.structureTree, TecmapUserAction.connectResources, TecmapUserAction.cohortTree));
+    }
+
+    @Test
+    void updateTecmapResources() {
+        String updateFiles = tecmapDatastore.updateTecmapResources("Cs1ExampleAssessmentAdded", tecmapDatastore.retrieveTecmapForId("Cs1ExampleAssessmentAdded").createBlankLearningResourceRecordsFromAssessment());
+        assertEquals("src/test/resources/datastore/Cs1ExampleAssessmentAdded/Cs1ExampleAssessmentAddedResources.json", updateFiles);
+        File file = new File("/src/test/resources/datastore/Cs1ExampleAssessmentAdded/Cs1ExampleAssessmentAdded.json");
+        assertNotNull(file);
+        //Bad ID
+        updateFiles = tecmapDatastore.updateTecmapResources("notAValidID", null);
+        assertNull(updateFiles);
+        //Good ID, null list
+        updateFiles = tecmapDatastore.updateTecmapResources("Cs1ExampleAssessmentAdded", null);
+        assertNull(updateFiles);
+        //Good ID, empty list
+        updateFiles = tecmapDatastore.updateTecmapResources("Cs1ExampleAssessmentAdded", new ArrayList<LearningResourceRecord>());
+        assertNull(updateFiles);
     }
 }

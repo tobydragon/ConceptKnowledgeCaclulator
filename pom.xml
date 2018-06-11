@@ -130,6 +130,7 @@
             <artifactId>RCaller</artifactId>
             <version>3.0</version>
         </dependency>
+        <!-- SpringBoot - IntelliJ build project with SpringBoot auto dependencies -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-actuator</artifactId>

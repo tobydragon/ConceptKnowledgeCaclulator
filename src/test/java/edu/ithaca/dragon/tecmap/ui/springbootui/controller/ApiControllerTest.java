@@ -4,6 +4,7 @@ import edu.ithaca.dragon.tecmap.Settings;
 import edu.ithaca.dragon.tecmap.data.TecmapDatastore;
 import edu.ithaca.dragon.tecmap.data.TecmapFileDatastore;
 import edu.ithaca.dragon.tecmap.io.Json;
+import edu.ithaca.dragon.tecmap.io.record.LearningResourceRecord;
 import edu.ithaca.dragon.tecmap.tecmapExamples.Cs1ExampleJsonStrings;
 import edu.ithaca.dragon.tecmap.ui.springbootui.service.TecmapService;
 import org.junit.Before;
@@ -22,9 +23,12 @@ import org.springframework.test.web.servlet.RequestBuilder;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
 import java.io.IOException;
+import java.util.ArrayList;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.mockito.ArgumentMatchers.anyObject;
 import static org.mockito.ArgumentMatchers.anyString;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @RunWith(SpringRunner.class)
 @WebMvcTest(ApiController.class)
@@ -40,7 +44,7 @@ public class ApiControllerTest {
 
     @Before
     public void setup() throws IOException {
-        TecmapDatastore tecmapDatastore = TecmapFileDatastore.buildFromJsonFile(Settings.DEFAULT_TEST_DATASTORE_FILE);
+        TecmapDatastore tecmapDatastore = TecmapFileDatastore.buildFromJsonFile(Settings.DEFAULT_TEST_DATASTORE_FILE, Settings.TEST_ROOT_PATH);
 
         tecmapService = new TecmapService(tecmapDatastore);
     }
@@ -173,6 +177,37 @@ public class ApiControllerTest {
 
         result = mockMvc.perform(requestBuilder).andReturn();
         assertEquals("", result.getResponse().getContentAsString());
+    }
+
+    @Test
+    public void postConnectedResources() throws Exception{
+        String courseId = "Cs1ExampleAssessmentAdded";
+        Mockito.when(tecmapServiceMock.postConnectedResources(anyString(), anyObject()))
+                .thenReturn(tecmapService.postConnectedResources(courseId, tecmapService.retrieveBlankLearningResourceRecordsFromAssessment(courseId)));
+
+        RequestBuilder requestBuilder = MockMvcRequestBuilders.post(
+                "/api/connectResources/courseId")
+                .accept(MediaType.APPLICATION_JSON)
+                .content(Json.toJsonString(tecmapService.retrieveBlankLearningResourceRecordsFromAssessment(courseId)))
+                .contentType(MediaType.APPLICATION_JSON);
+
+        mockMvc.perform(requestBuilder).andExpect(status().isOk());
+
+        Mockito.when(tecmapServiceMock.postConnectedResources(anyString(), anyObject()))
+                .thenReturn(tecmapService.postConnectedResources(courseId, null));
+
+        mockMvc.perform(requestBuilder).andExpect(status().isNotFound());
+
+        Mockito.when(tecmapServiceMock.postConnectedResources(anyString(), anyObject()))
+                .thenReturn(tecmapService.postConnectedResources(courseId, new ArrayList<LearningResourceRecord>()));
+
+        mockMvc.perform(requestBuilder).andExpect(status().isNotFound());
+
+        courseId = "NotAValidID";
+        Mockito.when(tecmapServiceMock.postConnectedResources(anyString(), anyObject()))
+                .thenReturn(tecmapService.postConnectedResources(courseId, tecmapService.retrieveBlankLearningResourceRecordsFromAssessment(courseId)));
+
+        mockMvc.perform(requestBuilder).andExpect(status().isNotFound());
     }
 
     @Test

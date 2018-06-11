@@ -14,6 +14,11 @@ public class WebController {
         super();
     }
 
+    @GetMapping()
+    public String viewLandingPage() {
+        return "Landing";
+    }
+
     @GetMapping("/structureTree/{courseId}")
     public String viewStructureTree(@PathVariable("courseId") String courseId, Model model) {
         model.addAttribute("courseId", courseId);

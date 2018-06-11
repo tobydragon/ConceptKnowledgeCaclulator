@@ -1,17 +1,16 @@
 package edu.ithaca.dragon.tecmap.ui.springbootui.controller;
 
-import edu.ithaca.dragon.tecmap.suggester.OrganizedLearningResourceSuggestions;
-import edu.ithaca.dragon.tecmap.ui.TecmapUserAction;
 import edu.ithaca.dragon.tecmap.io.record.CohortConceptGraphsRecord;
 import edu.ithaca.dragon.tecmap.io.record.ConceptGraphRecord;
 import edu.ithaca.dragon.tecmap.io.record.LearningResourceRecord;
+import edu.ithaca.dragon.tecmap.suggester.OrganizedLearningResourceSuggestions;
+import edu.ithaca.dragon.tecmap.ui.TecmapUserAction;
 import edu.ithaca.dragon.tecmap.ui.springbootui.service.TecmapService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletResponse;
 import java.util.List;
 import java.util.Map;
 
@@ -40,6 +39,17 @@ public class ApiController {
     @GetMapping("/blankLRRecords/{courseId}")
     public List<LearningResourceRecord> getBlankLearningResourceRecordsFromAssessment(@PathVariable("courseId") String courseId) {
         return tecmapService.retrieveBlankLearningResourceRecordsFromAssessment(courseId);
+    }
+
+    @PostMapping("/connectResources/{courseId}")
+    public ResponseEntity<Void> postConnectedResources(@PathVariable("courseId") String courseId, @RequestBody List<LearningResourceRecord> filledLearningResourceRecords, HttpServletResponse response) {
+        String updated = tecmapService.postConnectedResources(courseId, filledLearningResourceRecords);
+        if (updated != null) {
+            return ResponseEntity.ok().build();
+        } else {
+            return ResponseEntity.notFound().build();
+        }
+
     }
 
     @GetMapping("/cohortTree/{courseId}")

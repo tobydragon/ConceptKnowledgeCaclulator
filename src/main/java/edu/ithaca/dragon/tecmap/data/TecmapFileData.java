@@ -47,6 +47,11 @@ public class TecmapFileData {
         return availableState;
     }
 
+    public void addResourceFiles(String filename) {
+        resourceFiles.add(filename);
+        this.availableState = TecmapState.checkAvailableState(resourceFiles, assessmentFiles);
+    }
+
     public TecmapDataFilesRecord createTecmapDataFilesRecord() {
         return new TecmapDataFilesRecord(id, graphFile, resourceFiles, assessmentFiles);
     }

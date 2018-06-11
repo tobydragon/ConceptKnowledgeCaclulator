@@ -21,8 +21,8 @@ public class TecmapService {
     private TecmapDatastore tecmapDatastore;
 
     public TecmapService() throws IOException{
-        tecmapDatastore = TecmapFileDatastore.buildFromJsonFile(Settings.DEFAULT_MAIN_DATASTORE_FILE);
-//        tecmapDatastore = TecmapFileDatastore.buildFromJsonFile(Settings.DEFAULT_TEST_DATASTORE_FILE);
+//        tecmapDatastore = TecmapFileDatastore.buildFromJsonFile(Settings.DEFAULT_MAIN_DATASTORE_FILE, Settings.ROOT_PATH);
+        tecmapDatastore = TecmapFileDatastore.buildFromJsonFile(Settings.DEFAULT_TEST_DATASTORE_FILE, Settings.TEST_ROOT_PATH);
     }
 
     //For Tests
@@ -61,6 +61,10 @@ public class TecmapService {
             return tecmap.createBlankLearningResourceRecordsFromAssessment();
         }
         return null;
+    }
+
+    public String postConnectedResources(String id, List<LearningResourceRecord> resourceRecords) {
+        return tecmapDatastore.updateTecmapResources(id, resourceRecords);
     }
 
     public CohortConceptGraphsRecord retrieveCohortTree(String id) {
