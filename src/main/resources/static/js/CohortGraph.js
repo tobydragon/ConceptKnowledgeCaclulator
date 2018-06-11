@@ -1,5 +1,6 @@
 // variable that holds the json of the CohortGraphRecord, defined in CohortGraph.html
-var cohortGraphs;
+var courseId;
+var cohortGraphs = readJson("/api/cohortTree/" + courseId);
 
 function findAndMakeChart(name, type){
     var currentGraph = null;
