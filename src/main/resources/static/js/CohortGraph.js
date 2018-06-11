@@ -1,6 +1,30 @@
 // variable that holds the json of the CohortGraphRecord, defined in CohortGraph.html
 var courseId;
 var cohortGraphs = readJson("/api/cohortTree/" + courseId);
+var suggestions;
+
+//TODO: WILL NEED TO CHANGE ONCE API GETS INCOMPLETE AND WRONG LISTS
+//Currently displays just the concepts, will need to be changed into two tables
+function displaySuggestions(name) {
+    //suggestions = readJson("/api/suggestResources/" + courseId + "/" + name);
+    suggestions = readJson("/api/suggestConcepts/" + courseId + "/" + name);
+    console.log(suggestions);
+    if (suggestions.length > 0) {
+        var tableHTML = "<h1 style='text-align: center;'> Suggestions for " + name + " </h1>";
+        tableHTML += "<table border='5' style='text-align: center'><thead>";
+        tableHTML += "<tr><th>Concept</th>";
+        tableHTML += "</tr>";
+        tableHTML += "</thead>";
+        tableHTML += "<tbody>"; //reset for table body
+        for (var i = 0; i < suggestions.length; i++) { //will need to change to going through a map instead
+            tableHTML += "<tr><td>" + suggestions[i] + "</td></tr>"
+        }
+        tableHTML += "</tbody></table>";
+        document.getElementById("suggestion").innerHTML = tableHTML;
+    } else {
+        document.getElementById("suggestion").innerHTML = "";
+    }
+}
 
 function findAndMakeChart(name, type){
     var currentGraph = null;
@@ -13,6 +37,7 @@ function findAndMakeChart(name, type){
     }
     if (currentGraph != null){
         makeChart(currentGraph, type);
+        displaySuggestions(name);
     }
 }
 
