@@ -166,6 +166,11 @@ public class TecmapServiceTest {
 
         assertEquals(1, groupings.get(1).getSize());
         assertThat(groupings.get(1).getStudentNames(), containsInAnyOrder("s02"));
+
+        //Test bad sortType
+        groupings = tecmapService.retrieveGroupSuggestions("Cs1Example", "none", 2);
+
+        assertNull(groupings);
     }
 
     @Test

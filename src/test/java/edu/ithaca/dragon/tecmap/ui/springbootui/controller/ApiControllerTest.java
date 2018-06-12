@@ -26,6 +26,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.mockito.ArgumentMatchers.anyInt;
 import static org.mockito.ArgumentMatchers.anyObject;
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -378,7 +379,69 @@ public class ApiControllerTest {
 
     @Test
     public void getGroupSuggestions() throws Exception {
-        //TODO: Write Test
+        String courseId = "Cs1ExampleStructure";
+        String sortType = "bucket";
+        int size = 2;
+
+        Mockito.when(tecmapServiceMock.retrieveGroupSuggestions(anyString(), anyString(), anyInt()))
+                .thenReturn(tecmapService.retrieveGroupSuggestions(courseId, sortType, size));
+
+        RequestBuilder requestBuilder = MockMvcRequestBuilders.get(
+                "/api/suggestGroups/courseId/sortType/size").accept(
+                MediaType.APPLICATION_JSON);
+
+        //Test Structure
+        MvcResult result = mockMvc.perform(requestBuilder).andReturn();
+
+        String expected = "";
+
+        assertEquals(expected, result.getResponse().getContentAsString());
+
+        //Test Assessment Added
+        courseId = "Cs1ExampleAssessmentAdded";
+
+        Mockito.when(tecmapServiceMock.retrieveGroupSuggestions(anyString(), anyString(), anyInt()))
+                .thenReturn(tecmapService.retrieveGroupSuggestions(courseId, sortType, size));
+
+        result = mockMvc.perform(requestBuilder).andReturn();
+
+        assertEquals(expected, result.getResponse().getContentAsString());
+
+        //Test with bucket
+        courseId = "Cs1Example";
+
+        Mockito.when(tecmapServiceMock.retrieveGroupSuggestions(anyString(), anyString(), anyInt()))
+                .thenReturn(tecmapService.retrieveGroupSuggestions(courseId, sortType, size));
+
+        result = mockMvc.perform(requestBuilder).andReturn();
+
+        expected = Json.toJsonString(tecmapService.retrieveGroupSuggestions(courseId, sortType, size));
+
+        assertEquals(expected, result.getResponse().getContentAsString());
+
+        //Test with concept
+        sortType = "concept";
+
+        Mockito.when(tecmapServiceMock.retrieveGroupSuggestions(anyString(), anyString(), anyInt()))
+                .thenReturn(tecmapService.retrieveGroupSuggestions(courseId, sortType, size));
+
+        result = mockMvc.perform(requestBuilder).andReturn();
+
+        expected = Json.toJsonString(tecmapService.retrieveGroupSuggestions(courseId, sortType, size));
+
+        assertEquals(expected, result.getResponse().getContentAsString());
+
+        //Test bad sortType
+        sortType = "none";
+
+        Mockito.when(tecmapServiceMock.retrieveGroupSuggestions(anyString(), anyString(), anyInt()))
+                .thenReturn(tecmapService.retrieveGroupSuggestions(courseId, sortType, size));
+
+        result = mockMvc.perform(requestBuilder).andReturn();
+
+        expected = "";
+
+        assertEquals(expected, result.getResponse().getContentAsString());
     }
 
     @Test
