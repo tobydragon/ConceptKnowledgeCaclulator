@@ -6,23 +6,35 @@ var suggestions;
 //TODO: WILL NEED TO CHANGE ONCE API GETS INCOMPLETE AND WRONG LISTS
 //Currently displays just the concepts, will need to be changed into two tables
 function displaySuggestions(name) {
-    //suggestions = readJson("/api/suggestResources/" + courseId + "/" + name);
-    suggestions = readJson("/api/suggestConcepts/" + courseId + "/" + name);
+    suggestions = readJson("/api/suggestResources/" + courseId + "/" + name);
     console.log(suggestions);
-    if (suggestions.length > 0) {
-        var tableHTML = "<h1 style='text-align: center;'> Suggestions for " + name + " </h1>";
-        tableHTML += "<table border='5' style='text-align: center'><thead>";
-        tableHTML += "<tr><th>Concept</th>";
-        tableHTML += "</tr>";
+    if (suggestions !== null && suggestions !== undefined) {
+        var suggestionName = "Suggestions for " + name;
+        document.getElementById("suggestionName").innerHTML = suggestionName;
+        var tableHTML = "<table align='center' border='2' style='text-align: center'><thead>";
+        tableHTML += "<tr><th> Concept </th><th> Resource </th></tr>";
         tableHTML += "</thead>";
         tableHTML += "<tbody>"; //reset for table body
-        for (var i = 0; i < suggestions.length; i++) { //will need to change to going through a map instead
-            tableHTML += "<tr><td>" + suggestions[i] + "</td></tr>"
+        for (var i = 0; i < suggestions.wrongList.length; i++) {
+            var currentSuggestion = suggestions.wrongList[i];
+            tableHTML += "<tr><td>" + currentSuggestion.reasoning + "</td><td>" + currentSuggestion.id + "</td></tr>"
         }
         tableHTML += "</tbody></table>";
-        document.getElementById("suggestion").innerHTML = tableHTML;
+        document.getElementById("wrongTable").innerHTML = tableHTML;
+        tableHTML = "<table align='center' border='2' style='text-align: center'><thead>";
+        tableHTML += "<tr><th> Concept </th><th> Resource </th></tr>";
+        tableHTML += "</thead>";
+        tableHTML += "<tbody>"; //reset for table body
+        for (var i = 0; i < suggestions.incompleteList.length; i++) {
+            var currentSuggestion = suggestions.incompleteList[i];
+            tableHTML += "<tr><td>" + currentSuggestion.reasoning + "</td><td>" + currentSuggestion.id + "</td></tr>"
+        }
+        tableHTML += "</tbody></table>";
+        document.getElementById("incompleteTable").innerHTML = tableHTML;
     } else {
-        document.getElementById("suggestion").innerHTML = "";
+        document.getElementById("wrongTable").innerHTML = "";
+        document.getElementById("incompleteTable").innerHTML = "";
+        document.getElementById("suggestionName").innerHTML = " Suggestions ";
     }
 }
 

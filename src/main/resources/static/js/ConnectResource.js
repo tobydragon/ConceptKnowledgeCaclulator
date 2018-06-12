@@ -1,7 +1,7 @@
 //These 2 vars defined in ConnectResources.html
 var courseId;
 var conceptList = readJson("/api/conceptList/" + courseId);
-var resourceRecords = readJson("/api/blankLRRecords/" + courseId);;
+var resourceRecords = readJson("/api/blankLRRecords/" + courseId);
 
 var resourceNames; //List of Resource Names for
 
@@ -76,5 +76,9 @@ function buildTable() {
 if (conceptList === undefined || conceptList === null || resourceRecords === undefined || resourceRecords === null) {
     window.location.replace("/error");
 }
+console.log(courseId);
 getResourceNames();
+console.log(resourceRecords);
+console.log(resourceNames);
+console.log(conceptList);
 buildTable();
