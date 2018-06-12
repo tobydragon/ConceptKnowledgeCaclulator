@@ -18,6 +18,7 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.containsInAnyOrder;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 class SuggestingTecmapAPITest {
 
@@ -87,10 +88,10 @@ class SuggestingTecmapAPITest {
         assertEquals(groupings.get(0).getSize(), 1);
         assertEquals(groupings.get(0).getStudentNames().get(0), "s01");
 
-        assertEquals(groupings.get(1).getSize(), 1);
-        assertEquals(groupings.get(1).getStudentNames().get(0), "s03");
+        assertEquals(groupings.get(1).getSize(), 0);
 
-        assertEquals(groupings.get(2).getSize(), 1);
-        assertEquals(groupings.get(2).getStudentNames().get(0), "s02");
+        assertEquals(groupings.get(2).getSize(), 2);
+        assertTrue(groupings.get(2).getStudentNames().contains("s02"));
+        assertTrue(groupings.get(2).getStudentNames().contains("s03"));
     }
 }
