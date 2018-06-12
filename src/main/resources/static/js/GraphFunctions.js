@@ -113,7 +113,12 @@ function readJson(url){
     request.open("GET", url, false);
     request.send(null);
 
-    return JSON.parse(request.response);
+    try {
+        return JSON.parse(request.response);
+    } catch (e) {
+        window.location.replace("/error")
+    }
+
 }
 
 function convertToSingleString(listOfStrings){
