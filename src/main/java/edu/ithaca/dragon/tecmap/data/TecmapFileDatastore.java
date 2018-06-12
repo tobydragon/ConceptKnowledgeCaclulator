@@ -86,6 +86,7 @@ public class TecmapFileDatastore implements TecmapDatastore {
         if (idToMap.containsKey(idToUpdate)) {
             if (learningResourceRecords != null && learningResourceRecords.size() > 0) {
                 try {
+                    //TODO: SAVE FILE TO A NEW FILENAME
                     //Write To A New Resource File
                     String filename = rootPath + "resources/datastore/" + idToUpdate + "/" + idToUpdate + "Resources.json";
                     LearningResourceRecord.resourceRecordsToJSON(learningResourceRecords, filename);

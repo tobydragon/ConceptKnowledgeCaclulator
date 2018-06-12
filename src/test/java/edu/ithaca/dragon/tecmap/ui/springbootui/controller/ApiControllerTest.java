@@ -160,6 +160,8 @@ public class ApiControllerTest {
         result = mockMvc.perform(requestBuilder).andReturn();
         String expected = Cs1ExampleJsonStrings.assessment1And2Str;
 
+        System.out.println(result.getResponse().getContentAsString());
+
         JSONAssert.assertEquals(expected, result.getResponse().getContentAsString(), false);
 
         //Test Assessment Connected
@@ -387,7 +389,7 @@ public class ApiControllerTest {
                 .thenReturn(tecmapService.retrieveGroupSuggestions(courseId, sortType, size));
 
         RequestBuilder requestBuilder = MockMvcRequestBuilders.get(
-                "/api/suggestGroups/courseId/sortType/size").accept(
+                "/api/suggestGroups/courseId/sortType/2").accept(
                 MediaType.APPLICATION_JSON);
 
         //Test Structure
@@ -417,7 +419,7 @@ public class ApiControllerTest {
 
         expected = Json.toJsonString(tecmapService.retrieveGroupSuggestions(courseId, sortType, size));
 
-        assertEquals(expected, result.getResponse().getContentAsString());
+        JSONAssert.assertEquals(expected, result.getResponse().getContentAsString(), false);
 
         //Test with concept
         sortType = "concept";
@@ -429,7 +431,7 @@ public class ApiControllerTest {
 
         expected = Json.toJsonString(tecmapService.retrieveGroupSuggestions(courseId, sortType, size));
 
-        assertEquals(expected, result.getResponse().getContentAsString());
+        JSONAssert.assertEquals(expected, result.getResponse().getContentAsString(), false);
 
         //Test bad sortType
         sortType = "none";

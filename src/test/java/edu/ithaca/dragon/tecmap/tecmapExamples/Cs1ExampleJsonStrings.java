@@ -87,99 +87,98 @@ public class Cs1ExampleJsonStrings {
 
     public static final String assessment1Str = "[ {\n" +
             "  \"learningResourceId\" : \"Q1\",\n" +
-            "  \"resourceTypes\" : [ \"ASSESSMENT\" ],\n" +
+            "  \"resourceTypes\" : [ \"ASSESSMENT\", \"PRACTICE\" ],\n" +
             "  \"conceptIds\" : [ ],\n" +
             "  \"dataImportance\" : 0.0,\n" +
             "  \"maxPossibleKnowledgeEstimate\" : 10.0\n" +
             "}, {\n" +
             "  \"learningResourceId\" : \"Q2\",\n" +
-            "  \"resourceTypes\" : [ \"ASSESSMENT\" ],\n" +
+            "  \"resourceTypes\" : [ \"ASSESSMENT\", \"PRACTICE\" ],\n" +
             "  \"conceptIds\" : [ ],\n" +
             "  \"dataImportance\" : 0.0,\n" +
             "  \"maxPossibleKnowledgeEstimate\" : 5.0\n" +
             "}, {\n" +
             "  \"learningResourceId\" : \"Q3\",\n" +
-            "  \"resourceTypes\" : [ \"ASSESSMENT\" ],\n" +
+            "  \"resourceTypes\" : [ \"ASSESSMENT\", \"PRACTICE\" ],\n" +
             "  \"conceptIds\" : [ ],\n" +
             "  \"dataImportance\" : 0.0,\n" +
             "  \"maxPossibleKnowledgeEstimate\" : 10.0\n" +
             "}, {\n" +
             "  \"learningResourceId\" : \"Q4\",\n" +
-            "  \"resourceTypes\" : [ \"ASSESSMENT\" ],\n" +
+            "  \"resourceTypes\" : [ \"ASSESSMENT\", \"PRACTICE\" ],\n" +
             "  \"conceptIds\" : [ ],\n" +
             "  \"dataImportance\" : 0.0,\n" +
             "  \"maxPossibleKnowledgeEstimate\" : 5.0\n" +
             "}, {\n" +
             "  \"learningResourceId\" : \"Q5\",\n" +
-            "  \"resourceTypes\" : [ \"ASSESSMENT\" ],\n" +
+            "  \"resourceTypes\" : [ \"ASSESSMENT\", \"PRACTICE\" ],\n" +
             "  \"conceptIds\" : [ ],\n" +
             "  \"dataImportance\" : 0.0,\n" +
             "  \"maxPossibleKnowledgeEstimate\" : 100.0\n" +
-            "} ]"
-            ;
+            "} ]";
 
     public static final String assessment1And2Str = "[ {\n" +
             "  \"learningResourceId\" : \"Q1\",\n" +
-            "  \"resourceTypes\" : [ \"ASSESSMENT\" ],\n" +
+            "  \"resourceTypes\" : [ \"ASSESSMENT\", \"PRACTICE\" ],\n" +
             "  \"conceptIds\" : [ ],\n" +
             "  \"dataImportance\" : 0.0,\n" +
             "  \"maxPossibleKnowledgeEstimate\" : 10.0\n" +
             "}, {\n" +
             "  \"learningResourceId\" : \"Q2\",\n" +
-            "  \"resourceTypes\" : [ \"ASSESSMENT\" ],\n" +
+            "  \"resourceTypes\" : [ \"ASSESSMENT\", \"PRACTICE\" ],\n" +
             "  \"conceptIds\" : [ ],\n" +
             "  \"dataImportance\" : 0.0,\n" +
             "  \"maxPossibleKnowledgeEstimate\" : 5.0\n" +
             "}, {\n" +
             "  \"learningResourceId\" : \"Q3\",\n" +
-            "  \"resourceTypes\" : [ \"ASSESSMENT\" ],\n" +
+            "  \"resourceTypes\" : [ \"ASSESSMENT\", \"PRACTICE\" ],\n" +
             "  \"conceptIds\" : [ ],\n" +
             "  \"dataImportance\" : 0.0,\n" +
             "  \"maxPossibleKnowledgeEstimate\" : 10.0\n" +
             "}, {\n" +
             "  \"learningResourceId\" : \"Q4\",\n" +
-            "  \"resourceTypes\" : [ \"ASSESSMENT\" ],\n" +
+            "  \"resourceTypes\" : [ \"ASSESSMENT\", \"PRACTICE\" ],\n" +
             "  \"conceptIds\" : [ ],\n" +
             "  \"dataImportance\" : 0.0,\n" +
             "  \"maxPossibleKnowledgeEstimate\" : 5.0\n" +
             "}, {\n" +
             "  \"learningResourceId\" : \"Q5\",\n" +
-            "  \"resourceTypes\" : [ \"ASSESSMENT\" ],\n" +
+            "  \"resourceTypes\" : [ \"ASSESSMENT\", \"PRACTICE\" ],\n" +
             "  \"conceptIds\" : [ ],\n" +
             "  \"dataImportance\" : 0.0,\n" +
             "  \"maxPossibleKnowledgeEstimate\" : 100.0\n" +
             "}, {\n" +
             "  \"learningResourceId\" : \"HW1\",\n" +
-            "  \"resourceTypes\" : [ \"ASSESSMENT\" ],\n" +
+            "  \"resourceTypes\" : [ \"ASSESSMENT\", \"PRACTICE\" ],\n" +
             "  \"conceptIds\" : [ ],\n" +
             "  \"dataImportance\" : 0.0,\n" +
             "  \"maxPossibleKnowledgeEstimate\" : 1.0\n" +
             "}, {\n" +
             "  \"learningResourceId\" : \"HW2\",\n" +
-            "  \"resourceTypes\" : [ \"ASSESSMENT\" ],\n" +
+            "  \"resourceTypes\" : [ \"ASSESSMENT\", \"PRACTICE\" ],\n" +
             "  \"conceptIds\" : [ ],\n" +
             "  \"dataImportance\" : 0.0,\n" +
             "  \"maxPossibleKnowledgeEstimate\" : 5.0\n" +
             "}, {\n" +
             "  \"learningResourceId\" : \"HW3\",\n" +
-            "  \"resourceTypes\" : [ \"ASSESSMENT\" ],\n" +
+            "  \"resourceTypes\" : [ \"ASSESSMENT\", \"PRACTICE\" ],\n" +
             "  \"conceptIds\" : [ ],\n" +
             "  \"dataImportance\" : 0.0,\n" +
             "  \"maxPossibleKnowledgeEstimate\" : 2.0\n" +
             "}, {\n" +
             "  \"learningResourceId\" : \"HW4\",\n" +
-            "  \"resourceTypes\" : [ \"ASSESSMENT\" ],\n" +
+            "  \"resourceTypes\" : [ \"ASSESSMENT\", \"PRACTICE\" ],\n" +
             "  \"conceptIds\" : [ ],\n" +
             "  \"dataImportance\" : 0.0,\n" +
             "  \"maxPossibleKnowledgeEstimate\" : 1.0\n" +
             "}, {\n" +
             "  \"learningResourceId\" : \"HW5\",\n" +
-            "  \"resourceTypes\" : [ \"ASSESSMENT\" ],\n" +
+            "  \"resourceTypes\" : [ \"ASSESSMENT\", \"PRACTICE\" ],\n" +
             "  \"conceptIds\" : [ ],\n" +
             "  \"dataImportance\" : 0.0,\n" +
             "  \"maxPossibleKnowledgeEstimate\" : 1.0\n" +
-            "} ]"
-            ;
+            "} ]";
+
     public static String allConceptsString = "[\"While Loops\", \"For Loops\", \"Boolean Expressions\", \"Intro CS\", \"Loops\", \"If Statements\"]";
     public static String allConceptsStringAsJson = "[\"\\\"While Loops\\\"\",\"\\\"For Loops\\\"\",\"\\\"Boolean Expressions\\\"\",\"\\\"Intro CS\\\"\",\"\\\"Loops\\\"\",\"\\\"If Statements\\\"\"]";
 
