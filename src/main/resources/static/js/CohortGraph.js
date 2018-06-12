@@ -1,22 +1,22 @@
 // variable that holds the json of the CohortGraphRecord, defined in CohortGraph.html
 var courseId;
 var cohortGraphs = readJson("/api/cohortTree/" + courseId);
-var suggestions;
+var resourceSuggestions;
 
 //TODO: WILL NEED TO CHANGE ONCE API GETS INCOMPLETE AND WRONG LISTS
 //Currently displays just the concepts, will need to be changed into two tables
 function displaySuggestions(name) {
-    suggestions = readJson("/api/suggestResources/" + courseId + "/" + name);
-    console.log(suggestions);
-    if (suggestions !== null && suggestions !== undefined) {
+    resourceSuggestions = readJson("/api/suggestResources/" + courseId + "/" + name);
+    console.log(resourceSuggestions);
+    if (resourceSuggestions !== null && resourceSuggestions !== undefined) {
         var suggestionName = "Suggestions for " + name;
         document.getElementById("suggestionName").innerHTML = suggestionName;
         var tableHTML = "<table align='center' border='2' style='text-align: center'><thead>";
         tableHTML += "<tr><th> Concept </th><th> Resource </th></tr>";
         tableHTML += "</thead>";
         tableHTML += "<tbody>"; //reset for table body
-        for (var i = 0; i < suggestions.wrongList.length; i++) {
-            var currentSuggestion = suggestions.wrongList[i];
+        for (var i = 0; i < resourceSuggestions.wrongList.length; i++) {
+            var currentSuggestion = resourceSuggestions.wrongList[i];
             tableHTML += "<tr><td>" + currentSuggestion.reasoning + "</td><td>" + currentSuggestion.id + "</td></tr>"
         }
         tableHTML += "</tbody></table>";
@@ -25,8 +25,8 @@ function displaySuggestions(name) {
         tableHTML += "<tr><th> Concept </th><th> Resource </th></tr>";
         tableHTML += "</thead>";
         tableHTML += "<tbody>"; //reset for table body
-        for (var i = 0; i < suggestions.incompleteList.length; i++) {
-            var currentSuggestion = suggestions.incompleteList[i];
+        for (var i = 0; i < resourceSuggestions.incompleteList.length; i++) {
+            var currentSuggestion = resourceSuggestions.incompleteList[i];
             tableHTML += "<tr><td>" + currentSuggestion.reasoning + "</td><td>" + currentSuggestion.id + "</td></tr>"
         }
         tableHTML += "</tbody></table>";

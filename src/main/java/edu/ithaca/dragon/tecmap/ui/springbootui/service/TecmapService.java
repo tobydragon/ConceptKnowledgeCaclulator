@@ -206,7 +206,7 @@ public class TecmapService {
 
     /**
      * Gets all of the available Tecmap Ids and List of all actions that you can do with each
-     * @return
+     * @return Map of ids to list of actions
      */
     public Map<String, List<TecmapUserAction>> retrieveValidIdsAndActions() {
         return tecmapDatastore.retrieveValidIdsAndActions();
