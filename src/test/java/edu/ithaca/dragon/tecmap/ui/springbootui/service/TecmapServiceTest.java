@@ -9,6 +9,7 @@ import edu.ithaca.dragon.tecmap.io.Json;
 import edu.ithaca.dragon.tecmap.io.record.CohortConceptGraphsRecord;
 import edu.ithaca.dragon.tecmap.io.record.ConceptGraphRecord;
 import edu.ithaca.dragon.tecmap.io.record.LearningResourceRecord;
+import edu.ithaca.dragon.tecmap.suggester.GroupSuggester.Group;
 import edu.ithaca.dragon.tecmap.tecmapExamples.Cs1ExampleJsonStrings;
 import edu.ithaca.dragon.tecmap.ui.TecmapUserAction;
 import org.junit.Before;
@@ -24,8 +25,7 @@ import java.util.Map;
 import static org.hamcrest.Matchers.containsInAnyOrder;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertThat;
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.*;
 
 @RunWith(SpringRunner.class)
 public class TecmapServiceTest {
@@ -128,6 +128,44 @@ public class TecmapServiceTest {
     //TODO: FIX TESTS ONCE METHOD IS FINALIZED
     public void retrieveResourceSuggestionsForSpecificConceptForUser() throws JsonProcessingException {
         System.out.println(Json.toJsonString(tecmapService.retrieveResourceSuggestionsForSpecificConceptForUser("Cs1Example", "s01", "Loops")));
+    }
+
+    @Test
+    public void retrieveGroupSuggestions() throws Exception {
+        //test a bad id
+        List<Group> groupings = tecmapService.retrieveGroupSuggestions("notAGoodId", "bucket", 2);
+        assertNull(groupings);
+
+        //test structure
+        groupings = tecmapService.retrieveGroupSuggestions("Cs1ExampleStructure", "bucket", 2);
+        assertNull(groupings);
+
+        //test assessment added
+        groupings = tecmapService.retrieveGroupSuggestions("Cs1ExampleAssessmentAdded", "bucket", 2);
+        assertNull(groupings);
+
+        //Test bucket example
+        groupings = tecmapService.retrieveGroupSuggestions("Cs1Example", "bucket", 2);
+
+        assertEquals(1, groupings.get(0).getSize());
+        assertEquals("s01", groupings.get(0).getStudentNames().get(0));
+
+        assertEquals(0, groupings.get(1).getSize());
+
+        assertEquals(2, groupings.get(2).getSize());
+        assertTrue(groupings.get(2).getStudentNames().contains("s02"));
+        assertTrue(groupings.get(2).getStudentNames().contains("s03"));
+
+        //Test concept example
+        groupings = tecmapService.retrieveGroupSuggestions("Cs1Example", "concept", 2);
+
+        assertEquals(2, groupings.size());
+
+        assertEquals(2, groupings.get(0).getSize());
+        assertThat(groupings.get(0).getStudentNames(), containsInAnyOrder("s01", "s03"));
+
+        assertEquals(1, groupings.get(1).getSize());
+        assertThat(groupings.get(1).getStudentNames(), containsInAnyOrder("s02"));
     }
 
     @Test

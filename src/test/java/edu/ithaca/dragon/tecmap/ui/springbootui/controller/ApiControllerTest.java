@@ -377,6 +377,11 @@ public class ApiControllerTest {
     }
 
     @Test
+    public void getGroupSuggestions() throws Exception {
+        //TODO: Write Test
+    }
+
+    @Test
     public void getValidIdsandActions() throws Exception {
         Mockito.when(tecmapServiceMock.retrieveValidIdsAndActions())
                 .thenReturn(tecmapService.retrieveValidIdsAndActions());

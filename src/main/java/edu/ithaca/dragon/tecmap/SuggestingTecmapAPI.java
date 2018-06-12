@@ -19,5 +19,11 @@ public interface SuggestingTecmapAPI extends TecmapAPI {
 
     OrganizedLearningResourceSuggestions suggestResourcesForSpecificConceptForUser(String userId, String conceptId); //calcIndividualSpecificConceptSuggestions
 
+    /**
+     * Suggest groups based on what type of suggesters you use, and given group size
+     * @param groupTypeList
+     * @param groupSize
+     * @return List of Groups that are students grouped by your suggestions parameters
+     */
     List<Group> suggestGroups(List<Suggester> groupTypeList, int groupSize); //calcSmallGroups
 }

@@ -83,7 +83,6 @@ class SuggestingTecmapAPITest {
 
         List<Group> groupings = null;
         groupings = cs1Example.suggestGroups(suggesterList, 2);
-        System.out.println(groupings);
 
         assertEquals(groupings.get(0).getSize(), 1);
         assertEquals(groupings.get(0).getStudentNames().get(0), "s01");
