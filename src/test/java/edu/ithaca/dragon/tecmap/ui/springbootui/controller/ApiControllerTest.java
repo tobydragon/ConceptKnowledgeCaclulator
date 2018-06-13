@@ -23,12 +23,14 @@ import org.springframework.test.web.servlet.RequestBuilder;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
 import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.mockito.ArgumentMatchers.anyInt;
-import static org.mockito.ArgumentMatchers.anyObject;
-import static org.mockito.ArgumentMatchers.anyString;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.mockito.ArgumentMatchers.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @RunWith(SpringRunner.class)
@@ -45,7 +47,7 @@ public class ApiControllerTest {
 
     @Before
     public void setup() throws IOException {
-        TecmapDatastore tecmapDatastore = TecmapFileDatastore.buildFromJsonFile(Settings.DEFAULT_TEST_DATASTORE_FILE, Settings.TEST_ROOT_PATH);
+        TecmapDatastore tecmapDatastore = TecmapFileDatastore.buildFromJsonFile(Settings.DEFAULT_TEST_DATASTORE_PATH);
 
         tecmapService = new TecmapService(tecmapDatastore);
     }
@@ -194,7 +196,11 @@ public class ApiControllerTest {
                 .content(Json.toJsonString(tecmapService.retrieveBlankLearningResourceRecordsFromAssessment(courseId)))
                 .contentType(MediaType.APPLICATION_JSON);
 
-        mockMvc.perform(requestBuilder).andExpect(status().isOk());
+        MvcResult result = mockMvc.perform(requestBuilder).andExpect(status().isOk()).andReturn();
+
+        Path path = Paths.get(result.getResponse().getContentAsString());
+
+        assertTrue(Files.deleteIfExists(path));
 
         Mockito.when(tecmapServiceMock.postConnectedResources(anyString(), anyObject()))
                 .thenReturn(tecmapService.postConnectedResources(courseId, null));

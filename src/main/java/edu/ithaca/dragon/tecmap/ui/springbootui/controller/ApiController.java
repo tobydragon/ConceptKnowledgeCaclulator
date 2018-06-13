@@ -43,10 +43,10 @@ public class ApiController {
     }
 
     @PostMapping("/connectResources/{courseId}")
-    public ResponseEntity<Void> postConnectedResources(@PathVariable("courseId") String courseId, @RequestBody List<LearningResourceRecord> filledLearningResourceRecords, HttpServletResponse response) {
+    public ResponseEntity<String> postConnectedResources(@PathVariable("courseId") String courseId, @RequestBody List<LearningResourceRecord> filledLearningResourceRecords, HttpServletResponse response) {
         String updated = tecmapService.postConnectedResources(courseId, filledLearningResourceRecords);
         if (updated != null) {
-            return ResponseEntity.ok().build();
+            return ResponseEntity.ok().body(updated);
         } else {
             return ResponseEntity.notFound().build();
         }

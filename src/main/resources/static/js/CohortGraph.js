@@ -7,7 +7,6 @@ var resourceSuggestions;
 //Currently displays just the concepts, will need to be changed into two tables
 function displaySuggestions(name) {
     resourceSuggestions = readJson("/api/suggestResources/" + courseId + "/" + name);
-    console.log(resourceSuggestions);
     if (resourceSuggestions.incompleteList.length > 0 || resourceSuggestions.wrongList.length > 0) {
         var suggestionName = "Suggestions for " + name;
         document.getElementById("suggestionName").innerHTML = suggestionName;

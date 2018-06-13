@@ -1,5 +1,6 @@
 package edu.ithaca.dragon.tecmap.data;
 
+import edu.ithaca.dragon.tecmap.Settings;
 import edu.ithaca.dragon.tecmap.SuggestingTecmap;
 import edu.ithaca.dragon.tecmap.SuggestingTecmapAPI;
 import edu.ithaca.dragon.tecmap.io.Json;
@@ -12,10 +13,6 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.LinkOption;
-import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
@@ -92,20 +89,13 @@ public class TecmapFileDatastore implements TecmapDatastore {
                 try {
                     //Writes To A New Resource File, doesn't overwrite old resource files that already exist
                     int i = 0;
-                    String origFilename = rootPath + "resources/datastore/" + idToUpdate + "/" + idToUpdate + "Resources.json";
-                    String finalFilename = origFilename;
-                    Path path = Paths.get(origFilename);
-                    while (Files.exists(path, LinkOption.NOFOLLOW_LINKS)) {
-                        String[] splitFilename = origFilename.split("\\.");
-                        finalFilename = splitFilename[0] + "-" + i + "." + splitFilename[1];
-                        path = Paths.get(finalFilename);
-                        i++;
-                    }
-                    LearningResourceRecord.resourceRecordsToJSON(learningResourceRecords, finalFilename);
-                    idToMap.get(idToUpdate).addResourceFiles(finalFilename);
+                    String defaultFilename = rootPath + idToUpdate + "/" + idToUpdate + "Resources.json";
+                    FileCheck.backup(defaultFilename);
+                    LearningResourceRecord.resourceRecordsToJSON(learningResourceRecords, defaultFilename);
+                    idToMap.get(idToUpdate).addResourceFiles(defaultFilename);
 
                     //TODO: FIND A WAY TO UPDATE THE PERMANENT DATASTORE
-                    return finalFilename;
+                    return defaultFilename;
                 } catch (IOException exception) {
                     return null;
                 }
@@ -114,7 +104,8 @@ public class TecmapFileDatastore implements TecmapDatastore {
         return null;
     }
 
-    public static TecmapFileDatastore buildFromJsonFile(String filename, String rootPath) throws IOException {
+    public static TecmapFileDatastore buildFromJsonFile(String rootPath) throws IOException {
+        String filename = rootPath + Settings.DEFAULT_DATASTORE_FILENAME;
         return new TecmapFileDatastore(Json.fromJsonString(filename, TecmapFileDatastoreRecord.class), rootPath);
     }
 }

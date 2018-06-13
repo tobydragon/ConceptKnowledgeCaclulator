@@ -25,7 +25,7 @@ class TecmapAPITest {
 
     @BeforeEach
     void setup()throws IOException {
-        TecmapDatastore tecmapDatastore = TecmapFileDatastore.buildFromJsonFile(Settings.DEFAULT_TEST_DATASTORE_FILE, Settings.TEST_ROOT_PATH);
+        TecmapDatastore tecmapDatastore = TecmapFileDatastore.buildFromJsonFile(Settings.DEFAULT_TEST_DATASTORE_PATH);
 
         onlyStructureTecmap = tecmapDatastore.retrieveTecmapForId("Cs1Example", TecmapState.noAssessment);
         twoAssessmentsAddedTecmap = tecmapDatastore.retrieveTecmapForId("Cs1Example", TecmapState.assessmentAdded);
