@@ -1,10 +1,11 @@
 package edu.ithaca.dragon.tecmap.io;
 
+import com.fasterxml.jackson.annotation.JsonAutoDetect;
+import com.fasterxml.jackson.annotation.PropertyAccessor;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
-import edu.ithaca.dragon.tecmap.io.record.ConceptGraphRecord;
 
 import java.io.File;
 import java.io.IOException;
@@ -13,6 +14,7 @@ public class Json {
 
     public static String toJsonString(Object objectToSerialize) throws JsonProcessingException {
         ObjectMapper mapper = new ObjectMapper();
+        mapper.setVisibility(PropertyAccessor.FIELD, JsonAutoDetect.Visibility.ANY);
         mapper.enable(SerializationFeature.INDENT_OUTPUT);
         return mapper.writeValueAsString( objectToSerialize);
     }

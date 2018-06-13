@@ -47,7 +47,8 @@ public class TecmapFileData {
         return availableState;
     }
 
-    public void addResourceFiles(String filename) {
+    public void updateResourceFiles(String filename) {
+        resourceFiles.clear();
         resourceFiles.add(filename);
         this.availableState = TecmapState.checkAvailableState(resourceFiles, assessmentFiles);
     }

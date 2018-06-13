@@ -107,16 +107,16 @@ class TecmapDatastoreTest {
     }
 
     @Test
-    //CREATES AND DELETES THE FILE!!
+    //CREATES AND DELETES THE FILES!!
     void updateTecmapResources() throws IOException {
-        String expectedOrigFilename = "src/test/resources/datastore/Cs1ExampleAssessmentAdded/Cs1ExampleAssessmentAddedResources.json";
-        String secondFilename = "src/test/resources/datastore/Cs1ExampleAssessmentAdded/Cs1ExampleAssessmentAddedResources-0.json";
+        String expectedOrigFilename = Settings.DEFAULT_TEST_DATASTORE_PATH + "Cs1ExampleAssessmentAdded/Cs1ExampleAssessmentAddedResources.json";
+        String secondFilename = Settings.DEFAULT_TEST_DATASTORE_PATH + "Cs1ExampleAssessmentAdded/Cs1ExampleAssessmentAddedResources-backup-0.json";
         String updateFiles = tecmapDatastore.updateTecmapResources("Cs1ExampleAssessmentAdded", tecmapDatastore.retrieveTecmapForId("Cs1ExampleAssessmentAdded").createBlankLearningResourceRecordsFromAssessment());
         assertEquals(expectedOrigFilename, updateFiles);
 
         //Second call to make sure it adds to the file name so that it doesn't overwrite any files
         updateFiles = tecmapDatastore.updateTecmapResources("Cs1ExampleAssessmentAdded", tecmapDatastore.retrieveTecmapForId("Cs1ExampleAssessmentAdded").createBlankLearningResourceRecordsFromAssessment());
-        assertEquals(secondFilename, updateFiles);
+        assertEquals(expectedOrigFilename, updateFiles);
 
         //And Delete Both
         Path path = Paths.get(expectedOrigFilename);

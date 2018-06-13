@@ -12,6 +12,7 @@ import edu.ithaca.dragon.tecmap.ui.TecmapUserAction;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import java.io.FileWriter;
 import java.io.IOException;
 import java.util.List;
 import java.util.Map;
@@ -83,18 +84,28 @@ public class TecmapFileDatastore implements TecmapDatastore {
     }
 
     @Override
+    //ALWAYS WRITES TO THE SAME DEFAULT FILENAME, COPIES TO A DIFFERENT FILENAME
     public String updateTecmapResources(String idToUpdate, List<LearningResourceRecord> learningResourceRecords) {
         if (idToMap.containsKey(idToUpdate)) {
             if (learningResourceRecords != null && learningResourceRecords.size() > 0) {
                 try {
-                    //Writes To A New Resource File, doesn't overwrite old resource files that already exist
+                    //Copies old file with defaultFilename (if exists) to a new backup and overwrites the default
                     int i = 0;
                     String defaultFilename = rootPath + idToUpdate + "/" + idToUpdate + "Resources.json";
                     FileCheck.backup(defaultFilename);
                     LearningResourceRecord.resourceRecordsToJSON(learningResourceRecords, defaultFilename);
-                    idToMap.get(idToUpdate).addResourceFiles(defaultFilename);
+                    idToMap.get(idToUpdate).updateResourceFiles(defaultFilename);
 
                     //TODO: FIND A WAY TO UPDATE THE PERMANENT DATASTORE
+                    //Copies old datastore with default filename to a new backup and overwrites the default
+                    String defaultDatastoreFilename = rootPath + Settings.DEFAULT_DATASTORE_FILENAME;
+//                    FileCheck.backup(defaultDatastoreFilename);
+                    FileWriter fileWriter = new FileWriter(FileCheck.getNewName(defaultDatastoreFilename));
+                    String jsonString = Json.toJsonString(this);
+                    System.out.println(jsonString);
+                    fileWriter.write(jsonString);
+                    fileWriter.close();
+
                     return defaultFilename;
                 } catch (IOException exception) {
                     return null;
