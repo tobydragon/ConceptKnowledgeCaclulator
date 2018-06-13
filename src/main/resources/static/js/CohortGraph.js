@@ -8,7 +8,7 @@ var resourceSuggestions;
 function displaySuggestions(name) {
     resourceSuggestions = readJson("/api/suggestResources/" + courseId + "/" + name);
     console.log(resourceSuggestions);
-    if (resourceSuggestions !== null && resourceSuggestions !== undefined) {
+    if (resourceSuggestions.incompleteList.length > 0 || resourceSuggestions.wrongList.length > 0) {
         var suggestionName = "Suggestions for " + name;
         document.getElementById("suggestionName").innerHTML = suggestionName;
         var tableHTML = "<table align='center' border='2' style='text-align: center'><thead>";
@@ -34,7 +34,7 @@ function displaySuggestions(name) {
     } else {
         document.getElementById("wrongTable").innerHTML = "";
         document.getElementById("incompleteTable").innerHTML = "";
-        document.getElementById("suggestionName").innerHTML = " Suggestions ";
+        document.getElementById("suggestionName").innerHTML = " Suggestions for " + name;
     }
 }
 
@@ -74,7 +74,6 @@ function writeMenu(){
     newCode += "</ul></div>";
     //insert the HTML code into the div with the ID "menu"
     document.getElementById("menu").innerHTML = newCode;
-
     //make the accordion open when clicked (only one now, loops for each future possible section)
     var acc = document.getElementsByClassName("accordion");
     for (var i = 0; i < acc.length; i++) {
