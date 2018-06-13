@@ -11,8 +11,10 @@ import edu.ithaca.dragon.tecmap.ui.TecmapUserAction;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import java.io.File;
 import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
@@ -23,6 +25,7 @@ import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertThat;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 class TecmapDatastoreTest {
 
@@ -104,11 +107,24 @@ class TecmapDatastoreTest {
     }
 
     @Test
-    void updateTecmapResources() {
+    //CREATES AND DELETES THE FILE!!
+    void updateTecmapResources() throws IOException {
+        String expectedOrigFilename = "src/test/resources/datastore/Cs1ExampleAssessmentAdded/Cs1ExampleAssessmentAddedResources.json";
+        String secondFilename = "src/test/resources/datastore/Cs1ExampleAssessmentAdded/Cs1ExampleAssessmentAddedResources-0.json";
         String updateFiles = tecmapDatastore.updateTecmapResources("Cs1ExampleAssessmentAdded", tecmapDatastore.retrieveTecmapForId("Cs1ExampleAssessmentAdded").createBlankLearningResourceRecordsFromAssessment());
-        assertEquals("src/test/resources/datastore/Cs1ExampleAssessmentAdded/Cs1ExampleAssessmentAddedResources.json", updateFiles);
-        File file = new File("/src/test/resources/datastore/Cs1ExampleAssessmentAdded/Cs1ExampleAssessmentAdded.json");
-        assertNotNull(file);
+        assertEquals(expectedOrigFilename, updateFiles);
+
+        //Second call to make sure it adds to the file name so that it doesn't overwrite any files
+        updateFiles = tecmapDatastore.updateTecmapResources("Cs1ExampleAssessmentAdded", tecmapDatastore.retrieveTecmapForId("Cs1ExampleAssessmentAdded").createBlankLearningResourceRecordsFromAssessment());
+        assertEquals(secondFilename, updateFiles);
+
+        //And Delete Both
+        Path path = Paths.get(expectedOrigFilename);
+        assertTrue(Files.deleteIfExists(path));
+
+        path = Paths.get(secondFilename);
+        assertTrue(Files.deleteIfExists(path));
+
         //Bad ID
         updateFiles = tecmapDatastore.updateTecmapResources("notAValidID", null);
         assertNull(updateFiles);

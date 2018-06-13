@@ -12,6 +12,10 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.LinkOption;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
@@ -86,14 +90,22 @@ public class TecmapFileDatastore implements TecmapDatastore {
         if (idToMap.containsKey(idToUpdate)) {
             if (learningResourceRecords != null && learningResourceRecords.size() > 0) {
                 try {
-                    //TODO: SAVE FILE TO A NEW FILENAME
-                    //Write To A New Resource File
-                    String filename = rootPath + "resources/datastore/" + idToUpdate + "/" + idToUpdate + "Resources.json";
-                    LearningResourceRecord.resourceRecordsToJSON(learningResourceRecords, filename);
-                    idToMap.get(idToUpdate).addResourceFiles(filename);
+                    //Writes To A New Resource File, doesn't overwrite old resource files that already exist
+                    int i = 0;
+                    String origFilename = rootPath + "resources/datastore/" + idToUpdate + "/" + idToUpdate + "Resources.json";
+                    String finalFilename = origFilename;
+                    Path path = Paths.get(origFilename);
+                    while (Files.exists(path, LinkOption.NOFOLLOW_LINKS)) {
+                        String[] splitFilename = origFilename.split("\\.");
+                        finalFilename = splitFilename[0] + "-" + i + "." + splitFilename[1];
+                        path = Paths.get(finalFilename);
+                        i++;
+                    }
+                    LearningResourceRecord.resourceRecordsToJSON(learningResourceRecords, finalFilename);
+                    idToMap.get(idToUpdate).addResourceFiles(finalFilename);
 
                     //TODO: FIND A WAY TO UPDATE THE PERMANENT DATASTORE
-                    return filename;
+                    return finalFilename;
                 } catch (IOException exception) {
                     return null;
                 }
