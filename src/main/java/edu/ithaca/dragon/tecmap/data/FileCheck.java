@@ -30,10 +30,10 @@ public class FileCheck {
     }
 
     public static void backup(String filename) throws IOException {
-        String newName = getNewName(filename);
-        if (newName != null) {
+        String newFilename = getNewName(filename);
+        if (newFilename != null) {
             Path originalPath = Paths.get(filename);
-            Path newPath = Paths.get(newName);
+            Path newPath = Paths.get(newFilename);
             Files.copy(originalPath, newPath, StandardCopyOption.COPY_ATTRIBUTES);
         }
     }

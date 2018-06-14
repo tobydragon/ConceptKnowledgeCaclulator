@@ -1,10 +1,5 @@
 package edu.ithaca.dragon.tecmap.data;
 
-import com.fasterxml.jackson.annotation.JsonAutoDetect;
-import com.fasterxml.jackson.annotation.PropertyAccessor;
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.SerializationFeature;
 import edu.ithaca.dragon.tecmap.Settings;
 import edu.ithaca.dragon.tecmap.SuggestingTecmap;
 import edu.ithaca.dragon.tecmap.SuggestingTecmapAPI;
@@ -19,9 +14,7 @@ import org.apache.logging.log4j.Logger;
 
 import java.io.FileWriter;
 import java.io.IOException;
-import java.util.List;
-import java.util.Map;
-import java.util.TreeMap;
+import java.util.*;
 
 public class TecmapFileDatastore implements TecmapDatastore {
     private static final Logger logger = LogManager.getLogger(TecmapFileDatastore.class);
@@ -104,10 +97,9 @@ public class TecmapFileDatastore implements TecmapDatastore {
                     //TODO: FIND A WAY TO UPDATE THE PERMANENT DATASTORE
                     //Copies old datastore with default filename to a new backup and overwrites the default
                     String defaultDatastoreFilename = rootPath + Settings.DEFAULT_DATASTORE_FILENAME;
-//                    FileCheck.backup(defaultDatastoreFilename);
-                    FileWriter fileWriter = new FileWriter(FileCheck.getNewName(defaultDatastoreFilename));
-                    String jsonString = toJsonString(this);
-                    System.out.println(jsonString);
+                    FileCheck.backup(defaultDatastoreFilename);
+                    FileWriter fileWriter = new FileWriter(defaultDatastoreFilename);
+                    String jsonString = Json.toJsonString(this.createTecmapFileDatastoreRecord());
                     fileWriter.write(jsonString);
                     fileWriter.close();
 
@@ -120,15 +112,19 @@ public class TecmapFileDatastore implements TecmapDatastore {
         return null;
     }
 
-    public String toJsonString(Object objectToSerialize) throws JsonProcessingException {
-        ObjectMapper mapper = new ObjectMapper();
-        mapper.enable(SerializationFeature.INDENT_OUTPUT);
-        mapper.setVisibility(PropertyAccessor.FIELD, JsonAutoDetect.Visibility.ANY);
-        return mapper.writeValueAsString( objectToSerialize);
-    }
-
     public static TecmapFileDatastore buildFromJsonFile(String rootPath) throws IOException {
         String filename = rootPath + Settings.DEFAULT_DATASTORE_FILENAME;
         return new TecmapFileDatastore(Json.fromJsonString(filename, TecmapFileDatastoreRecord.class), rootPath);
     }
+
+
+    public TecmapFileDatastoreRecord createTecmapFileDatastoreRecord() {
+        Collection<TecmapFileData> allData = idToMap.values();
+        List<TecmapDataFilesRecord> allDataRecords = new ArrayList<>();
+        for (TecmapFileData data: allData) {
+            allDataRecords.add(new TecmapDataFilesRecord(data.getId(), data.getGraphFile(), data.getResourceFiles(), data.getAssessmentFiles()));
+        }
+        return new TecmapFileDatastoreRecord(allDataRecords);
+    }
+
 }
