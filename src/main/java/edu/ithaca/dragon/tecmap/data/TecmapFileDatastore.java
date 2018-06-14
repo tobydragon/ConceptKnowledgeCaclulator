@@ -1,5 +1,10 @@
 package edu.ithaca.dragon.tecmap.data;
 
+import com.fasterxml.jackson.annotation.JsonAutoDetect;
+import com.fasterxml.jackson.annotation.PropertyAccessor;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.SerializationFeature;
 import edu.ithaca.dragon.tecmap.Settings;
 import edu.ithaca.dragon.tecmap.SuggestingTecmap;
 import edu.ithaca.dragon.tecmap.SuggestingTecmapAPI;
@@ -101,7 +106,7 @@ public class TecmapFileDatastore implements TecmapDatastore {
                     String defaultDatastoreFilename = rootPath + Settings.DEFAULT_DATASTORE_FILENAME;
 //                    FileCheck.backup(defaultDatastoreFilename);
                     FileWriter fileWriter = new FileWriter(FileCheck.getNewName(defaultDatastoreFilename));
-                    String jsonString = Json.toJsonString(this);
+                    String jsonString = toJsonString(this);
                     System.out.println(jsonString);
                     fileWriter.write(jsonString);
                     fileWriter.close();
@@ -113,6 +118,13 @@ public class TecmapFileDatastore implements TecmapDatastore {
             }
         }
         return null;
+    }
+
+    public String toJsonString(Object objectToSerialize) throws JsonProcessingException {
+        ObjectMapper mapper = new ObjectMapper();
+        mapper.enable(SerializationFeature.INDENT_OUTPUT);
+        mapper.setVisibility(PropertyAccessor.FIELD, JsonAutoDetect.Visibility.ANY);
+        return mapper.writeValueAsString( objectToSerialize);
     }
 
     public static TecmapFileDatastore buildFromJsonFile(String rootPath) throws IOException {
