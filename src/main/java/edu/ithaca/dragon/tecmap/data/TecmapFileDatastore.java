@@ -12,7 +12,6 @@ import edu.ithaca.dragon.tecmap.ui.TecmapUserAction;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import java.io.FileWriter;
 import java.io.IOException;
 import java.util.*;
 
@@ -91,17 +90,13 @@ public class TecmapFileDatastore implements TecmapDatastore {
                     int i = 0;
                     String defaultFilename = rootPath + idToUpdate + "/" + idToUpdate + "Resources.json";
                     FileCheck.backup(defaultFilename);
-                    LearningResourceRecord.resourceRecordsToJSON(learningResourceRecords, defaultFilename);
+                    Json.toJsonFile(defaultFilename, learningResourceRecords);
                     idToMap.get(idToUpdate).updateResourceFiles(defaultFilename);
 
-                    //TODO: FIND A WAY TO UPDATE THE PERMANENT DATASTORE
                     //Copies old datastore with default filename to a new backup and overwrites the default
                     String defaultDatastoreFilename = rootPath + Settings.DEFAULT_DATASTORE_FILENAME;
                     FileCheck.backup(defaultDatastoreFilename);
-                    FileWriter fileWriter = new FileWriter(defaultDatastoreFilename);
-                    String jsonString = Json.toJsonString(this.createTecmapFileDatastoreRecord());
-                    fileWriter.write(jsonString);
-                    fileWriter.close();
+                    Json.toJsonFile(defaultDatastoreFilename, createTecmapFileDatastoreRecord());
 
                     return defaultFilename;
                 } catch (IOException exception) {
@@ -114,7 +109,7 @@ public class TecmapFileDatastore implements TecmapDatastore {
 
     public static TecmapFileDatastore buildFromJsonFile(String rootPath) throws IOException {
         String filename = rootPath + Settings.DEFAULT_DATASTORE_FILENAME;
-        return new TecmapFileDatastore(Json.fromJsonString(filename, TecmapFileDatastoreRecord.class), rootPath);
+        return new TecmapFileDatastore(Json.fromJsonFile(filename, TecmapFileDatastoreRecord.class), rootPath);
     }
 
 

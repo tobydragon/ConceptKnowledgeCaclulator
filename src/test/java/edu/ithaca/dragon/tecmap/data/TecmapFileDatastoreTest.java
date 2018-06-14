@@ -13,7 +13,6 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.skyscreamer.jsonassert.JSONAssert;
 
-import java.io.FileWriter;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -110,10 +109,11 @@ class TecmapFileDatastoreTest {
     @Test
     //CREATES AND DELETES THE FILES!!
     void updateTecmapResources() throws Exception {
-        TecmapFileDatastoreRecord originalRecord = tecmapDatastore.createTecmapFileDatastoreRecord();
+        TecmapDatastore originalDatastore = TecmapFileDatastore.buildFromJsonFile(Settings.DEFAULT_TEST_DATASTORE_PATH);
 
         String expectedOrigFilename = Settings.DEFAULT_TEST_DATASTORE_PATH + "Cs1ExampleAssessmentAdded/Cs1ExampleAssessmentAddedResources.json";
         String secondFilename = Settings.DEFAULT_TEST_DATASTORE_PATH + "Cs1ExampleAssessmentAdded/Cs1ExampleAssessmentAddedResources-backup-0.json";
+
         String updateFiles = tecmapDatastore.updateTecmapResources("Cs1ExampleAssessmentAdded", tecmapDatastore.retrieveTecmapForId("Cs1ExampleAssessmentAdded").createBlankLearningResourceRecordsFromAssessment());
         assertEquals(expectedOrigFilename, updateFiles);
 
@@ -134,10 +134,10 @@ class TecmapFileDatastoreTest {
         path = Paths.get(Settings.DEFAULT_TEST_DATASTORE_PATH + "TecmapDatastore-backup-1.json");
         assertTrue(Files.deleteIfExists(path));
 
-        FileWriter fileWriter = new FileWriter(Settings.DEFAULT_TEST_DATASTORE_PATH + Settings.DEFAULT_DATASTORE_FILENAME);
-        String jsonString = Json.toJsonString(originalRecord);
-        fileWriter.write(jsonString);
-        fileWriter.close();
+        path = Paths.get(Settings.DEFAULT_TEST_DATASTORE_PATH + Settings.DEFAULT_DATASTORE_FILENAME);
+        assertTrue(Files.deleteIfExists(path));
+
+        Json.toJsonFile(Settings.DEFAULT_TEST_DATASTORE_PATH + Settings.DEFAULT_DATASTORE_FILENAME, originalDatastore.createTecmapFileDatastoreRecord());
 
         //Bad ID
         updateFiles = tecmapDatastore.updateTecmapResources("notAValidID", null);
@@ -152,6 +152,6 @@ class TecmapFileDatastoreTest {
 
     @Test
     void createTecmapFileDatastoreRecord() throws Exception {
-        JSONAssert.assertEquals(Json.toJsonString(Json.fromJsonString(Settings.DEFAULT_TEST_DATASTORE_PATH + Settings.DEFAULT_DATASTORE_FILENAME, TecmapFileDatastoreRecord.class)), Json.toJsonString(tecmapDatastore.createTecmapFileDatastoreRecord()), false);
+        JSONAssert.assertEquals(Json.toJsonString(Json.fromJsonFile(Settings.DEFAULT_TEST_DATASTORE_PATH + Settings.DEFAULT_DATASTORE_FILENAME, TecmapFileDatastoreRecord.class)), Json.toJsonString(tecmapDatastore.createTecmapFileDatastoreRecord()), false);
     }
 }

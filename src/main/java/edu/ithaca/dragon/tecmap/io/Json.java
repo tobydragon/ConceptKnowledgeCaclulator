@@ -16,7 +16,13 @@ public class Json {
         return mapper.writeValueAsString( objectToSerialize);
     }
 
-    public static <T> T fromJsonString(String filename, Class<? extends T> classToBeCreated) throws IOException {
+    public static void toJsonFile(String filename, Object objectToSerialize) throws IOException {
+        ObjectMapper mapper = new ObjectMapper();
+        mapper.enable(SerializationFeature.INDENT_OUTPUT);
+        mapper.writeValue(new File(filename), objectToSerialize);
+    }
+
+    public static <T> T fromJsonFile(String filename, Class<? extends T> classToBeCreated) throws IOException {
         ObjectMapper mapper = new ObjectMapper();
         mapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
         return  mapper.readValue(new File(filename), classToBeCreated);

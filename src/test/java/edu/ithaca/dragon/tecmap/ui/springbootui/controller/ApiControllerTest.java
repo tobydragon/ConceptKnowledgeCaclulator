@@ -186,6 +186,8 @@ public class ApiControllerTest {
 
     @Test
     public void postConnectedResources() throws Exception{
+        TecmapDatastore originalDatastore = TecmapFileDatastore.buildFromJsonFile(Settings.DEFAULT_TEST_DATASTORE_PATH);
+
         String courseId = "Cs1ExampleAssessmentAdded";
         Mockito.when(tecmapServiceMock.postConnectedResources(anyString(), anyObject()))
                 .thenReturn(tecmapService.postConnectedResources(courseId, tecmapService.retrieveBlankLearningResourceRecordsFromAssessment(courseId)));
@@ -198,10 +200,19 @@ public class ApiControllerTest {
 
         MvcResult result = mockMvc.perform(requestBuilder).andExpect(status().isOk()).andReturn();
 
+        //Delete all files created and reset the TecmapDatastore.json
         Path path = Paths.get(result.getResponse().getContentAsString());
-
         assertTrue(Files.deleteIfExists(path));
 
+        path = Paths.get(Settings.DEFAULT_TEST_DATASTORE_PATH + "TecmapDatastore-backup-0.json");
+        assertTrue(Files.deleteIfExists(path));
+
+        path = Paths.get(Settings.DEFAULT_TEST_DATASTORE_PATH + Settings.DEFAULT_DATASTORE_FILENAME);
+        assertTrue(Files.deleteIfExists(path));
+
+        Json.toJsonFile(Settings.DEFAULT_TEST_DATASTORE_PATH + Settings.DEFAULT_DATASTORE_FILENAME, originalDatastore.createTecmapFileDatastoreRecord());
+
+        //Continue with tests
         Mockito.when(tecmapServiceMock.postConnectedResources(anyString(), anyObject()))
                 .thenReturn(tecmapService.postConnectedResources(courseId, null));
 

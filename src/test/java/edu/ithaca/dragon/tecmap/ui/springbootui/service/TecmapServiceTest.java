@@ -81,10 +81,22 @@ public class TecmapServiceTest {
 
     @Test
     public void postConnectedResources() throws IOException {
+        TecmapDatastore originalDatastore = TecmapFileDatastore.buildFromJsonFile(Settings.DEFAULT_TEST_DATASTORE_PATH);
+
         String filename = Settings.DEFAULT_TEST_DATASTORE_PATH + "Cs1ExampleAssessmentAdded/Cs1ExampleAssessmentAddedResources.json";
-        Path path = Paths.get(filename);
         assertEquals(filename, tecmapService.postConnectedResources("Cs1ExampleAssessmentAdded", tecmapService.retrieveBlankLearningResourceRecordsFromAssessment("Cs1ExampleAssessmentAdded")));
+
+        Path path = Paths.get(filename);
         assertTrue(Files.deleteIfExists(path));
+
+        path = Paths.get(Settings.DEFAULT_TEST_DATASTORE_PATH + "TecmapDatastore-backup-0.json");
+        assertTrue(Files.deleteIfExists(path));
+
+        path = Paths.get(Settings.DEFAULT_TEST_DATASTORE_PATH + Settings.DEFAULT_DATASTORE_FILENAME);
+        assertTrue(Files.deleteIfExists(path));
+
+        Json.toJsonFile(Settings.DEFAULT_TEST_DATASTORE_PATH + Settings.DEFAULT_DATASTORE_FILENAME, originalDatastore.createTecmapFileDatastoreRecord());
+
         assertNull(tecmapService.postConnectedResources("notAValidID", null));
         assertNull(tecmapService.postConnectedResources("Cs1ExampleAssessmentAdded", null));
         assertNull(tecmapService.postConnectedResources("Cs1ExampleAssessmentAdded", new ArrayList<LearningResourceRecord>()));
