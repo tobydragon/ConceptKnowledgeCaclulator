@@ -2,8 +2,8 @@
 var courseId;
 var cohortGraphs = readJson("/api/cohortTree/" + courseId);
 var resourceSuggestions;
+var groupSuggestions;
 
-//TODO: WILL NEED TO CHANGE ONCE API GETS INCOMPLETE AND WRONG LISTS
 //Currently displays just the concepts, will need to be changed into two tables
 function displaySuggestions(name) {
     resourceSuggestions = readJson("/api/suggestResources/" + courseId + "/" + name);
@@ -34,6 +34,28 @@ function displaySuggestions(name) {
         document.getElementById("wrongTable").innerHTML = "";
         document.getElementById("incompleteTable").innerHTML = "";
         document.getElementById("suggestionName").innerHTML = " Suggestions for " + name;
+    }
+}
+
+function getGroups(size) {
+    groupSuggestions = readJson("/api/suggestGroups/" + courseId + "/all/" + size);
+    console.log(groupSuggestions);
+    document.getElementById("groupTableDiv").innerHTML = "";
+    if (groupSuggestions.length > 0) {
+        var tableHTML = "<table align='center' border='2' id='groupTable'>";
+        tableHTML += "<tr><th> Group # </th><th> Group Members </th> <th> Rationale </th></tr>";
+        for (var i = 0; i < groupSuggestions.length; i++) {
+            var groupNames = groupSuggestions[i].studentNames;
+            console.log(groupNames);
+            tableHTML += "<tr><td> Group " + i + " </td><td>";
+            for (var j = 0; j < groupNames.length; j++) {
+                tableHTML += groupNames[j] + " ";
+            }
+            tableHTML += "</td><td>" + groupSuggestions[i].rationale + "</td></tr>"
+        }
+        tableHTML += "</table>";
+        tableHTML += "<br>";
+        document.getElementById("groupTableDiv").innerHTML += tableHTML;
     }
 }
 
