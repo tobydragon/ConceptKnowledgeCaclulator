@@ -10,7 +10,6 @@ import edu.ithaca.dragon.tecmap.learningresource.LearningResourceType;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
 
@@ -34,7 +33,7 @@ public class LearningResourceRecord {
     }
 
     public LearningResourceRecord(AssessmentItem assessment){
-        this( assessment.getId(), Arrays.asList(LearningResourceType.ASSESSMENT), new ArrayList<>(), assessment.getMaxPossibleKnowledgeEstimate(), assessment.getDataImportance());
+        this( assessment.getId(), LearningResourceType.getDefaultResourceTypes() , new ArrayList<>(), assessment.getMaxPossibleKnowledgeEstimate(), assessment.getDataImportance());
     }
 
     // default constructor for JSON

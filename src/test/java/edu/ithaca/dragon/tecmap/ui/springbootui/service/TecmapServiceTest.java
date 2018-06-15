@@ -9,6 +9,7 @@ import edu.ithaca.dragon.tecmap.io.Json;
 import edu.ithaca.dragon.tecmap.io.record.CohortConceptGraphsRecord;
 import edu.ithaca.dragon.tecmap.io.record.ConceptGraphRecord;
 import edu.ithaca.dragon.tecmap.io.record.LearningResourceRecord;
+import edu.ithaca.dragon.tecmap.suggester.GroupSuggester.Group;
 import edu.ithaca.dragon.tecmap.tecmapExamples.Cs1ExampleJsonStrings;
 import edu.ithaca.dragon.tecmap.ui.TecmapUserAction;
 import org.junit.Before;
@@ -17,6 +18,9 @@ import org.junit.runner.RunWith;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -24,8 +28,7 @@ import java.util.Map;
 import static org.hamcrest.Matchers.containsInAnyOrder;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertThat;
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.*;
 
 @RunWith(SpringRunner.class)
 public class TecmapServiceTest {
@@ -34,7 +37,7 @@ public class TecmapServiceTest {
 
     @Before
     public void setup() throws IOException {
-        TecmapDatastore tecmapDatastore = TecmapFileDatastore.buildFromJsonFile(Settings.DEFAULT_TEST_DATASTORE_FILE, Settings.TEST_ROOT_PATH);
+        TecmapDatastore tecmapDatastore = TecmapFileDatastore.buildFromJsonFile(Settings.DEFAULT_TEST_DATASTORE_PATH);
 
         tecmapService = new TecmapService(tecmapDatastore);
     }
@@ -77,8 +80,23 @@ public class TecmapServiceTest {
     }
 
     @Test
-    public void postConnectedResources() {
-        assertEquals("src/test/resources/datastore/Cs1ExampleAssessmentAdded/Cs1ExampleAssessmentAddedResources.json", tecmapService.postConnectedResources("Cs1ExampleAssessmentAdded", tecmapService.retrieveBlankLearningResourceRecordsFromAssessment("Cs1ExampleAssessmentAdded")));
+    public void postConnectedResources() throws IOException {
+        TecmapDatastore originalDatastore = TecmapFileDatastore.buildFromJsonFile(Settings.DEFAULT_TEST_DATASTORE_PATH);
+
+        String filename = Settings.DEFAULT_TEST_DATASTORE_PATH + "Cs1ExampleAssessmentAdded/Cs1ExampleAssessmentAddedResources.json";
+        assertEquals(filename, tecmapService.postConnectedResources("Cs1ExampleAssessmentAdded", tecmapService.retrieveBlankLearningResourceRecordsFromAssessment("Cs1ExampleAssessmentAdded")));
+
+        Path path = Paths.get(filename);
+        assertTrue(Files.deleteIfExists(path));
+
+        path = Paths.get(Settings.DEFAULT_TEST_DATASTORE_PATH + "TecmapDatastore-backup-0.json");
+        assertTrue(Files.deleteIfExists(path));
+
+        path = Paths.get(Settings.DEFAULT_TEST_DATASTORE_PATH + Settings.DEFAULT_DATASTORE_FILENAME);
+        assertTrue(Files.deleteIfExists(path));
+
+        Json.toJsonFile(Settings.DEFAULT_TEST_DATASTORE_PATH + Settings.DEFAULT_DATASTORE_FILENAME, originalDatastore.createTecmapFileDatastoreRecord());
+
         assertNull(tecmapService.postConnectedResources("notAValidID", null));
         assertNull(tecmapService.postConnectedResources("Cs1ExampleAssessmentAdded", null));
         assertNull(tecmapService.postConnectedResources("Cs1ExampleAssessmentAdded", new ArrayList<LearningResourceRecord>()));
@@ -131,10 +149,53 @@ public class TecmapServiceTest {
     }
 
     @Test
+    public void retrieveGroupSuggestions() throws Exception {
+        //test a bad id
+        List<Group> groupings = tecmapService.retrieveGroupSuggestions("notAGoodId", "bucket", 2);
+        assertNull(groupings);
+
+        //test structure
+        groupings = tecmapService.retrieveGroupSuggestions("Cs1ExampleStructure", "bucket", 2);
+        assertNull(groupings);
+
+        //test assessment added
+        groupings = tecmapService.retrieveGroupSuggestions("Cs1ExampleAssessmentAdded", "bucket", 2);
+        assertNull(groupings);
+
+        //Test bucket example
+        groupings = tecmapService.retrieveGroupSuggestions("Cs1Example", "bucket", 2);
+
+        assertEquals(1, groupings.get(0).getSize());
+        assertEquals("s01", groupings.get(0).getStudentNames().get(0));
+
+        assertEquals(0, groupings.get(1).getSize());
+
+        assertEquals(2, groupings.get(2).getSize());
+        assertTrue(groupings.get(2).getStudentNames().contains("s02"));
+        assertTrue(groupings.get(2).getStudentNames().contains("s03"));
+
+        //Test concept example
+        groupings = tecmapService.retrieveGroupSuggestions("Cs1Example", "concept", 2);
+
+        assertEquals(2, groupings.size());
+
+        assertEquals(2, groupings.get(0).getSize());
+        assertThat(groupings.get(0).getStudentNames(), containsInAnyOrder("s01", "s03"));
+
+        assertEquals(1, groupings.get(1).getSize());
+        assertThat(groupings.get(1).getStudentNames(), containsInAnyOrder("s02"));
+
+        //Test bad sortType
+        groupings = tecmapService.retrieveGroupSuggestions("Cs1Example", "none", 2);
+
+        assertNull(groupings);
+    }
+
+    @Test
     public void retrieveValidIdsAndActions() {
         //Will be the same for all of the Services, because they all use the same datastore
         Map<String, List<TecmapUserAction>> validMap = tecmapService.retrieveValidIdsAndActions();
-        assertEquals(4, validMap.size());
+        assertEquals(3, validMap.size());
         assertEquals(1, validMap.get("Cs1ExampleStructure").size());
         assertThat(validMap.get("Cs1ExampleStructure"), containsInAnyOrder(TecmapUserAction.structureTree));
         assertEquals(2, validMap.get("Cs1ExampleAssessmentAdded").size());

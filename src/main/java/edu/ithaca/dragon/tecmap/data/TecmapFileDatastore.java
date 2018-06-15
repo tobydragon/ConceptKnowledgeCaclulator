@@ -1,5 +1,6 @@
 package edu.ithaca.dragon.tecmap.data;
 
+import edu.ithaca.dragon.tecmap.Settings;
 import edu.ithaca.dragon.tecmap.SuggestingTecmap;
 import edu.ithaca.dragon.tecmap.SuggestingTecmapAPI;
 import edu.ithaca.dragon.tecmap.io.Json;
@@ -12,9 +13,11 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import java.io.IOException;
-import java.util.List;
-import java.util.Map;
-import java.util.TreeMap;
+import java.nio.file.Files;
+import java.nio.file.LinkOption;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.util.*;
 
 public class TecmapFileDatastore implements TecmapDatastore {
     private static final Logger logger = LogManager.getLogger(TecmapFileDatastore.class);
@@ -26,7 +29,34 @@ public class TecmapFileDatastore implements TecmapDatastore {
         this.rootPath = rootPath;
         idToMap = new TreeMap<>();
         for (TecmapDataFilesRecord dataFiles : recordIn.getAllRecords()){
-            idToMap.put(dataFiles.getId(), new TecmapFileData(dataFiles));
+            boolean graphValid = true;
+            boolean resourceValid = true;
+            boolean assessmentValid = true;
+            Path path;
+            for (String assessmentFilename : dataFiles.getAssessmentFiles()) {
+                path = Paths.get(assessmentFilename);
+                if (!Files.exists(path, LinkOption.NOFOLLOW_LINKS)) {
+                    assessmentValid = false;
+                }
+            }
+            for (String resourceFilename : dataFiles.getResourceFiles()) {
+                path = Paths.get(resourceFilename);
+                if (!Files.exists(path, LinkOption.NOFOLLOW_LINKS)) {
+                    resourceValid = false;
+                }
+            }
+            path = Paths.get(dataFiles.getGraphFile());
+            if (!Files.exists(path, LinkOption.NOFOLLOW_LINKS)) {
+                graphValid = false;
+            }
+
+            if (graphValid && assessmentValid && resourceValid) { //Assessment Connected
+                idToMap.put(dataFiles.getId(), new TecmapFileData(dataFiles));
+            } else if (graphValid && assessmentValid) { //Assessment Added
+                idToMap.put(dataFiles.getId(), new TecmapFileData(dataFiles.getId(), dataFiles.getGraphFile(), new ArrayList<String>(), dataFiles.getAssessmentFiles()));
+            } else if (graphValid) { //No Assessment
+                idToMap.put(dataFiles.getId(), new TecmapFileData(dataFiles.getId(), dataFiles.getGraphFile(), new ArrayList<String>(), new ArrayList<String>()));
+            }
         }
     }
 
@@ -82,17 +112,24 @@ public class TecmapFileDatastore implements TecmapDatastore {
     }
 
     @Override
+    //ALWAYS WRITES TO THE SAME DEFAULT FILENAME, COPIES TO A DIFFERENT FILENAME
     public String updateTecmapResources(String idToUpdate, List<LearningResourceRecord> learningResourceRecords) {
         if (idToMap.containsKey(idToUpdate)) {
             if (learningResourceRecords != null && learningResourceRecords.size() > 0) {
                 try {
-                    //Write To A New Resource File
-                    String filename = rootPath + "resources/datastore/" + idToUpdate + "/" + idToUpdate + "Resources.json";
-                    LearningResourceRecord.resourceRecordsToJSON(learningResourceRecords, filename);
-                    idToMap.get(idToUpdate).addResourceFiles(filename);
+                    //Copies old file with defaultFilename (if exists) to a new backup and overwrites the default
+                    int i = 0;
+                    String defaultFilename = rootPath + idToUpdate + "/" + idToUpdate + "Resources.json";
+                    FileCheck.backup(defaultFilename);
+                    Json.toJsonFile(defaultFilename, learningResourceRecords);
+                    idToMap.get(idToUpdate).updateResourceFiles(defaultFilename);
 
-                    //TODO: FIND A WAY TO UPDATE THE PERMANENT DATASTORE
-                    return filename;
+                    //Copies old datastore with default filename to a new backup and overwrites the default
+                    String defaultDatastoreFilename = rootPath + Settings.DEFAULT_DATASTORE_FILENAME;
+                    FileCheck.backup(defaultDatastoreFilename);
+                    Json.toJsonFile(defaultDatastoreFilename, createTecmapFileDatastoreRecord());
+
+                    return defaultFilename;
                 } catch (IOException exception) {
                     return null;
                 }
@@ -101,7 +138,19 @@ public class TecmapFileDatastore implements TecmapDatastore {
         return null;
     }
 
-    public static TecmapFileDatastore buildFromJsonFile(String filename, String rootPath) throws IOException {
-        return new TecmapFileDatastore(Json.fromJsonString(filename, TecmapFileDatastoreRecord.class), rootPath);
+    public static TecmapFileDatastore buildFromJsonFile(String rootPath) throws IOException {
+        String filename = rootPath + Settings.DEFAULT_DATASTORE_FILENAME;
+        return new TecmapFileDatastore(Json.fromJsonFile(filename, TecmapFileDatastoreRecord.class), rootPath);
     }
+
+
+    public TecmapFileDatastoreRecord createTecmapFileDatastoreRecord() {
+        Collection<TecmapFileData> allData = idToMap.values();
+        List<TecmapDataFilesRecord> allDataRecords = new ArrayList<>();
+        for (TecmapFileData data: allData) {
+            allDataRecords.add(new TecmapDataFilesRecord(data.getId(), data.getGraphFile(), data.getResourceFiles(), data.getAssessmentFiles()));
+        }
+        return new TecmapFileDatastoreRecord(allDataRecords);
+    }
+
 }

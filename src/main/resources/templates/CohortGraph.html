@@ -22,6 +22,25 @@
         Student Assessment Tool
     </div>
 
+    <div id="suggestion">
+        <h1 style="text-align: center;" id="suggestionName"> Suggestions </h1>
+        <table align="center" border="5" id="suggestionTable">
+            <tr><th scope="col"> Wrong List </th><th scope="col"> Incomplete List </th></tr>
+            <tr><td id="wrongTable"></td><td id="incompleteTable"></td></tr>
+        </table>
+    </div>
+
+    <div id="groupSuggestion" style="background-color: #dddddd">
+        <h1 style="text-align: center;"> Group Suggestions </h1>
+        <div align="center" id="groupButtons">
+            <label for="groupSize"> Group Size: </label><input id="groupSize" name="groupSize" type="number" min="1">
+            <button onclick="getGroups(groupSize.value)"> Get Groups! </button>
+            <div id="groupTableDiv">
+
+            </div>
+        </div>
+    </div>
+
 </body>
     <!-- Load the google charts loader JS, and the google ajax libraries -->
     <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
@@ -34,7 +53,7 @@
     <!-- File that starts execution -->
     <script th:inline="javascript">
         //could read from a static Json file by changing the argument to readJson here
-        cohortGraphs = readJson("/api/cohortTree/" + [[${courseId}]]);
+        courseId = [[${courseId}]];
     </script>
     <script th:src="@{/js/CohortGraph.js}"></script>
 </html>

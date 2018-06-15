@@ -3,6 +3,7 @@ package edu.ithaca.dragon.tecmap.ui.springbootui.controller;
 import edu.ithaca.dragon.tecmap.io.record.CohortConceptGraphsRecord;
 import edu.ithaca.dragon.tecmap.io.record.ConceptGraphRecord;
 import edu.ithaca.dragon.tecmap.io.record.LearningResourceRecord;
+import edu.ithaca.dragon.tecmap.suggester.GroupSuggester.Group;
 import edu.ithaca.dragon.tecmap.suggester.OrganizedLearningResourceSuggestions;
 import edu.ithaca.dragon.tecmap.ui.TecmapUserAction;
 import edu.ithaca.dragon.tecmap.ui.springbootui.service.TecmapService;
@@ -42,10 +43,10 @@ public class ApiController {
     }
 
     @PostMapping("/connectResources/{courseId}")
-    public ResponseEntity<Void> postConnectedResources(@PathVariable("courseId") String courseId, @RequestBody List<LearningResourceRecord> filledLearningResourceRecords, HttpServletResponse response) {
+    public ResponseEntity<String> postConnectedResources(@PathVariable("courseId") String courseId, @RequestBody List<LearningResourceRecord> filledLearningResourceRecords, HttpServletResponse response) {
         String updated = tecmapService.postConnectedResources(courseId, filledLearningResourceRecords);
         if (updated != null) {
-            return ResponseEntity.ok().build();
+            return ResponseEntity.ok().body(updated);
         } else {
             return ResponseEntity.notFound().build();
         }
@@ -70,6 +71,11 @@ public class ApiController {
     @GetMapping("/suggestResources/{courseId}/{userId}/{conceptId}")
     public OrganizedLearningResourceSuggestions getResourceSuggestionsForSpecificConceptForUser(@PathVariable("courseId") String courseId, @PathVariable("userId") String userId, @PathVariable("conceptId") String conceptId) {
         return tecmapService.retrieveResourceSuggestionsForSpecificConceptForUser(courseId, userId, conceptId);
+    }
+
+    @GetMapping("/suggestGroups/{courseId}/{sortType}/{size}")
+    public List<Group> getResourceSuggestions(@PathVariable("courseId") String courseId, @PathVariable("sortType") String sortType, @PathVariable("size") int size) throws Exception {
+        return tecmapService.retrieveGroupSuggestions(courseId, sortType, size);
     }
 
     @GetMapping("/actions")

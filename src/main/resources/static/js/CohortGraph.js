@@ -1,5 +1,72 @@
 // variable that holds the json of the CohortGraphRecord, defined in CohortGraph.html
-var cohortGraphs;
+var courseId;
+var cohortGraphs = readJson("/api/cohortTree/" + courseId);
+var resourceSuggestions;
+var groupSuggestions;
+
+//Currently displays just the concepts, will need to be changed into two tables
+function displaySuggestions(name) {
+    if (name !== "Average Graph") {
+        resourceSuggestions = readJson("/api/suggestResources/" + courseId + "/" + name);
+        if (resourceSuggestions.incompleteList.length > 0 || resourceSuggestions.wrongList.length > 0) {
+            var suggestionName = "Suggestions for " + name;
+            document.getElementById("suggestionName").innerHTML = suggestionName;
+            var tableHTML = "<table align='center' border='2' style='text-align: center'><thead>";
+            tableHTML += "<tr><th> Concept </th><th> Resource </th></tr>";
+            tableHTML += "</thead>";
+            tableHTML += "<tbody>"; //reset for table body
+            for (var i = 0; i < resourceSuggestions.wrongList.length; i++) {
+                var currentSuggestion = resourceSuggestions.wrongList[i];
+                tableHTML += "<tr><td>" + currentSuggestion.reasoning + "</td><td>" + currentSuggestion.id + "</td></tr>"
+            }
+            tableHTML += "</tbody></table>";
+            document.getElementById("wrongTable").innerHTML = tableHTML;
+            tableHTML = "<table align='center' border='2' style='text-align: center'><thead>";
+            tableHTML += "<tr><th> Concept </th><th> Resource </th></tr>";
+            tableHTML += "</thead>";
+            tableHTML += "<tbody>"; //reset for table body
+            for (var i = 0; i < resourceSuggestions.incompleteList.length; i++) {
+                var currentSuggestion = resourceSuggestions.incompleteList[i];
+                tableHTML += "<tr><td>" + currentSuggestion.reasoning + "</td><td>" + currentSuggestion.id + "</td></tr>"
+            }
+            tableHTML += "</tbody></table>";
+            document.getElementById("incompleteTable").innerHTML = tableHTML;
+        } else {
+            document.getElementById("wrongTable").innerHTML = "";
+            document.getElementById("incompleteTable").innerHTML = "";
+            document.getElementById("suggestionName").innerHTML = " Suggestions for " + name;
+        }
+    } else {
+        document.getElementById("wrongTable").innerHTML = "";
+        document.getElementById("incompleteTable").innerHTML = "";
+        document.getElementById("suggestionName").innerHTML = " Suggestions ";
+    }
+}
+
+function getGroups(size) {
+    document.getElementById("groupTableDiv").innerHTML = "";
+    if (size > 0) {
+        groupSuggestions = readJson("/api/suggestGroups/" + courseId + "/all/" + size);
+        if (groupSuggestions.length > 0) {
+            var tableHTML = "<table align='center' border='2' id='groupTable'>";
+            tableHTML += "<tr><th> Group # </th><th> Group Members </th> <th> Rationale </th></tr>";
+            for (var i = 0; i < groupSuggestions.length; i++) {
+                var groupNames = groupSuggestions[i].studentNames;
+                tableHTML += "<tr><td> Group " + i + " </td><td>";
+                for (var j = 0; j < groupNames.length; j++) {
+                    tableHTML += groupNames[j] + " ";
+                }
+                tableHTML += "</td><td>" + groupSuggestions[i].rationale + "</td></tr>"
+            }
+            tableHTML += "</table>";
+            tableHTML += "<br>";
+            document.getElementById("groupTableDiv").innerHTML += tableHTML;
+        }
+    } else {
+        window.alert("Group Size Must Be Greater Than 0");
+        document.getElementById("groupSize").value = null;
+    }
+}
 
 function findAndMakeChart(name, type){
     var currentGraph = null;
@@ -12,6 +79,7 @@ function findAndMakeChart(name, type){
     }
     if (currentGraph != null){
         makeChart(currentGraph, type);
+        displaySuggestions(name);
     }
 }
 
@@ -36,7 +104,6 @@ function writeMenu(){
     newCode += "</ul></div>";
     //insert the HTML code into the div with the ID "menu"
     document.getElementById("menu").innerHTML = newCode;
-
     //make the accordion open when clicked (only one now, loops for each future possible section)
     var acc = document.getElementsByClassName("accordion");
     for (var i = 0; i < acc.length; i++) {

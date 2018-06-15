@@ -35,7 +35,7 @@
     <!-- File that starts execution -->
     <script th:inline="javascript">
         //could read from a static Json file by changing the argument to readJson here
-        graph = readJson("/api/structureTree/" + [[${courseId}]]);
+        courseId = [[${courseId}]];
     </script>
     <script th:src="@{/js/StructureGraph.js}"></script>
     

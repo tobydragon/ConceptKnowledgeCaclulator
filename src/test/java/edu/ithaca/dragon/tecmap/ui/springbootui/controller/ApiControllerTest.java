@@ -23,11 +23,14 @@ import org.springframework.test.web.servlet.RequestBuilder;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
 import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.mockito.ArgumentMatchers.anyObject;
-import static org.mockito.ArgumentMatchers.anyString;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.mockito.ArgumentMatchers.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @RunWith(SpringRunner.class)
@@ -44,7 +47,7 @@ public class ApiControllerTest {
 
     @Before
     public void setup() throws IOException {
-        TecmapDatastore tecmapDatastore = TecmapFileDatastore.buildFromJsonFile(Settings.DEFAULT_TEST_DATASTORE_FILE, Settings.TEST_ROOT_PATH);
+        TecmapDatastore tecmapDatastore = TecmapFileDatastore.buildFromJsonFile(Settings.DEFAULT_TEST_DATASTORE_PATH);
 
         tecmapService = new TecmapService(tecmapDatastore);
     }
@@ -159,6 +162,8 @@ public class ApiControllerTest {
         result = mockMvc.perform(requestBuilder).andReturn();
         String expected = Cs1ExampleJsonStrings.assessment1And2Str;
 
+        System.out.println(result.getResponse().getContentAsString());
+
         JSONAssert.assertEquals(expected, result.getResponse().getContentAsString(), false);
 
         //Test Assessment Connected
@@ -181,6 +186,8 @@ public class ApiControllerTest {
 
     @Test
     public void postConnectedResources() throws Exception{
+        TecmapDatastore originalDatastore = TecmapFileDatastore.buildFromJsonFile(Settings.DEFAULT_TEST_DATASTORE_PATH);
+
         String courseId = "Cs1ExampleAssessmentAdded";
         Mockito.when(tecmapServiceMock.postConnectedResources(anyString(), anyObject()))
                 .thenReturn(tecmapService.postConnectedResources(courseId, tecmapService.retrieveBlankLearningResourceRecordsFromAssessment(courseId)));
@@ -191,8 +198,21 @@ public class ApiControllerTest {
                 .content(Json.toJsonString(tecmapService.retrieveBlankLearningResourceRecordsFromAssessment(courseId)))
                 .contentType(MediaType.APPLICATION_JSON);
 
-        mockMvc.perform(requestBuilder).andExpect(status().isOk());
+        MvcResult result = mockMvc.perform(requestBuilder).andExpect(status().isOk()).andReturn();
 
+        //Delete all files created and reset the TecmapDatastore.json
+        Path path = Paths.get(result.getResponse().getContentAsString());
+        assertTrue(Files.deleteIfExists(path));
+
+        path = Paths.get(Settings.DEFAULT_TEST_DATASTORE_PATH + "TecmapDatastore-backup-0.json");
+        assertTrue(Files.deleteIfExists(path));
+
+        path = Paths.get(Settings.DEFAULT_TEST_DATASTORE_PATH + Settings.DEFAULT_DATASTORE_FILENAME);
+        assertTrue(Files.deleteIfExists(path));
+
+        Json.toJsonFile(Settings.DEFAULT_TEST_DATASTORE_PATH + Settings.DEFAULT_DATASTORE_FILENAME, originalDatastore.createTecmapFileDatastoreRecord());
+
+        //Continue with tests
         Mockito.when(tecmapServiceMock.postConnectedResources(anyString(), anyObject()))
                 .thenReturn(tecmapService.postConnectedResources(courseId, null));
 
@@ -374,6 +394,73 @@ public class ApiControllerTest {
 
         JSONAssert.assertEquals(expected, result.getResponse().getContentAsString(), false);
         System.out.println(result.getResponse().getContentAsString());
+    }
+
+    @Test
+    public void getGroupSuggestions() throws Exception {
+        String courseId = "Cs1ExampleStructure";
+        String sortType = "bucket";
+        int size = 2;
+
+        Mockito.when(tecmapServiceMock.retrieveGroupSuggestions(anyString(), anyString(), anyInt()))
+                .thenReturn(tecmapService.retrieveGroupSuggestions(courseId, sortType, size));
+
+        RequestBuilder requestBuilder = MockMvcRequestBuilders.get(
+                "/api/suggestGroups/courseId/sortType/2").accept(
+                MediaType.APPLICATION_JSON);
+
+        //Test Structure
+        MvcResult result = mockMvc.perform(requestBuilder).andReturn();
+
+        String expected = "";
+
+        assertEquals(expected, result.getResponse().getContentAsString());
+
+        //Test Assessment Added
+        courseId = "Cs1ExampleAssessmentAdded";
+
+        Mockito.when(tecmapServiceMock.retrieveGroupSuggestions(anyString(), anyString(), anyInt()))
+                .thenReturn(tecmapService.retrieveGroupSuggestions(courseId, sortType, size));
+
+        result = mockMvc.perform(requestBuilder).andReturn();
+
+        assertEquals(expected, result.getResponse().getContentAsString());
+
+        //Test with bucket
+        courseId = "Cs1Example";
+
+        Mockito.when(tecmapServiceMock.retrieveGroupSuggestions(anyString(), anyString(), anyInt()))
+                .thenReturn(tecmapService.retrieveGroupSuggestions(courseId, sortType, size));
+
+        result = mockMvc.perform(requestBuilder).andReturn();
+
+        expected = Json.toJsonString(tecmapService.retrieveGroupSuggestions(courseId, sortType, size));
+
+        JSONAssert.assertEquals(expected, result.getResponse().getContentAsString(), false);
+
+        //Test with concept
+        sortType = "concept";
+
+        Mockito.when(tecmapServiceMock.retrieveGroupSuggestions(anyString(), anyString(), anyInt()))
+                .thenReturn(tecmapService.retrieveGroupSuggestions(courseId, sortType, size));
+
+        result = mockMvc.perform(requestBuilder).andReturn();
+
+        expected = Json.toJsonString(tecmapService.retrieveGroupSuggestions(courseId, sortType, size));
+
+        JSONAssert.assertEquals(expected, result.getResponse().getContentAsString(), false);
+
+        //Test bad sortType
+        sortType = "none";
+
+        Mockito.when(tecmapServiceMock.retrieveGroupSuggestions(anyString(), anyString(), anyInt()))
+                .thenReturn(tecmapService.retrieveGroupSuggestions(courseId, sortType, size));
+
+        result = mockMvc.perform(requestBuilder).andReturn();
+
+        expected = "";
+
+        assertEquals(expected, result.getResponse().getContentAsString());
     }
 
     @Test

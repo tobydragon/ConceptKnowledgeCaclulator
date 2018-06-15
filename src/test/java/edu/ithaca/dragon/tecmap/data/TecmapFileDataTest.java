@@ -22,9 +22,9 @@ public class TecmapFileDataTest {
     }
 
     @Test
-    public void addResourceFiles() {
+    public void updateResourceFiles() {
         assertEquals(TecmapState.assessmentAdded, tecmapFileData.getAvailableState());
-        tecmapFileData.addResourceFiles("fakeFile");
+        tecmapFileData.updateResourceFiles("fakeFile");
         assertEquals(TecmapState.assessmentConnected, tecmapFileData.getAvailableState());
     }
 

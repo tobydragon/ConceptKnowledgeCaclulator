@@ -1,5 +1,6 @@
 //defined in StructureGraph.html
-var graph;
+var courseId;
+var graph = readJson("/api/structureTree/" + courseId);
 
 if (graph === undefined || graph === null) {
     window.location.replace("/error")

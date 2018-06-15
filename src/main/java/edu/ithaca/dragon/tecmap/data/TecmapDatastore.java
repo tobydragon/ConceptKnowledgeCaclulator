@@ -2,6 +2,7 @@ package edu.ithaca.dragon.tecmap.data;
 
 import edu.ithaca.dragon.tecmap.SuggestingTecmapAPI;
 import edu.ithaca.dragon.tecmap.io.record.LearningResourceRecord;
+import edu.ithaca.dragon.tecmap.io.record.TecmapFileDatastoreRecord;
 import edu.ithaca.dragon.tecmap.tecmapstate.TecmapState;
 import edu.ithaca.dragon.tecmap.ui.TecmapUserAction;
 
@@ -39,4 +40,10 @@ public interface TecmapDatastore {
      * @return a map where each key is a valid TecmapID, and the corresponding value is a list of valid states for that Tecmap
      */
     Map<String, List<TecmapUserAction>> retrieveValidIdsAndActions();
+
+    /**
+     * creates a TecmapFileDatastoreRecord from the Datastore object
+     * @return
+     */
+    TecmapFileDatastoreRecord createTecmapFileDatastoreRecord();
 }
