@@ -5,6 +5,7 @@ import edu.ithaca.dragon.tecmap.TecmapAPI;
 import edu.ithaca.dragon.tecmap.io.Json;
 import edu.ithaca.dragon.tecmap.io.record.ConceptGraphRecord;
 import edu.ithaca.dragon.tecmap.io.record.LearningResourceRecord;
+import edu.ithaca.dragon.tecmap.io.record.TecmapDataFilesRecord;
 import edu.ithaca.dragon.tecmap.io.record.TecmapFileDatastoreRecord;
 import edu.ithaca.dragon.tecmap.tecmapExamples.Cs1ExampleJsonStrings;
 import edu.ithaca.dragon.tecmap.tecmapstate.TecmapState;
@@ -17,10 +18,7 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 import static org.hamcrest.Matchers.containsInAnyOrder;
 import static org.junit.Assert.assertNotNull;
@@ -40,9 +38,6 @@ class TecmapFileDatastoreTest {
     void TecmapFileDatastoreConstructorTest() {
         assertNull(tecmapDatastore.retrieveTecmapForId("BadPaths"));
 
-        //Assessment Added, Bad Resource Files
-        assertNotNull(tecmapDatastore.retrieveTecmapForId("Cs1ExampleBadResource"));
-        assertEquals(TecmapState.assessmentAdded, tecmapDatastore.retrieveTecmapForId("Cs1ExampleBadResource").getCurrentState());
         //Assessment Connected, All Good Files
         assertNotNull(tecmapDatastore.retrieveTecmapForId("Cs1Example"));
         assertEquals(TecmapState.assessmentConnected, tecmapDatastore.retrieveTecmapForId("Cs1Example").getCurrentState());
@@ -52,6 +47,46 @@ class TecmapFileDatastoreTest {
         //Assessment Added, All Good Files
         assertNotNull(tecmapDatastore.retrieveTecmapForId("Cs1ExampleAssessmentAdded"));
         assertEquals(TecmapState.assessmentAdded, tecmapDatastore.retrieveTecmapForId("Cs1ExampleAssessmentAdded").getCurrentState());
+    }
+
+    //Test that makes sure that a datastore with bad paths creates the correct tecmaps using
+    //only the files that exist
+    @Test
+    void TecmapFileDatastoreWithBadPathsConstructorTest() throws IOException {
+        TecmapFileDatastoreRecord tecmapFileDatastoreRecord = tecmapDatastore.createTecmapFileDatastoreRecord();
+
+        List<TecmapDataFilesRecord> tecmapDataFilesRecords = tecmapFileDatastoreRecord.getAllRecords();
+
+        tecmapDataFilesRecords.add(new TecmapDataFilesRecord("BadPaths", "BadPaths", Arrays.asList("BadPaths"), Arrays.asList("BadPaths")));
+        tecmapDataFilesRecords.add(new TecmapDataFilesRecord("Cs1ExampleBadResources", "src/test/resources/datastore/Cs1Example/Cs1ExampleGraph.json",
+                Arrays.asList("BadResourceFile"),
+                Arrays.asList("src/test/resources/datastore/Cs1Example/Cs1ExampleAssessment1.csv", "src/test/resources/author/tecmapExamples/Cs1ExampleAssessment2.csv")));
+
+        tecmapDataFilesRecords.add(new TecmapDataFilesRecord("Cs1ExampleBadAssessment", "src/test/resources/datastore/Cs1Example/Cs1ExampleGraph.json",
+                Arrays.asList("src/test/resources/datastore/Cs1Example/Cs1ExampleResources.json"),
+                Arrays.asList("BadAssessmentFile")));
+
+        tecmapFileDatastoreRecord.setAllRecords(tecmapDataFilesRecords);
+
+        TecmapFileDatastore badPathsDatastore = new TecmapFileDatastore(tecmapFileDatastoreRecord, "anyPath");
+
+        assertNull(badPathsDatastore.retrieveTecmapForId("BadPaths"));
+
+        //Assessment Connected, All Good Files
+        assertNotNull(badPathsDatastore.retrieveTecmapForId("Cs1Example"));
+        assertEquals(TecmapState.assessmentConnected, badPathsDatastore.retrieveTecmapForId("Cs1Example").getCurrentState());
+        //No Assessment, All Good Files
+        assertNotNull(badPathsDatastore.retrieveTecmapForId("Cs1ExampleStructure"));
+        assertEquals(TecmapState.noAssessment, badPathsDatastore.retrieveTecmapForId("Cs1ExampleStructure").getCurrentState());
+        //Assessment Added, All Good Files
+        assertNotNull(badPathsDatastore.retrieveTecmapForId("Cs1ExampleAssessmentAdded"));
+        assertEquals(TecmapState.assessmentAdded, badPathsDatastore.retrieveTecmapForId("Cs1ExampleAssessmentAdded").getCurrentState());
+        //Assessment Added, Bad Resource Files
+        assertNotNull(badPathsDatastore.retrieveTecmapForId("Cs1ExampleBadResources"));
+        assertEquals(TecmapState.assessmentAdded, badPathsDatastore.retrieveTecmapForId("Cs1ExampleBadResources").getCurrentState());
+        //NoAssessment, Bad Assessment Files
+        assertNotNull(badPathsDatastore.retrieveTecmapForId("Cs1ExampleBadAssessment"));
+        assertEquals(TecmapState.noAssessment, badPathsDatastore.retrieveTecmapForId("Cs1ExampleBadAssessment").getCurrentState());
     }
 
     @Test
@@ -115,7 +150,7 @@ class TecmapFileDatastoreTest {
     @Test
     void retrieveValidIdsAndActions(){
         Map<String, List<TecmapUserAction>> validMap = tecmapDatastore.retrieveValidIdsAndActions();
-        assertEquals(4, validMap.size());
+        assertEquals(3, validMap.size());
         assertEquals(1, validMap.get("Cs1ExampleStructure").size());
         assertThat(validMap.get("Cs1ExampleStructure"), containsInAnyOrder(TecmapUserAction.structureTree));
         assertEquals(2, validMap.get("Cs1ExampleAssessmentAdded").size());
@@ -126,7 +161,7 @@ class TecmapFileDatastoreTest {
 
     @Test
     //CREATES AND DELETES THE FILES!!
-    void updateTecmapResources() throws Exception {
+    void updateTecmapResourcesTest() throws Exception {
         TecmapDatastore originalDatastore = TecmapFileDatastore.buildFromJsonFile(Settings.DEFAULT_TEST_DATASTORE_PATH);
 
         String expectedOrigFilename = Settings.DEFAULT_TEST_DATASTORE_PATH + "Cs1ExampleAssessmentAdded/Cs1ExampleAssessmentAddedResources.json";

@@ -14,15 +14,5 @@
     "graphFile" : "src/test/resources/datastore/Cs1Example/Cs1ExampleGraph.json",
     "resourceFiles" : [ ],
     "assessmentFiles" : [ ]
-  }, {
-    "id" : "Cs1ExampleBadResource",
-    "graphFile" : "src/test/resources/datastore/Cs1Example/Cs1ExampleGraph.json",
-    "resourceFiles" : [ "badPath" ],
-    "assessmentFiles" : [ "src/test/resources/datastore/Cs1Example/Cs1ExampleAssessment1.csv", "src/test/resources/author/tecmapExamples/Cs1ExampleAssessment2.csv" ]
-  },{
-    "id" : "badPath",
-    "graphFile" : "badPath",
-    "resourceFiles" : [ "badPath" ],
-    "assessmentFiles" : [ "badPath" ]
   } ]
 }
