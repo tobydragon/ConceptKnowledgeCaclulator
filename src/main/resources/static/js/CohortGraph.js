@@ -114,8 +114,16 @@ function writeMenu(){
     }
 }
 
+//   START OF EXECUTION     //
 if (cohortGraphs === undefined || cohortGraphs === null) {
     window.location.replace("/error")
 }
+document.getElementById("groupSize")
+    .addEventListener("keyup", function(event) {
+        event.preventDefault();
+        if (event.key === "Enter") {
+            document.getElementById("groupButton").click();
+        }
+    });
 writeMenu();
 
