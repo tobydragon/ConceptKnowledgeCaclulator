@@ -29,26 +29,33 @@ public class TecmapFileDatastore implements TecmapDatastore {
         this.rootPath = rootPath;
         idToMap = new TreeMap<>();
         for (TecmapDataFilesRecord dataFiles : recordIn.getAllRecords()){
-            boolean valid = true;
+            boolean graphValid = true;
+            boolean resourceValid = true;
+            boolean assessmentValid = true;
             Path path;
             for (String assessmentFilename : dataFiles.getAssessmentFiles()) {
                 path = Paths.get(assessmentFilename);
                 if (!Files.exists(path, LinkOption.NOFOLLOW_LINKS)) {
-                    valid = false;
+                    assessmentValid = false;
                 }
             }
             for (String resourceFilename : dataFiles.getResourceFiles()) {
                 path = Paths.get(resourceFilename);
                 if (!Files.exists(path, LinkOption.NOFOLLOW_LINKS)) {
-                    valid = false;
+                    resourceValid = false;
                 }
             }
             path = Paths.get(dataFiles.getGraphFile());
             if (!Files.exists(path, LinkOption.NOFOLLOW_LINKS)) {
-                valid = false;
+                graphValid = false;
             }
-            if (valid) {
+
+            if (graphValid && assessmentValid && resourceValid) { //Assessment Connected
                 idToMap.put(dataFiles.getId(), new TecmapFileData(dataFiles));
+            } else if (graphValid && assessmentValid) { //Assessment Added
+                idToMap.put(dataFiles.getId(), new TecmapFileData(dataFiles.getId(), dataFiles.getGraphFile(), new ArrayList<String>(), dataFiles.getAssessmentFiles()));
+            } else if (graphValid) { //No Assessment
+                idToMap.put(dataFiles.getId(), new TecmapFileData(dataFiles.getId(), dataFiles.getGraphFile(), new ArrayList<String>(), new ArrayList<String>()));
             }
         }
     }

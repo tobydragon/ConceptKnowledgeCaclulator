@@ -39,8 +39,10 @@ class TecmapFileDatastoreTest {
     @Test
     void TecmapFileDatastoreConstructorTest() {
         assertNull(tecmapDatastore.retrieveTecmapForId("BadPaths"));
-        assertNull(tecmapDatastore.retrieveTecmapForId("Cs1ExampleBadResource"));
 
+        //Assessment Added, Bad Resource Files
+        assertNotNull(tecmapDatastore.retrieveTecmapForId("Cs1ExampleBadResource"));
+        assertEquals(TecmapState.assessmentAdded, tecmapDatastore.retrieveTecmapForId("Cs1ExampleBadResource").getCurrentState());
         //Assessment Connected, All Good Files
         assertNotNull(tecmapDatastore.retrieveTecmapForId("Cs1Example"));
         assertEquals(TecmapState.assessmentConnected, tecmapDatastore.retrieveTecmapForId("Cs1Example").getCurrentState());
