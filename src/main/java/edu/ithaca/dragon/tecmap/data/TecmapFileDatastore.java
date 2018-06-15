@@ -13,6 +13,10 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.LinkOption;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.*;
 
 public class TecmapFileDatastore implements TecmapDatastore {
@@ -25,7 +29,27 @@ public class TecmapFileDatastore implements TecmapDatastore {
         this.rootPath = rootPath;
         idToMap = new TreeMap<>();
         for (TecmapDataFilesRecord dataFiles : recordIn.getAllRecords()){
-            idToMap.put(dataFiles.getId(), new TecmapFileData(dataFiles));
+            boolean valid = true;
+            Path path;
+            for (String assessmentFilename : dataFiles.getAssessmentFiles()) {
+                path = Paths.get(assessmentFilename);
+                if (!Files.exists(path, LinkOption.NOFOLLOW_LINKS)) {
+                    valid = false;
+                }
+            }
+            for (String resourceFilename : dataFiles.getResourceFiles()) {
+                path = Paths.get(resourceFilename);
+                if (!Files.exists(path, LinkOption.NOFOLLOW_LINKS)) {
+                    valid = false;
+                }
+            }
+            path = Paths.get(dataFiles.getGraphFile());
+            if (!Files.exists(path, LinkOption.NOFOLLOW_LINKS)) {
+                valid = false;
+            }
+            if (valid) {
+                idToMap.put(dataFiles.getId(), new TecmapFileData(dataFiles));
+            }
         }
     }
 

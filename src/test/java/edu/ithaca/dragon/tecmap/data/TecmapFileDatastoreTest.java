@@ -37,6 +37,22 @@ class TecmapFileDatastoreTest {
     }
 
     @Test
+    void TecmapFileDatastoreConstructorTest() {
+        assertNull(tecmapDatastore.retrieveTecmapForId("BadPaths"));
+        assertNull(tecmapDatastore.retrieveTecmapForId("Cs1ExampleBadResource"));
+
+        //Assessment Connected, All Good Files
+        assertNotNull(tecmapDatastore.retrieveTecmapForId("Cs1Example"));
+        assertEquals(TecmapState.assessmentConnected, tecmapDatastore.retrieveTecmapForId("Cs1Example").getCurrentState());
+        //No Assessment, All Good Files
+        assertNotNull(tecmapDatastore.retrieveTecmapForId("Cs1ExampleStructure"));
+        assertEquals(TecmapState.noAssessment, tecmapDatastore.retrieveTecmapForId("Cs1ExampleStructure").getCurrentState());
+        //Assessment Added, All Good Files
+        assertNotNull(tecmapDatastore.retrieveTecmapForId("Cs1ExampleAssessmentAdded"));
+        assertEquals(TecmapState.assessmentAdded, tecmapDatastore.retrieveTecmapForId("Cs1ExampleAssessmentAdded").getCurrentState());
+    }
+
+    @Test
     void retrieveTecmapForId() throws IOException {
         //check invalid options
         assertNull(tecmapDatastore.retrieveTecmapForId("noSuchId"));
@@ -97,7 +113,7 @@ class TecmapFileDatastoreTest {
     @Test
     void retrieveValidIdsAndActions(){
         Map<String, List<TecmapUserAction>> validMap = tecmapDatastore.retrieveValidIdsAndActions();
-        assertEquals(4, validMap.size());
+        assertEquals(3, validMap.size());
         assertEquals(1, validMap.get("Cs1ExampleStructure").size());
         assertThat(validMap.get("Cs1ExampleStructure"), containsInAnyOrder(TecmapUserAction.structureTree));
         assertEquals(2, validMap.get("Cs1ExampleAssessmentAdded").size());

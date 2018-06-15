@@ -1,10 +1,5 @@
 {
   "allRecords" : [ {
-    "id" : "BadPaths",
-    "graphFile" : "badPath",
-    "resourceFiles" : [ "badPath" ],
-    "assessmentFiles" : [ "badPath" ]
-  }, {
     "id" : "Cs1Example",
     "graphFile" : "src/test/resources/datastore/Cs1Example/Cs1ExampleGraph.json",
     "resourceFiles" : [ "src/test/resources/datastore/Cs1Example/Cs1ExampleResources.json" ],
