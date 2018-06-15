@@ -116,7 +116,7 @@ function readJson(url){
     try {
         return JSON.parse(request.response);
     } catch (e) {
-        window.location.replace("/error")
+        //window.location.replace("/error")
     }
 
 }

@@ -6,34 +6,40 @@ var groupSuggestions;
 
 //Currently displays just the concepts, will need to be changed into two tables
 function displaySuggestions(name) {
-    resourceSuggestions = readJson("/api/suggestResources/" + courseId + "/" + name);
-    if (resourceSuggestions.incompleteList.length > 0 || resourceSuggestions.wrongList.length > 0) {
-        var suggestionName = "Suggestions for " + name;
-        document.getElementById("suggestionName").innerHTML = suggestionName;
-        var tableHTML = "<table align='center' border='2' style='text-align: center'><thead>";
-        tableHTML += "<tr><th> Concept </th><th> Resource </th></tr>";
-        tableHTML += "</thead>";
-        tableHTML += "<tbody>"; //reset for table body
-        for (var i = 0; i < resourceSuggestions.wrongList.length; i++) {
-            var currentSuggestion = resourceSuggestions.wrongList[i];
-            tableHTML += "<tr><td>" + currentSuggestion.reasoning + "</td><td>" + currentSuggestion.id + "</td></tr>"
+    if (name !== "Average Graph") {
+        resourceSuggestions = readJson("/api/suggestResources/" + courseId + "/" + name);
+        if (resourceSuggestions.incompleteList.length > 0 || resourceSuggestions.wrongList.length > 0) {
+            var suggestionName = "Suggestions for " + name;
+            document.getElementById("suggestionName").innerHTML = suggestionName;
+            var tableHTML = "<table align='center' border='2' style='text-align: center'><thead>";
+            tableHTML += "<tr><th> Concept </th><th> Resource </th></tr>";
+            tableHTML += "</thead>";
+            tableHTML += "<tbody>"; //reset for table body
+            for (var i = 0; i < resourceSuggestions.wrongList.length; i++) {
+                var currentSuggestion = resourceSuggestions.wrongList[i];
+                tableHTML += "<tr><td>" + currentSuggestion.reasoning + "</td><td>" + currentSuggestion.id + "</td></tr>"
+            }
+            tableHTML += "</tbody></table>";
+            document.getElementById("wrongTable").innerHTML = tableHTML;
+            tableHTML = "<table align='center' border='2' style='text-align: center'><thead>";
+            tableHTML += "<tr><th> Concept </th><th> Resource </th></tr>";
+            tableHTML += "</thead>";
+            tableHTML += "<tbody>"; //reset for table body
+            for (var i = 0; i < resourceSuggestions.incompleteList.length; i++) {
+                var currentSuggestion = resourceSuggestions.incompleteList[i];
+                tableHTML += "<tr><td>" + currentSuggestion.reasoning + "</td><td>" + currentSuggestion.id + "</td></tr>"
+            }
+            tableHTML += "</tbody></table>";
+            document.getElementById("incompleteTable").innerHTML = tableHTML;
+        } else {
+            document.getElementById("wrongTable").innerHTML = "";
+            document.getElementById("incompleteTable").innerHTML = "";
+            document.getElementById("suggestionName").innerHTML = " Suggestions for " + name;
         }
-        tableHTML += "</tbody></table>";
-        document.getElementById("wrongTable").innerHTML = tableHTML;
-        tableHTML = "<table align='center' border='2' style='text-align: center'><thead>";
-        tableHTML += "<tr><th> Concept </th><th> Resource </th></tr>";
-        tableHTML += "</thead>";
-        tableHTML += "<tbody>"; //reset for table body
-        for (var i = 0; i < resourceSuggestions.incompleteList.length; i++) {
-            var currentSuggestion = resourceSuggestions.incompleteList[i];
-            tableHTML += "<tr><td>" + currentSuggestion.reasoning + "</td><td>" + currentSuggestion.id + "</td></tr>"
-        }
-        tableHTML += "</tbody></table>";
-        document.getElementById("incompleteTable").innerHTML = tableHTML;
     } else {
         document.getElementById("wrongTable").innerHTML = "";
         document.getElementById("incompleteTable").innerHTML = "";
-        document.getElementById("suggestionName").innerHTML = " Suggestions for " + name;
+        document.getElementById("suggestionName").innerHTML = " Suggestions ";
     }
 }
 
