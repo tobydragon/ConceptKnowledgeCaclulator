@@ -54,6 +54,8 @@ public class TecmapFileDatastore implements TecmapDatastore {
                 idToMap.put(dataFiles.getId(), new TecmapFileData(dataFiles));
             } else if (graphValid && assessmentValid) { //Assessment Added
                 idToMap.put(dataFiles.getId(), new TecmapFileData(dataFiles.getId(), dataFiles.getGraphFile(), new ArrayList<String>(), dataFiles.getAssessmentFiles()));
+            } else if (graphValid && resourceValid) { //No state for this, but keeps the resource files
+                idToMap.put(dataFiles.getId(), new TecmapFileData(dataFiles.getId(), dataFiles.getGraphFile(), dataFiles.getResourceFiles(), new ArrayList<String>()));
             } else if (graphValid) { //No Assessment
                 idToMap.put(dataFiles.getId(), new TecmapFileData(dataFiles.getId(), dataFiles.getGraphFile(), new ArrayList<String>(), new ArrayList<String>()));
             }
