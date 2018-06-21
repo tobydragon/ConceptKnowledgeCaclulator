@@ -47,7 +47,10 @@ public abstract class CSVReader {
             //Takes the file being read in and calls a function to convert each line into a list split at
             //every comma, then pust all the lists returned into a list of lists lineList[line][item in line]
             while((line = this.csvBuffer.readLine())!= null){
-                lineList.add(toolBox.lineToList(line));
+                ArrayList<String> potentialLineList = toolBox.lineToList(line);
+                if (potentialLineList.size() > 1){
+                    lineList.add(potentialLineList);
+                }
             }
 
             boolean firstIteration = true;

@@ -2,7 +2,7 @@ package edu.ithaca.dragon.tecmap.suggester.GroupSuggester;
 
 import edu.ithaca.dragon.tecmap.conceptgraph.ConceptGraph;
 import edu.ithaca.dragon.tecmap.conceptgraph.ConceptNode;
-import edu.ithaca.dragon.tecmap.suggester.LearningObjectSuggester;
+import edu.ithaca.dragon.tecmap.suggester.ConceptGraphSuggesterLibrary;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -78,7 +78,7 @@ public class ConceptSuggester extends Suggester {
     public static List<String> getConcepts(ConceptGraph graph){
         List<String> stringConcepts = new ArrayList<>();
 
-        List<ConceptNode> nodes = LearningObjectSuggester.conceptsToWorkOn(graph);
+        List<ConceptNode> nodes = ConceptGraphSuggesterLibrary.suggestConcepts(graph);
         for(ConceptNode node: nodes){
             stringConcepts.add(node.getID());
         }

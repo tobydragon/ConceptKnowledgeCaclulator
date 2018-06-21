@@ -1,8 +1,5 @@
 package edu.ithaca.dragon.tecmap.conceptgraph;
 
-import edu.ithaca.dragon.tecmap.ConceptKnowledgeCalculator;
-import edu.ithaca.dragon.tecmap.ConceptKnowledgeCalculatorAPI;
-import edu.ithaca.dragon.tecmap.Settings;
 import edu.ithaca.dragon.tecmap.io.record.ConceptGraphRecord;
 import edu.ithaca.dragon.tecmap.io.record.LearningResourceRecord;
 import edu.ithaca.dragon.tecmap.learningresource.*;
@@ -12,7 +9,6 @@ import org.apache.logging.log4j.Logger;
 import org.junit.Assert;
 import org.junit.Test;
 
-import java.io.IOException;
 import java.util.*;
 
 import static org.hamcrest.collection.IsIterableContainingInAnyOrder.containsInAnyOrder;
@@ -235,76 +231,6 @@ public class ConceptGraphTest {
         Assert.assertEquals(0.722, orig.findNodeById("While Loop").getKnowledgeEstimate(), DataUtil.OK_FLOAT_MARGIN);
         Assert.assertEquals(0.566, orig.findNodeById("Counting").getKnowledgeEstimate(), DataUtil.OK_FLOAT_MARGIN);
         Assert.assertEquals(0.575, orig.findNodeById("For Loop").getKnowledgeEstimate(), DataUtil.OK_FLOAT_MARGIN);
-
-    }
-
-    @Test
-    public void calcTotalKnowledgeEstimateTest(){
-        ConceptKnowledgeCalculatorAPI ckc = null;
-        try {
-            ckc = new ConceptKnowledgeCalculator(Settings.TEST_RESOURCE_DIR + "ManuallyCreated/simpleConceptGraphTest.json", Settings.TEST_RESOURCE_DIR + "ManuallyCreated/simpleResourceTest.json", Settings.TEST_RESOURCE_DIR + "ManuallyCreated/simpleAssessmentTest.csv");
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
-        CohortConceptGraphs graphs = ckc.getCohortConceptGraphs();
-
-        ConceptGraph gr = graphs.getUserGraph("s1");
-        Assert.assertEquals(1.7999999999999998, gr.calcTotalKnowledgeEstimate(), DataUtil.OK_FLOAT_MARGIN);
-
-        ConceptGraph gr2 = graphs.getUserGraph("s2");
-        Assert.assertEquals(1.7999999999999998, gr2.calcTotalKnowledgeEstimate(), DataUtil.OK_FLOAT_MARGIN);
-
-
-        ConceptGraph gr3 = graphs.getUserGraph("s3");
-        Assert.assertEquals(1.7999999999999998, gr3.calcTotalKnowledgeEstimate(), DataUtil.OK_FLOAT_MARGIN);
-
-        ConceptGraph gr4 = graphs.getUserGraph("s4");
-        Assert.assertEquals(1.7999999999999998, gr4.calcTotalKnowledgeEstimate(), DataUtil.OK_FLOAT_MARGIN);
-
-    }
-
-
-
-
-    @Test
-    public void calcTotalKnowledgeEstimate2(){
-        ConceptKnowledgeCalculatorAPI ckc = null;
-        try {
-            ckc = new ConceptKnowledgeCalculator(Settings.TEST_RESOURCE_DIR + "ManuallyCreated/researchConceptGraph.json",
-                    Settings.TEST_RESOURCE_DIR + "ManuallyCreated/researchResource1.json",
-                    Settings.TEST_RESOURCE_DIR + "ManuallyCreated/researchAssessment1.csv");
-        } catch (IOException e) {
-            Assert.fail("Unable to load default files. Test unable to run");
-        }
-
-        CohortConceptGraphs graphs = ckc.getCohortConceptGraphs();
-
-        ConceptGraph gr = graphs.getUserGraph("s1");
-        Assert.assertEquals(13.580, gr.calcTotalKnowledgeEstimate(), DataUtil.OK_FLOAT_MARGIN);
-
-        ConceptGraph gr2 = graphs.getUserGraph("s2");
-        Assert.assertEquals(11.477, gr2.calcTotalKnowledgeEstimate(), DataUtil.OK_FLOAT_MARGIN);
-
-
-        ConceptGraph gr3 = graphs.getUserGraph("s3");
-        Assert.assertEquals(12.8326, gr3.calcTotalKnowledgeEstimate(), DataUtil.OK_FLOAT_MARGIN);
-
-        ConceptGraph gr4 = graphs.getUserGraph("s4");
-        Assert.assertEquals(1.0, gr4.calcTotalKnowledgeEstimate(), DataUtil.OK_FLOAT_MARGIN);
-
-
-        ConceptGraph gr5 = graphs.getUserGraph("s5");
-        Assert.assertEquals(12.872, gr5.calcTotalKnowledgeEstimate(), DataUtil.OK_FLOAT_MARGIN);
-
-
-        ConceptGraph gr6 = graphs.getUserGraph("s6");
-        Assert.assertEquals(12.7884, gr6.calcTotalKnowledgeEstimate(), DataUtil.OK_FLOAT_MARGIN);
-
-
-        ConceptGraph gr7 = graphs.getUserGraph("s7");
-        Assert.assertEquals(10.953, gr7.calcTotalKnowledgeEstimate(), DataUtil.OK_FLOAT_MARGIN);
-
 
     }
 

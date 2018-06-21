@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>404 Not Found</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <script th:src="@{/js/GraphFunctions.js}"></script>
+    <script>
+        actions = readJson("/api/actions")
+    </script>
+</head>
+<body>
+    <h1 class="text-center">404 Error: URL not found</h1>
+    <div class="row">
+        <div class="col-md-6">
+            <div id="courseList">
+            <p>
+                Try using the following links:<br/>
+            </p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Executes Making the list of valid links -->
+    <script th:src="@{/js/Actions.js}"></script>
+</body>
+</html>

@@ -10,7 +10,6 @@ import edu.ithaca.dragon.tecmap.learningresource.LearningResourceType;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
 
@@ -34,7 +33,7 @@ public class LearningResourceRecord {
     }
 
     public LearningResourceRecord(AssessmentItem assessment){
-        this( assessment.getId(), Arrays.asList(LearningResourceType.ASSESSMENT), new ArrayList<>(), assessment.getDataImportance(), assessment.getMaxPossibleKnowledgeEstimate());
+        this( assessment.getId(), LearningResourceType.getDefaultResourceTypes() , new ArrayList<>(), assessment.getMaxPossibleKnowledgeEstimate(), assessment.getDataImportance());
     }
 
     // default constructor for JSON
@@ -42,6 +41,14 @@ public class LearningResourceRecord {
         this("", new ArrayList<>(), new ArrayList<>(), 1, 0);
     }
 
+    public static List<LearningResourceRecord> createLinksFromResourceFiles(List<String> resourceConnectionRecords) throws IOException {
+        List<LearningResourceRecord> linkRecord = new ArrayList<>();
+        for (String rFiles : resourceConnectionRecords){
+            List<LearningResourceRecord> temp = LearningResourceRecord.buildListFromJson(rFiles);
+            linkRecord.addAll(temp);
+        }
+        return linkRecord;
+    }
 
     public static List<LearningResourceRecord> buildListFromJson(String fullFileName) throws IOException {
         ObjectMapper mapper = new ObjectMapper();

@@ -1,0 +1,61 @@
+[ {
+  "learningResourceId" : "Q1",
+  "resourceTypes" : [ "ASSESSMENT", "PRACTICE" ],
+  "conceptIds" : [ "If Statements"],
+  "dataImportance" : 0.0,
+  "maxPossibleKnowledgeEstimate" : 10.0
+}, {
+  "learningResourceId" : "Q2",
+  "resourceTypes" : [ "ASSESSMENT", "PRACTICE" ],
+  "conceptIds" : [ "While Loops"],
+  "dataImportance" : 0.0,
+  "maxPossibleKnowledgeEstimate" : 5.0
+}, {
+  "learningResourceId" : "Q3",
+  "resourceTypes" : [ "ASSESSMENT", "PRACTICE" ],
+  "conceptIds" : [ "For Loops"],
+  "dataImportance" : 0.0,
+  "maxPossibleKnowledgeEstimate" : 10.0
+}, {
+  "learningResourceId" : "Q4",
+  "resourceTypes" : [ "ASSESSMENT", "PRACTICE" ],
+  "conceptIds" : [ "Loops"],
+  "dataImportance" : 0.0,
+  "maxPossibleKnowledgeEstimate" : 5.0
+}, {
+  "learningResourceId" : "Q5",
+  "resourceTypes" : [ "ASSESSMENT", "PRACTICE" ],
+  "conceptIds" : [ "Intro CS"],
+  "dataImportance" : 0.0,
+  "maxPossibleKnowledgeEstimate" : 100.0
+}, {
+  "learningResourceId" : "HW1",
+  "resourceTypes" : [ "ASSESSMENT", "PRACTICE" ],
+  "conceptIds" : [ "Boolean Expressions"],
+  "dataImportance" : 0.0,
+  "maxPossibleKnowledgeEstimate" : 1.0
+}, {
+  "learningResourceId" : "HW2",
+  "resourceTypes" : [ "ASSESSMENT", "PRACTICE" ],
+  "conceptIds" : [ "Boolean Expressions"],
+  "dataImportance" : 0.0,
+  "maxPossibleKnowledgeEstimate" : 5.0
+}, {
+  "learningResourceId" : "HW3",
+  "resourceTypes" : [ "ASSESSMENT", "PRACTICE" ],
+  "conceptIds" : [ "If Statements"],
+  "dataImportance" : 0.0,
+  "maxPossibleKnowledgeEstimate" : 2.0
+}, {
+  "learningResourceId" : "HW4",
+  "resourceTypes" : [ "ASSESSMENT", "PRACTICE" ],
+  "conceptIds" : [ "While Loops"],
+  "dataImportance" : 0.0,
+  "maxPossibleKnowledgeEstimate" : 1.0
+}, {
+  "learningResourceId" : "HW5",
+  "resourceTypes" : [ "ASSESSMENT", "PRACTICE" ],
+  "conceptIds" : [ "For Loops"],
+  "dataImportance" : 0.0,
+  "maxPossibleKnowledgeEstimate" : 1.0
+} ]

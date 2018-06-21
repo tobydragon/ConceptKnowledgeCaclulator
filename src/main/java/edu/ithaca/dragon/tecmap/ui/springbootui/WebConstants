@@ -1,0 +1,6 @@
+All naming conventions used in WebController & ErrorController to link to resources/templates/*
+
+1.) StructureGraph.html viewed by "StructureGraph" in WebController.viewStructureGraph
+2.) CohortGraph.html viewed by "CohortGraph" in WebController.viewCohortGraph
+3.) ConnectResources.html viewed by "ConnectResources" in WebController.connectResources
+4.) 404.html viewed by "404" in ErrorController.redirectError
