@@ -158,6 +158,18 @@
             <artifactId>spring-boot-starter-test</artifactId>
             <scope>test</scope>
         </dependency>
+        <!-- Java Naive Bayes Classifier - https://github.com/ptnplanet/Java-Naive-Bayes-Classifier -->
+        <dependency>
+            <groupId>com.github.ptnplanet</groupId>
+            <artifactId>Java-Naive-Bayes-Classifier</artifactId>
+            <version>1.0.7</version>
+        </dependency>
+        <!-- DataFrame - https://github.com/chen0040/java-data-frame -->
+        <dependency>
+            <groupId>com.github.chen0040</groupId>
+            <artifactId>java-data-frame</artifactId>
+            <version>1.0.11</version>
+        </dependency>
     </dependencies>
 
 </project>
