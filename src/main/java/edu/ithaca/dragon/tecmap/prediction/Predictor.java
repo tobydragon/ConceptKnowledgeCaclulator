@@ -10,7 +10,12 @@ public interface Predictor {
      * Trains the predictor given the rawTrainingData
      * @param rawTrainingData
      */
-    void learn(KnowledgeEstimateMatrix rawTrainingData);
+    void learnSet(KnowledgeEstimateMatrix rawTrainingData);
+
+    /**
+     * Predictor forgets and unlearns everything
+     */
+    void reset();
 
     /**
      * Classifies a set of testing data that is given

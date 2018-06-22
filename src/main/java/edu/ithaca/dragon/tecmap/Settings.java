@@ -3,7 +3,7 @@ package edu.ithaca.dragon.tecmap;
 public class Settings {
 
     public static final String RESOURCE_DIR = "src/main/resources/author/";
-    public static final String PRIVATE_RESOURCE_DIR = "src/main/resources/author/private";
+    public static final String PRIVATE_RESOURCE_DIR = "src/main/resources/author/private/";
     public static final String TEST_RESOURCE_DIR = "src/test/resources/author/";
 
     public static final String DEFAULT_MAIN_DATASTORE_PATH = "src/main/resources/datastore/";

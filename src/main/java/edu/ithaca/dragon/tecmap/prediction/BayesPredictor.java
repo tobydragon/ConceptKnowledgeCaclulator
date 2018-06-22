@@ -26,8 +26,26 @@ public class BayesPredictor implements Predictor {
      * @param rawData
      * @return DataFrame that is easier to use
      */
-    private DataFrame toDataFrame(KnowledgeEstimateMatrix rawData) {
+    public DataFrame toDataFrame(KnowledgeEstimateMatrix rawData) {
         return null;
+    }
+
+    /**
+     * Resets and unlearns everything, resets category count
+     * TESTED ON PACKAGE BUILD, NOT NATIVELY
+     */
+    public void reset() {
+        bayesClassifier.reset();
+    }
+
+    /**
+     * Learns given the necessary data, category that assignment belongs to based on features given
+     * @param category
+     * @param grades
+     * TESTED ON PACKAGE BUILD, NOT NATIVELY
+     */
+    public void learn(String category, Collection<Double> grades) {
+        bayesClassifier.learn(category, grades);
     }
 
     /**
@@ -35,7 +53,7 @@ public class BayesPredictor implements Predictor {
      * @param rawTrainingData in the form of KnowledgeEstimateMatrix
      * TRAINING DATA MUST BE MANIPULATED IN ORDER TO USE THE BAYES LEARN METHOD
      */
-    public void learn(KnowledgeEstimateMatrix rawTrainingData) {
+    public void learnSet(KnowledgeEstimateMatrix rawTrainingData) {
 
     }
 
@@ -43,10 +61,11 @@ public class BayesPredictor implements Predictor {
      * classifies a single "row" of data in the form of a collection
      * @param testData a "row" of doubles(grades) for a single student
      * Uses Bayes Classify Method
+     * TESTED ON PACKAGE BUILD, NOT NATIVELY
      * @return String classification for a student
      */
     private String classify(Collection<Double> testData) {
-        return null;
+        return bayesClassifier.classify(testData).getCategory();
     }
 
     /**
