@@ -10,7 +10,7 @@ import java.util.Map;
 
 public class BayesPredictor implements Predictor {
 
-    Classifier<Double, String> bayesClassifier;
+    private Classifier<Double, String> bayesClassifier;
 
     /**
      * Default constructor
