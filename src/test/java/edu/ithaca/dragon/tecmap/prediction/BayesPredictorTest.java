@@ -5,21 +5,18 @@ import edu.ithaca.dragon.tecmap.conceptgraph.eval.KnowledgeEstimateMatrix;
 import edu.ithaca.dragon.tecmap.io.reader.CSVReader;
 import edu.ithaca.dragon.tecmap.io.reader.SakaiReader;
 import edu.ithaca.dragon.tecmap.learningresource.AssessmentItem;
+import org.junit.Before;
 import org.junit.Test;
-import org.junit.jupiter.api.BeforeEach;
 
 import java.io.IOException;
 import java.util.List;
-
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNull;
 
 public class BayesPredictorTest {
 
     BayesPredictor bayesPredictor;
     KnowledgeEstimateMatrix expectedMatrix;
 
-    @BeforeEach
+    @Before
     public void setup() throws IOException {
         //Set up the classifier
         bayesPredictor = new BayesPredictor();
@@ -34,17 +31,13 @@ public class BayesPredictorTest {
         assessments.addAll(data.getManualGradedLearningObjects());
 
         expectedMatrix = new KnowledgeEstimateMatrix(assessments);
-
-        System.out.println(expectedMatrix.getUserIdList());
     }
 
 
     @Test
     //TODO
     public void toDataFrame() {
-
-        assertEquals(null, null);
-        assertNull(null);
+        System.out.println(expectedMatrix.getUserIdList());
     }
 
     @Test

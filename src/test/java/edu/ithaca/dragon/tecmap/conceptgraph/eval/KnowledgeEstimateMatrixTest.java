@@ -63,7 +63,7 @@ public class KnowledgeEstimateMatrixTest {
             actualString.add("stu1");
             actualString.add("stu2");
             actualString.add("stu3");
-            //Assert.assertEquals(actualString, newMatrix.getUserIdList());
+//            Assert.assertEquals(actualString, newMatrix.getUserIdList());
 
         } catch (IOException e) {
             Assert.fail();

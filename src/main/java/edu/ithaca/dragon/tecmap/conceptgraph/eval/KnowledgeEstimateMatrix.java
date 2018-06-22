@@ -80,7 +80,7 @@ public class KnowledgeEstimateMatrix {
                     //cycle through each index of the userIdList
                     for (String user: userIdList){
                         //if the current userId matches a userId in the list, place it at the same row as the userIdList index
-                        if (ans.getUserId() == user) {
+                        if (ans.getUserId().equals(user)) {
                             newMatrix[currentColumn][userIdList.indexOf(user)] = ans.calcKnowledgeEstimate();
                             isPlaced = true;
                         }
