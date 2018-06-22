@@ -32,6 +32,14 @@
             <id>jitpack.io</id>
             <url>https://jitpack.io</url>
         </repository>
+        <repository>
+            <snapshots>
+                <enabled>false</enabled>
+            </snapshots>
+            <id>central</id>
+            <name>bintray</name>
+            <url>http://jcenter.bintray.com</url>
+        </repository>
     </repositories>
 
     <build>
@@ -173,9 +181,10 @@
         </dependency>
         <!-- DataFrame - https://github.com/chen0040/java-data-frame -->
         <dependency>
-            <groupId>com.github.chen0040</groupId>
-            <artifactId>java-data-frame</artifactId>
-            <version>1.0.11</version>
+            <groupId>ch.netzwerg</groupId>
+            <artifactId>paleo-core</artifactId>
+            <version>0.13.2</version>
+            <type>jar</type>
         </dependency>
     </dependencies>
 

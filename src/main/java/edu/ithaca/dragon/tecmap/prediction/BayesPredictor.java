@@ -1,12 +1,16 @@
 package edu.ithaca.dragon.tecmap.prediction;
 
-import com.github.chen0040.data.frame.DataFrame;
+import ch.netzwerg.paleo.*;
 import de.daslaboratorium.machinelearning.classifier.Classifier;
 import de.daslaboratorium.machinelearning.classifier.bayes.BayesClassifier;
 import edu.ithaca.dragon.tecmap.conceptgraph.eval.KnowledgeEstimateMatrix;
+import edu.ithaca.dragon.tecmap.learningresource.AssessmentItem;
 
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
 import java.util.Map;
+import java.util.stream.DoubleStream;
 
 public class BayesPredictor implements Predictor {
 
@@ -24,10 +28,37 @@ public class BayesPredictor implements Predictor {
     /**
      * Converts KnowledgeEstimateMatrix into a Dataframe
      * @param rawData
-     * @return DataFrame that is easier to use
+     * @return DataFrame that is easier to use (IN ORDER TO GET VALUES, YOU MUST USE THE COLUMNID TYPE THAT IS DICTATED BY THE DATAFRAME
      */
-    public DataFrame toDataFrame(KnowledgeEstimateMatrix rawData) {
-        return null;
+    public static DataFrame toDataFrame(KnowledgeEstimateMatrix rawData) {
+        if (rawData != null) {
+            //Column for Student IDs
+            List<String> studentIDs = rawData.getUserIdList();
+            StringColumn studentIDCol = StringColumn.ofAll(ColumnIds.StringColumnId.of("Students"), studentIDs);
+
+            //List of Columns for Each Assessment
+            List<DoubleColumn> assessmentCols = new ArrayList<>();
+            List<String> assessmentIDs = new ArrayList<>(); //list of IDs for each assessment
+            for (AssessmentItem assessment : rawData.getObjList()) {
+                assessmentIDs.add(assessment.getId());
+            }
+
+            double[][] assessmentMatrix = rawData.getStudentKnowledgeEstimates();
+            for (int i = 0; i < assessmentMatrix.length; i++) {
+                String currAssessmentId = assessmentIDs.get(i);
+                DoubleColumn assessmentCol = DoubleColumn.ofAll(ColumnIds.DoubleColumnId.of(currAssessmentId), DoubleStream.of(assessmentMatrix[i]));
+                assessmentCols.add(assessmentCol);
+            }
+
+            List<Column<?>> allCols = new ArrayList<>();
+            allCols.add(studentIDCol);
+            allCols.addAll(assessmentCols);
+
+            return DataFrame.ofAll(allCols);
+
+        } else {
+            return null;
+        }
     }
 
     /**
@@ -53,7 +84,7 @@ public class BayesPredictor implements Predictor {
      * @param rawTrainingData in the form of KnowledgeEstimateMatrix
      * TRAINING DATA MUST BE MANIPULATED IN ORDER TO USE THE BAYES LEARN METHOD
      */
-    public void learnSet(KnowledgeEstimateMatrix rawTrainingData) {
+    public void learnSet(KnowledgeEstimateMatrix rawTrainingData, String assessmentId) {
 
     }
 

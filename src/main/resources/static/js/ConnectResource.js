@@ -1,4 +1,4 @@
-//These 2 vars defined in ConnectResources.html
+.//These 2 vars defined in ConnectResources.html
 var courseId;
 var conceptList = readJson("/api/conceptList/" + courseId);
 var resourceRecords = readJson("/api/blankLRRecords/" + courseId);

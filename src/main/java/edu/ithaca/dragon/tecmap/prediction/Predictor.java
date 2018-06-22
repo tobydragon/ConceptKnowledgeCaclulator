@@ -10,7 +10,7 @@ public interface Predictor {
      * Trains the predictor given the rawTrainingData
      * @param rawTrainingData
      */
-    void learnSet(KnowledgeEstimateMatrix rawTrainingData);
+    void learnSet(KnowledgeEstimateMatrix rawTrainingData, String assessmentId);
 
     /**
      * Predictor forgets and unlearns everything

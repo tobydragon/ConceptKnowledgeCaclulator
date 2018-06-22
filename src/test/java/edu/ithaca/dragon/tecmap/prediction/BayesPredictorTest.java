@@ -1,25 +1,30 @@
 package edu.ithaca.dragon.tecmap.prediction;
 
+import ch.netzwerg.paleo.*;
 import edu.ithaca.dragon.tecmap.Settings;
 import edu.ithaca.dragon.tecmap.conceptgraph.eval.KnowledgeEstimateMatrix;
 import edu.ithaca.dragon.tecmap.io.reader.CSVReader;
 import edu.ithaca.dragon.tecmap.io.reader.SakaiReader;
 import edu.ithaca.dragon.tecmap.learningresource.AssessmentItem;
+import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.DoubleStream;
+
+import static org.hamcrest.collection.IsIterableContainingInAnyOrder.containsInAnyOrder;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
 
 public class BayesPredictorTest {
 
-    BayesPredictor bayesPredictor;
     KnowledgeEstimateMatrix expectedMatrix;
 
     @Before
     public void setup() throws IOException {
-        //Set up the classifier
-        bayesPredictor = new BayesPredictor();
 
         //Set up the matrix to test against
         String file1 = Settings.DEFAULT_TEST_DATASTORE_PATH + "Cs1Example/Cs1ExampleAssessment1.csv";
@@ -37,7 +42,35 @@ public class BayesPredictorTest {
     @Test
     //TODO
     public void toDataFrame() {
-        System.out.println(expectedMatrix.getUserIdList());
+        DataFrame testDataframe = BayesPredictor.toDataFrame(expectedMatrix);
+
+        StringColumn studentCol = StringColumn.ofAll(ColumnIds.StringColumnId.of("Students"), expectedMatrix.getUserIdList());
+
+        List<DoubleColumn> assessmentCols = new ArrayList<>();
+
+        List<String> assessmentIds = new ArrayList<>();
+        for (AssessmentItem assessment : expectedMatrix.getObjList()) {
+            assessmentIds.add(assessment.getId());
+        }
+
+        double[][] assessmentMatrix = expectedMatrix.getStudentKnowledgeEstimates();
+        for (int i = 0; i < assessmentMatrix.length; i++) {
+            DoubleColumn assessmentColumn = DoubleColumn.ofAll(ColumnIds.DoubleColumnId.of(assessmentIds.get(i)), DoubleStream.of(assessmentMatrix[i]));
+            assessmentCols.add(assessmentColumn);
+        }
+
+        List<Column<?>> allCols = new ArrayList<>();
+        allCols.add(studentCol);
+        allCols.addAll(assessmentCols);
+
+        DataFrame expectedDataframe = DataFrame.ofAll(allCols);
+
+        String[] expectedColNames = {"Students", "Q1", "Q2", "Q3", "Q4", "Q5", "HW1", "HW2", "HW3", "HW4", "HW5"};
+
+        Assert.assertThat(testDataframe.getColumnNames(), containsInAnyOrder(expectedColNames));
+        assertEquals(expectedDataframe.getRowCount(), testDataframe.getRowCount());
+        assertEquals(expectedDataframe.getColumnCount(), testDataframe.getColumnCount());
+        assertEquals(expectedDataframe.getValueAt(0, expectedDataframe.getColumnId(0, ColumnType.STRING)), testDataframe.getValueAt(0, testDataframe.getColumnId(0, ColumnType.STRING)));
     }
 
     @Test
