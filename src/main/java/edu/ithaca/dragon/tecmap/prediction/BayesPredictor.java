@@ -5,7 +5,9 @@ import de.daslaboratorium.machinelearning.classifier.Classifier;
 import de.daslaboratorium.machinelearning.classifier.bayes.BayesClassifier;
 import edu.ithaca.dragon.tecmap.conceptgraph.eval.KnowledgeEstimateMatrix;
 import edu.ithaca.dragon.tecmap.learningresource.AssessmentItem;
+import io.vavr.collection.Iterator;
 
+import javax.validation.constraints.NotNull;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
@@ -62,6 +64,29 @@ public class BayesPredictor implements Predictor {
     }
 
     /**
+     * Discretizes a column for an assignment (type double) and gives back a dataframe with that column replaced by a
+     * categorical variable
+     * @param original
+     * @param assessmentId
+     * @return
+     */
+    public static DataFrame discretizeColumn(@NotNull DataFrame original, String assessmentId) {
+        Iterator<ColumnId> columnIds = original.getColumnIds().iterator();
+        ColumnId assessmentColumnId = null;
+        for (ColumnId columnId : columnIds) {
+            if (columnId.getName().equals(assessmentId)) {
+                assessmentColumnId = columnId;
+            }
+        }
+        if (assessmentColumnId == null || assessmentColumnId.getType() != ColumnType.DOUBLE) {
+            return null;
+        } else {
+            //TODO
+            return null;
+        }
+    }
+
+    /**
      * Resets and unlearns everything, resets category count
      * TESTED ON PACKAGE BUILD, NOT NATIVELY
      */
@@ -82,6 +107,7 @@ public class BayesPredictor implements Predictor {
     /**
      * Trains the data based on the raw data matrix you give it
      * @param rawTrainingData in the form of KnowledgeEstimateMatrix
+     * @param assessmentId string of the assessment you want to learn on (will be the categorical variable), should have doubles as grade type
      * TRAINING DATA MUST BE MANIPULATED IN ORDER TO USE THE BAYES LEARN METHOD
      */
     public void learnSet(KnowledgeEstimateMatrix rawTrainingData, String assessmentId) {
@@ -102,7 +128,7 @@ public class BayesPredictor implements Predictor {
     /**
      * Classifies the data based on the raw testing matrix you give it
      * @param rawTestingData in the form of KnowledgeEstimateMatrix
-     * TESTING DATA MUST BE MANIPULATED IN ORDER TO GET ROWS FOR THE NATIVE CLASSIFY METHOD
+     * TESTING DATA MUST BE MANIPULATED IN ORDER TO GET ROWS FOR THE BAYES CLASSIFY METHOD
      * @return Map of String to String (Student id -> Classification) MAY CHANGE
      */
     public Map<String, String> classifySet(KnowledgeEstimateMatrix rawTestingData) {

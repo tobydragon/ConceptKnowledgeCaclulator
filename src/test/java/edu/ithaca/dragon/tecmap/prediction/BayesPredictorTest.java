@@ -16,7 +16,7 @@ import java.util.List;
 import java.util.stream.DoubleStream;
 
 import static org.hamcrest.collection.IsIterableContainingInAnyOrder.containsInAnyOrder;
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.*;
 
 
 public class BayesPredictorTest {
@@ -40,7 +40,6 @@ public class BayesPredictorTest {
 
 
     @Test
-    //TODO
     public void toDataFrame() {
         DataFrame testDataframe = BayesPredictor.toDataFrame(expectedMatrix);
 
@@ -71,6 +70,27 @@ public class BayesPredictorTest {
         assertEquals(expectedDataframe.getRowCount(), testDataframe.getRowCount());
         assertEquals(expectedDataframe.getColumnCount(), testDataframe.getColumnCount());
         assertEquals(expectedDataframe.getValueAt(0, expectedDataframe.getColumnId(0, ColumnType.STRING)), testDataframe.getValueAt(0, testDataframe.getColumnId(0, ColumnType.STRING)));
+    }
+
+    @Test
+    public void discretizeColumn() {
+        DataFrame originalDataframe = BayesPredictor.toDataFrame(expectedMatrix);
+
+        //Check bad assessment ID
+        DataFrame discretizedDataframe = BayesPredictor.discretizeColumn(originalDataframe, "badId");
+        assertNull(discretizedDataframe);
+
+        //Check non-double column type
+        discretizedDataframe = BayesPredictor.discretizeColumn(originalDataframe, "Students");
+        assertNull(discretizedDataframe);
+
+        //Check good discretizedData
+        discretizedDataframe = BayesPredictor.discretizeColumn(originalDataframe, "Q1");
+        assertNotNull(discretizedDataframe);
+        ColumnIds.CategoryColumnId discreteColumnId = discretizedDataframe.getColumnId(0, ColumnType.CATEGORY);
+        assertEquals(discretizedDataframe.getValueAt(0, discreteColumnId), "AT-RISK");
+        assertEquals(discretizedDataframe.getValueAt(1, discreteColumnId), "OK");
+        assertEquals(discretizedDataframe.getValueAt(2, discreteColumnId), "OK");
     }
 
     @Test
