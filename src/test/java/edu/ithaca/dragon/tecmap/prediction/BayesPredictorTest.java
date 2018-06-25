@@ -116,13 +116,23 @@ public class BayesPredictorTest {
     public void getRowsToLearn() {
         DataFrame discretizedDataframe = BayesPredictor.discretizeGradeColumn(BayesPredictor.toDataFrame(expectedMatrix), "Q1");
 
-        Map<String, Collection<Double>> rows = BayesPredictor.getRowsToLearn(discretizedDataframe, "Q1");
+        Map<String, Map<String, Collection<Double>>> rows = BayesPredictor.getRowsToLearn(discretizedDataframe, "Q1");
 
         assertNotNull(rows);
-        assertTrue(rows.containsKey("OK"));
-        assertTrue(rows.containsKey("AT-RISK"));
-        assertNotNull(rows.get("OK"));
-        assertNotNull(rows.get("AT-RISK"));
+        assertTrue(rows.containsKey("s01"));
+        assertTrue(rows.containsKey("s02"));
+        assertTrue(rows.containsKey("s03"));
+        assertFalse(rows.containsKey("s04"));
+
+        //Check for s01 (at-risk student)
+        Map<String, Collection<Double>> specificStudentMap = rows.get("s01");
+        assertTrue(specificStudentMap.containsKey("AT-RISK"));
+        assertEquals(9, specificStudentMap.get("AT-RISK").size());
+
+        //Check for s02 (ok student)
+        specificStudentMap = rows.get("s02");
+        assertTrue(specificStudentMap.containsKey("OK"));
+        assertEquals(9, specificStudentMap.get("OK").size());
     }
 
     @Test

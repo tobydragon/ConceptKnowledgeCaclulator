@@ -109,7 +109,7 @@ public class BayesPredictor implements Predictor {
         }
     }
 
-    public static Map<String, Collection<Double>> getRowsToLearn(@NotNull DataFrame learningData, String columnToLearn) {
+    public static Map<String, Map<String,Collection<Double>>> getRowsToLearn(@NotNull DataFrame learningData, String columnToLearn) {
         return null;
     }
 
