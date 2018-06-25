@@ -23,6 +23,8 @@ import static org.junit.jupiter.api.Assertions.*;
 
 public class BayesPredictorTest {
 
+    Predictor bayes;
+
     KnowledgeEstimateMatrix expectedMatrix;
 
     @Before
@@ -38,6 +40,8 @@ public class BayesPredictorTest {
         assessments.addAll(data.getManualGradedLearningObjects());
 
         expectedMatrix = new KnowledgeEstimateMatrix(assessments);
+
+        bayes = new BayesPredictor();
     }
 
 
@@ -136,13 +140,9 @@ public class BayesPredictorTest {
     }
 
     @Test
-    public void learnSet() {
-
-    }
-
-    @Test
-    public void classifySet() {
-
+    //TESTING BOTH LEARNSET AND CLASSIFY SET SINCE LEARNSET RETURNS VOID
+    public void predictions() {
+//        bayes.learnSet(expectedMatrix, "Q1");
     }
 
 }

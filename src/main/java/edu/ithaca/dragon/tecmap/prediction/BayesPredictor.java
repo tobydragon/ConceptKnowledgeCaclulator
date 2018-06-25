@@ -8,10 +8,7 @@ import edu.ithaca.dragon.tecmap.learningresource.AssessmentItem;
 import io.vavr.collection.Iterator;
 
 import javax.validation.constraints.NotNull;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.stream.DoubleStream;
 
 public class BayesPredictor implements Predictor {
@@ -109,8 +106,42 @@ public class BayesPredictor implements Predictor {
         }
     }
 
-    public static Map<String, Map<String,Collection<Double>>> getRowsToLearn(@NotNull DataFrame learningData, String columnToLearn) {
-        return null;
+    /**
+     * Gets rows from the dataframe
+     * @param learningData Dataframe to be parsed
+     * @param discreteColumn The column that is discretized
+     * @return a Map of studentId -> (a Map of category -> Collection of Grades)
+     */
+    public static Map<String, Map<String,Collection<Double>>> getRowsToLearn(@NotNull DataFrame learningData, String discreteColumn) {
+        Map<String, Map<String, Collection<Double>>> dataframeRows = new HashMap<>();
+        for (int i = 0; i < learningData.getRowCount(); i++) {
+            Map<String, Collection<Double>> currentRow = new HashMap<>();
+
+            //Get the student ID for the first string in the map
+            ColumnIds.StringColumnId studentIdColumn = (ColumnIds.StringColumnId) getColumnId(learningData, "Students");
+            String studentId = learningData.getValueAt(i, studentIdColumn);
+
+            //Get the category string for the currentRow map
+            ColumnIds.CategoryColumnId discreteColumnId = (ColumnIds.CategoryColumnId) getColumnId(learningData, discreteColumn);
+            String currentCategory = learningData.getValueAt(i, discreteColumnId);
+
+            //Get the rest of the grades
+            Collection<Double> grades = new ArrayList<>();
+            List<ColumnIds.DoubleColumnId> columnIds = new ArrayList<>();
+            for (ColumnId columnId : learningData.getColumnIds()) {
+                if (columnId.getType() == ColumnType.DOUBLE) {
+                    columnIds.add((ColumnIds.DoubleColumnId) columnId);
+                }
+            }
+            for (ColumnIds.DoubleColumnId columnId : columnIds) {
+                grades.add(learningData.getValueAt(i, columnId));
+            }
+
+            currentRow.put(currentCategory, grades);
+            dataframeRows.put(studentId, currentRow);
+        }
+
+        return dataframeRows;
     }
 
     /**
