@@ -27,6 +27,15 @@ public class BayesPredictor implements Predictor {
         bayesClassifier.setMemoryCapacity(500);
     }
 
+    private static ColumnId getColumnId(DataFrame dataFrame, String columnId) {
+        for (ColumnId colId : dataFrame.getColumnIds()) {
+            if (colId.getName().equals(columnId)) {
+                return colId;
+            }
+        }
+        return null;
+    }
+
     /**
      * Converts KnowledgeEstimateMatrix into a Dataframe
      * @param rawData
@@ -73,11 +82,7 @@ public class BayesPredictor implements Predictor {
     public static DataFrame discretizeGradeColumn(@NotNull DataFrame original, String assessmentId) {
         Iterator<ColumnId> columnIds = original.getColumnIds().iterator();
         ColumnId assessmentColumnId = null;
-        for (ColumnId columnId : columnIds) {
-            if (columnId.getName().equals(assessmentId)) {
-                assessmentColumnId = columnId;
-            }
-        }
+        assessmentColumnId = getColumnId(original, assessmentId);
         if (assessmentColumnId == null || assessmentColumnId.getType() != ColumnType.DOUBLE) {
             return null;
         } else {
@@ -102,6 +107,10 @@ public class BayesPredictor implements Predictor {
 
             return DataFrame.ofAll(allCols);
         }
+    }
+
+    public static Map<String, Collection<Double>> getRowsToLearn(@NotNull DataFrame learningData, String columnToLearn) {
+        return null;
     }
 
     /**

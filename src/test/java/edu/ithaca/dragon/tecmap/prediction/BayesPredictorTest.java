@@ -12,7 +12,9 @@ import org.junit.Test;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.DoubleStream;
 
 import static org.hamcrest.collection.IsIterableContainingInAnyOrder.containsInAnyOrder;
@@ -108,6 +110,19 @@ public class BayesPredictorTest {
         assertEquals(discretizedDataframe.getValueAt(0, discreteColumnId), "AT-RISK");
         assertEquals(discretizedDataframe.getValueAt(1, discreteColumnId), "OK");
         assertEquals(discretizedDataframe.getValueAt(2, discreteColumnId), "OK");
+    }
+
+    @Test
+    public void getRowsToLearn() {
+        DataFrame discretizedDataframe = BayesPredictor.discretizeGradeColumn(BayesPredictor.toDataFrame(expectedMatrix), "Q1");
+
+        Map<String, Collection<Double>> rows = BayesPredictor.getRowsToLearn(discretizedDataframe, "Q1");
+
+        assertNotNull(rows);
+        assertTrue(rows.containsKey("OK"));
+        assertTrue(rows.containsKey("AT-RISK"));
+        assertNotNull(rows.get("OK"));
+        assertNotNull(rows.get("AT-RISK"));
     }
 
     @Test
