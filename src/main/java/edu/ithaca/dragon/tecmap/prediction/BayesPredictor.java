@@ -68,9 +68,9 @@ public class BayesPredictor implements Predictor {
      * categorical variable
      * @param original
      * @param assessmentId
-     * @return
+     * @return new DataFrame with a category column replacing the double column, null if assessmentId doesn't match any column
      */
-    public static DataFrame discretizeColumn(@NotNull DataFrame original, String assessmentId) {
+    public static DataFrame discretizeGradeColumn(@NotNull DataFrame original, String assessmentId) {
         Iterator<ColumnId> columnIds = original.getColumnIds().iterator();
         ColumnId assessmentColumnId = null;
         for (ColumnId columnId : columnIds) {
@@ -81,8 +81,26 @@ public class BayesPredictor implements Predictor {
         if (assessmentColumnId == null || assessmentColumnId.getType() != ColumnType.DOUBLE) {
             return null;
         } else {
-            //TODO
-            return null;
+            DoubleColumn assessmentColumn = (DoubleColumn) original.getColumn(assessmentColumnId);
+            List<String> discreteValues = new ArrayList<>();
+            for (Double grade : assessmentColumn.valueStream().toArray()) {
+                if (grade <= 0.70) {
+                    discreteValues.add("AT-RISK");
+                } else {
+                    discreteValues.add("OK");
+                }
+            }
+            CategoryColumn discreteColumn = CategoryColumn.ofAll(ColumnIds.CategoryColumnId.of(assessmentId), discreteValues);
+
+            List<Column<?>> allCols = new ArrayList<>();
+            for (Column<?> column : original.iterator()) {
+                if (column.getId() != assessmentColumnId) {
+                    allCols.add(column);
+                }
+            }
+            allCols.add(discreteColumn);
+
+            return DataFrame.ofAll(allCols);
         }
     }
 

@@ -73,21 +73,38 @@ public class BayesPredictorTest {
     }
 
     @Test
-    public void discretizeColumn() {
+    public void discretizeGradeColumn() {
         DataFrame originalDataframe = BayesPredictor.toDataFrame(expectedMatrix);
 
         //Check bad assessment ID
-        DataFrame discretizedDataframe = BayesPredictor.discretizeColumn(originalDataframe, "badId");
+        DataFrame discretizedDataframe = BayesPredictor.discretizeGradeColumn(originalDataframe, "badId");
         assertNull(discretizedDataframe);
 
         //Check non-double column type
-        discretizedDataframe = BayesPredictor.discretizeColumn(originalDataframe, "Students");
+        discretizedDataframe = BayesPredictor.discretizeGradeColumn(originalDataframe, "Students");
         assertNull(discretizedDataframe);
 
         //Check good discretizedData
-        discretizedDataframe = BayesPredictor.discretizeColumn(originalDataframe, "Q1");
+        discretizedDataframe = BayesPredictor.discretizeGradeColumn(originalDataframe, "Q1");
         assertNotNull(discretizedDataframe);
-        ColumnIds.CategoryColumnId discreteColumnId = discretizedDataframe.getColumnId(0, ColumnType.CATEGORY);
+
+        ColumnIds.CategoryColumnId discreteColumnId = null;
+
+        ColumnIds.DoubleColumnId badDoubleColumnId = null;
+
+        for (ColumnId columnId : discretizedDataframe.getColumnIds()) {
+            if (columnId.getName().equals("Q1")) {
+                if (columnId.getType() == ColumnType.CATEGORY) {
+                    discreteColumnId = (ColumnIds.CategoryColumnId) columnId;
+                } else if (columnId.getType() == ColumnType.DOUBLE) {
+                    badDoubleColumnId = (ColumnIds.DoubleColumnId) columnId;
+                }
+            }
+        }
+
+        //Check that the original column that was discretized is not in the discretized dataframe
+        assertNull(badDoubleColumnId);
+
         assertEquals(discretizedDataframe.getValueAt(0, discreteColumnId), "AT-RISK");
         assertEquals(discretizedDataframe.getValueAt(1, discreteColumnId), "OK");
         assertEquals(discretizedDataframe.getValueAt(2, discreteColumnId), "OK");
