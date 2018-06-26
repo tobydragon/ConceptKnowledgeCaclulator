@@ -6,6 +6,7 @@ import edu.ithaca.dragon.tecmap.conceptgraph.eval.KnowledgeEstimateMatrix;
 import edu.ithaca.dragon.tecmap.io.reader.CSVReader;
 import edu.ithaca.dragon.tecmap.io.reader.SakaiReader;
 import edu.ithaca.dragon.tecmap.learningresource.AssessmentItem;
+import io.vavr.Tuple2;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -23,9 +24,11 @@ import static org.junit.jupiter.api.Assertions.*;
 
 public class BayesPredictorTest {
 
-    Predictor bayes;
+    private Predictor bayes;
 
-    KnowledgeEstimateMatrix expectedMatrix;
+    private KnowledgeEstimateMatrix learningMatrix;
+
+    private KnowledgeEstimateMatrix testingMatrix;
 
     @Before
     public void setup() throws IOException {
@@ -39,7 +42,13 @@ public class BayesPredictorTest {
         data = new SakaiReader(file2);
         assessments.addAll(data.getManualGradedLearningObjects());
 
-        expectedMatrix = new KnowledgeEstimateMatrix(assessments);
+        learningMatrix = new KnowledgeEstimateMatrix(assessments);
+
+        String testFile = Settings.DEFAULT_TEST_DATASTORE_PATH + "Cs1ExamplePrediction/Cs1ExampleAssessments.csv";
+        data = new SakaiReader(testFile);
+        assessments = data.getManualGradedLearningObjects();
+
+        testingMatrix = new KnowledgeEstimateMatrix(assessments);
 
         bayes = new BayesPredictor();
     }
@@ -47,18 +56,18 @@ public class BayesPredictorTest {
 
     @Test
     public void toDataFrame() {
-        DataFrame testDataframe = BayesPredictor.toDataFrame(expectedMatrix);
+        DataFrame testDataframe = BayesPredictor.toDataFrame(learningMatrix);
 
-        StringColumn studentCol = StringColumn.ofAll(ColumnIds.StringColumnId.of("Students"), expectedMatrix.getUserIdList());
+        StringColumn studentCol = StringColumn.ofAll(ColumnIds.StringColumnId.of("Students"), learningMatrix.getUserIdList());
 
         List<DoubleColumn> assessmentCols = new ArrayList<>();
 
         List<String> assessmentIds = new ArrayList<>();
-        for (AssessmentItem assessment : expectedMatrix.getObjList()) {
+        for (AssessmentItem assessment : learningMatrix.getObjList()) {
             assessmentIds.add(assessment.getId());
         }
 
-        double[][] assessmentMatrix = expectedMatrix.getStudentKnowledgeEstimates();
+        double[][] assessmentMatrix = learningMatrix.getStudentKnowledgeEstimates();
         for (int i = 0; i < assessmentMatrix.length; i++) {
             DoubleColumn assessmentColumn = DoubleColumn.ofAll(ColumnIds.DoubleColumnId.of(assessmentIds.get(i)), DoubleStream.of(assessmentMatrix[i]));
             assessmentCols.add(assessmentColumn);
@@ -80,7 +89,7 @@ public class BayesPredictorTest {
 
     @Test
     public void discretizeGradeColumn() {
-        DataFrame originalDataframe = BayesPredictor.toDataFrame(expectedMatrix);
+        DataFrame originalDataframe = BayesPredictor.toDataFrame(learningMatrix);
 
         //Check bad assessment ID
         DataFrame discretizedDataframe = BayesPredictor.discretizeGradeColumn(originalDataframe, "badId");
@@ -91,7 +100,7 @@ public class BayesPredictorTest {
         assertNull(discretizedDataframe);
 
         //Check good discretizedData
-        discretizedDataframe = BayesPredictor.discretizeGradeColumn(originalDataframe, "Q1");
+        discretizedDataframe = BayesPredictor.discretizeGradeColumn(originalDataframe, "Q5");
         assertNotNull(discretizedDataframe);
 
         ColumnIds.CategoryColumnId discreteColumnId = null;
@@ -99,7 +108,7 @@ public class BayesPredictorTest {
         ColumnIds.DoubleColumnId badDoubleColumnId = null;
 
         for (ColumnId columnId : discretizedDataframe.getColumnIds()) {
-            if (columnId.getName().equals("Q1")) {
+            if (columnId.getName().equals("Q5")) {
                 if (columnId.getType() == ColumnType.CATEGORY) {
                     discreteColumnId = (ColumnIds.CategoryColumnId) columnId;
                 } else if (columnId.getType() == ColumnType.DOUBLE) {
@@ -113,14 +122,22 @@ public class BayesPredictorTest {
 
         assertEquals(discretizedDataframe.getValueAt(0, discreteColumnId), "AT-RISK");
         assertEquals(discretizedDataframe.getValueAt(1, discreteColumnId), "OK");
-        assertEquals(discretizedDataframe.getValueAt(2, discreteColumnId), "OK");
+        assertEquals(discretizedDataframe.getValueAt(2, discreteColumnId), "AT-RISK");
+    }
+
+    @Test
+    public void getGrades() {
+        DataFrame discretizedDataframe = BayesPredictor.discretizeGradeColumn(BayesPredictor.toDataFrame(learningMatrix), "Q5");
+
+        Collection<Double> grades = BayesPredictor.getGrades(discretizedDataframe, 0);
+        assertEquals(9, grades.size());
     }
 
     @Test
     public void getRowsToLearn() {
-        DataFrame discretizedDataframe = BayesPredictor.discretizeGradeColumn(BayesPredictor.toDataFrame(expectedMatrix), "Q1");
+        DataFrame discretizedDataframe = BayesPredictor.discretizeGradeColumn(BayesPredictor.toDataFrame(learningMatrix), "Q5");
 
-        Map<String, Map<String, Collection<Double>>> rows = BayesPredictor.getRowsToLearn(discretizedDataframe, "Q1");
+        Map<String, Tuple2<String, Collection<Double>>> rows = BayesPredictor.getRowsToLearn(discretizedDataframe, "Q5");
 
         assertNotNull(rows);
         assertTrue(rows.containsKey("s01"));
@@ -129,27 +146,41 @@ public class BayesPredictorTest {
         assertFalse(rows.containsKey("s04"));
 
         //Check for s01 (at-risk student)
-        Map<String, Collection<Double>> specificStudentMap = rows.get("s01");
-        assertTrue(specificStudentMap.containsKey("AT-RISK"));
-        assertEquals(9, specificStudentMap.get("AT-RISK").size());
+        Tuple2<String, Collection<Double>> specificStudentMap = rows.get("s01");
+        assertEquals("AT-RISK", specificStudentMap._1);
+        assertEquals(9, specificStudentMap._2.size());
 
         //Check for s02 (ok student)
         specificStudentMap = rows.get("s02");
-        assertTrue(specificStudentMap.containsKey("OK"));
-        assertEquals(9, specificStudentMap.get("OK").size());
+        assertEquals("OK", specificStudentMap._1);
+        assertEquals(9, specificStudentMap._2.size());
+    }
+
+    @Test
+    public void getRowsToTest() {
+        DataFrame testingDataframe = BayesPredictor.toDataFrame(testingMatrix);
+
+        Map<String, Collection<Double>> rows = BayesPredictor.getRowsToTest(testingDataframe);
+
+        assertNotNull(rows);
+        assertTrue(rows.containsKey("s04"));
+        assertTrue(rows.containsKey("s05"));
+
+        //Check collection of grades for s04 & s05
+        assertEquals(9, rows.get("s04").size());
+        assertEquals(9, rows.get("s05").size());
     }
 
     @Test
     //TESTING BOTH LEARNSET AND CLASSIFY SET SINCE LEARNSET RETURNS VOID
     public void predictions() {
-        bayes.learnSet(expectedMatrix, "Q1");
+        bayes.learnSet(learningMatrix, "Q5");
 
-        Map<String, String> classified = bayes.classifySet(expectedMatrix);
+        Map<String, String> classified = bayes.classifySet(testingMatrix);
 
         //May not be correct just because we test with the learning data as well
-        assertEquals("AT-RISK", classified.get("s01"));
-        assertEquals("OK", classified.get("s02"));
-        assertEquals("OK", classified.get("s03"));
+        assertEquals("AT-RISK", classified.get("s04"));
+        assertEquals("OK", classified.get("s05"));
     }
 
 }

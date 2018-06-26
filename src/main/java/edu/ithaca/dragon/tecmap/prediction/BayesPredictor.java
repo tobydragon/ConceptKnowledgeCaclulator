@@ -5,6 +5,7 @@ import de.daslaboratorium.machinelearning.classifier.Classifier;
 import de.daslaboratorium.machinelearning.classifier.bayes.BayesClassifier;
 import edu.ithaca.dragon.tecmap.conceptgraph.eval.KnowledgeEstimateMatrix;
 import edu.ithaca.dragon.tecmap.learningresource.AssessmentItem;
+import io.vavr.Tuple2;
 import io.vavr.collection.Iterator;
 
 import javax.validation.constraints.NotNull;
@@ -24,6 +25,12 @@ public class BayesPredictor implements Predictor {
         bayesClassifier.setMemoryCapacity(500);
     }
 
+    /**
+     * Gets columnId based on string, assumes unique names for columns
+     * @param dataFrame
+     * @param columnId
+     * @return
+     */
     private static ColumnId getColumnId(DataFrame dataFrame, String columnId) {
         for (ColumnId colId : dataFrame.getColumnIds()) {
             if (colId.getName().equals(columnId)) {
@@ -86,7 +93,7 @@ public class BayesPredictor implements Predictor {
             DoubleColumn assessmentColumn = (DoubleColumn) original.getColumn(assessmentColumnId);
             List<String> discreteValues = new ArrayList<>();
             for (Double grade : assessmentColumn.valueStream().toArray()) {
-                if (grade <= 0.70) {
+                if (grade <= 0.78) {
                     discreteValues.add("AT-RISK");
                 } else {
                     discreteValues.add("OK");
@@ -107,16 +114,34 @@ public class BayesPredictor implements Predictor {
     }
 
     /**
-     * Gets rows from the dataframe
+     * Gets a collection of all of the double collections for a given row
+     * @param dataFrame
+     * @param rowIndex
+     * @return collection of grades as doubles
+     */
+    public static Collection<Double> getGrades(@NotNull DataFrame dataFrame, int rowIndex) {
+        Collection<Double> grades = new ArrayList<>();
+        List<ColumnIds.DoubleColumnId> columnIds = new ArrayList<>();
+        for (ColumnId columnId : dataFrame.getColumnIds()) {
+            if (columnId.getType() == ColumnType.DOUBLE) {
+                columnIds.add((ColumnIds.DoubleColumnId) columnId);
+            }
+        }
+        for (ColumnIds.DoubleColumnId columnId : columnIds) {
+            grades.add(dataFrame.getValueAt(rowIndex, columnId));
+        }
+        return grades;
+    }
+
+    /**
+     * Gets rows from the dataframe for learning
      * @param learningData Dataframe to be parsed
      * @param discreteColumn The column that is discretized
-     * @return a Map of studentId -> (a Map of category -> Collection of Grades)
+     * @return a Map of studentId -> (a tuple pair of category and grades)
      */
-    public static Map<String, Map<String,Collection<Double>>> getRowsToLearn(@NotNull DataFrame learningData, String discreteColumn) {
-        Map<String, Map<String, Collection<Double>>> dataframeRows = new HashMap<>();
+    public static Map<String, Tuple2<String, Collection<Double>>> getRowsToLearn(@NotNull DataFrame learningData, String discreteColumn) {
+        Map<String, Tuple2<String, Collection<Double>>> learningRows = new HashMap<>();
         for (int i = 0; i < learningData.getRowCount(); i++) {
-            Map<String, Collection<Double>> currentRow = new HashMap<>();
-
             //Get the student ID for the first string in the map
             ColumnIds.StringColumnId studentIdColumn = (ColumnIds.StringColumnId) getColumnId(learningData, "Students");
             String studentId = learningData.getValueAt(i, studentIdColumn);
@@ -126,22 +151,33 @@ public class BayesPredictor implements Predictor {
             String currentCategory = learningData.getValueAt(i, discreteColumnId);
 
             //Get the rest of the grades
-            Collection<Double> grades = new ArrayList<>();
-            List<ColumnIds.DoubleColumnId> columnIds = new ArrayList<>();
-            for (ColumnId columnId : learningData.getColumnIds()) {
-                if (columnId.getType() == ColumnType.DOUBLE) {
-                    columnIds.add((ColumnIds.DoubleColumnId) columnId);
-                }
-            }
-            for (ColumnIds.DoubleColumnId columnId : columnIds) {
-                grades.add(learningData.getValueAt(i, columnId));
-            }
+            Collection<Double> grades = getGrades(learningData, i);
 
-            currentRow.put(currentCategory, grades);
-            dataframeRows.put(studentId, currentRow);
+            Tuple2<String, Collection<Double>> currentRow = new Tuple2<>(currentCategory, grades);
+            learningRows.put(studentId, currentRow);
         }
 
-        return dataframeRows;
+        return learningRows;
+    }
+
+    /**
+     * Get rows from dataframe for testing
+     * @param testingData
+     * @return
+     */
+    public static Map<String, Collection<Double>> getRowsToTest(@NotNull DataFrame testingData) {
+        Map<String, Collection<Double>> testingRows = new HashMap<>();
+        for (int i = 0; i < testingData.getRowCount(); i++) {
+            //Get student ID
+            ColumnIds.StringColumnId studentIdColumn = (ColumnIds.StringColumnId) getColumnId(testingData, "Students");
+            String studentId = testingData.getValueAt(i, studentIdColumn);
+
+            //Get grades
+            Collection<Double> grades = getGrades(testingData, i);
+
+            testingRows.put(studentId, grades);
+        }
+        return testingRows;
     }
 
     /**
@@ -150,6 +186,7 @@ public class BayesPredictor implements Predictor {
      */
     public void reset() {
         bayesClassifier.reset();
+        bayesClassifier.setMemoryCapacity(500);
     }
 
     /**
@@ -169,7 +206,19 @@ public class BayesPredictor implements Predictor {
      * TRAINING DATA MUST BE MANIPULATED IN ORDER TO USE THE BAYES LEARN METHOD
      */
     public void learnSet(KnowledgeEstimateMatrix rawTrainingData, String assessmentId) {
+        //Get a dataframe from the raw training data
+        DataFrame rawTrainingDataframe = toDataFrame(rawTrainingData);
 
+        //Get discretized column using assessmentId param
+        DataFrame discretizedTrainingDataframe = discretizeGradeColumn(rawTrainingDataframe, assessmentId);
+
+        //Get rows from the discretized dataframe
+        Map<String, Tuple2<String, Collection<Double>>> trainingRows = getRowsToLearn(discretizedTrainingDataframe, assessmentId);
+
+        //For each row, call learn
+        for (Tuple2<String, Collection<Double>> row: trainingRows.values()) {
+            learn(row._1, row._2);
+        }
     }
 
     /**
@@ -184,12 +233,21 @@ public class BayesPredictor implements Predictor {
     }
 
     /**
-     * Classifies the data based on the raw testing matrix you give it
+     * Classifies the data based on the raw testing matrix you give it, should not have a grade for what you are predicting
      * @param rawTestingData in the form of KnowledgeEstimateMatrix
      * TESTING DATA MUST BE MANIPULATED IN ORDER TO GET ROWS FOR THE BAYES CLASSIFY METHOD
      * @return Map of String to String (Student id -> Classification) MAY CHANGE
      */
     public Map<String, String> classifySet(KnowledgeEstimateMatrix rawTestingData) {
+        //Get a dataframe from the raw testing data
+        DataFrame rawTestingDataframe = toDataFrame(rawTestingData);
+
+        //Get rows from the dataframe (studentId -> grades)
+        Map<String, Collection<Double>> testingRows = getRowsToTest(rawTestingDataframe);
+
+        //For each row, call classify
+
+
         return null;
     }
 }
