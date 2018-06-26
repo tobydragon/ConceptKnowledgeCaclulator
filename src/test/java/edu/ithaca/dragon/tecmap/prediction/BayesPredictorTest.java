@@ -142,7 +142,14 @@ public class BayesPredictorTest {
     @Test
     //TESTING BOTH LEARNSET AND CLASSIFY SET SINCE LEARNSET RETURNS VOID
     public void predictions() {
-//        bayes.learnSet(expectedMatrix, "Q1");
+        bayes.learnSet(expectedMatrix, "Q1");
+
+        Map<String, String> classified = bayes.classifySet(expectedMatrix);
+
+        //May not be correct just because we test with the learning data as well
+        assertEquals("AT-RISK", classified.get("s01"));
+        assertEquals("OK", classified.get("s02"));
+        assertEquals("OK", classified.get("s03"));
     }
 
 }

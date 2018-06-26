@@ -158,7 +158,7 @@ public class BayesPredictor implements Predictor {
      * @param grades
      * TESTED ON PACKAGE BUILD, NOT NATIVELY
      */
-    public void learn(String category, Collection<Double> grades) {
+    private void learn(String category, Collection<Double> grades) {
         bayesClassifier.learn(category, grades);
     }
 
@@ -179,7 +179,7 @@ public class BayesPredictor implements Predictor {
      * TESTED ON PACKAGE BUILD, NOT NATIVELY
      * @return String classification for a student
      */
-    private String classify(Collection<Double> testData) {
+    public String classify(Collection<Double> testData) {
         return bayesClassifier.classify(testData).getCategory();
     }
 
