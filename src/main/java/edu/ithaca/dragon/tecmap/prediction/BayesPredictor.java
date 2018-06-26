@@ -245,9 +245,15 @@ public class BayesPredictor implements Predictor {
         //Get rows from the dataframe (studentId -> grades)
         Map<String, Collection<Double>> testingRows = getRowsToTest(rawTestingDataframe);
 
+        //Get classifications for data
+        Map<String, String> classifications = new HashMap<>();
+
         //For each row, call classify
+        for (String studentId : testingRows.keySet()) {
+            String classification = classify(testingRows.get(studentId));
+            classifications.put(studentId, classification);
+        }
 
-
-        return null;
+        return classifications;
     }
 }
