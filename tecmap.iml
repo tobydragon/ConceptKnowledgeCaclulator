@@ -110,5 +110,9 @@
     <orderEntry type="library" name="Maven: org.springframework:spring-jcl:5.0.6.RELEASE" level="project" />
     <orderEntry type="library" scope="TEST" name="Maven: org.springframework:spring-test:5.0.6.RELEASE" level="project" />
     <orderEntry type="library" scope="TEST" name="Maven: org.xmlunit:xmlunit-core:2.5.1" level="project" />
+    <orderEntry type="library" name="Maven: com.github.ptnplanet:Java-Naive-Bayes-Classifier:1.0.7" level="project" />
+    <orderEntry type="library" name="Maven: ch.netzwerg:paleo-core:0.13.2" level="project" />
+    <orderEntry type="library" name="Maven: io.vavr:vavr:0.9.1" level="project" />
+    <orderEntry type="library" name="Maven: io.vavr:vavr-match:0.9.1" level="project" />
   </component>
 </module>
