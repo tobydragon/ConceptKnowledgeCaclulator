@@ -43,9 +43,10 @@ public class BayesPredictor implements Predictor {
     /**
      * Converts KnowledgeEstimateMatrix into a Dataframe
      * @param rawData
+     * @param columnsToInclude list of columns (assessment Ids) to be included in the dataframe
      * @return DataFrame that is easier to use (IN ORDER TO GET VALUES, YOU MUST USE THE COLUMNID TYPE THAT IS DICTATED BY THE DATAFRAME
      */
-    public static DataFrame toDataFrame(KnowledgeEstimateMatrix rawData) {
+    public static DataFrame toDataFrame(KnowledgeEstimateMatrix rawData, List<String> columnsToInclude) {
         if (rawData != null) {
             //Column for Student IDs
             List<String> studentIDs = rawData.getUserIdList();
@@ -61,8 +62,10 @@ public class BayesPredictor implements Predictor {
             double[][] assessmentMatrix = rawData.getStudentKnowledgeEstimates();
             for (int i = 0; i < assessmentMatrix.length; i++) {
                 String currAssessmentId = assessmentIDs.get(i);
-                DoubleColumn assessmentCol = DoubleColumn.ofAll(ColumnIds.DoubleColumnId.of(currAssessmentId), DoubleStream.of(assessmentMatrix[i]));
-                assessmentCols.add(assessmentCol);
+                if (columnsToInclude.contains(currAssessmentId)) {
+                    DoubleColumn assessmentCol = DoubleColumn.ofAll(ColumnIds.DoubleColumnId.of(currAssessmentId), DoubleStream.of(assessmentMatrix[i]));
+                    assessmentCols.add(assessmentCol);
+                }
             }
 
             List<Column<?>> allCols = new ArrayList<>();
@@ -202,18 +205,19 @@ public class BayesPredictor implements Predictor {
     /**
      * Trains the data based on the raw data matrix you give it
      * @param rawTrainingData in the form of KnowledgeEstimateMatrix
-     * @param assessmentId string of the assessment you want to learn on (will be the categorical variable), should have doubles as grade type
+     * @param categoryAssessmentId string of the assessment you want to learn on (will be the categorical variable), should have doubles as grade type
+     * @param assignmentsToLearnWith list of what columns should be used in learning (cannot include the categoryAssessmentId)
      * TRAINING DATA MUST BE MANIPULATED IN ORDER TO USE THE BAYES LEARN METHOD
      */
-    public void learnSet(KnowledgeEstimateMatrix rawTrainingData, String assessmentId) {
+    public void learnSet(KnowledgeEstimateMatrix rawTrainingData, String categoryAssessmentId, List<String> assignmentsToLearnWith) {
         //Get a dataframe from the raw training data
-        DataFrame rawTrainingDataframe = toDataFrame(rawTrainingData);
+        DataFrame rawTrainingDataframe = toDataFrame(rawTrainingData, assignmentsToLearnWith);
 
-        //Get discretized column using assessmentId param
-        DataFrame discretizedTrainingDataframe = discretizeGradeColumn(rawTrainingDataframe, assessmentId);
+        //Get discretized column using categoryAssessmentId param
+        DataFrame discretizedTrainingDataframe = discretizeGradeColumn(rawTrainingDataframe, categoryAssessmentId);
 
         //Get rows from the discretized dataframe
-        Map<String, Tuple2<String, Collection<Double>>> trainingRows = getRowsToLearn(discretizedTrainingDataframe, assessmentId);
+        Map<String, Tuple2<String, Collection<Double>>> trainingRows = getRowsToLearn(discretizedTrainingDataframe, categoryAssessmentId);
 
         //For each row, call learn
         for (Tuple2<String, Collection<Double>> row: trainingRows.values()) {
@@ -235,12 +239,13 @@ public class BayesPredictor implements Predictor {
     /**
      * Classifies the data based on the raw testing matrix you give it, should not have a grade for what you are predicting
      * @param rawTestingData in the form of KnowledgeEstimateMatrix
+     * @param assignmentsForClassification list of what assessment columns should be used in learning (should all be doubles, not the categorical variable)
      * TESTING DATA MUST BE MANIPULATED IN ORDER TO GET ROWS FOR THE BAYES CLASSIFY METHOD
      * @return Map of String to String (Student id -> Classification) MAY CHANGE
      */
-    public Map<String, String> classifySet(KnowledgeEstimateMatrix rawTestingData) {
+    public Map<String, String> classifySet(KnowledgeEstimateMatrix rawTestingData, List<String> assignmentsForClassification) {
         //Get a dataframe from the raw testing data
-        DataFrame rawTestingDataframe = toDataFrame(rawTestingData);
+        DataFrame rawTestingDataframe = toDataFrame(rawTestingData, assignmentsForClassification);
 
         //Get rows from the dataframe (studentId -> grades)
         Map<String, Collection<Double>> testingRows = getRowsToTest(rawTestingDataframe);

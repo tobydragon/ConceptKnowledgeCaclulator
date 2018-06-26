@@ -12,10 +12,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.stream.DoubleStream;
 
 import static org.hamcrest.collection.IsIterableContainingInAnyOrder.containsInAnyOrder;
@@ -56,7 +53,9 @@ public class BayesPredictorTest {
 
     @Test
     public void toDataFrame() {
-        DataFrame testDataframe = BayesPredictor.toDataFrame(learningMatrix);
+        String[] expectedColNames = {"Students", "Q1", "Q2", "Q3", "Q4", "Q5", "HW1", "HW2", "HW3", "HW4", "HW5"};
+
+        DataFrame testDataframe = BayesPredictor.toDataFrame(learningMatrix, Arrays.asList(expectedColNames));
 
         StringColumn studentCol = StringColumn.ofAll(ColumnIds.StringColumnId.of("Students"), learningMatrix.getUserIdList());
 
@@ -79,8 +78,6 @@ public class BayesPredictorTest {
 
         DataFrame expectedDataframe = DataFrame.ofAll(allCols);
 
-        String[] expectedColNames = {"Students", "Q1", "Q2", "Q3", "Q4", "Q5", "HW1", "HW2", "HW3", "HW4", "HW5"};
-
         Assert.assertThat(testDataframe.getColumnNames(), containsInAnyOrder(expectedColNames));
         assertEquals(expectedDataframe.getRowCount(), testDataframe.getRowCount());
         assertEquals(expectedDataframe.getColumnCount(), testDataframe.getColumnCount());
@@ -89,7 +86,9 @@ public class BayesPredictorTest {
 
     @Test
     public void discretizeGradeColumn() {
-        DataFrame originalDataframe = BayesPredictor.toDataFrame(learningMatrix);
+        String[] expectedColNames = {"Students", "Q1", "Q2", "Q3", "Q4", "Q5", "HW1", "HW2", "HW3", "HW4", "HW5"};
+
+        DataFrame originalDataframe = BayesPredictor.toDataFrame(learningMatrix, Arrays.asList(expectedColNames));
 
         //Check bad assessment ID
         DataFrame discretizedDataframe = BayesPredictor.discretizeGradeColumn(originalDataframe, "badId");
@@ -127,7 +126,9 @@ public class BayesPredictorTest {
 
     @Test
     public void getGrades() {
-        DataFrame discretizedDataframe = BayesPredictor.discretizeGradeColumn(BayesPredictor.toDataFrame(learningMatrix), "Q5");
+        String[] expectedColNames = {"Students", "Q1", "Q2", "Q3", "Q4", "Q5", "HW1", "HW2", "HW3", "HW4", "HW5"};
+
+        DataFrame discretizedDataframe = BayesPredictor.discretizeGradeColumn(BayesPredictor.toDataFrame(learningMatrix, Arrays.asList(expectedColNames)), "Q5");
 
         Collection<Double> grades = BayesPredictor.getGrades(discretizedDataframe, 0);
         assertEquals(9, grades.size());
@@ -135,7 +136,9 @@ public class BayesPredictorTest {
 
     @Test
     public void getRowsToLearn() {
-        DataFrame discretizedDataframe = BayesPredictor.discretizeGradeColumn(BayesPredictor.toDataFrame(learningMatrix), "Q5");
+        String[] expectedColNames = {"Students", "Q1", "Q2", "Q3", "Q4", "Q5", "HW1", "HW2", "HW3", "HW4", "HW5"};
+
+        DataFrame discretizedDataframe = BayesPredictor.discretizeGradeColumn(BayesPredictor.toDataFrame(learningMatrix, Arrays.asList(expectedColNames)), "Q5");
 
         Map<String, Tuple2<String, Collection<Double>>> rows = BayesPredictor.getRowsToLearn(discretizedDataframe, "Q5");
 
@@ -158,7 +161,9 @@ public class BayesPredictorTest {
 
     @Test
     public void getRowsToTest() {
-        DataFrame testingDataframe = BayesPredictor.toDataFrame(testingMatrix);
+        String[] expectedColNames = {"Students", "Q1", "Q2", "Q3", "Q4", "HW1", "HW2", "HW3", "HW4", "HW5"};
+
+        DataFrame testingDataframe = BayesPredictor.toDataFrame(testingMatrix, Arrays.asList(expectedColNames));
 
         Map<String, Collection<Double>> rows = BayesPredictor.getRowsToTest(testingDataframe);
 
@@ -174,9 +179,13 @@ public class BayesPredictorTest {
     @Test
     //TESTING BOTH LEARNSET AND CLASSIFY SET SINCE LEARNSET RETURNS VOID
     public void predictions() {
-        bayes.learnSet(learningMatrix, "Q5");
+        String[] learningColNames = {"Students", "Q1", "Q2", "Q3", "Q4", "Q5", "HW1", "HW2", "HW3", "HW4", "HW5"};
 
-        Map<String, String> classified = bayes.classifySet(testingMatrix);
+        bayes.learnSet(learningMatrix, "Q5", Arrays.asList(learningColNames));
+
+        String[] classifyColNames = {"Students", "Q1", "Q2", "Q3", "Q4", "HW1", "HW2", "HW3", "HW4", "HW5"};
+
+        Map<String, String> classified = bayes.classifySet(testingMatrix, Arrays.asList(classifyColNames));
 
         //May not be correct just because we test with the learning data as well
         assertEquals("AT-RISK", classified.get("s04"));
