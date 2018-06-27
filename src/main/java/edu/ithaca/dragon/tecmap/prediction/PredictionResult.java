@@ -5,11 +5,17 @@ class PredictionResult {
     private String studentId;
     private String expectedResult;
     private String predictedResult;
+    private boolean correct;
 
     public PredictionResult(String id, String expected, String predicted) {
         studentId = id;
         expectedResult = expected;
         predictedResult = predicted;
+        if (expectedResult.equals(predictedResult)) {
+            correct = true;
+        } else {
+            correct = false;
+        }
     }
 
     public String getStudentId() {
@@ -22,5 +28,9 @@ class PredictionResult {
 
     public String getPredictedResult() {
         return predictedResult;
+    }
+
+    public boolean isCorrect() {
+        return correct;
     }
 }
