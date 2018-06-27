@@ -62,6 +62,10 @@ public class PredictorEffectivenessTest {
         assertEquals("s04", studentResult.getStudentId());
         assertEquals("AT-RISK", studentResult.getExpectedResult());
         assertEquals("AT-RISK", studentResult.getExpectedResult());
+        studentResult = results.get(1);
+        assertEquals("s05", studentResult.getStudentId());
+        assertEquals("OK", studentResult.getExpectedResult());
+        assertEquals("OK", studentResult.getPredictedResult());
 
     }
 

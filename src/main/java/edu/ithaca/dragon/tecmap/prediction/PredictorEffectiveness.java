@@ -73,7 +73,16 @@ public class PredictorEffectiveness {
         return new Tuple2<>(ratioMatrix, nonRatioMatrix);
     }
 
-    public static PredictorEffectiveness testPredictor(Predictor predictor, String categoryToLearn, List<String> learningAssessments, KnowledgeEstimateMatrix originalMatrix, double ratio) {
+    /**
+     * Test how effective a predictor is, works off of the Predictor interface
+     * @param predictor specific type of predictor
+     * @param assessmentToLearn what assessment is being learned
+     * @param learningAssessments what assessments are being used to learn (including assessmentToLearn)
+     * @param originalMatrix matrix of all students and their assessment scores
+     * @param ratio what percent of the originalMatrix should be used for learning
+     * @return PredictorEffectiveness object with percent correct and a list of all the results
+     */
+    public static PredictorEffectiveness testPredictor(Predictor predictor, String assessmentToLearn, List<String> learningAssessments, KnowledgeEstimateMatrix originalMatrix, double ratio) {
         //Split the matrix
         Tuple2<KnowledgeEstimateMatrix, KnowledgeEstimateMatrix> splitMatrix = splitMatrix(originalMatrix, ratio);
 
@@ -83,11 +92,11 @@ public class PredictorEffectiveness {
         KnowledgeEstimateMatrix testingMatrix = splitMatrix._2;
 
         //Learn the category with the given assessments
-        predictor.learnSet(learningMatrix, categoryToLearn, learningAssessments);
+        predictor.learnSet(learningMatrix, assessmentToLearn, learningAssessments);
 
         //Test on the learning assessments without the learned category
         List<String> testingAssessments = learningAssessments;
-        testingAssessments.remove(categoryToLearn);
+        testingAssessments.remove(assessmentToLearn);
 
         Map<String, String> predictions = predictor.classifySet(testingMatrix, testingAssessments);
 
@@ -96,7 +105,7 @@ public class PredictorEffectiveness {
         //Get the expected without having a dataframe
         Map<String, String> expectedResults = new HashMap<>();
         for (AssessmentItem item : testingMatrix.getObjList()) {
-            if (item.getId().equals(categoryToLearn)) {
+            if (item.getId().equals(assessmentToLearn)) {
                 for (AssessmentItemResponse response : item.getResponses()) {
                     String expected = "OK";
                     if (response.calcKnowledgeEstimate() < Predictor.ESTIMATE_THRESHOLD) {
@@ -112,6 +121,7 @@ public class PredictorEffectiveness {
             predictionResults.add(result);
         }
 
+        //Calculate the percent correct
         double numCorrect = 0;
         for (PredictionResult result : predictionResults) {
             if (result.isCorrect()) {

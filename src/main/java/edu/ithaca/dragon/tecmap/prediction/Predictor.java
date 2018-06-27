@@ -13,10 +13,10 @@ public interface Predictor {
     /**
      * Trains the predictor given the rawTrainingData
      * @param rawTrainingData
-     * @param categoryAssessmentId
+     * @param assessmentToLearn
      * @param assignmentsToLearnWith
      */
-    void learnSet(KnowledgeEstimateMatrix rawTrainingData, String categoryAssessmentId, List<String> assignmentsToLearnWith);
+    void learnSet(KnowledgeEstimateMatrix rawTrainingData, String assessmentToLearn, List<String> assignmentsToLearnWith) throws RuntimeException;
 
     /**
      * Predictor forgets and unlearns everything

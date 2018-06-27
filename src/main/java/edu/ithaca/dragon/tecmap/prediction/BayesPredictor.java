@@ -205,19 +205,22 @@ public class BayesPredictor implements Predictor {
     /**
      * Trains the data based on the raw data matrix you give it
      * @param rawTrainingData in the form of KnowledgeEstimateMatrix
-     * @param categoryAssessmentId string of the assessment you want to learn on (will be the categorical variable), should have doubles as grade type
-     * @param assignmentsToLearnWith list of what columns should be used in learning (cannot include the categoryAssessmentId)
+     * @param assessmentToLearn string of the assessment you want to learn on (will be the categorical variable), should have doubles as grade type
+     * @param assignmentsToLearnWith list of what columns should be used in learning (must include the assessmentToLearn)
      * TRAINING DATA MUST BE MANIPULATED IN ORDER TO USE THE BAYES LEARN METHOD
      */
-    public void learnSet(KnowledgeEstimateMatrix rawTrainingData, String categoryAssessmentId, List<String> assignmentsToLearnWith) {
+    public void learnSet(KnowledgeEstimateMatrix rawTrainingData, String assessmentToLearn, List<String> assignmentsToLearnWith) throws RuntimeException{
+        if (!assignmentsToLearnWith.contains(assessmentToLearn)) {
+            throw new RuntimeException("Assignments to Learn Must include assessmentToLearn");
+        }
         //Get a dataframe from the raw training data
         DataFrame rawTrainingDataframe = toDataFrame(rawTrainingData, assignmentsToLearnWith);
 
-        //Get discretized column using categoryAssessmentId param
-        DataFrame discretizedTrainingDataframe = discretizeGradeColumn(rawTrainingDataframe, categoryAssessmentId);
+        //Get discretized column using assessmentToLearn param
+        DataFrame discretizedTrainingDataframe = discretizeGradeColumn(rawTrainingDataframe, assessmentToLearn);
 
         //Get rows from the discretized dataframe
-        Map<String, Tuple2<String, Collection<Double>>> trainingRows = getRowsToLearn(discretizedTrainingDataframe, categoryAssessmentId);
+        Map<String, Tuple2<String, Collection<Double>>> trainingRows = getRowsToLearn(discretizedTrainingDataframe, assessmentToLearn);
 
         //For each row, call learn
         for (Tuple2<String, Collection<Double>> row: trainingRows.values()) {
