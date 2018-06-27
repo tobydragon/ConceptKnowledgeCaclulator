@@ -11,6 +11,9 @@ import java.io.IOException;
 import java.util.LinkedList;
 import java.util.List;
 
+import static org.hamcrest.collection.IsIterableContainingInAnyOrder.containsInAnyOrder;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
 /**
  * Created by bleblanc2 on 6/13/17.
  */
@@ -68,6 +71,21 @@ public class KnowledgeEstimateMatrixTest {
         } catch (IOException e) {
             Assert.fail();
         }
+    }
+
+    @Test
+    public void getAssessmentIdList() throws IOException{
+        String file = Settings.DEFAULT_TEST_DATASTORE_PATH + "Cs1ExamplePrediction/Cs1ExampleAssessments.csv";
+        CSVReader data = new SakaiReader(file);
+        List<AssessmentItem> gotoMatrix = data.getManualGradedLearningObjects();
+        KnowledgeEstimateMatrix newMatrix = new KnowledgeEstimateMatrix(gotoMatrix);
+
+        List<String> assessmentIds = newMatrix.getAssessmentIdList();
+
+        String[] expected = {"Q1", "Q2", "Q3", "Q4", "Q5", "HW1", "HW2", "HW3", "HW4", "HW5"};
+
+        assertEquals(10, assessmentIds.size());
+        Assert.assertThat(assessmentIds, containsInAnyOrder(expected));
     }
 }
 

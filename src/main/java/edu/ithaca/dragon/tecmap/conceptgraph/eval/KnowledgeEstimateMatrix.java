@@ -145,5 +145,17 @@ public class KnowledgeEstimateMatrix {
 
     public List<AssessmentItem> getObjList(){return this.objList;}
 
+    public List<String> getAssessmentIdList() {
+        List<AssessmentItem> assessmentItems = getObjList();
+
+        List<String> assessmentIds = new ArrayList<>();
+
+        for (AssessmentItem assessmentItem : assessmentItems) {
+            assessmentIds.add(assessmentItem.getId());
+        }
+
+        return assessmentIds;
+    }
+
     public RCode getrMatrix() {return rMatrix;}
 }

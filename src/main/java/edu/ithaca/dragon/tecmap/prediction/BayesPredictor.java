@@ -96,7 +96,7 @@ public class BayesPredictor implements Predictor {
             DoubleColumn assessmentColumn = (DoubleColumn) original.getColumn(assessmentColumnId);
             List<String> discreteValues = new ArrayList<>();
             for (Double grade : assessmentColumn.valueStream().toArray()) {
-                if (grade <= 0.78) {
+                if (grade <= Predictor.ESTIMATE_THRESHOLD) {
                     discreteValues.add("AT-RISK");
                 } else {
                     discreteValues.add("OK");
