@@ -4,13 +4,18 @@ import edu.ithaca.dragon.tecmap.conceptgraph.eval.KnowledgeEstimateMatrix;
 import edu.ithaca.dragon.tecmap.learningresource.AssessmentItem;
 import edu.ithaca.dragon.tecmap.learningresource.AssessmentItemResponse;
 import io.vavr.Tuple2;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 public class PredictorEffectiveness {
+    private static final Logger logger = LogManager.getLogger(PredictorEffectiveness.class);
+
 
     private double percentCorrect; //between 0 & 1
     private List<PredictionResult> results;
@@ -67,10 +72,16 @@ public class PredictorEffectiveness {
             nonRatioAssessments.add(nonRatioItem);
         }
 
-        KnowledgeEstimateMatrix ratioMatrix = new KnowledgeEstimateMatrix(ratioAssessments);
-        KnowledgeEstimateMatrix nonRatioMatrix = new KnowledgeEstimateMatrix(nonRatioAssessments);
+        try {
 
-        return new Tuple2<>(ratioMatrix, nonRatioMatrix);
+            KnowledgeEstimateMatrix ratioMatrix = new KnowledgeEstimateMatrix(ratioAssessments);
+            KnowledgeEstimateMatrix nonRatioMatrix = new KnowledgeEstimateMatrix(nonRatioAssessments);
+
+            return new Tuple2<>(ratioMatrix, nonRatioMatrix);
+        } catch (IOException e) {
+            logger.warn(e.getMessage());
+            return null;
+        }
     }
 
     /**

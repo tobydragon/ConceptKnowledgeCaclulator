@@ -13,6 +13,7 @@ import java.util.List;
 
 import static org.hamcrest.collection.IsIterableContainingInAnyOrder.containsInAnyOrder;
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 /**
  * Created by bleblanc2 on 6/13/17.
@@ -86,6 +87,27 @@ public class KnowledgeEstimateMatrixTest {
 
         assertEquals(10, assessmentIds.size());
         Assert.assertThat(assessmentIds, containsInAnyOrder(expected));
+    }
+
+    @Test
+    public void createMatrixWithRepeatedAssessmentItems() throws IOException {
+        String file = Settings.DEFAULT_TEST_DATASTORE_PATH + "Cs1Example/Cs1ExampleAssessment1.csv";
+        CSVReader data = new SakaiReader(file);
+        List<AssessmentItem> assessmentItems = data.getManualGradedLearningObjects();
+        file = Settings.DEFAULT_TEST_DATASTORE_PATH + "Cs1Example/Cs1ExampleAssessment2.csv";
+        data = new SakaiReader(file);
+        assessmentItems.addAll(data.getManualGradedLearningObjects());
+
+        //Try and add repeated assessments
+        file = Settings.DEFAULT_TEST_DATASTORE_PATH + "Cs1ExamplePrediction/Cs1ExampleAssessments.csv";
+        data = new SakaiReader(file);
+        assessmentItems.addAll(data.getManualGradedLearningObjects());
+
+
+        assertThrows(IOException.class, () -> {
+            KnowledgeEstimateMatrix matrix = new KnowledgeEstimateMatrix(assessmentItems);
+        });
+
     }
 }
 

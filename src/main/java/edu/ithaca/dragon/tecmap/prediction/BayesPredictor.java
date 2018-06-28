@@ -209,7 +209,7 @@ public class BayesPredictor implements Predictor {
      * @param assignmentsToLearnWith list of what columns should be used in learning (must include the assessmentToLearn)
      * TRAINING DATA MUST BE MANIPULATED IN ORDER TO USE THE BAYES LEARN METHOD
      */
-    public void learnSet(KnowledgeEstimateMatrix rawTrainingData, String assessmentToLearn, List<String> assignmentsToLearnWith) throws RuntimeException{
+    public void learnSet(KnowledgeEstimateMatrix rawTrainingData, String assessmentToLearn, List<String> assignmentsToLearnWith) {
         if (!assignmentsToLearnWith.contains(assessmentToLearn)) {
             throw new RuntimeException("Assignments to Learn Must include assessmentToLearn");
         }
