@@ -106,7 +106,8 @@ public class PredictorEffectiveness {
         predictor.learnSet(learningMatrix, assessmentToLearn, learningAssessments);
 
         //Test on the learning assessments without the learned category
-        List<String> testingAssessments = learningAssessments;
+        List<String> testingAssessments = new ArrayList<>();
+        testingAssessments.addAll(learningAssessments);
         testingAssessments.remove(assessmentToLearn);
 
         Map<String, String> predictions = predictor.classifySet(testingMatrix, testingAssessments);
@@ -115,14 +116,30 @@ public class PredictorEffectiveness {
 
         //Get the expected without having a dataframe
         Map<String, String> expectedResults = new HashMap<>();
-        for (AssessmentItem item : testingMatrix.getObjList()) {
-            if (item.getId().equals(assessmentToLearn)) {
-                for (AssessmentItemResponse response : item.getResponses()) {
+//        for (AssessmentItem item : testingMatrix.getObjList()) {
+//            if (item.getId().equals(assessmentToLearn)) {
+//                for (AssessmentItemResponse response : item.getResponses()) {
+//                    String expected = "OK";
+//                    if (response.calcKnowledgeEstimate() < Predictor.ESTIMATE_THRESHOLD) {
+//                        expected = "AT-RISK";
+//                    }
+//                    expectedResults.put(response.getUserId(), expected);
+//                }
+//            }
+//        }
+
+        //Correct way of getting expected, because not everyone will have an AssessmentItemResponse, but the Matrix will have the data
+        List<AssessmentItem> assessments = testingMatrix.getObjList();
+        for (int i = 0; i < assessments.size(); i++) {
+            AssessmentItem currAssessment = assessments.get(i);
+            if (currAssessment.getId().equals(assessmentToLearn)) {
+                double[] assessmentKnowledgeEstimates = originalMatrix.getStudentKnowledgeEstimates()[i];
+                for (int j = 0; j < assessmentKnowledgeEstimates.length; j++) {
                     String expected = "OK";
-                    if (response.calcKnowledgeEstimate() < Predictor.ESTIMATE_THRESHOLD) {
+                    if (assessmentKnowledgeEstimates[j] < Predictor.ESTIMATE_THRESHOLD) {
                         expected = "AT-RISK";
                     }
-                    expectedResults.put(response.getUserId(), expected);
+                    expectedResults.put(originalMatrix.getUserIdList().get(j), expected);
                 }
             }
         }

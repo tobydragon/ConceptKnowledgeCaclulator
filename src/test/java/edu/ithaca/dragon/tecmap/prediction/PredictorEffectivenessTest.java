@@ -32,7 +32,7 @@ public class PredictorEffectivenessTest {
 
     @Test
     public void splitMatrix() {
-        double ratio = 0.6;
+        double ratio = 0.5;
         Tuple2<KnowledgeEstimateMatrix, KnowledgeEstimateMatrix> splitMatrix = PredictorEffectiveness.splitMatrix(knowledgeMatrix, ratio);
 
         int ratioSize = (int) Math.ceil(knowledgeMatrix.getUserIdList().size()*ratio);
@@ -52,21 +52,24 @@ public class PredictorEffectivenessTest {
     @Test
     public void testPredictor() {
 
-        PredictorEffectiveness testPredictor = PredictorEffectiveness.testPredictor(new BayesPredictor(), "Q5", knowledgeMatrix.getAssessmentIdList() , knowledgeMatrix, 0.6);
+        PredictorEffectiveness testPredictor = PredictorEffectiveness.testPredictor(new BayesPredictor(), "Q5", knowledgeMatrix.getAssessmentIdList() , knowledgeMatrix, 0.5);
 
-        assertEquals(1.00, testPredictor.getPercentCorrect());
+        assertEquals((double) 2/3, testPredictor.getPercentCorrect());
 
         List<PredictionResult> results = testPredictor.getResults();
-        assertEquals(2, results.size());
+        assertEquals(3, results.size());
         PredictionResult studentResult = results.get(0);
         assertEquals("s04", studentResult.getStudentId());
         assertEquals("AT-RISK", studentResult.getExpectedResult());
-        assertEquals("AT-RISK", studentResult.getExpectedResult());
-        studentResult = results.get(1);
+        assertEquals("AT-RISK", studentResult.getPredictedResult());
+        studentResult = results.get(2);
         assertEquals("s05", studentResult.getStudentId());
         assertEquals("OK", studentResult.getExpectedResult());
         assertEquals("OK", studentResult.getPredictedResult());
-
+        studentResult = results.get(1);
+        assertEquals("s06", studentResult.getStudentId());
+        assertEquals("OK", studentResult.getExpectedResult());
+        assertEquals("AT-RISK", studentResult.getPredictedResult());
     }
 
 }
