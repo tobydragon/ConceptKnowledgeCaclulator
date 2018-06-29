@@ -52,7 +52,7 @@ public class PredictorEffectivenessTest {
     @Test
     public void testPredictor() {
 
-        PredictorEffectiveness testPredictor = PredictorEffectiveness.testPredictor(new BayesPredictor(), "Q5", knowledgeMatrix.getAssessmentIdList() , knowledgeMatrix, 0.5);
+        PredictorEffectiveness testPredictor = PredictorEffectiveness.testPredictor(new BayesPredictor(), "Q5" , knowledgeMatrix, 0.5);
 
         assertEquals((double) 2/3, testPredictor.getPercentCorrect());
 

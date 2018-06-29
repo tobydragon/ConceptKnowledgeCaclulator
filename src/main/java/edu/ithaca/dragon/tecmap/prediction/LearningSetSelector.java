@@ -5,6 +5,7 @@ import edu.ithaca.dragon.tecmap.conceptgraph.eval.KnowledgeEstimateMatrix;
 import edu.ithaca.dragon.tecmap.learningresource.AssessmentItem;
 import edu.ithaca.dragon.tecmap.learningresource.AssessmentItemResponse;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -43,7 +44,7 @@ public class LearningSetSelector {
      * @param assessmentToPredict
      * @return list of strings containing the assessmentIds to be learned dictated by graph structure given
      */
-    public static List<String> getGraphLearningSet(ConceptGraph graph, String studentIdToDecideSet, String assessmentToPredict) {
+    public static List<String> getGraphLearningSet(ConceptGraph graph, String studentIdToDecideSet, String assessmentToPredict) throws IOException {
 
 
         List<String> learningSet = new ArrayList<>();

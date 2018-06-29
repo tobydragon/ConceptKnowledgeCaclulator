@@ -88,12 +88,11 @@ public class PredictorEffectiveness {
      * Test how effective a predictor is, works off of the Predictor interface
      * @param predictor specific type of predictor
      * @param assessmentToLearn what assessment is being learned
-     * @param learningAssessments what assessments are being used to learn (including assessmentToLearn)
      * @param originalMatrix matrix of all students and their assessment scores
      * @param ratio what percent of the originalMatrix should be used for learning
      * @return PredictorEffectiveness object with percent correct and a list of all the results
      */
-    public static PredictorEffectiveness testPredictor(Predictor predictor, String assessmentToLearn, List<String> learningAssessments, KnowledgeEstimateMatrix originalMatrix, double ratio) {
+    public static PredictorEffectiveness testPredictor(Predictor predictor, String assessmentToLearn, KnowledgeEstimateMatrix originalMatrix, double ratio) {
         //Split the matrix
         Tuple2<KnowledgeEstimateMatrix, KnowledgeEstimateMatrix> splitMatrix = splitMatrix(originalMatrix, ratio);
 
@@ -101,6 +100,9 @@ public class PredictorEffectiveness {
         KnowledgeEstimateMatrix learningMatrix = splitMatrix._1;
         //Test on the other sized matrix
         KnowledgeEstimateMatrix testingMatrix = splitMatrix._2;
+
+        //List of learningAssessments based on the first student's assessments
+        List<String> learningAssessments = LearningSetSelector.getBaseLearningSet(originalMatrix, learningMatrix.getUserIdList().get(0), assessmentToLearn);
 
         //Learn the category with the given assessments
         predictor.learnSet(learningMatrix, assessmentToLearn, learningAssessments);
