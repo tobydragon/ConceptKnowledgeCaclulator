@@ -42,12 +42,9 @@ public class PredictorEffectivenessMain {
         KnowledgeEstimateMatrix classMatrix = new KnowledgeEstimateMatrix(assessmentItems);
 
         for (double ratio : learningSizeRatios) {
-            PredictorEffectiveness comp220Effectiveness = PredictorEffectiveness.testPredictor(bayes, "Overall Weighted Exam Score", classMatrix.getAssessmentIdList(), classMatrix, ratio);
+            PredictorEffectiveness comp220Effectiveness = PredictorEffectiveness.testPredictor(bayes, "Course Grade", classMatrix.getAssessmentIdList(), classMatrix, ratio);
             System.out.println("Learning Set Size: " + ratio + "\tPercent Correct: " + comp220Effectiveness.getPercentCorrect());
         }
-
-
-
     }
 
 }
