@@ -358,6 +358,7 @@ public class  ConceptGraph {
      * @return
      */
 	public List<String> getAssessmentsBelowAssessmentID(String assessmentId) {
+	    //Array to hold all the assessmentsBelow
         List<String> assessmentsBelow = new ArrayList<>();
 
         List<ConceptNode> nodesWithAssessmentId = new ArrayList<>();
@@ -371,13 +372,21 @@ public class  ConceptGraph {
             }
         }
 
-        //Get all of the AssessmentIds that the children of the above nodes have
+        //Keep a queue of the nodes below the ones with the given assessmentID
+        Queue<ConceptNode> nodesBelow = new LinkedList<>();
         for (ConceptNode node : nodesWithAssessmentId) {
-            for (AssessmentItem item : node.getAssessmentItemMap().values()) {
+            nodesBelow.addAll(node.getChildren());
+        }
+
+        //Iterate over the rest of the graph below the given point
+        while (!nodesBelow.isEmpty()) {
+            ConceptNode current = nodesBelow.remove();
+            for (AssessmentItem item : current.getAssessmentItemMap().values()) {
                 if (!assessmentsBelow.contains(item.getId())) {
                     assessmentsBelow.add(item.getId());
                 }
             }
+            nodesBelow.addAll(current.getChildren());
         }
 
         return assessmentsBelow;

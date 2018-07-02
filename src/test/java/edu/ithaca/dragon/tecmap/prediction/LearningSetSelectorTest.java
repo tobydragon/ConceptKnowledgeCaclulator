@@ -1,12 +1,12 @@
 package edu.ithaca.dragon.tecmap.prediction;
 
 import edu.ithaca.dragon.tecmap.Settings;
-import edu.ithaca.dragon.tecmap.SuggestingTecmapAPI;
 import edu.ithaca.dragon.tecmap.conceptgraph.ConceptGraph;
 import edu.ithaca.dragon.tecmap.conceptgraph.eval.KnowledgeEstimateMatrix;
-import edu.ithaca.dragon.tecmap.data.TecmapFileDatastore;
 import edu.ithaca.dragon.tecmap.io.reader.CSVReader;
 import edu.ithaca.dragon.tecmap.io.reader.SakaiReader;
+import edu.ithaca.dragon.tecmap.io.record.ConceptGraphRecord;
+import edu.ithaca.dragon.tecmap.io.record.LearningResourceRecord;
 import edu.ithaca.dragon.tecmap.learningresource.AssessmentItem;
 import org.junit.Assert;
 import org.junit.Before;
@@ -32,9 +32,8 @@ public class LearningSetSelectorTest {
 
         matrix = new KnowledgeEstimateMatrix(assessmentItems);
 
-        SuggestingTecmapAPI tecmap = TecmapFileDatastore.buildFromJsonFile(Settings.DEFAULT_TEST_DATASTORE_PATH).retrieveTecmapForId("Cs1Example");
-
-        conceptGraph = new ConceptGraph(tecmap.createStructureTree());
+        conceptGraph = new ConceptGraph(ConceptGraphRecord.buildFromJson(Settings.DEFAULT_TEST_DATASTORE_PATH + "Cs1Example/Cs1ExampleGraph.json"),
+                LearningResourceRecord.buildListFromJson(Settings.DEFAULT_TEST_DATASTORE_PATH + "Cs1Example/Cs1ExampleResources.json"));
     }
 
     @Test
@@ -52,7 +51,14 @@ public class LearningSetSelectorTest {
 
     @Test
     public void getGraphLearningSet() throws IOException {
-        List<String> learningSet = LearningSetSelector.getGraphLearningSet(conceptGraph, matrix.getUserIdList().get(0), assessmentToPredict);
+        //Check the entire graph
+        List<String> learningSet = LearningSetSelector.getGraphLearningSet(conceptGraph, assessmentToPredict);
+
+        assertEquals(10, learningSet.size());
+        Assert.assertThat(learningSet, containsInAnyOrder("Q2", "HW4", "HW1", "HW2", "Q3", "HW5", "Q4", "Q1", "HW3", "Q5"));
+
+        //Check with something further down the graph
+        learningSet = LearningSetSelector.getGraphLearningSet(conceptGraph, "Q4");
 
         assertEquals(7, learningSet.size());
         Assert.assertThat(learningSet, containsInAnyOrder("Q2", "HW4", "HW1", "HW2", "Q3", "HW5", "Q4"));

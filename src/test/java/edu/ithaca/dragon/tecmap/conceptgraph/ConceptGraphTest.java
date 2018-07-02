@@ -1,8 +1,6 @@
 package edu.ithaca.dragon.tecmap.conceptgraph;
 
 import edu.ithaca.dragon.tecmap.Settings;
-import edu.ithaca.dragon.tecmap.SuggestingTecmapAPI;
-import edu.ithaca.dragon.tecmap.data.TecmapFileDatastore;
 import edu.ithaca.dragon.tecmap.io.record.ConceptGraphRecord;
 import edu.ithaca.dragon.tecmap.io.record.LearningResourceRecord;
 import edu.ithaca.dragon.tecmap.learningresource.*;
@@ -280,13 +278,14 @@ public class ConceptGraphTest {
 
     @Test
     public void getAssessmentItemsBelowAssessmentID() throws IOException {
-        SuggestingTecmapAPI tecmap = TecmapFileDatastore.buildFromJsonFile(Settings.DEFAULT_TEST_DATASTORE_PATH).retrieveTecmapForId("Cs1Example");
-        ConceptGraph conceptGraph = new ConceptGraph(tecmap.createStructureTree());
+        List<LearningResourceRecord> loRecords = LearningResourceRecord.buildListFromJson(Settings.DEFAULT_TEST_DATASTORE_PATH + "Cs1Example/Cs1ExampleResources.json");
+        ConceptGraph conceptGraph = new ConceptGraph(ConceptGraphRecord.buildFromJson(Settings.DEFAULT_TEST_DATASTORE_PATH + "Cs1Example/Cs1ExampleGraph.json"),
+                loRecords);
 
         List<String> assessmentsBelowQ4 = conceptGraph.getAssessmentsBelowAssessmentID("Q4");
 
-        assertEquals(7, assessmentsBelowQ4.size());
-        Assert.assertThat(assessmentsBelowQ4, containsInAnyOrder("Q2", "HW4", "HW1", "HW2", "Q3", "HW5", "Q4"));
+        assertEquals(6, assessmentsBelowQ4.size());
+        Assert.assertThat(assessmentsBelowQ4, containsInAnyOrder("Q2", "HW4", "HW1", "HW2", "Q3", "HW5"));
     }
 
 

@@ -40,14 +40,11 @@ public class LearningSetSelector {
     /**
      * Gets the list of assessments to learn from the graph structure given in the concept graph, studentId given, and the assessmentToLearn
      * @param graph
-     * @param studentIdToDecideSet
      * @param assessmentToPredict
      * @return list of strings containing the assessmentIds to be learned dictated by graph structure given
      */
-    public static List<String> getGraphLearningSet(ConceptGraph graph, String studentIdToDecideSet, String assessmentToPredict) throws IOException {
-
-
-        List<String> learningSet = new ArrayList<>();
+    public static List<String> getGraphLearningSet(ConceptGraph graph, String assessmentToPredict) throws IOException {
+        List<String> learningSet = graph.getAssessmentsBelowAssessmentID(assessmentToPredict);
 
         //List of learningSet should always contain the assessmentToPredict (with data or without)
         if (!learningSet.contains(assessmentToPredict)) {
