@@ -11,6 +11,15 @@ public class GraphLearningSetSelector extends BaseLearningSetSelector {
     public GraphLearningSetSelector() {
     }
 
+    /**
+     * Gets the list of learning assessments based on the structure of the graph, the assessmentToPredict, and the assessments available
+     * for the given student
+     * @param graph
+     * @param studentIdToDecideSet
+     * @param assessmentToPredict
+     * @return
+     * @throws IOException
+     */
     @Override
     public List<String> getLearningSet(ConceptGraph graph, String studentIdToDecideSet, String assessmentToPredict) throws IOException {
         List<String> defaultSet = super.getLearningSet(graph, studentIdToDecideSet, assessmentToPredict);

@@ -14,6 +14,14 @@ public class BaseLearningSetSelector implements LearningSetSelector {
     public BaseLearningSetSelector() {
     }
 
+    /**
+     * Gets the list of learning assessments based on the assessmentToPredict, and the assessments available for the given student
+     * @param graph
+     * @param studentIdToDecideSet
+     * @param assessmentToPredict
+     * @return
+     * @throws IOException
+     */
     @Override
     public List<String> getLearningSet(ConceptGraph graph, String studentIdToDecideSet, String assessmentToPredict) throws IOException {
         List<AssessmentItem> assessmentItems = new ArrayList<>();
