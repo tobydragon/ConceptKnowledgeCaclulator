@@ -18,13 +18,15 @@ import java.util.Arrays;
 import java.util.List;
 
 import static org.hamcrest.Matchers.containsInAnyOrder;
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class LearningSetSelectorTest {
 
     private static final String assessmentToPredict = "Q5";
-    private ConceptGraph conceptGraph;
     private KnowledgeEstimateMatrix matrix;
+    private ConceptGraph conceptGraph;
 
     @Before
     public void setup() throws IOException {
@@ -40,30 +42,32 @@ public class LearningSetSelectorTest {
     }
 
     @Test
-    public void getBaseLearningSet() {
-        List<String> learningSet = LearningSetSelector.getBaseLearningSet(matrix, matrix.getUserIdList().get(0), "Q5");
+    public void getLearningSetWithBaseSelector() throws IOException {
+        LearningSetSelector baseLearningSetSelector = new BaseLearningSetSelector();
+        List<String> learningSet = baseLearningSetSelector.getLearningSet(conceptGraph, matrix.getUserIdList().get(0), "Q5");
 
         assertEquals(10, learningSet.size());
         assertTrue(learningSet.contains(assessmentToPredict));
 
-        learningSet = LearningSetSelector.getBaseLearningSet(matrix, matrix.getUserIdList().get(5), assessmentToPredict);
+        learningSet = baseLearningSetSelector.getLearningSet(conceptGraph, matrix.getUserIdList().get(5), assessmentToPredict);
         assertEquals(9, learningSet.size());
         assertTrue(learningSet.contains(assessmentToPredict));
         assertFalse(learningSet.contains("HW5"));
     }
 
     @Test
-    public void getGraphLearningSet() throws IOException {
+    public void getLearningSetWithGraphSelector() throws IOException {
+        LearningSetSelector graphLearningSetSelector = new GraphLearningSetSelector();
         String studentId = matrix.getUserIdList().get(0);
         //Checks with student with all grades
         //Check the entire graph
-        List<String> learningSet = LearningSetSelector.getGraphLearningSet(conceptGraph, studentId, assessmentToPredict);
+        List<String> learningSet = graphLearningSetSelector.getLearningSet(conceptGraph, studentId, assessmentToPredict);
 
         assertEquals(10, learningSet.size());
         Assert.assertThat(learningSet, containsInAnyOrder("Q2", "HW4", "HW1", "HW2", "Q3", "HW5", "Q4", "Q1", "HW3", "Q5"));
 
         //Check with something further down the graph
-        learningSet = LearningSetSelector.getGraphLearningSet(conceptGraph, studentId,"Q4");
+        learningSet = graphLearningSetSelector.getLearningSet(conceptGraph, studentId,"Q4");
 
         assertEquals(7, learningSet.size());
         Assert.assertThat(learningSet, containsInAnyOrder("Q2", "HW4", "HW1", "HW2", "Q3", "HW5", "Q4"));
@@ -73,7 +77,7 @@ public class LearningSetSelectorTest {
 
         //Checks with student missing HW5
         studentId = matrix.getUserIdList().get(5);
-        learningSet = LearningSetSelector.getGraphLearningSet(conceptGraph, studentId, assessmentToPredict);
+        learningSet = graphLearningSetSelector.getLearningSet(conceptGraph, studentId, assessmentToPredict);
         assertEquals(9, learningSet.size());
         assertFalse(learningSet.contains("HW5"));
     }

@@ -1,5 +1,6 @@
 package edu.ithaca.dragon.tecmap.prediction;
 
+import edu.ithaca.dragon.tecmap.conceptgraph.ConceptGraph;
 import edu.ithaca.dragon.tecmap.conceptgraph.eval.KnowledgeEstimateMatrix;
 import edu.ithaca.dragon.tecmap.learningresource.AssessmentItem;
 import edu.ithaca.dragon.tecmap.learningresource.AssessmentItemResponse;
@@ -87,12 +88,15 @@ public class PredictorEffectiveness {
     /**
      * Test how effective a predictor is, works off of the Predictor interface
      * @param predictor specific type of predictor
+     * @param learningSetSelector how the learning set is being chosen
      * @param assessmentToLearn what assessment is being learned
-     * @param originalMatrix matrix of all students and their assessment scores
+     * @param conceptGraph graph that prediction is working on
      * @param ratio what percent of the originalMatrix should be used for learning
      * @return PredictorEffectiveness object with percent correct and a list of all the results
      */
-    public static PredictorEffectiveness testPredictor(Predictor predictor, String assessmentToLearn, KnowledgeEstimateMatrix originalMatrix, double ratio) {
+    public static PredictorEffectiveness testPredictor(Predictor predictor, LearningSetSelector learningSetSelector, String assessmentToLearn, ConceptGraph conceptGraph, double ratio) throws IOException{
+        KnowledgeEstimateMatrix originalMatrix = new KnowledgeEstimateMatrix(new ArrayList<>(conceptGraph.getAssessmentItemMap().values()));
+
         //Split the matrix
         Tuple2<KnowledgeEstimateMatrix, KnowledgeEstimateMatrix> splitMatrix = splitMatrix(originalMatrix, ratio);
 
@@ -102,7 +106,7 @@ public class PredictorEffectiveness {
         KnowledgeEstimateMatrix testingMatrix = splitMatrix._2;
 
         //List of learningAssessments based on the first student's assessments
-        List<String> learningAssessments = LearningSetSelector.getBaseLearningSet(originalMatrix, learningMatrix.getUserIdList().get(0), assessmentToLearn);
+        List<String> learningAssessments = learningSetSelector.getLearningSet(conceptGraph, learningMatrix.getUserIdList().get(0), assessmentToLearn);
 
         //Learn the category with the given assessments
         predictor.learnSet(learningMatrix, assessmentToLearn, learningAssessments);

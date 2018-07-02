@@ -1,10 +1,10 @@
 package edu.ithaca.dragon.tecmap.prediction;
 
 import edu.ithaca.dragon.tecmap.Settings;
-import edu.ithaca.dragon.tecmap.conceptgraph.eval.KnowledgeEstimateMatrix;
-import edu.ithaca.dragon.tecmap.io.reader.CSVReader;
-import edu.ithaca.dragon.tecmap.io.reader.SakaiReader;
-import edu.ithaca.dragon.tecmap.learningresource.AssessmentItem;
+import edu.ithaca.dragon.tecmap.conceptgraph.ConceptGraph;
+import edu.ithaca.dragon.tecmap.io.record.ConceptGraphRecord;
+import edu.ithaca.dragon.tecmap.io.record.LearningResourceRecord;
+import edu.ithaca.dragon.tecmap.learningresource.AssessmentItemResponse;
 
 import java.io.File;
 import java.io.IOException;
@@ -20,29 +20,46 @@ public class PredictorEffectivenessMain {
         //Test the Bayes Predictor Effectiveness on COMP220 Data
         Predictor bayes = new BayesPredictor();
 
+        //Get assessment filenames
         File directory = new File(Settings.DEFAULT_MAIN_DATASTORE_PATH + "comp220Dragon/private/");
 
         List<File> files = Arrays.asList(directory.listFiles());
-        List<String> filenames = new ArrayList<>();
+        List<String> assessmentFilenames = new ArrayList<>();
         for (File file : files) {
             if (file.isFile()) {
                 if (!file.getName().equals(".gitignore")) {
-                    filenames.add(Settings.DEFAULT_MAIN_DATASTORE_PATH + "comp220Dragon/private/" + file.getName());
+                    assessmentFilenames.add(Settings.DEFAULT_MAIN_DATASTORE_PATH + "comp220Dragon/private/" + file.getName());
                 }
             }
         }
 
-        List<AssessmentItem> assessmentItems = new ArrayList<>();
-
-        for (String filename : filenames) {
-            CSVReader data = new SakaiReader(filename);
-            assessmentItems.addAll(data.getManualGradedLearningObjects());
+        //Get resources
+        directory = new File(Settings.DEFAULT_MAIN_DATASTORE_PATH + "comp220Dragon");
+        files = Arrays.asList(directory.listFiles());
+        List<String> resourceFilenames = new ArrayList<>();
+        for (File file : files) {
+            if (file.isFile()) {
+                if (file.getName().contains("Resources")) {
+                    resourceFilenames.add(Settings.DEFAULT_MAIN_DATASTORE_PATH + "comp220Dragon/" + file.getName());
+                }
+            }
         }
 
-        KnowledgeEstimateMatrix classMatrix = new KnowledgeEstimateMatrix(assessmentItems);
+        List<LearningResourceRecord> loRecords = new ArrayList<>();
+        for (String filename : resourceFilenames) {
+            loRecords.addAll(LearningResourceRecord.buildListFromJson(filename));
+        }
 
+
+        ConceptGraph conceptGraph220 = new ConceptGraph(ConceptGraphRecord.buildFromJson(Settings.DEFAULT_MAIN_DATASTORE_PATH + "comp220Dragon/comp220DragonGraph.json"),
+                loRecords,
+                AssessmentItemResponse.createAssessmentItemResponses(assessmentFilenames));
+
+        LearningSetSelector baseLearningSetSelector = new BaseLearningSetSelector();
+
+        //Will get a null pointer exception when trying to predict an assessment not connected to a resource
         for (double ratio : learningSizeRatios) {
-            PredictorEffectiveness comp220Effectiveness = PredictorEffectiveness.testPredictor(bayes, "Course Grade", classMatrix, ratio);
+            PredictorEffectiveness comp220Effectiveness = PredictorEffectiveness.testPredictor(bayes, baseLearningSetSelector,"final-1", conceptGraph220, ratio);
             System.out.println("Learning Set Size: " + ratio + "\tPercent Correct: " + comp220Effectiveness.getPercentCorrect());
         }
     }
