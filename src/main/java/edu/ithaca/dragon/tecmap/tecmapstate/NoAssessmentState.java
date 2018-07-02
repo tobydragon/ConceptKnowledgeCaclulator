@@ -23,12 +23,7 @@ public class NoAssessmentState {
 
     public List<String> createConceptIdListToPrint() {
         Collection<String> ids =  graph.getAllNodeIds();
-        //TODO: convert this to functional style
-        List<String> idsToPrint = new ArrayList<>();
-        for (String id : ids){
-            idsToPrint.add("\""+id+"\"");
-        }
-        return idsToPrint;
+        return new ArrayList<>(ids);
     }
 
 }

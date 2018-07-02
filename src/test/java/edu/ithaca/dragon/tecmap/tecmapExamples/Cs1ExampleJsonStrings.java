@@ -179,8 +179,8 @@ public class Cs1ExampleJsonStrings {
             "  \"maxPossibleKnowledgeEstimate\" : 1.0\n" +
             "} ]";
 
-    public static String allConceptsString = "[\"While Loops\", \"For Loops\", \"Boolean Expressions\", \"Intro CS\", \"Loops\", \"If Statements\"]";
-    public static String allConceptsStringAsJson = "[\"\\\"While Loops\\\"\",\"\\\"For Loops\\\"\",\"\\\"Boolean Expressions\\\"\",\"\\\"Intro CS\\\"\",\"\\\"Loops\\\"\",\"\\\"If Statements\\\"\"]";
+    public static String allConceptsString = "[While Loops, For Loops, Boolean Expressions, Intro CS, Loops, If Statements]";
+    public static String allConceptsStringAsJson = "[\"While Loops\",\"For Loops\",\"Boolean Expressions\",\"Intro CS\",\"Loops\",\"If Statements\"]";
 
     public static String bartDataTree = "{\n" +
             "  \"name\" : \"s02\",\n" +
