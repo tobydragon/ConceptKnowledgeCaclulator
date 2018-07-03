@@ -63,9 +63,9 @@ function buildTable() {
     for (var r = 0; r < conceptList.length; r++) {
         tableHTML += "<tr><th scope='row'>" + conceptList[r] + "</th>";
         for (var c = 0; c < resourceNames.length; c++) {
-            var concept = conceptList[r].split("\"");
+            var concept = conceptList[r];
             console.log(concept);
-            tableHTML += "<td class='text-center'><input id='" + concept[1] + "_" + resourceNames[c] + "' type='checkbox' onclick='writeToJson(this)'></td>";
+            tableHTML += "<td class='text-center'><input id='" + concept + "_" + resourceNames[c] + "' type='checkbox' onclick='writeToJson(this)'></td>";
         }
         tableHTML += "</tr>";
     }
