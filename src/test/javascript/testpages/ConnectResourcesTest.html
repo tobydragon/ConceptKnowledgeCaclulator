@@ -1,17 +1,17 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
+    <meta charset="utf-8"/>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap.min.css">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
 </head>
 <body>
     <h1 class="text-center"> Connect Resources to Concepts </h1>
     <br>
     <div class="container-fluid">
         <div class="row>">
-            <div class="col-xs-6 col-xs-offset-3" th:id="authoring">
-                <table class="table-bordered table-striped" th:id="authoringTable">
+            <div class="col-xs-6 col-xs-offset-3" id="authoring">
+                <table class="table-bordered table-striped" id="authoringTable">
 
                 </table>
                 <br>
@@ -21,11 +21,8 @@
         </div>
     </div>
 
-    <script th:inline="javascript">
-        courseId = [[${courseId}]];
-    </script>
-    <script th:src="@{/../../javascript/CheckboxMatrixFunctions.js}"></script>
-    <script th:src="@{/../../javascript/ConnectResources.js}"></script>
+    <script src="../../../main/resources/static/js/CheckboxMatrixFunctions.js"></script>
+    <script src="ConnectResourcesTest.js"></script>
 
 </body>
 </html>
