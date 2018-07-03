@@ -67,7 +67,7 @@ public class PredictorEffectivenessMain {
 
     public static void main(String[] args) throws IOException {
         //Test the Bayes Predictor Effectiveness on COMP220 Data
-        Predictor bayes = new BayesPredictor();
+        LearningPredictor bayes = new BayesPredictor();
 
         ConceptGraph conceptGraph220 = getConceptGraph("comp220Dragon");
 
@@ -76,8 +76,8 @@ public class PredictorEffectivenessMain {
 
         //Will get a null pointer exception when trying to predict an assessment not connected to a resource
         for (double ratio : learningSizeRatios) {
-            PredictorEffectiveness comp220BaseEffectiveness = PredictorEffectiveness.testPredictor(bayes, baseLearningSetSelector,"7-HG", conceptGraph220, ratio);
-            PredictorEffectiveness comp220GraphEffectiveness = PredictorEffectiveness.testPredictor(bayes, graphLearningSetSelector,"7-HG", conceptGraph220, ratio);
+            PredictorEffectiveness comp220BaseEffectiveness = PredictorEffectiveness.testLearningPredictor(bayes, baseLearningSetSelector,"7-HG", conceptGraph220, ratio);
+            PredictorEffectiveness comp220GraphEffectiveness = PredictorEffectiveness.testLearningPredictor(bayes, graphLearningSetSelector,"7-HG", conceptGraph220, ratio);
             System.out.println("Learning Set Size: " + ratio + "\t Base Percent Correct: " + comp220BaseEffectiveness.getPercentCorrect() + "\t Graph Percent Correct: " + comp220GraphEffectiveness.getPercentCorrect());
         }
     }

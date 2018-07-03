@@ -12,7 +12,7 @@ import javax.validation.constraints.NotNull;
 import java.util.*;
 import java.util.stream.DoubleStream;
 
-public class BayesPredictor implements Predictor {
+public class BayesPredictor implements LearningPredictor {
 
     private Classifier<Double, String> bayesClassifier;
 

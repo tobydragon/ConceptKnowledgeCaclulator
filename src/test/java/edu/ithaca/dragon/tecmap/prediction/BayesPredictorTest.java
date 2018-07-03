@@ -19,7 +19,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 public class BayesPredictorTest {
 
-    private Predictor bayes;
+    private LearningPredictor bayes;
 
     private KnowledgeEstimateMatrix learningMatrix;
 

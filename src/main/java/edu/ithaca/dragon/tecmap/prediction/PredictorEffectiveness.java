@@ -94,7 +94,7 @@ public class PredictorEffectiveness {
      * @param ratio what percent of the originalMatrix should be used for learning
      * @return PredictorEffectiveness object with percent correct and a list of all the results
      */
-    public static PredictorEffectiveness testPredictor(Predictor predictor, LearningSetSelector learningSetSelector, String assessmentToLearn, ConceptGraph conceptGraph, double ratio) throws IOException{
+    public static PredictorEffectiveness testLearningPredictor(LearningPredictor predictor, LearningSetSelector learningSetSelector, String assessmentToLearn, ConceptGraph conceptGraph, double ratio) throws IOException{
         KnowledgeEstimateMatrix originalMatrix = new KnowledgeEstimateMatrix(new ArrayList<>(conceptGraph.getAssessmentItemMap().values()));
 
         //Split the matrix

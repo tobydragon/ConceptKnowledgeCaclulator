@@ -11,19 +11,6 @@ public interface Predictor {
     public static final double ESTIMATE_THRESHOLD = 0.78;
 
     /**
-     * Trains the predictor given the rawTrainingData
-     * @param rawTrainingData
-     * @param assessmentToLearn
-     * @param assignmentsToLearnWith
-     */
-    void learnSet(KnowledgeEstimateMatrix rawTrainingData, String assessmentToLearn, List<String> assignmentsToLearnWith) throws RuntimeException;
-
-    /**
-     * Predictor forgets and unlearns everything
-     */
-    void reset();
-
-    /**
      * Classifies a set of testing data that is given
      * @param rawTestingData
      * @param assignmentsForClassification
