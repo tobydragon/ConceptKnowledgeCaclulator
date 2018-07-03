@@ -1,12 +1,5 @@
 'use strict';
 
-function readJson(url) {
-    var request = new XMLHttpRequest();
-    request.open("GET", url, false);
-    request.send(null);
-    return JSON.parse(request.response);
-}
-
 function updateResourceRecords(resourceRecords, resourceId, conceptId) {
     var toChange,
         i = 0;

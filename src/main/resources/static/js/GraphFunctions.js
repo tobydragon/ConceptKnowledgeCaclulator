@@ -105,22 +105,6 @@ function stripTitle(title) {
     return title;
 }
 
-
-
-//reads in JSON file and parses it to objectsArray
-function readJson(url){
-    var request = new XMLHttpRequest();
-    request.open("GET", url, false);
-    request.send(null);
-
-    try {
-        return JSON.parse(request.response);
-    } catch (e) {
-        //window.location.replace("/error")
-    }
-
-}
-
 function convertToSingleString(listOfStrings){
     if (listOfStrings.length > 0) {
         var singleString = listOfStrings[0];
