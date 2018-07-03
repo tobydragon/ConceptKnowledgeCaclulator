@@ -34,24 +34,26 @@ describe("ConceptMatrixFunctionsSpecs", function() {
     });
     
     it("buildCheckboxHtmlString unchecked box", function(){
-        expect(buildTableCheckboxHtmlString("If Statements", "Q1", false)).toEqual("<td class='text-center'><input id='If Statements_Q1' type='checkbox' onclick='updateResourceRecords(resourceRecords, 'If Statements', 'Q1')'></td>");
+        expect(buildTableCheckboxHtmlString("If Statements", "Q1", false)).toEqual("<td class='text-center'><input id='If Statements_Q1' type='checkbox' onclick='updateResourceRecords(resourceRecords, \"Q1\", \"If Statements\")'></td>");
     });
     
     it("buildCheckboxHtmlString checked box", function(){
-        expect(buildTableCheckboxHtmlString("If Statements", "Q1", true)).toEqual("<td class='text-center'><input id='If Statements_Q1' type='checkbox' checked='true' onclick='updateResourceRecords(resourceRecords, 'If Statements', 'Q1')'></td>");
+        expect(buildTableCheckboxHtmlString("If Statements", "Q1", true)).toEqual("<td class='text-center'><input id='If Statements_Q1' type='checkbox' checked='true' onclick='updateResourceRecords(resourceRecords, \"Q1\", \"If Statements\")'></td>");
     });
     
     it("buildTableRowHtmlString", function(){
         console.log(buildTableRowHtmlString("If Statements", ["Q1", "Q2", "Q3"], [true, false, false]));
         expect(buildTableRowHtmlString("If Statements", ["Q1", "Q2", "Q3"], [true, false, false]))
-              .toEqual("<tr><th scope='row'>If Statements</th><td class='text-center'><input id='If Statements_Q1' type='checkbox' checked='true' onclick='updateResourceRecords(resourceRecords, 'If Statements', 'Q1')'></td><td class='text-center'><input id='If Statements_Q2' type='checkbox' onclick='updateResourceRecords(resourceRecords, 'If Statements', 'Q2')'></td><td class='text-center'><input id='If Statements_Q3' type='checkbox' onclick='updateResourceRecords(resourceRecords, 'If Statements', 'Q3')'></td></tr>");
+              .toEqual("<tr><th scope='row'>If Statements</th><td class='text-center'><input id='If Statements_Q1' type='checkbox' checked='true' onclick='updateResourceRecords(resourceRecords, \"Q1\", \"If Statements\")'></td><td class='text-center'><input id='If Statements_Q2' type='checkbox' onclick='updateResourceRecords(resourceRecords, \"Q2\", \"If Statements\")'></td><td class='text-center'><input id='If Statements_Q3' type='checkbox' onclick='updateResourceRecords(resourceRecords, \"Q3\", \"If Statements\")'></td></tr>");
     });
     
-//    it("buildTableBodyHtmlString", function(){
-//        var conceptList = ["While Loops","For Loops","Boolean Expressions","Intro CS", "Loops", "If Statements"];
-//        console.log(buildTableBodyHtmlString(conceptList, resourceRecords));
-//        expect(buildTableBodyHtmlString(conceptList, resourceRecords))
-//              .toContain("<tr><th scope='row'>If Statements</th><td class='text-center'><input id='If Statements_Q1' type='checkbox' checked='true' onclick='updateResourceRecords(resourceRecords, 'If Statements', 'Q1')'></td><td class='text-center'><input id='If Statements_Q2' type='checkbox' onclick='updateResourceRecords(resourceRecords, 'If Statements', 'Q2')'></td><td class='text-center'><input id='If Statements_Q3' type='checkbox' onclick='updateResourceRecords(resourceRecords, 'If Statements', 'Q3')'></td></tr>");
-//    });
+   it("buildTableBodyHtmlString", function(){
+       var conceptList = ["While Loops","For Loops","Boolean Expressions","Intro CS", "Loops", "If Statements"],
+           tableString = buildTableBodyHtmlString(conceptList, resourceRecords),
+           rowCount = (tableString.match(/<th scope='row'>/g) || []).length;
+       console.log(tableString);
+
+       expect(rowCount).toEqual(6);
+   });
 });
 

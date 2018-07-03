@@ -3,7 +3,7 @@
 function updateResourceRecords(resourceRecords, resourceId, conceptId) {
     var toChange,
         i = 0;
-    
+
     for (i = 0; i < resourceRecords.length; i += 1) {
         if (resourceRecords[i].learningResourceId === resourceId) {
             toChange = resourceRecords[i].conceptIds;
@@ -56,7 +56,8 @@ function buildTableCheckboxHtmlString(conceptId, resourceId, isChecked) {
     if (isChecked) {
         boxString += "checked='true' ";
     }
-    boxString += "onclick='updateResourceRecords(resourceRecords, \'" + conceptId + "\', \'" + resourceId + "')\'></td>";
+    //need double quotes around param literals because single quotes are around the whole onclick
+    boxString += "onclick='updateResourceRecords(resourceRecords, \"" + resourceId + "\", \"" + conceptId + "\")\'></td>";
     return boxString;
 }
 
