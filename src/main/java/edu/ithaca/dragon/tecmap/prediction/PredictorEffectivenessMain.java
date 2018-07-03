@@ -66,20 +66,36 @@ public class PredictorEffectivenessMain {
     }
 
     public static void main(String[] args) throws IOException {
-        //Test the Bayes Predictor Effectiveness on COMP220 Data
+        //For testing the Bayes Predictor Effectiveness
         LearningPredictor bayes = new BayesPredictor();
 
+        //For testing the Simple Predictor Effectiveness
+        Predictor simple = new SimplePredictor();
+
+        //Testing for COMP220 Data
         ConceptGraph conceptGraph220 = getConceptGraph("comp220Dragon");
+
+        //Assessment to learn
+        String assessmentToLearn = "Lab 4: Recursion";
 
         LearningSetSelector baseLearningSetSelector = new BaseLearningSetSelector();
         LearningSetSelector graphLearningSetSelector = new GraphLearningSetSelector();
 
+        System.out.println("Learning Set Size: \t Base Bayes %Correct: \t Graph Bayes %Correct: \t Base Simple %Correct: \t Graph Simple %Correct:");
         //Will get a null pointer exception when trying to predict an assessment not connected to a resource
         for (double ratio : learningSizeRatios) {
-            PredictorEffectiveness comp220BaseEffectiveness = PredictorEffectiveness.testLearningPredictor(bayes, baseLearningSetSelector,"7-HG", conceptGraph220, ratio);
-            PredictorEffectiveness comp220GraphEffectiveness = PredictorEffectiveness.testLearningPredictor(bayes, graphLearningSetSelector,"7-HG", conceptGraph220, ratio);
-            System.out.println("Learning Set Size: " + ratio + "\t Base Percent Correct: " + comp220BaseEffectiveness.getPercentCorrect() + "\t Graph Percent Correct: " + comp220GraphEffectiveness.getPercentCorrect());
+            PredictorEffectiveness comp220BaseBayesEffectiveness = PredictorEffectiveness.testLearningPredictor(bayes, baseLearningSetSelector,assessmentToLearn, conceptGraph220, ratio);
+            PredictorEffectiveness comp220GraphBayesEffectiveness = PredictorEffectiveness.testLearningPredictor(bayes, graphLearningSetSelector,assessmentToLearn, conceptGraph220, ratio);
+            PredictorEffectiveness comp220BaseSimpleEffectiveness = PredictorEffectiveness.testPredictor(simple, baseLearningSetSelector, assessmentToLearn, conceptGraph220, ratio);
+            PredictorEffectiveness comp220GraphSimpleEffectiveness = PredictorEffectiveness.testPredictor(simple, graphLearningSetSelector, assessmentToLearn, conceptGraph220, ratio);
+            System.out.println("\t\t" + ratio +
+                    "\t\t\t  " + comp220BaseBayesEffectiveness.getPercentCorrect() +
+                    "\t\t" + comp220GraphBayesEffectiveness.getPercentCorrect() +
+                    "\t\t" + comp220BaseSimpleEffectiveness.getPercentCorrect() +
+                    "\t\t" + comp220GraphSimpleEffectiveness.getPercentCorrect());
         }
+
+
     }
 
 }

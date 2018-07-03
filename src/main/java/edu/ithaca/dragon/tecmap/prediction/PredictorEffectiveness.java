@@ -85,6 +85,36 @@ public class PredictorEffectiveness {
         }
     }
 
+    private static List<PredictionResult> getResults(KnowledgeEstimateMatrix testingMatrix, String assessmentToLearn, Map<String, String> predictions) {
+        List<PredictionResult> predictionResults = new ArrayList<>();
+
+        //Get the expected without having a dataframe
+        Map<String, String> expectedResults = new HashMap<>();
+
+        //Correct way of getting expected, because not everyone will have an AssessmentItemResponse, but the Matrix will have the data
+        List<AssessmentItem> assessments = testingMatrix.getObjList();
+        for (int i = 0; i < assessments.size(); i++) {
+            AssessmentItem currAssessment = assessments.get(i);
+            if (currAssessment.getId().equals(assessmentToLearn)) {
+                double[] assessmentKnowledgeEstimates = testingMatrix.getStudentKnowledgeEstimates()[i];
+                for (int j = 0; j < assessmentKnowledgeEstimates.length; j++) {
+                    String expected = "OK";
+                    if (assessmentKnowledgeEstimates[j] < Predictor.ESTIMATE_THRESHOLD) {
+                        expected = "AT-RISK";
+                    }
+                    expectedResults.put(testingMatrix.getUserIdList().get(j), expected);
+                }
+            }
+        }
+
+        for (String studentId : predictions.keySet()) {
+            PredictionResult result = new PredictionResult(studentId, expectedResults.get(studentId), predictions.get(studentId));
+            predictionResults.add(result);
+        }
+
+        return predictionResults;
+    }
+
     /**
      * Test how effective a predictor is, works off of the Predictor interface
      * @param predictor specific type of predictor
@@ -118,42 +148,39 @@ public class PredictorEffectiveness {
 
         Map<String, String> predictions = predictor.classifySet(testingMatrix, testingAssessments);
 
-        List<PredictionResult> predictionResults = new ArrayList<>();
+        List<PredictionResult> predictionResults = getResults(testingMatrix, assessmentToLearn, predictions);
 
-        //Get the expected without having a dataframe
-        Map<String, String> expectedResults = new HashMap<>();
-//        for (AssessmentItem item : testingMatrix.getObjList()) {
-//            if (item.getId().equals(assessmentToLearn)) {
-//                for (AssessmentItemResponse response : item.getResponses()) {
-//                    String expected = "OK";
-//                    if (response.calcKnowledgeEstimate() < Predictor.ESTIMATE_THRESHOLD) {
-//                        expected = "AT-RISK";
-//                    }
-//                    expectedResults.put(response.getUserId(), expected);
-//                }
-//            }
-//        }
-
-        //Correct way of getting expected, because not everyone will have an AssessmentItemResponse, but the Matrix will have the data
-        List<AssessmentItem> assessments = testingMatrix.getObjList();
-        for (int i = 0; i < assessments.size(); i++) {
-            AssessmentItem currAssessment = assessments.get(i);
-            if (currAssessment.getId().equals(assessmentToLearn)) {
-                double[] assessmentKnowledgeEstimates = originalMatrix.getStudentKnowledgeEstimates()[i];
-                for (int j = 0; j < assessmentKnowledgeEstimates.length; j++) {
-                    String expected = "OK";
-                    if (assessmentKnowledgeEstimates[j] < Predictor.ESTIMATE_THRESHOLD) {
-                        expected = "AT-RISK";
-                    }
-                    expectedResults.put(originalMatrix.getUserIdList().get(j), expected);
-                }
+        //Calculate the percent correct
+        double numCorrect = 0;
+        for (PredictionResult result : predictionResults) {
+            if (result.isCorrect()) {
+                numCorrect++;
             }
         }
 
-        for (String studentId : predictions.keySet()) {
-            PredictionResult result = new PredictionResult(studentId, expectedResults.get(studentId), predictions.get(studentId));
-            predictionResults.add(result);
-        }
+        double percentCorrect = numCorrect/predictionResults.size();
+
+        return new PredictorEffectiveness(percentCorrect, predictionResults);
+    }
+
+    public static PredictorEffectiveness testPredictor(Predictor simplePredictor, LearningSetSelector learningSetSelector, String assessmentToLearn, ConceptGraph conceptGraph, double ratio) throws IOException {
+        KnowledgeEstimateMatrix originalMatrix = new KnowledgeEstimateMatrix(new ArrayList<>(conceptGraph.getAssessmentItemMap().values()));
+
+        //Split the matrix
+        Tuple2<KnowledgeEstimateMatrix, KnowledgeEstimateMatrix> splitMatrix = splitMatrix(originalMatrix, ratio);
+
+        //Ignore learningMatrix since simple predictors do not learn
+        KnowledgeEstimateMatrix learningMatrix = splitMatrix._1;
+        //Test on the other sized matrix
+        KnowledgeEstimateMatrix testingMatrix = splitMatrix._2;
+
+        //Get learning set and remove the assessmentToLearn from list
+        List<String> testingAssessments = learningSetSelector.getLearningSet(conceptGraph, learningMatrix.getUserIdList().get(0), assessmentToLearn);
+        testingAssessments.remove(assessmentToLearn);
+
+        Map<String, String> predictions = simplePredictor.classifySet(testingMatrix, testingAssessments);
+
+        List<PredictionResult> predictionResults = getResults(testingMatrix, assessmentToLearn, predictions);
 
         //Calculate the percent correct
         double numCorrect = 0;

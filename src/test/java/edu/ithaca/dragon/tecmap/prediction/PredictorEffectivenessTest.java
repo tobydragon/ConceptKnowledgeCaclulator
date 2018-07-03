@@ -60,7 +60,7 @@ public class PredictorEffectivenessTest {
     }
 
     @Test
-    public void testPredictor() throws IOException {
+    public void testLearningPredictor() throws IOException {
         LearningSetSelector baseLearningSetSelector = new BaseLearningSetSelector();
 
         PredictorEffectiveness testPredictor = PredictorEffectiveness.testLearningPredictor(new BayesPredictor(), baseLearningSetSelector, "Q5" , conceptGraph, 0.5);
@@ -85,6 +85,47 @@ public class PredictorEffectivenessTest {
         LearningSetSelector graphLearningSetSelector = new GraphLearningSetSelector();
 
         testPredictor = PredictorEffectiveness.testLearningPredictor(new BayesPredictor(), graphLearningSetSelector, "Q5", conceptGraph, 0.5);
+
+        results = testPredictor.getResults();
+        assertEquals(3, results.size());
+        studentResult = results.get(0);
+        assertEquals("s04", studentResult.getStudentId());
+        assertEquals("AT-RISK", studentResult.getExpectedResult());
+        assertEquals("AT-RISK", studentResult.getPredictedResult());
+        studentResult = results.get(2);
+        assertEquals("s05", studentResult.getStudentId());
+        assertEquals("OK", studentResult.getExpectedResult());
+        assertEquals("OK", studentResult.getPredictedResult());
+        studentResult = results.get(1);
+        assertEquals("s06", studentResult.getStudentId());
+        assertEquals("OK", studentResult.getExpectedResult());
+        assertEquals("AT-RISK", studentResult.getPredictedResult());
+    }
+
+    @Test
+    public void testPredictor() throws IOException {
+        LearningSetSelector baseLearningSetSelector = new BaseLearningSetSelector();
+
+        PredictorEffectiveness testPredictor = PredictorEffectiveness.testPredictor(new SimplePredictor(), baseLearningSetSelector, "Q5", conceptGraph, 0.5);
+
+        List<PredictionResult> results = testPredictor.getResults();
+        assertEquals(3, results.size());
+        PredictionResult studentResult = results.get(0);
+        assertEquals("s04", studentResult.getStudentId());
+        assertEquals("AT-RISK", studentResult.getExpectedResult());
+        assertEquals("AT-RISK", studentResult.getPredictedResult());
+        studentResult = results.get(2);
+        assertEquals("s05", studentResult.getStudentId());
+        assertEquals("OK", studentResult.getExpectedResult());
+        assertEquals("OK", studentResult.getPredictedResult());
+        studentResult = results.get(1);
+        assertEquals("s06", studentResult.getStudentId());
+        assertEquals("OK", studentResult.getExpectedResult());
+        assertEquals("AT-RISK", studentResult.getPredictedResult());
+
+        LearningSetSelector graphLearningSetSelector = new GraphLearningSetSelector();
+
+        testPredictor = PredictorEffectiveness.testPredictor(new SimplePredictor(), graphLearningSetSelector, "Q5", conceptGraph, 0.5);
 
         results = testPredictor.getResults();
         assertEquals(3, results.size());

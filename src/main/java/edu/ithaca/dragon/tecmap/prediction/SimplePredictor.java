@@ -10,6 +10,9 @@ import java.util.Map;
 
 public class SimplePredictor implements Predictor {
 
+    public SimplePredictor() {
+    }
+
     /**
      * Classifies the assessmentData based on a raw average
      * AT-RISK defined at 0.78 or below
