@@ -17,6 +17,13 @@ public class GradeDiscreteGroupings {
         pointBreaks = null;
     }
 
+    /**
+     * Builds a GradeDiscreteGroupings object from a given JSON file given a filename (including path)
+     * GROUPS & POINT BREAKS SHOULD BE IN DESCENDING ORDER, HIGHEST ORDER COMES FIRST IN THE LIST
+     * @param filename
+     * @return
+     * @throws IOException
+     */
     public static GradeDiscreteGroupings buildFromJson(String filename) throws IOException {
         ObjectMapper mapper = new ObjectMapper();
         mapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);

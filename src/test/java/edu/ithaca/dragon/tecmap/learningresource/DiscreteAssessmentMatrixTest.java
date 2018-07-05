@@ -32,6 +32,8 @@ public class DiscreteAssessmentMatrixTest {
         assertEquals(6, assessmentGrades[0].length);
         //Top left corner should be s01's Q1 grade (which is 0.5, which belongs in F)
         assertEquals("F", assessmentGrades[0][0]);
+        //s02's Q1 grade (which is a 1, which belongs in A)
+        assertEquals("A", assessmentGrades[0][1]);
         //s06 is missing the HW5 grade (bottom right corner), so should be 0
         assertEquals("F", assessmentGrades[9][5]);
     }

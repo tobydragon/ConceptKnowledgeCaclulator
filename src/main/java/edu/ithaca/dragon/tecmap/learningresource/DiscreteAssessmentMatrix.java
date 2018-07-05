@@ -16,6 +16,15 @@ public class DiscreteAssessmentMatrix {
         this.studentAssessmentGrades = createMatrix(assessmentItems, groupingsFilename);
     }
 
+    /**
+     * Creates a matrix of the discrete categorical variable from grade groups from a given file for each assessment and user pair
+     * Follows the indices given from the assessmentItem and the studentId list
+     * If no response for a given student, defaults to the lowest grade group
+     * @param assessmentItems
+     * @param filename file with the discrete grade groupings and grade break points
+     * @return 2d array of strings (the discretized grade)
+     * @throws IOException
+     */
     String[][] createMatrix(List<AssessmentItem> assessmentItems, String filename) throws IOException {
         GradeDiscreteGroupings discreteGroupings = GradeDiscreteGroupings.buildFromJson(filename);
         List<String> groupings = discreteGroupings.getGroups();
@@ -35,7 +44,7 @@ public class DiscreteAssessmentMatrix {
                 studentsWithResponse.add(currUserId);
                 String discretizedGrade = null;
                 for (int i = 0; i < gradePointBreaks.size(); i++) {
-                    if (response.calcKnowledgeEstimate()*100 >= gradePointBreaks.get(i)) {
+                    if (response.calcKnowledgeEstimate()*100 >= gradePointBreaks.get(i) && discretizedGrade == null) {
                         discretizedGrade = groupings.get(i);
                     }
                 }

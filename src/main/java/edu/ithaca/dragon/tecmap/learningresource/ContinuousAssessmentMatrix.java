@@ -15,6 +15,11 @@ public class ContinuousAssessmentMatrix {
         this.studentAssessmentGrades = createMatrix(assessmentItems);
     }
 
+    /**
+     * Gets a list of strings of all of the assessmentIds from a list of assessment items
+     * @param assessmentItems
+     * @return assessmentId list
+     */
     static List<String> getAssessmentIdList(List<AssessmentItem> assessmentItems) {
         List<String> assessmentIds = new ArrayList<>();
 
@@ -25,6 +30,12 @@ public class ContinuousAssessmentMatrix {
         return assessmentIds;
     }
 
+    /**
+     * Gets a list of strings of all of the studentIds from a list of assessment items' responses in the order
+     * that the studentIds appear
+     * @param assessmentItems
+     * @return studentId list
+     */
     static List<String> getStudentIds(List<AssessmentItem> assessmentItems) {
         List<String> userIds = new ArrayList<>();
 
@@ -40,6 +51,13 @@ public class ContinuousAssessmentMatrix {
         return userIds;
     }
 
+    /**
+     * Creates a matrix of the continuous variable knowledge estimates for each assessment and user pair
+     * Follows the indices given from the assessmentItem and the studentId list
+     * If no response for a given student, defaults to an estimate of 0
+     * @param assessmentItems
+     * @return 2d array of knowledge estimates
+     */
     double[][] createMatrix(List<AssessmentItem> assessmentItems) {
         double[][] gradeMatrix = new double[this.assessmentIds.size()][this.studentIds.size()];
         for (AssessmentItem assessmentItem : assessmentItems) {
