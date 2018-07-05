@@ -44,7 +44,6 @@ public class ContinuousAssessmentMatrix {
         double[][] gradeMatrix = new double[this.assessmentIds.size()][this.studentIds.size()];
         for (AssessmentItem assessmentItem : assessmentItems) {
             int assessmentIndex = assessmentIds.indexOf(assessmentItem.getId());
-            List<String> studentsWithoutResponse = new ArrayList<>(studentIds);
             List<String> studentsWithResponse = new ArrayList<>();
             for (AssessmentItemResponse response : assessmentItem.getResponses()) {
                 String currUserId = response.getUserId();
@@ -52,6 +51,7 @@ public class ContinuousAssessmentMatrix {
                 gradeMatrix[assessmentIndex][studentIndex] = response.calcKnowledgeEstimate();
                 studentsWithResponse.add(currUserId);
             }
+            List<String> studentsWithoutResponse = new ArrayList<>(studentIds);
             studentsWithoutResponse.removeAll(studentsWithResponse);
             for (String studentId : studentsWithoutResponse) {
                 gradeMatrix[assessmentIndex][studentIds.indexOf(studentId)] = 0.0;
