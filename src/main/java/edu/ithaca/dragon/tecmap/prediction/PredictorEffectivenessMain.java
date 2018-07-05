@@ -85,7 +85,9 @@ public class PredictorEffectivenessMain {
         //Will get a null pointer exception when trying to predict an assessment not connected to a resource
         for (double ratio : learningSizeRatios) {
             PredictorEffectiveness comp220BaseBayesEffectiveness = PredictorEffectiveness.testLearningPredictor(bayes, baseLearningSetSelector,assessmentToLearn, conceptGraph220, ratio);
+            bayes.reset();
             PredictorEffectiveness comp220GraphBayesEffectiveness = PredictorEffectiveness.testLearningPredictor(bayes, graphLearningSetSelector,assessmentToLearn, conceptGraph220, ratio);
+            bayes.reset();
             PredictorEffectiveness comp220BaseSimpleEffectiveness = PredictorEffectiveness.testPredictor(simple, baseLearningSetSelector, assessmentToLearn, conceptGraph220, ratio);
             PredictorEffectiveness comp220GraphSimpleEffectiveness = PredictorEffectiveness.testPredictor(simple, graphLearningSetSelector, assessmentToLearn, conceptGraph220, ratio);
             System.out.println("\t\t" + ratio +

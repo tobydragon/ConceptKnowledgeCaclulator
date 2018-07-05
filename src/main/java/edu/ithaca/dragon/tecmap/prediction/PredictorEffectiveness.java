@@ -153,7 +153,7 @@ public class PredictorEffectiveness {
         //Calculate the percent correct
         double numCorrect = 0;
         for (PredictionResult result : predictionResults) {
-            if (result.isCorrect()) {
+            if (result.getResult() == Result.TRUE_NEGATIVE || result.getResult() == Result.TRUE_POSITIVE) {
                 numCorrect++;
             }
         }
@@ -185,7 +185,7 @@ public class PredictorEffectiveness {
         //Calculate the percent correct
         double numCorrect = 0;
         for (PredictionResult result : predictionResults) {
-            if (result.isCorrect()) {
+            if (result.getResult() == Result.TRUE_NEGATIVE || result.getResult() == Result.TRUE_POSITIVE) {
                 numCorrect++;
             }
         }

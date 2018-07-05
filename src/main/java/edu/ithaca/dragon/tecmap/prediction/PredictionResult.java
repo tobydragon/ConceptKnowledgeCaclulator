@@ -5,16 +5,28 @@ class PredictionResult {
     private String studentId;
     private String expectedResult;
     private String predictedResult;
-    private boolean correct;
+    private Result result;
 
     public PredictionResult(String id, String expected, String predicted) {
         studentId = id;
         expectedResult = expected;
         predictedResult = predicted;
-        if (expectedResult.equals(predictedResult)) {
-            correct = true;
-        } else {
-            correct = false;
+        if (predictedResult.equals("AT-RISK")) {
+            if (expectedResult.equals(predictedResult)) {
+                //Predicted at risk and was a correct prediction
+                result = Result.TRUE_POSITIVE;
+            } else {
+                //Predicted at risk, but was actually OK
+                result = Result.FALSE_POSITIVE;
+            }
+        } else if (predictedResult.equals("OK")) {
+            if (expectedResult.equals(predictedResult)) {
+                //Predicted ok and was a correct prediction
+                result = Result.TRUE_NEGATIVE;
+            } else {
+                //Predicted ok, but was actually at risk
+                result = Result.FALSE_NEGATIVE;
+            }
         }
     }
 
@@ -30,7 +42,7 @@ class PredictionResult {
         return predictedResult;
     }
 
-    public boolean isCorrect() {
-        return correct;
+    public Result getResult() {
+        return result;
     }
 }
