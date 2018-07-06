@@ -85,9 +85,8 @@ public class ContinuousAssessmentMatrix {
         return assessmentItems;
     }
 
-    double[][] getStudentAssessmentGrades() {
+    public double[][] getStudentAssessmentGrades() {
         return studentAssessmentGrades;
-
     }
 
     public List<String> getAssessmentIds() {
