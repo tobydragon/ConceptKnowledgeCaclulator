@@ -1,8 +1,11 @@
 package edu.ithaca.dragon.tecmap;
 
+import edu.ithaca.dragon.tecmap.conceptgraph.ConceptGraph;
 import edu.ithaca.dragon.tecmap.io.record.CohortConceptGraphsRecord;
 import edu.ithaca.dragon.tecmap.io.record.ConceptGraphRecord;
 import edu.ithaca.dragon.tecmap.io.record.LearningResourceRecord;
+import edu.ithaca.dragon.tecmap.learningresource.AssessmentItem;
+import edu.ithaca.dragon.tecmap.learningresource.AssessmentItemResponse;
 import edu.ithaca.dragon.tecmap.tecmapstate.AssessmentAddedState;
 import edu.ithaca.dragon.tecmap.tecmapstate.AssessmentConnectedState;
 import edu.ithaca.dragon.tecmap.tecmapstate.NoAssessmentState;
@@ -16,9 +19,27 @@ public class Tecmap implements TecmapAPI {
 
     protected NoAssessmentState state;
 
+
+    public Tecmap(ConceptGraph structureGraph, List<AssessmentItem> assessmentItemsStructureList, List<AssessmentItemResponse> assessmentItemResponses) {
+        TecmapState stateEnum = TecmapState.checkAvailableState(assessmentItemResponses);
+        if (stateEnum == TecmapState.noAssessment){
+            state = new NoAssessmentState(structureGraph);
+        }
+        else if (stateEnum == TecmapState.assessmentAdded){
+            state = new AssessmentAddedState(structureGraph, assessmentItemsStructureList, assessmentItemResponses);
+        }
+//        else if (stateEnum == TecmapState.assessmentConnected){
+//            state = new AssessmentConnectedState(structureFileName, resourceConnectionFiles, assessmentFilenames);
+//        }
+        else {
+            throw new RuntimeException("State not recognized, cannot build");
+        }
+
+    }
+
     /**
      * creates a tecmap in the appropriate state, depending on what files are given
-     * @param structureFileName must be a valid json file for graph structure
+     * @param structureFileName must be a valid json file for structureGraph structure
      * @param resourceConnectionFiles can be a list of filenames, or null if there are no resource connections
      * @param assessmentFilenames can be a list of filenames, or null if there are no assessments
      * @throws IOException

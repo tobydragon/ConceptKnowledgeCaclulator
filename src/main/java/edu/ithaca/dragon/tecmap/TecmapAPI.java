@@ -10,14 +10,14 @@ import java.util.List;
 public interface TecmapAPI {
 
     /**
-     * Creates a tree representation of a single graph representing the structure of this tecmap
+     * Creates a tree representation of a single structureGraph representing the structure of this tecmap
      * All nodes that have multiple parents are duplicated to create the tree structure
      * @return a ConceptGraphRecord representing the tree representation
      */
     ConceptGraphRecord createStructureTree();
 
     /**
-     * Creates a list all conceptIds in the graph
+     * Creates a list all conceptIds in the structureGraph
      * @return a list of strings, one for each conceptId, each surrounded by quotes
      */
     List<String> createConceptIdListToPrint();
@@ -30,8 +30,8 @@ public interface TecmapAPI {
     List<LearningResourceRecord> createBlankLearningResourceRecordsFromAssessment();
 
     /**
-     * Creates a list of graphs: One average graph, and one for each student for which there is data
-     * each graph is a tree representation of that graph. All nodes that have multiple parents are duplicated to create the tree structure
+     * Creates a list of graphs: One average structureGraph, and one for each student for which there is data
+     * each structureGraph is a tree representation of that structureGraph. All nodes that have multiple parents are duplicated to create the tree structure
      * @return a CohortConceptGraphsRecord representing all of the graphs related to this tecmap
      * //TODO: what if there is not data for it?
      */
@@ -45,7 +45,7 @@ public interface TecmapAPI {
     //------------------ Suggestion Functionality ------------- //
 
     /**
-     * Calculates all suggestions for the individual graph, returns an object containing two ordered lists:
+     * Calculates all suggestions for the individual structureGraph, returns an object containing two ordered lists:
      * an ordered list of new resources to try
      * an ordered list of resources that have had unsuccessful assessments in the past
      *
@@ -54,7 +54,7 @@ public interface TecmapAPI {
 //    OrganizedLearningResourceSuggestions suggestResourcesForUser (String userId);              //calcIndividualGraphSuggestions
 
     /**
-     * Calculates suggestions specific to a certain Concept for an individual graph
+     * Calculates suggestions specific to a certain Concept for an individual structureGraph
      * @return Suggestion Resource object with two order resource lists
      */
 //    OrganizedLearningResourceSuggestions suggestResourcesForSpecificConceptForUser(String userId, String conceptId)   ; //calcIndividualSpecificConceptSuggestions
@@ -73,7 +73,7 @@ public interface TecmapAPI {
 //    void getFactorMatrix();
 
     /**
-     * Uses data from the students and the structure given by the user to create a graph showing the weights
+     * Uses data from the students and the structure given by the user to create a structureGraph showing the weights
      * between the bottom layer of data and the concepts they influence.
      */
 //    void createConfirmatoryGraph();

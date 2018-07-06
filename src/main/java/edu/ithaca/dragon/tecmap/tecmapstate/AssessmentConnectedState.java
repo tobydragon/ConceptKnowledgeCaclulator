@@ -13,11 +13,13 @@ public class AssessmentConnectedState extends AssessmentAddedState {
     protected CohortConceptGraphs cohortConceptGraphs;
     private List<LearningResourceRecord> links;
 
+
+
     public AssessmentConnectedState(String structureFile, List<String> resourceConnectionFiles, List<String> assessmentFiles) throws IOException {
         super(structureFile, assessmentFiles);
         links = LearningResourceRecord.createLinksFromResourceFiles(resourceConnectionFiles);
-        graph.addLearningResourcesFromRecords(links);
-        cohortConceptGraphs = new CohortConceptGraphs(graph, assessmentItemResponses);
+        structureGraph.addLearningResourcesFromRecords(links);
+        cohortConceptGraphs = new CohortConceptGraphs(structureGraph, assessmentItemResponses);
     }
 
     public CohortConceptGraphsRecord createCohortTree(){
