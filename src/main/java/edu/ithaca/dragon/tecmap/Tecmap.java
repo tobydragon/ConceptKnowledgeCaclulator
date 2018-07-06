@@ -19,7 +19,13 @@ public class Tecmap implements TecmapAPI {
 
     protected NoAssessmentState state;
 
-
+    /**
+     *
+     * @param structureGraph
+     * @param links a list of LearningResourceRecords, or null if data is not connected to the graph
+     * @param assessmentItemsStructureList a list of AssessmentItems to copy for the structure of the graph
+     * @param assessmentItemResponses a list of AssessmentItemResponses containing all data (not connectes to the structureList above)
+     */
     public Tecmap(ConceptGraph structureGraph,  List<LearningResourceRecord> links, List<AssessmentItem> assessmentItemsStructureList, List<AssessmentItemResponse> assessmentItemResponses) {
         TecmapState stateEnum = TecmapState.checkAvailableState(links, assessmentItemResponses);
         if (stateEnum == TecmapState.noAssessment){
@@ -30,30 +36,6 @@ public class Tecmap implements TecmapAPI {
         }
         else if (stateEnum == TecmapState.assessmentConnected){
             state = new AssessmentConnectedState(structureGraph, links, assessmentItemsStructureList, assessmentItemResponses);
-        }
-        else {
-            throw new RuntimeException("State not recognized, cannot build");
-        }
-
-    }
-
-    /**
-     * creates a tecmap in the appropriate state, depending on what files are given
-     * @param structureFileName must be a valid json file for structureGraph structure
-     * @param resourceConnectionFiles can be a list of filenames, or null if there are no resource connections
-     * @param assessmentFilenames can be a list of filenames, or null if there are no assessments
-     * @throws IOException
-     */
-    public Tecmap(String structureFileName, List<String> resourceConnectionFiles, List<String> assessmentFilenames) throws IOException {
-        TecmapState stateEnum = TecmapState.checkAvailableState(resourceConnectionFiles, assessmentFilenames);
-        if (stateEnum == TecmapState.noAssessment){
-            state = new NoAssessmentState(structureFileName);
-        }
-        else if (stateEnum == TecmapState.assessmentAdded){
-            state = new AssessmentAddedState(structureFileName, assessmentFilenames);
-        }
-        else if (stateEnum == TecmapState.assessmentConnected){
-            state = new AssessmentConnectedState(structureFileName, resourceConnectionFiles, assessmentFilenames);
         }
         else {
             throw new RuntimeException("State not recognized, cannot build");

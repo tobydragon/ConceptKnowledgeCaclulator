@@ -24,11 +24,6 @@ public class SuggestingTecmap extends Tecmap implements SuggestingTecmapAPI{
         super(graph, links, assessmentItemsStructureList, assessmentItemResponses);
     }
 
-
-    public SuggestingTecmap(String structureFileName, List<String> resourceConnectionFiles, List<String> assessmentFilenames) throws IOException {
-        super(structureFileName, resourceConnectionFiles, assessmentFilenames);
-    }
-
     public List<String> suggestConceptsForUser(String userId){
         if (state instanceof AssessmentConnectedState){
             ConceptGraph userGraph = ((AssessmentConnectedState)state).getGraphForUser(userId);

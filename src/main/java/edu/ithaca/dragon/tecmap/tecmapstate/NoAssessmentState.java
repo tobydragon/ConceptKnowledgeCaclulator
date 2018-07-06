@@ -17,10 +17,6 @@ public class NoAssessmentState {
         this.structureGraph = structureGraph;
     }
 
-    public NoAssessmentState(String structureFilename) throws IOException {
-        structureGraph = new ConceptGraph(ConceptGraphRecord.buildFromJson(structureFilename));
-    }
-
     public ConceptGraphRecord createStructureTree() {
         return TreeConverter.makeTreeCopy(structureGraph).buildConceptGraphRecord();
     }

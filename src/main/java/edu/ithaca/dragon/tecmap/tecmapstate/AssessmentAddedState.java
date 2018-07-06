@@ -32,13 +32,6 @@ public class AssessmentAddedState extends NoAssessmentState {
         this.assessmentItemResponses = assessmentItemResponses;
     }
 
-    public AssessmentAddedState(String structureFile, List<String> assessmentFiles) throws IOException {
-        super(structureFile);
-        //TODO: hardcoded to sakai csv, need to hold a list of CSVReaders, or the information about which kind of reader it is...
-        assessmentItemsStructureList = ReaderTools.learningObjectsFromCSVList(2, assessmentFiles);
-        assessmentItemResponses = AssessmentItemResponse.createAssessmentItemResponses(assessmentFiles);
-    }
-
     public List<LearningResourceRecord> createBlankLearningResourceRecordsFromAssessment() {
         return LearningResourceRecord.createLRecordsFromAssessments(assessmentItemsStructureList);
     }

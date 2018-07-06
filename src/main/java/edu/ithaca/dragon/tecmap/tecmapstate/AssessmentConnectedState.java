@@ -26,13 +26,6 @@ public class AssessmentConnectedState extends AssessmentAddedState {
         cohortConceptGraphs = new CohortConceptGraphs(structureGraph, assessmentItemResponses);
     }
 
-    public AssessmentConnectedState(String structureFile, List<String> resourceConnectionFiles, List<String> assessmentFiles) throws IOException {
-        super(structureFile, assessmentFiles);
-        links = LearningResourceRecord.createLinksFromResourceFiles(resourceConnectionFiles);
-        structureGraph.addLearningResourcesFromRecords(links);
-        cohortConceptGraphs = new CohortConceptGraphs(structureGraph, assessmentItemResponses);
-    }
-
     public CohortConceptGraphsRecord createCohortTree(){
         return cohortConceptGraphs.buildCohortConceptTreeRecord();
     }
