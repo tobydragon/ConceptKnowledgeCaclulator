@@ -2,6 +2,7 @@ package edu.ithaca.dragon.tecmap.prediction;
 
 import ch.netzwerg.paleo.DataFrame;
 import edu.ithaca.dragon.tecmap.conceptgraph.eval.KnowledgeEstimateMatrix;
+import edu.ithaca.dragon.tecmap.learningresource.GradeDiscreteGroupings;
 
 import java.util.Collection;
 import java.util.HashMap;
@@ -10,7 +11,10 @@ import java.util.Map;
 
 public class SimplePredictor implements Predictor {
 
-    public SimplePredictor() {
+    private GradeDiscreteGroupings atriskGroupings;
+
+    public SimplePredictor(GradeDiscreteGroupings atriskGroupings) {
+        this.atriskGroupings = atriskGroupings;
     }
 
     /**

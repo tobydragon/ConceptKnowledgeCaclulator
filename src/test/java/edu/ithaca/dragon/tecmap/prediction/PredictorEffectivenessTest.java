@@ -112,7 +112,7 @@ public class PredictorEffectivenessTest {
     public void testPredictor() throws IOException {
         LearningSetSelector baseLearningSetSelector = new BaseLearningSetSelector();
 
-        PredictorEffectiveness testPredictor = PredictorEffectiveness.testPredictor(new SimplePredictor(), baseLearningSetSelector, "Q5", conceptGraph, 0.5);
+        PredictorEffectiveness testPredictor = PredictorEffectiveness.testPredictor(new SimplePredictor(atriskGroupings), baseLearningSetSelector, "Q5", conceptGraph, 0.5);
 
         List<PredictionResult> results = testPredictor.getResults();
         assertEquals(3, results.size());
@@ -131,7 +131,7 @@ public class PredictorEffectivenessTest {
 
         LearningSetSelector graphLearningSetSelector = new GraphLearningSetSelector();
 
-        testPredictor = PredictorEffectiveness.testPredictor(new SimplePredictor(), graphLearningSetSelector, "Q5", conceptGraph, 0.5);
+        testPredictor = PredictorEffectiveness.testPredictor(new SimplePredictor(atriskGroupings), graphLearningSetSelector, "Q5", conceptGraph, 0.5);
 
         results = testPredictor.getResults();
         assertEquals(3, results.size());

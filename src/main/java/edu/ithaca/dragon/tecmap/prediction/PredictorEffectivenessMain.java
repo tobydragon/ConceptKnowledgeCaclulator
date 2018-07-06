@@ -67,13 +67,13 @@ public class PredictorEffectivenessMain {
     }
 
     public static void main(String[] args) throws IOException {
-        GradeDiscreteGroupings defaultGroupings = GradeDiscreteGroupings.buildFromJson(Settings.DEFAULT_TEST_PREDICTION_PATH + "discreteGroupings.json");
-        GradeDiscreteGroupings atriskGroupings = GradeDiscreteGroupings.buildFromJson(Settings.DEFAULT_TEST_PREDICTION_PATH + "atriskGroupings.json");
+        GradeDiscreteGroupings defaultGroupings = GradeDiscreteGroupings.buildFromJson(Settings.DEFAULT_MAIN_PREDICTION_PATH + "discreteGroupings.json");
+        GradeDiscreteGroupings atriskGroupings = GradeDiscreteGroupings.buildFromJson(Settings.DEFAULT_MAIN_PREDICTION_PATH + "atriskGroupings.json");
         //For testing the Bayes Predictor Effectiveness
         LearningPredictor bayes = new BayesPredictor(defaultGroupings, atriskGroupings);
 
         //For testing the Simple Predictor Effectiveness
-        Predictor simple = new SimplePredictor();
+        Predictor simple = new SimplePredictor(atriskGroupings);
 
         //Testing for COMP220 Data
         ConceptGraph conceptGraph220 = getConceptGraph("comp220Dragon");

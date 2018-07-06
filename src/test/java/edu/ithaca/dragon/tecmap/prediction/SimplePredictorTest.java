@@ -5,6 +5,7 @@ import edu.ithaca.dragon.tecmap.conceptgraph.eval.KnowledgeEstimateMatrix;
 import edu.ithaca.dragon.tecmap.io.reader.CSVReader;
 import edu.ithaca.dragon.tecmap.io.reader.SakaiReader;
 import edu.ithaca.dragon.tecmap.learningresource.AssessmentItem;
+import edu.ithaca.dragon.tecmap.learningresource.GradeDiscreteGroupings;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -18,6 +19,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 public class SimplePredictorTest {
 
     private KnowledgeEstimateMatrix testingMatrix;
+    private GradeDiscreteGroupings atriskGroupings;
 
     @Before
     public void setup() throws IOException {
@@ -27,12 +29,14 @@ public class SimplePredictorTest {
         assessmentItemList.addAll(data.getManualGradedLearningObjects());
 
         testingMatrix = new KnowledgeEstimateMatrix(assessmentItemList);
+
+        atriskGroupings = GradeDiscreteGroupings.buildFromJson(Settings.DEFAULT_TEST_PREDICTION_PATH + "atriskGroupings.json");
     }
 
     //Going to Predict Q5
     @Test
     public void classifySet() {
-        Predictor simple = new SimplePredictor();
+        Predictor simple = new SimplePredictor(atriskGroupings);
 
         List<String> classifyingSet = testingMatrix.getAssessmentIdList();
 
