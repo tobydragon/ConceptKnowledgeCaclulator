@@ -1,10 +1,10 @@
 package edu.ithaca.dragon.tecmap.prediction;
 
 import edu.ithaca.dragon.tecmap.Settings;
-import edu.ithaca.dragon.tecmap.conceptgraph.eval.KnowledgeEstimateMatrix;
 import edu.ithaca.dragon.tecmap.io.reader.CSVReader;
 import edu.ithaca.dragon.tecmap.io.reader.SakaiReader;
 import edu.ithaca.dragon.tecmap.learningresource.AssessmentItem;
+import edu.ithaca.dragon.tecmap.learningresource.ContinuousAssessmentMatrix;
 import edu.ithaca.dragon.tecmap.learningresource.GradeDiscreteGroupings;
 import org.junit.Before;
 import org.junit.Test;
@@ -19,8 +19,8 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class BayesPredictorTest {
 
-    private KnowledgeEstimateMatrix learningMatrix;
-    private KnowledgeEstimateMatrix testingMatrix;
+    private ContinuousAssessmentMatrix learningMatrix;
+    private ContinuousAssessmentMatrix testingMatrix;
     private GradeDiscreteGroupings defaultGroupings;
     private GradeDiscreteGroupings atriskGroupings;
 
@@ -36,13 +36,13 @@ public class BayesPredictorTest {
         data = new SakaiReader(file2);
         assessments.addAll(data.getManualGradedLearningObjects());
 
-        learningMatrix = new KnowledgeEstimateMatrix(assessments);
+        learningMatrix = new ContinuousAssessmentMatrix(assessments);
 
         String testFile = Settings.DEFAULT_TEST_DATASTORE_PATH + "Cs1ExamplePrediction/Cs1ExampleAssessments.csv";
         data = new SakaiReader(testFile);
         assessments = data.getManualGradedLearningObjects();
 
-        testingMatrix = new KnowledgeEstimateMatrix(assessments);
+        testingMatrix = new ContinuousAssessmentMatrix(assessments);
 
         defaultGroupings = GradeDiscreteGroupings.buildFromJson(Settings.DEFAULT_TEST_PREDICTION_PATH + "discreteGroupings.json");
         atriskGroupings = GradeDiscreteGroupings.buildFromJson(Settings.DEFAULT_TEST_PREDICTION_PATH + "atriskGroupings.json");
@@ -53,7 +53,7 @@ public class BayesPredictorTest {
     public void predictions() {
         LearningPredictor bayes = new BayesPredictor(defaultGroupings, atriskGroupings);
 
-        List<String> learningColNames = learningMatrix.getAssessmentIdList();
+        List<String> learningColNames = learningMatrix.getAssessmentIds();
 
         bayes.learnSet(learningMatrix, "Q5", learningColNames);
 

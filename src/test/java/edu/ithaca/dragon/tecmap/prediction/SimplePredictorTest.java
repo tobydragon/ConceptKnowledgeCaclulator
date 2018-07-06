@@ -1,10 +1,10 @@
 package edu.ithaca.dragon.tecmap.prediction;
 
 import edu.ithaca.dragon.tecmap.Settings;
-import edu.ithaca.dragon.tecmap.conceptgraph.eval.KnowledgeEstimateMatrix;
 import edu.ithaca.dragon.tecmap.io.reader.CSVReader;
 import edu.ithaca.dragon.tecmap.io.reader.SakaiReader;
 import edu.ithaca.dragon.tecmap.learningresource.AssessmentItem;
+import edu.ithaca.dragon.tecmap.learningresource.ContinuousAssessmentMatrix;
 import edu.ithaca.dragon.tecmap.learningresource.GradeDiscreteGroupings;
 import org.junit.Before;
 import org.junit.Test;
@@ -18,7 +18,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class SimplePredictorTest {
 
-    private KnowledgeEstimateMatrix testingMatrix;
+    private ContinuousAssessmentMatrix testingMatrix;
     private GradeDiscreteGroupings atriskGroupings;
 
     @Before
@@ -28,7 +28,7 @@ public class SimplePredictorTest {
         List<AssessmentItem> assessmentItemList = new ArrayList<>();
         assessmentItemList.addAll(data.getManualGradedLearningObjects());
 
-        testingMatrix = new KnowledgeEstimateMatrix(assessmentItemList);
+        testingMatrix = new ContinuousAssessmentMatrix(assessmentItemList);
 
         atriskGroupings = GradeDiscreteGroupings.buildFromJson(Settings.DEFAULT_TEST_PREDICTION_PATH + "atriskGroupings.json");
     }
@@ -38,7 +38,7 @@ public class SimplePredictorTest {
     public void classifySet() {
         Predictor simple = new SimplePredictor(atriskGroupings);
 
-        List<String> classifyingSet = testingMatrix.getAssessmentIdList();
+        List<String> classifyingSet = testingMatrix.getAssessmentIds();
 
         //Remove the assessment you are trying to predict
         classifyingSet.remove("Q5");

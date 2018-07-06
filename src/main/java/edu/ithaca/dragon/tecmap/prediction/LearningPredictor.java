@@ -1,6 +1,6 @@
 package edu.ithaca.dragon.tecmap.prediction;
 
-import edu.ithaca.dragon.tecmap.conceptgraph.eval.KnowledgeEstimateMatrix;
+import edu.ithaca.dragon.tecmap.learningresource.ContinuousAssessmentMatrix;
 
 import java.util.List;
 
@@ -12,7 +12,7 @@ public interface LearningPredictor extends Predictor {
      * @param assessmentToLearn
      * @param assignmentsToLearnWith
      */
-    void learnSet(KnowledgeEstimateMatrix rawTrainingData, String assessmentToLearn, List<String> assignmentsToLearnWith) throws RuntimeException;
+    void learnSet(ContinuousAssessmentMatrix rawTrainingData, String assessmentToLearn, List<String> assignmentsToLearnWith) throws RuntimeException;
 
     /**
      * Predictor forgets and unlearns everything

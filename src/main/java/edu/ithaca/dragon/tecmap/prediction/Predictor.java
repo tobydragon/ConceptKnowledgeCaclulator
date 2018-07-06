@@ -1,6 +1,6 @@
 package edu.ithaca.dragon.tecmap.prediction;
 
-import edu.ithaca.dragon.tecmap.conceptgraph.eval.KnowledgeEstimateMatrix;
+import edu.ithaca.dragon.tecmap.learningresource.ContinuousAssessmentMatrix;
 
 import java.util.List;
 import java.util.Map;
@@ -16,5 +16,5 @@ public interface Predictor {
      * @param assignmentsForClassification
      * @return Map of studentIds -> classification category
      */
-    Map<String, String> classifySet(KnowledgeEstimateMatrix rawTestingData, List<String> assignmentsForClassification);
+    Map<String, String> classifySet(ContinuousAssessmentMatrix rawTestingData, List<String> assignmentsForClassification);
 }

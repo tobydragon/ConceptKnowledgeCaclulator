@@ -2,6 +2,7 @@ package edu.ithaca.dragon.tecmap.prediction;
 
 import ch.netzwerg.paleo.DataFrame;
 import edu.ithaca.dragon.tecmap.conceptgraph.eval.KnowledgeEstimateMatrix;
+import edu.ithaca.dragon.tecmap.learningresource.ContinuousAssessmentMatrix;
 import edu.ithaca.dragon.tecmap.learningresource.GradeDiscreteGroupings;
 
 import java.util.Collection;
@@ -63,5 +64,15 @@ public class SimplePredictor implements Predictor {
         return classifications;
     }
 
+    /**
+     * Classifies the data based on the raw testing matrix you give it, should not have a grade for what you are predicting
+     * @param rawTestingData in the form of KnowledgeEstimateMatrix
+     * @param assignmentsForClassification list of what assessment columns should be used in learning (should all be doubles, not the categorical variable)
+     * TESTING DATA MUST BE MANIPULATED IN ORDER TO GET ROWS FOR THE BAYES CLASSIFY METHOD
+     * @return Map of String to String (Student id -> Classification) MAY CHANGE
+     */
+    public Map<String, String> classifySet(ContinuousAssessmentMatrix rawTestingData, List<String> assignmentsForClassification) {
+        return null;
+    }
 
 }

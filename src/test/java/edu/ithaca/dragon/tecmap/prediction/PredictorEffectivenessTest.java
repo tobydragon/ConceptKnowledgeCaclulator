@@ -9,6 +9,7 @@ import edu.ithaca.dragon.tecmap.io.record.ConceptGraphRecord;
 import edu.ithaca.dragon.tecmap.io.record.LearningResourceRecord;
 import edu.ithaca.dragon.tecmap.learningresource.AssessmentItem;
 import edu.ithaca.dragon.tecmap.learningresource.AssessmentItemResponse;
+import edu.ithaca.dragon.tecmap.learningresource.ContinuousAssessmentMatrix;
 import edu.ithaca.dragon.tecmap.learningresource.GradeDiscreteGroupings;
 import io.vavr.Tuple2;
 import org.junit.Assert;
@@ -26,6 +27,7 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 public class PredictorEffectivenessTest {
 
     private KnowledgeEstimateMatrix knowledgeMatrix;
+    private ContinuousAssessmentMatrix continuousAssessmentMatrix;
     private ConceptGraph conceptGraph;
     private GradeDiscreteGroupings defaultGroupings;
     private GradeDiscreteGroupings atriskGroupings;
@@ -38,6 +40,8 @@ public class PredictorEffectivenessTest {
 
         knowledgeMatrix = new KnowledgeEstimateMatrix(assessments);
 
+        continuousAssessmentMatrix = new ContinuousAssessmentMatrix(assessments);
+
         conceptGraph = new ConceptGraph(ConceptGraphRecord.buildFromJson(Settings.DEFAULT_TEST_DATASTORE_PATH + "Cs1Example/Cs1ExampleGraph.json"),
                 LearningResourceRecord.buildListFromJson(Settings.DEFAULT_TEST_DATASTORE_PATH + "Cs1Example/Cs1ExampleResources.json"),
                 AssessmentItemResponse.createAssessmentItemResponses(Arrays.asList(new String[] {Settings.DEFAULT_TEST_DATASTORE_PATH + "Cs1ExamplePrediction/Cs1ExampleAssessments.csv"})));
@@ -49,19 +53,19 @@ public class PredictorEffectivenessTest {
     @Test
     public void splitMatrix() {
         double ratio = 0.5;
-        Tuple2<KnowledgeEstimateMatrix, KnowledgeEstimateMatrix> splitMatrix = PredictorEffectiveness.splitMatrix(knowledgeMatrix, ratio);
+        Tuple2<ContinuousAssessmentMatrix, ContinuousAssessmentMatrix> splitMatrix = PredictorEffectiveness.splitMatrix(continuousAssessmentMatrix, ratio);
 
         int ratioSize = (int) Math.ceil(knowledgeMatrix.getUserIdList().size()*ratio);
 
         assertNotNull(splitMatrix);
         //Check that it splits the number of users correctly
-        assertEquals(ratioSize, splitMatrix._1.getUserIdList().size());
-        assertEquals(knowledgeMatrix.getUserIdList().size()-ratioSize, splitMatrix._2.getUserIdList().size());
+        assertEquals(ratioSize, splitMatrix._1.getStudentIds().size());
+        assertEquals(knowledgeMatrix.getUserIdList().size()-ratioSize, splitMatrix._2.getStudentIds().size());
         //Check that the ratio contains the first 3 users
-        Assert.assertThat(splitMatrix._1.getUserIdList(), containsInAnyOrder(new String[] {"s01", "s02", "s03"}));
+        Assert.assertThat(splitMatrix._1.getStudentIds(), containsInAnyOrder(new String[] {"s01", "s02", "s03"}));
         //Check that the number of assessments stays constant
-        assertEquals(10, splitMatrix._1.getAssessmentIdList().size());
-        assertEquals(10, splitMatrix._2.getAssessmentIdList().size());
+        assertEquals(10, splitMatrix._1.getAssessmentIds().size());
+        assertEquals(10, splitMatrix._2.getAssessmentIds().size());
 
     }
 
