@@ -3,6 +3,7 @@ package edu.ithaca.dragon.tecmap;
 import edu.ithaca.dragon.tecmap.conceptgraph.CohortConceptGraphs;
 import edu.ithaca.dragon.tecmap.conceptgraph.ConceptGraph;
 import edu.ithaca.dragon.tecmap.conceptgraph.ConceptNode;
+import edu.ithaca.dragon.tecmap.io.record.LearningResourceRecord;
 import edu.ithaca.dragon.tecmap.learningresource.AssessmentItem;
 import edu.ithaca.dragon.tecmap.learningresource.AssessmentItemResponse;
 import edu.ithaca.dragon.tecmap.suggester.ConceptGraphSuggesterLibrary;
@@ -19,8 +20,8 @@ import java.util.List;
 
 public class SuggestingTecmap extends Tecmap implements SuggestingTecmapAPI{
 
-    public SuggestingTecmap(ConceptGraph graph, List<AssessmentItem> assessmentItemsStructureList, List<AssessmentItemResponse> assessmentItemResponses) throws IOException {
-        super(graph, assessmentItemsStructureList, assessmentItemResponses);
+    public SuggestingTecmap(ConceptGraph graph, List<LearningResourceRecord> links, List<AssessmentItem> assessmentItemsStructureList, List<AssessmentItemResponse> assessmentItemResponses) {
+        super(graph, links, assessmentItemsStructureList, assessmentItemResponses);
     }
 
 

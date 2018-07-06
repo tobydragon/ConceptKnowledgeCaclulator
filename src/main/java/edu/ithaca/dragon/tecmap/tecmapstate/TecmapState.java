@@ -1,5 +1,6 @@
 package edu.ithaca.dragon.tecmap.tecmapstate;
 
+import edu.ithaca.dragon.tecmap.io.record.LearningResourceRecord;
 import edu.ithaca.dragon.tecmap.learningresource.AssessmentItemResponse;
 import edu.ithaca.dragon.tecmap.ui.TecmapUserAction;
 
@@ -13,30 +14,17 @@ public enum TecmapState {
     assessmentAdded,
     assessmentConnected;
 
-    public static TecmapState checkAvailableState(List<AssessmentItemResponse> assessmentItemResponses) {
+    public static <LinkRecordType, AssessmentRecordType> TecmapState checkAvailableState(List<LinkRecordType> links, List<AssessmentRecordType> assessmentItemResponses) {
         if (assessmentItemResponses == null || assessmentItemResponses.size() < 1){
             return TecmapState.noAssessment;
         }
-        else {//if (resourceFiles == null || resourceFiles.size() < 1){
-            return TecmapState.assessmentAdded;
-        }
-//        else {
-//            return TecmapState.assessmentConnected;
-//        }
-    }
-
-    public static TecmapState checkAvailableState(List<String> resourceFiles, List<String> assessmentFiles) {
-        if (assessmentFiles == null || assessmentFiles.size() < 1){
-            return TecmapState.noAssessment;
-        }
-        else if (resourceFiles == null || resourceFiles.size() < 1){
+        else if (links == null || links.size() < 1){
             return TecmapState.assessmentAdded;
         }
         else {
             return TecmapState.assessmentConnected;
         }
     }
-
 
     public List<TecmapUserAction> getAvailableActions(){
         if (this == noAssessment){

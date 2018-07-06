@@ -84,18 +84,24 @@ public class TecmapFileDatastore implements TecmapDatastore {
         if (files != null){
             try {
                 if (desiredState == TecmapState.assessmentConnected) {
-                    return new SuggestingTecmap(files.getGraphFile(), files.getResourceFiles(), files.getAssessmentFiles());
+                    return new SuggestingTecmap(new ConceptGraph(ConceptGraphRecord.buildFromJson(files.getGraphFile())),
+                            LearningResourceRecord.createLinksFromResourceFiles(files.getResourceFiles()),
+                            //TODO: hardcoded to sakai csv, need to hold a list of CSVReaders, or the information about which kind of reader it is...
+                            ReaderTools.learningObjectsFromCSVList(2, files.getAssessmentFiles()),
+                            AssessmentItemResponse.createAssessmentItemResponses(files.getAssessmentFiles())
+                    );
                 }
                 else if (desiredState == TecmapState.assessmentAdded) {
 
                     return new SuggestingTecmap(new ConceptGraph(ConceptGraphRecord.buildFromJson(files.getGraphFile())),
+                            null,
                             //TODO: hardcoded to sakai csv, need to hold a list of CSVReaders, or the information about which kind of reader it is...
                             ReaderTools.learningObjectsFromCSVList(2, files.getAssessmentFiles()),
                             AssessmentItemResponse.createAssessmentItemResponses(files.getAssessmentFiles())
                     );
                 }
                 else if (desiredState == TecmapState.noAssessment) {
-                    return new SuggestingTecmap(new ConceptGraph(ConceptGraphRecord.buildFromJson(files.getGraphFile())), null, null);
+                    return new SuggestingTecmap(new ConceptGraph(ConceptGraphRecord.buildFromJson(files.getGraphFile())), null,null, null);
                 }
                 else {
                     throw new RuntimeException("Unrecognized state desired, can't retrieve tecmap");

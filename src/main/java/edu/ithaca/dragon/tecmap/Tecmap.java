@@ -20,17 +20,17 @@ public class Tecmap implements TecmapAPI {
     protected NoAssessmentState state;
 
 
-    public Tecmap(ConceptGraph structureGraph, List<AssessmentItem> assessmentItemsStructureList, List<AssessmentItemResponse> assessmentItemResponses) {
-        TecmapState stateEnum = TecmapState.checkAvailableState(assessmentItemResponses);
+    public Tecmap(ConceptGraph structureGraph,  List<LearningResourceRecord> links, List<AssessmentItem> assessmentItemsStructureList, List<AssessmentItemResponse> assessmentItemResponses) {
+        TecmapState stateEnum = TecmapState.checkAvailableState(links, assessmentItemResponses);
         if (stateEnum == TecmapState.noAssessment){
             state = new NoAssessmentState(structureGraph);
         }
         else if (stateEnum == TecmapState.assessmentAdded){
             state = new AssessmentAddedState(structureGraph, assessmentItemsStructureList, assessmentItemResponses);
         }
-//        else if (stateEnum == TecmapState.assessmentConnected){
-//            state = new AssessmentConnectedState(structureFileName, resourceConnectionFiles, assessmentFilenames);
-//        }
+        else if (stateEnum == TecmapState.assessmentConnected){
+            state = new AssessmentConnectedState(structureGraph, links, assessmentItemsStructureList, assessmentItemResponses);
+        }
         else {
             throw new RuntimeException("State not recognized, cannot build");
         }
