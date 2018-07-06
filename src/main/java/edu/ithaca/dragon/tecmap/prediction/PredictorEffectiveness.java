@@ -1,10 +1,10 @@
 package edu.ithaca.dragon.tecmap.prediction;
 
 import edu.ithaca.dragon.tecmap.conceptgraph.ConceptGraph;
-import edu.ithaca.dragon.tecmap.conceptgraph.eval.KnowledgeEstimateMatrix;
 import edu.ithaca.dragon.tecmap.learningresource.AssessmentItem;
 import edu.ithaca.dragon.tecmap.learningresource.AssessmentItemResponse;
 import edu.ithaca.dragon.tecmap.learningresource.ContinuousAssessmentMatrix;
+import edu.ithaca.dragon.tecmap.learningresource.GradeDiscreteGroupings;
 import io.vavr.Tuple2;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -79,24 +79,31 @@ public class PredictorEffectiveness {
         return new Tuple2<>(ratioMatrix, nonRatioMatrix);
     }
 
-    private static List<PredictionResult> getResults(KnowledgeEstimateMatrix testingMatrix, String assessmentToLearn, Map<String, String> predictions) {
+    private static List<PredictionResult> getResults(ContinuousAssessmentMatrix testingMatrix, String assessmentToLearn, GradeDiscreteGroupings atRiskGroupings,Map<String, String> predictions) {
         List<PredictionResult> predictionResults = new ArrayList<>();
+        List<String> groups = atRiskGroupings.getGroups();
+        List<Integer> pointBreaks = atRiskGroupings.getPointBreaks();
 
         //Get the expected without having a dataframe
         Map<String, String> expectedResults = new HashMap<>();
 
         //Correct way of getting expected, because not everyone will have an AssessmentItemResponse, but the Matrix will have the data
-        List<AssessmentItem> assessments = testingMatrix.getObjList();
+        List<AssessmentItem> assessments = testingMatrix.getAssessmentItems();
         for (int i = 0; i < assessments.size(); i++) {
             AssessmentItem currAssessment = assessments.get(i);
             if (currAssessment.getId().equals(assessmentToLearn)) {
-                double[] assessmentKnowledgeEstimates = testingMatrix.getStudentKnowledgeEstimates()[i];
+                double[] assessmentKnowledgeEstimates = testingMatrix.getStudentAssessmentGrades()[i];
                 for (int j = 0; j < assessmentKnowledgeEstimates.length; j++) {
-                    String expected = "OK";
-                    if (assessmentKnowledgeEstimates[j] < Predictor.ESTIMATE_THRESHOLD) {
-                        expected = "AT-RISK";
+                    String expected = null;
+                    for (int k = 0; k < pointBreaks.size(); k++) {
+                        if (assessmentKnowledgeEstimates[j]*100 >= pointBreaks.get(k) && expected == null) {
+                            expected = groups.get(k);
+                        }
+                        if (expected == null) {
+                            expected = groups.get(pointBreaks.size());
+                        }
                     }
-                    expectedResults.put(testingMatrix.getUserIdList().get(j), expected);
+                    expectedResults.put(testingMatrix.getStudentIds().get(j), expected);
                 }
             }
         }
@@ -118,7 +125,7 @@ public class PredictorEffectiveness {
      * @param ratio what percent of the originalMatrix should be used for learning
      * @return PredictorEffectiveness object with percent correct and a list of all the results
      */
-    public static PredictorEffectiveness testLearningPredictor(LearningPredictor predictor, LearningSetSelector learningSetSelector, String assessmentToLearn, ConceptGraph conceptGraph, double ratio) throws IOException{
+    public static PredictorEffectiveness testLearningPredictor(LearningPredictor predictor, LearningSetSelector learningSetSelector, String assessmentToLearn, ConceptGraph conceptGraph, GradeDiscreteGroupings atriskGroupings, double ratio) throws IOException{
         ContinuousAssessmentMatrix originalMatrix = new ContinuousAssessmentMatrix(new ArrayList<>(conceptGraph.getAssessmentItemMap().values()));
 
         //Split the matrix
@@ -142,53 +149,51 @@ public class PredictorEffectiveness {
 
         Map<String, String> predictions = predictor.classifySet(testingMatrix, testingAssessments);
 
-//        List<PredictionResult> predictionResults = getResults(testingMatrix, assessmentToLearn, predictions);
-//
-//        //Calculate the percent correct
-//        double numCorrect = 0;
-//        for (PredictionResult result : predictionResults) {
-//            if (result.getResult() == Result.TRUE_NEGATIVE || result.getResult() == Result.TRUE_POSITIVE) {
-//                numCorrect++;
-//            }
-//        }
-//
-//        double percentCorrect = numCorrect/predictionResults.size();
-//
-//        return new PredictorEffectiveness(percentCorrect, predictionResults);.
-        return null;
+        List<PredictionResult> predictionResults = getResults(testingMatrix, assessmentToLearn, atriskGroupings, predictions);
+
+        //Calculate the percent correct
+        double numCorrect = 0;
+        for (PredictionResult result : predictionResults) {
+            if (result.getResult() == Result.TRUE_NEGATIVE || result.getResult() == Result.TRUE_POSITIVE) {
+                numCorrect++;
+            }
+        }
+
+        double percentCorrect = numCorrect/predictionResults.size();
+
+        return new PredictorEffectiveness(percentCorrect, predictionResults);
     }
 
-    public static PredictorEffectiveness testPredictor(Predictor simplePredictor, LearningSetSelector learningSetSelector, String assessmentToLearn, ConceptGraph conceptGraph, double ratio) throws IOException {
-//        KnowledgeEstimateMatrix originalMatrix = new KnowledgeEstimateMatrix(new ArrayList<>(conceptGraph.getAssessmentItemMap().values()));
-//
-//        //Split the matrix
-//        Tuple2<KnowledgeEstimateMatrix, KnowledgeEstimateMatrix> splitMatrix = splitMatrix(originalMatrix, ratio);
-//
-//        //Ignore learningMatrix since simple predictors do not learn
-//        KnowledgeEstimateMatrix learningMatrix = splitMatrix._1;
-//        //Test on the other sized matrix
-//        KnowledgeEstimateMatrix testingMatrix = splitMatrix._2;
-//
-//        //Get learning set and remove the assessmentToLearn from list
-//        List<String> testingAssessments = learningSetSelector.getLearningSet(conceptGraph, learningMatrix.getUserIdList().get(0), assessmentToLearn);
-//        testingAssessments.remove(assessmentToLearn);
-//
-//        Map<String, String> predictions = simplePredictor.classifySet(testingMatrix, testingAssessments);
-//
-//        List<PredictionResult> predictionResults = getResults(testingMatrix, assessmentToLearn, predictions);
-//
-//        //Calculate the percent correct
-//        double numCorrect = 0;
-//        for (PredictionResult result : predictionResults) {
-//            if (result.getResult() == Result.TRUE_NEGATIVE || result.getResult() == Result.TRUE_POSITIVE) {
-//                numCorrect++;
-//            }
-//        }
-//
-//        double percentCorrect = numCorrect/predictionResults.size();
-//
-//        return new PredictorEffectiveness(percentCorrect, predictionResults);
-        return null;
+    public static PredictorEffectiveness testPredictor(Predictor simplePredictor, LearningSetSelector learningSetSelector, String assessmentToLearn, ConceptGraph conceptGraph, GradeDiscreteGroupings atriskGroupings,double ratio) throws IOException {
+        ContinuousAssessmentMatrix originalMatrix = new ContinuousAssessmentMatrix(new ArrayList<>(conceptGraph.getAssessmentItemMap().values()));
+
+        //Split the matrix
+        Tuple2<ContinuousAssessmentMatrix, ContinuousAssessmentMatrix> splitMatrix = splitMatrix(originalMatrix, ratio);
+
+        //Ignore learningMatrix since simple predictors do not learn
+        ContinuousAssessmentMatrix learningMatrix = splitMatrix._1;
+        //Test on the other sized matrix
+        ContinuousAssessmentMatrix testingMatrix = splitMatrix._2;
+
+        //Get learning set and remove the assessmentToLearn from list
+        List<String> testingAssessments = learningSetSelector.getLearningSet(conceptGraph, learningMatrix.getStudentIds().get(0), assessmentToLearn);
+        testingAssessments.remove(assessmentToLearn);
+
+        Map<String, String> predictions = simplePredictor.classifySet(testingMatrix, testingAssessments);
+
+        List<PredictionResult> predictionResults = getResults(testingMatrix, assessmentToLearn, atriskGroupings, predictions);
+
+        //Calculate the percent correct
+        double numCorrect = 0;
+        for (PredictionResult result : predictionResults) {
+            if (result.getResult() == Result.TRUE_NEGATIVE || result.getResult() == Result.TRUE_POSITIVE) {
+                numCorrect++;
+            }
+        }
+
+        double percentCorrect = numCorrect/predictionResults.size();
+
+        return new PredictorEffectiveness(percentCorrect, predictionResults);
     }
 
 }

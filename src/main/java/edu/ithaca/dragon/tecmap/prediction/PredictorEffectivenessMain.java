@@ -87,12 +87,12 @@ public class PredictorEffectivenessMain {
         System.out.println("Learning Set Size: \t Base Bayes %Correct: \t Graph Bayes %Correct: \t Base Simple %Correct: \t Graph Simple %Correct:");
         //Will get a null pointer exception when trying to predict an assessment not connected to a resource
         for (double ratio : learningSizeRatios) {
-            PredictorEffectiveness comp220BaseBayesEffectiveness = PredictorEffectiveness.testLearningPredictor(bayes, baseLearningSetSelector,assessmentToLearn, conceptGraph220, ratio);
+            PredictorEffectiveness comp220BaseBayesEffectiveness = PredictorEffectiveness.testLearningPredictor(bayes, baseLearningSetSelector,assessmentToLearn, conceptGraph220, atriskGroupings,ratio);
             bayes.reset();
-            PredictorEffectiveness comp220GraphBayesEffectiveness = PredictorEffectiveness.testLearningPredictor(bayes, graphLearningSetSelector,assessmentToLearn, conceptGraph220, ratio);
+            PredictorEffectiveness comp220GraphBayesEffectiveness = PredictorEffectiveness.testLearningPredictor(bayes, graphLearningSetSelector,assessmentToLearn, conceptGraph220, atriskGroupings,ratio);
             bayes.reset();
-            PredictorEffectiveness comp220BaseSimpleEffectiveness = PredictorEffectiveness.testPredictor(simple, baseLearningSetSelector, assessmentToLearn, conceptGraph220, ratio);
-            PredictorEffectiveness comp220GraphSimpleEffectiveness = PredictorEffectiveness.testPredictor(simple, graphLearningSetSelector, assessmentToLearn, conceptGraph220, ratio);
+            PredictorEffectiveness comp220BaseSimpleEffectiveness = PredictorEffectiveness.testPredictor(simple, baseLearningSetSelector, assessmentToLearn, conceptGraph220, atriskGroupings, ratio);
+            PredictorEffectiveness comp220GraphSimpleEffectiveness = PredictorEffectiveness.testPredictor(simple, graphLearningSetSelector, assessmentToLearn, conceptGraph220, atriskGroupings, ratio);
             System.out.println("\t\t" + ratio +
                     "\t\t\t  " + comp220BaseBayesEffectiveness.getPercentCorrect() +
                     "\t\t" + comp220GraphBayesEffectiveness.getPercentCorrect() +
