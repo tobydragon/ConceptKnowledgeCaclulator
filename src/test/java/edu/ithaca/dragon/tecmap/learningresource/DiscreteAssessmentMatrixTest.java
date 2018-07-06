@@ -13,9 +13,9 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class DiscreteAssessmentMatrixTest {
 
-    List<AssessmentItem> assessmentItems;
-    GradeDiscreteGroupings defaultGroupings;
-    GradeDiscreteGroupings atriskGroupings;
+    private List<AssessmentItem> assessmentItems;
+    private GradeDiscreteGroupings defaultGroupings;
+    private GradeDiscreteGroupings atriskGroupings;
 
     @Before
     public void setup() throws IOException {

@@ -5,6 +5,7 @@ import edu.ithaca.dragon.tecmap.conceptgraph.ConceptGraph;
 import edu.ithaca.dragon.tecmap.io.record.ConceptGraphRecord;
 import edu.ithaca.dragon.tecmap.io.record.LearningResourceRecord;
 import edu.ithaca.dragon.tecmap.learningresource.AssessmentItemResponse;
+import edu.ithaca.dragon.tecmap.learningresource.GradeDiscreteGroupings;
 
 import java.io.File;
 import java.io.IOException;
@@ -66,8 +67,10 @@ public class PredictorEffectivenessMain {
     }
 
     public static void main(String[] args) throws IOException {
+        GradeDiscreteGroupings defaultGroupings = GradeDiscreteGroupings.buildFromJson(Settings.DEFAULT_TEST_PREDICTION_PATH + "discreteGroupings.json");
+        GradeDiscreteGroupings atriskGroupings = GradeDiscreteGroupings.buildFromJson(Settings.DEFAULT_TEST_PREDICTION_PATH + "atriskGroupings.json");
         //For testing the Bayes Predictor Effectiveness
-        LearningPredictor bayes = new BayesPredictor();
+        LearningPredictor bayes = new BayesPredictor(defaultGroupings, atriskGroupings);
 
         //For testing the Simple Predictor Effectiveness
         Predictor simple = new SimplePredictor();

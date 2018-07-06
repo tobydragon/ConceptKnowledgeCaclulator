@@ -4,6 +4,7 @@ import ch.netzwerg.paleo.DataFrame;
 import de.daslaboratorium.machinelearning.classifier.Classifier;
 import de.daslaboratorium.machinelearning.classifier.bayes.BayesClassifier;
 import edu.ithaca.dragon.tecmap.conceptgraph.eval.KnowledgeEstimateMatrix;
+import edu.ithaca.dragon.tecmap.learningresource.GradeDiscreteGroupings;
 import io.vavr.Tuple2;
 
 import java.util.Collection;
@@ -14,14 +15,17 @@ import java.util.Map;
 public class BayesPredictor implements LearningPredictor {
 
     private Classifier<Double, String> bayesClassifier;
+    private GradeDiscreteGroupings defaultGroupings;
+    private GradeDiscreteGroupings atriskGroupings;
 
     /**
-     * Default constructor
      * Sets memory capacity to 500 as a default
      */
-    public BayesPredictor() {
+    public BayesPredictor(GradeDiscreteGroupings defaultGroupings, GradeDiscreteGroupings atriskGroupings) {
         bayesClassifier = new BayesClassifier<>();
         bayesClassifier.setMemoryCapacity(500);
+        this.defaultGroupings = defaultGroupings;
+        this.atriskGroupings = atriskGroupings;
     }
 
     /**

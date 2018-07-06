@@ -9,6 +9,7 @@ import edu.ithaca.dragon.tecmap.io.record.ConceptGraphRecord;
 import edu.ithaca.dragon.tecmap.io.record.LearningResourceRecord;
 import edu.ithaca.dragon.tecmap.learningresource.AssessmentItem;
 import edu.ithaca.dragon.tecmap.learningresource.AssessmentItemResponse;
+import edu.ithaca.dragon.tecmap.learningresource.GradeDiscreteGroupings;
 import io.vavr.Tuple2;
 import org.junit.Assert;
 import org.junit.Before;
@@ -26,6 +27,8 @@ public class PredictorEffectivenessTest {
 
     private KnowledgeEstimateMatrix knowledgeMatrix;
     private ConceptGraph conceptGraph;
+    private GradeDiscreteGroupings defaultGroupings;
+    private GradeDiscreteGroupings atriskGroupings;
 
     @Before
     public void setup() throws IOException {
@@ -38,6 +41,9 @@ public class PredictorEffectivenessTest {
         conceptGraph = new ConceptGraph(ConceptGraphRecord.buildFromJson(Settings.DEFAULT_TEST_DATASTORE_PATH + "Cs1Example/Cs1ExampleGraph.json"),
                 LearningResourceRecord.buildListFromJson(Settings.DEFAULT_TEST_DATASTORE_PATH + "Cs1Example/Cs1ExampleResources.json"),
                 AssessmentItemResponse.createAssessmentItemResponses(Arrays.asList(new String[] {Settings.DEFAULT_TEST_DATASTORE_PATH + "Cs1ExamplePrediction/Cs1ExampleAssessments.csv"})));
+
+        defaultGroupings = GradeDiscreteGroupings.buildFromJson(Settings.DEFAULT_TEST_PREDICTION_PATH + "discreteGroupings.json");
+        atriskGroupings = GradeDiscreteGroupings.buildFromJson(Settings.DEFAULT_TEST_PREDICTION_PATH + "atriskGroupings.json");
     }
 
     @Test
@@ -63,7 +69,7 @@ public class PredictorEffectivenessTest {
     public void testLearningPredictor() throws IOException {
         LearningSetSelector baseLearningSetSelector = new BaseLearningSetSelector();
 
-        PredictorEffectiveness testPredictor = PredictorEffectiveness.testLearningPredictor(new BayesPredictor(), baseLearningSetSelector, "Q5" , conceptGraph, 0.5);
+        PredictorEffectiveness testPredictor = PredictorEffectiveness.testLearningPredictor(new BayesPredictor(defaultGroupings, atriskGroupings), baseLearningSetSelector, "Q5" , conceptGraph, 0.5);
 
         assertEquals((double) 2/3, testPredictor.getPercentCorrect());
 
@@ -84,7 +90,7 @@ public class PredictorEffectivenessTest {
 
         LearningSetSelector graphLearningSetSelector = new GraphLearningSetSelector();
 
-        testPredictor = PredictorEffectiveness.testLearningPredictor(new BayesPredictor(), graphLearningSetSelector, "Q5", conceptGraph, 0.5);
+        testPredictor = PredictorEffectiveness.testLearningPredictor(new BayesPredictor(defaultGroupings, atriskGroupings), graphLearningSetSelector, "Q5", conceptGraph, 0.5);
 
         results = testPredictor.getResults();
         assertEquals(3, results.size());

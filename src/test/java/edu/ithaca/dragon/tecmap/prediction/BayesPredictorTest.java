@@ -5,6 +5,7 @@ import edu.ithaca.dragon.tecmap.conceptgraph.eval.KnowledgeEstimateMatrix;
 import edu.ithaca.dragon.tecmap.io.reader.CSVReader;
 import edu.ithaca.dragon.tecmap.io.reader.SakaiReader;
 import edu.ithaca.dragon.tecmap.learningresource.AssessmentItem;
+import edu.ithaca.dragon.tecmap.learningresource.GradeDiscreteGroupings;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -20,6 +21,8 @@ public class BayesPredictorTest {
 
     private KnowledgeEstimateMatrix learningMatrix;
     private KnowledgeEstimateMatrix testingMatrix;
+    private GradeDiscreteGroupings defaultGroupings;
+    private GradeDiscreteGroupings atriskGroupings;
 
     @Before
     public void setup() throws IOException {
@@ -40,12 +43,15 @@ public class BayesPredictorTest {
         assessments = data.getManualGradedLearningObjects();
 
         testingMatrix = new KnowledgeEstimateMatrix(assessments);
+
+        defaultGroupings = GradeDiscreteGroupings.buildFromJson(Settings.DEFAULT_TEST_PREDICTION_PATH + "discreteGroupings.json");
+        atriskGroupings = GradeDiscreteGroupings.buildFromJson(Settings.DEFAULT_TEST_PREDICTION_PATH + "atriskGroupings.json");
     }
 
     @Test
     //TESTING BOTH LEARNSET AND CLASSIFY SET SINCE LEARNSET RETURNS VOID
     public void predictions() {
-        LearningPredictor bayes = new BayesPredictor();
+        LearningPredictor bayes = new BayesPredictor(defaultGroupings, atriskGroupings);
 
         List<String> learningColNames = learningMatrix.getAssessmentIdList();
 
