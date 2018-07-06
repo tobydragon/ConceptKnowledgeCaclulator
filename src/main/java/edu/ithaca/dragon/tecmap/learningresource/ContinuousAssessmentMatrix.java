@@ -5,11 +5,13 @@ import java.util.List;
 
 public class ContinuousAssessmentMatrix {
 
+    private List<AssessmentItem> assessmentItems;
     private List<String> assessmentIds;
     private List<String> studentIds;
     private double[][] studentAssessmentGrades;
 
     public ContinuousAssessmentMatrix(List<AssessmentItem> assessmentItems) {
+        this.assessmentItems = assessmentItems;
         this.assessmentIds = getAssessmentIdList(assessmentItems);
         this.studentIds = getStudentIds(assessmentItems);
         this.studentAssessmentGrades = createMatrix(assessmentItems);
@@ -79,7 +81,20 @@ public class ContinuousAssessmentMatrix {
         return gradeMatrix;
     }
 
+    public List<AssessmentItem> getAssessmentItems() {
+        return assessmentItems;
+    }
+
     double[][] getStudentAssessmentGrades() {
         return studentAssessmentGrades;
+
+    }
+
+    public List<String> getAssessmentIds() {
+        return assessmentIds;
+    }
+
+    public List<String> getStudentIds() {
+        return studentIds;
     }
 }

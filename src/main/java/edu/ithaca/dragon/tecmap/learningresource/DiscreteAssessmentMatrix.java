@@ -6,11 +6,13 @@ import java.util.List;
 
 public class DiscreteAssessmentMatrix {
 
+    private List<AssessmentItem> assessmentItems;
     private List<String> assessmentIds;
     private List<String> studentIds;
     private String[][] studentAssessmentGrades;
 
     public DiscreteAssessmentMatrix(List<AssessmentItem> assessmentItems, GradeDiscreteGroupings groupings) {
+        this.assessmentItems = assessmentItems;
         this.assessmentIds = ContinuousAssessmentMatrix.getAssessmentIdList(assessmentItems);
         this.studentIds = ContinuousAssessmentMatrix.getStudentIds(assessmentItems);
         this.studentAssessmentGrades = createMatrix(assessmentItems, groupings);

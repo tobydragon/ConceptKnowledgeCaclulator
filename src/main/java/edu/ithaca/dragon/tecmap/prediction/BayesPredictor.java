@@ -4,6 +4,8 @@ import ch.netzwerg.paleo.DataFrame;
 import de.daslaboratorium.machinelearning.classifier.Classifier;
 import de.daslaboratorium.machinelearning.classifier.bayes.BayesClassifier;
 import edu.ithaca.dragon.tecmap.conceptgraph.eval.KnowledgeEstimateMatrix;
+import edu.ithaca.dragon.tecmap.learningresource.ContinuousAssessmentMatrix;
+import edu.ithaca.dragon.tecmap.learningresource.DiscreteAssessmentMatrix;
 import edu.ithaca.dragon.tecmap.learningresource.GradeDiscreteGroupings;
 import io.vavr.Tuple2;
 
@@ -71,6 +73,13 @@ public class BayesPredictor implements LearningPredictor {
         for (Tuple2<String, Collection<Double>> row: trainingRows.values()) {
             learn(row._1, row._2);
         }
+    }
+
+    public void learnSet(ContinuousAssessmentMatrix rawTrainingData, String assessmentToLearn, List<String> assessmentsToLearnWith) {
+        if (!assessmentsToLearnWith.contains(assessmentToLearn)) {
+            throw new RuntimeException("Assignments to Learn Must include assessmentToLearn");
+        }
+        DiscreteAssessmentMatrix discreteRawTrainingData = new DiscreteAssessmentMatrix(rawTrainingData.getAssessmentItems(), defaultGroupings, assessmentToLearn, atriskGroupings);
     }
 
     /**
