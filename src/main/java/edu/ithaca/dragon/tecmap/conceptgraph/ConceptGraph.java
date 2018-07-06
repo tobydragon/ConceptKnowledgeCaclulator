@@ -376,6 +376,11 @@ public class  ConceptGraph {
         Queue<ConceptNode> nodesBelow = new LinkedList<>();
         for (ConceptNode node : nodesWithAssessmentId) {
             nodesBelow.addAll(node.getChildren());
+            for (AssessmentItem item : node.getAssessmentItemMap().values()) {
+                if (!item.getId().equals(assessmentId)) {
+                    assessmentsBelow.add(item.getId());
+                }
+            }
         }
 
         //Iterate over the rest of the graph below the given point

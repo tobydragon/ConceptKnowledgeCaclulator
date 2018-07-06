@@ -286,6 +286,10 @@ public class ConceptGraphTest {
 
         assertEquals(6, assessmentsBelowQ4.size());
         Assert.assertThat(assessmentsBelowQ4, containsInAnyOrder("Q2", "HW4", "HW1", "HW2", "Q3", "HW5"));
+
+        //Check that traversal includes the assessments on the node(s) with the given ID
+        List<String> assessmentsBelowQ1 = conceptGraph.getAssessmentsBelowAssessmentID("Q1");
+        Assert.assertThat(assessmentsBelowQ1, containsInAnyOrder("HW3", "HW1", "HW2"));
     }
 
 
