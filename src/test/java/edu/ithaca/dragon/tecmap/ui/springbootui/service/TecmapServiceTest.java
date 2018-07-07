@@ -73,10 +73,10 @@ public class TecmapServiceTest {
     }
 
     @Test
-    public void retrieveBlankLearningResourceRecordsFromAssessmentWithIds() throws JsonProcessingException{
-        assertEquals(0, tecmapService.retrieveBlankLearningResourceRecordsFromAssessment("Cs1ExampleStructure").size());
-        assertEquals(Cs1ExampleJsonStrings.assessment1And2Str, Json.toJsonString(tecmapService.retrieveBlankLearningResourceRecordsFromAssessment("Cs1ExampleAssessmentAdded")));
-        assertEquals(Cs1ExampleJsonStrings.assessment1And2Str, Json.toJsonString(tecmapService.retrieveBlankLearningResourceRecordsFromAssessment("Cs1Example")));
+    public void currentResourceRecords() throws JsonProcessingException{
+        assertEquals(0, tecmapService.currentLearningResourceRecords("Cs1ExampleStructure").size());
+        assertEquals(Cs1ExampleJsonStrings.assessment1And2Str, Json.toJsonString(tecmapService.currentLearningResourceRecords("Cs1ExampleAssessmentAdded")));
+        assertEquals(Cs1ExampleJsonStrings.resourcesConnectedString, Json.toJsonString(tecmapService.currentLearningResourceRecords("Cs1Example")));
     }
 
     @Test
@@ -84,7 +84,7 @@ public class TecmapServiceTest {
         TecmapDatastore originalDatastore = TecmapFileDatastore.buildFromJsonFile(Settings.DEFAULT_TEST_DATASTORE_PATH);
 
         String filename = Settings.DEFAULT_TEST_DATASTORE_PATH + "Cs1ExampleAssessmentAdded/Cs1ExampleAssessmentAddedResources.json";
-        assertEquals(filename, tecmapService.postConnectedResources("Cs1ExampleAssessmentAdded", tecmapService.retrieveBlankLearningResourceRecordsFromAssessment("Cs1ExampleAssessmentAdded")));
+        assertEquals(filename, tecmapService.postConnectedResources("Cs1ExampleAssessmentAdded", tecmapService.currentLearningResourceRecords("Cs1ExampleAssessmentAdded")));
 
         Path path = Paths.get(filename);
         assertTrue(Files.deleteIfExists(path));

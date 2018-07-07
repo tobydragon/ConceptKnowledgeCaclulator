@@ -11,7 +11,6 @@ import edu.ithaca.dragon.tecmap.tecmapstate.AssessmentConnectedState;
 import edu.ithaca.dragon.tecmap.tecmapstate.NoAssessmentState;
 import edu.ithaca.dragon.tecmap.tecmapstate.TecmapState;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -49,13 +48,16 @@ public class Tecmap implements TecmapAPI {
     }
 
     @Override
-    public List<String> createConceptIdListToPrint() {
-        return state.createConceptIdListToPrint();
+    public List<String> conceptIdList() {
+        return state.conceptIdList();
     }
 
     @Override
-    public List<LearningResourceRecord> createBlankLearningResourceRecordsFromAssessment() {
-        if (state instanceof AssessmentAddedState) {
+    public List<LearningResourceRecord> currentLearningResourceRecords() {
+        if (state instanceof AssessmentConnectedState){
+            return ((AssessmentConnectedState)state).getLinks();
+        }
+        else if (state instanceof AssessmentAddedState) {
             return ((AssessmentAddedState)state).createBlankLearningResourceRecordsFromAssessment();
         }
         else {
