@@ -63,7 +63,7 @@ public class TecmapService {
     public List<String> retrieveConceptIdList(String id) {
         SuggestingTecmapAPI tecmap = retrieveSuggestingTecmapAPI(id);
         if (tecmap != null) {
-            return tecmap.createConceptIdListToPrint();
+            return tecmap.conceptIdList();
         }
         return null;
     }

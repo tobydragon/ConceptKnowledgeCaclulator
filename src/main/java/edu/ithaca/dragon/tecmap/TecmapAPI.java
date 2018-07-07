@@ -18,9 +18,9 @@ public interface TecmapAPI {
 
     /**
      * Creates a list all conceptIds in the structureGraph
-     * @return a list of strings, one for each conceptId, each surrounded by quotes
+     * @return a list of strings, one for each conceptId
      */
-    List<String> createConceptIdListToPrint();
+    List<String> conceptIdList();
 
     /**
      * Creates a list of LearningResourceRecords, one for each of the current AssessmentItems associated with this tecmap

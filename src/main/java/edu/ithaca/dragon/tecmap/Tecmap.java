@@ -49,7 +49,7 @@ public class Tecmap implements TecmapAPI {
     }
 
     @Override
-    public List<String> createConceptIdListToPrint() {
+    public List<String> conceptIdList() {
         return state.createConceptIdListToPrint();
     }
 

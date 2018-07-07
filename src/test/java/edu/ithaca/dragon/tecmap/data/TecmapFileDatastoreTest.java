@@ -101,7 +101,7 @@ class TecmapFileDatastoreTest {
         assertEquals(10, cs1ExampleMap.createBlankLearningResourceRecordsFromAssessment().size());
 
         assertEquals(Cs1ExampleJsonStrings.structureWithResourceConnectionsAsTree, cs1ExampleMap.createStructureTree().toJsonString());
-        Collection<String> twoAssessmentsConnectedConcepts = cs1ExampleMap.createConceptIdListToPrint();
+        Collection<String> twoAssessmentsConnectedConcepts = cs1ExampleMap.conceptIdList();
         assertEquals(Cs1ExampleJsonStrings.allConceptsString, twoAssessmentsConnectedConcepts.toString());
         List<ConceptGraphRecord> records =  cs1ExampleMap.createCohortTree().getGraphRecords();
         assertEquals(4, records.size());
