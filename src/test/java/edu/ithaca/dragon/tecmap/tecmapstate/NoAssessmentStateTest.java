@@ -29,7 +29,7 @@ class NoAssessmentStateTest {
 
     @Test
     void createConceptIdListToPrint() {
-        Collection<String> concepts = noAssessmentState.createConceptIdListToPrint();
+        Collection<String> concepts = noAssessmentState.conceptIdList();
         //System.out.println(concepts.toString());
         assertEquals(Cs1ExampleJsonStrings.allConceptsString, concepts.toString());
     }

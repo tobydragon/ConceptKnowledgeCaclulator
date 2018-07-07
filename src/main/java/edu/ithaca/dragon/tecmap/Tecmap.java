@@ -11,7 +11,6 @@ import edu.ithaca.dragon.tecmap.tecmapstate.AssessmentConnectedState;
 import edu.ithaca.dragon.tecmap.tecmapstate.NoAssessmentState;
 import edu.ithaca.dragon.tecmap.tecmapstate.TecmapState;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -50,7 +49,7 @@ public class Tecmap implements TecmapAPI {
 
     @Override
     public List<String> conceptIdList() {
-        return state.createConceptIdListToPrint();
+        return state.conceptIdList();
     }
 
     @Override

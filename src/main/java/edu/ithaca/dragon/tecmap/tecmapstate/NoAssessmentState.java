@@ -21,7 +21,7 @@ public class NoAssessmentState {
         return TreeConverter.makeTreeCopy(structureGraph).buildConceptGraphRecord();
     }
 
-    public List<String> createConceptIdListToPrint() {
+    public List<String> conceptIdList() {
         Collection<String> ids =  structureGraph.getAllNodeIds();
         return new ArrayList<>(ids);
     }
