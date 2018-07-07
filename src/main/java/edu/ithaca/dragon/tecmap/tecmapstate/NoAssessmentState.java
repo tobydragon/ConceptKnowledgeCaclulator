@@ -11,7 +11,7 @@ import java.util.List;
 
 public class NoAssessmentState {
 
-    protected ConceptGraph structureGraph;
+    private ConceptGraph structureGraph;
 
     public NoAssessmentState(ConceptGraph structureGraph){
         this.structureGraph = structureGraph;

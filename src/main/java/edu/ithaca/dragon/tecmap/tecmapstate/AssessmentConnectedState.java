@@ -12,7 +12,7 @@ import java.util.List;
 
 public class AssessmentConnectedState extends AssessmentAddedState {
 
-    protected CohortConceptGraphs cohortConceptGraphs;
+    private CohortConceptGraphs cohortConceptGraphs;
     private List<LearningResourceRecord> links;
 
 
