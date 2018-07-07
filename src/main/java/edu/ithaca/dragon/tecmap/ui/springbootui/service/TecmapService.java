@@ -69,14 +69,13 @@ public class TecmapService {
     }
 
     /**
-     * Gets blank copy of the Learning resource records, allows for authoring of courses
      * @param id
-     * @return List of LRRecords with no concepts, null if not found
+     * @return List of LearningResourceRecords with no concepts, null if not found
      */
-    public List<LearningResourceRecord> retrieveBlankLearningResourceRecordsFromAssessment(String id) {
+    public List<LearningResourceRecord> currentLearningResourceRecords(String id) {
         SuggestingTecmapAPI tecmap = retrieveSuggestingTecmapAPI(id);
         if (tecmap != null) {
-            return tecmap.createBlankLearningResourceRecordsFromAssessment();
+            return tecmap.currentLearningResourceRecords();
         }
         return null;
     }

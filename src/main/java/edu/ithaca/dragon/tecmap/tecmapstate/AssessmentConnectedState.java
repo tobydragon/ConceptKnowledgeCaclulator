@@ -13,6 +13,7 @@ import java.util.List;
 public class AssessmentConnectedState extends AssessmentAddedState {
 
     private CohortConceptGraphs cohortConceptGraphs;
+    //these link records are also represented within the graph as the connections from concepts to resources
     private List<LearningResourceRecord> links;
 
 
@@ -36,4 +37,7 @@ public class AssessmentConnectedState extends AssessmentAddedState {
 
     public CohortConceptGraphs getCohortConceptGraphs() {return cohortConceptGraphs;}
 
+    public List<LearningResourceRecord> getLinks() {
+        return links;
+    }
 }

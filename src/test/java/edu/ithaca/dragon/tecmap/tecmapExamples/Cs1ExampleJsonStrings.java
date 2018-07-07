@@ -341,4 +341,66 @@ public class Cs1ExampleJsonStrings {
             "    \"child\" : \"If Statements-1\"\n" +
             "  } ]\n" +
             "}";
+
+    public static final String resourcesConnectedString = "[ {\n" +
+            "  \"learningResourceId\" : \"Q1\",\n" +
+            "  \"resourceTypes\" : [ \"PRACTICE\" ],\n" +
+            "  \"conceptIds\" : [ \"If Statements\" ],\n" +
+            "  \"dataImportance\" : 0.0,\n" +
+            "  \"maxPossibleKnowledgeEstimate\" : 10.0\n" +
+            "}, {\n" +
+            "  \"learningResourceId\" : \"Q2\",\n" +
+            "  \"resourceTypes\" : [ \"PRACTICE\" ],\n" +
+            "  \"conceptIds\" : [ \"While Loops\" ],\n" +
+            "  \"dataImportance\" : 0.0,\n" +
+            "  \"maxPossibleKnowledgeEstimate\" : 5.0\n" +
+            "}, {\n" +
+            "  \"learningResourceId\" : \"Q3\",\n" +
+            "  \"resourceTypes\" : [ \"PRACTICE\" ],\n" +
+            "  \"conceptIds\" : [ \"For Loops\" ],\n" +
+            "  \"dataImportance\" : 0.0,\n" +
+            "  \"maxPossibleKnowledgeEstimate\" : 10.0\n" +
+            "}, {\n" +
+            "  \"learningResourceId\" : \"Q4\",\n" +
+            "  \"resourceTypes\" : [ \"PRACTICE\" ],\n" +
+            "  \"conceptIds\" : [ \"Loops\" ],\n" +
+            "  \"dataImportance\" : 0.0,\n" +
+            "  \"maxPossibleKnowledgeEstimate\" : 5.0\n" +
+            "}, {\n" +
+            "  \"learningResourceId\" : \"Q5\",\n" +
+            "  \"resourceTypes\" : [ \"PRACTICE\" ],\n" +
+            "  \"conceptIds\" : [ \"Intro CS\" ],\n" +
+            "  \"dataImportance\" : 0.0,\n" +
+            "  \"maxPossibleKnowledgeEstimate\" : 100.0\n" +
+            "}, {\n" +
+            "  \"learningResourceId\" : \"HW1\",\n" +
+            "  \"resourceTypes\" : [ \"PRACTICE\" ],\n" +
+            "  \"conceptIds\" : [ \"Boolean Expressions\" ],\n" +
+            "  \"dataImportance\" : 0.0,\n" +
+            "  \"maxPossibleKnowledgeEstimate\" : 1.0\n" +
+            "}, {\n" +
+            "  \"learningResourceId\" : \"HW2\",\n" +
+            "  \"resourceTypes\" : [ \"PRACTICE\" ],\n" +
+            "  \"conceptIds\" : [ \"Boolean Expressions\" ],\n" +
+            "  \"dataImportance\" : 0.0,\n" +
+            "  \"maxPossibleKnowledgeEstimate\" : 5.0\n" +
+            "}, {\n" +
+            "  \"learningResourceId\" : \"HW3\",\n" +
+            "  \"resourceTypes\" : [ \"PRACTICE\" ],\n" +
+            "  \"conceptIds\" : [ \"If Statements\" ],\n" +
+            "  \"dataImportance\" : 0.0,\n" +
+            "  \"maxPossibleKnowledgeEstimate\" : 2.0\n" +
+            "}, {\n" +
+            "  \"learningResourceId\" : \"HW4\",\n" +
+            "  \"resourceTypes\" : [ \"PRACTICE\" ],\n" +
+            "  \"conceptIds\" : [ \"While Loops\" ],\n" +
+            "  \"dataImportance\" : 0.0,\n" +
+            "  \"maxPossibleKnowledgeEstimate\" : 1.0\n" +
+            "}, {\n" +
+            "  \"learningResourceId\" : \"HW5\",\n" +
+            "  \"resourceTypes\" : [ \"PRACTICE\" ],\n" +
+            "  \"conceptIds\" : [ \"For Loops\" ],\n" +
+            "  \"dataImportance\" : 0.0,\n" +
+            "  \"maxPossibleKnowledgeEstimate\" : 1.0\n" +
+            "} ]";
 }

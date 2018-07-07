@@ -98,7 +98,7 @@ class TecmapFileDatastoreTest {
         //check a valid TecmapAPI
         TecmapAPI cs1ExampleMap = tecmapDatastore.retrieveTecmapForId("Cs1Example");
 
-        assertEquals(10, cs1ExampleMap.createBlankLearningResourceRecordsFromAssessment().size());
+        assertEquals(10, cs1ExampleMap.currentLearningResourceRecords().size());
 
         assertEquals(Cs1ExampleJsonStrings.structureWithResourceConnectionsAsTree, cs1ExampleMap.createStructureTree().toJsonString());
         Collection<String> twoAssessmentsConnectedConcepts = cs1ExampleMap.conceptIdList();
@@ -133,17 +133,17 @@ class TecmapFileDatastoreTest {
 
         assertEquals(TecmapState.noAssessment, noAssessmentModeMap.getCurrentState());
         assertNotNull(noAssessmentModeMap.createStructureTree());
-        assertEquals(0, noAssessmentModeMap.createBlankLearningResourceRecordsFromAssessment().size());
+        assertEquals(0, noAssessmentModeMap.currentLearningResourceRecords().size());
         assertNull( noAssessmentModeMap.createCohortTree());
 
         assertEquals(TecmapState.assessmentAdded, assessmentAddedModeMap.getCurrentState());
         assertNotNull(assessmentAddedModeMap.createStructureTree());
-        assertEquals(10, assessmentAddedModeMap.createBlankLearningResourceRecordsFromAssessment().size());
+        assertEquals(10, assessmentAddedModeMap.currentLearningResourceRecords().size());
         assertNull(assessmentAddedModeMap.createCohortTree());
 
         assertEquals(TecmapState.assessmentConnected, assessmentConnectedModeMap.getCurrentState());
         assertNotNull(assessmentConnectedModeMap.createStructureTree());
-        assertEquals(10, assessmentConnectedModeMap.createBlankLearningResourceRecordsFromAssessment().size());
+        assertEquals(10, assessmentConnectedModeMap.currentLearningResourceRecords().size());
         assertNotNull(assessmentConnectedModeMap.createCohortTree());
     }
 
@@ -167,11 +167,11 @@ class TecmapFileDatastoreTest {
         String expectedOrigFilename = Settings.DEFAULT_TEST_DATASTORE_PATH + "Cs1ExampleAssessmentAdded/Cs1ExampleAssessmentAddedResources.json";
         String secondFilename = Settings.DEFAULT_TEST_DATASTORE_PATH + "Cs1ExampleAssessmentAdded/Cs1ExampleAssessmentAddedResources-backup-0.json";
 
-        String updateFiles = tecmapDatastore.updateTecmapResources("Cs1ExampleAssessmentAdded", tecmapDatastore.retrieveTecmapForId("Cs1ExampleAssessmentAdded").createBlankLearningResourceRecordsFromAssessment());
+        String updateFiles = tecmapDatastore.updateTecmapResources("Cs1ExampleAssessmentAdded", tecmapDatastore.retrieveTecmapForId("Cs1ExampleAssessmentAdded").currentLearningResourceRecords());
         assertEquals(expectedOrigFilename, updateFiles);
 
         //Second call to make sure it adds to the file name so that it doesn't overwrite any files
-        updateFiles = tecmapDatastore.updateTecmapResources("Cs1ExampleAssessmentAdded", tecmapDatastore.retrieveTecmapForId("Cs1ExampleAssessmentAdded").createBlankLearningResourceRecordsFromAssessment());
+        updateFiles = tecmapDatastore.updateTecmapResources("Cs1ExampleAssessmentAdded", tecmapDatastore.retrieveTecmapForId("Cs1ExampleAssessmentAdded").currentLearningResourceRecords());
         assertEquals(expectedOrigFilename, updateFiles);
 
         //And Delete Both all Files Created

@@ -22,12 +22,7 @@ public interface TecmapAPI {
      */
     List<String> conceptIdList();
 
-    /**
-     * Creates a list of LearningResourceRecords, one for each of the current AssessmentItems associated with this tecmap
-     * These objects will contain all default values, meaning that have no connections to concepts
-     * @return the list of LearningResourceRecords, or an empty list if there are no assessmentItems
-     */
-    List<LearningResourceRecord> createBlankLearningResourceRecordsFromAssessment();
+    List<LearningResourceRecord> currentLearningResourceRecords();
 
     /**
      * Creates a list of graphs: One average structureGraph, and one for each student for which there is data

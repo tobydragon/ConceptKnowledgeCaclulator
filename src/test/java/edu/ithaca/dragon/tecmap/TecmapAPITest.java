@@ -50,10 +50,10 @@ class TecmapAPITest {
     }
 
     @Test
-    void createBlankLearningResourceRecordsFromAssessment2Files() throws IOException {
-        assertEquals(0, onlyStructureTecmap.createBlankLearningResourceRecordsFromAssessment().size());
-        assertEquals(Cs1ExampleJsonStrings.assessment1And2Str, Json.toJsonString(twoAssessmentsAddedTecmap.createBlankLearningResourceRecordsFromAssessment()));
-        assertEquals(Cs1ExampleJsonStrings.assessment1And2Str, Json.toJsonString(twoAssessmentsConnectedTecmap.createBlankLearningResourceRecordsFromAssessment()));
+    void currentLearningResourceRecords() throws IOException {
+        assertEquals(0, onlyStructureTecmap.currentLearningResourceRecords().size());
+        assertEquals(Cs1ExampleJsonStrings.assessment1And2Str, Json.toJsonString(twoAssessmentsAddedTecmap.currentLearningResourceRecords()));
+        assertEquals(Cs1ExampleJsonStrings.resourcesConnectedString, Json.toJsonString(twoAssessmentsConnectedTecmap.currentLearningResourceRecords()));
     }
 
     @Test

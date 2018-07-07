@@ -44,7 +44,7 @@ class AssessmentAddedStateTest {
 
         );
 
-        //System.out.println(Json.toJsonString(state.createBlankLearningResourceRecordsFromAssessment()));
+        //System.out.println(Json.toJsonString(state.currentLearningResourceRecords()));
         assertEquals(Cs1ExampleJsonStrings.assessment1And2Str, Json.toJsonString(state.createBlankLearningResourceRecordsFromAssessment()));
     }
 

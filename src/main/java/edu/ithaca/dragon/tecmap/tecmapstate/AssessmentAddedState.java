@@ -1,12 +1,10 @@
 package edu.ithaca.dragon.tecmap.tecmapstate;
 
 import edu.ithaca.dragon.tecmap.conceptgraph.ConceptGraph;
-import edu.ithaca.dragon.tecmap.io.reader.ReaderTools;
 import edu.ithaca.dragon.tecmap.io.record.LearningResourceRecord;
 import edu.ithaca.dragon.tecmap.learningresource.AssessmentItem;
 import edu.ithaca.dragon.tecmap.learningresource.AssessmentItemResponse;
 
-import java.io.IOException;
 import java.util.List;
 
 public class AssessmentAddedState extends NoAssessmentState {
