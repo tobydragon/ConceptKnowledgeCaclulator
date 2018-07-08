@@ -31,7 +31,7 @@ public class PracticalConceptGraphTest {
 
             ConceptGraphRecord graphRecord = ConceptGraphRecord.buildFromJson(TEST_DIR+"mediumRealisticConceptGraph.json");
 
-            List<LearningResourceRecord> LOLRlist = LearningResourceRecord.buildListFromJson(TEST_DIR + "mediumRealisticResource.json");
+            List<LearningResourceRecord> LOLRlist = LearningResourceRecord.createLearningResourceRecordsFromJsonFile(TEST_DIR + "mediumRealisticResource.json");
             ConceptGraph graph = new ConceptGraph(graphRecord, LOLRlist, csvReader.getManualGradedResponses());
 
             ObjectMapper mapper = new ObjectMapper();
@@ -67,7 +67,7 @@ public class PracticalConceptGraphTest {
 
             ConceptGraphRecord graphRecord = ConceptGraphRecord.buildFromJson(Settings.TEST_RESOURCE_DIR + "ManuallyCreated/basicRealisticConceptGraph.json");
 
-            List<LearningResourceRecord> LOLRlist = LearningResourceRecord.buildListFromJson(Settings.TEST_RESOURCE_DIR + "ManuallyCreated/basicRealisticResource.json");
+            List<LearningResourceRecord> LOLRlist = LearningResourceRecord.createLearningResourceRecordsFromJsonFile(Settings.TEST_RESOURCE_DIR + "ManuallyCreated/basicRealisticResource.json");
             ConceptGraph graph = new ConceptGraph(graphRecord, LOLRlist);
 
             CohortConceptGraphs gcg = new CohortConceptGraphs(graph,csvReader.getManualGradedResponses());
@@ -107,7 +107,7 @@ public class PracticalConceptGraphTest {
 
             ConceptGraphRecord graphRecord = ConceptGraphRecord.buildFromJson(TEST_DIR+"mediumRealisticConceptGraph.json");
 
-            List<LearningResourceRecord> LOLRlist = LearningResourceRecord.buildListFromJson(TEST_DIR + "mediumRealisticResource.json");
+            List<LearningResourceRecord> LOLRlist = LearningResourceRecord.createLearningResourceRecordsFromJsonFile(TEST_DIR + "mediumRealisticResource.json");
             ConceptGraph graph = new ConceptGraph(graphRecord, LOLRlist);
 
             CohortConceptGraphs gcg = new CohortConceptGraphs(graph,csvReader.getManualGradedResponses());
@@ -142,7 +142,7 @@ public class PracticalConceptGraphTest {
         CSVReader csvReader = new SakaiReader(TEST_DIR+"singleStudentRealisticAssessment.csv");
 
             ConceptGraphRecord graphRecord = ConceptGraphRecord.buildFromJson(TEST_DIR+"mediumRealisticConceptGraph.json");
-            List<LearningResourceRecord> LOLRlist = LearningResourceRecord.buildListFromJson(TEST_DIR+"mediumRealisticResource.json");
+            List<LearningResourceRecord> LOLRlist = LearningResourceRecord.createLearningResourceRecordsFromJsonFile(TEST_DIR+"mediumRealisticResource.json");
             ConceptGraph graph = new ConceptGraph(graphRecord, LOLRlist, csvReader.getManualGradedResponses());
             graph.calcDataImportance();
             graph.calcKnowledgeEstimates();

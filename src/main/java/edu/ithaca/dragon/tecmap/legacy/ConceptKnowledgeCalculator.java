@@ -150,7 +150,7 @@ public class ConceptKnowledgeCalculator implements ConceptKnowledgeCalculatorAPI
 
         List<LearningResourceRecord> linkRecord = new ArrayList<>();
         for (String rFiles : resourceFilename){
-            List<LearningResourceRecord> temp = LearningResourceRecord.buildListFromJson(rFiles);
+            List<LearningResourceRecord> temp = LearningResourceRecord.createLearningResourceRecordsFromJsonFile(rFiles);
             linkRecord.addAll(temp);
             resourceFiles.add(rFiles);
         }
@@ -658,7 +658,7 @@ public class ConceptKnowledgeCalculator implements ConceptKnowledgeCalculatorAPI
 
     @Override
     public boolean resourceIsValid(String name) throws IOException {
-        List<LearningResourceRecord> temp = LearningResourceRecord.buildListFromJson(name);
+        List<LearningResourceRecord> temp = LearningResourceRecord.createLearningResourceRecordsFromJsonFile(name);
         if(temp.size()>0){
             return true;
         }else{

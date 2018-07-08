@@ -24,7 +24,7 @@ public class LearningResourceRecordTest {
         Collection<AssessmentItem> assessments = new ArrayList<>();
         Collection<LearningMaterial> materials = new ArrayList<>();
         try {
-            Collection<LearningResourceRecord> fromFile = LearningResourceRecord.buildListFromJson(Settings.TEST_RESOURCE_DIR + "ManuallyCreated/LearningRecordResourceTest-MissingFields.json");
+            Collection<LearningResourceRecord> fromFile = LearningResourceRecord.createLearningResourceRecordsFromJsonFile(Settings.TEST_RESOURCE_DIR + "ManuallyCreated/LearningRecordResourceTest-MissingFields.json");
 
             for (LearningResourceRecord record : fromFile){
                 //set defaults if there aren't any resources
@@ -163,7 +163,7 @@ public class LearningResourceRecordTest {
             mapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
 
 
-            List<LearningResourceRecord> list = LearningResourceRecord.buildListFromJson(Settings.TEST_RESOURCE_DIR + "ManuallyCreated/simpleResource.json");
+            List<LearningResourceRecord> list = LearningResourceRecord.createLearningResourceRecordsFromJsonFile(Settings.TEST_RESOURCE_DIR + "ManuallyCreated/simpleResource.json");
 
             Assert.assertEquals(6, list.size());
             Assert.assertEquals("Q1", list.get(0).getLearningResourceId());

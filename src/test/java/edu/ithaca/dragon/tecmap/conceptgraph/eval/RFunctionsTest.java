@@ -118,7 +118,7 @@ public class RFunctionsTest {
     public void modelMakerTest() throws IOException{
         ConceptGraph graph = new ConceptGraph(ConceptGraphRecord.buildFromJson(Settings.TEST_RESOURCE_DIR + "ManuallyCreated/simpleConceptGraph.json"));
         List<AssessmentItemResponse> assessmentItemResponses = AssessmentItemResponse.createAssessmentItemResponses(Arrays.asList(Settings.TEST_RESOURCE_DIR + "ManuallyCreated/simpleAssessmentMoreUsers.csv"));
-        List<LearningResourceRecord> links = LearningResourceRecord.createLinksFromResourceFiles(Arrays.asList(Settings.TEST_RESOURCE_DIR + "ManuallyCreated/simpleResource.json"));
+        List<LearningResourceRecord> links = LearningResourceRecord.createLearningResourceRecordsFromJsonFiles(Arrays.asList(Settings.TEST_RESOURCE_DIR + "ManuallyCreated/simpleResource.json"));
         graph.addLearningResourcesFromRecords(links);
         CohortConceptGraphs ccg = new CohortConceptGraphs(graph, assessmentItemResponses);
         Assert.assertEquals("B -> Q1, Q1ToB, NA \n" +
@@ -130,7 +130,7 @@ public class RFunctionsTest {
 
         graph = new ConceptGraph(ConceptGraphRecord.buildFromJson(Settings.TEST_RESOURCE_DIR + "ManuallyCreated/comp220GraphExample.json"));
         assessmentItemResponses = AssessmentItemResponse.createAssessmentItemResponses(Arrays.asList(Settings.TEST_RESOURCE_DIR + "/comp220/comp220ExampleDataPortion.csv"));
-        links = LearningResourceRecord.createLinksFromResourceFiles(Arrays.asList(Settings.TEST_RESOURCE_DIR + "ManuallyCreated/comp220Resources.json"));
+        links = LearningResourceRecord.createLearningResourceRecordsFromJsonFiles(Arrays.asList(Settings.TEST_RESOURCE_DIR + "ManuallyCreated/comp220Resources.json"));
         graph.addLearningResourcesFromRecords(links);
         ccg = new CohortConceptGraphs(graph, assessmentItemResponses);
 
@@ -158,7 +158,7 @@ public class RFunctionsTest {
     public static void confirmatoryGraphTest() throws IOException, InterruptedException {
         ConceptGraph graph = new ConceptGraph(ConceptGraphRecord.buildFromJson(Settings.TEST_RESOURCE_DIR + "ManuallyCreated/simpleConceptGraph.json"));
         List<AssessmentItemResponse> assessmentItemResponses = AssessmentItemResponse.createAssessmentItemResponses(Arrays.asList(Settings.TEST_RESOURCE_DIR + "ManuallyCreated/simpleAssessmentMoreUsers.csv"));
-        List<LearningResourceRecord> links = LearningResourceRecord.createLinksFromResourceFiles(Arrays.asList(Settings.TEST_RESOURCE_DIR + "ManuallyCreated/simpleResource.json"));
+        List<LearningResourceRecord> links = LearningResourceRecord.createLearningResourceRecordsFromJsonFiles(Arrays.asList(Settings.TEST_RESOURCE_DIR + "ManuallyCreated/simpleResource.json"));
         graph.addLearningResourcesFromRecords(links);
         CohortConceptGraphs ccg = new CohortConceptGraphs(graph, assessmentItemResponses);
 
@@ -172,7 +172,7 @@ public class RFunctionsTest {
     public static void getConfirmatoryMatrixTest() throws IOException, InterruptedException {
         ConceptGraph graph = new ConceptGraph(ConceptGraphRecord.buildFromJson(Settings.TEST_RESOURCE_DIR + "ManuallyCreated/simpleConceptGraph.json"));
         List<AssessmentItemResponse> assessmentItemResponses = AssessmentItemResponse.createAssessmentItemResponses(Arrays.asList(Settings.TEST_RESOURCE_DIR + "ManuallyCreated/simpleAssessmentMoreUsers.csv"));
-        List<LearningResourceRecord> links = LearningResourceRecord.createLinksFromResourceFiles(Arrays.asList(Settings.TEST_RESOURCE_DIR + "ManuallyCreated/simpleResource.json"));
+        List<LearningResourceRecord> links = LearningResourceRecord.createLearningResourceRecordsFromJsonFiles(Arrays.asList(Settings.TEST_RESOURCE_DIR + "ManuallyCreated/simpleResource.json"));
         graph.addLearningResourcesFromRecords(links);
         CohortConceptGraphs ccg = new CohortConceptGraphs(graph, assessmentItemResponses);
 
@@ -202,7 +202,7 @@ public class RFunctionsTest {
     public void modelToFileTest() throws IOException{
         ConceptGraph graph = new ConceptGraph(ConceptGraphRecord.buildFromJson(Settings.TEST_RESOURCE_DIR + "ManuallyCreated/simpleConceptGraph.json"));
         List<AssessmentItemResponse> assessmentItemResponses = AssessmentItemResponse.createAssessmentItemResponses(Arrays.asList(Settings.TEST_RESOURCE_DIR + "ManuallyCreated/simpleAssessmentMoreUsers.csv"));
-        List<LearningResourceRecord> links = LearningResourceRecord.createLinksFromResourceFiles(Arrays.asList(Settings.TEST_RESOURCE_DIR + "ManuallyCreated/simpleResource.json"));
+        List<LearningResourceRecord> links = LearningResourceRecord.createLearningResourceRecordsFromJsonFiles(Arrays.asList(Settings.TEST_RESOURCE_DIR + "ManuallyCreated/simpleResource.json"));
         graph.addLearningResourcesFromRecords(links);
         CohortConceptGraphs ccg = new CohortConceptGraphs(graph, assessmentItemResponses);
 

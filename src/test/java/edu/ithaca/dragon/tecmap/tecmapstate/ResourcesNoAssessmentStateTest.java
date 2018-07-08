@@ -21,7 +21,7 @@ class ResourcesNoAssessmentStateTest {
     public void getResourceRecordLinksTest() throws IOException {
         ResourcesNoAssessmentState state = new ResourcesNoAssessmentState(
                 new ConceptGraph(ConceptGraphRecord.buildFromJson(Settings.TEST_RESOURCE_DIR + "tecmapExamples/Cs1ExampleGraph.json")),
-                LearningResourceRecord.createLinksFromResourceFiles(new ArrayList<>(Arrays.asList(Settings.TEST_RESOURCE_DIR + "tecmapExamples/Cs1ExampleResources.json")))
+                LearningResourceRecord.createLearningResourceRecordsFromJsonFiles(new ArrayList<>(Arrays.asList(Settings.TEST_RESOURCE_DIR + "tecmapExamples/Cs1ExampleResources.json")))
         );
 
         assertEquals(Cs1ExampleJsonStrings.resourcesConnectedString, Json.toJsonString(state.getResourceRecordLinks()));

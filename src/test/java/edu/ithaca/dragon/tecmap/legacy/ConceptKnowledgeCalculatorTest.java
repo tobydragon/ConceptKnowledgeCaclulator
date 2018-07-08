@@ -913,7 +913,7 @@ public class ConceptKnowledgeCalculatorTest {
             csvFiles.add(Settings.TEST_RESOURCE_DIR + "ManuallyCreated/mediumAssessment.csv");
             ConceptKnowledgeCalculator.csvToResource(csvFiles, testFilepath);
 
-            List<LearningResourceRecord> recordsFromFile = LearningResourceRecord.buildListFromJson(testFilepath);
+            List<LearningResourceRecord> recordsFromFile = LearningResourceRecord.createLearningResourceRecordsFromJsonFile(testFilepath);
             Assert.assertNotNull(recordsFromFile);
             //TODO:test that these LOLRecords are good compared to the input csv file, they just won't have any concepts in their lists
             LearningResourceRecord currRec = recordsFromFile.get(0);
