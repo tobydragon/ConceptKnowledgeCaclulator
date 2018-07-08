@@ -56,7 +56,7 @@ public class LearningResourceRecord {
         return mapper.readValue(new File(fullFileName), new TypeReference<List<LearningResourceRecord>>(){});
     }
 
-    public static List<LearningResourceRecord> createLRecordsFromAssessments(Collection<AssessmentItem> assessmentItems){
+    public static List<LearningResourceRecord> createLearningResourceRecordsFromAssessmentItems(Collection<AssessmentItem> assessmentItems){
         List<LearningResourceRecord> lolrList = new ArrayList<LearningResourceRecord>();
         for(AssessmentItem assessmentItem : assessmentItems){
             lolrList.add( new LearningResourceRecord(assessmentItem));

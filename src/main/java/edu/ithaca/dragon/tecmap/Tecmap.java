@@ -55,7 +55,7 @@ public class Tecmap implements TecmapAPI {
     @Override
     public List<LearningResourceRecord> currentLearningResourceRecords() {
         if (state instanceof AssessmentConnectedState){
-            return ((AssessmentConnectedState)state).getLinks();
+            return ((AssessmentConnectedState)state).getResourceRecordLinks();
         }
         else if (state instanceof AssessmentAddedState) {
             return ((AssessmentAddedState)state).createBlankLearningResourceRecordsFromAssessment();

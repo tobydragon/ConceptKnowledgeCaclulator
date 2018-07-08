@@ -16,15 +16,40 @@ public class AssessmentConnectedState extends AssessmentAddedState {
     //these link records are also represented within the graph as the connections from concepts to resources
     private List<LearningResourceRecord> links;
 
+    /**
+     *
+     * @param structureGraph
+     * @param links
+     * @param assessmentItemsStructureList
+     * @param assessmentItemResponses
+     * @param linksNeedToBeAdded if coming from a ResourcesNoAssessmentState, links have already been added
+     */
+    public AssessmentConnectedState(ConceptGraph structureGraph,
+                                    List<LearningResourceRecord> links,
+                                    List<AssessmentItem> assessmentItemsStructureList,
+                                    List<AssessmentItemResponse> assessmentItemResponses,
+                                    boolean linksNeedToBeAdded) {
+        super(structureGraph, assessmentItemsStructureList, assessmentItemResponses);
+        this.links = links;
+        if (linksNeedToBeAdded) {
+            structureGraph.addLearningResourcesFromRecords(links);
+        }
+        cohortConceptGraphs = new CohortConceptGraphs(structureGraph, assessmentItemResponses);
+    }
 
+    /**
+     *
+     * @param structureGraph
+     * @param links
+     * @param assessmentItemsStructureList
+     * @param assessmentItemResponses
+     * @post links will be added to structureGraph before cohortGraphs are made
+     */
     public AssessmentConnectedState(ConceptGraph structureGraph,
                                     List<LearningResourceRecord> links,
                                     List<AssessmentItem> assessmentItemsStructureList,
                                     List<AssessmentItemResponse> assessmentItemResponses) {
-        super(structureGraph, assessmentItemsStructureList, assessmentItemResponses);
-        this.links = links;
-        structureGraph.addLearningResourcesFromRecords(links);
-        cohortConceptGraphs = new CohortConceptGraphs(structureGraph, assessmentItemResponses);
+        this(structureGraph, links, assessmentItemsStructureList, assessmentItemResponses, true);
     }
 
     public CohortConceptGraphsRecord createCohortTree(){
@@ -37,7 +62,7 @@ public class AssessmentConnectedState extends AssessmentAddedState {
 
     public CohortConceptGraphs getCohortConceptGraphs() {return cohortConceptGraphs;}
 
-    public List<LearningResourceRecord> getLinks() {
+    public List<LearningResourceRecord> getResourceRecordLinks() {
         return links;
     }
 }

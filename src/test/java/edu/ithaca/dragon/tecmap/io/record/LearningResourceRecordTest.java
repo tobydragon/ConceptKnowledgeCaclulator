@@ -185,7 +185,7 @@ public class LearningResourceRecordTest {
             CSVReader test = new SakaiReader(Settings.TEST_RESOURCE_DIR + "ManuallyCreated/complexRealisticAssessment.csv");
             Collection<AssessmentItem> list = test.getManualGradedLearningObjects();
             List<AssessmentItem> list2 = test.getManualGradedLearningObjects();
-            List<LearningResourceRecord> lolrList = LearningResourceRecord.createLRecordsFromAssessments(list);
+            List<LearningResourceRecord> lolrList = LearningResourceRecord.createLearningResourceRecordsFromAssessmentItems(list);
             List<String> resultString = new ArrayList<String>();
             for (LearningResourceRecord lolr : lolrList) {
                 resultString.add(lolr.getLearningResourceId());
