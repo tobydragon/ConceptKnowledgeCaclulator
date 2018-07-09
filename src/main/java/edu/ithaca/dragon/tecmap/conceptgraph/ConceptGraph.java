@@ -352,6 +352,51 @@ public class  ConceptGraph {
 		}
 	}
 
+    /**
+     * Gets list of assessmentItems that are below the highest occurrence of the given assessmentId for each root
+     * @param assessmentId
+     * @return
+     */
+	public List<String> getAssessmentsBelowAssessmentID(String assessmentId) {
+	    //Array to hold all the assessmentsBelow
+        List<String> assessmentsBelow = new ArrayList<>();
+
+        List<ConceptNode> nodesWithAssessmentId = new ArrayList<>();
+
+        //Find the nodes with the given AssessmentId
+        for (ConceptNode node : nodeMap.values()) {
+            for (AssessmentItem item : node.getAssessmentItemMap().values()) {
+                if (item.getId().equals(assessmentId)) {
+                    nodesWithAssessmentId.add(node);
+                }
+            }
+        }
+
+        //Keep a queue of the nodes below the ones with the given assessmentID
+        Queue<ConceptNode> nodesBelow = new LinkedList<>();
+        for (ConceptNode node : nodesWithAssessmentId) {
+            nodesBelow.addAll(node.getChildren());
+            for (AssessmentItem item : node.getAssessmentItemMap().values()) {
+                if (!item.getId().equals(assessmentId)) {
+                    assessmentsBelow.add(item.getId());
+                }
+            }
+        }
+
+        //Iterate over the rest of the graph below the given point
+        while (!nodesBelow.isEmpty()) {
+            ConceptNode current = nodesBelow.remove();
+            for (AssessmentItem item : current.getAssessmentItemMap().values()) {
+                if (!assessmentsBelow.contains(item.getId())) {
+                    assessmentsBelow.add(item.getId());
+                }
+            }
+            nodesBelow.addAll(current.getChildren());
+        }
+
+        return assessmentsBelow;
+    }
+
     ////////////////////////////////////////////  Simple Functions    //////////////////////////////////////
 
     public ConceptNode findNodeById(String id){

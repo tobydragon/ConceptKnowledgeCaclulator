@@ -1,5 +1,6 @@
 package edu.ithaca.dragon.tecmap.conceptgraph;
 
+import edu.ithaca.dragon.tecmap.Settings;
 import edu.ithaca.dragon.tecmap.io.record.ConceptGraphRecord;
 import edu.ithaca.dragon.tecmap.io.record.LearningResourceRecord;
 import edu.ithaca.dragon.tecmap.learningresource.*;
@@ -9,9 +10,11 @@ import org.apache.logging.log4j.Logger;
 import org.junit.Assert;
 import org.junit.Test;
 
+import java.io.IOException;
 import java.util.*;
 
 import static org.hamcrest.collection.IsIterableContainingInAnyOrder.containsInAnyOrder;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class ConceptGraphTest {
 	static Logger logger = LogManager.getLogger(ConceptGraphTest.class);
@@ -271,6 +274,22 @@ public class ConceptGraphTest {
         Assert.assertEquals(q13, 1);
         Assert.assertEquals(q14, 1);
 
+    }
+
+    @Test
+    public void getAssessmentItemsBelowAssessmentID() throws IOException {
+        List<LearningResourceRecord> loRecords = LearningResourceRecord.buildListFromJson(Settings.DEFAULT_TEST_DATASTORE_PATH + "Cs1Example/Cs1ExampleResources.json");
+        ConceptGraph conceptGraph = new ConceptGraph(ConceptGraphRecord.buildFromJson(Settings.DEFAULT_TEST_DATASTORE_PATH + "Cs1Example/Cs1ExampleGraph.json"),
+                loRecords);
+
+        List<String> assessmentsBelowQ4 = conceptGraph.getAssessmentsBelowAssessmentID("Q4");
+
+        assertEquals(6, assessmentsBelowQ4.size());
+        Assert.assertThat(assessmentsBelowQ4, containsInAnyOrder("Q2", "HW4", "HW1", "HW2", "Q3", "HW5"));
+
+        //Check that traversal includes the assessments on the node(s) with the given ID
+        List<String> assessmentsBelowQ1 = conceptGraph.getAssessmentsBelowAssessmentID("Q1");
+        Assert.assertThat(assessmentsBelowQ1, containsInAnyOrder("HW3", "HW1", "HW2"));
     }
 
 
