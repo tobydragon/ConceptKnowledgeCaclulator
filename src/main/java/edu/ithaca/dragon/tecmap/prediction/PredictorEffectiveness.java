@@ -20,19 +20,53 @@ public class PredictorEffectiveness {
 
 
     private double percentCorrect; //between 0 & 1
-    private List<PredictionResult> results;
+    private int totalTested;
+    private List<PredictionResult> allResults; //Redundant information
+    private List<PredictionResult> truePositive;
+    private List<PredictionResult> trueNegative;
+    private List<PredictionResult> falsePositive;
+    private List<PredictionResult> falseNegative;
 
-    private PredictorEffectiveness(double percentCorrect, List<PredictionResult> results) {
+    private PredictorEffectiveness(double percentCorrect, List<PredictionResult> truePositive, List<PredictionResult> trueNegative, List<PredictionResult> falsePositive, List<PredictionResult> falseNegative) {
         this.percentCorrect = percentCorrect;
-        this.results = results;
+        this.truePositive = truePositive;
+        this.trueNegative = trueNegative;
+        this.falsePositive = falsePositive;
+        this.falseNegative = falseNegative;
+        this.allResults = new ArrayList<>();
+        this.allResults.addAll(truePositive);
+        this.allResults.addAll(trueNegative);
+        this.allResults.addAll(falsePositive);
+        this.allResults.addAll(falseNegative);
+        this.totalTested = allResults.size();
     }
 
     public double getPercentCorrect() {
         return percentCorrect;
     }
 
-    public List<PredictionResult> getResults() {
-        return results;
+    public List<PredictionResult> getAllResults() {
+        return allResults;
+    }
+
+    public int getTotalTested() {
+        return totalTested;
+    }
+
+    public List<PredictionResult> getTruePositive() {
+        return truePositive;
+    }
+
+    public List<PredictionResult> getTrueNegative() {
+        return trueNegative;
+    }
+
+    public List<PredictionResult> getFalsePositive() {
+        return falsePositive;
+    }
+
+    public List<PredictionResult> getFalseNegative() {
+        return falseNegative;
     }
 
     /**
@@ -79,7 +113,7 @@ public class PredictorEffectiveness {
         return new Tuple2<>(ratioMatrix, nonRatioMatrix);
     }
 
-    private static List<PredictionResult> getResults(ContinuousAssessmentMatrix testingMatrix, String assessmentToLearn, GradeDiscreteGroupings atRiskGroupings,Map<String, String> predictions) {
+    static List<PredictionResult> getPredictionResults(ContinuousAssessmentMatrix testingMatrix, String assessmentToLearn, GradeDiscreteGroupings atRiskGroupings, Map<String, String> predictions) {
         List<PredictionResult> predictionResults = new ArrayList<>();
         List<String> groups = atRiskGroupings.getGroups();
         List<Integer> pointBreaks = atRiskGroupings.getPointBreaks();
@@ -116,6 +150,33 @@ public class PredictorEffectiveness {
         return predictionResults;
     }
 
+    static PredictorEffectiveness getPredictorEffectivenessFromResults(List<PredictionResult> predictionResults) {
+        List<PredictionResult> truePositive = new ArrayList<>();
+        List<PredictionResult> trueNegative = new ArrayList<>();
+        List<PredictionResult> falsePositive = new ArrayList<>();
+        List<PredictionResult> falseNegative = new ArrayList<>();
+        //Calculate the percent correct
+        double numCorrect = 0;
+        for (PredictionResult result : predictionResults) {
+            Result currResult = result.getResult();
+            if (currResult == Result.TRUE_POSITIVE) {
+                numCorrect++;
+                truePositive.add(result);
+            } else if (currResult == Result.TRUE_NEGATIVE) {
+                numCorrect++;
+                trueNegative.add(result);
+            } else if (currResult == Result.FALSE_POSITIVE) {
+                falsePositive.add(result);
+            } else {
+                falseNegative.add(result);
+            }
+        }
+
+        double percentCorrect = numCorrect/predictionResults.size();
+
+        return new PredictorEffectiveness(percentCorrect, truePositive, trueNegative, falsePositive, falseNegative);
+    }
+
     /**
      * Test how effective a predictor is, works off of the Predictor interface
      * @param predictor specific type of predictor
@@ -149,19 +210,9 @@ public class PredictorEffectiveness {
 
         Map<String, String> predictions = predictor.classifySet(testingMatrix, testingAssessments);
 
-        List<PredictionResult> predictionResults = getResults(testingMatrix, assessmentToLearn, atriskGroupings, predictions);
+        List<PredictionResult> predictionResults = getPredictionResults(testingMatrix, assessmentToLearn, atriskGroupings, predictions);
 
-        //Calculate the percent correct
-        double numCorrect = 0;
-        for (PredictionResult result : predictionResults) {
-            if (result.getResult() == Result.TRUE_NEGATIVE || result.getResult() == Result.TRUE_POSITIVE) {
-                numCorrect++;
-            }
-        }
-
-        double percentCorrect = numCorrect/predictionResults.size();
-
-        return new PredictorEffectiveness(percentCorrect, predictionResults);
+        return getPredictorEffectivenessFromResults(predictionResults);
     }
 
     public static PredictorEffectiveness testPredictor(Predictor simplePredictor, LearningSetSelector learningSetSelector, String assessmentToLearn, ConceptGraph conceptGraph, GradeDiscreteGroupings atriskGroupings,double ratio) throws IOException {
@@ -181,19 +232,9 @@ public class PredictorEffectiveness {
 
         Map<String, String> predictions = simplePredictor.classifySet(testingMatrix, testingAssessments);
 
-        List<PredictionResult> predictionResults = getResults(testingMatrix, assessmentToLearn, atriskGroupings, predictions);
+        List<PredictionResult> predictionResults = getPredictionResults(testingMatrix, assessmentToLearn, atriskGroupings, predictions);
 
-        //Calculate the percent correct
-        double numCorrect = 0;
-        for (PredictionResult result : predictionResults) {
-            if (result.getResult() == Result.TRUE_NEGATIVE || result.getResult() == Result.TRUE_POSITIVE) {
-                numCorrect++;
-            }
-        }
-
-        double percentCorrect = numCorrect/predictionResults.size();
-
-        return new PredictorEffectiveness(percentCorrect, predictionResults);
+        return getPredictorEffectivenessFromResults(predictionResults);
     }
 
 }
