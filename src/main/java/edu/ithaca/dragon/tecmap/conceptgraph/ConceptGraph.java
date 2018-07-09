@@ -361,16 +361,7 @@ public class  ConceptGraph {
 	    //Array to hold all the assessmentsBelow
         List<String> assessmentsBelow = new ArrayList<>();
 
-        List<ConceptNode> nodesWithAssessmentId = new ArrayList<>();
-
-        //Find the nodes with the given AssessmentId
-        for (ConceptNode node : nodeMap.values()) {
-            for (AssessmentItem item : node.getAssessmentItemMap().values()) {
-                if (item.getId().equals(assessmentId)) {
-                    nodesWithAssessmentId.add(node);
-                }
-            }
-        }
+        List<ConceptNode> nodesWithAssessmentId = getNodesWithAssessmentId(assessmentId);
 
         //Keep a queue of the nodes below the ones with the given assessmentID
         Queue<ConceptNode> nodesBelow = new LinkedList<>();
@@ -395,6 +386,72 @@ public class  ConceptGraph {
         }
 
         return assessmentsBelow;
+    }
+
+    /**
+     * Gets list of assessmentItems that are x steps below the highest occurrence of the given assessmentId for each root
+     * @param assessmentId
+     * @param stepsDown number of steps to take
+     * @return List of assessments x steps down, null if there are negative stepsDown
+     */
+    public List<String> getAssessmentsBelowAssessmentID(String assessmentId, int stepsDown) {
+        if (stepsDown < 0) {
+            return null;
+        }
+        List<ConceptNode> nodesWithAssessmentId = getNodesWithAssessmentId(assessmentId);
+
+        //Dictates that an assessmentId will only be included once
+        Set<String> assessmentsBelow = new HashSet<>();
+        for (ConceptNode node : nodesWithAssessmentId) {
+            assessmentsBelow.addAll(getAssessmentsBelowNode(assessmentsBelow, node, stepsDown));
+            for (AssessmentItem item : node.getAssessmentItemMap().values()) {
+                if (!assessmentsBelow.contains(item.getId()) && !item.getId().equals(assessmentId)) {
+                    assessmentsBelow.add(item.getId());
+                }
+            }
+        }
+
+        return new ArrayList<>(assessmentsBelow);
+    }
+
+    /**
+     * Finds the nodes from the graph with the given assessmentId in its list of assessments
+     * @param assessmentId
+     * @return
+     */
+    public List<ConceptNode> getNodesWithAssessmentId(String assessmentId) {
+        List<ConceptNode> nodesWithAssessmentId = new ArrayList<>();
+        //Find the nodes with the given AssessmentId
+        for (ConceptNode node : nodeMap.values()) {
+            for (AssessmentItem item : node.getAssessmentItemMap().values()) {
+                if (item.getId().equals(assessmentId)) {
+                    nodesWithAssessmentId.add(node);
+                }
+            }
+        }
+        return nodesWithAssessmentId;
+    }
+
+    /**
+     * Returns a set of assessmentIds(dictating that each is only included once) x steps below a given node
+     * Recursive function
+     * @param assessmentList
+     * @param startNode
+     * @param stepsToTake
+     * @return
+     */
+    public Set<String> getAssessmentsBelowNode(Set<String> assessmentList, ConceptNode startNode, int stepsToTake) {
+        if (stepsToTake == 0) {
+            return assessmentList;
+        } else {
+            for (ConceptNode child : startNode.getChildren()) {
+                for (AssessmentItem item : child.getAssessmentItemMap().values()) {
+                    assessmentList.add(item.getId());
+                }
+                assessmentList = getAssessmentsBelowNode(assessmentList, child, stepsToTake-1);
+            }
+            return assessmentList;
+        }
     }
 
     ////////////////////////////////////////////  Simple Functions    //////////////////////////////////////
