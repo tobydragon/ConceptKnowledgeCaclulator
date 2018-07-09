@@ -4,20 +4,27 @@ import edu.ithaca.dragon.tecmap.conceptgraph.CohortConceptGraphs;
 import edu.ithaca.dragon.tecmap.conceptgraph.ConceptGraph;
 import edu.ithaca.dragon.tecmap.io.record.CohortConceptGraphsRecord;
 import edu.ithaca.dragon.tecmap.io.record.LearningResourceRecord;
+import edu.ithaca.dragon.tecmap.learningresource.AssessmentItem;
+import edu.ithaca.dragon.tecmap.learningresource.AssessmentItemResponse;
 
 import java.io.IOException;
 import java.util.List;
 
 public class AssessmentConnectedState extends AssessmentAddedState {
 
-    protected CohortConceptGraphs cohortConceptGraphs;
+    private CohortConceptGraphs cohortConceptGraphs;
+    //these link records are also represented within the graph as the connections from concepts to resources
     private List<LearningResourceRecord> links;
 
-    public AssessmentConnectedState(String structureFile, List<String> resourceConnectionFiles, List<String> assessmentFiles) throws IOException {
-        super(structureFile, assessmentFiles);
-        links = LearningResourceRecord.createLinksFromResourceFiles(resourceConnectionFiles);
-        graph.addLearningResourcesFromRecords(links);
-        cohortConceptGraphs = new CohortConceptGraphs(graph, assessmentItemResponses);
+
+    public AssessmentConnectedState(ConceptGraph structureGraph,
+                                    List<LearningResourceRecord> links,
+                                    List<AssessmentItem> assessmentItemsStructureList,
+                                    List<AssessmentItemResponse> assessmentItemResponses) {
+        super(structureGraph, assessmentItemsStructureList, assessmentItemResponses);
+        this.links = links;
+        structureGraph.addLearningResourcesFromRecords(links);
+        cohortConceptGraphs = new CohortConceptGraphs(structureGraph, assessmentItemResponses);
     }
 
     public CohortConceptGraphsRecord createCohortTree(){
@@ -30,4 +37,7 @@ public class AssessmentConnectedState extends AssessmentAddedState {
 
     public CohortConceptGraphs getCohortConceptGraphs() {return cohortConceptGraphs;}
 
+    public List<LearningResourceRecord> getLinks() {
+        return links;
+    }
 }

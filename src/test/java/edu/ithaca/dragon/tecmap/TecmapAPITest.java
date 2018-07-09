@@ -41,19 +41,19 @@ class TecmapAPITest {
 
     @Test
     void createConceptIdListToPrint() {
-        Collection<String> onlyStructureConcepts = onlyStructureTecmap.createConceptIdListToPrint();
+        Collection<String> onlyStructureConcepts = onlyStructureTecmap.conceptIdList();
         assertEquals(Cs1ExampleJsonStrings.allConceptsString, onlyStructureConcepts.toString());
-        Collection<String> twoAssessmentsAddedConcepts = twoAssessmentsAddedTecmap.createConceptIdListToPrint();
+        Collection<String> twoAssessmentsAddedConcepts = twoAssessmentsAddedTecmap.conceptIdList();
         assertEquals(Cs1ExampleJsonStrings.allConceptsString, twoAssessmentsAddedConcepts.toString());
-        Collection<String> twoAssessmentsConnectedConcepts = twoAssessmentsConnectedTecmap.createConceptIdListToPrint();
+        Collection<String> twoAssessmentsConnectedConcepts = twoAssessmentsConnectedTecmap.conceptIdList();
         assertEquals(Cs1ExampleJsonStrings.allConceptsString, twoAssessmentsConnectedConcepts.toString());
     }
 
     @Test
-    void createBlankLearningResourceRecordsFromAssessment2Files() throws IOException {
-        assertEquals(0, onlyStructureTecmap.createBlankLearningResourceRecordsFromAssessment().size());
-        assertEquals(Cs1ExampleJsonStrings.assessment1And2Str, Json.toJsonString(twoAssessmentsAddedTecmap.createBlankLearningResourceRecordsFromAssessment()));
-        assertEquals(Cs1ExampleJsonStrings.assessment1And2Str, Json.toJsonString(twoAssessmentsConnectedTecmap.createBlankLearningResourceRecordsFromAssessment()));
+    void currentLearningResourceRecords() throws IOException {
+        assertEquals(0, onlyStructureTecmap.currentLearningResourceRecords().size());
+        assertEquals(Cs1ExampleJsonStrings.assessment1And2Str, Json.toJsonString(twoAssessmentsAddedTecmap.currentLearningResourceRecords()));
+        assertEquals(Cs1ExampleJsonStrings.resourcesConnectedString, Json.toJsonString(twoAssessmentsConnectedTecmap.currentLearningResourceRecords()));
     }
 
     @Test

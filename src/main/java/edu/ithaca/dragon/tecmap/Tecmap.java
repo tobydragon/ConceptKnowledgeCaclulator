@@ -1,14 +1,16 @@
 package edu.ithaca.dragon.tecmap;
 
+import edu.ithaca.dragon.tecmap.conceptgraph.ConceptGraph;
 import edu.ithaca.dragon.tecmap.io.record.CohortConceptGraphsRecord;
 import edu.ithaca.dragon.tecmap.io.record.ConceptGraphRecord;
 import edu.ithaca.dragon.tecmap.io.record.LearningResourceRecord;
+import edu.ithaca.dragon.tecmap.learningresource.AssessmentItem;
+import edu.ithaca.dragon.tecmap.learningresource.AssessmentItemResponse;
 import edu.ithaca.dragon.tecmap.tecmapstate.AssessmentAddedState;
 import edu.ithaca.dragon.tecmap.tecmapstate.AssessmentConnectedState;
 import edu.ithaca.dragon.tecmap.tecmapstate.NoAssessmentState;
 import edu.ithaca.dragon.tecmap.tecmapstate.TecmapState;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -17,22 +19,22 @@ public class Tecmap implements TecmapAPI {
     protected NoAssessmentState state;
 
     /**
-     * creates a tecmap in the appropriate state, depending on what files are given
-     * @param structureFileName must be a valid json file for graph structure
-     * @param resourceConnectionFiles can be a list of filenames, or null if there are no resource connections
-     * @param assessmentFilenames can be a list of filenames, or null if there are no assessments
-     * @throws IOException
+     *
+     * @param structureGraph
+     * @param links a list of LearningResourceRecords, or null if data is not connected to the graph
+     * @param assessmentItemsStructureList a list of AssessmentItems to copy for the structure of the graph
+     * @param assessmentItemResponses a list of AssessmentItemResponses containing all data (not connectes to the structureList above)
      */
-    public Tecmap(String structureFileName, List<String> resourceConnectionFiles, List<String> assessmentFilenames) throws IOException {
-        TecmapState stateEnum = TecmapState.checkAvailableState(resourceConnectionFiles, assessmentFilenames);
+    public Tecmap(ConceptGraph structureGraph,  List<LearningResourceRecord> links, List<AssessmentItem> assessmentItemsStructureList, List<AssessmentItemResponse> assessmentItemResponses) {
+        TecmapState stateEnum = TecmapState.checkAvailableState(links, assessmentItemResponses);
         if (stateEnum == TecmapState.noAssessment){
-            state = new NoAssessmentState(structureFileName);
+            state = new NoAssessmentState(structureGraph);
         }
         else if (stateEnum == TecmapState.assessmentAdded){
-            state = new AssessmentAddedState(structureFileName, assessmentFilenames);
+            state = new AssessmentAddedState(structureGraph, assessmentItemsStructureList, assessmentItemResponses);
         }
         else if (stateEnum == TecmapState.assessmentConnected){
-            state = new AssessmentConnectedState(structureFileName, resourceConnectionFiles, assessmentFilenames);
+            state = new AssessmentConnectedState(structureGraph, links, assessmentItemsStructureList, assessmentItemResponses);
         }
         else {
             throw new RuntimeException("State not recognized, cannot build");
@@ -46,13 +48,16 @@ public class Tecmap implements TecmapAPI {
     }
 
     @Override
-    public List<String> createConceptIdListToPrint() {
-        return state.createConceptIdListToPrint();
+    public List<String> conceptIdList() {
+        return state.conceptIdList();
     }
 
     @Override
-    public List<LearningResourceRecord> createBlankLearningResourceRecordsFromAssessment() {
-        if (state instanceof AssessmentAddedState) {
+    public List<LearningResourceRecord> currentLearningResourceRecords() {
+        if (state instanceof AssessmentConnectedState){
+            return ((AssessmentConnectedState)state).getLinks();
+        }
+        else if (state instanceof AssessmentAddedState) {
             return ((AssessmentAddedState)state).createBlankLearningResourceRecordsFromAssessment();
         }
         else {

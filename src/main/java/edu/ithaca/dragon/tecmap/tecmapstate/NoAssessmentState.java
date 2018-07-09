@@ -11,18 +11,18 @@ import java.util.List;
 
 public class NoAssessmentState {
 
-    protected ConceptGraph graph;
+    private ConceptGraph structureGraph;
 
-    public NoAssessmentState(String structureFilename) throws IOException {
-        graph = new ConceptGraph(ConceptGraphRecord.buildFromJson(structureFilename));
+    public NoAssessmentState(ConceptGraph structureGraph){
+        this.structureGraph = structureGraph;
     }
 
     public ConceptGraphRecord createStructureTree() {
-        return TreeConverter.makeTreeCopy(graph).buildConceptGraphRecord();
+        return TreeConverter.makeTreeCopy(structureGraph).buildConceptGraphRecord();
     }
 
-    public List<String> createConceptIdListToPrint() {
-        Collection<String> ids =  graph.getAllNodeIds();
+    public List<String> conceptIdList() {
+        Collection<String> ids =  structureGraph.getAllNodeIds();
         return new ArrayList<>(ids);
     }
 

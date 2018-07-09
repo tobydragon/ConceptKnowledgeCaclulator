@@ -39,7 +39,7 @@ public class ApiController {
 
     @GetMapping("/blankLRRecords/{courseId}")
     public List<LearningResourceRecord> getBlankLearningResourceRecordsFromAssessment(@PathVariable("courseId") String courseId) {
-        return tecmapService.retrieveBlankLearningResourceRecordsFromAssessment(courseId);
+        return tecmapService.currentLearningResourceRecords(courseId);
     }
 
     @PostMapping("/connectResources/{courseId}")
