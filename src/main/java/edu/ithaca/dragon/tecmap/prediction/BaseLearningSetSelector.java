@@ -1,9 +1,9 @@
 package edu.ithaca.dragon.tecmap.prediction;
 
 import edu.ithaca.dragon.tecmap.conceptgraph.ConceptGraph;
-import edu.ithaca.dragon.tecmap.conceptgraph.eval.KnowledgeEstimateMatrix;
 import edu.ithaca.dragon.tecmap.learningresource.AssessmentItem;
 import edu.ithaca.dragon.tecmap.learningresource.AssessmentItemResponse;
+import edu.ithaca.dragon.tecmap.learningresource.ContinuousAssessmentMatrix;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -26,12 +26,12 @@ public class BaseLearningSetSelector implements LearningSetSelector {
     public List<String> getLearningSet(ConceptGraph graph, String studentIdToDecideSet, String assessmentToPredict) throws IOException {
         List<AssessmentItem> assessmentItems = new ArrayList<>();
         assessmentItems.addAll(graph.getAssessmentItemMap().values());
-        KnowledgeEstimateMatrix graphMatrix = new KnowledgeEstimateMatrix(assessmentItems);
+        ContinuousAssessmentMatrix graphMatrix = new ContinuousAssessmentMatrix(assessmentItems);
 
         List<String> learningSet = new ArrayList<>();
 
         //Only includes assessments that have responses for the given student
-        for (AssessmentItem item : graphMatrix.getObjList()) {
+        for (AssessmentItem item : graphMatrix.getAssessmentItems()) {
             for (AssessmentItemResponse response : item.getResponses()) {
                 if (response.getUserId().equals(studentIdToDecideSet)) {
                     learningSet.add(item.getId());
