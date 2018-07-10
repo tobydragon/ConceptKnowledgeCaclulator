@@ -27,6 +27,24 @@
         "src/main/resources/datastore/comp220Dragon/private/comp220Assessment-e2.csv",
         "src/main/resources/datastore/comp220Dragon/private/comp220Assessment-finalExam.csv"
       ]
+    },
+    {
+      "id" : "comp105",
+      "graphFile" : "src/main/resources/datastore/comp105/comp105Graph.json",
+      "resourceFiles" : [ "src/main/resources/datastore/comp105/comp105Resources.json" ],
+      "assessmentFiles" : [  ]
+    },
+    {
+      "id" : "comp110",
+      "graphFile" : "src/main/resources/datastore/comp110/comp110Graph.json",
+      "resourceFiles" : [ "src/main/resources/datastore/comp110/comp110Resources.json" ],
+      "assessmentFiles" : [  ]
+    },
+    {
+      "id" : "comp115",
+      "graphFile" : "src/main/resources/datastore/comp115/comp115Graph.json",
+      "resourceFiles" : [ "src/main/resources/datastore/comp115/comp115Resources.json" ],
+      "assessmentFiles" : [  ]
     }
   ]
 }
