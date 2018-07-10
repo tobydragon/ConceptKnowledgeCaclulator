@@ -188,6 +188,8 @@ public class PredictorEffectiveness {
      */
     public static PredictorEffectiveness testLearningPredictor(LearningPredictor predictor, LearningSetSelector learningSetSelector, String assessmentToLearn, ConceptGraph conceptGraph, GradeDiscreteGroupings atriskGroupings, double ratio) throws IOException{
         ContinuousAssessmentMatrix originalMatrix = new ContinuousAssessmentMatrix(new ArrayList<>(conceptGraph.getAssessmentItemMap().values()));
+        //List of learningAssessments based on the first student's assessments
+        List<String> learningAssessments = learningSetSelector.getLearningSet(conceptGraph, originalMatrix.getStudentIds().get(0), assessmentToLearn);
 
         //Split the matrix
         Tuple2<ContinuousAssessmentMatrix, ContinuousAssessmentMatrix> splitMatrix = splitMatrix(originalMatrix, ratio);
@@ -196,9 +198,6 @@ public class PredictorEffectiveness {
         ContinuousAssessmentMatrix learningMatrix = splitMatrix._1;
         //Test on the other sized matrix
         ContinuousAssessmentMatrix testingMatrix = splitMatrix._2;
-
-        //List of learningAssessments based on the first student's assessments
-        List<String> learningAssessments = learningSetSelector.getLearningSet(conceptGraph, learningMatrix.getStudentIds().get(0), assessmentToLearn);
 
         //Learn the category with the given assessments
         predictor.learnSet(learningMatrix, assessmentToLearn, learningAssessments);
@@ -217,6 +216,9 @@ public class PredictorEffectiveness {
 
     public static PredictorEffectiveness testPredictor(Predictor simplePredictor, LearningSetSelector learningSetSelector, String assessmentToLearn, ConceptGraph conceptGraph, GradeDiscreteGroupings atriskGroupings,double ratio) throws IOException {
         ContinuousAssessmentMatrix originalMatrix = new ContinuousAssessmentMatrix(new ArrayList<>(conceptGraph.getAssessmentItemMap().values()));
+        //Get learning set and remove the assessmentToLearn from list
+        List<String> testingAssessments = learningSetSelector.getLearningSet(conceptGraph, originalMatrix.getStudentIds().get(0), assessmentToLearn);
+        testingAssessments.remove(assessmentToLearn);
 
         //Split the matrix
         Tuple2<ContinuousAssessmentMatrix, ContinuousAssessmentMatrix> splitMatrix = splitMatrix(originalMatrix, ratio);
@@ -225,10 +227,6 @@ public class PredictorEffectiveness {
         ContinuousAssessmentMatrix learningMatrix = splitMatrix._1;
         //Test on the other sized matrix
         ContinuousAssessmentMatrix testingMatrix = splitMatrix._2;
-
-        //Get learning set and remove the assessmentToLearn from list
-        List<String> testingAssessments = learningSetSelector.getLearningSet(conceptGraph, learningMatrix.getStudentIds().get(0), assessmentToLearn);
-        testingAssessments.remove(assessmentToLearn);
 
         Map<String, String> predictions = simplePredictor.classifySet(testingMatrix, testingAssessments);
 
