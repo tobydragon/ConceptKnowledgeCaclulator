@@ -1,9 +1,16 @@
 package edu.ithaca.dragon.tecmap.conceptgraph;
 
+import edu.ithaca.dragon.tecmap.Settings;
+import edu.ithaca.dragon.tecmap.io.record.ConceptGraphRecord;
+import edu.ithaca.dragon.tecmap.io.record.LearningResourceRecord;
 import org.junit.Assert;
 import org.junit.Test;
 
+import java.io.IOException;
 import java.util.HashMap;
+import java.util.List;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class ConceptNodeTest {
 
@@ -38,8 +45,6 @@ public class ConceptNodeTest {
         Assert.assertEquals(true,num6);
     }
 
-
-
     @Test
     public void buildLearningObjectSummaryOccurrenceSimpleTest(){
 		//test the creation of graph
@@ -65,13 +70,27 @@ public class ConceptNodeTest {
 //
     }
 
+    @Test
+    public void getLongestPathToLeaf() throws IOException {
+        List<LearningResourceRecord> loRecords = LearningResourceRecord.buildListFromJson(Settings.DEFAULT_TEST_DATASTORE_PATH + "Cs1Example/Cs1ExampleResources.json");
+        ConceptGraph conceptGraph = new ConceptGraph(ConceptGraphRecord.buildFromJson(Settings.DEFAULT_TEST_DATASTORE_PATH + "Cs1Example/Cs1ExampleGraph.json"),
+                loRecords);
 
+        //Test on root with 3 on one side & two on the other
+        ConceptNode testNode = conceptGraph.findNodeById("Intro CS");
+        assertEquals(3, testNode.getLongestPathToLeaf());
 
+        //Test non-root w/ 2 on one side & one on other
+        testNode = conceptGraph.findNodeById("Loops");
+        assertEquals(2, testNode.getLongestPathToLeaf());
 
+        //Test on node w/ path of 1 and no other paths
+        testNode = conceptGraph.findNodeById("While Loops");
+        assertEquals(1, testNode.getLongestPathToLeaf());
 
+        //Test on leaf
+        testNode = conceptGraph.findNodeById("Boolean Expressions");
+        assertEquals(0, testNode.getLongestPathToLeaf());
+    }
 
-
-
-
-	
 }
