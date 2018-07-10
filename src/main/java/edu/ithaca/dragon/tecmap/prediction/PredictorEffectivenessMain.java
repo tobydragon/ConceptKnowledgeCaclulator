@@ -25,16 +25,16 @@ public class PredictorEffectivenessMain {
      * @param courseName the name of the directory in the datastore for the course
      * @return ConceptGraph built from the graph file, the assessment files and resource files
      */
-    private static ConceptGraph getConceptGraph(String courseName) throws IOException {
+    static ConceptGraph getConceptGraph(String courseName, String datastorePath) throws IOException {
         //Get assessment filenames
-        File directory = new File(Settings.DEFAULT_MAIN_DATASTORE_PATH + courseName + "/private/");
+        File directory = new File(datastorePath + courseName + "/private/");
 
         List<File> files = Arrays.asList(directory.listFiles());
         List<String> assessmentFilenames = new ArrayList<>();
         for (File file : files) {
             if (file.isFile()) {
                 if (!file.getName().equals(".gitignore")) {
-                    assessmentFilenames.add(Settings.DEFAULT_MAIN_DATASTORE_PATH + courseName + "/private/" + file.getName());
+                    assessmentFilenames.add(datastorePath + courseName + "/private/" + file.getName());
                 }
             }
         }
@@ -42,14 +42,14 @@ public class PredictorEffectivenessMain {
         List<String> resourceFilenames = new ArrayList<>();
         String graphFilename = null;
         //Get resources
-        directory = new File(Settings.DEFAULT_MAIN_DATASTORE_PATH + courseName);
+        directory = new File(datastorePath + courseName);
         files = Arrays.asList(directory.listFiles());
         for (File file : files) {
             if (file.isFile()) {
                 if (file.getName().contains("Resources")) {
-                    resourceFilenames.add(Settings.DEFAULT_MAIN_DATASTORE_PATH + courseName + "/" + file.getName());
+                    resourceFilenames.add(datastorePath + courseName + "/" + file.getName());
                 } else if (file.getName().contains("Graph")) {
-                    graphFilename = Settings.DEFAULT_MAIN_DATASTORE_PATH + courseName + "/" + file.getName();
+                    graphFilename = datastorePath + courseName + "/" + file.getName();
                 }
             }
         }
@@ -76,7 +76,7 @@ public class PredictorEffectivenessMain {
         Predictor simple = new SimplePredictor(atriskGroupings);
 
         //Testing for COMP220 Data
-        ConceptGraph conceptGraph220 = getConceptGraph("comp220Dragon");
+        ConceptGraph conceptGraph220 = getConceptGraph("comp220Dragon", Settings.DEFAULT_MAIN_DATASTORE_PATH);
 
         //Assessment to learn
         String assessmentToLearn = "Lab 4: Recursion";

@@ -1,6 +1,8 @@
 package edu.ithaca.dragon.tecmap.conceptgraph;
 
 import edu.ithaca.dragon.tecmap.Settings;
+import edu.ithaca.dragon.tecmap.io.reader.CSVReader;
+import edu.ithaca.dragon.tecmap.io.reader.SakaiReader;
 import edu.ithaca.dragon.tecmap.io.record.ConceptGraphRecord;
 import edu.ithaca.dragon.tecmap.io.record.LearningResourceRecord;
 import edu.ithaca.dragon.tecmap.learningresource.*;
@@ -15,6 +17,7 @@ import java.util.*;
 
 import static org.hamcrest.collection.IsIterableContainingInAnyOrder.containsInAnyOrder;
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotEquals;
 import static org.junit.jupiter.api.Assertions.assertNull;
 
 public class ConceptGraphTest {
@@ -68,6 +71,26 @@ public class ConceptGraphTest {
 	    ConceptGraph copy = new ConceptGraph(orig, "Copy");
 	    Assert.assertNotNull(copy.findNodeById("A"));
 	    Assert.assertEquals(copy.findNodeById("C"), copy.findNodeById("B").getChildren().get(0));
+    }
+
+    @Test
+    public void copyConstructorTestWithLOMap() throws IOException {
+        String testFile = Settings.DEFAULT_TEST_DATASTORE_PATH + "Cs1ExamplePrediction/Cs1ExampleAssessments.csv";
+        CSVReader data = new SakaiReader(testFile);
+        List<AssessmentItem> assessments = data.getManualGradedLearningObjects();
+
+        ConceptGraph original = new ConceptGraph(ConceptGraphRecord.buildFromJson(Settings.DEFAULT_TEST_DATASTORE_PATH + "Cs1Example/Cs1ExampleGraph.json"),
+                LearningResourceRecord.buildListFromJson(Settings.DEFAULT_TEST_DATASTORE_PATH + "Cs1Example/Cs1ExampleResources.json"),
+                AssessmentItemResponse.createAssessmentItemResponses(Arrays.asList(new String[] {Settings.DEFAULT_TEST_DATASTORE_PATH + "Cs1ExamplePrediction/Cs1ExampleAssessments.csv"})));
+
+        List<AssessmentItem> originalAssessments = new ArrayList<>(original.getAssessmentItemMap().values());
+        HashMap<String, AssessmentItem> copyAssessments = new HashMap<>();
+        copyAssessments.put(originalAssessments.get(0).getId(), new AssessmentItem(originalAssessments.get(0)));
+
+        ConceptGraph copy = new ConceptGraph(original, original.getName() + "Copy", copyAssessments, new HashMap<>());
+
+        assertNotEquals(original, copy);
+        assertEquals(1, copy.getAssessmentItemMap().values().size());
     }
 
     @Test
