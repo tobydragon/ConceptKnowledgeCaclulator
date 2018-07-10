@@ -358,34 +358,14 @@ public class  ConceptGraph {
      * @return
      */
 	public List<String> getAssessmentsBelowAssessmentID(String assessmentId) {
-	    //Array to hold all the assessmentsBelow
-        List<String> assessmentsBelow = new ArrayList<>();
-
         List<ConceptNode> nodesWithAssessmentId = getNodesWithAssessmentId(assessmentId);
 
-        //Keep a queue of the nodes below the ones with the given assessmentID
-        Queue<ConceptNode> nodesBelow = new LinkedList<>();
+        List<Integer> assessmentNodesPathLengths = new ArrayList<>();
         for (ConceptNode node : nodesWithAssessmentId) {
-            nodesBelow.addAll(node.getChildren());
-            for (AssessmentItem item : node.getAssessmentItemMap().values()) {
-                if (!item.getId().equals(assessmentId)) {
-                    assessmentsBelow.add(item.getId());
-                }
-            }
+            assessmentNodesPathLengths.add(node.getLongestPathToLeaf());
         }
 
-        //Iterate over the rest of the graph below the given point
-        while (!nodesBelow.isEmpty()) {
-            ConceptNode current = nodesBelow.remove();
-            for (AssessmentItem item : current.getAssessmentItemMap().values()) {
-                if (!assessmentsBelow.contains(item.getId())) {
-                    assessmentsBelow.add(item.getId());
-                }
-            }
-            nodesBelow.addAll(current.getChildren());
-        }
-
-        return assessmentsBelow;
+        return getAssessmentsBelowAssessmentID(assessmentId, Collections.max(assessmentNodesPathLengths));
     }
 
     /**
@@ -403,7 +383,7 @@ public class  ConceptGraph {
         //Dictates that an assessmentId will only be included once
         Set<String> assessmentsBelow = new HashSet<>();
         for (ConceptNode node : nodesWithAssessmentId) {
-            assessmentsBelow.addAll(getAssessmentsBelowNode(assessmentsBelow, node, stepsDown));
+            getAssessmentsBelowNode(assessmentsBelow, node, stepsDown);
             for (AssessmentItem item : node.getAssessmentItemMap().values()) {
                 if (!assessmentsBelow.contains(item.getId()) && !item.getId().equals(assessmentId)) {
                     assessmentsBelow.add(item.getId());
