@@ -233,9 +233,12 @@ public class PredictorEffectiveness {
      * @return PredictorEffectiveness object with percent correct and a list of all the results
      */
     public static PredictorEffectiveness testLearningPredictor(LearningPredictor predictor, LearningSetSelector learningSetSelector, String assessmentToLearn, ConceptGraph conceptGraph, GradeDiscreteGroupings atriskGroupings, double ratio) throws IOException{
-        ContinuousAssessmentMatrix originalMatrix = new ContinuousAssessmentMatrix(new ArrayList<>(conceptGraph.getAssessmentItemMap().values()));
+        List<AssessmentItem> allAssessments = new ArrayList<>(conceptGraph.getAssessmentItemMap().values());
         //List of learningAssessments based on the first student's assessments
-        List<String> learningAssessments = learningSetSelector.getLearningSet(conceptGraph, originalMatrix.getStudentIds().get(0), assessmentToLearn);
+        List<String> learningAssessments = learningSetSelector.getLearningSet(conceptGraph, allAssessments.get(0).getResponses().get(0).getUserId(), assessmentToLearn);
+        List<AssessmentItem> assessmentItemsWithValidStudents = getStudentResponsesWithAssessments(allAssessments, learningAssessments);
+
+        ContinuousAssessmentMatrix originalMatrix = new ContinuousAssessmentMatrix(assessmentItemsWithValidStudents);
 
         //Split the matrix
         Tuple2<ContinuousAssessmentMatrix, ContinuousAssessmentMatrix> splitMatrix = splitMatrix(originalMatrix, ratio);
@@ -261,9 +264,13 @@ public class PredictorEffectiveness {
     }
 
     public static PredictorEffectiveness testPredictor(Predictor simplePredictor, LearningSetSelector learningSetSelector, String assessmentToLearn, ConceptGraph conceptGraph, GradeDiscreteGroupings atriskGroupings,double ratio) throws IOException {
-        ContinuousAssessmentMatrix originalMatrix = new ContinuousAssessmentMatrix(new ArrayList<>(conceptGraph.getAssessmentItemMap().values()));
-        //Get learning set and remove the assessmentToLearn from list
-        List<String> testingAssessments = learningSetSelector.getLearningSet(conceptGraph, originalMatrix.getStudentIds().get(0), assessmentToLearn);
+        List<AssessmentItem> allAssessments = new ArrayList<>(conceptGraph.getAssessmentItemMap().values());
+        List<String> testingAssessments = learningSetSelector.getLearningSet(conceptGraph, allAssessments.get(0).getResponses().get(0).getUserId() , assessmentToLearn);
+        List<AssessmentItem> assessmentItemsWithValidStudents = getStudentResponsesWithAssessments(allAssessments, testingAssessments);
+
+        ContinuousAssessmentMatrix originalMatrix = new ContinuousAssessmentMatrix(assessmentItemsWithValidStudents);        //Get learning set and remove the assessmentToLearn from list
+
+        //Need to remove for the classification
         testingAssessments.remove(assessmentToLearn);
 
         //Split the matrix
