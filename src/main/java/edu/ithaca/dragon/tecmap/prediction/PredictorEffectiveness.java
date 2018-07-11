@@ -178,6 +178,39 @@ public class PredictorEffectiveness {
     }
 
     /**
+     * Finds the students that have responses to all of the assessments to be included
+     * Mutates the list of students
+     * @param allAssessments
+     * @param assessmentsToInclude
+     * @return all of the assessmentItemResponses for the students that are to be included
+     */
+    static List<AssessmentItemResponse> getStudentResponsesWithAssessments(List<AssessmentItem> allAssessments, List<String> assessmentsToInclude) {
+        Map<String, List<AssessmentItemResponse>> studentResponses = new HashMap<>();
+        for (AssessmentItem assessmentItem : allAssessments) {
+            if (assessmentsToInclude.contains(assessmentItem.getId())) {
+                for (AssessmentItemResponse response : assessmentItem.getResponses()) {
+                    if (studentResponses.containsKey(response.getUserId())) {
+                        studentResponses.get(response.getUserId()).add(response);
+                    } else {
+                        List<AssessmentItemResponse> responseList = new ArrayList<>();
+                        responseList.add(response);
+                        studentResponses.put(response.getUserId(), responseList);
+                    }
+
+                }
+            }
+        }
+        List<AssessmentItemResponse> studentsWithAllAssessmentsToInclude = new ArrayList<>();
+        for (Map.Entry<String, List<AssessmentItemResponse>> entry : studentResponses.entrySet()) {
+            if (entry.getValue().size() == assessmentsToInclude.size()) {
+                studentsWithAllAssessmentsToInclude.addAll(entry.getValue());
+            }
+        }
+        return studentsWithAllAssessmentsToInclude;
+    }
+
+
+    /**
      * Test how effective a predictor is, works off of the Predictor interface
      * @param predictor specific type of predictor
      * @param learningSetSelector how the learning set is being chosen

@@ -16,10 +16,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 import java.io.IOException;
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 import static org.hamcrest.collection.IsIterableContainingInAnyOrder.containsInAnyOrder;
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -100,6 +97,26 @@ public class PredictorEffectivenessTest {
         assertEquals(1, testPredictor.getTruePositive().size());
         assertEquals(1, testPredictor.getTrueNegative().size());
         assertEquals(1, testPredictor.getFalsePositive().size());
+    }
+
+    @Test
+    public void getStudentResponsesWithAssessments() {
+        List<AssessmentItem> assessmentItems = continuousAssessmentMatrix.getAssessmentItems();
+        List<String> assessmentsToInclude = new ArrayList<>();
+
+        List<AssessmentItemResponse> responses = PredictorEffectiveness.getStudentResponsesWithAssessments(assessmentItems, assessmentsToInclude);
+
+        assertEquals(0, responses.size());
+
+        assessmentsToInclude.add("HW5");
+        responses = PredictorEffectiveness.getStudentResponsesWithAssessments(assessmentItems, assessmentsToInclude);
+        //Should have omitted s06 since has no HW5
+        assertEquals(5, responses.size());
+
+        assessmentsToInclude.add("HW4");
+        responses = PredictorEffectiveness.getStudentResponsesWithAssessments(assessmentItems, assessmentsToInclude);
+        //Should have omitted s06 since no HW5
+        assertEquals(10, responses.size());
     }
 
     @Test
