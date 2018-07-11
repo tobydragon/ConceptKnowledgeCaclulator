@@ -104,19 +104,26 @@ public class PredictorEffectivenessTest {
         List<AssessmentItem> assessmentItems = continuousAssessmentMatrix.getAssessmentItems();
         List<String> assessmentsToInclude = new ArrayList<>();
 
-        List<AssessmentItemResponse> responses = PredictorEffectiveness.getStudentResponsesWithAssessments(assessmentItems, assessmentsToInclude);
+        List<AssessmentItem> studentsWithResponses = PredictorEffectiveness.getStudentResponsesWithAssessments(assessmentItems, assessmentsToInclude);
 
-        assertEquals(0, responses.size());
+        assertEquals(0, studentsWithResponses.size());
 
         assessmentsToInclude.add("HW5");
-        responses = PredictorEffectiveness.getStudentResponsesWithAssessments(assessmentItems, assessmentsToInclude);
+        studentsWithResponses = PredictorEffectiveness.getStudentResponsesWithAssessments(assessmentItems, assessmentsToInclude);
         //Should have omitted s06 since has no HW5
-        assertEquals(5, responses.size());
+        assertEquals(1, studentsWithResponses.size());
+        assertEquals(1, studentsWithResponses.get(0).getMaxPossibleKnowledgeEstimate());
+        assertEquals(5, studentsWithResponses.get(0).getResponses().size());
 
-        assessmentsToInclude.add("HW4");
-        responses = PredictorEffectiveness.getStudentResponsesWithAssessments(assessmentItems, assessmentsToInclude);
+        assessmentsToInclude.add("HW3");
+        studentsWithResponses = PredictorEffectiveness.getStudentResponsesWithAssessments(assessmentItems, assessmentsToInclude);
         //Should have omitted s06 since no HW5
-        assertEquals(10, responses.size());
+        System.out.println(studentsWithResponses.get(1).getId());
+        assertEquals(2, studentsWithResponses.size());
+        assertEquals(1, studentsWithResponses.get(1).getMaxPossibleKnowledgeEstimate());
+        assertEquals(5, studentsWithResponses.get(1).getResponses().size());
+        assertEquals(2, studentsWithResponses.get(0).getMaxPossibleKnowledgeEstimate());
+        assertEquals(5, studentsWithResponses.get(0).getResponses().size());
     }
 
     @Test

@@ -184,10 +184,12 @@ public class PredictorEffectiveness {
      * @param assessmentsToInclude
      * @return all of the assessmentItemResponses for the students that are to be included
      */
-    static List<AssessmentItemResponse> getStudentResponsesWithAssessments(List<AssessmentItem> allAssessments, List<String> assessmentsToInclude) {
+    static List<AssessmentItem> getStudentResponsesWithAssessments(List<AssessmentItem> allAssessments, List<String> assessmentsToInclude) {
         Map<String, List<AssessmentItemResponse>> studentResponses = new HashMap<>();
+        Map<String, Double> originalMaxKnowledgeEstimates = new HashMap<>();
         for (AssessmentItem assessmentItem : allAssessments) {
             if (assessmentsToInclude.contains(assessmentItem.getId())) {
+                originalMaxKnowledgeEstimates.put(assessmentItem.getId(), assessmentItem.getMaxPossibleKnowledgeEstimate());
                 for (AssessmentItemResponse response : assessmentItem.getResponses()) {
                     if (studentResponses.containsKey(response.getUserId())) {
                         studentResponses.get(response.getUserId()).add(response);
@@ -196,7 +198,6 @@ public class PredictorEffectiveness {
                         responseList.add(response);
                         studentResponses.put(response.getUserId(), responseList);
                     }
-
                 }
             }
         }
@@ -206,7 +207,19 @@ public class PredictorEffectiveness {
                 studentsWithAllAssessmentsToInclude.addAll(entry.getValue());
             }
         }
-        return studentsWithAllAssessmentsToInclude;
+        Map<String, AssessmentItem> assessmentsForValidStudents = new HashMap<>();
+        for (AssessmentItemResponse response : studentsWithAllAssessmentsToInclude) {
+            String assessmentId = response.getLearningObjectId();
+            if (assessmentsForValidStudents.containsKey(assessmentId)) {
+                assessmentsForValidStudents.get(assessmentId).addResponse(response);
+            } else {
+                double maxKE = originalMaxKnowledgeEstimates.get(assessmentId);
+                AssessmentItem newAssessment = new AssessmentItem(assessmentId, maxKE);
+                newAssessment.addResponse(response);
+                assessmentsForValidStudents.put(assessmentId, newAssessment);
+            }
+        }
+        return new ArrayList<>(assessmentsForValidStudents.values());
     }
 
 
