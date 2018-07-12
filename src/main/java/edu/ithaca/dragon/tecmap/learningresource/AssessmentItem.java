@@ -128,4 +128,20 @@ public class AssessmentItem {
         }
     }
 
+    public static List<AssessmentItem> buildListFromAssessmentItemResponses(List<AssessmentItemResponse> responses, Map<String, Double> maxKnowledgeEstimates) {
+        Map<String, AssessmentItem> assessments = new HashMap<>();
+        for (AssessmentItemResponse response : responses) {
+            String assessmentId = response.getLearningObjectId();
+            if (assessments.containsKey(assessmentId)) {
+                assessments.get(assessmentId).addResponse(response);
+            } else {
+                double maxKE = maxKnowledgeEstimates.get(assessmentId);
+                AssessmentItem newAssessment = new AssessmentItem(assessmentId, maxKE);
+                newAssessment.addResponse(response);
+                assessments.put(assessmentId, newAssessment);
+            }
+        }
+        return new ArrayList<>(assessments.values());
+    }
+
 }

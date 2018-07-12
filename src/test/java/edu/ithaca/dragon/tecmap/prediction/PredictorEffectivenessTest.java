@@ -100,23 +100,30 @@ public class PredictorEffectivenessTest {
     }
 
     @Test
-    public void getStudentResponsesWithAssessments() {
+    public void getAssessmentsForStudentsWithAllResponses() {
         List<AssessmentItem> assessmentItems = continuousAssessmentMatrix.getAssessmentItems();
         List<String> assessmentsToInclude = new ArrayList<>();
 
-        List<AssessmentItem> studentsWithResponses = PredictorEffectiveness.getStudentResponsesWithAssessments(assessmentItems, assessmentsToInclude);
+        List<AssessmentItem> studentsWithResponses = PredictorEffectiveness.getAssessmentsForStudentsWithAllResponses(assessmentItems, assessmentsToInclude);
 
         assertEquals(0, studentsWithResponses.size());
 
+        assessmentsToInclude.add("HW4");
+        studentsWithResponses = PredictorEffectiveness.getAssessmentsForStudentsWithAllResponses(assessmentItems, assessmentsToInclude);
+        assertEquals(1, studentsWithResponses.size());
+        assertEquals(1, studentsWithResponses.get(0).getMaxPossibleKnowledgeEstimate());
+        assertEquals(6, studentsWithResponses.get(0).getResponses().size());
+        assessmentsToInclude.remove("HW4");
+
         assessmentsToInclude.add("HW5");
-        studentsWithResponses = PredictorEffectiveness.getStudentResponsesWithAssessments(assessmentItems, assessmentsToInclude);
+        studentsWithResponses = PredictorEffectiveness.getAssessmentsForStudentsWithAllResponses(assessmentItems, assessmentsToInclude);
         //Should have omitted s06 since has no HW5
         assertEquals(1, studentsWithResponses.size());
         assertEquals(1, studentsWithResponses.get(0).getMaxPossibleKnowledgeEstimate());
         assertEquals(5, studentsWithResponses.get(0).getResponses().size());
 
         assessmentsToInclude.add("HW3");
-        studentsWithResponses = PredictorEffectiveness.getStudentResponsesWithAssessments(assessmentItems, assessmentsToInclude);
+        studentsWithResponses = PredictorEffectiveness.getAssessmentsForStudentsWithAllResponses(assessmentItems, assessmentsToInclude);
         //Should have omitted s06 since no HW5
         assertEquals(2, studentsWithResponses.size());
         assertEquals(1, studentsWithResponses.get(1).getMaxPossibleKnowledgeEstimate());

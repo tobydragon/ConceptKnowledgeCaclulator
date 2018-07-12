@@ -3,7 +3,12 @@ package edu.ithaca.dragon.tecmap.learningresource;
 import org.junit.Assert;
 import org.junit.Test;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class AssessmentItemTest {
     @Test
@@ -55,4 +60,20 @@ public class AssessmentItemTest {
         Assert.assertEquals(toCopy, newMap);
     }
 
+    @Test
+    public void buildListFromAssessmentItemResponses() {
+        List<AssessmentItemResponse> responseList = new ArrayList<>();
+        responseList.add(new AssessmentItemResponse("s01", "AI1", 1));
+        responseList.add(new AssessmentItemResponse("s02", "AI1", 1));
+        responseList.add(new AssessmentItemResponse("s01", "AI2", 2));
+        responseList.add(new AssessmentItemResponse("s02", "AI2", 2));
+        Map<String, Double> maxKnowledgeEstimatesForAssessments = new HashMap<>();
+        maxKnowledgeEstimatesForAssessments.put("AI1", 1.0);
+        maxKnowledgeEstimatesForAssessments.put("AI2", 2.0);
+
+        List<AssessmentItem> assessmentItems = AssessmentItem.buildListFromAssessmentItemResponses(responseList, maxKnowledgeEstimatesForAssessments);
+        assertEquals(2, assessmentItems.size());
+        assertEquals("AI1", assessmentItems.get(0).getId());
+        assertEquals("AI2", assessmentItems.get(1).getId());
+    }
 }

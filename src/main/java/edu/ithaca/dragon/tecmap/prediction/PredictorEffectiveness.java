@@ -179,12 +179,11 @@ public class PredictorEffectiveness {
 
     /**
      * Finds the students that have responses to all of the assessments to be included
-     * Mutates the list of students
      * @param allAssessments
      * @param assessmentsToInclude
      * @return all of the assessmentItemResponses for the students that are to be included
      */
-    static List<AssessmentItem> getStudentResponsesWithAssessments(List<AssessmentItem> allAssessments, List<String> assessmentsToInclude) {
+    static List<AssessmentItem> getAssessmentsForStudentsWithAllResponses(List<AssessmentItem> allAssessments, List<String> assessmentsToInclude) {
         Map<String, List<AssessmentItemResponse>> studentResponses = new HashMap<>();
         Map<String, Double> originalMaxKnowledgeEstimates = new HashMap<>();
         for (AssessmentItem assessmentItem : allAssessments) {
@@ -207,21 +206,8 @@ public class PredictorEffectiveness {
                 studentsWithAllAssessmentsToInclude.addAll(entry.getValue());
             }
         }
-        Map<String, AssessmentItem> assessmentsForValidStudents = new HashMap<>();
-        for (AssessmentItemResponse response : studentsWithAllAssessmentsToInclude) {
-            String assessmentId = response.getLearningObjectId();
-            if (assessmentsForValidStudents.containsKey(assessmentId)) {
-                assessmentsForValidStudents.get(assessmentId).addResponse(response);
-            } else {
-                double maxKE = originalMaxKnowledgeEstimates.get(assessmentId);
-                AssessmentItem newAssessment = new AssessmentItem(assessmentId, maxKE);
-                newAssessment.addResponse(response);
-                assessmentsForValidStudents.put(assessmentId, newAssessment);
-            }
-        }
-        return new ArrayList<>(assessmentsForValidStudents.values());
+        return AssessmentItem.buildListFromAssessmentItemResponses(studentsWithAllAssessmentsToInclude, originalMaxKnowledgeEstimates);
     }
-
 
     /**
      * Test how effective a predictor is, works off of the Predictor interface
@@ -236,7 +222,7 @@ public class PredictorEffectiveness {
         List<AssessmentItem> allAssessments = new ArrayList<>(conceptGraph.getAssessmentItemMap().values());
         //List of learningAssessments based on the first student's assessments
         List<String> learningAssessments = learningSetSelector.getLearningSet(conceptGraph, allAssessments.get(0).getResponses().get(0).getUserId(), assessmentToLearn);
-        List<AssessmentItem> assessmentItemsWithValidStudents = getStudentResponsesWithAssessments(allAssessments, learningAssessments);
+        List<AssessmentItem> assessmentItemsWithValidStudents = getAssessmentsForStudentsWithAllResponses(allAssessments, learningAssessments);
 
         ContinuousAssessmentMatrix originalMatrix = new ContinuousAssessmentMatrix(assessmentItemsWithValidStudents);
 
@@ -266,7 +252,7 @@ public class PredictorEffectiveness {
     public static PredictorEffectiveness testPredictor(Predictor simplePredictor, LearningSetSelector learningSetSelector, String assessmentToLearn, ConceptGraph conceptGraph, GradeDiscreteGroupings atriskGroupings,double ratio) throws IOException {
         List<AssessmentItem> allAssessments = new ArrayList<>(conceptGraph.getAssessmentItemMap().values());
         List<String> testingAssessments = learningSetSelector.getLearningSet(conceptGraph, allAssessments.get(0).getResponses().get(0).getUserId() , assessmentToLearn);
-        List<AssessmentItem> assessmentItemsWithValidStudents = getStudentResponsesWithAssessments(allAssessments, testingAssessments);
+        List<AssessmentItem> assessmentItemsWithValidStudents = getAssessmentsForStudentsWithAllResponses(allAssessments, testingAssessments);
 
         ContinuousAssessmentMatrix originalMatrix = new ContinuousAssessmentMatrix(assessmentItemsWithValidStudents);        //Get learning set and remove the assessmentToLearn from list
 
