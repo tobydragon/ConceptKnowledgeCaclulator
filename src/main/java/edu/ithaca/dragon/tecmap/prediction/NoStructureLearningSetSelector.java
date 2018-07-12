@@ -9,9 +9,9 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class BaseLearningSetSelector implements LearningSetSelector {
+public class NoStructureLearningSetSelector implements LearningSetSelector {
 
-    public BaseLearningSetSelector() {
+    public NoStructureLearningSetSelector() {
     }
 
     /**

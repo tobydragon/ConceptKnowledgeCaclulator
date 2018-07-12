@@ -134,7 +134,7 @@ public class PredictorEffectivenessTest {
 
     @Test
     public void testLearningPredictor() throws IOException {
-        LearningSetSelector baseLearningSetSelector = new BaseLearningSetSelector();
+        LearningSetSelector baseLearningSetSelector = new NoStructureLearningSetSelector();
 
         PredictorEffectiveness testPredictor = PredictorEffectiveness.testLearningPredictor(new BayesPredictor(defaultGroupings, atriskGroupings), baseLearningSetSelector, "Q5" , conceptGraph, atriskGroupings, 0.5);
 
@@ -174,7 +174,7 @@ public class PredictorEffectivenessTest {
 
     @Test
     public void testPredictor() throws IOException {
-        LearningSetSelector baseLearningSetSelector = new BaseLearningSetSelector();
+        LearningSetSelector baseLearningSetSelector = new NoStructureLearningSetSelector();
 
         PredictorEffectiveness testPredictor = PredictorEffectiveness.testPredictor(new SimplePredictor(atriskGroupings), baseLearningSetSelector, "Q5", conceptGraph, atriskGroupings,0.5);
 

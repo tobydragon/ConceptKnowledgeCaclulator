@@ -7,6 +7,7 @@ import edu.ithaca.dragon.tecmap.io.record.LearningResourceRecord;
 import edu.ithaca.dragon.tecmap.learningresource.AssessmentItem;
 import edu.ithaca.dragon.tecmap.learningresource.AssessmentItemResponse;
 import edu.ithaca.dragon.tecmap.learningresource.GradeDiscreteGroupings;
+import edu.ithaca.dragon.tecmap.util.DataUtil;
 
 import java.io.File;
 import java.io.IOException;
@@ -83,7 +84,7 @@ public class PredictorEffectivenessMain {
         }
     }
 
-    private static void allAssessmentTwoSelectorTwoPredictorTest(ConceptGraph courseGraph, LearningPredictor bayes, Predictor simple, LearningSetSelector baseLearningSetSelector, LearningSetSelector graphLearningSetSelector, GradeDiscreteGroupings atriskGroupings, double ratio) throws IOException {
+    private static void allAssessmentTwoSelectorTwoPredictorTest(ConceptGraph courseGraph, LearningPredictor learning, Predictor simple, LearningSetSelector baseLearningSetSelector, LearningSetSelector graphLearningSetSelector, GradeDiscreteGroupings atriskGroupings, double ratio) throws IOException {
         //Get all assessments from courseGraph
         List<AssessmentItem> allAssessments = new ArrayList<>(courseGraph.getAssessmentItemMap().values());
         Map<String, Double> courseBaseBayes = new HashMap<>();
@@ -93,10 +94,10 @@ public class PredictorEffectivenessMain {
         //Get results for each assessment
         for (AssessmentItem item : allAssessments) {
             String assessment = item.getId();
-            courseBaseBayes.put(assessment, PredictorEffectiveness.testLearningPredictor(bayes, baseLearningSetSelector, assessment, courseGraph, atriskGroupings,ratio).getPercentCorrect());
-            bayes.reset();
-            courseGraphBayes.put(assessment, PredictorEffectiveness.testLearningPredictor(bayes, graphLearningSetSelector, assessment, courseGraph, atriskGroupings,ratio).getPercentCorrect());
-            bayes.reset();
+            courseBaseBayes.put(assessment, PredictorEffectiveness.testLearningPredictor(learning, baseLearningSetSelector, assessment, courseGraph, atriskGroupings,ratio).getPercentCorrect());
+            learning.reset();
+            courseGraphBayes.put(assessment, PredictorEffectiveness.testLearningPredictor(learning, graphLearningSetSelector, assessment, courseGraph, atriskGroupings,ratio).getPercentCorrect());
+            learning.reset();
             courseBaseSimple.put(assessment, PredictorEffectiveness.testPredictor(simple, baseLearningSetSelector, assessment, courseGraph, atriskGroupings, ratio).getPercentCorrect());
             courseGraphSimple.put(assessment, PredictorEffectiveness.testPredictor(simple, graphLearningSetSelector, assessment, courseGraph, atriskGroupings, ratio).getPercentCorrect());
         }
@@ -109,12 +110,12 @@ public class PredictorEffectivenessMain {
 
         //Output the sorted results
         //Rank lowest % correct to highest
-        System.out.println("\tBase Bayes:\t\t\t Graph Bayes: \t\t\t Base Simple \t\t\t Graph Simple");
+        System.out.println("\tBase Bayes:\t Graph Bayes: \t Base Simple: \t Graph Simple:");
         for (int i = 0; i < courseBaseBayesSorted.length; i++) {
-            String baseBayes = courseBaseBayesSorted[i].toString().split("=")[0] + "(" + courseBaseBayesSorted[i].toString().split("=")[1].substring(0, 3) + ")";
-            String graphBayes = courseGraphBayesSorted[i].toString().split("=")[0] + "(" + courseGraphBayesSorted[i].toString().split("=")[1].substring(0, 3) + ")";
-            String baseSimple = courseBaseSimpleSorted[i].toString().split("=")[0] + "(" + courseBaseSimpleSorted[i].toString().split("=")[1].substring(0, 3) + ")";
-            String graphSimple = courseGraphSimpleSorted[i].toString().split("=")[0] + "(" + courseGraphSimpleSorted[i].toString().split("=")[1].substring(0, 3) + ")";
+            String baseBayes = courseBaseBayesSorted[i].toString().split("=")[0] + "(" + DataUtil.format(Double.parseDouble(courseBaseBayesSorted[i].toString().split("=")[1])) + ")";
+            String graphBayes = courseGraphBayesSorted[i].toString().split("=")[0] + "(" + DataUtil.format(Double.parseDouble(courseGraphBayesSorted[i].toString().split("=")[1])) + ")";
+            String baseSimple = courseBaseSimpleSorted[i].toString().split("=")[0] + "(" + DataUtil.format(Double.parseDouble(courseBaseSimpleSorted[i].toString().split("=")[1])) + ")";
+            String graphSimple = courseGraphSimpleSorted[i].toString().split("=")[0] + "(" + DataUtil.format(Double.parseDouble(courseGraphSimpleSorted[i].toString().split("=")[1])) + ")";
             System.out.println(i + ")" + baseBayes + "\t" + graphBayes + "\t" + baseSimple + "\t" + graphSimple);
         }
     }
@@ -129,7 +130,7 @@ public class PredictorEffectivenessMain {
         Predictor simple = new SimplePredictor(atriskGroupings);
 
         //Two different ways to select learning sets
-        LearningSetSelector baseLearningSetSelector = new BaseLearningSetSelector();
+        LearningSetSelector baseLearningSetSelector = new NoStructureLearningSetSelector();
         LearningSetSelector graphLearningSetSelector = new GraphLearningSetSelector();
 
         //Testing for COMP220 Data

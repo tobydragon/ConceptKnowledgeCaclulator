@@ -41,7 +41,7 @@ public class LearningSetSelectorTest {
 
     @Test
     public void getLearningSetWithBaseSelector() throws IOException {
-        LearningSetSelector baseLearningSetSelector = new BaseLearningSetSelector();
+        LearningSetSelector baseLearningSetSelector = new NoStructureLearningSetSelector();
         List<String> learningSet = baseLearningSetSelector.getLearningSet(conceptGraph, matrix.getStudentIds().get(0), "Q5");
 
         assertEquals(10, learningSet.size());
