@@ -41,22 +41,22 @@ public class LearningResourceRecord {
         this("", new ArrayList<>(), new ArrayList<>(), 1, 0);
     }
 
-    public static List<LearningResourceRecord> createLinksFromResourceFiles(List<String> resourceConnectionRecords) throws IOException {
+    public static List<LearningResourceRecord> createLearningResourceRecordsFromJsonFiles(List<String> filenames) throws IOException {
         List<LearningResourceRecord> linkRecord = new ArrayList<>();
-        for (String rFiles : resourceConnectionRecords){
-            List<LearningResourceRecord> temp = LearningResourceRecord.buildListFromJson(rFiles);
+        for (String rFiles : filenames){
+            List<LearningResourceRecord> temp = LearningResourceRecord.createLearningResourceRecordsFromJsonFile(rFiles);
             linkRecord.addAll(temp);
         }
         return linkRecord;
     }
 
-    public static List<LearningResourceRecord> buildListFromJson(String fullFileName) throws IOException {
+    public static List<LearningResourceRecord> createLearningResourceRecordsFromJsonFile(String fullFileName) throws IOException {
         ObjectMapper mapper = new ObjectMapper();
         mapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
         return mapper.readValue(new File(fullFileName), new TypeReference<List<LearningResourceRecord>>(){});
     }
 
-    public static List<LearningResourceRecord> createLRecordsFromAssessments(Collection<AssessmentItem> assessmentItems){
+    public static List<LearningResourceRecord> createLearningResourceRecordsFromAssessmentItems(Collection<AssessmentItem> assessmentItems){
         List<LearningResourceRecord> lolrList = new ArrayList<LearningResourceRecord>();
         for(AssessmentItem assessmentItem : assessmentItems){
             lolrList.add( new LearningResourceRecord(assessmentItem));

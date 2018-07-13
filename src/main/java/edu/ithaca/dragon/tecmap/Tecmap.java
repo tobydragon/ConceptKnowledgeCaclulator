@@ -6,10 +6,7 @@ import edu.ithaca.dragon.tecmap.io.record.ConceptGraphRecord;
 import edu.ithaca.dragon.tecmap.io.record.LearningResourceRecord;
 import edu.ithaca.dragon.tecmap.learningresource.AssessmentItem;
 import edu.ithaca.dragon.tecmap.learningresource.AssessmentItemResponse;
-import edu.ithaca.dragon.tecmap.tecmapstate.AssessmentAddedState;
-import edu.ithaca.dragon.tecmap.tecmapstate.AssessmentConnectedState;
-import edu.ithaca.dragon.tecmap.tecmapstate.NoAssessmentState;
-import edu.ithaca.dragon.tecmap.tecmapstate.TecmapState;
+import edu.ithaca.dragon.tecmap.tecmapstate.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -29,6 +26,9 @@ public class Tecmap implements TecmapAPI {
         TecmapState stateEnum = TecmapState.checkAvailableState(links, assessmentItemResponses);
         if (stateEnum == TecmapState.noAssessment){
             state = new NoAssessmentState(structureGraph);
+        }
+        else if (stateEnum == TecmapState.resourcesNoAssessment){
+            state = new ResourcesNoAssessmentState(structureGraph, links);
         }
         else if (stateEnum == TecmapState.assessmentAdded){
             state = new AssessmentAddedState(structureGraph, assessmentItemsStructureList, assessmentItemResponses);
@@ -55,13 +55,19 @@ public class Tecmap implements TecmapAPI {
     @Override
     public List<LearningResourceRecord> currentLearningResourceRecords() {
         if (state instanceof AssessmentConnectedState){
-            return ((AssessmentConnectedState)state).getLinks();
+            return ((AssessmentConnectedState)state).getResourceRecordLinks();
+        }
+        else if (state instanceof ResourcesNoAssessmentState) {
+            return ((ResourcesNoAssessmentState)state).getResourceRecordLinks();
         }
         else if (state instanceof AssessmentAddedState) {
             return ((AssessmentAddedState)state).createBlankLearningResourceRecordsFromAssessment();
         }
-        else {
+        else if (state instanceof NoAssessmentState){
             return new ArrayList<>();
+        }
+        else {
+            throw new RuntimeException("State not recognized");
         }
     }
 
@@ -82,6 +88,9 @@ public class Tecmap implements TecmapAPI {
         }
         else if (state instanceof AssessmentAddedState) {
             return TecmapState.assessmentAdded;
+        }
+        else if (state instanceof ResourcesNoAssessmentState) {
+            return TecmapState.resourcesNoAssessment;
         }
         else {
             return TecmapState.noAssessment;

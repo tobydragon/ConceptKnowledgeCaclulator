@@ -108,7 +108,7 @@ public class ExampleConceptGraphFactory {
         try{
         CSVReader csvReader = new SakaiReader(Settings.TEST_RESOURCE_DIR + "ManuallyCreated/basicRealisticAssessment.csv");
             ConceptGraphRecord graphRecord = ConceptGraphRecord.buildFromJson(Settings.TEST_RESOURCE_DIR + "ManuallyCreated/basicRealisticConceptGraph.json");
-            List<LearningResourceRecord> LOLRlist = LearningResourceRecord.buildListFromJson(Settings.TEST_RESOURCE_DIR + "ManuallyCreated/basicRealisticResource.json");
+            List<LearningResourceRecord> LOLRlist = LearningResourceRecord.createLearningResourceRecordsFromJsonFile(Settings.TEST_RESOURCE_DIR + "ManuallyCreated/basicRealisticResource.json");
 
             ConceptGraph graph = new ConceptGraph(graphRecord, LOLRlist, csvReader.getManualGradedResponses());
             graph.calcKnowledgeEstimates();
@@ -131,7 +131,7 @@ public class ExampleConceptGraphFactory {
         try{
         CSVReader csvReader = new SakaiReader(Settings.TEST_RESOURCE_DIR + "ManuallyCreated/simpleAssessment.csv");
             ConceptGraphRecord graphRecord = ConceptGraphRecord.buildFromJson(Settings.TEST_RESOURCE_DIR + "ManuallyCreated/simpleConceptGraph.json");
-            List<LearningResourceRecord> LOLRlist = LearningResourceRecord.buildListFromJson(Settings.TEST_RESOURCE_DIR + "ManuallyCreated/simpleResource.json");
+            List<LearningResourceRecord> LOLRlist = LearningResourceRecord.createLearningResourceRecordsFromJsonFile(Settings.TEST_RESOURCE_DIR + "ManuallyCreated/simpleResource.json");
              ConceptGraph graph = new ConceptGraph(graphRecord, LOLRlist, csvReader.getManualGradedResponses());
 
             graph.calcKnowledgeEstimates();

@@ -11,12 +11,18 @@ import java.util.List;
 
 public enum TecmapState {
     noAssessment,
+    resourcesNoAssessment,
     assessmentAdded,
     assessmentConnected;
 
     public static <LinkRecordType, AssessmentRecordType> TecmapState checkAvailableState(List<LinkRecordType> links, List<AssessmentRecordType> assessmentItemResponses) {
         if (assessmentItemResponses == null || assessmentItemResponses.size() < 1){
-            return TecmapState.noAssessment;
+            if (links == null || links.size() < 1){
+                return TecmapState.noAssessment;
+            }
+            else {
+                return TecmapState.resourcesNoAssessment;
+            }
         }
         else if (links == null || links.size() < 1){
             return TecmapState.assessmentAdded;
@@ -30,7 +36,7 @@ public enum TecmapState {
         if (this == noAssessment){
             return(new ArrayList<>(Collections.singletonList(TecmapUserAction.structureTree)));
         }
-        else if (this == assessmentAdded){
+        else if (this == assessmentAdded || this == resourcesNoAssessment){
             return(new ArrayList<>(Arrays.asList(TecmapUserAction.structureTree, TecmapUserAction.connectResources)));
         }
         else if (this == assessmentConnected){

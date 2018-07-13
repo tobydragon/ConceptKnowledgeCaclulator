@@ -2,7 +2,6 @@ package edu.ithaca.dragon.tecmap.conceptgraph;
 
 import edu.ithaca.dragon.tecmap.Settings;
 import edu.ithaca.dragon.tecmap.io.reader.CSVReader;
-import edu.ithaca.dragon.tecmap.io.reader.ReaderTools;
 import edu.ithaca.dragon.tecmap.io.reader.SakaiReader;
 import edu.ithaca.dragon.tecmap.io.record.CohortConceptGraphsRecord;
 import edu.ithaca.dragon.tecmap.io.record.ConceptGraphRecord;
@@ -12,8 +11,6 @@ import edu.ithaca.dragon.tecmap.learningresource.ExampleLearningObjectLinkRecord
 import edu.ithaca.dragon.tecmap.learningresource.ExampleLearningObjectResponseFactory;
 import edu.ithaca.dragon.tecmap.learningresource.AssessmentItem;
 import edu.ithaca.dragon.tecmap.learningresource.AssessmentItemResponse;
-import edu.ithaca.dragon.tecmap.legacy.ConceptKnowledgeCalculator;
-import edu.ithaca.dragon.tecmap.legacy.ConceptKnowledgeCalculatorAPI;
 import edu.ithaca.dragon.tecmap.util.DataUtil;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -149,7 +146,7 @@ public class CohortConceptGraphsTest {
         try{
         CSVReader csvReader = new SakaiReader(Settings.TEST_RESOURCE_DIR + "ManuallyCreated/basicRealisticAssessment.csv");
             ConceptGraph  structure = new ConceptGraph(ConceptGraphRecord.buildFromJson(Settings.TEST_RESOURCE_DIR + "ManuallyCreated/basicRealisticConceptGraph.json"),
-                    LearningResourceRecord.buildListFromJson(Settings.TEST_RESOURCE_DIR + "ManuallyCreated/basicRealisticResource.json" ));
+                    LearningResourceRecord.createLearningResourceRecordsFromJsonFile(Settings.TEST_RESOURCE_DIR + "ManuallyCreated/basicRealisticResource.json" ));
             CohortConceptGraphs group = new CohortConceptGraphs(structure, csvReader.getManualGradedResponses());
 
             CohortConceptGraphsRecord record = group.buildCohortConceptTreeRecord();
@@ -170,7 +167,7 @@ public class CohortConceptGraphsTest {
         try {
             CSVReader csvReader = new SakaiReader(Settings.TEST_RESOURCE_DIR + "ManuallyCreated/basicRealisticAssessment.csv");
             ConceptGraph graph = new ConceptGraph(ConceptGraphRecord.buildFromJson(Settings.TEST_RESOURCE_DIR + "ManuallyCreated/basicRealisticConceptGraph.json"),
-                    LearningResourceRecord.buildListFromJson(Settings.TEST_RESOURCE_DIR + "ManuallyCreated/basicRealisticResource.json"));
+                    LearningResourceRecord.createLearningResourceRecordsFromJsonFile(Settings.TEST_RESOURCE_DIR + "ManuallyCreated/basicRealisticResource.json"));
             CohortConceptGraphs gcg = new CohortConceptGraphs(graph,csvReader.getManualGradedResponses());
             ConceptGraph testGraph = gcg.getAvgGraph();
 
@@ -190,12 +187,12 @@ public class CohortConceptGraphsTest {
             CSVReader csvReader = new SakaiReader(Settings.TEST_RESOURCE_DIR + "ManuallyCreated/basicRealisticAssessment.csv");
 
             ConceptGraph singleGraph = new ConceptGraph(ConceptGraphRecord.buildFromJson(Settings.TEST_RESOURCE_DIR + "ManuallyCreated/basicRealisticConceptGraph.json"),
-                    LearningResourceRecord.buildListFromJson(Settings.TEST_RESOURCE_DIR + "ManuallyCreated/basicRealisticResource.json"),
+                    LearningResourceRecord.createLearningResourceRecordsFromJsonFile(Settings.TEST_RESOURCE_DIR + "ManuallyCreated/basicRealisticResource.json"),
                     csvReader.getManualGradedResponses());
             singleGraph.calcKnowledgeEstimates();
 
             ConceptGraph graph = new ConceptGraph(ConceptGraphRecord.buildFromJson(Settings.TEST_RESOURCE_DIR + "ManuallyCreated/basicRealisticConceptGraph.json"),
-                    LearningResourceRecord.buildListFromJson(Settings.TEST_RESOURCE_DIR + "ManuallyCreated/basicRealisticResource.json"));
+                    LearningResourceRecord.createLearningResourceRecordsFromJsonFile(Settings.TEST_RESOURCE_DIR + "ManuallyCreated/basicRealisticResource.json"));
             CohortConceptGraphs gcg = new CohortConceptGraphs(graph,csvReader.getManualGradedResponses());
             ConceptGraph testGraph = gcg.getAvgGraph();
 
@@ -215,7 +212,7 @@ public class CohortConceptGraphsTest {
     public void calcTotalKnowledgeEstimateTest() throws IOException {
         ConceptGraph graph = new ConceptGraph(ConceptGraphRecord.buildFromJson(Settings.TEST_RESOURCE_DIR + "ManuallyCreated/simpleConceptGraphTest.json"));
         List<AssessmentItemResponse> assessmentItemResponses = AssessmentItemResponse.createAssessmentItemResponses(Arrays.asList(Settings.TEST_RESOURCE_DIR + "ManuallyCreated/simpleAssessmentTest.csv"));
-        List<LearningResourceRecord> links = LearningResourceRecord.createLinksFromResourceFiles(Arrays.asList(Settings.TEST_RESOURCE_DIR + "ManuallyCreated/simpleResourceTest.json"));
+        List<LearningResourceRecord> links = LearningResourceRecord.createLearningResourceRecordsFromJsonFiles(Arrays.asList(Settings.TEST_RESOURCE_DIR + "ManuallyCreated/simpleResourceTest.json"));
         graph.addLearningResourcesFromRecords(links);
         CohortConceptGraphs graphs = new CohortConceptGraphs(graph, assessmentItemResponses);
 
@@ -241,7 +238,7 @@ public class CohortConceptGraphsTest {
     public void calcTotalKnowledgeEstimate2() throws IOException {
         ConceptGraph graph = new ConceptGraph(ConceptGraphRecord.buildFromJson(Settings.TEST_RESOURCE_DIR + "ManuallyCreated/researchConceptGraph.json"));
         List<AssessmentItemResponse> assessmentItemResponses = AssessmentItemResponse.createAssessmentItemResponses(Arrays.asList(Settings.TEST_RESOURCE_DIR + "ManuallyCreated/researchAssessment1.csv"));
-        List<LearningResourceRecord> links = LearningResourceRecord.createLinksFromResourceFiles(Arrays.asList(Settings.TEST_RESOURCE_DIR + "ManuallyCreated/researchResource1.json"));
+        List<LearningResourceRecord> links = LearningResourceRecord.createLearningResourceRecordsFromJsonFiles(Arrays.asList(Settings.TEST_RESOURCE_DIR + "ManuallyCreated/researchResource1.json"));
         graph.addLearningResourcesFromRecords(links);
         CohortConceptGraphs graphs = new CohortConceptGraphs(graph, assessmentItemResponses);
 

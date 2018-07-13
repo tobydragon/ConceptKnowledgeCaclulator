@@ -86,7 +86,7 @@ class TecmapFileDatastoreTest {
         assertEquals(TecmapState.assessmentAdded, badPathsDatastore.retrieveTecmapForId("Cs1ExampleBadResources").getCurrentState());
         //NoAssessment, Bad Assessment Files
         assertNotNull(badPathsDatastore.retrieveTecmapForId("Cs1ExampleBadAssessment"));
-        assertEquals(TecmapState.noAssessment, badPathsDatastore.retrieveTecmapForId("Cs1ExampleBadAssessment").getCurrentState());
+        assertEquals(TecmapState.resourcesNoAssessment, badPathsDatastore.retrieveTecmapForId("Cs1ExampleBadAssessment").getCurrentState());
     }
 
     @Test

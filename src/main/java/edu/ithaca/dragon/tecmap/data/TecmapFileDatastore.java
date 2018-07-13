@@ -85,7 +85,7 @@ public class TecmapFileDatastore implements TecmapDatastore {
             try {
                 if (desiredState == TecmapState.assessmentConnected) {
                     return new SuggestingTecmap(new ConceptGraph(ConceptGraphRecord.buildFromJson(files.getGraphFile())),
-                            LearningResourceRecord.createLinksFromResourceFiles(files.getResourceFiles()),
+                            LearningResourceRecord.createLearningResourceRecordsFromJsonFiles(files.getResourceFiles()),
                             //TODO: hardcoded to sakai csv, need to hold a list of CSVReaders, or the information about which kind of reader it is...
                             ReaderTools.learningObjectsFromCSVList(2, files.getAssessmentFiles()),
                             AssessmentItemResponse.createAssessmentItemResponses(files.getAssessmentFiles())
@@ -98,6 +98,13 @@ public class TecmapFileDatastore implements TecmapDatastore {
                             //TODO: hardcoded to sakai csv, need to hold a list of CSVReaders, or the information about which kind of reader it is...
                             ReaderTools.learningObjectsFromCSVList(2, files.getAssessmentFiles()),
                             AssessmentItemResponse.createAssessmentItemResponses(files.getAssessmentFiles())
+                    );
+                }
+                else if (desiredState == TecmapState.resourcesNoAssessment){
+                    return new SuggestingTecmap(new ConceptGraph(ConceptGraphRecord.buildFromJson(files.getGraphFile())),
+                            LearningResourceRecord.createLearningResourceRecordsFromJsonFiles(files.getResourceFiles()),
+                            null,
+                            null
                     );
                 }
                 else if (desiredState == TecmapState.noAssessment) {

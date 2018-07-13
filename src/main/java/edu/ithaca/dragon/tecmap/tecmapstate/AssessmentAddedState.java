@@ -31,7 +31,7 @@ public class AssessmentAddedState extends NoAssessmentState {
     }
 
     public List<LearningResourceRecord> createBlankLearningResourceRecordsFromAssessment() {
-        return LearningResourceRecord.createLRecordsFromAssessments(assessmentItemsStructureList);
+        return LearningResourceRecord.createLearningResourceRecordsFromAssessmentItems(assessmentItemsStructureList);
     }
 
 }

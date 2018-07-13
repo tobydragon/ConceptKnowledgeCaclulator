@@ -154,7 +154,7 @@ public class ConceptKnowledgeCalculator implements ConceptKnowledgeCalculatorAPI
 
         List<LearningResourceRecord> linkRecord = new ArrayList<>();
         for (String rFiles : resourceFilename){
-            List<LearningResourceRecord> temp = LearningResourceRecord.buildListFromJson(rFiles);
+            List<LearningResourceRecord> temp = LearningResourceRecord.createLearningResourceRecordsFromJsonFile(rFiles);
             linkRecord.addAll(temp);
             resourceFiles.add(rFiles);
         }
@@ -517,7 +517,7 @@ public class ConceptKnowledgeCalculator implements ConceptKnowledgeCalculatorAPI
     public static void csvToResource(List<String> assessmentFiles, String destinationFilepath) throws Exception{
         //TODO: hardcoded to sakai csv, need to hold a list of CSVReaders, or the information about which kind of reader it is...
         List<AssessmentItem> fullLoList = ReaderTools.learningObjectsFromCSVList(2, assessmentFiles);
-        List<LearningResourceRecord> lolrList = LearningResourceRecord.createLRecordsFromAssessments(fullLoList);
+        List<LearningResourceRecord> lolrList = LearningResourceRecord.createLearningResourceRecordsFromAssessmentItems(fullLoList);
         LearningResourceRecord.resourceRecordsToJSON(lolrList, destinationFilepath);
     }
 
@@ -671,7 +671,7 @@ public class ConceptKnowledgeCalculator implements ConceptKnowledgeCalculatorAPI
 
     @Override
     public boolean resourceIsValid(String name) throws IOException {
-        List<LearningResourceRecord> temp = LearningResourceRecord.buildListFromJson(name);
+        List<LearningResourceRecord> temp = LearningResourceRecord.createLearningResourceRecordsFromJsonFile(name);
         if(temp.size()>0){
             return true;
         }else{
