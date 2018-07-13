@@ -115,12 +115,12 @@ public class TecmapFileDatastore implements TecmapDatastore {
                 }
             }
             catch (IOException e){
-                logger.info("IOException when trying to create map for id: "+ idToRetrieve +"\tError:", e);
+                logger.warn("IOException when trying to create map for id: "+ idToRetrieve +"\tError:", e);
                 return null;
             }
         }
         else {
-            logger.info("Map not found in fileDatastore for id: "+ idToRetrieve);
+            logger.warn("Map not found in fileDatastore for id: "+ idToRetrieve);
             return null;
         }
     }

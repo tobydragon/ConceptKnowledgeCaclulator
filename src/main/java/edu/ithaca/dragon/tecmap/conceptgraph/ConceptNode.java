@@ -252,6 +252,23 @@ public class ConceptNode {
 		}
 	}
 
+
+	/**
+	 * starting from a node, gets longest distance to a leaf
+	 * @return that length
+	 */
+	public int getLongestPathToLeaf() {
+		if (this.children.isEmpty()) {  //ie. a leaf
+			return 0;
+		} else {
+			List<Integer> childrenPaths = new ArrayList<>();
+			for (ConceptNode child : children) {
+				childrenPaths.add(1 + child.getLongestPathToLeaf());
+			}
+			return Collections.max(childrenPaths);
+		}
+	}
+
 	//////////////////  Simple Methods  //////////////////////
 	public void addAssessmentItem(AssessmentItem assessmentItem) {
 		learningObjectMap.put(assessmentItem.getId(), assessmentItem);

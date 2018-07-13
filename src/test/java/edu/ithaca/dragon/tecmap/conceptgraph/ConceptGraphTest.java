@@ -1,5 +1,6 @@
 package edu.ithaca.dragon.tecmap.conceptgraph;
 
+import edu.ithaca.dragon.tecmap.Settings;
 import edu.ithaca.dragon.tecmap.io.record.ConceptGraphRecord;
 import edu.ithaca.dragon.tecmap.io.record.LearningResourceRecord;
 import edu.ithaca.dragon.tecmap.learningresource.*;
@@ -9,9 +10,12 @@ import org.apache.logging.log4j.Logger;
 import org.junit.Assert;
 import org.junit.Test;
 
+import java.io.IOException;
 import java.util.*;
 
 import static org.hamcrest.collection.IsIterableContainingInAnyOrder.containsInAnyOrder;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNull;
 
 public class ConceptGraphTest {
 	static Logger logger = LogManager.getLogger(ConceptGraphTest.class);
@@ -273,7 +277,88 @@ public class ConceptGraphTest {
 
     }
 
+    @Test
+    public void getAssessmentItemsBelowAssessmentIDNoDepthGiven() throws IOException {
+        List<LearningResourceRecord> loRecords = LearningResourceRecord.buildListFromJson(Settings.DEFAULT_TEST_DATASTORE_PATH + "Cs1Example/Cs1ExampleResources.json");
+        ConceptGraph conceptGraph = new ConceptGraph(ConceptGraphRecord.buildFromJson(Settings.DEFAULT_TEST_DATASTORE_PATH + "Cs1Example/Cs1ExampleGraph.json"),
+                loRecords);
 
+        List<String> assessmentsBelowQ4 = conceptGraph.getAssessmentsBelowAssessmentID("Q4");
+
+        assertEquals(6, assessmentsBelowQ4.size());
+        Assert.assertThat(assessmentsBelowQ4, containsInAnyOrder("Q2", "HW4", "HW1", "HW2", "Q3", "HW5"));
+
+        //Check that traversal includes the assessments on the node(s) with the given ID
+        List<String> assessmentsBelowQ1 = conceptGraph.getAssessmentsBelowAssessmentID("Q1");
+        Assert.assertThat(assessmentsBelowQ1, containsInAnyOrder("HW3", "HW1", "HW2"));
+    }
+
+    @Test
+    public void getAssessmentItemsBelowAssessmentIDGivenDepth() throws IOException {
+        List<LearningResourceRecord> loRecords = LearningResourceRecord.buildListFromJson(Settings.DEFAULT_TEST_DATASTORE_PATH + "Cs1Example/Cs1ExampleResources.json");
+        ConceptGraph conceptGraph = new ConceptGraph(ConceptGraphRecord.buildFromJson(Settings.DEFAULT_TEST_DATASTORE_PATH + "Cs1Example/Cs1ExampleGraph.json"),
+                loRecords);
+
+        //Test with negative steps down
+        List<String> assessmentsXBelowQ4 = conceptGraph.getAssessmentsBelowAssessmentID("Q4", -1);
+        assertNull(assessmentsXBelowQ4);
+
+        //Test with 0 steps down
+        assessmentsXBelowQ4 = conceptGraph.getAssessmentsBelowAssessmentID("Q4", 0);
+        assertEquals(0, assessmentsXBelowQ4.size());
+
+        //Test 1 Step down
+        assessmentsXBelowQ4 = conceptGraph.getAssessmentsBelowAssessmentID("Q4", 1);
+        assertEquals(4, assessmentsXBelowQ4.size());
+        Assert.assertThat(assessmentsXBelowQ4, containsInAnyOrder("Q2", "HW4", "Q3", "HW5"));
+
+        //Test 2 Steps Down
+        assessmentsXBelowQ4 = conceptGraph.getAssessmentsBelowAssessmentID("Q4", 2);
+        assertEquals(6, assessmentsXBelowQ4.size());
+        Assert.assertThat(assessmentsXBelowQ4, containsInAnyOrder("Q2", "HW4", "HW1", "HW2", "Q3", "HW5"));
+
+        //Check that traversal includes the assessments on the node(s) with the given ID @ 0 steps
+        List<String> assessmentsBelowQ1 = conceptGraph.getAssessmentsBelowAssessmentID("Q1", 0);
+        Assert.assertThat(assessmentsBelowQ1, containsInAnyOrder("HW3"));
+
+        //And with 1 step down
+        assessmentsBelowQ1 = conceptGraph.getAssessmentsBelowAssessmentID("Q1", 1);
+        Assert.assertThat(assessmentsBelowQ1, containsInAnyOrder("HW3", "HW1", "HW2"));
+    }
+
+    @Test
+    public void getNodesWithAssessmentId() throws IOException {
+        List<LearningResourceRecord> loRecords = LearningResourceRecord.buildListFromJson(Settings.DEFAULT_TEST_DATASTORE_PATH + "Cs1Example/Cs1ExampleResources.json");
+        ConceptGraph conceptGraph = new ConceptGraph(ConceptGraphRecord.buildFromJson(Settings.DEFAULT_TEST_DATASTORE_PATH + "Cs1Example/Cs1ExampleGraph.json"),
+                loRecords);
+
+        List<ConceptNode> nodesWithQ4 = conceptGraph.getNodesWithAssessmentId("Q4");
+        assertEquals(1, nodesWithQ4.size());
+        assertEquals("Loops", nodesWithQ4.get(0).getID());
+    }
+
+    @Test
+    public void getAssessmentsBelowNode() throws IOException {
+        List<LearningResourceRecord> loRecords = LearningResourceRecord.buildListFromJson(Settings.DEFAULT_TEST_DATASTORE_PATH + "Cs1Example/Cs1ExampleResources.json");
+        ConceptGraph conceptGraph = new ConceptGraph(ConceptGraphRecord.buildFromJson(Settings.DEFAULT_TEST_DATASTORE_PATH + "Cs1Example/Cs1ExampleGraph.json"),
+                loRecords);
+
+        List<ConceptNode> nodesWithQ4 = conceptGraph.getNodesWithAssessmentId("Q4");
+        //Test 0 steps down
+        Set<String> assessmentsXBelowQ4 = conceptGraph.getAssessmentsBelowNode(new HashSet<>(), nodesWithQ4.get(0), 0);
+        assertEquals(0, assessmentsXBelowQ4.size());
+
+        //Test 1 Step down
+        assessmentsXBelowQ4 = conceptGraph.getAssessmentsBelowNode(new HashSet<>(), nodesWithQ4.get(0), 1);
+        assertEquals(4, assessmentsXBelowQ4.size());
+        Assert.assertThat(assessmentsXBelowQ4, containsInAnyOrder("Q2", "HW4", "Q3", "HW5"));
+
+        //Test 2 Steps Down
+        assessmentsXBelowQ4 = conceptGraph.getAssessmentsBelowNode(new HashSet<>(),nodesWithQ4.get(0), 2);
+        assertEquals(6, assessmentsXBelowQ4.size());
+        Assert.assertThat(assessmentsXBelowQ4, containsInAnyOrder("Q2", "HW4", "HW1", "HW2", "Q3", "HW5"));
+
+    }
 
 }
 
