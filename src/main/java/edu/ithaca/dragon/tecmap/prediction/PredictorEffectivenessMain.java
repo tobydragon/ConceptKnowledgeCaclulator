@@ -54,10 +54,7 @@ public class PredictorEffectivenessMain {
             }
         }
 
-        List<LearningResourceRecord> loRecords = new ArrayList<>();
-        for (String filename : resourceFilenames) {
-            loRecords.addAll(LearningResourceRecord.buildListFromJson(filename));
-        }
+        List<LearningResourceRecord> loRecords = LearningResourceRecord.createLearningResourceRecordsFromJsonFiles(resourceFilenames);
 
         ConceptGraph courseGraph = new ConceptGraph(ConceptGraphRecord.buildFromJson(graphFilename),
                 loRecords,

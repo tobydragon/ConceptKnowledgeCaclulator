@@ -279,7 +279,7 @@ public class ConceptGraphTest {
 
     @Test
     public void getAssessmentItemsBelowAssessmentIDNoDepthGiven() throws IOException {
-        List<LearningResourceRecord> loRecords = LearningResourceRecord.buildListFromJson(Settings.DEFAULT_TEST_DATASTORE_PATH + "Cs1Example/Cs1ExampleResources.json");
+        List<LearningResourceRecord> loRecords = LearningResourceRecord.createLearningResourceRecordsFromJsonFile(Settings.DEFAULT_TEST_DATASTORE_PATH + "Cs1Example/Cs1ExampleResources.json");
         ConceptGraph conceptGraph = new ConceptGraph(ConceptGraphRecord.buildFromJson(Settings.DEFAULT_TEST_DATASTORE_PATH + "Cs1Example/Cs1ExampleGraph.json"),
                 loRecords);
 
@@ -295,7 +295,7 @@ public class ConceptGraphTest {
 
     @Test
     public void getAssessmentItemsBelowAssessmentIDGivenDepth() throws IOException {
-        List<LearningResourceRecord> loRecords = LearningResourceRecord.buildListFromJson(Settings.DEFAULT_TEST_DATASTORE_PATH + "Cs1Example/Cs1ExampleResources.json");
+        List<LearningResourceRecord> loRecords = LearningResourceRecord.createLearningResourceRecordsFromJsonFile(Settings.DEFAULT_TEST_DATASTORE_PATH + "Cs1Example/Cs1ExampleResources.json");
         ConceptGraph conceptGraph = new ConceptGraph(ConceptGraphRecord.buildFromJson(Settings.DEFAULT_TEST_DATASTORE_PATH + "Cs1Example/Cs1ExampleGraph.json"),
                 loRecords);
 
@@ -328,7 +328,7 @@ public class ConceptGraphTest {
 
     @Test
     public void getNodesWithAssessmentId() throws IOException {
-        List<LearningResourceRecord> loRecords = LearningResourceRecord.buildListFromJson(Settings.DEFAULT_TEST_DATASTORE_PATH + "Cs1Example/Cs1ExampleResources.json");
+        List<LearningResourceRecord> loRecords = LearningResourceRecord.createLearningResourceRecordsFromJsonFile(Settings.DEFAULT_TEST_DATASTORE_PATH + "Cs1Example/Cs1ExampleResources.json");
         ConceptGraph conceptGraph = new ConceptGraph(ConceptGraphRecord.buildFromJson(Settings.DEFAULT_TEST_DATASTORE_PATH + "Cs1Example/Cs1ExampleGraph.json"),
                 loRecords);
 
@@ -339,7 +339,7 @@ public class ConceptGraphTest {
 
     @Test
     public void getAssessmentsBelowNode() throws IOException {
-        List<LearningResourceRecord> loRecords = LearningResourceRecord.buildListFromJson(Settings.DEFAULT_TEST_DATASTORE_PATH + "Cs1Example/Cs1ExampleResources.json");
+        List<LearningResourceRecord> loRecords = LearningResourceRecord.createLearningResourceRecordsFromJsonFile(Settings.DEFAULT_TEST_DATASTORE_PATH + "Cs1Example/Cs1ExampleResources.json");
         ConceptGraph conceptGraph = new ConceptGraph(ConceptGraphRecord.buildFromJson(Settings.DEFAULT_TEST_DATASTORE_PATH + "Cs1Example/Cs1ExampleGraph.json"),
                 loRecords);
 
