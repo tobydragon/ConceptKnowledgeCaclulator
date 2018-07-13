@@ -100,6 +100,13 @@ public class TecmapFileDatastore implements TecmapDatastore {
                             AssessmentItemResponse.createAssessmentItemResponses(files.getAssessmentFiles())
                     );
                 }
+                else if (desiredState == TecmapState.resourcesNoAssessment){
+                    return new SuggestingTecmap(new ConceptGraph(ConceptGraphRecord.buildFromJson(files.getGraphFile())),
+                            LearningResourceRecord.createLearningResourceRecordsFromJsonFiles(files.getResourceFiles()),
+                            null,
+                            null
+                    );
+                }
                 else if (desiredState == TecmapState.noAssessment) {
                     return new SuggestingTecmap(new ConceptGraph(ConceptGraphRecord.buildFromJson(files.getGraphFile())), null,null, null);
                 }
