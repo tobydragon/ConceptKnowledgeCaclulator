@@ -108,6 +108,7 @@ public class PredictorEffectivenessTest {
 
         assertEquals(0, studentsWithResponses.size());
 
+        //Check with an assessment that everyone has
         assessmentsToInclude.add("HW4");
         studentsWithResponses = PredictorEffectiveness.getAssessmentsForStudentsWithAllResponses(assessmentItems, assessmentsToInclude);
         assertEquals(1, studentsWithResponses.size());
@@ -115,21 +116,30 @@ public class PredictorEffectivenessTest {
         assertEquals(6, studentsWithResponses.get(0).getResponses().size());
         assessmentsToInclude.remove("HW4");
 
-        assessmentsToInclude.add("HW5");
+        //Check with an assessment that s06 is missing
+        assessmentsToInclude.add("Q2");
         studentsWithResponses = PredictorEffectiveness.getAssessmentsForStudentsWithAllResponses(assessmentItems, assessmentsToInclude);
         //Should have omitted s06 since has no HW5
         assertEquals(1, studentsWithResponses.size());
-        assertEquals(1, studentsWithResponses.get(0).getMaxPossibleKnowledgeEstimate());
+        assertEquals(5, studentsWithResponses.get(0).getMaxPossibleKnowledgeEstimate());
         assertEquals(5, studentsWithResponses.get(0).getResponses().size());
 
-        assessmentsToInclude.add("HW3");
+        //Check with a second assessment that s06 is missing
+        assessmentsToInclude.add("HW5");
         studentsWithResponses = PredictorEffectiveness.getAssessmentsForStudentsWithAllResponses(assessmentItems, assessmentsToInclude);
-        //Should have omitted s06 since no HW5
+        //Should have omitted s06 since has no HW5
         assertEquals(2, studentsWithResponses.size());
         assertEquals(1, studentsWithResponses.get(1).getMaxPossibleKnowledgeEstimate());
         assertEquals(5, studentsWithResponses.get(1).getResponses().size());
-        assertEquals(2, studentsWithResponses.get(0).getMaxPossibleKnowledgeEstimate());
-        assertEquals(5, studentsWithResponses.get(0).getResponses().size());
+
+        assessmentsToInclude.add("HW3");
+        studentsWithResponses = PredictorEffectiveness.getAssessmentsForStudentsWithAllResponses(assessmentItems, assessmentsToInclude);
+        //Should have omitted s06 since no HW5 & no Q2
+        assertEquals(3, studentsWithResponses.size());
+        assertEquals(1, studentsWithResponses.get(2).getMaxPossibleKnowledgeEstimate());
+        assertEquals(5, studentsWithResponses.get(2).getResponses().size());
+        assertEquals(2, studentsWithResponses.get(1).getMaxPossibleKnowledgeEstimate());
+        assertEquals(5, studentsWithResponses.get(1).getResponses().size());
     }
 
     @Test

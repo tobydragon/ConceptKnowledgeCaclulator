@@ -48,7 +48,7 @@ public class LearningSetSelectorTest {
         assertTrue(learningSet.contains(assessmentToPredict));
 
         learningSet = baseLearningSetSelector.getLearningSet(conceptGraph, matrix.getStudentIds().get(5), assessmentToPredict);
-        assertEquals(9, learningSet.size());
+        assertEquals(8, learningSet.size());
         assertTrue(learningSet.contains(assessmentToPredict));
         assertFalse(learningSet.contains("HW5"));
     }
@@ -76,7 +76,7 @@ public class LearningSetSelectorTest {
         //Checks with student missing HW5
         studentId = matrix.getStudentIds().get(5);
         learningSet = graphLearningSetSelector.getLearningSet(conceptGraph, studentId, assessmentToPredict);
-        assertEquals(9, learningSet.size());
+        assertEquals(8, learningSet.size());
         assertFalse(learningSet.contains("HW5"));
     }
 
