@@ -25,7 +25,7 @@ public class DiscreteDataFrameFunctions {
     }
 
     /**
-     * Converts KnowledgeEstimateMatrix into a Dataframe
+     * Converts DiscreteAssessmentMatrix into a Dataframe
      * @param rawData
      * @param columnsToInclude list of columns (assessment Ids) to be included in the dataframe
      * @return DataFrame that is easier to use (IN ORDER TO GET VALUES, YOU MUST USE THE COLUMNID TYPE THAT IS DICTATED BY THE DATAFRAME

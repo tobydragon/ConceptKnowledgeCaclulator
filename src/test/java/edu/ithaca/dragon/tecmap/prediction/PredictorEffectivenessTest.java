@@ -16,10 +16,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 import java.io.IOException;
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 import static org.hamcrest.collection.IsIterableContainingInAnyOrder.containsInAnyOrder;
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -103,99 +100,123 @@ public class PredictorEffectivenessTest {
     }
 
     @Test
+    public void getAssessmentsForStudentsWithAllResponses() {
+        List<AssessmentItem> assessmentItems = continuousAssessmentMatrix.getAssessmentItems();
+        List<String> assessmentsToInclude = new ArrayList<>();
+
+        List<AssessmentItem> studentsWithResponses = PredictorEffectiveness.getAssessmentsForStudentsWithAllResponses(assessmentItems, assessmentsToInclude);
+
+        assertEquals(0, studentsWithResponses.size());
+
+        //Check with an assessment that everyone has
+        assessmentsToInclude.add("HW4");
+        studentsWithResponses = PredictorEffectiveness.getAssessmentsForStudentsWithAllResponses(assessmentItems, assessmentsToInclude);
+        assertEquals(1, studentsWithResponses.size());
+        assertEquals(1, studentsWithResponses.get(0).getMaxPossibleKnowledgeEstimate());
+        assertEquals(6, studentsWithResponses.get(0).getResponses().size());
+        assessmentsToInclude.remove("HW4");
+
+        //Check with an assessment that s06 is missing
+        assessmentsToInclude.add("Q2");
+        studentsWithResponses = PredictorEffectiveness.getAssessmentsForStudentsWithAllResponses(assessmentItems, assessmentsToInclude);
+        //Should have omitted s06 since has no HW5
+        assertEquals(1, studentsWithResponses.size());
+        assertEquals(5, studentsWithResponses.get(0).getMaxPossibleKnowledgeEstimate());
+        assertEquals(5, studentsWithResponses.get(0).getResponses().size());
+
+        //Check with a second assessment that s06 is missing
+        assessmentsToInclude.add("HW5");
+        studentsWithResponses = PredictorEffectiveness.getAssessmentsForStudentsWithAllResponses(assessmentItems, assessmentsToInclude);
+        //Should have omitted s06 since has no HW5
+        assertEquals(2, studentsWithResponses.size());
+        assertEquals(1, studentsWithResponses.get(1).getMaxPossibleKnowledgeEstimate());
+        assertEquals(5, studentsWithResponses.get(1).getResponses().size());
+
+        assessmentsToInclude.add("HW3");
+        studentsWithResponses = PredictorEffectiveness.getAssessmentsForStudentsWithAllResponses(assessmentItems, assessmentsToInclude);
+        //Should have omitted s06 since no HW5 & no Q2
+        assertEquals(3, studentsWithResponses.size());
+        assertEquals(1, studentsWithResponses.get(2).getMaxPossibleKnowledgeEstimate());
+        assertEquals(5, studentsWithResponses.get(2).getResponses().size());
+        assertEquals(2, studentsWithResponses.get(1).getMaxPossibleKnowledgeEstimate());
+        assertEquals(5, studentsWithResponses.get(1).getResponses().size());
+    }
+
+    @Test
     public void testLearningPredictor() throws IOException {
-        LearningSetSelector baseLearningSetSelector = new BaseLearningSetSelector();
+        LearningSetSelector baseLearningSetSelector = new NoStructureLearningSetSelector();
 
         PredictorEffectiveness testPredictor = PredictorEffectiveness.testLearningPredictor(new BayesPredictor(defaultGroupings, atriskGroupings), baseLearningSetSelector, "Q5" , conceptGraph, atriskGroupings, 0.5);
 
-        assertEquals((double) 2/3, testPredictor.getPercentCorrect());
+        assertEquals(1, testPredictor.getPercentCorrect());
 
         List<PredictionResult> results = testPredictor.getAllResults();
-        assertEquals(3, results.size());
+        assertEquals(2, results.size());
         PredictionResult studentResult = results.get(0);
-        assertEquals("s04", studentResult.getStudentId());
+        assertEquals("s03", studentResult.getStudentId());
         assertEquals("AT-RISK", studentResult.getExpectedResult());
         assertEquals("AT-RISK", studentResult.getPredictedResult());
         studentResult = results.get(1);
         assertEquals("s05", studentResult.getStudentId());
         assertEquals("OK", studentResult.getExpectedResult());
         assertEquals("OK", studentResult.getPredictedResult());
-        studentResult = results.get(2);
-        assertEquals("s06", studentResult.getStudentId());
-        assertEquals("OK", studentResult.getExpectedResult());
-        assertEquals("AT-RISK", studentResult.getPredictedResult());
         assertEquals(1, testPredictor.getTruePositive().size());
         assertEquals(1, testPredictor.getTrueNegative().size());
-        assertEquals(1, testPredictor.getFalsePositive().size());
+
 
         LearningSetSelector graphLearningSetSelector = new GraphLearningSetSelector();
 
         testPredictor = PredictorEffectiveness.testLearningPredictor(new BayesPredictor(defaultGroupings, atriskGroupings), graphLearningSetSelector, "Q5", conceptGraph, atriskGroupings, 0.5);
 
         results = testPredictor.getAllResults();
-        assertEquals(3, results.size());
+        assertEquals(2, results.size());
         studentResult = results.get(0);
-        assertEquals("s04", studentResult.getStudentId());
+        assertEquals("s03", studentResult.getStudentId());
         assertEquals("AT-RISK", studentResult.getExpectedResult());
         assertEquals("AT-RISK", studentResult.getPredictedResult());
         studentResult = results.get(1);
         assertEquals("s05", studentResult.getStudentId());
         assertEquals("OK", studentResult.getExpectedResult());
         assertEquals("OK", studentResult.getPredictedResult());
-        studentResult = results.get(2);
-        assertEquals("s06", studentResult.getStudentId());
-        assertEquals("OK", studentResult.getExpectedResult());
-        assertEquals("AT-RISK", studentResult.getPredictedResult());
         assertEquals(1, testPredictor.getTruePositive().size());
         assertEquals(1, testPredictor.getTrueNegative().size());
-        assertEquals(1, testPredictor.getFalsePositive().size());
     }
 
     @Test
     public void testPredictor() throws IOException {
-        LearningSetSelector baseLearningSetSelector = new BaseLearningSetSelector();
+        LearningSetSelector baseLearningSetSelector = new NoStructureLearningSetSelector();
 
         PredictorEffectiveness testPredictor = PredictorEffectiveness.testPredictor(new SimplePredictor(atriskGroupings), baseLearningSetSelector, "Q5", conceptGraph, atriskGroupings,0.5);
 
         List<PredictionResult> results = testPredictor.getAllResults();
-        assertEquals(3, results.size());
+        assertEquals(2, results.size());
         PredictionResult studentResult = results.get(0);
-        assertEquals("s04", studentResult.getStudentId());
+        assertEquals("s03", studentResult.getStudentId());
         assertEquals("AT-RISK", studentResult.getExpectedResult());
         assertEquals("AT-RISK", studentResult.getPredictedResult());
         studentResult = results.get(1);
         assertEquals("s05", studentResult.getStudentId());
         assertEquals("OK", studentResult.getExpectedResult());
         assertEquals("OK", studentResult.getPredictedResult());
-        studentResult = results.get(2);
-        assertEquals("s06", studentResult.getStudentId());
-        assertEquals("OK", studentResult.getExpectedResult());
-        assertEquals("AT-RISK", studentResult.getPredictedResult());
         assertEquals(1, testPredictor.getTruePositive().size());
         assertEquals(1, testPredictor.getTrueNegative().size());
-        assertEquals(1, testPredictor.getFalsePositive().size());
 
         LearningSetSelector graphLearningSetSelector = new GraphLearningSetSelector();
 
         testPredictor = PredictorEffectiveness.testPredictor(new SimplePredictor(atriskGroupings), graphLearningSetSelector, "Q5", conceptGraph, atriskGroupings, 0.5);
 
         results = testPredictor.getAllResults();
-        assertEquals(3, results.size());
+        assertEquals(2, results.size());
         studentResult = results.get(0);
-        assertEquals("s04", studentResult.getStudentId());
+        assertEquals("s03", studentResult.getStudentId());
         assertEquals("AT-RISK", studentResult.getExpectedResult());
         assertEquals("AT-RISK", studentResult.getPredictedResult());
         studentResult = results.get(1);
         assertEquals("s05", studentResult.getStudentId());
         assertEquals("OK", studentResult.getExpectedResult());
         assertEquals("OK", studentResult.getPredictedResult());
-        studentResult = results.get(2);
-        assertEquals("s06", studentResult.getStudentId());
-        assertEquals("OK", studentResult.getExpectedResult());
-        assertEquals("AT-RISK", studentResult.getPredictedResult());
         assertEquals(1, testPredictor.getTruePositive().size());
         assertEquals(1, testPredictor.getTrueNegative().size());
-        assertEquals(1, testPredictor.getFalsePositive().size());
     }
 
 }

@@ -178,6 +178,38 @@ public class PredictorEffectiveness {
     }
 
     /**
+     * Finds the students that have responses to all of the assessments to be included
+     * @param allAssessments
+     * @param assessmentsToInclude
+     * @return all of the assessmentItemResponses for the students that are to be included
+     */
+    static List<AssessmentItem> getAssessmentsForStudentsWithAllResponses(List<AssessmentItem> allAssessments, List<String> assessmentsToInclude) {
+        Map<String, List<AssessmentItemResponse>> studentResponses = new HashMap<>();
+        Map<String, Double> originalMaxKnowledgeEstimates = new HashMap<>();
+        for (AssessmentItem assessmentItem : allAssessments) {
+            if (assessmentsToInclude.contains(assessmentItem.getId())) {
+                originalMaxKnowledgeEstimates.put(assessmentItem.getId(), assessmentItem.getMaxPossibleKnowledgeEstimate());
+                for (AssessmentItemResponse response : assessmentItem.getResponses()) {
+                    if (studentResponses.containsKey(response.getUserId())) {
+                        studentResponses.get(response.getUserId()).add(response);
+                    } else {
+                        List<AssessmentItemResponse> responseList = new ArrayList<>();
+                        responseList.add(response);
+                        studentResponses.put(response.getUserId(), responseList);
+                    }
+                }
+            }
+        }
+        List<AssessmentItemResponse> studentsWithAllAssessmentsToInclude = new ArrayList<>();
+        for (Map.Entry<String, List<AssessmentItemResponse>> entry : studentResponses.entrySet()) {
+            if (entry.getValue().size() == assessmentsToInclude.size()) {
+                studentsWithAllAssessmentsToInclude.addAll(entry.getValue());
+            }
+        }
+        return AssessmentItem.buildListFromAssessmentItemResponses(studentsWithAllAssessmentsToInclude, originalMaxKnowledgeEstimates);
+    }
+
+    /**
      * Test how effective a predictor is, works off of the Predictor interface
      * @param predictor specific type of predictor
      * @param learningSetSelector how the learning set is being chosen
@@ -187,7 +219,12 @@ public class PredictorEffectiveness {
      * @return PredictorEffectiveness object with percent correct and a list of all the results
      */
     public static PredictorEffectiveness testLearningPredictor(LearningPredictor predictor, LearningSetSelector learningSetSelector, String assessmentToLearn, ConceptGraph conceptGraph, GradeDiscreteGroupings atriskGroupings, double ratio) throws IOException{
-        ContinuousAssessmentMatrix originalMatrix = new ContinuousAssessmentMatrix(new ArrayList<>(conceptGraph.getAssessmentItemMap().values()));
+        List<AssessmentItem> allAssessments = new ArrayList<>(conceptGraph.getAssessmentItemMap().values());
+        //List of learningAssessments based on the first student's assessments
+        List<String> learningAssessments = learningSetSelector.getLearningSet(conceptGraph, allAssessments.get(0).getResponses().get(0).getUserId(), assessmentToLearn);
+        List<AssessmentItem> assessmentItemsWithValidStudents = getAssessmentsForStudentsWithAllResponses(allAssessments, learningAssessments);
+
+        ContinuousAssessmentMatrix originalMatrix = new ContinuousAssessmentMatrix(assessmentItemsWithValidStudents);
 
         //Split the matrix
         Tuple2<ContinuousAssessmentMatrix, ContinuousAssessmentMatrix> splitMatrix = splitMatrix(originalMatrix, ratio);
@@ -196,9 +233,6 @@ public class PredictorEffectiveness {
         ContinuousAssessmentMatrix learningMatrix = splitMatrix._1;
         //Test on the other sized matrix
         ContinuousAssessmentMatrix testingMatrix = splitMatrix._2;
-
-        //List of learningAssessments based on the first student's assessments
-        List<String> learningAssessments = learningSetSelector.getLearningSet(conceptGraph, learningMatrix.getStudentIds().get(0), assessmentToLearn);
 
         //Learn the category with the given assessments
         predictor.learnSet(learningMatrix, assessmentToLearn, learningAssessments);
@@ -216,7 +250,14 @@ public class PredictorEffectiveness {
     }
 
     public static PredictorEffectiveness testPredictor(Predictor simplePredictor, LearningSetSelector learningSetSelector, String assessmentToLearn, ConceptGraph conceptGraph, GradeDiscreteGroupings atriskGroupings,double ratio) throws IOException {
-        ContinuousAssessmentMatrix originalMatrix = new ContinuousAssessmentMatrix(new ArrayList<>(conceptGraph.getAssessmentItemMap().values()));
+        List<AssessmentItem> allAssessments = new ArrayList<>(conceptGraph.getAssessmentItemMap().values());
+        List<String> testingAssessments = learningSetSelector.getLearningSet(conceptGraph, allAssessments.get(0).getResponses().get(0).getUserId() , assessmentToLearn);
+        List<AssessmentItem> assessmentItemsWithValidStudents = getAssessmentsForStudentsWithAllResponses(allAssessments, testingAssessments);
+
+        ContinuousAssessmentMatrix originalMatrix = new ContinuousAssessmentMatrix(assessmentItemsWithValidStudents);        //Get learning set and remove the assessmentToLearn from list
+
+        //Need to remove for the classification
+        testingAssessments.remove(assessmentToLearn);
 
         //Split the matrix
         Tuple2<ContinuousAssessmentMatrix, ContinuousAssessmentMatrix> splitMatrix = splitMatrix(originalMatrix, ratio);
@@ -225,10 +266,6 @@ public class PredictorEffectiveness {
         ContinuousAssessmentMatrix learningMatrix = splitMatrix._1;
         //Test on the other sized matrix
         ContinuousAssessmentMatrix testingMatrix = splitMatrix._2;
-
-        //Get learning set and remove the assessmentToLearn from list
-        List<String> testingAssessments = learningSetSelector.getLearningSet(conceptGraph, learningMatrix.getStudentIds().get(0), assessmentToLearn);
-        testingAssessments.remove(assessmentToLearn);
 
         Map<String, String> predictions = simplePredictor.classifySet(testingMatrix, testingAssessments);
 

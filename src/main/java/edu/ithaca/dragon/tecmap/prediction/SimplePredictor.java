@@ -43,7 +43,7 @@ public class SimplePredictor implements Predictor {
 
     /**
      * Classifies the data based on the raw testing matrix you give it, should not have a grade for what you are predicting
-     * @param rawTestingData in the form of KnowledgeEstimateMatrix
+     * @param rawTestingData in the form of ContinuousAssessmentMatrix
      * @param assessmentsForClassification list of what assessment columns should be used in learning (should all be doubles, not the categorical variable)
      * TESTING DATA MUST BE MANIPULATED IN ORDER TO GET ROWS FOR THE BAYES CLASSIFY METHOD
      * @return Map of String to String (Student id -> Classification) MAY CHANGE

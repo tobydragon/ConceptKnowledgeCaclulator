@@ -2,13 +2,13 @@ package edu.ithaca.dragon.tecmap.prediction;
 
 import edu.ithaca.dragon.tecmap.Settings;
 import edu.ithaca.dragon.tecmap.conceptgraph.ConceptGraph;
-import edu.ithaca.dragon.tecmap.conceptgraph.eval.KnowledgeEstimateMatrix;
 import edu.ithaca.dragon.tecmap.io.reader.CSVReader;
 import edu.ithaca.dragon.tecmap.io.reader.SakaiReader;
 import edu.ithaca.dragon.tecmap.io.record.ConceptGraphRecord;
 import edu.ithaca.dragon.tecmap.io.record.LearningResourceRecord;
 import edu.ithaca.dragon.tecmap.learningresource.AssessmentItem;
 import edu.ithaca.dragon.tecmap.learningresource.AssessmentItemResponse;
+import edu.ithaca.dragon.tecmap.learningresource.ContinuousAssessmentMatrix;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -18,14 +18,12 @@ import java.util.Arrays;
 import java.util.List;
 
 import static org.hamcrest.Matchers.containsInAnyOrder;
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertFalse;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.*;
 
 public class LearningSetSelectorTest {
 
     private static final String assessmentToPredict = "Q5";
-    private KnowledgeEstimateMatrix matrix;
+    private ContinuousAssessmentMatrix matrix;
     private ConceptGraph conceptGraph;
 
     @Before
@@ -34,7 +32,7 @@ public class LearningSetSelectorTest {
         CSVReader data = new SakaiReader(filename);
         List<AssessmentItem> assessmentItems = data.getManualGradedLearningObjects();
 
-        matrix = new KnowledgeEstimateMatrix(assessmentItems);
+        matrix = new ContinuousAssessmentMatrix(assessmentItems);
 
         conceptGraph = new ConceptGraph(ConceptGraphRecord.buildFromJson(Settings.DEFAULT_TEST_DATASTORE_PATH + "Cs1Example/Cs1ExampleGraph.json"),
                 LearningResourceRecord.createLearningResourceRecordsFromJsonFile(Settings.DEFAULT_TEST_DATASTORE_PATH + "Cs1Example/Cs1ExampleResources.json"),
@@ -43,14 +41,14 @@ public class LearningSetSelectorTest {
 
     @Test
     public void getLearningSetWithBaseSelector() throws IOException {
-        LearningSetSelector baseLearningSetSelector = new BaseLearningSetSelector();
-        List<String> learningSet = baseLearningSetSelector.getLearningSet(conceptGraph, matrix.getUserIdList().get(0), "Q5");
+        LearningSetSelector baseLearningSetSelector = new NoStructureLearningSetSelector();
+        List<String> learningSet = baseLearningSetSelector.getLearningSet(conceptGraph, matrix.getStudentIds().get(0), "Q5");
 
         assertEquals(10, learningSet.size());
         assertTrue(learningSet.contains(assessmentToPredict));
 
-        learningSet = baseLearningSetSelector.getLearningSet(conceptGraph, matrix.getUserIdList().get(5), assessmentToPredict);
-        assertEquals(9, learningSet.size());
+        learningSet = baseLearningSetSelector.getLearningSet(conceptGraph, matrix.getStudentIds().get(5), assessmentToPredict);
+        assertEquals(8, learningSet.size());
         assertTrue(learningSet.contains(assessmentToPredict));
         assertFalse(learningSet.contains("HW5"));
     }
@@ -58,7 +56,7 @@ public class LearningSetSelectorTest {
     @Test
     public void getLearningSetWithGraphSelector() throws IOException {
         LearningSetSelector graphLearningSetSelector = new GraphLearningSetSelector();
-        String studentId = matrix.getUserIdList().get(0);
+        String studentId = matrix.getStudentIds().get(0);
         //Checks with student with all grades
         //Check the entire graph
         List<String> learningSet = graphLearningSetSelector.getLearningSet(conceptGraph, studentId, assessmentToPredict);
@@ -76,9 +74,9 @@ public class LearningSetSelectorTest {
         assertFalse(learningSet.contains("Q5"));
 
         //Checks with student missing HW5
-        studentId = matrix.getUserIdList().get(5);
+        studentId = matrix.getStudentIds().get(5);
         learningSet = graphLearningSetSelector.getLearningSet(conceptGraph, studentId, assessmentToPredict);
-        assertEquals(9, learningSet.size());
+        assertEquals(8, learningSet.size());
         assertFalse(learningSet.contains("HW5"));
     }
 

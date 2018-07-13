@@ -6,7 +6,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class GraphLearningSetSelector extends BaseLearningSetSelector {
+public class GraphLearningSetSelector extends NoStructureLearningSetSelector {
 
     public GraphLearningSetSelector() {
     }

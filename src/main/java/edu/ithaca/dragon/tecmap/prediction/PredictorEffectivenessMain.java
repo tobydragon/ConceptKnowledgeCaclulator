@@ -4,14 +4,14 @@ import edu.ithaca.dragon.tecmap.Settings;
 import edu.ithaca.dragon.tecmap.conceptgraph.ConceptGraph;
 import edu.ithaca.dragon.tecmap.io.record.ConceptGraphRecord;
 import edu.ithaca.dragon.tecmap.io.record.LearningResourceRecord;
+import edu.ithaca.dragon.tecmap.learningresource.AssessmentItem;
 import edu.ithaca.dragon.tecmap.learningresource.AssessmentItemResponse;
 import edu.ithaca.dragon.tecmap.learningresource.GradeDiscreteGroupings;
+import edu.ithaca.dragon.tecmap.util.DataUtil;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
+import java.util.*;
 
 public class PredictorEffectivenessMain {
 
@@ -25,16 +25,16 @@ public class PredictorEffectivenessMain {
      * @param courseName the name of the directory in the datastore for the course
      * @return ConceptGraph built from the graph file, the assessment files and resource files
      */
-    private static ConceptGraph getConceptGraph(String courseName) throws IOException {
+    static ConceptGraph getConceptGraph(String courseName, String datastorePath) throws IOException {
         //Get assessment filenames
-        File directory = new File(Settings.DEFAULT_MAIN_DATASTORE_PATH + courseName + "/private/");
+        File directory = new File(datastorePath + courseName + "/private/");
 
         List<File> files = Arrays.asList(directory.listFiles());
         List<String> assessmentFilenames = new ArrayList<>();
         for (File file : files) {
             if (file.isFile()) {
                 if (!file.getName().equals(".gitignore")) {
-                    assessmentFilenames.add(Settings.DEFAULT_MAIN_DATASTORE_PATH + courseName + "/private/" + file.getName());
+                    assessmentFilenames.add(datastorePath + courseName + "/private/" + file.getName());
                 }
             }
         }
@@ -42,14 +42,14 @@ public class PredictorEffectivenessMain {
         List<String> resourceFilenames = new ArrayList<>();
         String graphFilename = null;
         //Get resources
-        directory = new File(Settings.DEFAULT_MAIN_DATASTORE_PATH + courseName);
+        directory = new File(datastorePath + courseName);
         files = Arrays.asList(directory.listFiles());
         for (File file : files) {
             if (file.isFile()) {
                 if (file.getName().contains("Resources")) {
-                    resourceFilenames.add(Settings.DEFAULT_MAIN_DATASTORE_PATH + courseName + "/" + file.getName());
+                    resourceFilenames.add(datastorePath + courseName + "/" + file.getName());
                 } else if (file.getName().contains("Graph")) {
-                    graphFilename = Settings.DEFAULT_MAIN_DATASTORE_PATH + courseName + "/" + file.getName();
+                    graphFilename = datastorePath + courseName + "/" + file.getName();
                 }
             }
         }
@@ -63,6 +63,60 @@ public class PredictorEffectivenessMain {
         return courseGraph;
     }
 
+    private static void singleAssessmentTwoSetSelectorTwoPredictorTest(ConceptGraph courseGraph, String assessmentToLearn, LearningPredictor bayes, Predictor simple, LearningSetSelector baseLearningSetSelector, LearningSetSelector graphLearningSetSelector, GradeDiscreteGroupings atriskGroupings) throws IOException {
+        System.out.println("Learning Set Size: \t Base Bayes %Correct: \t Graph Bayes %Correct: \t Base Simple %Correct: \t Graph Simple %Correct:");
+        //Will get a null pointer exception when trying to predict an assessment not connected to a resource
+        for (double ratio : learningSizeRatios) {
+            PredictorEffectiveness courseBaseBayesEffectiveness = PredictorEffectiveness.testLearningPredictor(bayes, baseLearningSetSelector,assessmentToLearn, courseGraph, atriskGroupings,ratio);
+            bayes.reset();
+            PredictorEffectiveness courseGraphBayesEffectiveness = PredictorEffectiveness.testLearningPredictor(bayes, graphLearningSetSelector,assessmentToLearn, courseGraph, atriskGroupings,ratio);
+            bayes.reset();
+            PredictorEffectiveness courseBaseSimpleEffectiveness = PredictorEffectiveness.testPredictor(simple, baseLearningSetSelector, assessmentToLearn, courseGraph, atriskGroupings, ratio);
+            PredictorEffectiveness courseGraphSimpleEffectiveness = PredictorEffectiveness.testPredictor(simple, graphLearningSetSelector, assessmentToLearn, courseGraph, atriskGroupings, ratio);
+            System.out.println("\t\t" + ratio +
+                    "\t\t\t  " + courseBaseBayesEffectiveness.getPercentCorrect() + "(" + courseBaseBayesEffectiveness.getTotalTested() + ")" +
+                    "\t\t" + courseGraphBayesEffectiveness.getPercentCorrect() + "(" + courseGraphBayesEffectiveness.getTotalTested() + ")" +
+                    "\t\t" + courseBaseSimpleEffectiveness.getPercentCorrect() + "(" + courseBaseSimpleEffectiveness.getTotalTested() + ")" +
+                    "\t\t" + courseGraphSimpleEffectiveness.getPercentCorrect() + "(" + courseGraphSimpleEffectiveness.getTotalTested() + ")");
+        }
+    }
+
+    private static void allAssessmentTwoSelectorTwoPredictorTest(ConceptGraph courseGraph, LearningPredictor learning, Predictor simple, LearningSetSelector baseLearningSetSelector, LearningSetSelector graphLearningSetSelector, GradeDiscreteGroupings atriskGroupings, double ratio) throws IOException {
+        //Get all assessments from courseGraph
+        List<AssessmentItem> allAssessments = new ArrayList<>(courseGraph.getAssessmentItemMap().values());
+        Map<String, Double> courseBaseBayes = new HashMap<>();
+        Map<String, Double> courseGraphBayes = new HashMap<>();
+        Map<String, Double> courseBaseSimple = new HashMap<>();
+        Map<String, Double> courseGraphSimple = new HashMap<>();
+        //Get results for each assessment
+        for (AssessmentItem item : allAssessments) {
+            String assessment = item.getId();
+            courseBaseBayes.put(assessment, PredictorEffectiveness.testLearningPredictor(learning, baseLearningSetSelector, assessment, courseGraph, atriskGroupings,ratio).getPercentCorrect());
+            learning.reset();
+            courseGraphBayes.put(assessment, PredictorEffectiveness.testLearningPredictor(learning, graphLearningSetSelector, assessment, courseGraph, atriskGroupings,ratio).getPercentCorrect());
+            learning.reset();
+            courseBaseSimple.put(assessment, PredictorEffectiveness.testPredictor(simple, baseLearningSetSelector, assessment, courseGraph, atriskGroupings, ratio).getPercentCorrect());
+            courseGraphSimple.put(assessment, PredictorEffectiveness.testPredictor(simple, graphLearningSetSelector, assessment, courseGraph, atriskGroupings, ratio).getPercentCorrect());
+        }
+
+        //Sort the results
+        Object[] courseBaseBayesSorted = courseBaseBayes.entrySet().stream().sorted(Map.Entry.comparingByValue()).toArray();
+        Object[] courseGraphBayesSorted = courseGraphBayes.entrySet().stream().sorted(Map.Entry.comparingByValue()).toArray();
+        Object[] courseBaseSimpleSorted = courseBaseSimple.entrySet().stream().sorted(Map.Entry.comparingByValue()).toArray();
+        Object[] courseGraphSimpleSorted = courseGraphSimple.entrySet().stream().sorted(Map.Entry.comparingByValue()).toArray();
+
+        //Output the sorted results
+        //Rank lowest % correct to highest
+        System.out.println("\tBase Bayes:\t Graph Bayes: \t Base Simple: \t Graph Simple:");
+        for (int i = 0; i < courseBaseBayesSorted.length; i++) {
+            String baseBayes = courseBaseBayesSorted[i].toString().split("=")[0] + "(" + DataUtil.format(Double.parseDouble(courseBaseBayesSorted[i].toString().split("=")[1])) + ")";
+            String graphBayes = courseGraphBayesSorted[i].toString().split("=")[0] + "(" + DataUtil.format(Double.parseDouble(courseGraphBayesSorted[i].toString().split("=")[1])) + ")";
+            String baseSimple = courseBaseSimpleSorted[i].toString().split("=")[0] + "(" + DataUtil.format(Double.parseDouble(courseBaseSimpleSorted[i].toString().split("=")[1])) + ")";
+            String graphSimple = courseGraphSimpleSorted[i].toString().split("=")[0] + "(" + DataUtil.format(Double.parseDouble(courseGraphSimpleSorted[i].toString().split("=")[1])) + ")";
+            System.out.println(i + ")" + baseBayes + "\t" + graphBayes + "\t" + baseSimple + "\t" + graphSimple);
+        }
+    }
+
     public static void main(String[] args) throws IOException {
         GradeDiscreteGroupings defaultGroupings = GradeDiscreteGroupings.buildFromJson(Settings.DEFAULT_MAIN_PREDICTION_PATH + "discreteGroupings.json");
         GradeDiscreteGroupings atriskGroupings = GradeDiscreteGroupings.buildFromJson(Settings.DEFAULT_MAIN_PREDICTION_PATH + "atriskGroupings.json");
@@ -72,32 +126,19 @@ public class PredictorEffectivenessMain {
         //For testing the Simple Predictor Effectiveness
         Predictor simple = new SimplePredictor(atriskGroupings);
 
-        //Testing for COMP220 Data
-        ConceptGraph conceptGraph220 = getConceptGraph("comp220Dragon");
-
-        //Assessment to learn
-        String assessmentToLearn = "Lab 4: Recursion";
-
-        LearningSetSelector baseLearningSetSelector = new BaseLearningSetSelector();
+        //Two different ways to select learning sets
+        LearningSetSelector baseLearningSetSelector = new NoStructureLearningSetSelector();
         LearningSetSelector graphLearningSetSelector = new GraphLearningSetSelector();
 
-        System.out.println("Learning Set Size: \t Base Bayes %Correct: \t Graph Bayes %Correct: \t Base Simple %Correct: \t Graph Simple %Correct:");
-        //Will get a null pointer exception when trying to predict an assessment not connected to a resource
-        for (double ratio : learningSizeRatios) {
-            PredictorEffectiveness comp220BaseBayesEffectiveness = PredictorEffectiveness.testLearningPredictor(bayes, baseLearningSetSelector,assessmentToLearn, conceptGraph220, atriskGroupings,ratio);
-            bayes.reset();
-            PredictorEffectiveness comp220GraphBayesEffectiveness = PredictorEffectiveness.testLearningPredictor(bayes, graphLearningSetSelector,assessmentToLearn, conceptGraph220, atriskGroupings,ratio);
-            bayes.reset();
-            PredictorEffectiveness comp220BaseSimpleEffectiveness = PredictorEffectiveness.testPredictor(simple, baseLearningSetSelector, assessmentToLearn, conceptGraph220, atriskGroupings, ratio);
-            PredictorEffectiveness comp220GraphSimpleEffectiveness = PredictorEffectiveness.testPredictor(simple, graphLearningSetSelector, assessmentToLearn, conceptGraph220, atriskGroupings, ratio);
-            System.out.println("\t\t" + ratio +
-                    "\t\t\t  " + comp220BaseBayesEffectiveness.getPercentCorrect() +
-                    "\t\t" + comp220GraphBayesEffectiveness.getPercentCorrect() +
-                    "\t\t" + comp220BaseSimpleEffectiveness.getPercentCorrect() +
-                    "\t\t" + comp220GraphSimpleEffectiveness.getPercentCorrect());
-        }
+        //Testing for COMP220 Data
+        ConceptGraph conceptGraph220 = getConceptGraph("comp220Dragon", Settings.DEFAULT_MAIN_DATASTORE_PATH);
 
+        //Single Assessment Two Selector Two Predictor Test
+        String assessmentToLearn = "Lab 4: Recursion";
+//        singleAssessmentTwoSetSelectorTwoPredictorTest(conceptGraph220, assessmentToLearn, bayes, simple, baseLearningSetSelector, graphLearningSetSelector, atriskGroupings);
 
+        //All Assessment Two Selector Two Predictor Test
+        allAssessmentTwoSelectorTwoPredictorTest(conceptGraph220, bayes, simple, baseLearningSetSelector, graphLearningSetSelector, atriskGroupings, 0.5);
     }
 
 }

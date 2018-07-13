@@ -365,7 +365,11 @@ public class  ConceptGraph {
             assessmentNodesPathLengths.add(node.getLongestPathToLeaf());
         }
 
-        return getAssessmentsBelowAssessmentID(assessmentId, Collections.max(assessmentNodesPathLengths));
+        if (assessmentNodesPathLengths.size() == 0) {
+            return getAssessmentsBelowAssessmentID(assessmentId, 0);
+        } else {
+            return getAssessmentsBelowAssessmentID(assessmentId, Collections.max(assessmentNodesPathLengths));
+        }
     }
 
     /**
