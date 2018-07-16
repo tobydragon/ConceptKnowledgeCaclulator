@@ -15,6 +15,6 @@ public interface LearningSetSelector {
      * @return
      * @throws IOException
      */
-    List<String> getLearningSetForGivenStudent(List<AssessmentItem> allAssessments, String studentIdToDecideSet, String assessmentToPredict) throws IOException;
+    List<String> getLearningSetForGivenStudent(List<AssessmentItem> allAssessments, String studentIdToDecideSet, String assessmentToPredict);
 
 }

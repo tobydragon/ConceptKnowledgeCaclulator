@@ -21,7 +21,7 @@ public class NoStructureLearningSetSelector implements LearningSetSelector {
      * @throws IOException
      */
     @Override
-    public List<String> getLearningSetForGivenStudent(List<AssessmentItem> allAssessments, String studentIdToDecideSet, String assessmentToPredict) throws IOException {
+    public List<String> getLearningSetForGivenStudent(List<AssessmentItem> allAssessments, String studentIdToDecideSet, String assessmentToPredict) {
         List<String> learningSet = new ArrayList<>();
 
         //Only includes assessments that have responses for the given student

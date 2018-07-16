@@ -40,7 +40,7 @@ public class LearningSetSelectorTest {
     }
 
     @Test
-    public void getLearningSetWithBaseSelector() throws IOException {
+    public void getLearningSetWithBaseSelector() {
         List<AssessmentItem> allAssessments = matrix.getAssessmentItems();
         LearningSetSelector baseLearningSetSelector = new NoStructureLearningSetSelector();
         List<String> learningSet = baseLearningSetSelector.getLearningSetForGivenStudent(allAssessments, matrix.getStudentIds().get(0), "Q5");
@@ -55,7 +55,7 @@ public class LearningSetSelectorTest {
     }
 
     @Test
-    public void getLearningSetWithGraphSelector() throws IOException {
+    public void getLearningSetWithGraphSelector() {
         LearningSetSelector graphLearningSetSelector = new GraphLearningSetSelector(conceptGraph);
         String studentId = matrix.getStudentIds().get(0);
         List<AssessmentItem> allAssessments = matrix.getAssessmentItems();
@@ -78,6 +78,25 @@ public class LearningSetSelectorTest {
         //Checks with student missing HW5
         studentId = matrix.getStudentIds().get(5);
         learningSet = graphLearningSetSelector.getLearningSetForGivenStudent(allAssessments, studentId, assessmentToPredict);
+        assertEquals(8, learningSet.size());
+        assertFalse(learningSet.contains("HW5"));
+    }
+
+    @Test
+    public void getLearningSetWithGraphSelectorNoAssessmentsGiven() {
+        GraphLearningSetSelector graphLearningSetSelector = new GraphLearningSetSelector(conceptGraph);
+        String studentId = matrix.getStudentIds().get(0);
+
+        List<String> learningSet = graphLearningSetSelector.getLearningSetForGivenStudent(studentId, "Q4");
+        assertEquals(7, learningSet.size());
+        Assert.assertThat(learningSet, containsInAnyOrder("Q2", "HW4", "HW1", "HW2", "Q3", "HW5", "Q4"));
+        assertFalse(learningSet.contains("Q1"));
+        assertFalse(learningSet.contains("HW3"));
+        assertFalse(learningSet.contains("Q5"));
+
+        //Checks with student missing HW5
+        studentId = matrix.getStudentIds().get(5);
+        learningSet = graphLearningSetSelector.getLearningSetForGivenStudent(studentId, assessmentToPredict);
         assertEquals(8, learningSet.size());
         assertFalse(learningSet.contains("HW5"));
     }

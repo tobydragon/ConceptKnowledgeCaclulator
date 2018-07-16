@@ -16,6 +16,18 @@ public class GraphLearningSetSelector extends NoStructureLearningSetSelector {
     }
 
     /**
+     * Uses the graph's list of assessments and calls the other form of this function with that list of assessments
+     * @param studentIdToDecide
+     * @param assessmentToPredict
+     * @return
+     */
+    public List<String> getLearningSetForGivenStudent(String studentIdToDecide, String assessmentToPredict) {
+        List<AssessmentItem> allAssessments = new ArrayList<>();
+        allAssessments.addAll(this.graph.getAssessmentItemMap().values());
+        return getLearningSetForGivenStudent(allAssessments, studentIdToDecide, assessmentToPredict);
+    }
+
+    /**
      * Gets the list of learning assessments based on the structure of the graph, the assessmentToPredict, and the assessments available
      * for the given student
      * @param allAssessments
@@ -25,7 +37,7 @@ public class GraphLearningSetSelector extends NoStructureLearningSetSelector {
      * @throws IOException
      */
     @Override
-    public List<String> getLearningSetForGivenStudent(List<AssessmentItem> allAssessments, String studentIdToDecideSet, String assessmentToPredict) throws IOException {
+    public List<String> getLearningSetForGivenStudent(List<AssessmentItem> allAssessments, String studentIdToDecideSet, String assessmentToPredict) {
         List<String> defaultSet = super.getLearningSetForGivenStudent(allAssessments, studentIdToDecideSet, assessmentToPredict);
 
         List<String> origlearningSet = graph.getAssessmentsBelowAssessmentID(assessmentToPredict);
