@@ -212,16 +212,16 @@ public class PredictorEffectiveness {
     /**
      * Test how effective a predictor is, works off of the Predictor interface
      * @param predictor specific type of predictor
-     * @param learningSetSelector how the learning set is being chosen
+     * @param predictionSetSelector how the learning set is being chosen
      * @param assessmentToLearn what assessment is being learned
      * @param conceptGraph graph that prediction is working on
      * @param ratio what percent of the originalMatrix should be used for learning
      * @return PredictorEffectiveness object with percent correct and a list of all the results
      */
-    public static PredictorEffectiveness testLearningPredictor(LearningPredictor predictor, LearningSetSelector learningSetSelector, String assessmentToLearn, ConceptGraph conceptGraph, GradeDiscreteGroupings atriskGroupings, double ratio) throws IOException{
+    public static PredictorEffectiveness testLearningPredictor(LearningPredictor predictor, PredictionSetSelector predictionSetSelector, String assessmentToLearn, ConceptGraph conceptGraph, GradeDiscreteGroupings atriskGroupings, double ratio) throws IOException{
         List<AssessmentItem> allAssessments = new ArrayList<>(conceptGraph.getAssessmentItemMap().values());
         //List of learningAssessments based on the first student's assessments
-        List<String> learningAssessments = learningSetSelector.getLearningSetForGivenStudent(allAssessments, allAssessments.get(0).getResponses().get(0).getUserId(), assessmentToLearn);
+        List<String> learningAssessments = predictionSetSelector.getLearningSetForGivenStudent(allAssessments, allAssessments.get(0).getResponses().get(0).getUserId(), assessmentToLearn);
         List<AssessmentItem> assessmentItemsWithValidStudents = getAssessmentsForStudentsWithAllResponses(allAssessments, learningAssessments);
 
         ContinuousAssessmentMatrix originalMatrix = new ContinuousAssessmentMatrix(assessmentItemsWithValidStudents);
@@ -249,9 +249,9 @@ public class PredictorEffectiveness {
         return getPredictorEffectivenessFromResults(predictionResults);
     }
 
-    public static PredictorEffectiveness testPredictor(Predictor simplePredictor, LearningSetSelector learningSetSelector, String assessmentToLearn, ConceptGraph conceptGraph, GradeDiscreteGroupings atriskGroupings,double ratio) throws IOException {
+    public static PredictorEffectiveness testPredictor(Predictor simplePredictor, PredictionSetSelector predictionSetSelector, String assessmentToLearn, ConceptGraph conceptGraph, GradeDiscreteGroupings atriskGroupings, double ratio) throws IOException {
         List<AssessmentItem> allAssessments = new ArrayList<>(conceptGraph.getAssessmentItemMap().values());
-        List<String> testingAssessments = learningSetSelector.getLearningSetForGivenStudent(allAssessments, allAssessments.get(0).getResponses().get(0).getUserId() , assessmentToLearn);
+        List<String> testingAssessments = predictionSetSelector.getLearningSetForGivenStudent(allAssessments, allAssessments.get(0).getResponses().get(0).getUserId() , assessmentToLearn);
         List<AssessmentItem> assessmentItemsWithValidStudents = getAssessmentsForStudentsWithAllResponses(allAssessments, testingAssessments);
 
         ContinuousAssessmentMatrix originalMatrix = new ContinuousAssessmentMatrix(assessmentItemsWithValidStudents);        //Get learning set and remove the assessmentToLearn from list

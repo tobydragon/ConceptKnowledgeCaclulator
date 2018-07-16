@@ -63,16 +63,16 @@ public class PredictorEffectivenessMain {
         return courseGraph;
     }
 
-    private static void singleAssessmentTwoSetSelectorTwoPredictorTest(ConceptGraph courseGraph, String assessmentToLearn, LearningPredictor bayes, Predictor simple, LearningSetSelector baseLearningSetSelector, LearningSetSelector graphLearningSetSelector, GradeDiscreteGroupings atriskGroupings) throws IOException {
+    private static void singleAssessmentTwoSetSelectorTwoPredictorTest(ConceptGraph courseGraph, String assessmentToLearn, LearningPredictor bayes, Predictor simple, PredictionSetSelector basePredictionSetSelector, PredictionSetSelector graphPredictionSetSelector, GradeDiscreteGroupings atriskGroupings) throws IOException {
         System.out.println("Learning Set Size: \t Base Bayes %Correct: \t Graph Bayes %Correct: \t Base Simple %Correct: \t Graph Simple %Correct:");
         //Will get a null pointer exception when trying to predict an assessment not connected to a resource
         for (double ratio : learningSizeRatios) {
-            PredictorEffectiveness courseBaseBayesEffectiveness = PredictorEffectiveness.testLearningPredictor(bayes, baseLearningSetSelector,assessmentToLearn, courseGraph, atriskGroupings,ratio);
+            PredictorEffectiveness courseBaseBayesEffectiveness = PredictorEffectiveness.testLearningPredictor(bayes, basePredictionSetSelector,assessmentToLearn, courseGraph, atriskGroupings,ratio);
             bayes.reset();
-            PredictorEffectiveness courseGraphBayesEffectiveness = PredictorEffectiveness.testLearningPredictor(bayes, graphLearningSetSelector,assessmentToLearn, courseGraph, atriskGroupings,ratio);
+            PredictorEffectiveness courseGraphBayesEffectiveness = PredictorEffectiveness.testLearningPredictor(bayes, graphPredictionSetSelector,assessmentToLearn, courseGraph, atriskGroupings,ratio);
             bayes.reset();
-            PredictorEffectiveness courseBaseSimpleEffectiveness = PredictorEffectiveness.testPredictor(simple, baseLearningSetSelector, assessmentToLearn, courseGraph, atriskGroupings, ratio);
-            PredictorEffectiveness courseGraphSimpleEffectiveness = PredictorEffectiveness.testPredictor(simple, graphLearningSetSelector, assessmentToLearn, courseGraph, atriskGroupings, ratio);
+            PredictorEffectiveness courseBaseSimpleEffectiveness = PredictorEffectiveness.testPredictor(simple, basePredictionSetSelector, assessmentToLearn, courseGraph, atriskGroupings, ratio);
+            PredictorEffectiveness courseGraphSimpleEffectiveness = PredictorEffectiveness.testPredictor(simple, graphPredictionSetSelector, assessmentToLearn, courseGraph, atriskGroupings, ratio);
             System.out.println("\t\t" + ratio +
                     "\t\t\t  " + courseBaseBayesEffectiveness.getPercentCorrect() + "(" + courseBaseBayesEffectiveness.getTotalTested() + ")" +
                     "\t\t" + courseGraphBayesEffectiveness.getPercentCorrect() + "(" + courseGraphBayesEffectiveness.getTotalTested() + ")" +
@@ -81,7 +81,7 @@ public class PredictorEffectivenessMain {
         }
     }
 
-    private static void allAssessmentTwoSelectorTwoPredictorTest(ConceptGraph courseGraph, LearningPredictor learning, Predictor simple, LearningSetSelector baseLearningSetSelector, LearningSetSelector graphLearningSetSelector, GradeDiscreteGroupings atriskGroupings, double ratio) throws IOException {
+    private static void allAssessmentTwoSelectorTwoPredictorTest(ConceptGraph courseGraph, LearningPredictor learning, Predictor simple, PredictionSetSelector basePredictionSetSelector, PredictionSetSelector graphPredictionSetSelector, GradeDiscreteGroupings atriskGroupings, double ratio) throws IOException {
         //Get all assessments from courseGraph
         List<AssessmentItem> allAssessments = new ArrayList<>(courseGraph.getAssessmentItemMap().values());
         Map<String, Double> courseBaseBayes = new HashMap<>();
@@ -91,12 +91,12 @@ public class PredictorEffectivenessMain {
         //Get results for each assessment
         for (AssessmentItem item : allAssessments) {
             String assessment = item.getId();
-            courseBaseBayes.put(assessment, PredictorEffectiveness.testLearningPredictor(learning, baseLearningSetSelector, assessment, courseGraph, atriskGroupings,ratio).getPercentCorrect());
+            courseBaseBayes.put(assessment, PredictorEffectiveness.testLearningPredictor(learning, basePredictionSetSelector, assessment, courseGraph, atriskGroupings,ratio).getPercentCorrect());
             learning.reset();
-            courseGraphBayes.put(assessment, PredictorEffectiveness.testLearningPredictor(learning, graphLearningSetSelector, assessment, courseGraph, atriskGroupings,ratio).getPercentCorrect());
+            courseGraphBayes.put(assessment, PredictorEffectiveness.testLearningPredictor(learning, graphPredictionSetSelector, assessment, courseGraph, atriskGroupings,ratio).getPercentCorrect());
             learning.reset();
-            courseBaseSimple.put(assessment, PredictorEffectiveness.testPredictor(simple, baseLearningSetSelector, assessment, courseGraph, atriskGroupings, ratio).getPercentCorrect());
-            courseGraphSimple.put(assessment, PredictorEffectiveness.testPredictor(simple, graphLearningSetSelector, assessment, courseGraph, atriskGroupings, ratio).getPercentCorrect());
+            courseBaseSimple.put(assessment, PredictorEffectiveness.testPredictor(simple, basePredictionSetSelector, assessment, courseGraph, atriskGroupings, ratio).getPercentCorrect());
+            courseGraphSimple.put(assessment, PredictorEffectiveness.testPredictor(simple, graphPredictionSetSelector, assessment, courseGraph, atriskGroupings, ratio).getPercentCorrect());
         }
 
         //Sort the results
@@ -130,15 +130,15 @@ public class PredictorEffectivenessMain {
         Predictor simple = new SimplePredictor(atriskGroupings);
 
         //Two different ways to select learning sets
-        LearningSetSelector baseLearningSetSelector = new NoStructureLearningSetSelector();
-        LearningSetSelector graphLearningSetSelector = new GraphLearningSetSelector(conceptGraph220);
+        PredictionSetSelector basePredictionSetSelector = new NoStructurePredictionSetSelector();
+        PredictionSetSelector graphPredictionSetSelector = new GraphPredictionSetSelector(conceptGraph220);
 
         //Single Assessment Two Selector Two Predictor Test
         String assessmentToLearn = "Lab 4: Recursion";
-//        singleAssessmentTwoSetSelectorTwoPredictorTest(conceptGraph220, assessmentToLearn, bayes, simple, baseLearningSetSelector, graphLearningSetSelector, atriskGroupings);
+//        singleAssessmentTwoSetSelectorTwoPredictorTest(conceptGraph220, assessmentToLearn, bayes, simple, basePredictionSetSelector, graphPredictionSetSelector, atriskGroupings);
 
         //All Assessment Two Selector Two Predictor Test
-        allAssessmentTwoSelectorTwoPredictorTest(conceptGraph220, bayes, simple, baseLearningSetSelector, graphLearningSetSelector, atriskGroupings, 0.5);
+        allAssessmentTwoSelectorTwoPredictorTest(conceptGraph220, bayes, simple, basePredictionSetSelector, graphPredictionSetSelector, atriskGroupings, 0.5);
     }
 
 }

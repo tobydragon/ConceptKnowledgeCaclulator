@@ -7,11 +7,11 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class GraphLearningSetSelector extends NoStructureLearningSetSelector {
+public class GraphPredictionSetSelector extends NoStructurePredictionSetSelector {
 
     private ConceptGraph graph;
 
-    public GraphLearningSetSelector(ConceptGraph graph) {
+    public GraphPredictionSetSelector(ConceptGraph graph) {
         this.graph = graph;
     }
 

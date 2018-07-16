@@ -7,9 +7,9 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class NoStructureLearningSetSelector implements LearningSetSelector {
+public class NoStructurePredictionSetSelector implements PredictionSetSelector {
 
-    public NoStructureLearningSetSelector() {
+    public NoStructurePredictionSetSelector() {
     }
 
     /**
