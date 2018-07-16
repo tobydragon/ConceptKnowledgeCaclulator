@@ -40,65 +40,95 @@ public class PredictionSetSelectorTest {
     }
 
     @Test
-    public void getLearningSetWithBaseSelector() {
+    public void getPredictionSetWithBaseSelector() {
         List<AssessmentItem> allAssessments = matrix.getAssessmentItems();
         PredictionSetSelector basePredictionSetSelector = new NoStructurePredictionSetSelector();
-        List<String> learningSet = basePredictionSetSelector.getLearningSetForGivenStudent(allAssessments, matrix.getStudentIds().get(0), "Q5");
+        List<String> predictionSet = basePredictionSetSelector.getPredictionSetForGivenStudent(allAssessments, matrix.getStudentIds().get(0), "Q5");
 
-        assertEquals(10, learningSet.size());
-        assertTrue(learningSet.contains(assessmentToPredict));
+        assertEquals(10, predictionSet.size());
+        assertTrue(predictionSet.contains(assessmentToPredict));
 
-        learningSet = basePredictionSetSelector.getLearningSetForGivenStudent(allAssessments, matrix.getStudentIds().get(5), assessmentToPredict);
-        assertEquals(8, learningSet.size());
-        assertTrue(learningSet.contains(assessmentToPredict));
-        assertFalse(learningSet.contains("HW5"));
+        predictionSet = basePredictionSetSelector.getPredictionSetForGivenStudent(allAssessments, matrix.getStudentIds().get(5), assessmentToPredict);
+        assertEquals(8, predictionSet.size());
+        assertTrue(predictionSet.contains(assessmentToPredict));
+        assertFalse(predictionSet.contains("HW5"));
     }
 
     @Test
-    public void getLearningSetWithGraphSelector() {
+    public void getPredictionSetWithGraphSelector() {
         PredictionSetSelector graphPredictionSetSelector = new GraphPredictionSetSelector(conceptGraph);
         String studentId = matrix.getStudentIds().get(0);
         List<AssessmentItem> allAssessments = matrix.getAssessmentItems();
         //Checks with student with all grades
         //Check the entire graph
-        List<String> learningSet = graphPredictionSetSelector.getLearningSetForGivenStudent(allAssessments, studentId, assessmentToPredict);
+        List<String> predictionSet = graphPredictionSetSelector.getPredictionSetForGivenStudent(allAssessments, studentId, assessmentToPredict);
 
-        assertEquals(10, learningSet.size());
-        Assert.assertThat(learningSet, containsInAnyOrder("Q2", "HW4", "HW1", "HW2", "Q3", "HW5", "Q4", "Q1", "HW3", "Q5"));
+        assertEquals(10, predictionSet.size());
+        Assert.assertThat(predictionSet, containsInAnyOrder("Q2", "HW4", "HW1", "HW2", "Q3", "HW5", "Q4", "Q1", "HW3", "Q5"));
 
         //Check with something further down the graph
-        learningSet = graphPredictionSetSelector.getLearningSetForGivenStudent(allAssessments, studentId,"Q4");
+        predictionSet = graphPredictionSetSelector.getPredictionSetForGivenStudent(allAssessments, studentId,"Q4");
 
-        assertEquals(7, learningSet.size());
-        Assert.assertThat(learningSet, containsInAnyOrder("Q2", "HW4", "HW1", "HW2", "Q3", "HW5", "Q4"));
-        assertFalse(learningSet.contains("Q1"));
-        assertFalse(learningSet.contains("HW3"));
-        assertFalse(learningSet.contains("Q5"));
+        assertEquals(7, predictionSet.size());
+        Assert.assertThat(predictionSet, containsInAnyOrder("Q2", "HW4", "HW1", "HW2", "Q3", "HW5", "Q4"));
+        assertFalse(predictionSet.contains("Q1"));
+        assertFalse(predictionSet.contains("HW3"));
+        assertFalse(predictionSet.contains("Q5"));
 
         //Checks with student missing HW5
         studentId = matrix.getStudentIds().get(5);
-        learningSet = graphPredictionSetSelector.getLearningSetForGivenStudent(allAssessments, studentId, assessmentToPredict);
-        assertEquals(8, learningSet.size());
-        assertFalse(learningSet.contains("HW5"));
+        predictionSet = graphPredictionSetSelector.getPredictionSetForGivenStudent(allAssessments, studentId, assessmentToPredict);
+        assertEquals(8, predictionSet.size());
+        assertFalse(predictionSet.contains("HW5"));
     }
 
     @Test
-    public void getLearningSetWithGraphSelectorNoAssessmentsGiven() {
-        GraphPredictionSetSelector graphLearningSetSelector = new GraphPredictionSetSelector(conceptGraph);
+    public void getPredictionSetWithGraphSelectorNoAssessmentsGiven() {
+        GraphPredictionSetSelector graphPredictionSetSelector = new GraphPredictionSetSelector(conceptGraph);
         String studentId = matrix.getStudentIds().get(0);
 
-        List<String> learningSet = graphLearningSetSelector.getLearningSetForGivenStudent(studentId, "Q4");
-        assertEquals(7, learningSet.size());
-        Assert.assertThat(learningSet, containsInAnyOrder("Q2", "HW4", "HW1", "HW2", "Q3", "HW5", "Q4"));
-        assertFalse(learningSet.contains("Q1"));
-        assertFalse(learningSet.contains("HW3"));
-        assertFalse(learningSet.contains("Q5"));
+        List<String> predictionSet = graphPredictionSetSelector.getPredictionSetForGivenStudent(studentId, "Q4");
+        assertEquals(7, predictionSet.size());
+        Assert.assertThat(predictionSet, containsInAnyOrder("Q2", "HW4", "HW1", "HW2", "Q3", "HW5", "Q4"));
+        assertFalse(predictionSet.contains("Q1"));
+        assertFalse(predictionSet.contains("HW3"));
+        assertFalse(predictionSet.contains("Q5"));
 
         //Checks with student missing HW5
         studentId = matrix.getStudentIds().get(5);
-        learningSet = graphLearningSetSelector.getLearningSetForGivenStudent(studentId, assessmentToPredict);
-        assertEquals(8, learningSet.size());
-        assertFalse(learningSet.contains("HW5"));
+        predictionSet = graphPredictionSetSelector.getPredictionSetForGivenStudent(studentId, assessmentToPredict);
+        assertEquals(8, predictionSet.size());
+        assertFalse(predictionSet.contains("HW5"));
+    }
+
+    //Test for both NoStructure & Graph PredictionSetSelectors
+    @Test
+    public void removeLowestResponseRateAssessment() {
+        PredictionSetSelector predictionSetSelector = new NoStructurePredictionSetSelector();
+        String studentId = matrix.getStudentIds().get(0);
+        List<AssessmentItem> allAssessments = matrix.getAssessmentItems();
+
+        //Test with the NoStructure selector
+        List<String> predictionSet = predictionSetSelector.getPredictionSetForGivenStudent(allAssessments, studentId, "Q4");
+        assertEquals(10, predictionSet.size());
+        predictionSetSelector.removeLowestResponseRateAssessment(allAssessments, predictionSet, "Q4");
+        assertEquals(9, predictionSet.size());
+        Assert.assertThat(predictionSet, containsInAnyOrder("HW4", "HW1", "HW2", "Q3", "HW5", "Q4", "Q1", "HW3", "Q5"));
+
+        //Test with the Graph selector
+        predictionSetSelector = new GraphPredictionSetSelector(conceptGraph);
+        predictionSet = predictionSetSelector.getPredictionSetForGivenStudent(allAssessments, studentId, "Q4");
+        assertEquals(7, predictionSet.size());
+        Assert.assertThat(predictionSet, containsInAnyOrder("Q2", "HW4", "HW1", "HW2", "Q3", "HW5", "Q4"));
+        predictionSetSelector.removeLowestResponseRateAssessment(allAssessments, predictionSet, "Q4");
+        assertEquals(6, predictionSet.size());
+        Assert.assertThat(predictionSet, containsInAnyOrder("HW4", "HW1", "HW2", "Q3", "HW5", "Q4"));
+
+        //Test that if all assessments have all responses, nothing gets removed
+        predictionSet = predictionSetSelector.getPredictionSetForGivenStudent(allAssessments, studentId, "Q1");
+        assertEquals(4, predictionSet.size());
+        predictionSetSelector.removeLowestResponseRateAssessment(allAssessments, predictionSet, "Q1");
+        assertEquals(4, predictionSet.size());
     }
 
 }

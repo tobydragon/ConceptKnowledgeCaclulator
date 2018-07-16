@@ -21,7 +21,7 @@ public class NoStructurePredictionSetSelector implements PredictionSetSelector {
      * @throws IOException
      */
     @Override
-    public List<String> getLearningSetForGivenStudent(List<AssessmentItem> allAssessments, String studentIdToDecideSet, String assessmentToPredict) {
+    public List<String> getPredictionSetForGivenStudent(List<AssessmentItem> allAssessments, String studentIdToDecideSet, String assessmentToPredict) {
         List<String> learningSet = new ArrayList<>();
 
         //Only includes assessments that have responses for the given student
@@ -38,5 +38,40 @@ public class NoStructurePredictionSetSelector implements PredictionSetSelector {
             learningSet.add(assessmentToPredict);
         }
         return learningSet;
+    }
+
+    /**
+     * Removes the assessment with the lowest response rate from the currentPredictionSet
+     * If multiple assessments have the lowest response rate, only the first occurrence will be removed
+     * @param allAssessments
+     * @param currentPredictionSet
+     * @param assessmentToPredict
+     * @return
+     */
+    @Override
+    public void removeLowestResponseRateAssessment(List<AssessmentItem> allAssessments, List<String> currentPredictionSet, String assessmentToPredict) {
+        int maxResponses = 0;
+        double minResponseRate = Double.MAX_VALUE;
+        AssessmentItem lowestResponseRateAssessment = null;
+        List<AssessmentItem> currentAssessments = new ArrayList<>(); //holds assessments for currentPredictionSet
+        for (AssessmentItem assessmentItem : allAssessments) {
+            if (currentPredictionSet.contains(assessmentItem.getId())) {
+                if (assessmentItem.getResponses().size() > maxResponses) {
+                    maxResponses = assessmentItem.getResponses().size(); //Number of
+                }
+                currentAssessments.add(assessmentItem);
+            }
+        }
+        for (AssessmentItem assessmentItem : currentAssessments) {
+            List<AssessmentItemResponse> responses = assessmentItem.getResponses();
+            double responseRate = (double) responses.size()/maxResponses;
+            if (responseRate < minResponseRate && responseRate != 1.0 && !assessmentItem.getId().equals(assessmentToPredict)) {
+                minResponseRate = responseRate;
+                lowestResponseRateAssessment = assessmentItem;
+            }
+        }
+        if (lowestResponseRateAssessment != null) {
+            currentPredictionSet.remove(lowestResponseRateAssessment.getId());
+        }
     }
 }

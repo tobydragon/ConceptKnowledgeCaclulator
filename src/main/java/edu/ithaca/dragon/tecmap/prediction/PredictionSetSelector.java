@@ -15,6 +15,14 @@ public interface PredictionSetSelector {
      * @return
      * @throws IOException
      */
-    List<String> getLearningSetForGivenStudent(List<AssessmentItem> allAssessments, String studentIdToDecideSet, String assessmentToPredict);
+    List<String> getPredictionSetForGivenStudent(List<AssessmentItem> allAssessments, String studentIdToDecideSet, String assessmentToPredict);
+
+    /**
+     * Removes the assessment with the lowest response rate from the currentPredictionSet
+     * @param allAssessments
+     * @param currentPredictionSet mutated in the
+     * @param assessmentToPredict
+     */
+    void removeLowestResponseRateAssessment(List<AssessmentItem> allAssessments, List<String> currentPredictionSet, String assessmentToPredict);
 
 }

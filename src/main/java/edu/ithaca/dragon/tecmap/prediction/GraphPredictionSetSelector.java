@@ -21,10 +21,10 @@ public class GraphPredictionSetSelector extends NoStructurePredictionSetSelector
      * @param assessmentToPredict
      * @return
      */
-    public List<String> getLearningSetForGivenStudent(String studentIdToDecide, String assessmentToPredict) {
+    public List<String> getPredictionSetForGivenStudent(String studentIdToDecide, String assessmentToPredict) {
         List<AssessmentItem> allAssessments = new ArrayList<>();
         allAssessments.addAll(this.graph.getAssessmentItemMap().values());
-        return getLearningSetForGivenStudent(allAssessments, studentIdToDecide, assessmentToPredict);
+        return getPredictionSetForGivenStudent(allAssessments, studentIdToDecide, assessmentToPredict);
     }
 
     /**
@@ -37,8 +37,8 @@ public class GraphPredictionSetSelector extends NoStructurePredictionSetSelector
      * @throws IOException
      */
     @Override
-    public List<String> getLearningSetForGivenStudent(List<AssessmentItem> allAssessments, String studentIdToDecideSet, String assessmentToPredict) {
-        List<String> defaultSet = super.getLearningSetForGivenStudent(allAssessments, studentIdToDecideSet, assessmentToPredict);
+    public List<String> getPredictionSetForGivenStudent(List<AssessmentItem> allAssessments, String studentIdToDecideSet, String assessmentToPredict) {
+        List<String> defaultSet = super.getPredictionSetForGivenStudent(allAssessments, studentIdToDecideSet, assessmentToPredict);
 
         List<String> origlearningSet = graph.getAssessmentsBelowAssessmentID(assessmentToPredict);
         List<String> finalLearningSet = new ArrayList<>();
