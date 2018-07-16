@@ -36,18 +36,19 @@ public class LearningSetSelectorTest {
 
         conceptGraph = new ConceptGraph(ConceptGraphRecord.buildFromJson(Settings.DEFAULT_TEST_DATASTORE_PATH + "Cs1Example/Cs1ExampleGraph.json"),
                 LearningResourceRecord.createLearningResourceRecordsFromJsonFile(Settings.DEFAULT_TEST_DATASTORE_PATH + "Cs1Example/Cs1ExampleResources.json"),
-                AssessmentItemResponse.createAssessmentItemResponses(Arrays.asList(new String[] {Settings.DEFAULT_TEST_DATASTORE_PATH + "Cs1ExamplePrediction/Cs1ExampleAssessments.csv"})));
+                AssessmentItemResponse.createAssessmentItemResponses(Arrays.asList(Settings.DEFAULT_TEST_DATASTORE_PATH + "Cs1ExamplePrediction/Cs1ExampleAssessments.csv")));
     }
 
     @Test
     public void getLearningSetWithBaseSelector() throws IOException {
+        List<AssessmentItem> allAssessments = matrix.getAssessmentItems();
         LearningSetSelector baseLearningSetSelector = new NoStructureLearningSetSelector();
-        List<String> learningSet = baseLearningSetSelector.getLearningSet(conceptGraph, matrix.getStudentIds().get(0), "Q5");
+        List<String> learningSet = baseLearningSetSelector.getLearningSetForGivenStudent(allAssessments, matrix.getStudentIds().get(0), "Q5");
 
         assertEquals(10, learningSet.size());
         assertTrue(learningSet.contains(assessmentToPredict));
 
-        learningSet = baseLearningSetSelector.getLearningSet(conceptGraph, matrix.getStudentIds().get(5), assessmentToPredict);
+        learningSet = baseLearningSetSelector.getLearningSetForGivenStudent(allAssessments, matrix.getStudentIds().get(5), assessmentToPredict);
         assertEquals(8, learningSet.size());
         assertTrue(learningSet.contains(assessmentToPredict));
         assertFalse(learningSet.contains("HW5"));
@@ -55,17 +56,18 @@ public class LearningSetSelectorTest {
 
     @Test
     public void getLearningSetWithGraphSelector() throws IOException {
-        LearningSetSelector graphLearningSetSelector = new GraphLearningSetSelector();
+        LearningSetSelector graphLearningSetSelector = new GraphLearningSetSelector(conceptGraph);
         String studentId = matrix.getStudentIds().get(0);
+        List<AssessmentItem> allAssessments = matrix.getAssessmentItems();
         //Checks with student with all grades
         //Check the entire graph
-        List<String> learningSet = graphLearningSetSelector.getLearningSet(conceptGraph, studentId, assessmentToPredict);
+        List<String> learningSet = graphLearningSetSelector.getLearningSetForGivenStudent(allAssessments, studentId, assessmentToPredict);
 
         assertEquals(10, learningSet.size());
         Assert.assertThat(learningSet, containsInAnyOrder("Q2", "HW4", "HW1", "HW2", "Q3", "HW5", "Q4", "Q1", "HW3", "Q5"));
 
         //Check with something further down the graph
-        learningSet = graphLearningSetSelector.getLearningSet(conceptGraph, studentId,"Q4");
+        learningSet = graphLearningSetSelector.getLearningSetForGivenStudent(allAssessments, studentId,"Q4");
 
         assertEquals(7, learningSet.size());
         Assert.assertThat(learningSet, containsInAnyOrder("Q2", "HW4", "HW1", "HW2", "Q3", "HW5", "Q4"));
@@ -75,7 +77,7 @@ public class LearningSetSelectorTest {
 
         //Checks with student missing HW5
         studentId = matrix.getStudentIds().get(5);
-        learningSet = graphLearningSetSelector.getLearningSet(conceptGraph, studentId, assessmentToPredict);
+        learningSet = graphLearningSetSelector.getLearningSetForGivenStudent(allAssessments, studentId, assessmentToPredict);
         assertEquals(8, learningSet.size());
         assertFalse(learningSet.contains("HW5"));
     }

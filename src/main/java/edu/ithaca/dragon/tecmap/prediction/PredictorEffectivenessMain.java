@@ -118,6 +118,9 @@ public class PredictorEffectivenessMain {
     }
 
     public static void main(String[] args) throws IOException {
+        //Testing for COMP220 Data
+        ConceptGraph conceptGraph220 = getConceptGraph("comp220Dragon", Settings.DEFAULT_MAIN_DATASTORE_PATH);
+
         GradeDiscreteGroupings defaultGroupings = GradeDiscreteGroupings.buildFromJson(Settings.DEFAULT_MAIN_PREDICTION_PATH + "discreteGroupings.json");
         GradeDiscreteGroupings atriskGroupings = GradeDiscreteGroupings.buildFromJson(Settings.DEFAULT_MAIN_PREDICTION_PATH + "atriskGroupings.json");
         //For testing the Bayes Predictor Effectiveness
@@ -128,10 +131,7 @@ public class PredictorEffectivenessMain {
 
         //Two different ways to select learning sets
         LearningSetSelector baseLearningSetSelector = new NoStructureLearningSetSelector();
-        LearningSetSelector graphLearningSetSelector = new GraphLearningSetSelector();
-
-        //Testing for COMP220 Data
-        ConceptGraph conceptGraph220 = getConceptGraph("comp220Dragon", Settings.DEFAULT_MAIN_DATASTORE_PATH);
+        LearningSetSelector graphLearningSetSelector = new GraphLearningSetSelector(conceptGraph220);
 
         //Single Assessment Two Selector Two Predictor Test
         String assessmentToLearn = "Lab 4: Recursion";

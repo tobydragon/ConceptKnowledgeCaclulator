@@ -1,9 +1,7 @@
 package edu.ithaca.dragon.tecmap.prediction;
 
-import edu.ithaca.dragon.tecmap.conceptgraph.ConceptGraph;
 import edu.ithaca.dragon.tecmap.learningresource.AssessmentItem;
 import edu.ithaca.dragon.tecmap.learningresource.AssessmentItemResponse;
-import edu.ithaca.dragon.tecmap.learningresource.ContinuousAssessmentMatrix;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -16,24 +14,20 @@ public class NoStructureLearningSetSelector implements LearningSetSelector {
 
     /**
      * Gets the list of learning assessments based on the assessmentToPredict, and the assessments available for the given student
-     * @param graph
+     * @param allAssessments
      * @param studentIdToDecideSet
      * @param assessmentToPredict
      * @return
      * @throws IOException
      */
     @Override
-    public List<String> getLearningSet(ConceptGraph graph, String studentIdToDecideSet, String assessmentToPredict) throws IOException {
-        List<AssessmentItem> assessmentItems = new ArrayList<>();
-        assessmentItems.addAll(graph.getAssessmentItemMap().values());
-        ContinuousAssessmentMatrix graphMatrix = new ContinuousAssessmentMatrix(assessmentItems);
-
+    public List<String> getLearningSetForGivenStudent(List<AssessmentItem> allAssessments, String studentIdToDecideSet, String assessmentToPredict) throws IOException {
         List<String> learningSet = new ArrayList<>();
 
         //Only includes assessments that have responses for the given student
-        for (AssessmentItem item : graphMatrix.getAssessmentItems()) {
+        for (AssessmentItem item : allAssessments) {
             for (AssessmentItemResponse response : item.getResponses()) {
-                if (response.getUserId().equals(studentIdToDecideSet)) {
+                if (response.getUserId().equals(studentIdToDecideSet) && !learningSet.contains(item.getId())) {
                     learningSet.add(item.getId());
                 }
             }

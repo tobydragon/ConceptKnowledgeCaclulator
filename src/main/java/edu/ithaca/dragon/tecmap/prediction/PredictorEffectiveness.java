@@ -221,7 +221,7 @@ public class PredictorEffectiveness {
     public static PredictorEffectiveness testLearningPredictor(LearningPredictor predictor, LearningSetSelector learningSetSelector, String assessmentToLearn, ConceptGraph conceptGraph, GradeDiscreteGroupings atriskGroupings, double ratio) throws IOException{
         List<AssessmentItem> allAssessments = new ArrayList<>(conceptGraph.getAssessmentItemMap().values());
         //List of learningAssessments based on the first student's assessments
-        List<String> learningAssessments = learningSetSelector.getLearningSet(conceptGraph, allAssessments.get(0).getResponses().get(0).getUserId(), assessmentToLearn);
+        List<String> learningAssessments = learningSetSelector.getLearningSetForGivenStudent(allAssessments, allAssessments.get(0).getResponses().get(0).getUserId(), assessmentToLearn);
         List<AssessmentItem> assessmentItemsWithValidStudents = getAssessmentsForStudentsWithAllResponses(allAssessments, learningAssessments);
 
         ContinuousAssessmentMatrix originalMatrix = new ContinuousAssessmentMatrix(assessmentItemsWithValidStudents);
@@ -251,7 +251,7 @@ public class PredictorEffectiveness {
 
     public static PredictorEffectiveness testPredictor(Predictor simplePredictor, LearningSetSelector learningSetSelector, String assessmentToLearn, ConceptGraph conceptGraph, GradeDiscreteGroupings atriskGroupings,double ratio) throws IOException {
         List<AssessmentItem> allAssessments = new ArrayList<>(conceptGraph.getAssessmentItemMap().values());
-        List<String> testingAssessments = learningSetSelector.getLearningSet(conceptGraph, allAssessments.get(0).getResponses().get(0).getUserId() , assessmentToLearn);
+        List<String> testingAssessments = learningSetSelector.getLearningSetForGivenStudent(allAssessments, allAssessments.get(0).getResponses().get(0).getUserId() , assessmentToLearn);
         List<AssessmentItem> assessmentItemsWithValidStudents = getAssessmentsForStudentsWithAllResponses(allAssessments, testingAssessments);
 
         ContinuousAssessmentMatrix originalMatrix = new ContinuousAssessmentMatrix(assessmentItemsWithValidStudents);        //Get learning set and remove the assessmentToLearn from list

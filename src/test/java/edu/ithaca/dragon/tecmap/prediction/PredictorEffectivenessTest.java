@@ -164,7 +164,7 @@ public class PredictorEffectivenessTest {
         assertEquals(1, testPredictor.getTrueNegative().size());
 
 
-        LearningSetSelector graphLearningSetSelector = new GraphLearningSetSelector();
+        LearningSetSelector graphLearningSetSelector = new GraphLearningSetSelector(conceptGraph);
 
         testPredictor = PredictorEffectiveness.testLearningPredictor(new BayesPredictor(defaultGroupings, atriskGroupings), graphLearningSetSelector, "Q5", conceptGraph, atriskGroupings, 0.5);
 
@@ -201,7 +201,7 @@ public class PredictorEffectivenessTest {
         assertEquals(1, testPredictor.getTruePositive().size());
         assertEquals(1, testPredictor.getTrueNegative().size());
 
-        LearningSetSelector graphLearningSetSelector = new GraphLearningSetSelector();
+        LearningSetSelector graphLearningSetSelector = new GraphLearningSetSelector(conceptGraph);
 
         testPredictor = PredictorEffectiveness.testPredictor(new SimplePredictor(atriskGroupings), graphLearningSetSelector, "Q5", conceptGraph, atriskGroupings, 0.5);
 
