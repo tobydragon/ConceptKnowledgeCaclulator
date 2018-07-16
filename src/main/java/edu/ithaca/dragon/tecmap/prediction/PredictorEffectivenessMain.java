@@ -7,6 +7,13 @@ import edu.ithaca.dragon.tecmap.io.record.LearningResourceRecord;
 import edu.ithaca.dragon.tecmap.learningresource.AssessmentItem;
 import edu.ithaca.dragon.tecmap.learningresource.AssessmentItemResponse;
 import edu.ithaca.dragon.tecmap.learningresource.GradeDiscreteGroupings;
+import edu.ithaca.dragon.tecmap.prediction.predictionsetselector.GraphPredictionSetSelector;
+import edu.ithaca.dragon.tecmap.prediction.predictionsetselector.NoStructurePredictionSetSelector;
+import edu.ithaca.dragon.tecmap.prediction.predictionsetselector.PredictionSetSelector;
+import edu.ithaca.dragon.tecmap.prediction.predictor.BayesPredictor;
+import edu.ithaca.dragon.tecmap.prediction.predictor.LearningPredictor;
+import edu.ithaca.dragon.tecmap.prediction.predictor.Predictor;
+import edu.ithaca.dragon.tecmap.prediction.predictor.SimplePredictor;
 import edu.ithaca.dragon.tecmap.util.DataUtil;
 
 import java.io.File;

@@ -1,4 +1,4 @@
-package edu.ithaca.dragon.tecmap.prediction;
+package edu.ithaca.dragon.tecmap.prediction.predictionsetselector;
 
 import edu.ithaca.dragon.tecmap.learningresource.AssessmentItem;
 
