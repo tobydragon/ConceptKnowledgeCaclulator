@@ -7,7 +7,6 @@ import edu.ithaca.dragon.tecmap.io.record.LearningResourceRecord;
 import edu.ithaca.dragon.tecmap.learningresource.AssessmentItem;
 import edu.ithaca.dragon.tecmap.learningresource.AssessmentItemResponse;
 
-import java.io.IOException;
 import java.util.List;
 
 public class AssessmentConnectedState extends AssessmentAddedState {
@@ -58,6 +57,10 @@ public class AssessmentConnectedState extends AssessmentAddedState {
 
     public ConceptGraph getGraphForUser(String userId){
         return cohortConceptGraphs.getUserGraph(userId);
+    }
+
+    public ConceptGraph getAverageGraph() {
+        return cohortConceptGraphs.getAvgGraph();
     }
 
     public CohortConceptGraphs getCohortConceptGraphs() {return cohortConceptGraphs;}
