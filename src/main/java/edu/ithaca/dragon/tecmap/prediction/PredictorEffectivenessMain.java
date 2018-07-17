@@ -1,11 +1,10 @@
 package edu.ithaca.dragon.tecmap.prediction;
 
 import edu.ithaca.dragon.tecmap.Settings;
+import edu.ithaca.dragon.tecmap.SuggestingTecmapAPI;
 import edu.ithaca.dragon.tecmap.conceptgraph.ConceptGraph;
-import edu.ithaca.dragon.tecmap.io.record.ConceptGraphRecord;
-import edu.ithaca.dragon.tecmap.io.record.LearningResourceRecord;
+import edu.ithaca.dragon.tecmap.data.TecmapFileDatastore;
 import edu.ithaca.dragon.tecmap.learningresource.AssessmentItem;
-import edu.ithaca.dragon.tecmap.learningresource.AssessmentItemResponse;
 import edu.ithaca.dragon.tecmap.learningresource.GradeDiscreteGroupings;
 import edu.ithaca.dragon.tecmap.prediction.predictionsetselector.GraphPredictionSetSelector;
 import edu.ithaca.dragon.tecmap.prediction.predictionsetselector.NoStructurePredictionSetSelector;
@@ -16,9 +15,11 @@ import edu.ithaca.dragon.tecmap.prediction.predictor.Predictor;
 import edu.ithaca.dragon.tecmap.prediction.predictor.SimplePredictor;
 import edu.ithaca.dragon.tecmap.util.DataUtil;
 
-import java.io.File;
 import java.io.IOException;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 public class PredictorEffectivenessMain {
 
@@ -34,40 +35,9 @@ public class PredictorEffectivenessMain {
      */
     static ConceptGraph getConceptGraph(String courseName, String datastorePath) throws IOException {
         //Get assessment filenames
-        File directory = new File(datastorePath + courseName + "/private/");
-
-        List<File> files = Arrays.asList(directory.listFiles());
-        List<String> assessmentFilenames = new ArrayList<>();
-        for (File file : files) {
-            if (file.isFile()) {
-                if (!file.getName().equals(".gitignore")) {
-                    assessmentFilenames.add(datastorePath + courseName + "/private/" + file.getName());
-                }
-            }
-        }
-
-        List<String> resourceFilenames = new ArrayList<>();
-        String graphFilename = null;
-        //Get resources
-        directory = new File(datastorePath + courseName);
-        files = Arrays.asList(directory.listFiles());
-        for (File file : files) {
-            if (file.isFile()) {
-                if (file.getName().contains("Resources")) {
-                    resourceFilenames.add(datastorePath + courseName + "/" + file.getName());
-                } else if (file.getName().contains("Graph")) {
-                    graphFilename = datastorePath + courseName + "/" + file.getName();
-                }
-            }
-        }
-
-        List<LearningResourceRecord> loRecords = LearningResourceRecord.createLearningResourceRecordsFromJsonFiles(resourceFilenames);
-
-        ConceptGraph courseGraph = new ConceptGraph(ConceptGraphRecord.buildFromJson(graphFilename),
-                loRecords,
-                AssessmentItemResponse.createAssessmentItemResponses(assessmentFilenames));
-
-        return courseGraph;
+        TecmapFileDatastore courseDatastore = TecmapFileDatastore.buildFromJsonFile(datastorePath);
+        SuggestingTecmapAPI courseTecmap = courseDatastore.retrieveTecmapForId(courseName);
+        return courseTecmap.getAverageConceptGraph();
     }
 
     private static void singleAssessmentTwoSetSelectorTwoPredictorTest(ConceptGraph courseGraph, String assessmentToLearn, LearningPredictor bayes, Predictor simple, PredictionSetSelector basePredictionSetSelector, PredictionSetSelector graphPredictionSetSelector, GradeDiscreteGroupings atriskGroupings) throws IOException {
