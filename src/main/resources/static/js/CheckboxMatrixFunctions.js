@@ -16,6 +16,23 @@ function updateResourceRecords(resourceRecords, resourceId, conceptId) {
     }
 }
 
+function updateResourceType(resourceRecords, resourceId, resourceType) {
+    console.log(resourceRecords);
+    var toChange,
+        i = 0;
+
+    for (i = 0; i < resourceRecords.length; i += 1) {
+        if (resourceRecords[i].learningResourceId === resourceId) {
+            toChange = resourceRecords[i].resourceTypes;
+            if (toChange.includes(resourceType)) {
+                toChange.pop(resourceType);
+            } else {
+                toChange.push(resourceType);
+            }
+        }
+    }
+}
+
 function createResourceIdsList(resourceRecords) {
     var resourceIds = [],
         i = 0;
@@ -39,11 +56,46 @@ function createResourceCheckedListForConcept(conceptId, resourceRecords) {
     return checks;
 }
 
-function buildTableHeaderHtmlString(headerNames) {
+function buildTableHeaderTypeSelector(resourceRecords, resourceId) {
+    var typeString,
+        resourceTypes,
+        i = 0;
+
+    for (i = 0; i < resourceRecords.length; i += 1) {
+        if (resourceRecords[i].learningResourceId === resourceId) {
+            resourceTypes = resourceRecords[i].resourceTypes;
+            typeString = "<br><div class='col-lg-1'><div class='button-group'>";
+            typeString += "<button type=\"button\" class=\"btn btn-default btn-sm dropdown-toggle\" data-toggle=\"dropdown\"><span class=\"glyphicon glyphicon-cog\"></span> <span class=\"caret\"></span></button>";
+            typeString += "<ul class='dropdown-menu'>";
+            typeString += "<a class='small' data-value='PRACTICE' tabindex='-1'><li><input onclick='updateResourceType(resourceRecords, \"" + resourceId + "\", \"PRACTICE\")' type='checkbox'";
+            if (resourceTypes.includes("PRACTICE")) {
+                typeString += " checked='true' ";
+            }
+            typeString += "/>&nbsp;PRACTICE</a></li>";
+            typeString += "<a class='small' data-value='ASSESSMENT' tabindex='-1'><li><input onclick='updateResourceType(resourceRecords, \"" + resourceId + "\", \"ASSESSMENT\")' type='checkbox'";
+            if (resourceTypes.includes("ASSESSMENT")) {
+                typeString += " checked='true' ";
+            }
+            typeString += "/>&nbsp;ASSESSMENT</a></li>";
+            typeString += "<a class='small' data-value='INFORMATION' tabindex='-1'><li><input onclick='updateResourceType(resourceRecords, \"" + resourceId + "\", \"INFORMATION\")' type='checkbox'";
+            if (resourceTypes.includes("INFORMATION")) {
+                typeString += " checked='true' ";
+            }
+            typeString += "/>&nbsp;INFORMATION</a></li>";
+            typeString += "</ul></div></div>";
+            return typeString;
+        }
+    }
+    return "";
+}
+
+function buildTableHeaderHtmlString(resourceRecords, headerNames) {
     var tableHTML = "<thead><tr><th class='col-xs-1' scope='col'></th>",
         i = 0;
     for (i = 0; i < headerNames.length; i += 1) {
-        tableHTML += "<th class='col-xs-1' scope='col'> " + headerNames[i] + " </th>";
+        tableHTML += "<th class='col-xs-1' scope='col'> " + headerNames[i];
+        tableHTML += buildTableHeaderTypeSelector(resourceRecords, headerNames[i]);
+        tableHTML += "</th>"
     }
     tableHTML += "</tr></thead>";
     return tableHTML;
@@ -86,6 +138,6 @@ function buildTableBodyHtmlString(conceptList, resourceRecords) {
 }
 
 function buildTableHtmlString(conceptList, resourceRecords) {
-    return buildTableHeaderHtmlString(createResourceIdsList(resourceRecords)) +
+    return buildTableHeaderHtmlString(resourceRecords, createResourceIdsList(resourceRecords)) +
         buildTableBodyHtmlString(conceptList, resourceRecords);
 }
