@@ -16,6 +16,19 @@ function updateResourceRecords(resourceRecords, resourceId, conceptId) {
     }
 }
 
+function addResourceToRecords(resourceRecords, newResourceId, maxKnowledgeEstimate) {
+    var newRecord = {
+        learningResourceId: newResourceId,
+        resourceTypes: [],
+        conceptIds: [],
+        dataImportance: 0,
+        maxPossibleKnowledgeEstimate: maxKnowledgeEstimate
+    };
+
+    resourceRecords.push(newRecord);
+
+}
+
 function updateResourceType(resourceRecords, resourceId, resourceType) {
     console.log(resourceRecords);
     var toChange,
