@@ -8,4 +8,9 @@ function submit() {
     submitToAPI("/api/connectResources/" + courseId, resourceRecords);
 }
 
+//linked to the home button in the html page
+function goHome() {
+    document.location.replace("/view");
+}
+
 document.getElementById("authoringTable").innerHTML += buildTableHtmlString(conceptList, resourceRecords);

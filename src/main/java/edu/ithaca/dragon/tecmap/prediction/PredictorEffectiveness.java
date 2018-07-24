@@ -221,15 +221,15 @@ public class PredictorEffectiveness {
         return getPredictorEffectivenessFromResults(predictionResults);
     }
 
-    public static PredictorEffectiveness testPredictor(Predictor simplePredictor, PredictionSetSelector predictionSetSelector, String assessmentToLearn, ConceptGraph conceptGraph, GradeDiscreteGroupings atriskGroupings, double ratio) throws IOException {
+    public static PredictorEffectiveness testPredictor(Predictor simplePredictor, PredictionSetSelector predictionSetSelector, String assessmentToPredict, ConceptGraph conceptGraph, GradeDiscreteGroupings atriskGroupings, double ratio) throws IOException {
         List<AssessmentItem> allAssessments = new ArrayList<>(conceptGraph.getAssessmentItemMap().values());
         PredictionController predictionController = new PredictionController(simplePredictor, predictionSetSelector);
-        List<String> testingAssessments = predictionController.getPredictionSet(allAssessments, allAssessments.get(0).getResponses().get(0).getUserId() , assessmentToLearn);
+        List<String> testingAssessments = predictionController.getPredictionSet(allAssessments, allAssessments.get(0).getResponses().get(0).getUserId() , assessmentToPredict);
 
         ContinuousAssessmentMatrix originalMatrix = getMatrix(allAssessments, testingAssessments);
 
         //Need to remove for the classification
-        testingAssessments.remove(assessmentToLearn);
+        testingAssessments.remove(assessmentToPredict);
 
         //Split the matrix
         Tuple2<ContinuousAssessmentMatrix, ContinuousAssessmentMatrix> splitMatrix = splitMatrix(originalMatrix, ratio);
@@ -241,7 +241,7 @@ public class PredictorEffectiveness {
 
         Map<String, String> predictions = predictionController.predict(testingMatrix, testingAssessments);
 
-        List<PredictionResult> predictionResults = getPredictionResults(testingMatrix, assessmentToLearn, atriskGroupings, predictions);
+        List<PredictionResult> predictionResults = getPredictionResults(testingMatrix, assessmentToPredict, atriskGroupings, predictions);
 
         return getPredictorEffectivenessFromResults(predictionResults);
     }
