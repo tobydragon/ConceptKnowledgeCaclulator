@@ -18,6 +18,17 @@ describe("ConceptMatrixFunctionsSpecs", function() {
       expect(resourceRecords[1].conceptIds.length).toEqual(0);
     });
 
+    it("addResourceToRecords adding a new resource", function() {
+        expect(resourceRecords.length).toEqual(10);
+        addResourceToRecords(resourceRecords, "newResource", 1);
+        expect(resourceRecords.length).toEqual(11);
+        expect(resourceRecords[10].conceptIds.length).toEqual(0);
+        expect(resourceRecords[10].resourceTypes.length).toEqual(0);
+        expect(resourceRecords[10].maxPossibleKnowledgeEstimate).toEqual(1);
+        //reset resourceRecords afterwards
+        resourceRecords = readJson("../resources/datastore/Cs1Example/Cs1ExampleResources.json");
+    });
+
     it("updateResourceType to add a resource type", function() {
         updateResourceType(resourceRecords, "Q1", "INFORMATION");
         expect(resourceRecords[0].resourceTypes.length).toEqual(3);
