@@ -2,7 +2,6 @@ package edu.ithaca.dragon.tecmap.prediction;
 
 import edu.ithaca.dragon.tecmap.conceptgraph.ConceptGraph;
 import edu.ithaca.dragon.tecmap.learningresource.AssessmentItem;
-import edu.ithaca.dragon.tecmap.learningresource.AssessmentItemResponse;
 import edu.ithaca.dragon.tecmap.learningresource.ContinuousAssessmentMatrix;
 import edu.ithaca.dragon.tecmap.learningresource.GradeDiscreteGroupings;
 import edu.ithaca.dragon.tecmap.prediction.predictionsetselector.PredictionSetSelector;
@@ -17,8 +16,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
-import static edu.ithaca.dragon.tecmap.prediction.PredictionController.getMatrix;
 
 public class PredictorEffectiveness {
     private static final Logger logger = LogManager.getLogger(PredictorEffectiveness.class);
@@ -72,50 +69,6 @@ public class PredictorEffectiveness {
 
     public List<PredictionResult> getFalseNegative() {
         return falseNegative;
-    }
-
-    /**
-     * Splits the given matrix into two matrices, first has the given ratio size, second has (1-ratio) size
-     * Assumes that all students have all assessments with responses
-     * @param originalMatrix
-     * @param ratio
-     * @return Tuple2 following the given first(_1) has the given ratio size, second(_2) has (1-ratio) size
-     */
-    static Tuple2<ContinuousAssessmentMatrix, ContinuousAssessmentMatrix> splitMatrix(ContinuousAssessmentMatrix originalMatrix, Double ratio) {
-        int ratioSize = (int) Math.ceil(originalMatrix.getStudentIds().size()*ratio);
-
-        List<String> ratioUserIds = new ArrayList<>();
-        for (int i = 0; i < originalMatrix.getStudentIds().size(); i++) {
-            if (i < ratioSize) {
-                ratioUserIds.add(originalMatrix.getStudentIds().get(i));
-            }
-        }
-
-        //For ratioMatrix
-        List<AssessmentItem> ratioAssessments = new ArrayList<>();
-        //For nonRatioMatrix
-        List<AssessmentItem> nonRatioAssessments = new ArrayList<>();
-
-        List<AssessmentItem> allAssessments = originalMatrix.getAssessmentItems();
-        for (AssessmentItem item : allAssessments) {
-            AssessmentItem ratioItem = new AssessmentItem(item.getId(), item.getMaxPossibleKnowledgeEstimate());
-            AssessmentItem nonRatioItem = new AssessmentItem(item.getId(), item.getMaxPossibleKnowledgeEstimate());
-            for (int i = 0; i < item.getResponses().size(); i++) {
-                AssessmentItemResponse currResponse = item.getResponses().get(i);
-                //Keeps the users between the two matrices constant instead of by index
-                if (ratioUserIds.contains(currResponse.getUserId())) {
-                    ratioItem.addResponse(currResponse);
-                } else {
-                    nonRatioItem.addResponse(currResponse);
-                }
-            }
-            ratioAssessments.add(ratioItem);
-            nonRatioAssessments.add(nonRatioItem);
-        }
-        ContinuousAssessmentMatrix ratioMatrix = new ContinuousAssessmentMatrix(ratioAssessments);
-        ContinuousAssessmentMatrix nonRatioMatrix = new ContinuousAssessmentMatrix(nonRatioAssessments);
-
-        return new Tuple2<>(ratioMatrix, nonRatioMatrix);
     }
 
     static List<PredictionResult> getPredictionResults(ContinuousAssessmentMatrix testingMatrix, String assessmentToLearn, GradeDiscreteGroupings atRiskGroupings, Map<String, String> predictions) {
@@ -196,10 +149,12 @@ public class PredictorEffectiveness {
         //List of learningAssessments based on the first student's assessments
         List<String> learningAssessments = predictionSetSelector.getPredictionSetForGivenStudent(allAssessments, allAssessments.get(0).getResponses().get(0).getUserId(), assessmentToLearn);
 
-        ContinuousAssessmentMatrix originalMatrix = getMatrix(allAssessments, learningAssessments);
+        PredictionController controller = new PredictionController(predictor, predictionSetSelector);
+
+        ContinuousAssessmentMatrix originalMatrix = controller.getMatrix(allAssessments, learningAssessments);
 
         //Split the matrix
-        Tuple2<ContinuousAssessmentMatrix, ContinuousAssessmentMatrix> splitMatrix = splitMatrix(originalMatrix, ratio);
+        Tuple2<ContinuousAssessmentMatrix, ContinuousAssessmentMatrix> splitMatrix = PredictionController.splitMatrix(originalMatrix, ratio);
 
         //Learn on the ratioSized matrix
         ContinuousAssessmentMatrix learningMatrix = splitMatrix._1;
@@ -226,13 +181,13 @@ public class PredictorEffectiveness {
         PredictionController predictionController = new PredictionController(simplePredictor, predictionSetSelector);
         List<String> testingAssessments = predictionController.getPredictionSet(allAssessments, allAssessments.get(0).getResponses().get(0).getUserId() , assessmentToPredict);
 
-        ContinuousAssessmentMatrix originalMatrix = getMatrix(allAssessments, testingAssessments);
+        ContinuousAssessmentMatrix originalMatrix = predictionController.getMatrix(allAssessments, testingAssessments);
 
         //Need to remove for the classification
         testingAssessments.remove(assessmentToPredict);
 
         //Split the matrix
-        Tuple2<ContinuousAssessmentMatrix, ContinuousAssessmentMatrix> splitMatrix = splitMatrix(originalMatrix, ratio);
+        Tuple2<ContinuousAssessmentMatrix, ContinuousAssessmentMatrix> splitMatrix = PredictionController.splitMatrix(originalMatrix, ratio);
 
         //Ignore learningMatrix since simple predictors do not learn
         ContinuousAssessmentMatrix learningMatrix = splitMatrix._1;

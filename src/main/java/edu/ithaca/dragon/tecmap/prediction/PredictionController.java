@@ -1,11 +1,17 @@
 package edu.ithaca.dragon.tecmap.prediction;
 
+import edu.ithaca.dragon.tecmap.SuggestingTecmapAPI;
+import edu.ithaca.dragon.tecmap.conceptgraph.ConceptGraph;
+import edu.ithaca.dragon.tecmap.data.TecmapFileDatastore;
 import edu.ithaca.dragon.tecmap.learningresource.AssessmentItem;
 import edu.ithaca.dragon.tecmap.learningresource.AssessmentItemResponse;
 import edu.ithaca.dragon.tecmap.learningresource.ContinuousAssessmentMatrix;
 import edu.ithaca.dragon.tecmap.prediction.predictionsetselector.PredictionSetSelector;
+import edu.ithaca.dragon.tecmap.prediction.predictor.LearningPredictor;
 import edu.ithaca.dragon.tecmap.prediction.predictor.Predictor;
+import io.vavr.Tuple2;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -19,6 +25,65 @@ public class PredictionController {
     public PredictionController(Predictor predictor, PredictionSetSelector predictionSetSelector) {
         this.predictor = predictor;
         this.predictionSetSelector = predictionSetSelector;
+    }
+
+    /**
+     * Gets graph from the main datastore assuming:
+     * assessment files are all in a private subfolder,
+     * resources files are all in the main folder and contain "Resources" in their name,
+     * there is one graph file and contains "Graph" in its name
+     * @param courseName the name of the directory in the datastore for the course
+     * @return ConceptGraph built from the graph file, the assessment files and resource files
+     */
+    static ConceptGraph getConceptGraph(String courseName, String datastorePath) throws IOException {
+        //Get assessment filenames
+        TecmapFileDatastore courseDatastore = TecmapFileDatastore.buildFromJsonFile(datastorePath);
+        SuggestingTecmapAPI courseTecmap = courseDatastore.retrieveTecmapForId(courseName);
+        return courseTecmap.getAverageConceptGraph();
+    }
+
+    /**
+     * Splits the given matrix into two matrices, first has the given ratio size, second has (1-ratio) size
+     * Assumes that all students have all assessments with responses
+     * @param originalMatrix
+     * @param ratio
+     * @return Tuple2 following the given first(_1) has the given ratio size, second(_2) has (1-ratio) size
+     */
+    static Tuple2<ContinuousAssessmentMatrix, ContinuousAssessmentMatrix> splitMatrix(ContinuousAssessmentMatrix originalMatrix, Double ratio) {
+        int ratioSize = (int) Math.ceil(originalMatrix.getStudentIds().size()*ratio);
+
+        List<String> ratioUserIds = new ArrayList<>();
+        for (int i = 0; i < originalMatrix.getStudentIds().size(); i++) {
+            if (i < ratioSize) {
+                ratioUserIds.add(originalMatrix.getStudentIds().get(i));
+            }
+        }
+
+        //For ratioMatrix
+        List<AssessmentItem> ratioAssessments = new ArrayList<>();
+        //For nonRatioMatrix
+        List<AssessmentItem> nonRatioAssessments = new ArrayList<>();
+
+        List<AssessmentItem> allAssessments = originalMatrix.getAssessmentItems();
+        for (AssessmentItem item : allAssessments) {
+            AssessmentItem ratioItem = new AssessmentItem(item.getId(), item.getMaxPossibleKnowledgeEstimate());
+            AssessmentItem nonRatioItem = new AssessmentItem(item.getId(), item.getMaxPossibleKnowledgeEstimate());
+            for (int i = 0; i < item.getResponses().size(); i++) {
+                AssessmentItemResponse currResponse = item.getResponses().get(i);
+                //Keeps the users between the two matrices constant instead of by index
+                if (ratioUserIds.contains(currResponse.getUserId())) {
+                    ratioItem.addResponse(currResponse);
+                } else {
+                    nonRatioItem.addResponse(currResponse);
+                }
+            }
+            ratioAssessments.add(ratioItem);
+            nonRatioAssessments.add(nonRatioItem);
+        }
+        ContinuousAssessmentMatrix ratioMatrix = new ContinuousAssessmentMatrix(ratioAssessments);
+        ContinuousAssessmentMatrix nonRatioMatrix = new ContinuousAssessmentMatrix(nonRatioAssessments);
+
+        return new Tuple2<>(ratioMatrix, nonRatioMatrix);
     }
 
     /**
@@ -59,7 +124,7 @@ public class PredictionController {
      * @param predictionSet
      * @return
      */
-    public static ContinuousAssessmentMatrix getMatrix(List<AssessmentItem> allAssessments, List<String> predictionSet) {
+    public ContinuousAssessmentMatrix getMatrix(List<AssessmentItem> allAssessments, List<String> predictionSet) {
         List<AssessmentItem> assessmentItemsWithValidStudents = getAssessmentsForStudentsWithAllResponses(allAssessments, predictionSet);
         return new ContinuousAssessmentMatrix(assessmentItemsWithValidStudents);
     }
@@ -81,6 +146,23 @@ public class PredictionController {
      */
     public Map<String, String> predict(ContinuousAssessmentMatrix testingMatrix, List<String> testingAssessments) {
         return predictor.classifySet(testingMatrix, testingAssessments);
+    }
+
+    /**
+     * What to call with the TecmapService
+     * @param allAssessments
+     * @param assessmentToPredict
+     */
+    public void getPredictions(List<AssessmentItem> allAssessments, String assessmentToPredict) {
+        List<String> predictionSet = getPredictionSet(allAssessments, allAssessments.get(0).getResponses().get(0).getUserId(), assessmentToPredict);
+        ContinuousAssessmentMatrix matrix = getMatrix(allAssessments, predictionSet);
+        if (this.predictor instanceof LearningPredictor) {
+            Tuple2<ContinuousAssessmentMatrix, ContinuousAssessmentMatrix> splitMatrix = splitMatrix(matrix, 0.5);
+            ((LearningPredictor) predictor).learnSet(splitMatrix._1, assessmentToPredict, predictionSet);
+            System.out.println(predict(splitMatrix._2, predictionSet));
+        } else {
+            System.out.println(predict(matrix, predictionSet));
+        }
     }
 
 }

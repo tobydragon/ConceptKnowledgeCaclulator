@@ -12,6 +12,8 @@ import edu.ithaca.dragon.tecmap.learningresource.ContinuousAssessmentMatrix;
 import edu.ithaca.dragon.tecmap.learningresource.GradeDiscreteGroupings;
 import edu.ithaca.dragon.tecmap.prediction.predictionsetselector.NoStructurePredictionSetSelector;
 import edu.ithaca.dragon.tecmap.prediction.predictor.SimplePredictor;
+import io.vavr.Tuple2;
+import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -21,7 +23,9 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 
+import static org.hamcrest.collection.IsIterableContainingInAnyOrder.containsInAnyOrder;
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 public class PredictionControllerTest {
 
@@ -45,6 +49,25 @@ public class PredictionControllerTest {
         atriskGroupings = GradeDiscreteGroupings.buildFromJson(Settings.DEFAULT_TEST_PREDICTION_PATH + "atriskGroupings.json");
 
         testController = new PredictionController(new SimplePredictor(atriskGroupings), new NoStructurePredictionSetSelector());
+    }
+
+
+    @Test
+    public void splitMatrix() {
+        double ratio = 0.5;
+        Tuple2<ContinuousAssessmentMatrix, ContinuousAssessmentMatrix> splitMatrix = PredictionController.splitMatrix(continuousAssessmentMatrix, ratio);
+
+        int ratioSize = (int) Math.ceil(continuousAssessmentMatrix.getStudentIds().size()*ratio);
+
+        assertNotNull(splitMatrix);
+        //Check that it splits the number of users correctly
+        assertEquals(ratioSize, splitMatrix._1.getStudentIds().size());
+        assertEquals(continuousAssessmentMatrix.getStudentIds().size()-ratioSize, splitMatrix._2.getStudentIds().size());
+        //Check that the ratio contains the first 3 users
+        Assert.assertThat(splitMatrix._1.getStudentIds(), containsInAnyOrder(new String[] {"s01", "s02", "s03"}));
+        //Check that the number of assessments stays constant
+        assertEquals(10, splitMatrix._1.getAssessmentIds().size());
+        assertEquals(10, splitMatrix._2.getAssessmentIds().size());
     }
 
     @Test
@@ -95,11 +118,11 @@ public class PredictionControllerTest {
         List<AssessmentItem> allAssessments = continuousAssessmentMatrix.getAssessmentItems();
         List<String> predictionSet = new ArrayList<>();
         predictionSet.add("Q4");
-        ContinuousAssessmentMatrix predictionMatrix = PredictionController.getMatrix(allAssessments, predictionSet);
+        ContinuousAssessmentMatrix predictionMatrix = testController.getMatrix(allAssessments, predictionSet);
         assertEquals(1, predictionMatrix.getStudentAssessmentGrades().length);
         assertEquals(6, predictionMatrix.getStudentAssessmentGrades()[0].length);
         predictionSet.add("Q2");
-        predictionMatrix = PredictionController.getMatrix(allAssessments, predictionSet);
+        predictionMatrix = testController.getMatrix(allAssessments, predictionSet);
         assertEquals(2, predictionMatrix.getStudentAssessmentGrades().length);
         assertEquals(5, predictionMatrix.getStudentAssessmentGrades()[0].length);
         assertEquals(5, predictionMatrix.getStudentAssessmentGrades()[1].length);
