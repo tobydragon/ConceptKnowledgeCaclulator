@@ -82,6 +82,15 @@ public class Tecmap implements TecmapAPI {
     }
 
     @Override
+    public ConceptGraph getAverageConceptGraph() {
+        if (state instanceof AssessmentConnectedState) {
+            return ((AssessmentConnectedState)state).getAverageGraph();
+        } else {
+            return null;
+        }
+    }
+
+    @Override
     public TecmapState getCurrentState() {
         if (state instanceof AssessmentConnectedState) {
             return TecmapState.assessmentConnected;

@@ -1,4 +1,4 @@
-package edu.ithaca.dragon.tecmap.prediction;
+package edu.ithaca.dragon.tecmap.prediction.predictor;
 
 import ch.netzwerg.paleo.DataFrame;
 import de.daslaboratorium.machinelearning.classifier.Classifier;

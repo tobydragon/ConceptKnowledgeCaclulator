@@ -10,17 +10,22 @@ import edu.ithaca.dragon.tecmap.learningresource.AssessmentItem;
 import edu.ithaca.dragon.tecmap.learningresource.AssessmentItemResponse;
 import edu.ithaca.dragon.tecmap.learningresource.ContinuousAssessmentMatrix;
 import edu.ithaca.dragon.tecmap.learningresource.GradeDiscreteGroupings;
-import io.vavr.Tuple2;
+import edu.ithaca.dragon.tecmap.prediction.predictionsetselector.GraphPredictionSetSelector;
+import edu.ithaca.dragon.tecmap.prediction.predictionsetselector.NoStructurePredictionSetSelector;
+import edu.ithaca.dragon.tecmap.prediction.predictionsetselector.PredictionSetSelector;
+import edu.ithaca.dragon.tecmap.prediction.predictor.BayesPredictor;
+import edu.ithaca.dragon.tecmap.prediction.predictor.SimplePredictor;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
 import java.io.IOException;
-import java.util.*;
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
-import static org.hamcrest.collection.IsIterableContainingInAnyOrder.containsInAnyOrder;
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 public class PredictorEffectivenessTest {
 
@@ -43,24 +48,6 @@ public class PredictorEffectivenessTest {
 
         defaultGroupings = GradeDiscreteGroupings.buildFromJson(Settings.DEFAULT_TEST_PREDICTION_PATH + "discreteGroupings.json");
         atriskGroupings = GradeDiscreteGroupings.buildFromJson(Settings.DEFAULT_TEST_PREDICTION_PATH + "atriskGroupings.json");
-    }
-
-    @Test
-    public void splitMatrix() {
-        double ratio = 0.5;
-        Tuple2<ContinuousAssessmentMatrix, ContinuousAssessmentMatrix> splitMatrix = PredictorEffectiveness.splitMatrix(continuousAssessmentMatrix, ratio);
-
-        int ratioSize = (int) Math.ceil(continuousAssessmentMatrix.getStudentIds().size()*ratio);
-
-        assertNotNull(splitMatrix);
-        //Check that it splits the number of users correctly
-        assertEquals(ratioSize, splitMatrix._1.getStudentIds().size());
-        assertEquals(continuousAssessmentMatrix.getStudentIds().size()-ratioSize, splitMatrix._2.getStudentIds().size());
-        //Check that the ratio contains the first 3 users
-        Assert.assertThat(splitMatrix._1.getStudentIds(), containsInAnyOrder(new String[] {"s01", "s02", "s03"}));
-        //Check that the number of assessments stays constant
-        assertEquals(10, splitMatrix._1.getAssessmentIds().size());
-        assertEquals(10, splitMatrix._2.getAssessmentIds().size());
     }
 
     @Test
@@ -100,53 +87,10 @@ public class PredictorEffectivenessTest {
     }
 
     @Test
-    public void getAssessmentsForStudentsWithAllResponses() {
-        List<AssessmentItem> assessmentItems = continuousAssessmentMatrix.getAssessmentItems();
-        List<String> assessmentsToInclude = new ArrayList<>();
-
-        List<AssessmentItem> studentsWithResponses = PredictorEffectiveness.getAssessmentsForStudentsWithAllResponses(assessmentItems, assessmentsToInclude);
-
-        assertEquals(0, studentsWithResponses.size());
-
-        //Check with an assessment that everyone has
-        assessmentsToInclude.add("HW4");
-        studentsWithResponses = PredictorEffectiveness.getAssessmentsForStudentsWithAllResponses(assessmentItems, assessmentsToInclude);
-        assertEquals(1, studentsWithResponses.size());
-        assertEquals(1, studentsWithResponses.get(0).getMaxPossibleKnowledgeEstimate());
-        assertEquals(6, studentsWithResponses.get(0).getResponses().size());
-        assessmentsToInclude.remove("HW4");
-
-        //Check with an assessment that s06 is missing
-        assessmentsToInclude.add("Q2");
-        studentsWithResponses = PredictorEffectiveness.getAssessmentsForStudentsWithAllResponses(assessmentItems, assessmentsToInclude);
-        //Should have omitted s06 since has no HW5
-        assertEquals(1, studentsWithResponses.size());
-        assertEquals(5, studentsWithResponses.get(0).getMaxPossibleKnowledgeEstimate());
-        assertEquals(5, studentsWithResponses.get(0).getResponses().size());
-
-        //Check with a second assessment that s06 is missing
-        assessmentsToInclude.add("HW5");
-        studentsWithResponses = PredictorEffectiveness.getAssessmentsForStudentsWithAllResponses(assessmentItems, assessmentsToInclude);
-        //Should have omitted s06 since has no HW5
-        assertEquals(2, studentsWithResponses.size());
-        assertEquals(1, studentsWithResponses.get(1).getMaxPossibleKnowledgeEstimate());
-        assertEquals(5, studentsWithResponses.get(1).getResponses().size());
-
-        assessmentsToInclude.add("HW3");
-        studentsWithResponses = PredictorEffectiveness.getAssessmentsForStudentsWithAllResponses(assessmentItems, assessmentsToInclude);
-        //Should have omitted s06 since no HW5 & no Q2
-        assertEquals(3, studentsWithResponses.size());
-        assertEquals(1, studentsWithResponses.get(2).getMaxPossibleKnowledgeEstimate());
-        assertEquals(5, studentsWithResponses.get(2).getResponses().size());
-        assertEquals(2, studentsWithResponses.get(1).getMaxPossibleKnowledgeEstimate());
-        assertEquals(5, studentsWithResponses.get(1).getResponses().size());
-    }
-
-    @Test
     public void testLearningPredictor() throws IOException {
-        LearningSetSelector baseLearningSetSelector = new NoStructureLearningSetSelector();
+        PredictionSetSelector basePredictionSetSelector = new NoStructurePredictionSetSelector();
 
-        PredictorEffectiveness testPredictor = PredictorEffectiveness.testLearningPredictor(new BayesPredictor(defaultGroupings, atriskGroupings), baseLearningSetSelector, "Q5" , conceptGraph, atriskGroupings, 0.5);
+        PredictorEffectiveness testPredictor = PredictorEffectiveness.testLearningPredictor(new BayesPredictor(defaultGroupings, atriskGroupings), basePredictionSetSelector, "Q5" , conceptGraph, atriskGroupings, 0.5);
 
         assertEquals(1, testPredictor.getPercentCorrect());
 
@@ -164,9 +108,9 @@ public class PredictorEffectivenessTest {
         assertEquals(1, testPredictor.getTrueNegative().size());
 
 
-        LearningSetSelector graphLearningSetSelector = new GraphLearningSetSelector();
+        PredictionSetSelector graphPredictionSetSelector = new GraphPredictionSetSelector(conceptGraph);
 
-        testPredictor = PredictorEffectiveness.testLearningPredictor(new BayesPredictor(defaultGroupings, atriskGroupings), graphLearningSetSelector, "Q5", conceptGraph, atriskGroupings, 0.5);
+        testPredictor = PredictorEffectiveness.testLearningPredictor(new BayesPredictor(defaultGroupings, atriskGroupings), graphPredictionSetSelector, "Q5", conceptGraph, atriskGroupings, 0.5);
 
         results = testPredictor.getAllResults();
         assertEquals(2, results.size());
@@ -184,9 +128,9 @@ public class PredictorEffectivenessTest {
 
     @Test
     public void testPredictor() throws IOException {
-        LearningSetSelector baseLearningSetSelector = new NoStructureLearningSetSelector();
+        PredictionSetSelector basePredictionSetSelector = new NoStructurePredictionSetSelector();
 
-        PredictorEffectiveness testPredictor = PredictorEffectiveness.testPredictor(new SimplePredictor(atriskGroupings), baseLearningSetSelector, "Q5", conceptGraph, atriskGroupings,0.5);
+        PredictorEffectiveness testPredictor = PredictorEffectiveness.testPredictor(new SimplePredictor(atriskGroupings), basePredictionSetSelector, "Q5", conceptGraph, atriskGroupings,0.5);
 
         List<PredictionResult> results = testPredictor.getAllResults();
         assertEquals(2, results.size());
@@ -201,9 +145,9 @@ public class PredictorEffectivenessTest {
         assertEquals(1, testPredictor.getTruePositive().size());
         assertEquals(1, testPredictor.getTrueNegative().size());
 
-        LearningSetSelector graphLearningSetSelector = new GraphLearningSetSelector();
+        PredictionSetSelector graphPredictionSetSelector = new GraphPredictionSetSelector(conceptGraph);
 
-        testPredictor = PredictorEffectiveness.testPredictor(new SimplePredictor(atriskGroupings), graphLearningSetSelector, "Q5", conceptGraph, atriskGroupings, 0.5);
+        testPredictor = PredictorEffectiveness.testPredictor(new SimplePredictor(atriskGroupings), graphPredictionSetSelector, "Q5", conceptGraph, atriskGroupings, 0.5);
 
         results = testPredictor.getAllResults();
         assertEquals(2, results.size());

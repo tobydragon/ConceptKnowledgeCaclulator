@@ -1,4 +1,4 @@
-package edu.ithaca.dragon.tecmap.prediction;
+package edu.ithaca.dragon.tecmap.prediction.predictor;
 
 import edu.ithaca.dragon.tecmap.learningresource.ContinuousAssessmentMatrix;
 import edu.ithaca.dragon.tecmap.learningresource.GradeDiscreteGroupings;

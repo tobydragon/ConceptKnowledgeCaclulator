@@ -1,6 +1,7 @@
 package edu.ithaca.dragon.tecmap;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
+import edu.ithaca.dragon.tecmap.conceptgraph.ConceptGraph;
 import edu.ithaca.dragon.tecmap.data.TecmapDatastore;
 import edu.ithaca.dragon.tecmap.data.TecmapFileDatastore;
 import edu.ithaca.dragon.tecmap.io.Json;
@@ -71,4 +72,16 @@ class TecmapAPITest {
             }
         }
     }
+
+    @Test
+    void getAverageConceptGraph() {
+        assertNull(onlyStructureTecmap.getAverageConceptGraph());
+        assertNull(twoAssessmentsAddedTecmap.getAverageConceptGraph());
+
+        ConceptGraph avgGraph = twoAssessmentsConnectedTecmap.getAverageConceptGraph();
+        //Assert that it has data
+        assertEquals(10, avgGraph.getAssessmentItemMap().values().size());
+    }
+
+
 }
