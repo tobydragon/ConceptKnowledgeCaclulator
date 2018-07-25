@@ -16,7 +16,7 @@ function submitToAPI(url, objectToSubmit) {
     request.onreadystatechange = function() {
         if (request.status === 200) {
             window.alert("Submission Successful!");
-            window.location.reload();
+            window.location.reload(true);
         } else {
             window.location.replace("/error");
         }
