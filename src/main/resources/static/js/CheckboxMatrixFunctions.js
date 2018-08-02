@@ -77,6 +77,8 @@ function buildTableHeaderTypeSelector(resourceRecords, resourceId) {
     for (i = 0; i < resourceRecords.length; i += 1) {
         if (resourceRecords[i].learningResourceId === resourceId) {
             resourceTypes = resourceRecords[i].resourceTypes;
+            console.log(resourceId);
+            console.log(resourceTypes);
             typeString = "<br><div class='col-lg-1'><div class='button-group'>";
             typeString += "<button type=\"button\" class=\"btn btn-default btn-sm dropdown-toggle\" data-toggle=\"dropdown\"><span class=\"glyphicon glyphicon-cog\"></span> <span class=\"caret\"></span></button>";
             typeString += "<ul class='dropdown-menu'>";
