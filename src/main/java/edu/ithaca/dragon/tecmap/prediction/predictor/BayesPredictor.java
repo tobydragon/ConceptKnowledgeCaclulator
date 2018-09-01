@@ -24,7 +24,7 @@ public class BayesPredictor implements LearningPredictor {
      */
     public BayesPredictor(GradeDiscreteGroupings defaultGroupings, GradeDiscreteGroupings atriskGroupings) {
         bayesClassifier = new BayesClassifier<>();
-        bayesClassifier.setMemoryCapacity(500);
+        bayesClassifier.setMemoryCapacity(Integer.MAX_VALUE);
         this.defaultGroupings = defaultGroupings;
         this.atriskGroupings = atriskGroupings;
     }
@@ -35,7 +35,7 @@ public class BayesPredictor implements LearningPredictor {
      */
     public void reset() {
         bayesClassifier.reset();
-        bayesClassifier.setMemoryCapacity(500);
+        bayesClassifier.setMemoryCapacity(Integer.MAX_VALUE);
     }
 
     /**

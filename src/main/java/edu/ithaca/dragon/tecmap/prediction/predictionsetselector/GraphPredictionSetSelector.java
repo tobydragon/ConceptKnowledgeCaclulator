@@ -10,9 +10,11 @@ import java.util.List;
 public class GraphPredictionSetSelector extends NoStructurePredictionSetSelector {
 
     private ConceptGraph graph;
+    private int setSize;
 
     public GraphPredictionSetSelector(ConceptGraph graph) {
         this.graph = graph;
+        this.setSize = 0;
     }
 
     /**
@@ -53,6 +55,7 @@ public class GraphPredictionSetSelector extends NoStructurePredictionSetSelector
         if (!finalLearningSet.contains(assessmentToPredict)) {
             finalLearningSet.add(assessmentToPredict);
         }
+        this.setSize = finalLearningSet.size();
         return finalLearningSet;
     }
 }

@@ -9,7 +9,10 @@ import java.util.List;
 
 public class NoStructurePredictionSetSelector implements PredictionSetSelector {
 
+    private int setSize;
+
     public NoStructurePredictionSetSelector() {
+        setSize = 0;
     }
 
     /**
@@ -37,6 +40,7 @@ public class NoStructurePredictionSetSelector implements PredictionSetSelector {
         if (!learningSet.contains(assessmentToPredict)) {
             learningSet.add(assessmentToPredict);
         }
+        this.setSize = learningSet.size();
         return learningSet;
     }
 
@@ -72,6 +76,7 @@ public class NoStructurePredictionSetSelector implements PredictionSetSelector {
         }
         if (lowestResponseRateAssessment != null) {
             currentPredictionSet.remove(lowestResponseRateAssessment.getId());
+            setSize--;
         }
     }
 }
