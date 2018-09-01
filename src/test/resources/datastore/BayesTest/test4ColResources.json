@@ -1,0 +1,25 @@
+[ {
+  "learningResourceId" : "Q1",
+  "resourceTypes" : [ "ASSESSMENT", "PRACTICE" ],
+  "conceptIds" : [ "Q1" ],
+  "dataImportance" : 0.0,
+  "maxPossibleKnowledgeEstimate" : 10.0
+}, {
+  "learningResourceId" : "Q2",
+  "resourceTypes" : [ "ASSESSMENT", "PRACTICE" ],
+  "conceptIds" : [ "Q2" ],
+  "dataImportance" : 0.0,
+  "maxPossibleKnowledgeEstimate" : 10.0
+}, {
+  "learningResourceId" : "Q3",
+  "resourceTypes" : [ "ASSESSMENT", "PRACTICE" ],
+  "conceptIds" : [ "Q3" ],
+  "dataImportance" : 0.0,
+  "maxPossibleKnowledgeEstimate" : 5.0
+}, {
+  "learningResourceId" : "Exam",
+  "resourceTypes" : [ "ASSESSMENT", "PRACTICE" ],
+  "conceptIds" : [ "Exam" ],
+  "dataImportance" : 0.0,
+  "maxPossibleKnowledgeEstimate" : 10.0
+} ]
