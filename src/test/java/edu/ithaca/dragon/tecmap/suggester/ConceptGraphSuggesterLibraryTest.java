@@ -81,7 +81,7 @@ public class ConceptGraphSuggesterLibraryTest {
 
         //create the graph structure to be copied for each user
         ConceptGraphRecord structureRecord = ConceptGraphRecord.buildFromJson(Settings.TEST_RESOURCE_DIR + "ManuallyCreated/comp220GraphExample.json");
-        List<LearningResourceRecord> linkRecord = LearningResourceRecord.buildListFromJson(Settings.TEST_RESOURCE_DIR + "ManuallyCreated/comp220Resources.json");
+        List<LearningResourceRecord> linkRecord = LearningResourceRecord.createLearningResourceRecordsFromJsonFile(Settings.TEST_RESOURCE_DIR + "ManuallyCreated/comp220Resources.json");
         ConceptGraph graph = new ConceptGraph(structureRecord, linkRecord);
 
         //create the data to be used to create and populate the graph copies
@@ -109,7 +109,7 @@ public class ConceptGraphSuggesterLibraryTest {
 
         //create the graph structure to be copied for each user
         ConceptGraphRecord structureRecord = ConceptGraphRecord.buildFromJson(Settings.TEST_RESOURCE_DIR + "ManuallyCreated/comp220GraphExample.json");
-        List<LearningResourceRecord> linkRecord = LearningResourceRecord.buildListFromJson(Settings.TEST_RESOURCE_DIR + "ManuallyCreated/comp220Resources.json");
+        List<LearningResourceRecord> linkRecord = LearningResourceRecord.createLearningResourceRecordsFromJsonFile(Settings.TEST_RESOURCE_DIR + "ManuallyCreated/comp220Resources.json");
         ConceptGraph graph = new ConceptGraph(structureRecord, linkRecord);
 
         //create the data to be used to create and populate the graph copies
@@ -251,7 +251,7 @@ public class ConceptGraphSuggesterLibraryTest {
 
         //create the graph structure to be copied for each user
         ConceptGraphRecord structureRecord = ConceptGraphRecord.buildFromJson(Settings.TEST_RESOURCE_DIR + "ManuallyCreated/comp220GraphExample.json");
-        List<LearningResourceRecord> linkRecord = LearningResourceRecord.buildListFromJson(Settings.TEST_RESOURCE_DIR + "ManuallyCreated/comp220Resources.json");
+        List<LearningResourceRecord> linkRecord = LearningResourceRecord.createLearningResourceRecordsFromJsonFile(Settings.TEST_RESOURCE_DIR + "ManuallyCreated/comp220Resources.json");
         ConceptGraph graph = new ConceptGraph(structureRecord, linkRecord);
 
         //create the data to be used to create and populate the graph copies

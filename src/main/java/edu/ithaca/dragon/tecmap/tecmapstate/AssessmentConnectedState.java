@@ -4,20 +4,51 @@ import edu.ithaca.dragon.tecmap.conceptgraph.CohortConceptGraphs;
 import edu.ithaca.dragon.tecmap.conceptgraph.ConceptGraph;
 import edu.ithaca.dragon.tecmap.io.record.CohortConceptGraphsRecord;
 import edu.ithaca.dragon.tecmap.io.record.LearningResourceRecord;
+import edu.ithaca.dragon.tecmap.learningresource.AssessmentItem;
+import edu.ithaca.dragon.tecmap.learningresource.AssessmentItemResponse;
 
-import java.io.IOException;
 import java.util.List;
 
 public class AssessmentConnectedState extends AssessmentAddedState {
 
-    protected CohortConceptGraphs cohortConceptGraphs;
+    private CohortConceptGraphs cohortConceptGraphs;
+    //these link records are also represented within the graph as the connections from concepts to resources
     private List<LearningResourceRecord> links;
 
-    public AssessmentConnectedState(String structureFile, List<String> resourceConnectionFiles, List<String> assessmentFiles) throws IOException {
-        super(structureFile, assessmentFiles);
-        links = LearningResourceRecord.createLinksFromResourceFiles(resourceConnectionFiles);
-        graph.addLearningResourcesFromRecords(links);
-        cohortConceptGraphs = new CohortConceptGraphs(graph, assessmentItemResponses);
+    /**
+     *
+     * @param structureGraph
+     * @param links
+     * @param assessmentItemsStructureList
+     * @param assessmentItemResponses
+     * @param linksNeedToBeAdded if coming from a ResourcesNoAssessmentState, links have already been added
+     */
+    public AssessmentConnectedState(ConceptGraph structureGraph,
+                                    List<LearningResourceRecord> links,
+                                    List<AssessmentItem> assessmentItemsStructureList,
+                                    List<AssessmentItemResponse> assessmentItemResponses,
+                                    boolean linksNeedToBeAdded) {
+        super(structureGraph, assessmentItemsStructureList, assessmentItemResponses);
+        this.links = links;
+        if (linksNeedToBeAdded) {
+            structureGraph.addLearningResourcesFromRecords(links);
+        }
+        cohortConceptGraphs = new CohortConceptGraphs(structureGraph, assessmentItemResponses);
+    }
+
+    /**
+     *
+     * @param structureGraph
+     * @param links
+     * @param assessmentItemsStructureList
+     * @param assessmentItemResponses
+     * @post links will be added to structureGraph before cohortGraphs are made
+     */
+    public AssessmentConnectedState(ConceptGraph structureGraph,
+                                    List<LearningResourceRecord> links,
+                                    List<AssessmentItem> assessmentItemsStructureList,
+                                    List<AssessmentItemResponse> assessmentItemResponses) {
+        this(structureGraph, links, assessmentItemsStructureList, assessmentItemResponses, true);
     }
 
     public CohortConceptGraphsRecord createCohortTree(){
@@ -28,6 +59,13 @@ public class AssessmentConnectedState extends AssessmentAddedState {
         return cohortConceptGraphs.getUserGraph(userId);
     }
 
+    public ConceptGraph getAverageGraph() {
+        return cohortConceptGraphs.getAvgGraph();
+    }
+
     public CohortConceptGraphs getCohortConceptGraphs() {return cohortConceptGraphs;}
 
+    public List<LearningResourceRecord> getResourceRecordLinks() {
+        return links;
+    }
 }

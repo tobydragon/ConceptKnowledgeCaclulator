@@ -20,7 +20,7 @@ class ComplementaryKnowledgeSuggesterTest {
     void isComplementary() throws IOException {
         ConceptGraph graph = new ConceptGraph(ConceptGraphRecord.buildFromJson(Settings.TEST_RESOURCE_DIR + "ManuallyCreated/simpleConceptGraphTest.json"));
         List<AssessmentItemResponse> assessmentItemResponses = AssessmentItemResponse.createAssessmentItemResponses(Arrays.asList(Settings.TEST_RESOURCE_DIR + "ManuallyCreated/simpleAssessmentTest.csv"));
-        List<LearningResourceRecord> links = LearningResourceRecord.createLinksFromResourceFiles(Arrays.asList(Settings.TEST_RESOURCE_DIR + "ManuallyCreated/simpleResourceTest.json"));
+        List<LearningResourceRecord> links = LearningResourceRecord.createLearningResourceRecordsFromJsonFiles(Arrays.asList(Settings.TEST_RESOURCE_DIR + "ManuallyCreated/simpleResourceTest.json"));
         graph.addLearningResourcesFromRecords(links);
         CohortConceptGraphs graphs = new CohortConceptGraphs(graph, assessmentItemResponses);
 

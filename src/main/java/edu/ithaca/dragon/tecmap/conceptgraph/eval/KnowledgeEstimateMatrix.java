@@ -4,6 +4,7 @@ import com.github.rcaller.rstuff.RCode;
 import edu.ithaca.dragon.tecmap.learningresource.AssessmentItem;
 import edu.ithaca.dragon.tecmap.learningresource.AssessmentItemResponse;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
@@ -24,7 +25,7 @@ public class KnowledgeEstimateMatrix {
     RCode rMatrix;
 
 
-    public KnowledgeEstimateMatrix(List<AssessmentItem> lo){
+    public KnowledgeEstimateMatrix(List<AssessmentItem> lo) throws IOException {
         this.id = id;
         this.objList = lo;
         this.userIdList = new ArrayList<String>();
@@ -43,7 +44,7 @@ public class KnowledgeEstimateMatrix {
      * @post userListId is changed to add each new user found within the LORs
      */
 
-    public double[][] createMatrix(Collection<AssessmentItem> assessmentItems){
+    public double[][] createMatrix(Collection<AssessmentItem> assessmentItems) throws IOException {
         //number of rows and columns needed check
         int columns = assessmentItems.size();
         int rows = 0;
@@ -59,7 +60,13 @@ public class KnowledgeEstimateMatrix {
         int currentColumn = 0;
         int currentRow = 0;
 
+        List<String> assessmentItemIDs = new ArrayList<>();
+
         for(AssessmentItem obj: assessmentItems) {
+            if (assessmentItemIDs.contains(obj.getId())) {
+                throw new IOException("Cannot Add Multiple Assessments With Same ID");
+            }
+            assessmentItemIDs.add(obj.getId());
             List<AssessmentItemResponse> responses = obj.getResponses();
             //first column of LearningObjectResponses cannot compare to anything to keep userid in same row as any previous columns of LearningObjectResponses
             if (currentColumn == 0) {
@@ -80,7 +87,7 @@ public class KnowledgeEstimateMatrix {
                     //cycle through each index of the userIdList
                     for (String user: userIdList){
                         //if the current userId matches a userId in the list, place it at the same row as the userIdList index
-                        if (ans.getUserId() == user) {
+                        if (ans.getUserId().equals(user)) {
                             newMatrix[currentColumn][userIdList.indexOf(user)] = ans.calcKnowledgeEstimate();
                             isPlaced = true;
                         }
@@ -144,6 +151,18 @@ public class KnowledgeEstimateMatrix {
     public List<String> getUserIdList(){return this.userIdList;}
 
     public List<AssessmentItem> getObjList(){return this.objList;}
+
+    public List<String> getAssessmentIdList() {
+        List<AssessmentItem> assessmentItems = getObjList();
+
+        List<String> assessmentIds = new ArrayList<>();
+
+        for (AssessmentItem assessmentItem : assessmentItems) {
+            assessmentIds.add(assessmentItem.getId());
+        }
+
+        return assessmentIds;
+    }
 
     public RCode getrMatrix() {return rMatrix;}
 }

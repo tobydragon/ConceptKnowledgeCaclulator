@@ -1,5 +1,7 @@
 package edu.ithaca.dragon.tecmap.tecmapstate;
 
+import edu.ithaca.dragon.tecmap.io.record.LearningResourceRecord;
+import edu.ithaca.dragon.tecmap.learningresource.AssessmentItemResponse;
 import edu.ithaca.dragon.tecmap.ui.TecmapUserAction;
 
 import java.util.ArrayList;
@@ -9,14 +11,20 @@ import java.util.List;
 
 public enum TecmapState {
     noAssessment,
+    resourcesNoAssessment,
     assessmentAdded,
     assessmentConnected;
 
-    public static TecmapState checkAvailableState(List<String> resourceFiles, List<String> assessmentFiles) {
-        if (assessmentFiles == null || assessmentFiles.size() < 1){
-            return TecmapState.noAssessment;
+    public static <LinkRecordType, AssessmentRecordType> TecmapState checkAvailableState(List<LinkRecordType> links, List<AssessmentRecordType> assessmentItemResponses) {
+        if (assessmentItemResponses == null || assessmentItemResponses.size() < 1){
+            if (links == null || links.size() < 1){
+                return TecmapState.noAssessment;
+            }
+            else {
+                return TecmapState.resourcesNoAssessment;
+            }
         }
-        else if (resourceFiles == null || resourceFiles.size() < 1){
+        else if (links == null || links.size() < 1){
             return TecmapState.assessmentAdded;
         }
         else {
@@ -24,12 +32,11 @@ public enum TecmapState {
         }
     }
 
-
     public List<TecmapUserAction> getAvailableActions(){
         if (this == noAssessment){
             return(new ArrayList<>(Collections.singletonList(TecmapUserAction.structureTree)));
         }
-        else if (this == assessmentAdded){
+        else if (this == assessmentAdded || this == resourcesNoAssessment){
             return(new ArrayList<>(Arrays.asList(TecmapUserAction.structureTree, TecmapUserAction.connectResources)));
         }
         else if (this == assessmentConnected){

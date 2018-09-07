@@ -140,10 +140,10 @@ public class ApiControllerTest {
     }
 
     @Test
-    public void getBlankLearningResourceRecordsFromAssessment() throws Exception {
+    public void currentLearningResourceRecords() throws Exception {
         String courseId = "Cs1ExampleStructure";
-        Mockito.when(tecmapServiceMock.retrieveBlankLearningResourceRecordsFromAssessment(anyString())).
-                thenReturn(tecmapService.retrieveBlankLearningResourceRecordsFromAssessment(courseId));
+        Mockito.when(tecmapServiceMock.currentLearningResourceRecords(anyString())).
+                thenReturn(tecmapService.currentLearningResourceRecords(courseId));
 
         RequestBuilder requestBuilder = MockMvcRequestBuilders.get(
                 "/api/blankLRRecords/thisIsACourse").accept(
@@ -156,8 +156,8 @@ public class ApiControllerTest {
 
         //Test Assessment Added
         courseId = "Cs1ExampleAssessmentAdded";
-        Mockito.when(tecmapServiceMock.retrieveBlankLearningResourceRecordsFromAssessment(anyString())).
-                thenReturn(tecmapService.retrieveBlankLearningResourceRecordsFromAssessment(courseId));
+        Mockito.when(tecmapServiceMock.currentLearningResourceRecords(anyString())).
+                thenReturn(tecmapService.currentLearningResourceRecords(courseId));
 
         result = mockMvc.perform(requestBuilder).andReturn();
         String expected = Cs1ExampleJsonStrings.assessment1And2Str;
@@ -168,17 +168,17 @@ public class ApiControllerTest {
 
         //Test Assessment Connected
         courseId = "Cs1Example";
-        Mockito.when(tecmapServiceMock.retrieveBlankLearningResourceRecordsFromAssessment(anyString())).
-                thenReturn(tecmapService.retrieveBlankLearningResourceRecordsFromAssessment(courseId));
+        Mockito.when(tecmapServiceMock.currentLearningResourceRecords(anyString())).
+                thenReturn(tecmapService.currentLearningResourceRecords(courseId));
 
         result = mockMvc.perform(requestBuilder).andReturn();
 
-        JSONAssert.assertEquals(expected, result.getResponse().getContentAsString(), false);
+        JSONAssert.assertEquals(Cs1ExampleJsonStrings.resourcesConnectedString, result.getResponse().getContentAsString(), false);
 
         //Test Null
         courseId = "NoPath";
-        Mockito.when(tecmapServiceMock.retrieveBlankLearningResourceRecordsFromAssessment(anyString())).
-                thenReturn(tecmapService.retrieveBlankLearningResourceRecordsFromAssessment(courseId));
+        Mockito.when(tecmapServiceMock.currentLearningResourceRecords(anyString())).
+                thenReturn(tecmapService.currentLearningResourceRecords(courseId));
 
         result = mockMvc.perform(requestBuilder).andReturn();
         assertEquals("", result.getResponse().getContentAsString());
@@ -189,13 +189,13 @@ public class ApiControllerTest {
         TecmapDatastore originalDatastore = TecmapFileDatastore.buildFromJsonFile(Settings.DEFAULT_TEST_DATASTORE_PATH);
 
         String courseId = "Cs1ExampleAssessmentAdded";
-        Mockito.when(tecmapServiceMock.postConnectedResources(anyString(), anyObject()))
-                .thenReturn(tecmapService.postConnectedResources(courseId, tecmapService.retrieveBlankLearningResourceRecordsFromAssessment(courseId)));
+        Mockito.when(tecmapServiceMock.postConnectedResources(anyString(), anyList()))
+                .thenReturn(tecmapService.postConnectedResources(courseId, tecmapService.currentLearningResourceRecords(courseId)));
 
         RequestBuilder requestBuilder = MockMvcRequestBuilders.post(
                 "/api/connectResources/courseId")
                 .accept(MediaType.APPLICATION_JSON)
-                .content(Json.toJsonString(tecmapService.retrieveBlankLearningResourceRecordsFromAssessment(courseId)))
+                .content(Json.toJsonString(tecmapService.currentLearningResourceRecords(courseId)))
                 .contentType(MediaType.APPLICATION_JSON);
 
         MvcResult result = mockMvc.perform(requestBuilder).andExpect(status().isOk()).andReturn();
@@ -213,19 +213,19 @@ public class ApiControllerTest {
         Json.toJsonFile(Settings.DEFAULT_TEST_DATASTORE_PATH + Settings.DEFAULT_DATASTORE_FILENAME, originalDatastore.createTecmapFileDatastoreRecord());
 
         //Continue with tests
-        Mockito.when(tecmapServiceMock.postConnectedResources(anyString(), anyObject()))
+        Mockito.when(tecmapServiceMock.postConnectedResources(anyString(), anyList()))
                 .thenReturn(tecmapService.postConnectedResources(courseId, null));
 
         mockMvc.perform(requestBuilder).andExpect(status().isNotFound());
 
-        Mockito.when(tecmapServiceMock.postConnectedResources(anyString(), anyObject()))
+        Mockito.when(tecmapServiceMock.postConnectedResources(anyString(), anyList()))
                 .thenReturn(tecmapService.postConnectedResources(courseId, new ArrayList<LearningResourceRecord>()));
 
         mockMvc.perform(requestBuilder).andExpect(status().isNotFound());
 
         courseId = "NotAValidID";
-        Mockito.when(tecmapServiceMock.postConnectedResources(anyString(), anyObject()))
-                .thenReturn(tecmapService.postConnectedResources(courseId, tecmapService.retrieveBlankLearningResourceRecordsFromAssessment(courseId)));
+        Mockito.when(tecmapServiceMock.postConnectedResources(anyString(), anyList()))
+                .thenReturn(tecmapService.postConnectedResources(courseId, tecmapService.currentLearningResourceRecords(courseId)));
 
         mockMvc.perform(requestBuilder).andExpect(status().isNotFound());
     }

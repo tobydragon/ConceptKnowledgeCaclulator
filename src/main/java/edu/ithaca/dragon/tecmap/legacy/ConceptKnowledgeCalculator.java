@@ -15,6 +15,8 @@ import edu.ithaca.dragon.tecmap.learningresource.AssessmentItemResponse;
 import edu.ithaca.dragon.tecmap.suggester.GroupSuggester.*;
 import edu.ithaca.dragon.tecmap.suggester.ConceptGraphSuggesterLibrary;
 import edu.ithaca.dragon.tecmap.suggester.OrganizedLearningResourceSuggestions;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
@@ -27,6 +29,8 @@ import java.util.*;
  * Created by tdragon on 6/8/17.
  */
 public class ConceptKnowledgeCalculator implements ConceptKnowledgeCalculatorAPI{
+    private static final Logger logger = LogManager.getLogger(ConceptKnowledgeCalculator.class);
+
 
 //    private static final String OUTPUT_PATH = "ckcvisualizer/json/";
 
@@ -150,7 +154,7 @@ public class ConceptKnowledgeCalculator implements ConceptKnowledgeCalculatorAPI
 
         List<LearningResourceRecord> linkRecord = new ArrayList<>();
         for (String rFiles : resourceFilename){
-            List<LearningResourceRecord> temp = LearningResourceRecord.buildListFromJson(rFiles);
+            List<LearningResourceRecord> temp = LearningResourceRecord.createLearningResourceRecordsFromJsonFile(rFiles);
             linkRecord.addAll(temp);
             resourceFiles.add(rFiles);
         }
@@ -513,7 +517,7 @@ public class ConceptKnowledgeCalculator implements ConceptKnowledgeCalculatorAPI
     public static void csvToResource(List<String> assessmentFiles, String destinationFilepath) throws Exception{
         //TODO: hardcoded to sakai csv, need to hold a list of CSVReaders, or the information about which kind of reader it is...
         List<AssessmentItem> fullLoList = ReaderTools.learningObjectsFromCSVList(2, assessmentFiles);
-        List<LearningResourceRecord> lolrList = LearningResourceRecord.createLRecordsFromAssessments(fullLoList);
+        List<LearningResourceRecord> lolrList = LearningResourceRecord.createLearningResourceRecordsFromAssessmentItems(fullLoList);
         LearningResourceRecord.resourceRecordsToJSON(lolrList, destinationFilepath);
     }
 
@@ -562,37 +566,46 @@ public class ConceptKnowledgeCalculator implements ConceptKnowledgeCalculatorAPI
     }
 
     public double getStudentAvg(String user)throws NullPointerException{
-        ConceptGraph graph = cohortConceptGraphs.getAvgGraph();
-        Map<String, AssessmentItem> loMap = graph.getAssessmentItemMap();
-        List<AssessmentItem> objList = new ArrayList<AssessmentItem>(loMap.values());
-        KnowledgeEstimateMatrix myMatrix = new KnowledgeEstimateMatrix(objList);
-        List<String> userIdList = myMatrix.getUserIdList();
-
-        if(userIdList.contains(user)) {
-            return RFunctions.StudentKnowledgeEstAvg(myMatrix, user);
-        }else{
-            throw new NullPointerException();
-        }
-    }
-
-    public void getFactorMatrix(){
-        if(currentMode== Mode.COHORTGRAPH){
+        try {
             ConceptGraph graph = cohortConceptGraphs.getAvgGraph();
             Map<String, AssessmentItem> loMap = graph.getAssessmentItemMap();
             List<AssessmentItem> objList = new ArrayList<AssessmentItem>(loMap.values());
             KnowledgeEstimateMatrix myMatrix = new KnowledgeEstimateMatrix(objList);
+            List<String> userIdList = myMatrix.getUserIdList();
 
-            try {
-                RFunctions.getFactorMatrix(myMatrix);
-            }catch (Exception e){
-                System.out.println("Insufficient data to perform factor analysis. Please refer to the guidelines of the data below:\n" +
-                        "- Learning objects without any variance in scores between students will be ignored \n" +
-                        "- There must be at least 3 valid learning objects present\n" +
-                        "- There must be more students than learning objects\n");
-
+            if (userIdList.contains(user)) {
+                return RFunctions.StudentKnowledgeEstAvg(myMatrix, user);
+            } else {
+                throw new NullPointerException();
             }
-        }else{
-            throw new NullPointerException();
+        } catch (IOException e) {
+            logger.warn(e.getMessage());
+            return 0;
+        }
+    }
+
+    public void getFactorMatrix(){
+        try {
+            if (currentMode == Mode.COHORTGRAPH) {
+                ConceptGraph graph = cohortConceptGraphs.getAvgGraph();
+                Map<String, AssessmentItem> loMap = graph.getAssessmentItemMap();
+                List<AssessmentItem> objList = new ArrayList<AssessmentItem>(loMap.values());
+                KnowledgeEstimateMatrix myMatrix = new KnowledgeEstimateMatrix(objList);
+
+                try {
+                    RFunctions.getFactorMatrix(myMatrix);
+                } catch (Exception e) {
+                    System.out.println("Insufficient data to perform factor analysis. Please refer to the guidelines of the data below:\n" +
+                            "- Learning objects without any variance in scores between students will be ignored \n" +
+                            "- There must be at least 3 valid learning objects present\n" +
+                            "- There must be more students than learning objects\n");
+
+                }
+            } else {
+                throw new NullPointerException();
+            }
+        } catch (IOException e) {
+            logger.warn(e.getMessage());
         }
 
     }
@@ -658,7 +671,7 @@ public class ConceptKnowledgeCalculator implements ConceptKnowledgeCalculatorAPI
 
     @Override
     public boolean resourceIsValid(String name) throws IOException {
-        List<LearningResourceRecord> temp = LearningResourceRecord.buildListFromJson(name);
+        List<LearningResourceRecord> temp = LearningResourceRecord.createLearningResourceRecordsFromJsonFile(name);
         if(temp.size()>0){
             return true;
         }else{

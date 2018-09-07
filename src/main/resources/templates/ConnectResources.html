@@ -16,17 +16,32 @@
                 </table>
                 <br>
                 <br>
-                <button class='center-block btn btn-primary' type='submit' onclick='submit()'> Submit </button>
+                <div class="col-xs-4" th:id="home">
+                    <button class='center-block btn btn-primary' type='submit' onclick='goHome()'> Home </button>
+                </div>
+                <div class="col-xs-4" th:id="addResource">
+                    <label class="center-block" for="newResource"> New Resource ID: </label>
+                    <input style="color: #BBB;" class="center-block" id="newResource" value="New Resource ID" onblur="if(this.value==''){ this.value='New Resource ID'; this.style.color='#BBB';}"
+                           onfocus="if(this.value=='New Resource ID'){ this.value=''; this.style.color='#000';}" type="text">
+                    <label class="center-block" for="newResourceMaxValue"> Max Knowledge Estimate: </label>
+                    <input class="center-block" min="1" value="1" type="number" id="newResourceMaxValue">
+                    <button class="center-block btn btn-primary" type="submit" onclick="addResource(document.getElementById('newResource').value, document.getElementById('newResourceMaxValue').valueAsNumber)"> Add Resource </button>
+                </div>
+                <div class="col-xs-4" th:id="save">
+                    <button class='center-block btn btn-primary' type='submit' onclick='submit()'> Save </button>
+                </div>
             </div>
         </div>
     </div>
 
     <!--Files That Starts the calls  -->
+    <script type="text/javascript" th:src="@{/js/Comm.js}"></script>
     <script type="text/javascript" th:src="@{/js/GraphFunctions.js}"></script>
     <script th:inline="javascript">
         courseId = [[${courseId}]];
     </script>
-    <script th:src="@{/js/ConnectResource.js}"></script>
+    <script th:src="@{/js/CheckboxMatrixFunctions.js}"></script>
+    <script th:src="@{/js/ConnectResources.js}"></script>
 
 </body>
 </html>

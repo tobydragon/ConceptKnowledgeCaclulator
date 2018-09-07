@@ -85,6 +85,86 @@ public class Cs1ExampleJsonStrings {
             "}"
             ;
 
+    public static final String structureWithResourcesAsTreeString = "{\n" +
+            "  \"name\" : \"Cs1ExampleGraph\",\n" +
+            "  \"concepts\" : [ {\n" +
+            "    \"id\" : \"Intro CS-1\",\n" +
+            "    \"label\" : \"Intro CS\",\n" +
+            "    \"knowledgeEstimate\" : 0.0,\n" +
+            "    \"knowledgePrediction\" : 0.0,\n" +
+            "    \"knowledgeDistFromAvg\" : 0.0,\n" +
+            "    \"dataImportance\" : 0.0,\n" +
+            "    \"resourceSummaries\" : [ \"Q5   Est:0.000  Imp:0.000  ResponseCount:0\" ]\n" +
+            "  }, {\n" +
+            "    \"id\" : \"Loops-1\",\n" +
+            "    \"label\" : \"Loops\",\n" +
+            "    \"knowledgeEstimate\" : 0.0,\n" +
+            "    \"knowledgePrediction\" : 0.0,\n" +
+            "    \"knowledgeDistFromAvg\" : 0.0,\n" +
+            "    \"dataImportance\" : 0.0,\n" +
+            "    \"resourceSummaries\" : [ \"Q4   Est:0.000  Imp:0.000  ResponseCount:0\" ]\n" +
+            "  }, {\n" +
+            "    \"id\" : \"While Loops-1\",\n" +
+            "    \"label\" : \"While Loops\",\n" +
+            "    \"knowledgeEstimate\" : 0.0,\n" +
+            "    \"knowledgePrediction\" : 0.0,\n" +
+            "    \"knowledgeDistFromAvg\" : 0.0,\n" +
+            "    \"dataImportance\" : 0.0,\n" +
+            "    \"resourceSummaries\" : [ \"Q2   Est:0.000  Imp:0.000  ResponseCount:0\", \"HW4   Est:0.000  Imp:0.000  ResponseCount:0\" ]\n" +
+            "  }, {\n" +
+            "    \"id\" : \"Boolean Expressions-1\",\n" +
+            "    \"label\" : \"Boolean Expressions\",\n" +
+            "    \"knowledgeEstimate\" : 0.0,\n" +
+            "    \"knowledgePrediction\" : 0.0,\n" +
+            "    \"knowledgeDistFromAvg\" : 0.0,\n" +
+            "    \"dataImportance\" : 0.0,\n" +
+            "    \"resourceSummaries\" : [ \"HW2   Est:0.000  Imp:0.000  ResponseCount:0\", \"HW1   Est:0.000  Imp:0.000  ResponseCount:0\" ]\n" +
+            "  }, {\n" +
+            "    \"id\" : \"For Loops-1\",\n" +
+            "    \"label\" : \"For Loops\",\n" +
+            "    \"knowledgeEstimate\" : 0.0,\n" +
+            "    \"knowledgePrediction\" : 0.0,\n" +
+            "    \"knowledgeDistFromAvg\" : 0.0,\n" +
+            "    \"dataImportance\" : 0.0,\n" +
+            "    \"resourceSummaries\" : [ \"Q3   Est:0.000  Imp:0.000  ResponseCount:0\", \"HW5   Est:0.000  Imp:0.000  ResponseCount:0\" ]\n" +
+            "  }, {\n" +
+            "    \"id\" : \"If Statements-1\",\n" +
+            "    \"label\" : \"If Statements\",\n" +
+            "    \"knowledgeEstimate\" : 0.0,\n" +
+            "    \"knowledgePrediction\" : 0.0,\n" +
+            "    \"knowledgeDistFromAvg\" : 0.0,\n" +
+            "    \"dataImportance\" : 0.0,\n" +
+            "    \"resourceSummaries\" : [ \"Q1   Est:0.000  Imp:0.000  ResponseCount:0\", \"HW3   Est:0.000  Imp:0.000  ResponseCount:0\" ]\n" +
+            "  }, {\n" +
+            "    \"id\" : \"Boolean Expressions-2\",\n" +
+            "    \"label\" : \"Boolean Expressions\",\n" +
+            "    \"knowledgeEstimate\" : 0.0,\n" +
+            "    \"knowledgePrediction\" : 0.0,\n" +
+            "    \"knowledgeDistFromAvg\" : 0.0,\n" +
+            "    \"dataImportance\" : 0.0,\n" +
+            "    \"resourceSummaries\" : [ \"HW2   Est:0.000  Imp:0.000  ResponseCount:0\", \"HW1   Est:0.000  Imp:0.000  ResponseCount:0\" ]\n" +
+            "  } ],\n" +
+            "  \"links\" : [ {\n" +
+            "    \"parent\" : \"While Loops-1\",\n" +
+            "    \"child\" : \"Boolean Expressions-1\"\n" +
+            "  }, {\n" +
+            "    \"parent\" : \"Loops-1\",\n" +
+            "    \"child\" : \"While Loops-1\"\n" +
+            "  }, {\n" +
+            "    \"parent\" : \"Loops-1\",\n" +
+            "    \"child\" : \"For Loops-1\"\n" +
+            "  }, {\n" +
+            "    \"parent\" : \"Intro CS-1\",\n" +
+            "    \"child\" : \"Loops-1\"\n" +
+            "  }, {\n" +
+            "    \"parent\" : \"If Statements-1\",\n" +
+            "    \"child\" : \"Boolean Expressions-2\"\n" +
+            "  }, {\n" +
+            "    \"parent\" : \"Intro CS-1\",\n" +
+            "    \"child\" : \"If Statements-1\"\n" +
+            "  } ]\n" +
+            "}";
+
     public static final String assessment1Str = "[ {\n" +
             "  \"learningResourceId\" : \"Q1\",\n" +
             "  \"resourceTypes\" : [ \"ASSESSMENT\", \"PRACTICE\" ],\n" +
@@ -179,8 +259,8 @@ public class Cs1ExampleJsonStrings {
             "  \"maxPossibleKnowledgeEstimate\" : 1.0\n" +
             "} ]";
 
-    public static String allConceptsString = "[\"While Loops\", \"For Loops\", \"Boolean Expressions\", \"Intro CS\", \"Loops\", \"If Statements\"]";
-    public static String allConceptsStringAsJson = "[\"\\\"While Loops\\\"\",\"\\\"For Loops\\\"\",\"\\\"Boolean Expressions\\\"\",\"\\\"Intro CS\\\"\",\"\\\"Loops\\\"\",\"\\\"If Statements\\\"\"]";
+    public static String allConceptsString = "[While Loops, For Loops, Boolean Expressions, Intro CS, Loops, If Statements]";
+    public static String allConceptsStringAsJson = "[\"While Loops\",\"For Loops\",\"Boolean Expressions\",\"Intro CS\",\"Loops\",\"If Statements\"]";
 
     public static String bartDataTree = "{\n" +
             "  \"name\" : \"s02\",\n" +
@@ -341,4 +421,66 @@ public class Cs1ExampleJsonStrings {
             "    \"child\" : \"If Statements-1\"\n" +
             "  } ]\n" +
             "}";
+
+    public static final String resourcesConnectedString = "[ {\n" +
+            "  \"learningResourceId\" : \"Q1\",\n" +
+            "  \"resourceTypes\" : [ \"PRACTICE\" ],\n" +
+            "  \"conceptIds\" : [ \"If Statements\" ],\n" +
+            "  \"dataImportance\" : 0.0,\n" +
+            "  \"maxPossibleKnowledgeEstimate\" : 10.0\n" +
+            "}, {\n" +
+            "  \"learningResourceId\" : \"Q2\",\n" +
+            "  \"resourceTypes\" : [ \"PRACTICE\" ],\n" +
+            "  \"conceptIds\" : [ \"While Loops\" ],\n" +
+            "  \"dataImportance\" : 0.0,\n" +
+            "  \"maxPossibleKnowledgeEstimate\" : 5.0\n" +
+            "}, {\n" +
+            "  \"learningResourceId\" : \"Q3\",\n" +
+            "  \"resourceTypes\" : [ \"PRACTICE\" ],\n" +
+            "  \"conceptIds\" : [ \"For Loops\" ],\n" +
+            "  \"dataImportance\" : 0.0,\n" +
+            "  \"maxPossibleKnowledgeEstimate\" : 10.0\n" +
+            "}, {\n" +
+            "  \"learningResourceId\" : \"Q4\",\n" +
+            "  \"resourceTypes\" : [ \"PRACTICE\" ],\n" +
+            "  \"conceptIds\" : [ \"Loops\" ],\n" +
+            "  \"dataImportance\" : 0.0,\n" +
+            "  \"maxPossibleKnowledgeEstimate\" : 5.0\n" +
+            "}, {\n" +
+            "  \"learningResourceId\" : \"Q5\",\n" +
+            "  \"resourceTypes\" : [ \"PRACTICE\" ],\n" +
+            "  \"conceptIds\" : [ \"Intro CS\" ],\n" +
+            "  \"dataImportance\" : 0.0,\n" +
+            "  \"maxPossibleKnowledgeEstimate\" : 100.0\n" +
+            "}, {\n" +
+            "  \"learningResourceId\" : \"HW1\",\n" +
+            "  \"resourceTypes\" : [ \"PRACTICE\" ],\n" +
+            "  \"conceptIds\" : [ \"Boolean Expressions\" ],\n" +
+            "  \"dataImportance\" : 0.0,\n" +
+            "  \"maxPossibleKnowledgeEstimate\" : 1.0\n" +
+            "}, {\n" +
+            "  \"learningResourceId\" : \"HW2\",\n" +
+            "  \"resourceTypes\" : [ \"PRACTICE\" ],\n" +
+            "  \"conceptIds\" : [ \"Boolean Expressions\" ],\n" +
+            "  \"dataImportance\" : 0.0,\n" +
+            "  \"maxPossibleKnowledgeEstimate\" : 5.0\n" +
+            "}, {\n" +
+            "  \"learningResourceId\" : \"HW3\",\n" +
+            "  \"resourceTypes\" : [ \"PRACTICE\" ],\n" +
+            "  \"conceptIds\" : [ \"If Statements\" ],\n" +
+            "  \"dataImportance\" : 0.0,\n" +
+            "  \"maxPossibleKnowledgeEstimate\" : 2.0\n" +
+            "}, {\n" +
+            "  \"learningResourceId\" : \"HW4\",\n" +
+            "  \"resourceTypes\" : [ \"PRACTICE\" ],\n" +
+            "  \"conceptIds\" : [ \"While Loops\" ],\n" +
+            "  \"dataImportance\" : 0.0,\n" +
+            "  \"maxPossibleKnowledgeEstimate\" : 1.0\n" +
+            "}, {\n" +
+            "  \"learningResourceId\" : \"HW5\",\n" +
+            "  \"resourceTypes\" : [ \"PRACTICE\" ],\n" +
+            "  \"conceptIds\" : [ \"For Loops\" ],\n" +
+            "  \"dataImportance\" : 0.0,\n" +
+            "  \"maxPossibleKnowledgeEstimate\" : 1.0\n" +
+            "} ]";
 }
