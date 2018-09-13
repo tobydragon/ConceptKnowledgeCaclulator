@@ -1,5 +1,8 @@
 package edu.ithaca.dragon.tecmap.learningresource;
 
+import com.github.rcaller.rstuff.RCode;
+import edu.ithaca.dragon.tecmap.conceptgraph.eval.RFunctions;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -79,6 +82,24 @@ public class ContinuousAssessmentMatrix {
         }
 
         return gradeMatrix;
+    }
+
+    public RCode createRMatrix(double[][] studentKnowledgeEstimates){
+
+        int objLength = assessmentItems.size();
+
+        //object list into string array
+
+        int i = 0;
+        String[] objStr = new String[objLength];
+        for(AssessmentItem obj: assessmentItems){
+            objStr[i] = obj.getId();
+            i++;
+        }
+
+
+        RCode rMatrix = RFunctions.JavaToR(studentKnowledgeEstimates, objStr);
+        return rMatrix;
     }
 
     public List<AssessmentItem> getAssessmentItems() {

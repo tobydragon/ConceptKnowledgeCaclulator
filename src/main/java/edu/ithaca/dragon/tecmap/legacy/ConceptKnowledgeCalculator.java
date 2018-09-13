@@ -617,7 +617,7 @@ public class ConceptKnowledgeCalculator implements ConceptKnowledgeCalculatorAPI
             List<AssessmentItem> objList = new ArrayList<AssessmentItem>(loMap.values());
 //            KnowledgeEstimateMatrix myMatrix = new KnowledgeEstimateMatrix(objList);
             try {
-//                RFunctions.confirmatoryGraph(myMatrix, cohortConceptGraphs);
+//                FactorAnalysis.confirmatoryGraph(myMatrix, cohortConceptGraphs);
             }catch (IndexOutOfBoundsException e){
                 System.out.println("Insufficient data to perform task. Please refer to guidelines of the data below:\n" +
                         "- There must be more than 1 student\n" +

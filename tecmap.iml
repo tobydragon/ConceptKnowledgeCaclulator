@@ -114,5 +114,6 @@
     <orderEntry type="library" name="Maven: ch.netzwerg:paleo-core:0.13.2" level="project" />
     <orderEntry type="library" name="Maven: io.vavr:vavr:0.9.1" level="project" />
     <orderEntry type="library" name="Maven: io.vavr:vavr-match:0.9.1" level="project" />
+    <orderEntry type="library" name="com.github.jbytecode:RCaller:3.0" level="project" />
   </component>
 </module>
