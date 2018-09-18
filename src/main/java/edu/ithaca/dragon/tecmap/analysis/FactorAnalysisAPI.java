@@ -11,29 +11,36 @@ import edu.ithaca.dragon.tecmap.learningresource.ContinuousAssessmentMatrix;
 public interface FactorAnalysisAPI {
 
     /**
-     * Prints out a factor matrix connecting learning objects to similar higher up objects
+     * displays a graph connecting learning objects to similar higher up objects
      * @param assessmentMatrix KnowledgeEstimateMatrix object will use the RMatrix data member
      * @pre resource, assessment, structure files are all present and an R Matrix is created
      * @throws Exception
      */
-    void getExploratoryGraph(ContinuousAssessmentMatrix assessmentMatrix)throws Exception;
+    void displayExploratoryGraph(ContinuousAssessmentMatrix assessmentMatrix)throws Exception;
 
     /**
-     * creates a matrix of factors in java (factors=rows, LearningObjects=columns)
+     * creates a matrix of factors in java using assessment matrix(factors=rows, LearningObjects=columns)
      * @param assessmentMatrix
      * @return statsMatrix the matrix of strengths between a factor and AssessmentItem
      * @pre resource, assessment, structure files are all present and an R Matrix is created
      * @throws Exception
      */
-    double[][] returnExploratoryMatrix(ContinuousAssessmentMatrix assessmentMatrix)throws Exception;
+    double[][] calculateExploratoryMatrix(ContinuousAssessmentMatrix assessmentMatrix)throws Exception;
 
     /**
-     * Prints out a factor matrix providing strengths for the given connections from the user
+     * displays a graph with connections (given by user) between assessments and higher up objects with strengths in connection
      * @param assessmentMatrix
      * @param ccg
      */
-    void getConfirmatoryGraph(ContinuousAssessmentMatrix assessmentMatrix, CohortConceptGraphs ccg);
+    void displayConfirmatoryGraph(ContinuousAssessmentMatrix assessmentMatrix, CohortConceptGraphs ccg);
 
-    double[][] returnConfirmatoryMatrix(ContinuousAssessmentMatrix assessmentMatrix, CohortConceptGraphs ccg);
+
+    /**
+     * creates a matrix of factors in java using assessment matrix and connections given by user(factors=rows, LearningObjects=columns)
+     * @param assessmentMatrix
+     * @param ccg
+     * @return
+     */
+    double[][] calculateConfirmatoryMatrix(ContinuousAssessmentMatrix assessmentMatrix, CohortConceptGraphs ccg);
 
 }

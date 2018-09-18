@@ -189,7 +189,7 @@ public class FactorAnalysis implements FactorAnalysisAPI{
      * @pre resource, assessment, structure files are all present and an R Matrix is created
      * @throws Exception
      */
-    public void getExploratoryGraph(ContinuousAssessmentMatrix AssessmentMatrix)throws Exception {
+    public void displayExploratoryGraph(ContinuousAssessmentMatrix AssessmentMatrix)throws Exception {
         try{
         int numOfFactors = findFactorCount(AssessmentMatrix);
         RCaller rCaller = RCallerVariable();
@@ -225,7 +225,7 @@ public class FactorAnalysis implements FactorAnalysisAPI{
      * @pre resource, assessment, structure files are all present and an R Matrix is created
      * @throws Exception
      */
-    public double[][] returnExploratoryMatrix(ContinuousAssessmentMatrix AssessmentMatrix)throws Exception {
+    public double[][] calculateExploratoryMatrix(ContinuousAssessmentMatrix AssessmentMatrix)throws Exception {
         int learningObjectCount = getColumnCount(AssessmentMatrix);
         int numOfFactors = findFactorCount(AssessmentMatrix);
         RCaller rCaller = RCallerVariable();
@@ -342,7 +342,7 @@ public class FactorAnalysis implements FactorAnalysisAPI{
         }
     }
 
-    public void getConfirmatoryGraph(ContinuousAssessmentMatrix assessmentMatrix, CohortConceptGraphs ccg){
+    public void displayConfirmatoryGraph(ContinuousAssessmentMatrix assessmentMatrix, CohortConceptGraphs ccg){
             try {
                 modelToFile(ccg);
 
@@ -374,7 +374,7 @@ public class FactorAnalysis implements FactorAnalysisAPI{
     }
 
     //TODO: dataSem.dhp$A returns the values wanted but not in necessarily correct format. Also, many 0s are present.
-    public double[][] returnConfirmatoryMatrix(ContinuousAssessmentMatrix assessmentMatrix, CohortConceptGraphs ccg){
+    public double[][] calculateConfirmatoryMatrix(ContinuousAssessmentMatrix assessmentMatrix, CohortConceptGraphs ccg){
         int matrixSize = assessmentMatrix.getStudentAssessmentGrades().length;
         try {
             String modelString = modelMaker(ccg);
