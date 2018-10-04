@@ -8,7 +8,7 @@ import edu.ithaca.dragon.tecmap.io.reader.CSVReader;
 import edu.ithaca.dragon.tecmap.io.reader.SakaiReader;
 import edu.ithaca.dragon.tecmap.io.record.ConceptGraphRecord;
 import edu.ithaca.dragon.tecmap.io.record.LearningResourceRecord;
-import edu.ithaca.dragon.tecmap.learningresource.AssessmentItem;
+import edu.ithaca.dragon.tecmap.learningresource.ColumnItem;
 import edu.ithaca.dragon.tecmap.learningresource.AssessmentItemResponse;
 import org.junit.Assert;
 
@@ -28,7 +28,7 @@ public class RFunctionsTest {
         String file = Settings.TEST_RESOURCE_DIR + "ManuallyCreated/partialComplexRealitsticAssessment.csv";
         try {
             CSVReader data = new SakaiReader(file);
-            List<AssessmentItem> gotoMatrix = data.getManualGradedLearningObjects();
+            List<ColumnItem> gotoMatrix = data.getManualGradedLearningObjects();
             KnowledgeEstimateMatrix newMatrix = new KnowledgeEstimateMatrix(gotoMatrix);
             double avg = RFunctions.StudentKnowledgeEstAvg(newMatrix, "stu1");
             Assert.assertEquals(.7238, avg, 0.001);
@@ -51,7 +51,7 @@ public class RFunctionsTest {
     public void findFactorCountTest(){
         try {
             CSVReader data = new SakaiReader(Settings.TEST_RESOURCE_DIR + "ManuallyCreated/complexRealisticAssessment.csv");
-            List<AssessmentItem> gotoMatrix = data.getManualGradedLearningObjects();
+            List<ColumnItem> gotoMatrix = data.getManualGradedLearningObjects();
             KnowledgeEstimateMatrix newMatrix = new KnowledgeEstimateMatrix(gotoMatrix);
 
             int factorCount = RFunctions.findFactorCount(newMatrix);
@@ -68,7 +68,7 @@ public class RFunctionsTest {
 
         try{
             CSVReader data = new SakaiReader(Settings.TEST_RESOURCE_DIR + "ManuallyCreated/complexRealisticAssessment.csv");
-            List<AssessmentItem> gotoMatrix = data.getManualGradedLearningObjects();
+            List<ColumnItem> gotoMatrix = data.getManualGradedLearningObjects();
             KnowledgeEstimateMatrix newMatrix = new KnowledgeEstimateMatrix(gotoMatrix);
             RFunctions.getFactorMatrix(newMatrix);
             TimeUnit.SECONDS.sleep(5);
@@ -84,7 +84,7 @@ public class RFunctionsTest {
     public static void returnFactorMatrixTest(){
         try {
             CSVReader data = new SakaiReader(Settings.TEST_RESOURCE_DIR + "ManuallyCreated/complexRealisticAssessment.csv");
-            List<AssessmentItem> gotoMatrix = data.getManualGradedLearningObjects();
+            List<ColumnItem> gotoMatrix = data.getManualGradedLearningObjects();
             KnowledgeEstimateMatrix newMatrix = new KnowledgeEstimateMatrix(gotoMatrix);
 
             double[][] statsMatrix = RFunctions.returnFactorMatrix(newMatrix);
@@ -163,7 +163,7 @@ public class RFunctionsTest {
         CohortConceptGraphs ccg = new CohortConceptGraphs(graph, assessmentItemResponses);
 
         CSVReader data = new SakaiReader(Settings.TEST_RESOURCE_DIR + "ManuallyCreated/simpleAssessmentMoreUsers.csv");
-        List<AssessmentItem> gotoMatrix = data.getManualGradedLearningObjects();
+        List<ColumnItem> gotoMatrix = data.getManualGradedLearningObjects();
         KnowledgeEstimateMatrix newMatrix = new KnowledgeEstimateMatrix(gotoMatrix);
         RFunctions.confirmatoryGraph(newMatrix, ccg);
         TimeUnit.SECONDS.sleep(5);
@@ -177,7 +177,7 @@ public class RFunctionsTest {
         CohortConceptGraphs ccg = new CohortConceptGraphs(graph, assessmentItemResponses);
 
         CSVReader data = new SakaiReader(Settings.TEST_RESOURCE_DIR + "ManuallyCreated/simpleAssessmentMoreUsers.csv");
-        List<AssessmentItem> gotoMatrix = data.getManualGradedLearningObjects();
+        List<ColumnItem> gotoMatrix = data.getManualGradedLearningObjects();
         KnowledgeEstimateMatrix newMatrix = new KnowledgeEstimateMatrix(gotoMatrix);
         RFunctions.returnConfirmatoryMatrix(newMatrix, ccg);
         TimeUnit.SECONDS.sleep(5);
@@ -189,7 +189,7 @@ public class RFunctionsTest {
     public void getColumnCountTest(){
         try {
             CSVReader data = new SakaiReader(Settings.TEST_RESOURCE_DIR + "ManuallyCreated/complexRealisticAssessment.csv");
-            List<AssessmentItem> gotoMatrix = data.getManualGradedLearningObjects();
+            List<ColumnItem> gotoMatrix = data.getManualGradedLearningObjects();
             KnowledgeEstimateMatrix newMatrix = new KnowledgeEstimateMatrix(gotoMatrix);
             Assert.assertEquals(7, RFunctions.getColumnCount(newMatrix), 0);
         }catch(Exception e){

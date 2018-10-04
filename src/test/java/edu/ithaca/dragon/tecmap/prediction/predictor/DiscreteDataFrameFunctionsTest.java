@@ -4,7 +4,7 @@ import ch.netzwerg.paleo.*;
 import edu.ithaca.dragon.tecmap.Settings;
 import edu.ithaca.dragon.tecmap.io.reader.CSVReader;
 import edu.ithaca.dragon.tecmap.io.reader.SakaiReader;
-import edu.ithaca.dragon.tecmap.learningresource.AssessmentItem;
+import edu.ithaca.dragon.tecmap.learningresource.ColumnItem;
 import edu.ithaca.dragon.tecmap.learningresource.DiscreteAssessmentMatrix;
 import edu.ithaca.dragon.tecmap.learningresource.GradeDiscreteGroupings;
 import io.vavr.Tuple2;
@@ -27,7 +27,7 @@ public class DiscreteDataFrameFunctionsTest {
 
         String testFile = Settings.DEFAULT_TEST_DATASTORE_PATH + "Cs1ExamplePrediction/Cs1ExampleAssessments.csv";
         CSVReader data = new SakaiReader(testFile);
-        List<AssessmentItem> assessments = data.getManualGradedLearningObjects();
+        List<ColumnItem> assessments = data.getManualGradedLearningObjects();
 
         defaultGroupings = GradeDiscreteGroupings.buildFromJson(Settings.DEFAULT_TEST_PREDICTION_PATH + "discreteGroupings.json");
         atriskGroupings = GradeDiscreteGroupings.buildFromJson(Settings.DEFAULT_TEST_PREDICTION_PATH + "atriskGroupings.json");

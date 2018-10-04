@@ -2,7 +2,7 @@ package edu.ithaca.dragon.tecmap.prediction;
 
 import edu.ithaca.dragon.tecmap.Settings;
 import edu.ithaca.dragon.tecmap.conceptgraph.ConceptGraph;
-import edu.ithaca.dragon.tecmap.learningresource.AssessmentItem;
+import edu.ithaca.dragon.tecmap.learningresource.ColumnItem;
 import edu.ithaca.dragon.tecmap.learningresource.GradeDiscreteGroupings;
 import edu.ithaca.dragon.tecmap.prediction.predictionsetselector.GraphPredictionSetSelector;
 import edu.ithaca.dragon.tecmap.prediction.predictionsetselector.NoStructurePredictionSetSelector;
@@ -43,13 +43,13 @@ public class PredictorEffectivenessMain {
 
     private static void allAssessmentTwoSelectorTwoPredictorTest(ConceptGraph courseGraph, LearningPredictor learning, Predictor simple, PredictionSetSelector basePredictionSetSelector, PredictionSetSelector graphPredictionSetSelector, GradeDiscreteGroupings atriskGroupings, double ratio) throws IOException {
         //Get all assessments from courseGraph
-        List<AssessmentItem> allAssessments = new ArrayList<>(courseGraph.getAssessmentItemMap().values());
+        List<ColumnItem> allAssessments = new ArrayList<>(courseGraph.getAssessmentItemMap().values());
         Map<String, Double> courseBaseBayes = new HashMap<>();
         Map<String, Double> courseGraphBayes = new HashMap<>();
         Map<String, Double> courseBaseSimple = new HashMap<>();
         Map<String, Double> courseGraphSimple = new HashMap<>();
         //Get results for each assessment
-        for (AssessmentItem item : allAssessments) {
+        for (ColumnItem item : allAssessments) {
             String assessment = item.getId();
             courseBaseBayes.put(assessment, PredictorEffectiveness.testLearningPredictor(learning, basePredictionSetSelector, assessment, courseGraph, atriskGroupings,ratio).getPercentCorrect());
             learning.reset();

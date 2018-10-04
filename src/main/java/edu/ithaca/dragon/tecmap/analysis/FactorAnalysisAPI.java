@@ -1,8 +1,7 @@
 package edu.ithaca.dragon.tecmap.analysis;
 
 import edu.ithaca.dragon.tecmap.conceptgraph.CohortConceptGraphs;
-import edu.ithaca.dragon.tecmap.conceptgraph.eval.KnowledgeEstimateMatrix;
-import edu.ithaca.dragon.tecmap.learningresource.AssessmentItem;
+import edu.ithaca.dragon.tecmap.io.record.ContinuousMatrixRecord;
 import edu.ithaca.dragon.tecmap.learningresource.ContinuousAssessmentMatrix;
 
 /**
@@ -16,23 +15,23 @@ public interface FactorAnalysisAPI {
      * @pre resource, assessment, structure files are all present and an R Matrix is created
      * @throws Exception
      */
-    void displayExploratoryGraph(ContinuousAssessmentMatrix assessmentMatrix)throws Exception;
+    void displayExploratoryGraph(ContinuousMatrixRecord assessmentMatrix)throws Exception;
 
     /**
      * creates a matrix of factors in java using assessment matrix(factors=rows, LearningObjects=columns)
      * @param assessmentMatrix
-     * @return statsMatrix the matrix of strengths between a factor and AssessmentItem
+     * @return statsMatrix the matrix of strengths between a factor and ColumnItem
      * @pre resource, assessment, structure files are all present and an R Matrix is created
      * @throws Exception
      */
-    double[][] calculateExploratoryMatrix(ContinuousAssessmentMatrix assessmentMatrix)throws Exception;
+    void calculateExploratoryMatrix(ContinuousMatrixRecord assessmentMatrix)throws Exception;
 
     /**
      * displays a graph with connections (given by user) between assessments and higher up objects with strengths in connection
      * @param assessmentMatrix
      * @param ccg
      */
-    void displayConfirmatoryGraph(ContinuousAssessmentMatrix assessmentMatrix, CohortConceptGraphs ccg);
+    void displayConfirmatoryGraph(ContinuousMatrixRecord assessmentMatrix, CohortConceptGraphs ccg);
 
 
     /**
@@ -41,6 +40,6 @@ public interface FactorAnalysisAPI {
      * @param ccg
      * @return
      */
-    double[][] calculateConfirmatoryMatrix(ContinuousAssessmentMatrix assessmentMatrix, CohortConceptGraphs ccg);
+    double[][] calculateConfirmatoryMatrix(ContinuousMatrixRecord assessmentMatrix, CohortConceptGraphs ccg);
 
 }

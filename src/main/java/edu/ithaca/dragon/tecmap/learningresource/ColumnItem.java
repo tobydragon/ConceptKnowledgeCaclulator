@@ -9,23 +9,23 @@ import java.util.*;
  * @uathor tdragon
  * 2/14/17.
  */
-public class AssessmentItem {
+public class ColumnItem {
 
     String id;
     List<AssessmentItemResponse> responses;
     double maxPossibleKnowledgeEstimate;
 
-    public AssessmentItem(String id){
+    public ColumnItem(String id){
         this (id, 1);
     }
 
-    public AssessmentItem(String id, double maxPossibleKnowledgeEstimate){
+    public ColumnItem(String id, double maxPossibleKnowledgeEstimate){
         this.id = id;
         this.responses = new ArrayList<>();
         this.maxPossibleKnowledgeEstimate = maxPossibleKnowledgeEstimate;
     }
 
-    public AssessmentItem(AssessmentItem other){
+    public ColumnItem(ColumnItem other){
         this.id = other.id;
         this.maxPossibleKnowledgeEstimate = other.maxPossibleKnowledgeEstimate;
         this.responses = new ArrayList<>();
@@ -34,14 +34,14 @@ public class AssessmentItem {
         }
     }
 
-//    public AssessmentItem(LearningObjectLinkRecord record) {
+//    public ColumnItem(LearningObjectLinkRecord record) {
 //        this.id = record.getLearningObject();
 //        this.responses = new ArrayList<>();
 //        this.maxPossibleKnowledgeEstimate = 1;
 //    }
 
     //temprary fucntion to get htings working before switching to LearningResourceRecords
-    public AssessmentItem(LearningResourceRecord record){
+    public ColumnItem(LearningResourceRecord record){
         this.id = record.getLearningResourceId();
         this.maxPossibleKnowledgeEstimate = record.getMaxPossibleKnowledgeEstimate();
         this.responses = new ArrayList<>();
@@ -73,10 +73,10 @@ public class AssessmentItem {
         return estimate;
     }
 
-    public static Map<String, AssessmentItem> deepCopyLearningObjectMap(Map<String, AssessmentItem> mapToCopy){
-        Map<String, AssessmentItem> newMap = new HashMap<>();
-        for (Map.Entry<String, AssessmentItem> entryToCopy : mapToCopy.entrySet()){
-            newMap.put(entryToCopy.getKey(), new AssessmentItem(entryToCopy.getValue()));
+    public static Map<String, ColumnItem> deepCopyLearningObjectMap(Map<String, ColumnItem> mapToCopy){
+        Map<String, ColumnItem> newMap = new HashMap<>();
+        for (Map.Entry<String, ColumnItem> entryToCopy : mapToCopy.entrySet()){
+            newMap.put(entryToCopy.getKey(), new ColumnItem(entryToCopy.getValue()));
         }
         return newMap;
     }
@@ -98,10 +98,10 @@ public class AssessmentItem {
         if(other == null){
             return false;
         }
-        if(!AssessmentItem.class.isAssignableFrom(other.getClass())){
+        if(!ColumnItem.class.isAssignableFrom(other.getClass())){
             return false;
         }
-        AssessmentItem otherNode = (AssessmentItem) other;
+        ColumnItem otherNode = (ColumnItem) other;
         if(this.id.equals(otherNode.id) && this.responses.equals(otherNode.responses)){
             return true;
         } else {
@@ -117,10 +117,10 @@ public class AssessmentItem {
         return getId() + "   Est:" + DataUtil.format(calcKnowledgeEstimate()) + "  Imp:" + DataUtil.format(getDataImportance()) + "  ResponseCount:" + getResponses().size();
     }
 
-    public void setMatchingKnowledgeEstimates(Collection<AssessmentItem> assessmentItems, Map<String, AssessmentItem> loMap){
-        List<AssessmentItem> loList= new ArrayList<AssessmentItem>(loMap.values());
-        for(AssessmentItem fromList: assessmentItems){
-            for(AssessmentItem toList: loList){
+    public void setMatchingKnowledgeEstimates(Collection<ColumnItem> columnItems, Map<String, ColumnItem> loMap){
+        List<ColumnItem> loList= new ArrayList<ColumnItem>(loMap.values());
+        for(ColumnItem fromList: columnItems){
+            for(ColumnItem toList: loList){
                 if(fromList == toList){
                     toList.setMaxPossibleKnowledgeEstimate(fromList.getMaxPossibleKnowledgeEstimate());
                 }
@@ -128,15 +128,15 @@ public class AssessmentItem {
         }
     }
 
-    public static List<AssessmentItem> buildListFromAssessmentItemResponses(List<AssessmentItemResponse> responses, Map<String, Double> maxKnowledgeEstimates) {
-        Map<String, AssessmentItem> assessments = new HashMap<>();
+    public static List<ColumnItem> buildListFromAssessmentItemResponses(List<AssessmentItemResponse> responses, Map<String, Double> maxKnowledgeEstimates) {
+        Map<String, ColumnItem> assessments = new HashMap<>();
         for (AssessmentItemResponse response : responses) {
             String assessmentId = response.getLearningObjectId();
             if (assessments.containsKey(assessmentId)) {
                 assessments.get(assessmentId).addResponse(response);
             } else {
                 double maxKE = maxKnowledgeEstimates.get(assessmentId);
-                AssessmentItem newAssessment = new AssessmentItem(assessmentId, maxKE);
+                ColumnItem newAssessment = new ColumnItem(assessmentId, maxKE);
                 newAssessment.addResponse(response);
                 assessments.put(assessmentId, newAssessment);
             }

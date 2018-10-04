@@ -6,7 +6,7 @@ package edu.ithaca.dragon.tecmap.io.reader;
  * Created by willsuchanek on 3/6/17.
  */
 
-import edu.ithaca.dragon.tecmap.learningresource.AssessmentItem;
+import edu.ithaca.dragon.tecmap.learningresource.ColumnItem;
 import edu.ithaca.dragon.tecmap.learningresource.AssessmentItemResponse;
 import edu.ithaca.dragon.tecmap.learningresource.ManualGradedResponse;
 import org.apache.logging.log4j.LogManager;
@@ -24,7 +24,7 @@ public abstract class CSVReader {
 
     String filename;
     BufferedReader csvBuffer = null;
-    List<AssessmentItem> assessmentItemList;
+    List<ColumnItem> columnItemList;
     List<AssessmentItemResponse> manualGradedResponseList;
     ReaderTools toolBox = new ReaderTools();
 
@@ -39,7 +39,7 @@ public abstract class CSVReader {
     public CSVReader(String filename, int gradeStartCoulmnIndex)throws IOException{
         this.filename = filename;
         manualGradedResponseList = new ArrayList<>();
-        assessmentItemList = new ArrayList<>();
+        columnItemList = new ArrayList<>();
         try {
             String line;
             this.csvBuffer = new BufferedReader(new FileReader(filename));
@@ -61,7 +61,7 @@ public abstract class CSVReader {
                 //learning object list
                 if(firstIteration){
                     firstIteration = false;
-                    this.assessmentItemList = toolBox.learningObjectsFromList(gradeStartCoulmnIndex,singleList);
+                    this.columnItemList = toolBox.learningObjectsFromList(gradeStartCoulmnIndex,singleList);
                 } else {
                     try {
                         //goes through and adds all the questions to their proper learning object, as well as adds them to
@@ -81,7 +81,7 @@ public abstract class CSVReader {
 
     public List<AssessmentItemResponse> getManualGradedResponses(){return this.manualGradedResponseList;}
 
-    public List<AssessmentItem> getManualGradedLearningObjects(){return this.assessmentItemList;}
+    public List<ColumnItem> getManualGradedLearningObjects(){return this.columnItemList;}
 
     public abstract String makeFullName(List<String> dataLine, List<String> studentNames);
 
@@ -94,15 +94,15 @@ public abstract class CSVReader {
     public void lorLister(ArrayList<String> singleList,int gradeMark)throws NullPointerException{
         int i = gradeMark;
         String stdID = makeFullName(singleList, studentNames);
-        if (assessmentItemList.size() + gradeMark < singleList.size()) {
+        if (columnItemList.size() + gradeMark < singleList.size()) {
             logger.warn("More data than learning objects on line for id:" + stdID);
-        } else if (assessmentItemList.size() + gradeMark > singleList.size()) {
+        } else if (columnItemList.size() + gradeMark > singleList.size()) {
             logger.warn("More learning objects than data on line for id:" + stdID);
         }
         //need to make sure we don't go out of bounds on either list
-        while (i < singleList.size() && i < assessmentItemList.size() + gradeMark) {
-            AssessmentItem currentAssessmentItem = this.assessmentItemList.get(i - gradeMark);
-            String qid = currentAssessmentItem.getId();
+        while (i < singleList.size() && i < columnItemList.size() + gradeMark) {
+            ColumnItem currentColumnItem = this.columnItemList.get(i - gradeMark);
+            String qid = currentColumnItem.getId();
             if (!("".equals(singleList.get(i)))) {
                 double studentGrade;
                 String number = toolBox.pullNumber(singleList.get(i));
@@ -112,9 +112,9 @@ public abstract class CSVReader {
                 else{
                     studentGrade = Double.parseDouble(number);
                 }
-                ManualGradedResponse response = new ManualGradedResponse(qid, currentAssessmentItem.getMaxPossibleKnowledgeEstimate(), studentGrade, stdID);
+                ManualGradedResponse response = new ManualGradedResponse(qid, currentColumnItem.getMaxPossibleKnowledgeEstimate(), studentGrade, stdID);
                 if(response != null) {
-                    currentAssessmentItem.addResponse(response);
+                    currentColumnItem.addResponse(response);
                     this.manualGradedResponseList.add(response);
                 }else{
                     throw new NullPointerException();

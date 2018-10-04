@@ -1,7 +1,7 @@
 package edu.ithaca.dragon.tecmap.conceptgraph.eval;
 
 import com.github.rcaller.rstuff.RCode;
-import edu.ithaca.dragon.tecmap.learningresource.AssessmentItem;
+import edu.ithaca.dragon.tecmap.learningresource.ColumnItem;
 import edu.ithaca.dragon.tecmap.learningresource.AssessmentItemResponse;
 
 import java.io.IOException;
@@ -20,12 +20,12 @@ public class KnowledgeEstimateMatrix {
 
     String id;
     double[][] studentKnowledgeEstimates;
-    public List<AssessmentItem> objList;
+    public List<ColumnItem> objList;
     List<String> userIdList;
     RCode rMatrix;
 
 
-    public KnowledgeEstimateMatrix(List<AssessmentItem> lo) throws IOException {
+    public KnowledgeEstimateMatrix(List<ColumnItem> lo) throws IOException {
         this.id = id;
         this.objList = lo;
         this.userIdList = new ArrayList<String>();
@@ -39,16 +39,16 @@ public class KnowledgeEstimateMatrix {
      * Creates a 2D array from a list of LearningObjects and their responses held within the objects.
      * The columns are sorted by LearningObjects. The rows are sorted by the userId held within the responses.
      * A userIdList is also created to track the userIds to the correct row.
-     * @param assessmentItems collection of assessmentItems
-     * @return a 2D Array of learningObjectResponses based on the list of assessmentItems
+     * @param columnItems collection of columnItems
+     * @return a 2D Array of learningObjectResponses based on the list of columnItems
      * @post userListId is changed to add each new user found within the LORs
      */
 
-    public double[][] createMatrix(Collection<AssessmentItem> assessmentItems) throws IOException {
+    public double[][] createMatrix(Collection<ColumnItem> columnItems) throws IOException {
         //number of rows and columns needed check
-        int columns = assessmentItems.size();
+        int columns = columnItems.size();
         int rows = 0;
-        for(AssessmentItem obj: assessmentItems){
+        for(ColumnItem obj: columnItems){
             List<AssessmentItemResponse> responses = obj.getResponses();
             if(responses.size() > rows){
                 rows = responses.size();
@@ -62,7 +62,7 @@ public class KnowledgeEstimateMatrix {
 
         List<String> assessmentItemIDs = new ArrayList<>();
 
-        for(AssessmentItem obj: assessmentItems) {
+        for(ColumnItem obj: columnItems) {
             if (assessmentItemIDs.contains(obj.getId())) {
                 throw new IOException("Cannot Add Multiple Assessments With Same ID");
             }
@@ -81,7 +81,7 @@ public class KnowledgeEstimateMatrix {
                 //these columns must have response's userid matching across all rows
                 //and make a new row if it does not match with anything
 
-                //for each response in a AssessmentItem
+                //for each response in a ColumnItem
                 for (AssessmentItemResponse ans : responses) {
                     boolean isPlaced = false;
                     //cycle through each index of the userIdList
@@ -124,7 +124,7 @@ public class KnowledgeEstimateMatrix {
 
         int i = 0;
         String[] objStr = new String[objLength];
-        for(AssessmentItem obj: objList){
+        for(ColumnItem obj: objList){
             objStr[i] = obj.getId();
             i++;
         }
@@ -139,7 +139,7 @@ public class KnowledgeEstimateMatrix {
      * @param lo learningObject
      * @return the index of the learningObject
      */
-    public int getloIndex(AssessmentItem lo){
+    public int getloIndex(ColumnItem lo){
         int loIndex = -1;
         loIndex = objList.indexOf(lo);
         return loIndex;
@@ -150,15 +150,15 @@ public class KnowledgeEstimateMatrix {
 
     public List<String> getUserIdList(){return this.userIdList;}
 
-    public List<AssessmentItem> getObjList(){return this.objList;}
+    public List<ColumnItem> getObjList(){return this.objList;}
 
     public List<String> getAssessmentIdList() {
-        List<AssessmentItem> assessmentItems = getObjList();
+        List<ColumnItem> columnItems = getObjList();
 
         List<String> assessmentIds = new ArrayList<>();
 
-        for (AssessmentItem assessmentItem : assessmentItems) {
-            assessmentIds.add(assessmentItem.getId());
+        for (ColumnItem columnItem : columnItems) {
+            assessmentIds.add(columnItem.getId());
         }
 
         return assessmentIds;

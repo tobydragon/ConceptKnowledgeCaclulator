@@ -6,7 +6,7 @@ import edu.ithaca.dragon.tecmap.io.reader.CSVReader;
 import edu.ithaca.dragon.tecmap.io.reader.SakaiReader;
 import edu.ithaca.dragon.tecmap.io.record.ConceptGraphRecord;
 import edu.ithaca.dragon.tecmap.io.record.LearningResourceRecord;
-import edu.ithaca.dragon.tecmap.learningresource.AssessmentItem;
+import edu.ithaca.dragon.tecmap.learningresource.ColumnItem;
 import edu.ithaca.dragon.tecmap.learningresource.AssessmentItemResponse;
 import edu.ithaca.dragon.tecmap.learningresource.ContinuousAssessmentMatrix;
 import edu.ithaca.dragon.tecmap.learningresource.GradeDiscreteGroupings;
@@ -38,7 +38,7 @@ public class PredictionControllerTest {
     public void setup() throws IOException {
         String testFile = Settings.DEFAULT_TEST_DATASTORE_PATH + "Cs1ExamplePrediction/Cs1ExampleAssessments.csv";
         CSVReader data = new SakaiReader(testFile);
-        List<AssessmentItem> assessments = data.getManualGradedLearningObjects();
+        List<ColumnItem> assessments = data.getManualGradedLearningObjects();
 
         continuousAssessmentMatrix = new ContinuousAssessmentMatrix(assessments);
 
@@ -72,16 +72,16 @@ public class PredictionControllerTest {
 
     @Test
     public void getAssessmentsForStudentsWithAllResponses() {
-        List<AssessmentItem> assessmentItems = continuousAssessmentMatrix.getAssessmentItems();
+        List<ColumnItem> columnItems = continuousAssessmentMatrix.getColumnItems();
         List<String> assessmentsToInclude = new ArrayList<>();
 
-        List<AssessmentItem> studentsWithResponses = PredictionController.getAssessmentsForStudentsWithAllResponses(assessmentItems, assessmentsToInclude);
+        List<ColumnItem> studentsWithResponses = PredictionController.getAssessmentsForStudentsWithAllResponses(columnItems, assessmentsToInclude);
 
         assertEquals(0, studentsWithResponses.size());
 
         //Check with an assessment that everyone has
         assessmentsToInclude.add("HW4");
-        studentsWithResponses = PredictionController.getAssessmentsForStudentsWithAllResponses(assessmentItems, assessmentsToInclude);
+        studentsWithResponses = PredictionController.getAssessmentsForStudentsWithAllResponses(columnItems, assessmentsToInclude);
         assertEquals(1, studentsWithResponses.size());
         assertEquals(1, studentsWithResponses.get(0).getMaxPossibleKnowledgeEstimate());
         assertEquals(6, studentsWithResponses.get(0).getResponses().size());
@@ -89,7 +89,7 @@ public class PredictionControllerTest {
 
         //Check with an assessment that s06 is missing
         assessmentsToInclude.add("Q2");
-        studentsWithResponses = PredictionController.getAssessmentsForStudentsWithAllResponses(assessmentItems, assessmentsToInclude);
+        studentsWithResponses = PredictionController.getAssessmentsForStudentsWithAllResponses(columnItems, assessmentsToInclude);
         //Should have omitted s06 since has no HW5
         assertEquals(1, studentsWithResponses.size());
         assertEquals(5, studentsWithResponses.get(0).getMaxPossibleKnowledgeEstimate());
@@ -97,14 +97,14 @@ public class PredictionControllerTest {
 
         //Check with a second assessment that s06 is missing
         assessmentsToInclude.add("HW5");
-        studentsWithResponses = PredictionController.getAssessmentsForStudentsWithAllResponses(assessmentItems, assessmentsToInclude);
+        studentsWithResponses = PredictionController.getAssessmentsForStudentsWithAllResponses(columnItems, assessmentsToInclude);
         //Should have omitted s06 since has no HW5
         assertEquals(2, studentsWithResponses.size());
         assertEquals(1, studentsWithResponses.get(1).getMaxPossibleKnowledgeEstimate());
         assertEquals(5, studentsWithResponses.get(1).getResponses().size());
 
         assessmentsToInclude.add("HW3");
-        studentsWithResponses = PredictionController.getAssessmentsForStudentsWithAllResponses(assessmentItems, assessmentsToInclude);
+        studentsWithResponses = PredictionController.getAssessmentsForStudentsWithAllResponses(columnItems, assessmentsToInclude);
         //Should have omitted s06 since no HW5 & no Q2
         assertEquals(3, studentsWithResponses.size());
         assertEquals(1, studentsWithResponses.get(2).getMaxPossibleKnowledgeEstimate());
@@ -115,7 +115,7 @@ public class PredictionControllerTest {
 
     @Test
     public void getMatrix() {
-        List<AssessmentItem> allAssessments = continuousAssessmentMatrix.getAssessmentItems();
+        List<ColumnItem> allAssessments = continuousAssessmentMatrix.getColumnItems();
         List<String> predictionSet = new ArrayList<>();
         predictionSet.add("Q4");
         ContinuousAssessmentMatrix predictionMatrix = testController.getMatrix(allAssessments, predictionSet);
@@ -130,7 +130,7 @@ public class PredictionControllerTest {
 
     @Test
     public void getPredictionSet() {
-        List<AssessmentItem> allAssessments = new ArrayList<>(conceptGraph.getAssessmentItemMap().values());
+        List<ColumnItem> allAssessments = new ArrayList<>(conceptGraph.getAssessmentItemMap().values());
         String studentId = allAssessments.get(0).getResponses().get(0).getUserId();
         String assessmentToPredict = "Q5";
         List<String> predictionSet = testController.getPredictionSet(allAssessments, studentId, assessmentToPredict);
@@ -143,7 +143,7 @@ public class PredictionControllerTest {
 
     @Test
     public void predict() {
-        List<AssessmentItem> allAssessments = new ArrayList<>(conceptGraph.getAssessmentItemMap().values());
+        List<ColumnItem> allAssessments = new ArrayList<>(conceptGraph.getAssessmentItemMap().values());
         String studentId = allAssessments.get(0).getResponses().get(0).getUserId();
         String assessmentToPredict = "Q5";
         List<String> predictionSet = testController.getPredictionSet(allAssessments, studentId, assessmentToPredict);

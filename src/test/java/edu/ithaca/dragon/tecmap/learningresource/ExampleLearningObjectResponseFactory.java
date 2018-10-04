@@ -39,15 +39,15 @@ public class ExampleLearningObjectResponseFactory {
         return responses;
     }
 
-    public static Map<String, AssessmentItem> makeSimpleLearningObjectMap(){
-        Map<String, AssessmentItem> los = new HashMap<>();
+    public static Map<String, ColumnItem> makeSimpleLearningObjectMap(){
+        Map<String, ColumnItem> los = new HashMap<>();
 
-        los.put("Q1", new AssessmentItem("Q1"));
-        los.put("Q2", new AssessmentItem("Q2"));
-        los.put("Q3", new AssessmentItem("Q3"));
-        los.put("Q4", new AssessmentItem("Q4"));
-        los.put("Q5", new AssessmentItem("Q5"));
-        los.put("Q6", new AssessmentItem("Q6"));
+        los.put("Q1", new ColumnItem("Q1"));
+        los.put("Q2", new ColumnItem("Q2"));
+        los.put("Q3", new ColumnItem("Q3"));
+        los.put("Q4", new ColumnItem("Q4"));
+        los.put("Q5", new ColumnItem("Q5"));
+        los.put("Q6", new ColumnItem("Q6"));
 
         for (AssessmentItemResponse resp : makeSimpleResponses()){
             los.get(resp.getLearningObjectId()).addResponse(resp);

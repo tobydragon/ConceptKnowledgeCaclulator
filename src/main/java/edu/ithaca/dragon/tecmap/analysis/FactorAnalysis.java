@@ -6,9 +6,9 @@ import edu.ithaca.dragon.tecmap.Settings;
 import edu.ithaca.dragon.tecmap.conceptgraph.CohortConceptGraphs;
 import edu.ithaca.dragon.tecmap.conceptgraph.ConceptGraph;
 import edu.ithaca.dragon.tecmap.conceptgraph.ConceptNode;
-import edu.ithaca.dragon.tecmap.conceptgraph.eval.KnowledgeEstimateMatrix;
 import edu.ithaca.dragon.tecmap.conceptgraph.eval.RFunctions;
-import edu.ithaca.dragon.tecmap.learningresource.AssessmentItem;
+import edu.ithaca.dragon.tecmap.io.record.ContinuousMatrixRecord;
+import edu.ithaca.dragon.tecmap.learningresource.ColumnItem;
 import edu.ithaca.dragon.tecmap.learningresource.ContinuousAssessmentMatrix;
 
 import java.io.File;
@@ -31,12 +31,12 @@ public class FactorAnalysis implements FactorAnalysisAPI{
 
 
     /**
-     * Using RCode, the average of knowledgeEstimates of a AssessmentItem across all user's is calculated
+     * Using RCode, the average of knowledgeEstimates of a ColumnItem across all user's is calculated
      * @param loMatrix the current graph being searched
-     * @param lo the AssessmentItem that is selected to have an average taken from
-     * @return an average of all knowledgeEstimates in a single AssessmentItem
+     * @param lo the ColumnItem that is selected to have an average taken from
+     * @return an average of all knowledgeEstimates in a single ColumnItem
      */
-//    public static double LearningObjectAvg(KnowledgeEstimateMatrix loMatrix, AssessmentItem lo){
+//    public static double LearningObjectAvg(KnowledgeEstimateMatrix loMatrix, ColumnItem lo){
 //        RCaller rCaller = RCallerVariable();
 //
 //        int loIndex = loMatrix.getloIndex(lo);
@@ -81,21 +81,21 @@ public class FactorAnalysis implements FactorAnalysisAPI{
 //    }
 
 
-    public static RCode createRMatrix(ContinuousAssessmentMatrix assessmentMatrix){
+    public static RCode createRMatrix(ContinuousMatrixRecord assessmentMatrix){
 
 
-        int objLength = assessmentMatrix.getAssessmentItems().size();
+        int objLength = assessmentMatrix.getColumnItems().size();
 
         //object list into string array
 
         int i = 0;
         String[] objStr = new String[objLength];
-        for(AssessmentItem obj: assessmentMatrix.getAssessmentItems()){
+        for(ColumnItem obj: assessmentMatrix.getColumnItems()){
             objStr[i] = obj.getId();
             i++;
         }
 
-        RCode rMatrix = RFunctions.JavaToR(assessmentMatrix.getStudentAssessmentGrades(), objStr);
+        RCode rMatrix = RFunctions.JavaToR(assessmentMatrix.getDataMatrix(), objStr);
         return rMatrix;
     }
 
@@ -107,7 +107,7 @@ public class FactorAnalysis implements FactorAnalysisAPI{
      * @param assessmentMatrix
      * @return result the amount of columns valid for use in factor analysis
      */
-    public static int getColumnCount(ContinuousAssessmentMatrix assessmentMatrix){
+    public static int getColumnCount(ContinuousMatrixRecord assessmentMatrix){
         RCaller rCaller = RCallerVariable();
 
         RCode code = createRMatrix(assessmentMatrix);
@@ -144,7 +144,7 @@ public class FactorAnalysis implements FactorAnalysisAPI{
      * @return result the number of factors to be used in factor analysis on the current matrix
      * @throws Exception
      */
-    public static int findFactorCount(ContinuousAssessmentMatrix AssessmentMatrix)throws Exception{
+    public static int findFactorCount(ContinuousMatrixRecord AssessmentMatrix)throws Exception{
         RCaller rCaller = RCallerVariable();
 
         RCode code = createRMatrix(AssessmentMatrix);
@@ -189,8 +189,9 @@ public class FactorAnalysis implements FactorAnalysisAPI{
      * @pre resource, assessment, structure files are all present and an R Matrix is created
      * @throws Exception
      */
-    public void displayExploratoryGraph(ContinuousAssessmentMatrix AssessmentMatrix)throws Exception {
+    public void displayExploratoryGraph(ContinuousMatrixRecord AssessmentMatrix)throws Exception {
         try{
+
         int numOfFactors = findFactorCount(AssessmentMatrix);
         RCaller rCaller = RCallerVariable();
 
@@ -220,19 +221,21 @@ public class FactorAnalysis implements FactorAnalysisAPI{
 
     /**
      * creates a matrix of factors in java (factors=rows, LearningObjects=columns)
-     * @param AssessmentMatrix
-     * @return statsMatrix the matrix of strengths between a factor and AssessmentItem
+     * @param assessmentMatrix
+     * @return statsMatrix the matrix of strengths between a factor and ColumnItem
      * @pre resource, assessment, structure files are all present and an R Matrix is created
      * @throws Exception
      */
-    public double[][] calculateExploratoryMatrix(ContinuousAssessmentMatrix AssessmentMatrix)throws Exception {
-        int learningObjectCount = getColumnCount(AssessmentMatrix);
-        int numOfFactors = findFactorCount(AssessmentMatrix);
+
+    //TODO: This is the only function changed over so far to create a ContinuousMatrixRecord rather than return
+    public void calculateExploratoryMatrix(ContinuousMatrixRecord assessmentMatrix)throws Exception {
+        int learningObjectCount = getColumnCount(assessmentMatrix);
+        int numOfFactors = findFactorCount(assessmentMatrix);
         RCaller rCaller = RCallerVariable();
 
         rCaller.redirectROutputToStream(System.out);
 
-        RCode code = createRMatrix(AssessmentMatrix);
+        RCode code = createRMatrix(assessmentMatrix);
         code.addInt("numOfFactors", numOfFactors);
         code.addRCode("matrixOfLoadings <- factanal(matrix, factors = numOfFactors, method = 'mle')");
 
@@ -259,7 +262,15 @@ public class FactorAnalysis implements FactorAnalysisAPI{
             }
         }
 
-        return statsMatrix;
+        //Create List of factors for being placed into the rowId
+        List<String> rowIds = new ArrayList<>();
+        for(int i=0; i<numOfFactors; i++){
+            rowIds.add("Factor"+(i+1));
+        }
+
+        new ContinuousMatrixRecord(statsMatrix, assessmentMatrix.getColumnItems(), rowIds);
+
+        //return statsMatrix;
     }
 
 
@@ -300,9 +311,9 @@ public class FactorAnalysis implements FactorAnalysisAPI{
 
         for(String conceptString : conceptStringList){
             ConceptNode concept = graph.findNodeById(conceptString);
-            Map<String, AssessmentItem> loMap = concept.getAssessmentItemMap();
-            Collection<AssessmentItem> loList = loMap.values();
-            for(AssessmentItem lo : loList){
+            Map<String, ColumnItem> loMap = concept.getAssessmentItemMap();
+            Collection<ColumnItem> loList = loMap.values();
+            for(ColumnItem lo : loList){
 
 
 
@@ -342,7 +353,7 @@ public class FactorAnalysis implements FactorAnalysisAPI{
         }
     }
 
-    public void displayConfirmatoryGraph(ContinuousAssessmentMatrix assessmentMatrix, CohortConceptGraphs ccg){
+    public void displayConfirmatoryGraph(ContinuousMatrixRecord assessmentMatrix, CohortConceptGraphs ccg){
             try {
                 modelToFile(ccg);
 
@@ -374,8 +385,8 @@ public class FactorAnalysis implements FactorAnalysisAPI{
     }
 
     //TODO: dataSem.dhp$A returns the values wanted but not in necessarily correct format. Also, many 0s are present.
-    public double[][] calculateConfirmatoryMatrix(ContinuousAssessmentMatrix assessmentMatrix, CohortConceptGraphs ccg){
-        int matrixSize = assessmentMatrix.getStudentAssessmentGrades().length;
+    public double[][] calculateConfirmatoryMatrix(ContinuousMatrixRecord assessmentMatrix, CohortConceptGraphs ccg){
+        int matrixSize = assessmentMatrix.getDataMatrix().length;
         try {
             String modelString = modelMaker(ccg);
 
@@ -458,4 +469,6 @@ public class FactorAnalysis implements FactorAnalysisAPI{
         return code;
 
     }
+
+
 }

@@ -15,18 +15,18 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class ContinuousAssessmentMatrixTest {
 
-    private List<AssessmentItem> assessmentItems;
+    private List<ColumnItem> columnItems;
 
     @Before
     public void setup() throws IOException {
         String testFile = Settings.DEFAULT_TEST_DATASTORE_PATH + "Cs1ExamplePrediction/Cs1ExampleAssessments.csv";
         CSVReader data = new SakaiReader(testFile);
-        assessmentItems = data.getManualGradedLearningObjects();
+        columnItems = data.getManualGradedLearningObjects();
     }
 
     @Test
     public void getAssessmentIdList() {
-        List<String> assessmentIds = ContinuousAssessmentMatrix.getAssessmentIdList(assessmentItems);
+        List<String> assessmentIds = ContinuousAssessmentMatrix.getAssessmentIdList(columnItems);
 
         String[] expected = {"Q1", "Q2", "Q3", "Q4", "Q5", "HW1", "HW2", "HW3", "HW4", "HW5"};
 
@@ -36,7 +36,7 @@ public class ContinuousAssessmentMatrixTest {
 
     @Test
     public void getUserIds() {
-        List<String> userIds = ContinuousAssessmentMatrix.getStudentIds(assessmentItems);
+        List<String> userIds = ContinuousAssessmentMatrix.getStudentIds(columnItems);
 
         String[] expected = {"s01", "s02", "s03", "s04", "s05", "s06"};
 
@@ -46,7 +46,7 @@ public class ContinuousAssessmentMatrixTest {
 
     @Test
     public void createMatrix() {
-        ContinuousAssessmentMatrix matrix = new ContinuousAssessmentMatrix(assessmentItems);
+        ContinuousAssessmentMatrix matrix = new ContinuousAssessmentMatrix(columnItems);
 
         double[][] assessmentGrades = matrix.getStudentAssessmentGrades();
 

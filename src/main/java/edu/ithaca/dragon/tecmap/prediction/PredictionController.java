@@ -3,7 +3,7 @@ package edu.ithaca.dragon.tecmap.prediction;
 import edu.ithaca.dragon.tecmap.SuggestingTecmapAPI;
 import edu.ithaca.dragon.tecmap.conceptgraph.ConceptGraph;
 import edu.ithaca.dragon.tecmap.data.TecmapFileDatastore;
-import edu.ithaca.dragon.tecmap.learningresource.AssessmentItem;
+import edu.ithaca.dragon.tecmap.learningresource.ColumnItem;
 import edu.ithaca.dragon.tecmap.learningresource.AssessmentItemResponse;
 import edu.ithaca.dragon.tecmap.learningresource.ContinuousAssessmentMatrix;
 import edu.ithaca.dragon.tecmap.prediction.predictionsetselector.PredictionSetSelector;
@@ -60,14 +60,14 @@ public class PredictionController {
         }
 
         //For ratioMatrix
-        List<AssessmentItem> ratioAssessments = new ArrayList<>();
+        List<ColumnItem> ratioAssessments = new ArrayList<>();
         //For nonRatioMatrix
-        List<AssessmentItem> nonRatioAssessments = new ArrayList<>();
+        List<ColumnItem> nonRatioAssessments = new ArrayList<>();
 
-        List<AssessmentItem> allAssessments = originalMatrix.getAssessmentItems();
-        for (AssessmentItem item : allAssessments) {
-            AssessmentItem ratioItem = new AssessmentItem(item.getId(), item.getMaxPossibleKnowledgeEstimate());
-            AssessmentItem nonRatioItem = new AssessmentItem(item.getId(), item.getMaxPossibleKnowledgeEstimate());
+        List<ColumnItem> allAssessments = originalMatrix.getColumnItems();
+        for (ColumnItem item : allAssessments) {
+            ColumnItem ratioItem = new ColumnItem(item.getId(), item.getMaxPossibleKnowledgeEstimate());
+            ColumnItem nonRatioItem = new ColumnItem(item.getId(), item.getMaxPossibleKnowledgeEstimate());
             for (int i = 0; i < item.getResponses().size(); i++) {
                 AssessmentItemResponse currResponse = item.getResponses().get(i);
                 //Keeps the users between the two matrices constant instead of by index
@@ -92,13 +92,13 @@ public class PredictionController {
      * @param assessmentsToInclude
      * @return all of the assessmentItemResponses for the students that are to be included
      */
-    static List<AssessmentItem> getAssessmentsForStudentsWithAllResponses(List<AssessmentItem> allAssessments, List<String> assessmentsToInclude) {
+    static List<ColumnItem> getAssessmentsForStudentsWithAllResponses(List<ColumnItem> allAssessments, List<String> assessmentsToInclude) {
         Map<String, List<AssessmentItemResponse>> studentResponses = new HashMap<>();
         Map<String, Double> originalMaxKnowledgeEstimates = new HashMap<>();
-        for (AssessmentItem assessmentItem : allAssessments) {
-            if (assessmentsToInclude.contains(assessmentItem.getId())) {
-                originalMaxKnowledgeEstimates.put(assessmentItem.getId(), assessmentItem.getMaxPossibleKnowledgeEstimate());
-                for (AssessmentItemResponse response : assessmentItem.getResponses()) {
+        for (ColumnItem columnItem : allAssessments) {
+            if (assessmentsToInclude.contains(columnItem.getId())) {
+                originalMaxKnowledgeEstimates.put(columnItem.getId(), columnItem.getMaxPossibleKnowledgeEstimate());
+                for (AssessmentItemResponse response : columnItem.getResponses()) {
                     if (studentResponses.containsKey(response.getUserId())) {
                         studentResponses.get(response.getUserId()).add(response);
                     } else {
@@ -115,7 +115,7 @@ public class PredictionController {
                 studentsWithAllAssessmentsToInclude.addAll(entry.getValue());
             }
         }
-        return AssessmentItem.buildListFromAssessmentItemResponses(studentsWithAllAssessmentsToInclude, originalMaxKnowledgeEstimates);
+        return ColumnItem.buildListFromAssessmentItemResponses(studentsWithAllAssessmentsToInclude, originalMaxKnowledgeEstimates);
     }
 
     /**
@@ -124,9 +124,9 @@ public class PredictionController {
      * @param predictionSet
      * @return
      */
-    public ContinuousAssessmentMatrix getMatrix(List<AssessmentItem> allAssessments, List<String> predictionSet) {
-        List<AssessmentItem> assessmentItemsWithValidStudents = getAssessmentsForStudentsWithAllResponses(allAssessments, predictionSet);
-        return new ContinuousAssessmentMatrix(assessmentItemsWithValidStudents);
+    public ContinuousAssessmentMatrix getMatrix(List<ColumnItem> allAssessments, List<String> predictionSet) {
+        List<ColumnItem> columnItemsWithValidStudents = getAssessmentsForStudentsWithAllResponses(allAssessments, predictionSet);
+        return new ContinuousAssessmentMatrix(columnItemsWithValidStudents);
     }
 
     /**
@@ -136,7 +136,7 @@ public class PredictionController {
      * @param assessmentToPredict
      * @return
      */
-    public List<String> getPredictionSet(List<AssessmentItem> allAssessments, String studentId, String assessmentToPredict) {
+    public List<String> getPredictionSet(List<ColumnItem> allAssessments, String studentId, String assessmentToPredict) {
         return predictionSetSelector.getPredictionSetForGivenStudent(allAssessments, studentId, assessmentToPredict);
     }
 
@@ -153,7 +153,7 @@ public class PredictionController {
      * @param allAssessments
      * @param assessmentToPredict
      */
-    public void getPredictions(List<AssessmentItem> allAssessments, String assessmentToPredict) {
+    public void getPredictions(List<ColumnItem> allAssessments, String assessmentToPredict) {
         List<String> predictionSet = getPredictionSet(allAssessments, allAssessments.get(0).getResponses().get(0).getUserId(), assessmentToPredict);
         ContinuousAssessmentMatrix matrix = getMatrix(allAssessments, predictionSet);
         if (this.predictor instanceof LearningPredictor) {

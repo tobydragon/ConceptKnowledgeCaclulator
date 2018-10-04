@@ -13,7 +13,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class DiscreteAssessmentMatrixTest {
 
-    private List<AssessmentItem> assessmentItems;
+    private List<ColumnItem> columnItems;
     private GradeDiscreteGroupings defaultGroupings;
     private GradeDiscreteGroupings atriskGroupings;
 
@@ -21,7 +21,7 @@ public class DiscreteAssessmentMatrixTest {
     public void setup() throws IOException {
         String testFile = Settings.DEFAULT_TEST_DATASTORE_PATH + "Cs1ExamplePrediction/Cs1ExampleAssessments.csv";
         CSVReader data = new SakaiReader(testFile);
-        assessmentItems = data.getManualGradedLearningObjects();
+        columnItems = data.getManualGradedLearningObjects();
 
         defaultGroupings = GradeDiscreteGroupings.buildFromJson(Settings.DEFAULT_TEST_PREDICTION_PATH + "discreteGroupings.json");
         atriskGroupings = GradeDiscreteGroupings.buildFromJson(Settings.DEFAULT_TEST_PREDICTION_PATH + "atriskGroupings.json");
@@ -29,17 +29,17 @@ public class DiscreteAssessmentMatrixTest {
 
     @Test
     public void discretizeAssessment() {
-        DiscreteAssessmentMatrix matrix = new DiscreteAssessmentMatrix(assessmentItems, defaultGroupings);
+        DiscreteAssessmentMatrix matrix = new DiscreteAssessmentMatrix(columnItems, defaultGroupings);
 
         String[][] assessmentGrades = matrix.getStudentAssessmentGrades();
         assertEquals("F", assessmentGrades[0][0]);
-        matrix.discretizeAssessment(assessmentGrades, assessmentItems.get(0), atriskGroupings);
+        matrix.discretizeAssessment(assessmentGrades, columnItems.get(0), atriskGroupings);
         assertEquals("AT-RISK", assessmentGrades[0][0]);
     }
 
     @Test
     public void createMatrixWithOneGrouping() throws RuntimeException {
-        DiscreteAssessmentMatrix matrix = new DiscreteAssessmentMatrix(assessmentItems, defaultGroupings);
+        DiscreteAssessmentMatrix matrix = new DiscreteAssessmentMatrix(columnItems, defaultGroupings);
 
         String[][] assessmentGrades = matrix.getStudentAssessmentGrades();
 
@@ -55,7 +55,7 @@ public class DiscreteAssessmentMatrixTest {
 
     @Test
     public void createMatrixWithTwoGroupings() throws RuntimeException {
-        DiscreteAssessmentMatrix matrix = new DiscreteAssessmentMatrix(assessmentItems, defaultGroupings, "HW5", atriskGroupings);
+        DiscreteAssessmentMatrix matrix = new DiscreteAssessmentMatrix(columnItems, defaultGroupings, "HW5", atriskGroupings);
 
         String[][] assessmentGrades = matrix.getStudentAssessmentGrades();
 

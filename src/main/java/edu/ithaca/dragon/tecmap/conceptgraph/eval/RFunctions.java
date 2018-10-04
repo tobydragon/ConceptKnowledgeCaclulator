@@ -6,7 +6,7 @@ import edu.ithaca.dragon.tecmap.Settings;
 import edu.ithaca.dragon.tecmap.conceptgraph.CohortConceptGraphs;
 import edu.ithaca.dragon.tecmap.conceptgraph.ConceptGraph;
 import edu.ithaca.dragon.tecmap.conceptgraph.ConceptNode;
-import edu.ithaca.dragon.tecmap.learningresource.AssessmentItem;
+import edu.ithaca.dragon.tecmap.learningresource.ColumnItem;
 
 import java.io.File;
 import java.io.FileWriter;
@@ -28,12 +28,12 @@ public class RFunctions {
 
 
     /**
-     * Using RCode, the average of knowledgeEstimates of a AssessmentItem across all user's is calculated
+     * Using RCode, the average of knowledgeEstimates of a ColumnItem across all user's is calculated
      * @param loMatrix the current graph being searched
-     * @param lo the AssessmentItem that is selected to have an average taken from
-     * @return an average of all knowledgeEstimates in a single AssessmentItem
+     * @param lo the ColumnItem that is selected to have an average taken from
+     * @return an average of all knowledgeEstimates in a single ColumnItem
      */
-    public static double LearningObjectAvg(KnowledgeEstimateMatrix loMatrix, AssessmentItem lo){
+    public static double LearningObjectAvg(KnowledgeEstimateMatrix loMatrix, ColumnItem lo){
         RCaller rCaller = RCallerVariable();
 
         int loIndex = loMatrix.getloIndex(lo);
@@ -199,7 +199,7 @@ public class RFunctions {
     /**
      * creates a matrix of factors in java (factors=rows, LearningObjects=columns)
      * @param loMatrix
-     * @return statsMatrix the matrix of strengths between a factor and AssessmentItem
+     * @return statsMatrix the matrix of strengths between a factor and ColumnItem
      * @pre resource, assessment, structure files are all present and an R Matrix is created
      * @throws Exception
      */
@@ -278,9 +278,9 @@ public class RFunctions {
 
         for(String conceptString : conceptStringList){
             ConceptNode concept = graph.findNodeById(conceptString);
-            Map<String, AssessmentItem> loMap = concept.getAssessmentItemMap();
-            Collection<AssessmentItem> loList = loMap.values();
-            for(AssessmentItem lo : loList){
+            Map<String, ColumnItem> loMap = concept.getAssessmentItemMap();
+            Collection<ColumnItem> loList = loMap.values();
+            for(ColumnItem lo : loList){
 
 
 

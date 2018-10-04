@@ -10,7 +10,7 @@ import edu.ithaca.dragon.tecmap.io.reader.SakaiReader;
 import edu.ithaca.dragon.tecmap.io.record.CohortConceptGraphsRecord;
 import edu.ithaca.dragon.tecmap.io.record.ConceptGraphRecord;
 import edu.ithaca.dragon.tecmap.io.record.LearningResourceRecord;
-import edu.ithaca.dragon.tecmap.learningresource.AssessmentItem;
+import edu.ithaca.dragon.tecmap.learningresource.ColumnItem;
 import edu.ithaca.dragon.tecmap.learningresource.AssessmentItemResponse;
 import edu.ithaca.dragon.tecmap.suggester.GroupSuggester.*;
 import edu.ithaca.dragon.tecmap.suggester.ConceptGraphSuggesterLibrary;
@@ -516,7 +516,7 @@ public class ConceptKnowledgeCalculator implements ConceptKnowledgeCalculatorAPI
 
     public static void csvToResource(List<String> assessmentFiles, String destinationFilepath) throws Exception{
         //TODO: hardcoded to sakai csv, need to hold a list of CSVReaders, or the information about which kind of reader it is...
-        List<AssessmentItem> fullLoList = ReaderTools.learningObjectsFromCSVList(2, assessmentFiles);
+        List<ColumnItem> fullLoList = ReaderTools.learningObjectsFromCSVList(2, assessmentFiles);
         List<LearningResourceRecord> lolrList = LearningResourceRecord.createLearningResourceRecordsFromAssessmentItems(fullLoList);
         LearningResourceRecord.resourceRecordsToJSON(lolrList, destinationFilepath);
     }
@@ -547,12 +547,12 @@ public class ConceptKnowledgeCalculator implements ConceptKnowledgeCalculatorAPI
     public double getLearningObjectAvg(String learningObject) throws Exception {
         if(currentMode== Mode.COHORTGRAPH) {
             ConceptGraph graph = cohortConceptGraphs.getAvgGraph();
-            Map<String, AssessmentItem> loMap = graph.getAssessmentItemMap();
-            Collection<AssessmentItem> objList = loMap.values();
-            ArrayList<AssessmentItem> list;
-            list = new ArrayList<AssessmentItem>(objList);
+            Map<String, ColumnItem> loMap = graph.getAssessmentItemMap();
+            Collection<ColumnItem> objList = loMap.values();
+            ArrayList<ColumnItem> list;
+            list = new ArrayList<ColumnItem>(objList);
             KnowledgeEstimateMatrix myMatrix = new KnowledgeEstimateMatrix(list);
-            AssessmentItem concept = loMap.get(learningObject);
+            ColumnItem concept = loMap.get(learningObject);
 
             if (concept != null) {
                 double result = RFunctions.LearningObjectAvg(myMatrix, concept);
@@ -568,8 +568,8 @@ public class ConceptKnowledgeCalculator implements ConceptKnowledgeCalculatorAPI
     public double getStudentAvg(String user)throws NullPointerException{
         try {
             ConceptGraph graph = cohortConceptGraphs.getAvgGraph();
-            Map<String, AssessmentItem> loMap = graph.getAssessmentItemMap();
-            List<AssessmentItem> objList = new ArrayList<AssessmentItem>(loMap.values());
+            Map<String, ColumnItem> loMap = graph.getAssessmentItemMap();
+            List<ColumnItem> objList = new ArrayList<ColumnItem>(loMap.values());
             KnowledgeEstimateMatrix myMatrix = new KnowledgeEstimateMatrix(objList);
             List<String> userIdList = myMatrix.getUserIdList();
 
@@ -588,8 +588,8 @@ public class ConceptKnowledgeCalculator implements ConceptKnowledgeCalculatorAPI
         try {
             if (currentMode == Mode.COHORTGRAPH) {
                 ConceptGraph graph = cohortConceptGraphs.getAvgGraph();
-                Map<String, AssessmentItem> loMap = graph.getAssessmentItemMap();
-                List<AssessmentItem> objList = new ArrayList<AssessmentItem>(loMap.values());
+                Map<String, ColumnItem> loMap = graph.getAssessmentItemMap();
+                List<ColumnItem> objList = new ArrayList<ColumnItem>(loMap.values());
                 KnowledgeEstimateMatrix myMatrix = new KnowledgeEstimateMatrix(objList);
 
                 try {
@@ -613,8 +613,8 @@ public class ConceptKnowledgeCalculator implements ConceptKnowledgeCalculatorAPI
     public void createConfirmatoryGraph(){
         if(currentMode== Mode.COHORTGRAPH){
             ConceptGraph graph = cohortConceptGraphs.getAvgGraph();
-            Map<String, AssessmentItem> loMap = graph.getAssessmentItemMap();
-            List<AssessmentItem> objList = new ArrayList<AssessmentItem>(loMap.values());
+            Map<String, ColumnItem> loMap = graph.getAssessmentItemMap();
+            List<ColumnItem> objList = new ArrayList<ColumnItem>(loMap.values());
 //            KnowledgeEstimateMatrix myMatrix = new KnowledgeEstimateMatrix(objList);
             try {
 //                FactorAnalysis.confirmatoryGraph(myMatrix, cohortConceptGraphs);

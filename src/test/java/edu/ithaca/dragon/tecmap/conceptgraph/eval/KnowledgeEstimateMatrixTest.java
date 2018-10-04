@@ -3,7 +3,7 @@ package edu.ithaca.dragon.tecmap.conceptgraph.eval;
 import edu.ithaca.dragon.tecmap.Settings;
 import edu.ithaca.dragon.tecmap.io.reader.CSVReader;
 import edu.ithaca.dragon.tecmap.io.reader.SakaiReader;
-import edu.ithaca.dragon.tecmap.learningresource.AssessmentItem;
+import edu.ithaca.dragon.tecmap.learningresource.ColumnItem;
 import org.junit.Assert;
 import org.junit.Test;
 
@@ -29,7 +29,7 @@ public class KnowledgeEstimateMatrixTest {
 
         try {
             CSVReader data = new SakaiReader(file);
-            List<AssessmentItem> gotoMatrix = data.getManualGradedLearningObjects();
+            List<ColumnItem> gotoMatrix = data.getManualGradedLearningObjects();
             KnowledgeEstimateMatrix newMatrix = new KnowledgeEstimateMatrix(gotoMatrix);
             double[][] myMatrix = newMatrix.getStudentKnowledgeEstimates();
             double[] arr1 = new double[9];
@@ -78,7 +78,7 @@ public class KnowledgeEstimateMatrixTest {
     public void getAssessmentIdList() throws IOException{
         String file = Settings.DEFAULT_TEST_DATASTORE_PATH + "Cs1ExamplePrediction/Cs1ExampleAssessments.csv";
         CSVReader data = new SakaiReader(file);
-        List<AssessmentItem> gotoMatrix = data.getManualGradedLearningObjects();
+        List<ColumnItem> gotoMatrix = data.getManualGradedLearningObjects();
         KnowledgeEstimateMatrix newMatrix = new KnowledgeEstimateMatrix(gotoMatrix);
 
         List<String> assessmentIds = newMatrix.getAssessmentIdList();
@@ -93,19 +93,19 @@ public class KnowledgeEstimateMatrixTest {
     public void createMatrixWithRepeatedAssessmentItems() throws IOException {
         String file = Settings.DEFAULT_TEST_DATASTORE_PATH + "Cs1Example/Cs1ExampleAssessment1.csv";
         CSVReader data = new SakaiReader(file);
-        List<AssessmentItem> assessmentItems = data.getManualGradedLearningObjects();
+        List<ColumnItem> columnItems = data.getManualGradedLearningObjects();
         file = Settings.DEFAULT_TEST_DATASTORE_PATH + "Cs1Example/Cs1ExampleAssessment2.csv";
         data = new SakaiReader(file);
-        assessmentItems.addAll(data.getManualGradedLearningObjects());
+        columnItems.addAll(data.getManualGradedLearningObjects());
 
         //Try and add repeated assessments
         file = Settings.DEFAULT_TEST_DATASTORE_PATH + "Cs1ExamplePrediction/Cs1ExampleAssessments.csv";
         data = new SakaiReader(file);
-        assessmentItems.addAll(data.getManualGradedLearningObjects());
+        columnItems.addAll(data.getManualGradedLearningObjects());
 
 
         assertThrows(IOException.class, () -> {
-            KnowledgeEstimateMatrix matrix = new KnowledgeEstimateMatrix(assessmentItems);
+            KnowledgeEstimateMatrix matrix = new KnowledgeEstimateMatrix(columnItems);
         });
 
     }

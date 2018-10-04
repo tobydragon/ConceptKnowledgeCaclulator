@@ -121,9 +121,9 @@ public interface ConceptKnowledgeCalculatorAPI {
     OrganizedLearningResourceSuggestions calcIndividualSpecificConceptSuggestions(String userId, String conceptId) throws Exception;
 
     /**
-     * Calculates average knowledgeEstimates of a AssessmentItem across all students
+     * Calculates average knowledgeEstimates of a ColumnItem across all students
      * @param learningObject matrix, Learningobject
-     * @return average knowledgeEstimates for given AssessmentItem
+     * @return average knowledgeEstimates for given ColumnItem
      */
     double getLearningObjectAvg(String learningObject) throws Exception;
 

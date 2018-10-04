@@ -1,7 +1,7 @@
 package edu.ithaca.dragon.tecmap.prediction;
 
 import edu.ithaca.dragon.tecmap.conceptgraph.ConceptGraph;
-import edu.ithaca.dragon.tecmap.learningresource.AssessmentItem;
+import edu.ithaca.dragon.tecmap.learningresource.ColumnItem;
 import edu.ithaca.dragon.tecmap.learningresource.ContinuousAssessmentMatrix;
 import edu.ithaca.dragon.tecmap.learningresource.GradeDiscreteGroupings;
 import edu.ithaca.dragon.tecmap.prediction.predictionsetselector.PredictionSetSelector;
@@ -80,9 +80,9 @@ public class PredictorEffectiveness {
         Map<String, String> expectedResults = new HashMap<>();
 
         //Correct way of getting expected, because not everyone will have an AssessmentItemResponse, but the Matrix will have the data
-        List<AssessmentItem> assessments = testingMatrix.getAssessmentItems();
+        List<ColumnItem> assessments = testingMatrix.getColumnItems();
         for (int i = 0; i < assessments.size(); i++) {
-            AssessmentItem currAssessment = assessments.get(i);
+            ColumnItem currAssessment = assessments.get(i);
             if (currAssessment.getId().equals(assessmentToLearn)) {
                 double[] assessmentKnowledgeEstimates = testingMatrix.getStudentAssessmentGrades()[i];
                 for (int j = 0; j < assessmentKnowledgeEstimates.length; j++) {
@@ -145,7 +145,7 @@ public class PredictorEffectiveness {
      * @return PredictorEffectiveness object with percent correct and a list of all the results
      */
     public static PredictorEffectiveness testLearningPredictor(LearningPredictor predictor, PredictionSetSelector predictionSetSelector, String assessmentToLearn, ConceptGraph conceptGraph, GradeDiscreteGroupings atriskGroupings, double ratio) throws IOException{
-        List<AssessmentItem> allAssessments = new ArrayList<>(conceptGraph.getAssessmentItemMap().values());
+        List<ColumnItem> allAssessments = new ArrayList<>(conceptGraph.getAssessmentItemMap().values());
         //List of learningAssessments based on the first student's assessments
         List<String> learningAssessments = predictionSetSelector.getPredictionSetForGivenStudent(allAssessments, allAssessments.get(0).getResponses().get(0).getUserId(), assessmentToLearn);
 
@@ -177,7 +177,7 @@ public class PredictorEffectiveness {
     }
 
     public static PredictorEffectiveness testPredictor(Predictor simplePredictor, PredictionSetSelector predictionSetSelector, String assessmentToPredict, ConceptGraph conceptGraph, GradeDiscreteGroupings atriskGroupings, double ratio) throws IOException {
-        List<AssessmentItem> allAssessments = new ArrayList<>(conceptGraph.getAssessmentItemMap().values());
+        List<ColumnItem> allAssessments = new ArrayList<>(conceptGraph.getAssessmentItemMap().values());
         PredictionController predictionController = new PredictionController(simplePredictor, predictionSetSelector);
         List<String> testingAssessments = predictionController.getPredictionSet(allAssessments, allAssessments.get(0).getResponses().get(0).getUserId() , assessmentToPredict);
 

@@ -4,7 +4,7 @@ import edu.ithaca.dragon.tecmap.conceptgraph.ConceptGraph;
 import edu.ithaca.dragon.tecmap.io.record.CohortConceptGraphsRecord;
 import edu.ithaca.dragon.tecmap.io.record.ConceptGraphRecord;
 import edu.ithaca.dragon.tecmap.io.record.LearningResourceRecord;
-import edu.ithaca.dragon.tecmap.learningresource.AssessmentItem;
+import edu.ithaca.dragon.tecmap.learningresource.ColumnItem;
 import edu.ithaca.dragon.tecmap.learningresource.AssessmentItemResponse;
 import edu.ithaca.dragon.tecmap.tecmapstate.*;
 
@@ -19,10 +19,10 @@ public class Tecmap implements TecmapAPI {
      *
      * @param structureGraph
      * @param links a list of LearningResourceRecords, or null if data is not connected to the graph
-     * @param assessmentItemsStructureList a list of AssessmentItems to copy for the structure of the graph
+     * @param columnItemsStructureList a list of AssessmentItems to copy for the structure of the graph
      * @param assessmentItemResponses a list of AssessmentItemResponses containing all data (not connectes to the structureList above)
      */
-    public Tecmap(ConceptGraph structureGraph,  List<LearningResourceRecord> links, List<AssessmentItem> assessmentItemsStructureList, List<AssessmentItemResponse> assessmentItemResponses) {
+    public Tecmap(ConceptGraph structureGraph, List<LearningResourceRecord> links, List<ColumnItem> columnItemsStructureList, List<AssessmentItemResponse> assessmentItemResponses) {
         TecmapState stateEnum = TecmapState.checkAvailableState(links, assessmentItemResponses);
         if (stateEnum == TecmapState.noAssessment){
             state = new NoAssessmentState(structureGraph);
@@ -31,10 +31,10 @@ public class Tecmap implements TecmapAPI {
             state = new ResourcesNoAssessmentState(structureGraph, links);
         }
         else if (stateEnum == TecmapState.assessmentAdded){
-            state = new AssessmentAddedState(structureGraph, assessmentItemsStructureList, assessmentItemResponses);
+            state = new AssessmentAddedState(structureGraph, columnItemsStructureList, assessmentItemResponses);
         }
         else if (stateEnum == TecmapState.assessmentConnected){
-            state = new AssessmentConnectedState(structureGraph, links, assessmentItemsStructureList, assessmentItemResponses);
+            state = new AssessmentConnectedState(structureGraph, links, columnItemsStructureList, assessmentItemResponses);
         }
         else {
             throw new RuntimeException("State not recognized, cannot build");

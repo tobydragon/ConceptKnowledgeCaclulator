@@ -2,7 +2,7 @@ package edu.ithaca.dragon.tecmap.conceptgraph;
 
 import edu.ithaca.dragon.tecmap.io.record.ConceptGraphRecord;
 import edu.ithaca.dragon.tecmap.io.record.ConceptRecord;
-import edu.ithaca.dragon.tecmap.learningresource.AssessmentItem;
+import edu.ithaca.dragon.tecmap.learningresource.ColumnItem;
 import edu.ithaca.dragon.tecmap.util.DataUtil;
 import org.junit.Assert;
 import org.junit.Test;
@@ -73,8 +73,8 @@ public class TreeConverterTest {
         Assert.assertEquals(expectedResourcesCount, tree.getAssessmentItemMap().size());
         Assert.assertEquals(expectedResponsesCount, tree.responsesCount());
         //but they should be different, equivalent objects across tree and graph
-        for (Map.Entry<String, AssessmentItem> entry: graphToTest.getAssessmentItemMap().entrySet()){
-            AssessmentItem treeCopy = tree.getAssessmentItemMap().get(entry.getKey());
+        for (Map.Entry<String, ColumnItem> entry: graphToTest.getAssessmentItemMap().entrySet()){
+            ColumnItem treeCopy = tree.getAssessmentItemMap().get(entry.getKey());
             Assert.assertEquals(entry.getValue(), treeCopy);
             Assert.assertTrue(entry.getValue() != treeCopy);
         }

@@ -6,7 +6,7 @@ import edu.ithaca.dragon.tecmap.io.reader.CSVReader;
 import edu.ithaca.dragon.tecmap.io.reader.SakaiReader;
 import edu.ithaca.dragon.tecmap.io.record.ConceptGraphRecord;
 import edu.ithaca.dragon.tecmap.io.record.LearningResourceRecord;
-import edu.ithaca.dragon.tecmap.learningresource.AssessmentItem;
+import edu.ithaca.dragon.tecmap.learningresource.ColumnItem;
 import edu.ithaca.dragon.tecmap.learningresource.AssessmentItemResponse;
 import edu.ithaca.dragon.tecmap.learningresource.ContinuousAssessmentMatrix;
 import org.junit.Assert;
@@ -30,9 +30,9 @@ public class PredictionSetSelectorTest {
     public void setup() throws IOException {
         String filename = Settings.DEFAULT_TEST_DATASTORE_PATH + "Cs1ExamplePrediction/Cs1ExampleAssessments.csv";
         CSVReader data = new SakaiReader(filename);
-        List<AssessmentItem> assessmentItems = data.getManualGradedLearningObjects();
+        List<ColumnItem> columnItems = data.getManualGradedLearningObjects();
 
-        matrix = new ContinuousAssessmentMatrix(assessmentItems);
+        matrix = new ContinuousAssessmentMatrix(columnItems);
 
         conceptGraph = new ConceptGraph(ConceptGraphRecord.buildFromJson(Settings.DEFAULT_TEST_DATASTORE_PATH + "Cs1Example/Cs1ExampleGraph.json"),
                 LearningResourceRecord.createLearningResourceRecordsFromJsonFile(Settings.DEFAULT_TEST_DATASTORE_PATH + "Cs1Example/Cs1ExampleResources.json"),
@@ -41,7 +41,7 @@ public class PredictionSetSelectorTest {
 
     @Test
     public void getPredictionSetWithBaseSelector() {
-        List<AssessmentItem> allAssessments = matrix.getAssessmentItems();
+        List<ColumnItem> allAssessments = matrix.getColumnItems();
         PredictionSetSelector basePredictionSetSelector = new NoStructurePredictionSetSelector();
         List<String> predictionSet = basePredictionSetSelector.getPredictionSetForGivenStudent(allAssessments, matrix.getStudentIds().get(0), "Q5");
 
@@ -58,7 +58,7 @@ public class PredictionSetSelectorTest {
     public void getPredictionSetWithGraphSelector() {
         PredictionSetSelector graphPredictionSetSelector = new GraphPredictionSetSelector(conceptGraph);
         String studentId = matrix.getStudentIds().get(0);
-        List<AssessmentItem> allAssessments = matrix.getAssessmentItems();
+        List<ColumnItem> allAssessments = matrix.getColumnItems();
         //Checks with student with all grades
         //Check the entire graph
         List<String> predictionSet = graphPredictionSetSelector.getPredictionSetForGivenStudent(allAssessments, studentId, assessmentToPredict);
@@ -106,7 +106,7 @@ public class PredictionSetSelectorTest {
     public void removeLowestResponseRateAssessment() {
         PredictionSetSelector predictionSetSelector = new NoStructurePredictionSetSelector();
         String studentId = matrix.getStudentIds().get(0);
-        List<AssessmentItem> allAssessments = matrix.getAssessmentItems();
+        List<ColumnItem> allAssessments = matrix.getColumnItems();
 
         //Test with the NoStructure selector
         List<String> predictionSet = predictionSetSelector.getPredictionSetForGivenStudent(allAssessments, studentId, "Q4");

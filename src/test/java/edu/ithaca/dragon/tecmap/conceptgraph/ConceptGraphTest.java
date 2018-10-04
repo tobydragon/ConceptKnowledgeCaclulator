@@ -1,8 +1,6 @@
 package edu.ithaca.dragon.tecmap.conceptgraph;
 
 import edu.ithaca.dragon.tecmap.Settings;
-import edu.ithaca.dragon.tecmap.io.reader.CSVReader;
-import edu.ithaca.dragon.tecmap.io.reader.SakaiReader;
 import edu.ithaca.dragon.tecmap.io.record.ConceptGraphRecord;
 import edu.ithaca.dragon.tecmap.io.record.LearningResourceRecord;
 import edu.ithaca.dragon.tecmap.learningresource.*;
@@ -147,7 +145,7 @@ public class ConceptGraphTest {
         //TODO: Did this line matter, because it can't work like that anymore...
         //graph.addLearningObjects(ExampleLearningObjectLinkRecordFactory.makeSimpleLearningObjectDef());
 
-        AssessmentItem duplicateObject = new AssessmentItem("Q1");
+        ColumnItem duplicateObject = new ColumnItem("Q1");
         AssessmentItemResponse duplicateResponse = new AssessmentItemResponse("user1","Q1",1);
 
         // Tries to add Q1 but it already exists so it does not get added and returns false
@@ -159,7 +157,7 @@ public class ConceptGraphTest {
 
 
         // New question to be linked in to the existing graph
-        AssessmentItem myObject = new AssessmentItem("Q7");
+        ColumnItem myObject = new ColumnItem("Q7");
         AssessmentItemResponse myResponse = new AssessmentItemResponse("user1","Q7",1);
 
         concepts.add("D");

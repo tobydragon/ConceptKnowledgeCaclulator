@@ -80,7 +80,7 @@ public class OrganizedLearningResourceSuggestions {
 
     /**
      *Creates a list of incomplete or wrong learningObjects that are ordered from greatest importance level to least
-     *go through map and pick the first suggestions, and go through all concepts then go through all concepts again and get the second AssessmentItem
+     *go through map and pick the first suggestions, and go through all concepts then go through all concepts again and get the second ColumnItem
      *@param graph of concepts
      *@param choice  0= wrong list, 1= incomplete list
      */

@@ -5,7 +5,7 @@ import com.github.rcaller.util.Globals;
 import edu.ithaca.dragon.tecmap.Settings;
 import edu.ithaca.dragon.tecmap.io.reader.CSVReader;
 import edu.ithaca.dragon.tecmap.io.reader.SakaiReader;
-import edu.ithaca.dragon.tecmap.learningresource.AssessmentItem;
+import edu.ithaca.dragon.tecmap.learningresource.ColumnItem;
 import org.junit.Assert;
 import org.junit.Test;
 
@@ -28,10 +28,10 @@ public class JavaToRConversionTest {
         String file = Settings.TEST_RESOURCE_DIR + "ManuallyCreated/partialComplexRealitsticAssessment.csv";
         try {
             CSVReader data = new SakaiReader(file);
-            List<AssessmentItem> gotoMatrix = data.getManualGradedLearningObjects();
+            List<ColumnItem> gotoMatrix = data.getManualGradedLearningObjects();
             KnowledgeEstimateMatrix newMatrix = new KnowledgeEstimateMatrix(gotoMatrix);
             double[][] struct = newMatrix.getStudentKnowledgeEstimates();
-            List<AssessmentItem> objList = newMatrix.getObjList();
+            List<ColumnItem> objList = newMatrix.getObjList();
             List<String> user = newMatrix.getUserIdList();
 
             int objLength = objList.size();
@@ -40,7 +40,7 @@ public class JavaToRConversionTest {
 
             int i = 0;
             String[] objStr = new String[objLength];
-            for(AssessmentItem obj: objList){
+            for(ColumnItem obj: objList){
                 objStr[i] = obj.getId();
                 i++;
             }

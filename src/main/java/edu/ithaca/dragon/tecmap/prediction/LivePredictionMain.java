@@ -2,7 +2,7 @@ package edu.ithaca.dragon.tecmap.prediction;
 
 import edu.ithaca.dragon.tecmap.Settings;
 import edu.ithaca.dragon.tecmap.conceptgraph.ConceptGraph;
-import edu.ithaca.dragon.tecmap.learningresource.AssessmentItem;
+import edu.ithaca.dragon.tecmap.learningresource.ColumnItem;
 import edu.ithaca.dragon.tecmap.learningresource.GradeDiscreteGroupings;
 import edu.ithaca.dragon.tecmap.prediction.predictionsetselector.NoStructurePredictionSetSelector;
 import edu.ithaca.dragon.tecmap.prediction.predictionsetselector.PredictionSetSelector;
@@ -26,7 +26,7 @@ public class LivePredictionMain {
         Predictor predictor = new SimplePredictor(atriskGroupings);
         PredictionSetSelector setSelector = new NoStructurePredictionSetSelector();
         PredictionController controller = new PredictionController(predictor, setSelector);
-        List<AssessmentItem> allAssessments = new ArrayList<>(courseGraph.getAssessmentItemMap().values());
+        List<ColumnItem> allAssessments = new ArrayList<>(courseGraph.getAssessmentItemMap().values());
         controller.getPredictions(allAssessments, "Lab 4: Recursion");
     }
 
@@ -34,7 +34,7 @@ public class LivePredictionMain {
         LearningPredictor learningPredictor = new BayesPredictor(defaultGroupings, atriskGroupings);
         PredictionSetSelector setSelector = new NoStructurePredictionSetSelector();
         PredictionController controller = new PredictionController(learningPredictor, setSelector);
-        List<AssessmentItem> allAssessments = new ArrayList<>(courseGraph.getAssessmentItemMap().values());
+        List<ColumnItem> allAssessments = new ArrayList<>(courseGraph.getAssessmentItemMap().values());
         controller.getPredictions(allAssessments, "Lab 4: Recursion");
     }
 

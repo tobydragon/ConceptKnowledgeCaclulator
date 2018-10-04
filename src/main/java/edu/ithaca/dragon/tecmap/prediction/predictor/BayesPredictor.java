@@ -58,7 +58,7 @@ public class BayesPredictor implements LearningPredictor {
         if (!assessmentsToLearnWith.contains(assessmentToLearn)) {
             throw new RuntimeException("Assignments to Learn Must include assessmentToLearn");
         }
-        DiscreteAssessmentMatrix discreteRawTrainingData = new DiscreteAssessmentMatrix(rawTrainingData.getAssessmentItems(), defaultGroupings, assessmentToLearn, atriskGroupings);
+        DiscreteAssessmentMatrix discreteRawTrainingData = new DiscreteAssessmentMatrix(rawTrainingData.getColumnItems(), defaultGroupings, assessmentToLearn, atriskGroupings);
         //Get a dataframe from the raw training data
         DataFrame rawTrainingDataframe = DiscreteDataFrameFunctions.toDataFrame(discreteRawTrainingData, assessmentsToLearnWith);
 
@@ -89,7 +89,7 @@ public class BayesPredictor implements LearningPredictor {
      * @return
      */
     public Map<String, String> classifySet(ContinuousAssessmentMatrix rawTestingData, List<String> assessmentsForClassifications) {
-        DiscreteAssessmentMatrix discreteTestingData = new DiscreteAssessmentMatrix(rawTestingData.getAssessmentItems(), defaultGroupings);
+        DiscreteAssessmentMatrix discreteTestingData = new DiscreteAssessmentMatrix(rawTestingData.getColumnItems(), defaultGroupings);
         //Get a dataframe from the raw testing data
         DataFrame rawTestingDataframe = DiscreteDataFrameFunctions.toDataFrame(discreteTestingData, assessmentsForClassifications);
 
