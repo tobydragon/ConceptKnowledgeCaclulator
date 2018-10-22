@@ -11,11 +11,12 @@ import java.io.IOException;
 import java.util.List;
 
 import static org.hamcrest.collection.IsIterableContainingInAnyOrder.containsInAnyOrder;
+import static org.junit.Assert.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class ContinuousAssessmentMatrixTest {
 
-    private List<ColumnItem> columnItems;
+    private List<AssessmentItem> columnItems;
 
     @Before
     public void setup() throws IOException {

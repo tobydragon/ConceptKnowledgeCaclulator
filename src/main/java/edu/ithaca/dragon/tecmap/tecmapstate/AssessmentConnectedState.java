@@ -4,7 +4,7 @@ import edu.ithaca.dragon.tecmap.conceptgraph.CohortConceptGraphs;
 import edu.ithaca.dragon.tecmap.conceptgraph.ConceptGraph;
 import edu.ithaca.dragon.tecmap.io.record.CohortConceptGraphsRecord;
 import edu.ithaca.dragon.tecmap.io.record.LearningResourceRecord;
-import edu.ithaca.dragon.tecmap.learningresource.ColumnItem;
+import edu.ithaca.dragon.tecmap.learningresource.AssessmentItem;
 import edu.ithaca.dragon.tecmap.learningresource.AssessmentItemResponse;
 
 import java.util.List;
@@ -25,7 +25,7 @@ public class AssessmentConnectedState extends AssessmentAddedState {
      */
     public AssessmentConnectedState(ConceptGraph structureGraph,
                                     List<LearningResourceRecord> links,
-                                    List<ColumnItem> columnItemsStructureList,
+                                    List<AssessmentItem> columnItemsStructureList,
                                     List<AssessmentItemResponse> assessmentItemResponses,
                                     boolean linksNeedToBeAdded) {
         super(structureGraph, columnItemsStructureList, assessmentItemResponses);
@@ -46,7 +46,7 @@ public class AssessmentConnectedState extends AssessmentAddedState {
      */
     public AssessmentConnectedState(ConceptGraph structureGraph,
                                     List<LearningResourceRecord> links,
-                                    List<ColumnItem> columnItemsStructureList,
+                                    List<AssessmentItem> columnItemsStructureList,
                                     List<AssessmentItemResponse> assessmentItemResponses) {
         this(structureGraph, links, columnItemsStructureList, assessmentItemResponses, true);
     }

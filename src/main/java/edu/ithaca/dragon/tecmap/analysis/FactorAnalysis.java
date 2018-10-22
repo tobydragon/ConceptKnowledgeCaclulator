@@ -8,8 +8,7 @@ import edu.ithaca.dragon.tecmap.conceptgraph.ConceptGraph;
 import edu.ithaca.dragon.tecmap.conceptgraph.ConceptNode;
 import edu.ithaca.dragon.tecmap.conceptgraph.eval.RFunctions;
 import edu.ithaca.dragon.tecmap.io.record.ContinuousMatrixRecord;
-import edu.ithaca.dragon.tecmap.learningresource.ColumnItem;
-import edu.ithaca.dragon.tecmap.learningresource.ContinuousAssessmentMatrix;
+import edu.ithaca.dragon.tecmap.learningresource.AssessmentItem;
 
 import java.io.File;
 import java.io.FileWriter;
@@ -31,12 +30,12 @@ public class FactorAnalysis implements FactorAnalysisAPI{
 
 
     /**
-     * Using RCode, the average of knowledgeEstimates of a ColumnItem across all user's is calculated
+     * Using RCode, the average of knowledgeEstimates of a AssessmentItem across all user's is calculated
      * @param loMatrix the current graph being searched
-     * @param lo the ColumnItem that is selected to have an average taken from
-     * @return an average of all knowledgeEstimates in a single ColumnItem
+     * @param lo the AssessmentItem that is selected to have an average taken from
+     * @return an average of all knowledgeEstimates in a single AssessmentItem
      */
-//    public static double LearningObjectAvg(KnowledgeEstimateMatrix loMatrix, ColumnItem lo){
+//    public static double LearningObjectAvg(KnowledgeEstimateMatrix loMatrix, AssessmentItem lo){
 //        RCaller rCaller = RCallerVariable();
 //
 //        int loIndex = loMatrix.getloIndex(lo);
@@ -84,13 +83,13 @@ public class FactorAnalysis implements FactorAnalysisAPI{
     public static RCode createRMatrix(ContinuousMatrixRecord assessmentMatrix){
 
 
-        int objLength = assessmentMatrix.getColumnItems().size();
+        int objLength = assessmentMatrix.getAssessmentItems().size();
 
         //object list into string array
 
         int i = 0;
         String[] objStr = new String[objLength];
-        for(ColumnItem obj: assessmentMatrix.getColumnItems()){
+        for(AssessmentItem obj: assessmentMatrix.getAssessmentItems()){
             objStr[i] = obj.getId();
             i++;
         }
@@ -222,7 +221,7 @@ public class FactorAnalysis implements FactorAnalysisAPI{
     /**
      * creates a matrix of factors in java (factors=rows, LearningObjects=columns)
      * @param assessmentMatrix
-     * @return statsMatrix the matrix of strengths between a factor and ColumnItem
+     * @return statsMatrix the matrix of strengths between a factor and AssessmentItem
      * @pre resource, assessment, structure files are all present and an R Matrix is created
      * @throws Exception
      */
@@ -268,7 +267,7 @@ public class FactorAnalysis implements FactorAnalysisAPI{
             rowIds.add("Factor"+(i+1));
         }
 
-        new ContinuousMatrixRecord(statsMatrix, assessmentMatrix.getColumnItems(), rowIds);
+        new ContinuousMatrixRecord(statsMatrix, assessmentMatrix.getAssessmentItems(), rowIds);
 
         //return statsMatrix;
     }
@@ -311,9 +310,9 @@ public class FactorAnalysis implements FactorAnalysisAPI{
 
         for(String conceptString : conceptStringList){
             ConceptNode concept = graph.findNodeById(conceptString);
-            Map<String, ColumnItem> loMap = concept.getAssessmentItemMap();
-            Collection<ColumnItem> loList = loMap.values();
-            for(ColumnItem lo : loList){
+            Map<String, AssessmentItem> loMap = concept.getAssessmentItemMap();
+            Collection<AssessmentItem> loList = loMap.values();
+            for(AssessmentItem lo : loList){
 
 
 

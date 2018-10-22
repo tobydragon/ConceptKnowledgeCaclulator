@@ -8,12 +8,12 @@ import java.util.List;
 
 public class ContinuousAssessmentMatrix {
 
-    private List<ColumnItem> columnItems;
+    private List<AssessmentItem> columnItems;
     private List<String> assessmentIds;
     private List<String> studentIds;
     private double[][] studentAssessmentGrades;
 
-    public ContinuousAssessmentMatrix(List<ColumnItem> columnItems) {
+    public ContinuousAssessmentMatrix(List<AssessmentItem> columnItems) {
         this.columnItems = columnItems;
         this.assessmentIds = getAssessmentIdList(columnItems);
         this.studentIds = getStudentIds(columnItems);
@@ -25,10 +25,10 @@ public class ContinuousAssessmentMatrix {
      * @param columnItems
      * @return assessmentId list
      */
-    static List<String> getAssessmentIdList(List<ColumnItem> columnItems) {
+    static List<String> getAssessmentIdList(List<AssessmentItem> columnItems) {
         List<String> assessmentIds = new ArrayList<>();
 
-        for (ColumnItem columnItem : columnItems) {
+        for (AssessmentItem columnItem : columnItems) {
             assessmentIds.add(columnItem.getId());
         }
 
@@ -41,10 +41,10 @@ public class ContinuousAssessmentMatrix {
      * @param columnItems
      * @return studentId list
      */
-    static List<String> getStudentIds(List<ColumnItem> columnItems) {
+    static List<String> getStudentIds(List<AssessmentItem> columnItems) {
         List<String> userIds = new ArrayList<>();
 
-        for (ColumnItem columnItem : columnItems) {
+        for (AssessmentItem columnItem : columnItems) {
             for (AssessmentItemResponse response : columnItem.getResponses()) {
                 String currId = response.getUserId();
                 if (!userIds.contains(currId)) {
@@ -63,9 +63,9 @@ public class ContinuousAssessmentMatrix {
      * @param columnItems
      * @return 2d array of knowledge estimates
      */
-    double[][] createMatrix(List<ColumnItem> columnItems) {
+    double[][] createMatrix(List<AssessmentItem> columnItems) {
         double[][] gradeMatrix = new double[this.assessmentIds.size()][this.studentIds.size()];
-        for (ColumnItem columnItem : columnItems) {
+        for (AssessmentItem columnItem : columnItems) {
             int assessmentIndex = assessmentIds.indexOf(columnItem.getId());
             List<String> studentsWithResponse = new ArrayList<>();
             for (AssessmentItemResponse response : columnItem.getResponses()) {
@@ -92,7 +92,7 @@ public class ContinuousAssessmentMatrix {
 
         int i = 0;
         String[] objStr = new String[objLength];
-        for(ColumnItem obj: columnItems){
+        for(AssessmentItem obj: columnItems){
             objStr[i] = obj.getId();
             i++;
         }
@@ -102,7 +102,7 @@ public class ContinuousAssessmentMatrix {
         return rMatrix;
     }
 
-    public List<ColumnItem> getColumnItems() {
+    public List<AssessmentItem> getColumnItems() {
         return columnItems;
     }
 

@@ -6,19 +6,19 @@ import java.util.List;
 
 public class DiscreteAssessmentMatrix {
 
-    private List<ColumnItem> columnItems;
+    private List<AssessmentItem> columnItems;
     private List<String> assessmentIds;
     private List<String> studentIds;
     private String[][] studentAssessmentGrades;
 
-    public DiscreteAssessmentMatrix(List<ColumnItem> columnItems, GradeDiscreteGroupings groupings) {
+    public DiscreteAssessmentMatrix(List<AssessmentItem> columnItems, GradeDiscreteGroupings groupings) {
         this.columnItems = columnItems;
         this.assessmentIds = ContinuousAssessmentMatrix.getAssessmentIdList(columnItems);
         this.studentIds = ContinuousAssessmentMatrix.getStudentIds(columnItems);
         this.studentAssessmentGrades = createMatrix(columnItems, groupings);
     }
 
-    public DiscreteAssessmentMatrix(List<ColumnItem> columnItems, GradeDiscreteGroupings defaultGrouping, String specialDiscreteAssessment, GradeDiscreteGroupings specialGrouping) throws RuntimeException {
+    public DiscreteAssessmentMatrix(List<AssessmentItem> columnItems, GradeDiscreteGroupings defaultGrouping, String specialDiscreteAssessment, GradeDiscreteGroupings specialGrouping) throws RuntimeException {
         this.assessmentIds = ContinuousAssessmentMatrix.getAssessmentIdList(columnItems);
         this.studentIds = ContinuousAssessmentMatrix.getStudentIds(columnItems);
         if (!assessmentIds.contains(specialDiscreteAssessment)) {
@@ -27,7 +27,7 @@ public class DiscreteAssessmentMatrix {
         this.studentAssessmentGrades = createMatrix(columnItems, defaultGrouping, specialDiscreteAssessment, specialGrouping);
     }
 
-    void discretizeAssessment(String[][] discreteGradesMatrix, ColumnItem columnItem, GradeDiscreteGroupings discreteGroupings) throws RuntimeException{
+    void discretizeAssessment(String[][] discreteGradesMatrix, AssessmentItem columnItem, GradeDiscreteGroupings discreteGroupings) throws RuntimeException{
         List<String> groupings = discreteGroupings.getGroups();
         List<Integer> gradePointBreaks = discreteGroupings.getPointBreaks();
         if (groupings.size()-1 != gradePointBreaks.size()) {
@@ -67,9 +67,9 @@ public class DiscreteAssessmentMatrix {
      * @return 2d array of strings (the discretized grade)
      * @throws IOException
      */
-    String[][] createMatrix(List<ColumnItem> columnItems, GradeDiscreteGroupings discreteGroupings) throws RuntimeException {
+    String[][] createMatrix(List<AssessmentItem> columnItems, GradeDiscreteGroupings discreteGroupings) throws RuntimeException {
         String[][] discreteGradesMatrix = new String[assessmentIds.size()][studentIds.size()];
-        for (ColumnItem columnItem : columnItems) {
+        for (AssessmentItem columnItem : columnItems) {
             discretizeAssessment(discreteGradesMatrix, columnItem, discreteGroupings);
         }
         return discreteGradesMatrix;
@@ -84,9 +84,9 @@ public class DiscreteAssessmentMatrix {
      * @param specialGroup
      * @return
      */
-    String[][] createMatrix(List<ColumnItem> columnItems, GradeDiscreteGroupings defaultGroupings, String specialAssessment, GradeDiscreteGroupings specialGroup) throws RuntimeException {
+    String[][] createMatrix(List<AssessmentItem> columnItems, GradeDiscreteGroupings defaultGroupings, String specialAssessment, GradeDiscreteGroupings specialGroup) throws RuntimeException {
         String[][] discreteGradesMatrix = new String[assessmentIds.size()][studentIds.size()];
-        for (ColumnItem columnItem : columnItems) {
+        for (AssessmentItem columnItem : columnItems) {
             if (columnItem.getId().equals(specialAssessment)) {
                 discretizeAssessment(discreteGradesMatrix, columnItem, specialGroup);
             } else {

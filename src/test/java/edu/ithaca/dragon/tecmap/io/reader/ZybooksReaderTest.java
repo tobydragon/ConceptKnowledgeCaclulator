@@ -1,7 +1,7 @@
 package edu.ithaca.dragon.tecmap.io.reader;
 
 import edu.ithaca.dragon.tecmap.Settings;
-import edu.ithaca.dragon.tecmap.learningresource.ColumnItem;
+import edu.ithaca.dragon.tecmap.learningresource.AssessmentItem;
 import edu.ithaca.dragon.tecmap.learningresource.AssessmentItemResponse;
 import edu.ithaca.dragon.tecmap.learningresource.ManualGradedResponse;
 import org.junit.Assert;
@@ -71,7 +71,7 @@ public class ZybooksReaderTest {
         try {
             ZybooksReader readfile = new ZybooksReader(file);
             List<AssessmentItemResponse> manualGradedResponseList = readfile.getManualGradedResponses();
-            List<ColumnItem> manualGradedColumnItemList = readfile.getManualGradedLearningObjects();
+            List<AssessmentItem> manualGradedColumnItemList = readfile.getManualGradedLearningObjects();
             //testing title entries from the csv files
 
             //Testing for first entry in the CSV

@@ -13,7 +13,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class DiscreteAssessmentMatrixTest {
 
-    private List<ColumnItem> columnItems;
+    private List<AssessmentItem> columnItems;
     private GradeDiscreteGroupings defaultGroupings;
     private GradeDiscreteGroupings atriskGroupings;
 

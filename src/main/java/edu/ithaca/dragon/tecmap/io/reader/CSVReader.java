@@ -6,7 +6,7 @@ package edu.ithaca.dragon.tecmap.io.reader;
  * Created by willsuchanek on 3/6/17.
  */
 
-import edu.ithaca.dragon.tecmap.learningresource.ColumnItem;
+import edu.ithaca.dragon.tecmap.learningresource.AssessmentItem;
 import edu.ithaca.dragon.tecmap.learningresource.AssessmentItemResponse;
 import edu.ithaca.dragon.tecmap.learningresource.ManualGradedResponse;
 import org.apache.logging.log4j.LogManager;
@@ -24,7 +24,7 @@ public abstract class CSVReader {
 
     String filename;
     BufferedReader csvBuffer = null;
-    List<ColumnItem> columnItemList;
+    List<AssessmentItem> columnItemList;
     List<AssessmentItemResponse> manualGradedResponseList;
     ReaderTools toolBox = new ReaderTools();
 
@@ -81,7 +81,7 @@ public abstract class CSVReader {
 
     public List<AssessmentItemResponse> getManualGradedResponses(){return this.manualGradedResponseList;}
 
-    public List<ColumnItem> getManualGradedLearningObjects(){return this.columnItemList;}
+    public List<AssessmentItem> getManualGradedLearningObjects(){return this.columnItemList;}
 
     public abstract String makeFullName(List<String> dataLine, List<String> studentNames);
 
@@ -101,7 +101,7 @@ public abstract class CSVReader {
         }
         //need to make sure we don't go out of bounds on either list
         while (i < singleList.size() && i < columnItemList.size() + gradeMark) {
-            ColumnItem currentColumnItem = this.columnItemList.get(i - gradeMark);
+            AssessmentItem currentColumnItem = this.columnItemList.get(i - gradeMark);
             String qid = currentColumnItem.getId();
             if (!("".equals(singleList.get(i)))) {
                 double studentGrade;

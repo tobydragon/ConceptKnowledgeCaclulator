@@ -1,6 +1,6 @@
 package edu.ithaca.dragon.tecmap.io.reader;
 
-import edu.ithaca.dragon.tecmap.learningresource.ColumnItem;
+import edu.ithaca.dragon.tecmap.learningresource.AssessmentItem;
 
 import java.io.BufferedReader;
 import java.io.FileReader;
@@ -48,9 +48,9 @@ public class ReaderTools {
      * @return loList -> a list of each assignment and its maximum grade
      */
 
-    public static List<ColumnItem> learningObjectsFromList(int indexMark, List<String> singleList) {
+    public static List<AssessmentItem> learningObjectsFromList(int indexMark, List<String> singleList) {
         int i = indexMark;
-        List<ColumnItem> loList = new ArrayList<ColumnItem>();
+        List<AssessmentItem> loList = new ArrayList<AssessmentItem>();
         while(i<singleList.size()){
             String question = singleList.get(i);
             //used to find the max score of a question (won't be affected if there are other brackets in the question title
@@ -70,13 +70,13 @@ public class ReaderTools {
                 String maxScoreStr = question.substring(begin + 1, end);
                 double maxScore = Double.parseDouble(maxScoreStr);
                 question = question.substring(0, begin - 1);
-                ColumnItem columnItem = new ColumnItem(question);
+                AssessmentItem columnItem = new AssessmentItem(question);
                 columnItem.setMaxPossibleKnowledgeEstimate(maxScore);
                 loList.add(columnItem);
             }
             else {
                 //logger.error("No max score found for string:"+question+"\t defaulting to 1, which is probably wrong");
-                ColumnItem columnItem = new ColumnItem(question);
+                AssessmentItem columnItem = new AssessmentItem(question);
                 columnItem.setMaxPossibleKnowledgeEstimate(1);
                 loList.add(columnItem);
             }
@@ -91,17 +91,17 @@ public class ReaderTools {
      * @param csvfiles
      * @return a list of all LearningObjects across all files
      */
-    public static List<ColumnItem> learningObjectsFromCSVList(int indexMark, List<String> csvfiles){
-        List<ColumnItem> fullLoList = new ArrayList<ColumnItem>();
+    public static List<AssessmentItem> learningObjectsFromCSVList(int indexMark, List<String> csvfiles){
+        List<AssessmentItem> fullLoList = new ArrayList<AssessmentItem>();
 
         //Each csvfile has their LOs searched
         for(String file: csvfiles){
             ArrayList<ArrayList<String>> lineList = ReaderTools.staticLineToList(file);
-            List<ColumnItem> loList = new ArrayList<ColumnItem>();
+            List<AssessmentItem> loList = new ArrayList<AssessmentItem>();
             loList = ReaderTools.learningObjectsFromList(indexMark,lineList.get(0));
 
             //adding current csvfile's LOs to the full list of LOs
-            for(ColumnItem columnItem : loList) {
+            for(AssessmentItem columnItem : loList) {
                 fullLoList.add(columnItem);
             }
         }

@@ -3,7 +3,7 @@ package edu.ithaca.dragon.tecmap.prediction.predictor;
 import edu.ithaca.dragon.tecmap.Settings;
 import edu.ithaca.dragon.tecmap.io.reader.CSVReader;
 import edu.ithaca.dragon.tecmap.io.reader.SakaiReader;
-import edu.ithaca.dragon.tecmap.learningresource.ColumnItem;
+import edu.ithaca.dragon.tecmap.learningresource.AssessmentItem;
 import edu.ithaca.dragon.tecmap.learningresource.ContinuousAssessmentMatrix;
 import edu.ithaca.dragon.tecmap.learningresource.GradeDiscreteGroupings;
 import org.junit.Before;
@@ -25,7 +25,7 @@ public class SimplePredictorTest {
     public void setup() throws IOException {
         String testFile = Settings.DEFAULT_TEST_DATASTORE_PATH + "Cs1ExamplePrediction/Cs1ExampleAssessments.csv";
         CSVReader data = new SakaiReader(testFile);
-        List<ColumnItem> columnItemList = new ArrayList<>();
+        List<AssessmentItem> columnItemList = new ArrayList<>();
         columnItemList.addAll(data.getManualGradedLearningObjects());
 
         testingMatrix = new ContinuousAssessmentMatrix(columnItemList);

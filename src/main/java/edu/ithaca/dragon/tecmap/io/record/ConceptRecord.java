@@ -1,7 +1,7 @@
 package edu.ithaca.dragon.tecmap.io.record;
 
 import edu.ithaca.dragon.tecmap.conceptgraph.ConceptNode;
-import edu.ithaca.dragon.tecmap.learningresource.ColumnItem;
+import edu.ithaca.dragon.tecmap.learningresource.AssessmentItem;
 import edu.ithaca.dragon.tecmap.util.DataUtil;
 
 import java.util.ArrayList;
@@ -35,7 +35,7 @@ public class ConceptRecord {
         this.knowledgeDistFromAvg = conceptToRecord.getKnowledgeDistanceFromAvg();
         this.dataImportance = conceptToRecord.getDataImportance();
         resourceSummaries = new ArrayList<>();
-        for (ColumnItem objectToSummarize : conceptToRecord.getAssessmentItemMap().values()){
+        for (AssessmentItem objectToSummarize : conceptToRecord.getAssessmentItemMap().values()){
             resourceSummaries.add(objectToSummarize.getSummaryString());
         }
     }

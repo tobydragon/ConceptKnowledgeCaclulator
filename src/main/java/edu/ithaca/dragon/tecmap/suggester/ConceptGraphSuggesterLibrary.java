@@ -2,7 +2,7 @@ package edu.ithaca.dragon.tecmap.suggester;
 
 import edu.ithaca.dragon.tecmap.conceptgraph.ConceptGraph;
 import edu.ithaca.dragon.tecmap.conceptgraph.ConceptNode;
-import edu.ithaca.dragon.tecmap.learningresource.ColumnItem;
+import edu.ithaca.dragon.tecmap.learningresource.AssessmentItem;
 import edu.ithaca.dragon.tecmap.learningresource.AssessmentItemResponse;
 
 import java.util.*;
@@ -109,17 +109,17 @@ public class ConceptGraphSuggesterLibrary {
     }
 
     /**
-    *takes a map of strings and creates a list of learningObjectSuggestion that holds if the learningObject was incomplete, wrong, or right, the pathNum, and the Concept that caused the ColumnItem to be suggested
+    *takes a map of strings and creates a list of learningObjectSuggestion that holds if the learningObject was incomplete, wrong, or right, the pathNum, and the Concept that caused the AssessmentItem to be suggested
     *@param summaryList- map of the summaryList (map of the LearningObjects and the pathNum from a certain start)
     *@param  learningObjectMap- map of all of the learningObjects
     *@param causedConcept- the ID of ConceptNode that the learningObject came from
     *@returns a list of the created LearningObjectSuggestions
     */
-    public static List<LearningResourceSuggestion> buildLearningObjectSuggestionList(Map<String, Integer> summaryList, Map<String, ColumnItem> learningObjectMap, String causedConcept, Map<String, Integer> directLinkMap){
+    public static List<LearningResourceSuggestion> buildLearningObjectSuggestionList(Map<String, Integer> summaryList, Map<String, AssessmentItem> learningObjectMap, String causedConcept, Map<String, Integer> directLinkMap){
         List<LearningResourceSuggestion> myList = new ArrayList<LearningResourceSuggestion>();
         for (String key : summaryList.keySet()){
             int lineNum = summaryList.get(key);
-            ColumnItem node = learningObjectMap.get(key);
+            AssessmentItem node = learningObjectMap.get(key);
             double estimate = node.calcKnowledgeEstimate();
 
             int directConceptLinkCount = directLinkMap.get(node.getId());

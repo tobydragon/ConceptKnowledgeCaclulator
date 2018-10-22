@@ -6,7 +6,7 @@ import edu.ithaca.dragon.tecmap.io.reader.CSVReader;
 import edu.ithaca.dragon.tecmap.io.reader.SakaiReader;
 import edu.ithaca.dragon.tecmap.io.record.ConceptGraphRecord;
 import edu.ithaca.dragon.tecmap.io.record.LearningResourceRecord;
-import edu.ithaca.dragon.tecmap.learningresource.ColumnItem;
+import edu.ithaca.dragon.tecmap.learningresource.AssessmentItem;
 import edu.ithaca.dragon.tecmap.learningresource.AssessmentItemResponse;
 import edu.ithaca.dragon.tecmap.learningresource.ContinuousAssessmentMatrix;
 import edu.ithaca.dragon.tecmap.learningresource.GradeDiscreteGroupings;
@@ -38,7 +38,7 @@ public class PredictionControllerTest {
     public void setup() throws IOException {
         String testFile = Settings.DEFAULT_TEST_DATASTORE_PATH + "Cs1ExamplePrediction/Cs1ExampleAssessments.csv";
         CSVReader data = new SakaiReader(testFile);
-        List<ColumnItem> assessments = data.getManualGradedLearningObjects();
+        List<AssessmentItem> assessments = data.getManualGradedLearningObjects();
 
         continuousAssessmentMatrix = new ContinuousAssessmentMatrix(assessments);
 
@@ -72,10 +72,10 @@ public class PredictionControllerTest {
 
     @Test
     public void getAssessmentsForStudentsWithAllResponses() {
-        List<ColumnItem> columnItems = continuousAssessmentMatrix.getColumnItems();
+        List<AssessmentItem> columnItems = continuousAssessmentMatrix.getColumnItems();
         List<String> assessmentsToInclude = new ArrayList<>();
 
-        List<ColumnItem> studentsWithResponses = PredictionController.getAssessmentsForStudentsWithAllResponses(columnItems, assessmentsToInclude);
+        List<AssessmentItem> studentsWithResponses = PredictionController.getAssessmentsForStudentsWithAllResponses(columnItems, assessmentsToInclude);
 
         assertEquals(0, studentsWithResponses.size());
 
@@ -115,7 +115,7 @@ public class PredictionControllerTest {
 
     @Test
     public void getMatrix() {
-        List<ColumnItem> allAssessments = continuousAssessmentMatrix.getColumnItems();
+        List<AssessmentItem> allAssessments = continuousAssessmentMatrix.getColumnItems();
         List<String> predictionSet = new ArrayList<>();
         predictionSet.add("Q4");
         ContinuousAssessmentMatrix predictionMatrix = testController.getMatrix(allAssessments, predictionSet);
@@ -130,7 +130,7 @@ public class PredictionControllerTest {
 
     @Test
     public void getPredictionSet() {
-        List<ColumnItem> allAssessments = new ArrayList<>(conceptGraph.getAssessmentItemMap().values());
+        List<AssessmentItem> allAssessments = new ArrayList<>(conceptGraph.getAssessmentItemMap().values());
         String studentId = allAssessments.get(0).getResponses().get(0).getUserId();
         String assessmentToPredict = "Q5";
         List<String> predictionSet = testController.getPredictionSet(allAssessments, studentId, assessmentToPredict);
@@ -143,7 +143,7 @@ public class PredictionControllerTest {
 
     @Test
     public void predict() {
-        List<ColumnItem> allAssessments = new ArrayList<>(conceptGraph.getAssessmentItemMap().values());
+        List<AssessmentItem> allAssessments = new ArrayList<>(conceptGraph.getAssessmentItemMap().values());
         String studentId = allAssessments.get(0).getResponses().get(0).getUserId();
         String assessmentToPredict = "Q5";
         List<String> predictionSet = testController.getPredictionSet(allAssessments, studentId, assessmentToPredict);

@@ -1,6 +1,6 @@
 package edu.ithaca.dragon.tecmap.prediction.predictionsetselector;
 
-import edu.ithaca.dragon.tecmap.learningresource.ColumnItem;
+import edu.ithaca.dragon.tecmap.learningresource.AssessmentItem;
 
 import java.io.IOException;
 import java.util.List;
@@ -15,7 +15,7 @@ public interface PredictionSetSelector {
      * @return
      * @throws IOException
      */
-    List<String> getPredictionSetForGivenStudent(List<ColumnItem> allAssessments, String studentIdToDecideSet, String assessmentToPredict);
+    List<String> getPredictionSetForGivenStudent(List<AssessmentItem> allAssessments, String studentIdToDecideSet, String assessmentToPredict);
 
     /**
      * Removes the assessment with the lowest response rate from the currentPredictionSet
@@ -23,6 +23,6 @@ public interface PredictionSetSelector {
      * @param currentPredictionSet mutated in the
      * @param assessmentToPredict
      */
-    void removeLowestResponseRateAssessment(List<ColumnItem> allAssessments, List<String> currentPredictionSet, String assessmentToPredict);
+    void removeLowestResponseRateAssessment(List<AssessmentItem> allAssessments, List<String> currentPredictionSet, String assessmentToPredict);
 
 }

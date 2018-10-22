@@ -1,7 +1,7 @@
 package edu.ithaca.dragon.tecmap.prediction.predictionsetselector;
 
 import edu.ithaca.dragon.tecmap.conceptgraph.ConceptGraph;
-import edu.ithaca.dragon.tecmap.learningresource.ColumnItem;
+import edu.ithaca.dragon.tecmap.learningresource.AssessmentItem;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -22,7 +22,7 @@ public class GraphPredictionSetSelector extends NoStructurePredictionSetSelector
      * @return
      */
     public List<String> getPredictionSetForGivenStudent(String studentIdToDecide, String assessmentToPredict) {
-        List<ColumnItem> allAssessments = new ArrayList<>();
+        List<AssessmentItem> allAssessments = new ArrayList<>();
         allAssessments.addAll(this.graph.getAssessmentItemMap().values());
         return getPredictionSetForGivenStudent(allAssessments, studentIdToDecide, assessmentToPredict);
     }
@@ -37,7 +37,7 @@ public class GraphPredictionSetSelector extends NoStructurePredictionSetSelector
      * @throws IOException
      */
     @Override
-    public List<String> getPredictionSetForGivenStudent(List<ColumnItem> allAssessments, String studentIdToDecideSet, String assessmentToPredict) {
+    public List<String> getPredictionSetForGivenStudent(List<AssessmentItem> allAssessments, String studentIdToDecideSet, String assessmentToPredict) {
         List<String> defaultSet = super.getPredictionSetForGivenStudent(allAssessments, studentIdToDecideSet, assessmentToPredict);
 
         List<String> origlearningSet = graph.getAssessmentsBelowAssessmentID(assessmentToPredict);

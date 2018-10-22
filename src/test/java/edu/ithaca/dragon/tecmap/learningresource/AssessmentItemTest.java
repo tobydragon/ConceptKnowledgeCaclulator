@@ -28,15 +28,15 @@ public class AssessmentItemTest {
 
     @Test
     public void loEqualsTest(){
-        ColumnItem lo1 = new ColumnItem("Q1");
+        AssessmentItem lo1 = new AssessmentItem("Q1");
         lo1.addResponse(new AssessmentItemResponse("student1", "Q1", 1));
         lo1.addResponse(new AssessmentItemResponse("student1", "Q1", 1));
 
-        ColumnItem lo2 = new ColumnItem("Q1");
+        AssessmentItem lo2 = new AssessmentItem("Q1");
         lo2.addResponse(new AssessmentItemResponse("student1", "Q1", 1));
         lo2.addResponse(new AssessmentItemResponse("student1", "Q1", 1));
 
-        ColumnItem lo3 = new ColumnItem("Q2");
+        AssessmentItem lo3 = new AssessmentItem("Q2");
         lo3.addResponse(new AssessmentItemResponse("student1", "Q2", 1));
         lo3.addResponse(new AssessmentItemResponse("student1", "Q2", 1));
 
@@ -46,11 +46,11 @@ public class AssessmentItemTest {
 
     @Test
     public void deepCopyLearningObjectMapTest(){
-        Map<String, ColumnItem> toCopy = ExampleLearningObjectResponseFactory.makeSimpleLearningObjectMap();
-        Map<String, ColumnItem> newMap = ColumnItem.deepCopyLearningObjectMap(toCopy);
+        Map<String, AssessmentItem> toCopy = ExampleLearningObjectResponseFactory.makeSimpleLearningObjectMap();
+        Map<String, AssessmentItem> newMap = AssessmentItem.deepCopyLearningObjectMap(toCopy);
 
-        for (ColumnItem orig : toCopy.values()){
-            ColumnItem copy = newMap.get(orig.getId());
+        for (AssessmentItem orig : toCopy.values()){
+            AssessmentItem copy = newMap.get(orig.getId());
             Assert.assertEquals(orig, copy);
             Assert.assertFalse(orig == copy);
         }
@@ -71,7 +71,7 @@ public class AssessmentItemTest {
         maxKnowledgeEstimatesForAssessments.put("AI1", 1.0);
         maxKnowledgeEstimatesForAssessments.put("AI2", 2.0);
 
-        List<ColumnItem> columnItems = ColumnItem.buildListFromAssessmentItemResponses(responseList, maxKnowledgeEstimatesForAssessments);
+        List<AssessmentItem> columnItems = AssessmentItem.buildListFromAssessmentItemResponses(responseList, maxKnowledgeEstimatesForAssessments);
         assertEquals(2, columnItems.size());
         assertEquals("AI1", columnItems.get(0).getId());
         assertEquals("AI2", columnItems.get(1).getId());

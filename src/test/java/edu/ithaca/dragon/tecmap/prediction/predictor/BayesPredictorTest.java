@@ -3,7 +3,7 @@ package edu.ithaca.dragon.tecmap.prediction.predictor;
 import edu.ithaca.dragon.tecmap.Settings;
 import edu.ithaca.dragon.tecmap.io.reader.CSVReader;
 import edu.ithaca.dragon.tecmap.io.reader.SakaiReader;
-import edu.ithaca.dragon.tecmap.learningresource.ColumnItem;
+import edu.ithaca.dragon.tecmap.learningresource.AssessmentItem;
 import edu.ithaca.dragon.tecmap.learningresource.ContinuousAssessmentMatrix;
 import edu.ithaca.dragon.tecmap.learningresource.GradeDiscreteGroupings;
 import org.junit.Before;
@@ -32,7 +32,7 @@ public class BayesPredictorTest {
         String file2 = Settings.DEFAULT_TEST_DATASTORE_PATH + "Cs1Example/Cs1ExampleAssessment2.csv";
 
         CSVReader data = new SakaiReader(file1);
-        List<ColumnItem> assessments = data.getManualGradedLearningObjects();
+        List<AssessmentItem> assessments = data.getManualGradedLearningObjects();
         data = new SakaiReader(file2);
         assessments.addAll(data.getManualGradedLearningObjects());
 

@@ -145,7 +145,7 @@ public class ConceptGraphTest {
         //TODO: Did this line matter, because it can't work like that anymore...
         //graph.addLearningObjects(ExampleLearningObjectLinkRecordFactory.makeSimpleLearningObjectDef());
 
-        ColumnItem duplicateObject = new ColumnItem("Q1");
+        AssessmentItem duplicateObject = new AssessmentItem("Q1");
         AssessmentItemResponse duplicateResponse = new AssessmentItemResponse("user1","Q1",1);
 
         // Tries to add Q1 but it already exists so it does not get added and returns false
@@ -157,7 +157,7 @@ public class ConceptGraphTest {
 
 
         // New question to be linked in to the existing graph
-        ColumnItem myObject = new ColumnItem("Q7");
+        AssessmentItem myObject = new AssessmentItem("Q7");
         AssessmentItemResponse myResponse = new AssessmentItemResponse("user1","Q7",1);
 
         concepts.add("D");

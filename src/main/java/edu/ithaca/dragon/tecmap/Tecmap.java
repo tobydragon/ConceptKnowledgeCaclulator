@@ -4,7 +4,7 @@ import edu.ithaca.dragon.tecmap.conceptgraph.ConceptGraph;
 import edu.ithaca.dragon.tecmap.io.record.CohortConceptGraphsRecord;
 import edu.ithaca.dragon.tecmap.io.record.ConceptGraphRecord;
 import edu.ithaca.dragon.tecmap.io.record.LearningResourceRecord;
-import edu.ithaca.dragon.tecmap.learningresource.ColumnItem;
+import edu.ithaca.dragon.tecmap.learningresource.AssessmentItem;
 import edu.ithaca.dragon.tecmap.learningresource.AssessmentItemResponse;
 import edu.ithaca.dragon.tecmap.tecmapstate.*;
 
@@ -22,7 +22,7 @@ public class Tecmap implements TecmapAPI {
      * @param columnItemsStructureList a list of AssessmentItems to copy for the structure of the graph
      * @param assessmentItemResponses a list of AssessmentItemResponses containing all data (not connectes to the structureList above)
      */
-    public Tecmap(ConceptGraph structureGraph, List<LearningResourceRecord> links, List<ColumnItem> columnItemsStructureList, List<AssessmentItemResponse> assessmentItemResponses) {
+    public Tecmap(ConceptGraph structureGraph, List<LearningResourceRecord> links, List<AssessmentItem> columnItemsStructureList, List<AssessmentItemResponse> assessmentItemResponses) {
         TecmapState stateEnum = TecmapState.checkAvailableState(links, assessmentItemResponses);
         if (stateEnum == TecmapState.noAssessment){
             state = new NoAssessmentState(structureGraph);

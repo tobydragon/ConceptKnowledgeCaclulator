@@ -20,7 +20,7 @@ public interface FactorAnalysisAPI {
     /**
      * creates a matrix of factors in java using assessment matrix(factors=rows, LearningObjects=columns)
      * @param assessmentMatrix
-     * @return statsMatrix the matrix of strengths between a factor and ColumnItem
+     * @return statsMatrix the matrix of strengths between a factor and AssessmentItem
      * @pre resource, assessment, structure files are all present and an R Matrix is created
      * @throws Exception
      */

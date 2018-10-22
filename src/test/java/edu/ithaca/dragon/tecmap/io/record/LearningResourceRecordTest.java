@@ -5,7 +5,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import edu.ithaca.dragon.tecmap.Settings;
 import edu.ithaca.dragon.tecmap.io.reader.CSVReader;
 import edu.ithaca.dragon.tecmap.io.reader.SakaiReader;
-import edu.ithaca.dragon.tecmap.learningresource.ColumnItem;
+import edu.ithaca.dragon.tecmap.learningresource.AssessmentItem;
 import edu.ithaca.dragon.tecmap.learningresource.LearningMaterial;
 import edu.ithaca.dragon.tecmap.learningresource.LearningResourceType;
 import edu.ithaca.dragon.tecmap.util.DataUtil;
@@ -21,7 +21,7 @@ public class LearningResourceRecordTest {
 
     @Test
     public void testBuildingResourcesFromRecords(){
-        Collection<ColumnItem> assessments = new ArrayList<>();
+        Collection<AssessmentItem> assessments = new ArrayList<>();
         Collection<LearningMaterial> materials = new ArrayList<>();
         try {
             Collection<LearningResourceRecord> fromFile = LearningResourceRecord.createLearningResourceRecordsFromJsonFile(Settings.TEST_RESOURCE_DIR + "ManuallyCreated/LearningRecordResourceTest-MissingFields.json");
@@ -33,7 +33,7 @@ public class LearningResourceRecordTest {
                 }
                 //may create duplicate records if one resource is both an assessment and a material
                 if (record.isType(LearningResourceType.ASSESSMENT)){
-                    assessments.add(new ColumnItem(record));
+                    assessments.add(new AssessmentItem(record));
                 }
                 if (record.isType(LearningResourceType.INFORMATION) || record.isType(LearningResourceType.PRACTICE)){
                     //since we've already added an assessment for this record, remove it so the list can be used to create the material directly from the list
@@ -183,8 +183,8 @@ public class LearningResourceRecordTest {
     public void createLearningObjectLinkRecordsTest(){
         try {
             CSVReader test = new SakaiReader(Settings.TEST_RESOURCE_DIR + "ManuallyCreated/complexRealisticAssessment.csv");
-            Collection<ColumnItem> list = test.getManualGradedLearningObjects();
-            List<ColumnItem> list2 = test.getManualGradedLearningObjects();
+            Collection<AssessmentItem> list = test.getManualGradedLearningObjects();
+            List<AssessmentItem> list2 = test.getManualGradedLearningObjects();
             List<LearningResourceRecord> lolrList = LearningResourceRecord.createLearningResourceRecordsFromAssessmentItems(list);
             List<String> resultString = new ArrayList<String>();
             for (LearningResourceRecord lolr : lolrList) {
@@ -192,7 +192,7 @@ public class LearningResourceRecordTest {
             }
 
             List<String> list2string = new ArrayList<String>();
-            for (ColumnItem lo : list2) {
+            for (AssessmentItem lo : list2) {
                 list2string.add(lo.getId());
             }
             Assert.assertEquals(list2string.toString(), resultString.toString());

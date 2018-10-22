@@ -1,6 +1,6 @@
 package edu.ithaca.dragon.tecmap.prediction.predictionsetselector;
 
-import edu.ithaca.dragon.tecmap.learningresource.ColumnItem;
+import edu.ithaca.dragon.tecmap.learningresource.AssessmentItem;
 import edu.ithaca.dragon.tecmap.learningresource.AssessmentItemResponse;
 
 import java.io.IOException;
@@ -21,11 +21,11 @@ public class NoStructurePredictionSetSelector implements PredictionSetSelector {
      * @throws IOException
      */
     @Override
-    public List<String> getPredictionSetForGivenStudent(List<ColumnItem> allAssessments, String studentIdToDecideSet, String assessmentToPredict) {
+    public List<String> getPredictionSetForGivenStudent(List<AssessmentItem> allAssessments, String studentIdToDecideSet, String assessmentToPredict) {
         List<String> learningSet = new ArrayList<>();
 
         //Only includes assessments that have responses for the given student
-        for (ColumnItem item : allAssessments) {
+        for (AssessmentItem item : allAssessments) {
             for (AssessmentItemResponse response : item.getResponses()) {
                 if (response.getUserId().equals(studentIdToDecideSet) && !learningSet.contains(item.getId())) {
                     learningSet.add(item.getId());
@@ -49,12 +49,12 @@ public class NoStructurePredictionSetSelector implements PredictionSetSelector {
      * @return
      */
     @Override
-    public void removeLowestResponseRateAssessment(List<ColumnItem> allAssessments, List<String> currentPredictionSet, String assessmentToPredict) {
+    public void removeLowestResponseRateAssessment(List<AssessmentItem> allAssessments, List<String> currentPredictionSet, String assessmentToPredict) {
         int maxResponses = 0;
         double minResponseRate = Double.MAX_VALUE;
-        ColumnItem lowestResponseRateAssessment = null;
-        List<ColumnItem> currentAssessments = new ArrayList<>(); //holds assessments for currentPredictionSet
-        for (ColumnItem columnItem : allAssessments) {
+        AssessmentItem lowestResponseRateAssessment = null;
+        List<AssessmentItem> currentAssessments = new ArrayList<>(); //holds assessments for currentPredictionSet
+        for (AssessmentItem columnItem : allAssessments) {
             if (currentPredictionSet.contains(columnItem.getId())) {
                 if (columnItem.getResponses().size() > maxResponses) {
                     maxResponses = columnItem.getResponses().size(); //Number of
@@ -62,7 +62,7 @@ public class NoStructurePredictionSetSelector implements PredictionSetSelector {
                 currentAssessments.add(columnItem);
             }
         }
-        for (ColumnItem columnItem : currentAssessments) {
+        for (AssessmentItem columnItem : currentAssessments) {
             List<AssessmentItemResponse> responses = columnItem.getResponses();
             double responseRate = (double) responses.size()/maxResponses;
             if (responseRate < minResponseRate && responseRate != 1.0 && !columnItem.getId().equals(assessmentToPredict)) {
