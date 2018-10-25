@@ -94,7 +94,7 @@ public class FactorAnalysis implements FactorAnalysisAPI{
             i++;
         }
 
-        RCode rMatrix = RFunctions.JavaToR(assessmentMatrix.getDataMatrix(), objStr);
+        RCode rMatrix = JavaToR(assessmentMatrix.getDataMatrix(), objStr);
         return rMatrix;
     }
 
@@ -139,18 +139,18 @@ public class FactorAnalysis implements FactorAnalysisAPI{
 
     /**
      * A helper function for getFactorMatrix() that finds the best number of factors to use in factor analysis
-     * @param AssessmentMatrix KnowledgeEstimateMatrix
+     * @param assessmentMatrix KnowledgeEstimateMatrix
      * @return result the number of factors to be used in factor analysis on the current matrix
      * @throws Exception
      */
-    public static int findFactorCount(ContinuousMatrixRecord AssessmentMatrix)throws Exception{
+    public static int findFactorCount(ContinuousMatrixRecord assessmentMatrix)throws Exception{
         RCaller rCaller = RCallerVariable();
 
-        RCode code = createRMatrix(AssessmentMatrix);
+        RCode code = createRMatrix(assessmentMatrix);
         int numOfFactors = 0;
 
         code.addInt("numOfFactors", numOfFactors);
-        int columnCount = getColumnCount(AssessmentMatrix);
+        int columnCount = getColumnCount(assessmentMatrix);
         if(columnCount > 2) {
             code.addInt("columnCount", columnCount);
 
@@ -184,19 +184,20 @@ public class FactorAnalysis implements FactorAnalysisAPI{
 
     /**
      * Prints out a factor matrix connecting learning objects to similar higher up objects
-     * @param AssessmentMatrix KnowledgeEstimateMatrix object will use the RMatrix data member
+     * @param assessmentMatrix KnowledgeEstimateMatrix object will use the RMatrix data member
      * @pre resource, assessment, structure files are all present and an R Matrix is created
      * @throws Exception
      */
-    public void displayExploratoryGraph(ContinuousMatrixRecord AssessmentMatrix)throws Exception {
+    public void displayExploratoryGraph(ContinuousMatrixRecord assessmentMatrix)throws Exception {
         try{
 
-        int numOfFactors = findFactorCount(AssessmentMatrix);
+
+        int numOfFactors = findFactorCount(assessmentMatrix);
         RCaller rCaller = RCallerVariable();
 
         rCaller.redirectROutputToStream(System.out);
 
-        RCode code = createRMatrix(AssessmentMatrix);
+        RCode code = createRMatrix(assessmentMatrix);
         code.addInt("numOfFactors", numOfFactors);
         code.addRCode("matrixOfLoadings <- factanal(matrix,numOfFactors, method=\"MLE\")");
         //rCaller.getRCallerOptions();
@@ -228,6 +229,7 @@ public class FactorAnalysis implements FactorAnalysisAPI{
 
     //TODO: This is the only function changed over so far to create a ContinuousMatrixRecord rather than return
     public void calculateExploratoryMatrix(ContinuousMatrixRecord assessmentMatrix)throws Exception {
+        double[][] dataMatrix = assessmentMatrix.getDataMatrix();
         int learningObjectCount = getColumnCount(assessmentMatrix);
         int numOfFactors = findFactorCount(assessmentMatrix);
         RCaller rCaller = RCallerVariable();
@@ -267,7 +269,7 @@ public class FactorAnalysis implements FactorAnalysisAPI{
             rowIds.add("Factor"+(i+1));
         }
 
-        new ContinuousMatrixRecord(statsMatrix, assessmentMatrix.getAssessmentItems(), rowIds);
+        ContinuousMatrixRecord factorMatrixRecord = new ContinuousMatrixRecord(statsMatrix, assessmentMatrix.getAssessmentItems(), rowIds);
 
         //return statsMatrix;
     }

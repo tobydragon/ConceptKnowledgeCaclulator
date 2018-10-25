@@ -17,20 +17,20 @@ public class ContinuousMatrixRecord {
 
     private List<AssessmentItem> assessmentItems;
     private List<String> assessmentIds;
-    private List<String> studentIds;
+    private List<String> rowIds;
     private double[][] dataMatrix;
 
-    public ContinuousMatrixRecord(List<AssessmentItem> columnItems) {
-        this.assessmentItems = columnItems;
-        this.assessmentIds = getColumnIdList(columnItems);
-        this.studentIds = getRowIds(columnItems);
-        this.dataMatrix = createMatrix(columnItems);
+    public ContinuousMatrixRecord(List<AssessmentItem> assessmentItems) {
+        this.assessmentItems = assessmentItems;
+        this.assessmentIds = getAssessmentIds(assessmentItems);
+        this.rowIds = getRowIds(assessmentItems);
+        this.dataMatrix = createMatrix(assessmentItems);
     }
 
-    public ContinuousMatrixRecord(double[][] dataMatrix, List<AssessmentItem> columnItems, List<String> rowIds){
-        this.assessmentItems = columnItems;
-        this.assessmentIds = getColumnIdList(columnItems);
-        this.studentIds = rowIds;
+    public ContinuousMatrixRecord(double[][] dataMatrix, List<AssessmentItem> assessmentItems, List<String> rowIds){
+        this.assessmentItems = assessmentItems;
+        this.assessmentIds = getAssessmentIds(assessmentItems);
+        this.rowIds = rowIds;
         this.dataMatrix = dataMatrix;
 
     }
@@ -40,7 +40,7 @@ public class ContinuousMatrixRecord {
      * @param columnItems
      * @return assessmentId list
      */
-    static List<String> getColumnIdList(List<AssessmentItem> columnItems) {
+    static List<String> getAssessmentIds(List<AssessmentItem> columnItems) {
         List<String> assessmentIds = new ArrayList<>();
 
         for (AssessmentItem columnItem : columnItems) {
@@ -75,24 +75,24 @@ public class ContinuousMatrixRecord {
      * Creates a matrix of the continuous variable knowledge estimates for each assessment and user pair
      * Follows the indices given from the assessmentItem and the studentId list
      * If no response for a given student, defaults to an estimate of 0
-     * @param columnItems
+     * @param assessmentItems
      * @return 2d array of knowledge estimates
      */
-    double[][] createMatrix(List<AssessmentItem> columnItems) {
-        double[][] gradeMatrix = new double[this.assessmentIds.size()][this.studentIds.size()];
-        for (AssessmentItem columnItem : columnItems) {
+    double[][] createMatrix(List<AssessmentItem> assessmentItems) {
+        double[][] gradeMatrix = new double[this.assessmentIds.size()][this.rowIds.size()];
+        for (AssessmentItem columnItem : assessmentItems) {
             int assessmentIndex = assessmentIds.indexOf(columnItem.getId());
             List<String> studentsWithResponse = new ArrayList<>();
             for (AssessmentItemResponse response : columnItem.getResponses()) {
                 String currUserId = response.getUserId();
-                int studentIndex = studentIds.indexOf(currUserId);
+                int studentIndex = rowIds.indexOf(currUserId);
                 gradeMatrix[assessmentIndex][studentIndex] = response.calcKnowledgeEstimate();
                 studentsWithResponse.add(currUserId);
             }
-            List<String> studentsWithoutResponse = new ArrayList<>(studentIds);
+            List<String> studentsWithoutResponse = new ArrayList<>(rowIds);
             studentsWithoutResponse.removeAll(studentsWithResponse);
             for (String studentId : studentsWithoutResponse) {
-                gradeMatrix[assessmentIndex][studentIds.indexOf(studentId)] = 0.0;
+                gradeMatrix[assessmentIndex][rowIds.indexOf(studentId)] = 0.0;
             }
         }
 
@@ -129,7 +129,7 @@ public class ContinuousMatrixRecord {
         return assessmentIds;
     }
 
-    public List<String> getStudentIds() {
-        return studentIds;
+    public List<String> getRowIds() {
+        return rowIds;
     }
 }
