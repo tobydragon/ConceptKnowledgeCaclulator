@@ -7,6 +7,12 @@
       "assessmentFiles" : [ "src/test/resources/datastore/Cs1Example/Cs1ExampleAssessment1.csv", "src/test/resources/author/tecmapExamples/Cs1ExampleAssessment2.csv" ]
     },
     {
+      "id" : "AnalysisExample",
+      "graphFile" : "src/test/resources/datastore/AnalysisExample/AnalysisGraph.json",
+      "resourceFiles" : [ "src/test/resources/datastore/AnalysisExample/AnalysisResources.json" ],
+      "assessmentFiles" : [ "src/test/resources/datastore/AnalysisExample/AnalysisExample1.csv" ]
+    },
+    {
       "id" : "comp171Dragon",
       "graphFile" : "src/main/resources/datastore/comp171Dragon/comp171DragonGraph.json",
       "resourceFiles" : [  ],

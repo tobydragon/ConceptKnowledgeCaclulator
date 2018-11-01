@@ -16,6 +16,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+import static edu.ithaca.dragon.tecmap.analysis.FactorAnalysis.calculateExploratoryMatrix;
 import static edu.ithaca.dragon.tecmap.tecmapstate.TecmapState.assessmentAdded;
 
 /**
@@ -25,17 +26,19 @@ public class FactorAnalysisTest {
 
     @Test
     //TODO finish test. Confirm the structure of steps needed before calculatingExploratoryMatrix
-    public void calculateExploratoryMatrixTest() throws IOException{
+    public void calculateExploratoryMatrixTest() throws Exception {
         TecmapDatastore tecmapDatastore = TecmapFileDatastore.buildFromJsonFile(Settings.DEFAULT_TEST_DATASTORE_PATH);
-        SuggestingTecmapAPI cs1Example = tecmapDatastore.retrieveTecmapForId("Cs1Example");
-        SuggestingTecmapAPI notConnectedExample = tecmapDatastore.retrieveTecmapForId("Cs1ExampleAssessmentAdded");
+        SuggestingTecmapAPI analysisExample = tecmapDatastore.retrieveTecmapForId("AnalysisExample");
+        //SuggestingTecmapAPI notConnectedExample = tecmapDatastore.retrieveTecmapForId("Cs1ExampleAssessmentAdded");
 
-        ConceptGraph acg = cs1Example.getAverageConceptGraph();
+        ConceptGraph acg = analysisExample.getAverageConceptGraph();
         Map<String, AssessmentItem> assessmentItemMap= acg.getAssessmentItemMap();
         List<AssessmentItem> assessmentItems = new ArrayList<>(assessmentItemMap.values());
         ContinuousMatrixRecord gradeMatrix = new ContinuousMatrixRecord(assessmentItems);
 
-        //FactorAnalysis.calculateExploratoryMatrix(gradeMatrix);
+        ContinuousMatrixRecord factorMatrix = calculateExploratoryMatrix(gradeMatrix);
+        double[][] data = factorMatrix.getDataMatrix();
+
 
     }
 }

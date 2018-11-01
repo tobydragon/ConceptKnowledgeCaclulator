@@ -219,6 +219,10 @@ public class FactorAnalysis implements FactorAnalysisAPI{
     }
     }
 
+    public void ExploratoryMatrix(ContinuousMatrixRecord assessmentMatrix)throws Exception{
+        calculateExploratoryMatrix(assessmentMatrix);
+    }
+
     /**
      * creates a matrix of factors in java (factors=rows, LearningObjects=columns)
      * @param assessmentMatrix
@@ -227,9 +231,9 @@ public class FactorAnalysis implements FactorAnalysisAPI{
      * @throws Exception
      */
 
-    //TODO: This is the only function changed over so far to create a ContinuousMatrixRecord rather than return
-    public void calculateExploratoryMatrix(ContinuousMatrixRecord assessmentMatrix)throws Exception {
-        double[][] dataMatrix = assessmentMatrix.getDataMatrix();
+    public static ContinuousMatrixRecord calculateExploratoryMatrix(ContinuousMatrixRecord assessmentMatrix)throws Exception {
+        boolean canCalculate = false;
+        //double[][] dataMatrix = assessmentMatrix.getDataMatrix();
         int learningObjectCount = getColumnCount(assessmentMatrix);
         int numOfFactors = findFactorCount(assessmentMatrix);
         RCaller rCaller = RCallerVariable();
@@ -271,7 +275,7 @@ public class FactorAnalysis implements FactorAnalysisAPI{
 
         ContinuousMatrixRecord factorMatrixRecord = new ContinuousMatrixRecord(statsMatrix, assessmentMatrix.getAssessmentItems(), rowIds);
 
-        //return statsMatrix;
+        return factorMatrixRecord;
     }
 
 
