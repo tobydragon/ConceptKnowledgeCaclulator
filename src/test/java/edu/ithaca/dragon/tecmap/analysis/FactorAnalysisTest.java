@@ -18,6 +18,7 @@ import java.util.Map;
 
 import static edu.ithaca.dragon.tecmap.analysis.FactorAnalysis.calculateExploratoryMatrix;
 import static edu.ithaca.dragon.tecmap.tecmapstate.TecmapState.assessmentAdded;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 /**
  * Created by Benjamin on 9/18/2018.
@@ -25,7 +26,6 @@ import static edu.ithaca.dragon.tecmap.tecmapstate.TecmapState.assessmentAdded;
 public class FactorAnalysisTest {
 
     @Test
-    //TODO finish test. Confirm the structure of steps needed before calculatingExploratoryMatrix
     public void calculateExploratoryMatrixTest() throws Exception {
         TecmapDatastore tecmapDatastore = TecmapFileDatastore.buildFromJsonFile(Settings.DEFAULT_TEST_DATASTORE_PATH);
         SuggestingTecmapAPI analysisExample = tecmapDatastore.retrieveTecmapForId("AnalysisExample");
@@ -39,6 +39,14 @@ public class FactorAnalysisTest {
         ContinuousMatrixRecord factorMatrix = calculateExploratoryMatrix(gradeMatrix);
         double[][] data = factorMatrix.getDataMatrix();
 
+        assertEquals(data[0][0], .8, .2);
+
 
     }
+
+    @Test
+    public void calculateConfirmatoryMatrixTest() throws Exception{
+
+    }
+
 }

@@ -143,7 +143,7 @@ public class FactorAnalysis implements FactorAnalysisAPI{
      * @return result the number of factors to be used in factor analysis on the current matrix
      * @throws Exception
      */
-    public static int findFactorCount(ContinuousMatrixRecord assessmentMatrix)throws Exception{
+    public static int findFactorCount(ContinuousMatrixRecord assessmentMatrix)throws NoVarianceException{
         RCaller rCaller = RCallerVariable();
 
         RCode code = createRMatrix(assessmentMatrix);
@@ -177,7 +177,7 @@ public class FactorAnalysis implements FactorAnalysisAPI{
             int[] result = rCaller.getParser().getAsIntArray("numOfFactors");
             return result[0];
         }else{
-            throw new Exception();
+            throw new NoVarianceException();
         }
     }
 
@@ -476,4 +476,10 @@ public class FactorAnalysis implements FactorAnalysisAPI{
     }
 
 
+    public static class NoVarianceException extends Exception {
+        public NoVarianceException() { super(); }
+        public NoVarianceException(String message) { super(message); }
+        public NoVarianceException(String message, Throwable cause) { super(message, cause); }
+        public NoVarianceException(Throwable cause) { super(cause); }
+    }
 }
