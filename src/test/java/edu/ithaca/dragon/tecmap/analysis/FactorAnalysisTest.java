@@ -9,8 +9,11 @@ import edu.ithaca.dragon.tecmap.data.TecmapDatastore;
 import edu.ithaca.dragon.tecmap.data.TecmapFileDatastore;
 import edu.ithaca.dragon.tecmap.io.record.ContinuousMatrixRecord;
 import edu.ithaca.dragon.tecmap.learningresource.AssessmentItem;
+import org.junit.Assert;
 import org.junit.Test;
+import org.junit.jupiter.api.Assertions;
 
+import javax.validation.constraints.AssertFalse;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -43,6 +46,7 @@ public class FactorAnalysisTest {
             assertEquals(data[0][0], .8, .2);
 
         }catch (Exception e){
+            Assert.fail();
             e.printStackTrace();
         }
 

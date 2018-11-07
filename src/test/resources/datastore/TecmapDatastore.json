@@ -1,15 +1,15 @@
 {
   "allRecords" : [ {
+    "id" : "AnalysisExample",
+    "graphFile" : "src/test/resources/datastore/AnalysisExample/AnalysisGraph.json",
+    "resourceFiles" : [ "src/test/resources/datastore/AnalysisExample/AnalysisResources.json" ],
+    "assessmentFiles" : [ "src/test/resources/datastore/AnalysisExample/AnalysisExample1.csv" ]
+  }, {
     "id" : "Cs1Example",
     "graphFile" : "src/test/resources/datastore/Cs1Example/Cs1ExampleGraph.json",
     "resourceFiles" : [ "src/test/resources/datastore/Cs1Example/Cs1ExampleResources.json" ],
     "assessmentFiles" : [ "src/test/resources/datastore/Cs1Example/Cs1ExampleAssessment1.csv", "src/test/resources/author/tecmapExamples/Cs1ExampleAssessment2.csv" ]
   }, {
-      "id" : "AnalysisExample",
-      "graphFile" : "src/test/resources/datastore/AnalysisExample/AnalysisGraph.json",
-      "resourceFiles" : [ "src/test/resources/datastore/AnalysisExample/AnalysisResources.json" ],
-      "assessmentFiles" : [ "src/test/resources/datastore/AnalysisExample/AnalysisExample1.csv" ]
-    }, {
     "id" : "Cs1ExampleAssessmentAdded",
     "graphFile" : "src/test/resources/datastore/Cs1ExampleAssessmentAdded/Cs1ExampleGraph.json",
     "resourceFiles" : [ ],

@@ -431,7 +431,7 @@ public class FactorAnalysis implements FactorAnalysisAPI{
      */
     public static RCaller RCallerVariable(){
         if(Globals.isWindows() == false) {
-            RCallerOptions options = RCallerOptions.create("/usr/local/Cellar/r/3.4.2/bin/Rscript", Globals.R_current, FailurePolicy.RETRY_5, Long.MAX_VALUE, 100, RProcessStartUpOptions.create());
+            RCallerOptions options = RCallerOptions.create("/usr/local/Cellar/r/3.5.1/bin/Rscript", Globals.R_current, FailurePolicy.RETRY_5, Long.MAX_VALUE, 100, RProcessStartUpOptions.create());
             return RCaller.create(options);
         }else {
             return RCaller.create();
