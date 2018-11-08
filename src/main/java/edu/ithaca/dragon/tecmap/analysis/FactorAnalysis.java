@@ -474,8 +474,24 @@ public class FactorAnalysis implements FactorAnalysisAPI{
         return code;
 
     }
+    /*
+    //TODO: Comments in function tell the structure of the function
+    public static ContinuousMatrixRecord newCalculateExploratoryMatrix(ContinuousMatrixRecord assessmentMatrix)throws Exception{
+        RCaller rCaller = RCallerVariable();
+        rCaller.redirectROutputToStream(System.out);
+
+        /*
+        Get the dataMatrix of the ContinuousMatrixRecord and send it to an rMatrix
+        Source the ExploratoryMatrix.R
+        Call calculateExploratoryMatrix within the R script
+        return factorMatrix out of R and into Java
+        Place assessmentIds onto correct indices
+        create a ContinuousMatrixRecord of the factorMatrix
 
 
+        return();
+    }
+    */
     public static class NoVarianceException extends Exception {
         public NoVarianceException() { super(); }
         public NoVarianceException(String message) { super(message); }
