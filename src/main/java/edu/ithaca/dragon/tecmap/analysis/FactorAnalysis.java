@@ -119,7 +119,7 @@ public class FactorAnalysis implements FactorAnalysisAPI{
         code.addRCode("deleteVector = c()");
         code.addRCode("vectorIndex <- 0");
         code.addRCode("for(i in columnCount:1){" +
-                "if(data[1,i] == mean(matrix[,i])){");
+                "if(matrix[1,i] == mean(matrix[,i])){");
         code.addRCode("vectorIndex <- vectorIndex + 1");
         code.addRCode("deleteVector[vectorIndex] <- names(matrix[i])");
         code.addRCode("matrix <- matrix[,-c(i)]" +
