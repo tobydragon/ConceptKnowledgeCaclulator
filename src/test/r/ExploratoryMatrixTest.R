@@ -1,13 +1,29 @@
 #TEST
 calculateExploratoryMatrixTest <- function(){
+	
+	#Hardcoded matrix test data
+	
 	data <- matrix(c(.3,.43,.48,.2, .2,.2,.2,.2, .7,.9,.83,.6, .34,.27,.11,.10, .45,.43,.3,.20, .21,.25,.16,.22, .51,.7,.6,.8, .46,.32,.5,.8), nrow=4, ncol=8)
+	data <- as.data.frame(t(data))
+	
+	#CSV test data
+	
+	#data = read.csv("/Users/bleblanc2/Documents/randomTestData.csv", sep=",", header = TRUE)
+	print(data)
+	
+	#data <- spss.get("/Users/bleblanc2/Documents/AthleticsData.sav")
+	#print(data)
+	 
 	
 	factorMatrix <- calculateExploratoryMatrix(data)
-	if(factorMatrix[1][1] > 0){
-		print('calculateExploratoryMatrix: PASS')
-	}else{
-		print('calculateExploratpryMatrix: FAIL')
-	}
+	print(factorMatrix)
+#	if(factorMatrix[1][1] > 0){
+#		print('calculateExploratoryMatrix: PASS')
+#		print(factorMatrix)
+#	}else{
+#		print('calculateExploratoryMatrix: FAIL')
+#		print(factorMatrix)
+#	}
 }
 
 
@@ -51,6 +67,6 @@ getCleanedMatrixTest <- function(){
 
 source("/Users/bleblanc2/IdeaProjects/tecmap/src/main/r/ExploratoryMatrix.R")
 
-getCleanedMatrixTest()
-findFactorCountTest()
+#getCleanedMatrixTest()
+#findFactorCountTest()
 calculateExploratoryMatrixTest()

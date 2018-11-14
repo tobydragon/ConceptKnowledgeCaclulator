@@ -20,6 +20,7 @@ import java.util.List;
 import java.util.Map;
 
 import static edu.ithaca.dragon.tecmap.analysis.FactorAnalysis.calculateExploratoryMatrix;
+import static edu.ithaca.dragon.tecmap.analysis.FactorAnalysis.newCalculateExploratoryMatrix;
 import static edu.ithaca.dragon.tecmap.tecmapstate.TecmapState.assessmentAdded;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
@@ -29,7 +30,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 public class FactorAnalysisTest {
 
     @Test
-    public void calculateExploratoryMatrixTest() {
+    public void newCalculateExploratoryMatrixTest() {
         try {
             TecmapDatastore tecmapDatastore = TecmapFileDatastore.buildFromJsonFile(Settings.DEFAULT_TEST_DATASTORE_PATH);
             SuggestingTecmapAPI analysisExample = tecmapDatastore.retrieveTecmapForId("AnalysisExample");
@@ -38,10 +39,30 @@ public class FactorAnalysisTest {
             ConceptGraph acg = analysisExample.getAverageConceptGraph();
             Map<String, AssessmentItem> assessmentItemMap = acg.getAssessmentItemMap();
             List<AssessmentItem> assessmentItems = new ArrayList<>(assessmentItemMap.values());
-            ContinuousMatrixRecord gradeMatrix = new ContinuousMatrixRecord(assessmentItems);
+            ContinuousMatrixRecord assessmentMatrix = new ContinuousMatrixRecord(assessmentItems);
 
-            ContinuousMatrixRecord factorMatrix = calculateExploratoryMatrix(gradeMatrix);
+            double[][] testGradeMatrix = assessmentMatrix.getDataMatrix();
+
+            //System.out.println(testGradeMatrix[0][0]);
+            //System.out.println(testGradeMatrix[1][0]);
+            //System.out.println(testGradeMatrix[0][1]);
+
+
+            int rows = testGradeMatrix.length;
+            int cols = testGradeMatrix[0].length;
+            for(int i = 0; i<rows; i++)
+            {
+                for(int j = 0; j<cols; j++)
+                {
+                    System.out.print(testGradeMatrix[i][j] + "  ");
+                }
+                System.out.println();
+            }
+
+
+            ContinuousMatrixRecord factorMatrix = FactorAnalysis.newCalculateExploratoryMatrix(assessmentMatrix);
             double[][] data = factorMatrix.getDataMatrix();
+
 
             assertEquals(data[0][0], .8, .2);
 

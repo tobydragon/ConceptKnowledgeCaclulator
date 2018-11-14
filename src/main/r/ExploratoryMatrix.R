@@ -21,6 +21,7 @@ findFactorCount <-function(data){
 	numOfFactors <- 0
 	#data <- as.data.frame(t(data))
 	columnCount <- ncol(data)
+	#print(data)
 	if(columnCount > 2){
 		#sets limit on how high program will go to find factors based on existing columns
 		
@@ -29,6 +30,8 @@ findFactorCount <-function(data){
 		}else{
 			upperlimit <- (columnCount/2) - 0.5
 		}
+		
+		#print(columnCount)
 
 		#put p-values of factor analysis into a list
 		#take the first factor number with a pvalue above 0.05
@@ -37,7 +40,7 @@ findFactorCount <-function(data){
 			vector[i] <- factanal(data, i, method='mle')$PVAL
 			#print(factanal(data, i, method='mle'))
 		}
-		
+		#print(vector)
 		for(i in 1:upperlimit){
 			if(vector[i] < 0.05){
 				numOfFactors <- i + 1
@@ -51,7 +54,7 @@ findFactorCount <-function(data){
 }
 
 calculateExploratoryMatrix <- function(data){
-	data <- as.data.frame(t(data))
+	#data <- as.data.frame(t(data))
 	cleanedData <- getCleanedMatrix(data)
 	if(ncol(cleanedData) > 2){
 		numOfFactors <- findFactorCount(cleanedData)
@@ -60,9 +63,9 @@ calculateExploratoryMatrix <- function(data){
 		return(-1)
 	}
 
-	matrixOfLoadings <- factanal(data, factors = numOfFactors, method = 'mle')
-	factorsMatrix <- matrixOfLoadings$loadings
-	return(factorsMatrix)
+	matrixOfLoadings <- factanal(data, factors = numOfFactors, method='mle')
+	factorMatrix <- matrixOfLoadings$loadings
+	return(factorMatrix)
 }
 
 

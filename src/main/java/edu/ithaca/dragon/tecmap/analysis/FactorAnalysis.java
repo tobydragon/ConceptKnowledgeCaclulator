@@ -273,7 +273,7 @@ public class FactorAnalysis implements FactorAnalysisAPI{
             rowIds.add("Factor"+(i+1));
         }
 
-        ContinuousMatrixRecord factorMatrixRecord = new ContinuousMatrixRecord(statsMatrix, assessmentMatrix.getAssessmentItems(), rowIds);
+        ContinuousMatrixRecord factorMatrixRecord = new ContinuousMatrixRecord(statsMatrix, rowIds, assessmentMatrix.getAssessmentItems());
 
         return factorMatrixRecord;
     }
@@ -474,7 +474,7 @@ public class FactorAnalysis implements FactorAnalysisAPI{
         return code;
 
     }
-    /*
+
     //TODO: Comments in function tell the structure of the function
     public static ContinuousMatrixRecord newCalculateExploratoryMatrix(ContinuousMatrixRecord assessmentMatrix)throws Exception{
         RCaller rCaller = RCallerVariable();
@@ -487,11 +487,31 @@ public class FactorAnalysis implements FactorAnalysisAPI{
         return factorMatrix out of R and into Java
         Place assessmentIds onto correct indices
         create a ContinuousMatrixRecord of the factorMatrix
+*/
+
+        RCode code = createRMatrix(assessmentMatrix);
+        double[][] gradeMatrix = assessmentMatrix.getDataMatrix();
+        code.addRCode("source('/Users/bleblanc2/IdeaProjects/tecmap/src/main/r/ExploratoryMatrix.R')");
+        code.addDoubleMatrix("data", gradeMatrix);
+        //code.addRCode("data <- as.data.frame(t(data))");
+        code.addRCode("factorMatrix <- calculateExploratoryMatrix(data)");
+        rCaller.setRCode(code);
+        rCaller.runAndReturnResult("factorMatrix");
+        double[][] factorMatrix = rCaller.getParser().getAsDoubleMatrix("factorMatrix");
 
 
-        return();
+        //Create List of factors for being placed into the columns
+        int numOfFactors = factorMatrix[0].length;
+        List<String> factorList = new ArrayList<>();
+        for(int i=0; i<numOfFactors; i++){
+            factorList.add("Factor"+(i+1));
+        }
+
+        ContinuousMatrixRecord factorMatrixRecord = new ContinuousMatrixRecord(factorMatrix, factorList, assessmentMatrix.getAssessmentItems());
+
+        return factorMatrixRecord;
     }
-    */
+
     public static class NoVarianceException extends Exception {
         public NoVarianceException() { super(); }
         public NoVarianceException(String message) { super(message); }
