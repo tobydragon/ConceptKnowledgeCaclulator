@@ -85,6 +85,7 @@ public class ContinuousMatrixRecord {
         for (AssessmentItem columnItem : assessmentItems) {
             int assessmentIndex = assessmentIds.indexOf(columnItem.getId());
             List<String> studentsWithResponse = new ArrayList<>();
+            //TODO: This is not picking up every student when using AnalysisExample1.csv
             for (AssessmentItemResponse response : columnItem.getResponses()) {
                 String currUserId = response.getUserId();
                 int studentIndex = rowIds.indexOf(currUserId);
