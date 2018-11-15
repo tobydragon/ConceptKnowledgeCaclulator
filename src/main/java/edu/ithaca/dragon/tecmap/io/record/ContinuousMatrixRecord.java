@@ -80,12 +80,12 @@ public class ContinuousMatrixRecord {
      * @param assessmentItems
      * @return 2d array of knowledge estimates
      */
+    //TODO: rowIds should match rows and assessments should match columns
     double[][] createMatrix(List<AssessmentItem> assessmentItems) {
         double[][] gradeMatrix = new double[this.assessmentIds.size()][this.rowIds.size()];
         for (AssessmentItem columnItem : assessmentItems) {
             int assessmentIndex = assessmentIds.indexOf(columnItem.getId());
             List<String> studentsWithResponse = new ArrayList<>();
-            //TODO: This is not picking up every student when using AnalysisExample1.csv
             for (AssessmentItemResponse response : columnItem.getResponses()) {
                 String currUserId = response.getUserId();
                 int studentIndex = rowIds.indexOf(currUserId);

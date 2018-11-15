@@ -37,6 +37,7 @@ public class ContinuousMatrixRecordTest {
 
         System.out.println();
 
+        /*
         int rows = assessmentGrades.length;
         int cols = assessmentGrades[0].length;
         for(int i = 0; i<rows; i++)
@@ -47,7 +48,7 @@ public class ContinuousMatrixRecordTest {
             }
             System.out.println();
         }
-
+*/
 
 
         assertEquals(5, assessmentGrades.length);

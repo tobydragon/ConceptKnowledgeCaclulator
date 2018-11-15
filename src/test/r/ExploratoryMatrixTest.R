@@ -8,12 +8,13 @@ calculateExploratoryMatrixTest <- function(){
 	
 	#CSV test data
 	
-	data = read.csv("/Users/bleblanc2/Documents/AnalysisExample1copy.csv", sep=",", header = FALSE)
-	data <- (t(data))
+	#data = read.csv("/Users/bleblanc2/Documents/AnalysisExample1copy.csv", sep=",", header = FALSE)
+	#data <- (t(data))
 	#print(data)
 	
-	#data <- spss.get("/Users/bleblanc2/Documents/AthleticsData.sav")
-	#print(data)
+	data <- spss.get("/Users/bleblanc2/Documents/AthleticsData.sav")
+	#data <- t(data)
+	print(data)
 	 
 	
 	factorMatrix <- calculateExploratoryMatrix(data)
@@ -66,8 +67,19 @@ getCleanedMatrixTest <- function(){
 	}
 }
 
+
+#TEST
+calculateConfirmatoryMatrixTest <- function(){
+	data = read.csv("/Users/bleblanc2/Documents/AnalysisExample1copy.csv", sep=",", header = FALSE)
+	
+	modelString <- ("Loops -> Intro CS, theta01, NA \n If Statements -> Intro CS, theta02, NA\nBoolean Expressions -> If Statements, theta03, NA\nWhile Loops -> Loops, theta04, NA\nFor Loops -> Loops, theta05, NA\nBoolean Expressions -> While Loops")
+	print(modelString)
+	
+}
+
 source("/Users/bleblanc2/IdeaProjects/tecmap/src/main/r/ExploratoryMatrix.R")
 
 #getCleanedMatrixTest()
 #findFactorCountTest()
 calculateExploratoryMatrixTest()
+#calculateConfirmatoryMatrixTest()

@@ -68,4 +68,18 @@ calculateExploratoryMatrix <- function(data){
 	return(factorMatrix)
 }
 
+calculateConfirmatoryMatrix <- function(data, modelFile){
+	library(sem)
+	library(semPlot)
+	library(stringr)
+	library(readr)
+	
+	model.txt <- readLines(modelFile)
+	data.dhp <- specifyModel(text=model.txt)
+	dataCorrelation <- cor(data)
+	dataSem.dhp <- sem(data.dhp, dataCorrelation, nrow(data))
+	resultMatrix <- dataSem.dhp$A
+	return(resultMatrix)
+}
+
 

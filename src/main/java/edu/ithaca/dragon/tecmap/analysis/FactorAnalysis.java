@@ -475,7 +475,7 @@ public class FactorAnalysis implements FactorAnalysisAPI{
 
     }
 
-    //TODO: Comments in function tell the structure of the function
+
     public static ContinuousMatrixRecord newCalculateExploratoryMatrix(ContinuousMatrixRecord assessmentMatrix)throws Exception{
         RCaller rCaller = RCallerVariable();
         rCaller.redirectROutputToStream(System.out);
