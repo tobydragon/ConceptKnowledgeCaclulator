@@ -52,7 +52,6 @@ public class ContinuousAssessmentMatrixTest {
         double[][] assessmentGrades = matrix.getStudentAssessmentGrades();
 
 
-
         assertEquals(10, assessmentGrades.length);
         assertEquals(6, assessmentGrades[0].length);
         //Top left corner should be s01's Q1 grade (which is 0.5)

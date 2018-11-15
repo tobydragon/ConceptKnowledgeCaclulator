@@ -30,14 +30,32 @@ public class ContinuousMatrixRecordTest {
 
         double[][] assessmentGrades = matrix.getDataMatrix();
 
+        List<String> students = matrix.getRowIds();
+        for(String i:students){
+            System.out.print(i + " ");
+        }
+
+        System.out.println();
+
+        int rows = assessmentGrades.length;
+        int cols = assessmentGrades[0].length;
+        for(int i = 0; i<rows; i++)
+        {
+            for(int j = 0; j<cols; j++)
+            {
+                System.out.print(assessmentGrades[i][j] + "  ");
+            }
+            System.out.println();
+        }
+
 
 
         assertEquals(5, assessmentGrades.length);
         assertEquals(7, assessmentGrades[0].length);
         //Top left corner should be s01's Q1 grade (which is 0.5)
-        //assertEquals(0.5, assessmentGrades[0][0]);
-        //s06 is missing the HW5 grade (bottom right corner), so should be 0
-        //assertEquals(0, assessmentGrades[9][5]);
+        assertEquals(0.9, assessmentGrades[0][0]);
+        assertEquals(0.252, assessmentGrades[3][5]);
+        assertEquals(.95, assessmentGrades[4][6]);
     }
 
 

@@ -28,34 +28,4 @@
   "conceptIds" : [ "Intro CS"],
   "dataImportance" : 0.0,
   "maxPossibleKnowledgeEstimate" : 100.0
-}, {
-  "learningResourceId" : "HW1",
-  "resourceTypes" : [ "ASSESSMENT" ],
-  "conceptIds" : [ "Boolean Expressions"],
-  "dataImportance" : 0.0,
-  "maxPossibleKnowledgeEstimate" : 1.0
-}, {
-  "learningResourceId" : "HW2",
-  "resourceTypes" : [ "ASSESSMENT" ],
-  "conceptIds" : [ "Boolean Expressions"],
-  "dataImportance" : 0.0,
-  "maxPossibleKnowledgeEstimate" : 5.0
-}, {
-  "learningResourceId" : "HW3",
-  "resourceTypes" : [ "ASSESSMENT" ],
-  "conceptIds" : [ "If Statements"],
-  "dataImportance" : 0.0,
-  "maxPossibleKnowledgeEstimate" : 2.0
-}, {
-  "learningResourceId" : "HW4",
-  "resourceTypes" : [ "ASSESSMENT" ],
-  "conceptIds" : [ "While Loops"],
-  "dataImportance" : 0.0,
-  "maxPossibleKnowledgeEstimate" : 1.0
-}, {
-  "learningResourceId" : "HW5",
-  "resourceTypes" : [ "ASSESSMENT" ],
-  "conceptIds" : [ "For Loops"],
-  "dataImportance" : 0.0,
-  "maxPossibleKnowledgeEstimate" : 1.0
-} ]
+}]

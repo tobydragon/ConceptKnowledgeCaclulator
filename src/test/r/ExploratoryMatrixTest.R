@@ -3,13 +3,14 @@ calculateExploratoryMatrixTest <- function(){
 	
 	#Hardcoded matrix test data
 	
-	data <- matrix(c(.3,.43,.48,.2, .2,.2,.2,.2, .7,.9,.83,.6, .34,.27,.11,.10, .45,.43,.3,.20, .21,.25,.16,.22, .51,.7,.6,.8, .46,.32,.5,.8), nrow=4, ncol=8)
-	data <- as.data.frame(t(data))
+	#data <- matrix(c(.3,.43,.48,.2, .2,.2,.2,.2, .7,.9,.83,.6, .34,.27,.11,.10, .45,.43,.3,.20, .21,.25,.16,.22, .51,.7,.6,.8, .46,.32,.5,.8), nrow=4, ncol=8)
+	#data <- as.data.frame(t(data))
 	
 	#CSV test data
 	
-	#data = read.csv("/Users/bleblanc2/Documents/randomTestData.csv", sep=",", header = TRUE)
-	print(data)
+	data = read.csv("/Users/bleblanc2/Documents/AnalysisExample1copy.csv", sep=",", header = FALSE)
+	data <- (t(data))
+	#print(data)
 	
 	#data <- spss.get("/Users/bleblanc2/Documents/AthleticsData.sav")
 	#print(data)

@@ -47,7 +47,7 @@ public class FactorAnalysisTest {
             //System.out.println(testGradeMatrix[1][0]);
             //System.out.println(testGradeMatrix[0][1]);
 
-
+            /*
             int rows = testGradeMatrix.length;
             int cols = testGradeMatrix[0].length;
             for(int i = 0; i<rows; i++)
@@ -58,13 +58,13 @@ public class FactorAnalysisTest {
                 }
                 System.out.println();
             }
-
+            */
 
             ContinuousMatrixRecord factorMatrix = FactorAnalysis.newCalculateExploratoryMatrix(assessmentMatrix);
             double[][] data = factorMatrix.getDataMatrix();
 
 
-            assertEquals(data[0][0], .8, .2);
+            assertEquals(.134, data[0][0], .05);
 
         }catch (Exception e){
             Assert.fail();
