@@ -1,18 +1,16 @@
 package edu.ithaca.dragon.tecmap.io.reader;
 
-import edu.ithaca.dragon.tecmap.io.reader.CSVReader;
-
 import java.io.IOException;
 import java.util.List;
 
 /**
  *This is tha child class for zybooks files, with its specific function for reading in the student names
- * it will call super to the parent class, CSVReader, and pass the filename and the specific gradeColumnIndexMark.
+ * it will call super to the parent class, TecmapCSVReader, and pass the filename and the specific gradeColumnIndexMark.
  *
  * Created by Ryan on 10/4/2017.
  */
 
-public class ZybooksReader extends CSVReader {
+public class ZybooksReader extends TecmapCSVReader {
     public ZybooksReader(String filename)throws IOException{
         super(filename, 5);
     }

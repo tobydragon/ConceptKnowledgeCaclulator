@@ -3,7 +3,7 @@ package edu.ithaca.dragon.tecmap.conceptgraph.eval;
 import com.github.rcaller.rstuff.*;
 import com.github.rcaller.util.Globals;
 import edu.ithaca.dragon.tecmap.Settings;
-import edu.ithaca.dragon.tecmap.io.reader.CSVReader;
+import edu.ithaca.dragon.tecmap.io.reader.TecmapCSVReader;
 import edu.ithaca.dragon.tecmap.io.reader.SakaiReader;
 import edu.ithaca.dragon.tecmap.learningresource.AssessmentItem;
 import org.junit.Assert;
@@ -27,7 +27,7 @@ public class JavaToRConversionTest {
 
         String file = Settings.TEST_RESOURCE_DIR + "ManuallyCreated/partialComplexRealitsticAssessment.csv";
         try {
-            CSVReader data = new SakaiReader(file);
+            TecmapCSVReader data = new SakaiReader(file);
             List<AssessmentItem> gotoMatrix = data.getManualGradedLearningObjects();
             KnowledgeEstimateMatrix newMatrix = new KnowledgeEstimateMatrix(gotoMatrix);
             double[][] struct = newMatrix.getStudentKnowledgeEstimates();

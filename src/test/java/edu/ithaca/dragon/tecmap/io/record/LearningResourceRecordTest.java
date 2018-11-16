@@ -3,7 +3,7 @@ package edu.ithaca.dragon.tecmap.io.record;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import edu.ithaca.dragon.tecmap.Settings;
-import edu.ithaca.dragon.tecmap.io.reader.CSVReader;
+import edu.ithaca.dragon.tecmap.io.reader.TecmapCSVReader;
 import edu.ithaca.dragon.tecmap.io.reader.SakaiReader;
 import edu.ithaca.dragon.tecmap.learningresource.AssessmentItem;
 import edu.ithaca.dragon.tecmap.learningresource.LearningMaterial;
@@ -182,7 +182,7 @@ public class LearningResourceRecordTest {
     @Test
     public void createLearningObjectLinkRecordsTest(){
         try {
-            CSVReader test = new SakaiReader(Settings.TEST_RESOURCE_DIR + "ManuallyCreated/complexRealisticAssessment.csv");
+            TecmapCSVReader test = new SakaiReader(Settings.TEST_RESOURCE_DIR + "ManuallyCreated/complexRealisticAssessment.csv");
             Collection<AssessmentItem> list = test.getManualGradedLearningObjects();
             List<AssessmentItem> list2 = test.getManualGradedLearningObjects();
             List<LearningResourceRecord> lolrList = LearningResourceRecord.createLearningResourceRecordsFromAssessmentItems(list);

@@ -1,7 +1,7 @@
 package edu.ithaca.dragon.tecmap.conceptgraph.eval;
 
 import edu.ithaca.dragon.tecmap.Settings;
-import edu.ithaca.dragon.tecmap.io.reader.CSVReader;
+import edu.ithaca.dragon.tecmap.io.reader.TecmapCSVReader;
 import edu.ithaca.dragon.tecmap.io.reader.SakaiReader;
 import edu.ithaca.dragon.tecmap.learningresource.AssessmentItem;
 import org.junit.Assert;
@@ -28,7 +28,7 @@ public class KnowledgeEstimateMatrixTest {
         String file = Settings.TEST_RESOURCE_DIR + "ManuallyCreated/complexRealisticAssessment.csv";
 
         try {
-            CSVReader data = new SakaiReader(file);
+            TecmapCSVReader data = new SakaiReader(file);
             List<AssessmentItem> gotoMatrix = data.getManualGradedLearningObjects();
             KnowledgeEstimateMatrix newMatrix = new KnowledgeEstimateMatrix(gotoMatrix);
             double[][] myMatrix = newMatrix.getStudentKnowledgeEstimates();
@@ -77,7 +77,7 @@ public class KnowledgeEstimateMatrixTest {
     @Test
     public void getAssessmentIdList() throws IOException{
         String file = Settings.DEFAULT_TEST_DATASTORE_PATH + "Cs1ExamplePrediction/Cs1ExampleAssessments.csv";
-        CSVReader data = new SakaiReader(file);
+        TecmapCSVReader data = new SakaiReader(file);
         List<AssessmentItem> gotoMatrix = data.getManualGradedLearningObjects();
         KnowledgeEstimateMatrix newMatrix = new KnowledgeEstimateMatrix(gotoMatrix);
 
@@ -92,7 +92,7 @@ public class KnowledgeEstimateMatrixTest {
     @Test
     public void createMatrixWithRepeatedAssessmentItems() throws IOException {
         String file = Settings.DEFAULT_TEST_DATASTORE_PATH + "Cs1Example/Cs1ExampleAssessment1.csv";
-        CSVReader data = new SakaiReader(file);
+        TecmapCSVReader data = new SakaiReader(file);
         List<AssessmentItem> assessmentItems = data.getManualGradedLearningObjects();
         file = Settings.DEFAULT_TEST_DATASTORE_PATH + "Cs1Example/Cs1ExampleAssessment2.csv";
         data = new SakaiReader(file);

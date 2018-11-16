@@ -9,7 +9,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * This class is a tool box class for CSV reader, these static functions are called by CSVReader
+ * This class is a tool box class for CSV reader, these static functions are called by TecmapCSVReader
  * to to data specific and line reading tasks.
  * Created by Ryan on 10/25/2017.
  */

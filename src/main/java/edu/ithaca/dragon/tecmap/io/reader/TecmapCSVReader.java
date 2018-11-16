@@ -1,7 +1,7 @@
 package edu.ithaca.dragon.tecmap.io.reader;
 
 /**
- * CSVReader is the parent function that is responsible for the reading in CSV files, it is created when
+ * TecmapCSVReader is the parent function that is responsible for the reading in CSV files, it is created when
  * a child class calls to it giving file specific parameters
  * Created by willsuchanek on 3/6/17.
  */
@@ -19,8 +19,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-public abstract class CSVReader {
-    static Logger logger = LogManager.getLogger(CSVReader.class);
+public abstract class TecmapCSVReader {
+    static Logger logger = LogManager.getLogger(TecmapCSVReader.class);
 
     String filename;
     BufferedReader csvBuffer = null;
@@ -36,7 +36,7 @@ public abstract class CSVReader {
      * @param filename
      * @param gradeStartCoulmnIndex
      */
-    public CSVReader(String filename, int gradeStartCoulmnIndex)throws IOException{
+    public TecmapCSVReader(String filename, int gradeStartCoulmnIndex)throws IOException{
         this.filename = filename;
         manualGradedResponseList = new ArrayList<>();
         assessmentItemList = new ArrayList<>();

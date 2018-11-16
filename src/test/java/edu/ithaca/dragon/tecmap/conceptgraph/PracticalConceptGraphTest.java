@@ -3,7 +3,7 @@ package edu.ithaca.dragon.tecmap.conceptgraph;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import edu.ithaca.dragon.tecmap.Settings;
-import edu.ithaca.dragon.tecmap.io.reader.CSVReader;
+import edu.ithaca.dragon.tecmap.io.reader.TecmapCSVReader;
 import edu.ithaca.dragon.tecmap.io.reader.SakaiReader;
 import edu.ithaca.dragon.tecmap.io.record.ConceptGraphRecord;
 import edu.ithaca.dragon.tecmap.io.record.LearningResourceRecord;
@@ -26,13 +26,13 @@ public class PracticalConceptGraphTest {
 
         graphMapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
         try{
-        CSVReader csvReader = new SakaiReader(TEST_DIR+"basicRealisticAssessment.csv");
+        TecmapCSVReader tecmapCsvReader = new SakaiReader(TEST_DIR+"basicRealisticAssessment.csv");
 
 
             ConceptGraphRecord graphRecord = ConceptGraphRecord.buildFromJson(TEST_DIR+"mediumRealisticConceptGraph.json");
 
             List<LearningResourceRecord> LOLRlist = LearningResourceRecord.createLearningResourceRecordsFromJsonFile(TEST_DIR + "mediumRealisticResource.json");
-            ConceptGraph graph = new ConceptGraph(graphRecord, LOLRlist, csvReader.getManualGradedResponses());
+            ConceptGraph graph = new ConceptGraph(graphRecord, LOLRlist, tecmapCsvReader.getManualGradedResponses());
 
             ObjectMapper mapper = new ObjectMapper();
             mapper.writeValue(new File(Settings.TEST_RESOURCE_DIR + "practicalExamples/SystemCreated/blankRealisticExample.json"), TreeConverter.makeTreeCopy(graph).buildConceptGraphRecord());
@@ -62,7 +62,7 @@ public class PracticalConceptGraphTest {
 
         graphMapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
         try{
-        CSVReader csvReader = new SakaiReader(Settings.TEST_RESOURCE_DIR + "ManuallyCreated/basicRealisticAssessment.csv");
+        TecmapCSVReader tecmapCsvReader = new SakaiReader(Settings.TEST_RESOURCE_DIR + "ManuallyCreated/basicRealisticAssessment.csv");
 
 
             ConceptGraphRecord graphRecord = ConceptGraphRecord.buildFromJson(Settings.TEST_RESOURCE_DIR + "ManuallyCreated/basicRealisticConceptGraph.json");
@@ -70,7 +70,7 @@ public class PracticalConceptGraphTest {
             List<LearningResourceRecord> LOLRlist = LearningResourceRecord.createLearningResourceRecordsFromJsonFile(Settings.TEST_RESOURCE_DIR + "ManuallyCreated/basicRealisticResource.json");
             ConceptGraph graph = new ConceptGraph(graphRecord, LOLRlist);
 
-            CohortConceptGraphs gcg = new CohortConceptGraphs(graph,csvReader.getManualGradedResponses());
+            CohortConceptGraphs gcg = new CohortConceptGraphs(graph, tecmapCsvReader.getManualGradedResponses());
 
             ConceptGraph testGraph = gcg.getAvgGraph();
 
@@ -102,7 +102,7 @@ public class PracticalConceptGraphTest {
 
         graphMapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
         try{
-        CSVReader csvReader = new SakaiReader(TEST_DIR+"advancedRealisticAssessment.csv");
+        TecmapCSVReader tecmapCsvReader = new SakaiReader(TEST_DIR+"advancedRealisticAssessment.csv");
 
 
             ConceptGraphRecord graphRecord = ConceptGraphRecord.buildFromJson(TEST_DIR+"mediumRealisticConceptGraph.json");
@@ -110,7 +110,7 @@ public class PracticalConceptGraphTest {
             List<LearningResourceRecord> LOLRlist = LearningResourceRecord.createLearningResourceRecordsFromJsonFile(TEST_DIR + "mediumRealisticResource.json");
             ConceptGraph graph = new ConceptGraph(graphRecord, LOLRlist);
 
-            CohortConceptGraphs gcg = new CohortConceptGraphs(graph,csvReader.getManualGradedResponses());
+            CohortConceptGraphs gcg = new CohortConceptGraphs(graph, tecmapCsvReader.getManualGradedResponses());
             graph.calcDataImportance();
             graph.calcKnowledgeEstimates();
 
@@ -139,11 +139,11 @@ public class PracticalConceptGraphTest {
 
         graphMapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
         try{
-        CSVReader csvReader = new SakaiReader(TEST_DIR+"singleStudentRealisticAssessment.csv");
+        TecmapCSVReader tecmapCsvReader = new SakaiReader(TEST_DIR+"singleStudentRealisticAssessment.csv");
 
             ConceptGraphRecord graphRecord = ConceptGraphRecord.buildFromJson(TEST_DIR+"mediumRealisticConceptGraph.json");
             List<LearningResourceRecord> LOLRlist = LearningResourceRecord.createLearningResourceRecordsFromJsonFile(TEST_DIR+"mediumRealisticResource.json");
-            ConceptGraph graph = new ConceptGraph(graphRecord, LOLRlist, csvReader.getManualGradedResponses());
+            ConceptGraph graph = new ConceptGraph(graphRecord, LOLRlist, tecmapCsvReader.getManualGradedResponses());
             graph.calcDataImportance();
             graph.calcKnowledgeEstimates();
 

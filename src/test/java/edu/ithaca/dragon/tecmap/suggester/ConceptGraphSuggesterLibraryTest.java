@@ -2,7 +2,7 @@ package edu.ithaca.dragon.tecmap.suggester;
 
 import edu.ithaca.dragon.tecmap.Settings;
 import edu.ithaca.dragon.tecmap.conceptgraph.*;
-import edu.ithaca.dragon.tecmap.io.reader.CSVReader;
+import edu.ithaca.dragon.tecmap.io.reader.TecmapCSVReader;
 import edu.ithaca.dragon.tecmap.io.record.ConceptGraphRecord;
 import edu.ithaca.dragon.tecmap.io.record.LearningResourceRecord;
 import edu.ithaca.dragon.tecmap.io.reader.SakaiReader;
@@ -85,8 +85,8 @@ public class ConceptGraphSuggesterLibraryTest {
         ConceptGraph graph = new ConceptGraph(structureRecord, linkRecord);
 
         //create the data to be used to create and populate the graph copies
-        CSVReader csvReader = new SakaiReader(Settings.TEST_RESOURCE_DIR + "ManuallyCreated/exampleDataAssessment.csv");
-        List<AssessmentItemResponse> assessments = csvReader.getManualGradedResponses();
+        TecmapCSVReader tecmapCsvReader = new SakaiReader(Settings.TEST_RESOURCE_DIR + "ManuallyCreated/exampleDataAssessment.csv");
+        List<AssessmentItemResponse> assessments = tecmapCsvReader.getManualGradedResponses();
 
         //create the average and individual graphs
         cohortConceptGraphs = new CohortConceptGraphs(graph, assessments);
@@ -113,8 +113,8 @@ public class ConceptGraphSuggesterLibraryTest {
         ConceptGraph graph = new ConceptGraph(structureRecord, linkRecord);
 
         //create the data to be used to create and populate the graph copies
-        CSVReader csvReader = new SakaiReader(Settings.TEST_RESOURCE_DIR + "ManuallyCreated/exampleDataAssessment.csv");
-        List<AssessmentItemResponse> assessments = csvReader.getManualGradedResponses();
+        TecmapCSVReader tecmapCsvReader = new SakaiReader(Settings.TEST_RESOURCE_DIR + "ManuallyCreated/exampleDataAssessment.csv");
+        List<AssessmentItemResponse> assessments = tecmapCsvReader.getManualGradedResponses();
 
         //create the average and individual graphs
         cohortConceptGraphs = new CohortConceptGraphs(graph, assessments);
@@ -255,8 +255,8 @@ public class ConceptGraphSuggesterLibraryTest {
         ConceptGraph graph = new ConceptGraph(structureRecord, linkRecord);
 
         //create the data to be used to create and populate the graph copies
-        CSVReader csvReader = new SakaiReader(Settings.TEST_RESOURCE_DIR + "ManuallyCreated/exampleDataAssessment.csv");
-        List<AssessmentItemResponse> assessments = csvReader.getManualGradedResponses();
+        TecmapCSVReader tecmapCsvReader = new SakaiReader(Settings.TEST_RESOURCE_DIR + "ManuallyCreated/exampleDataAssessment.csv");
+        List<AssessmentItemResponse> assessments = tecmapCsvReader.getManualGradedResponses();
 
         //create the average and individual graphs
         cohortConceptGraphs = new CohortConceptGraphs(graph, assessments);

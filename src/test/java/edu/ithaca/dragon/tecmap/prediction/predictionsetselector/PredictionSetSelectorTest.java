@@ -2,7 +2,7 @@ package edu.ithaca.dragon.tecmap.prediction.predictionsetselector;
 
 import edu.ithaca.dragon.tecmap.Settings;
 import edu.ithaca.dragon.tecmap.conceptgraph.ConceptGraph;
-import edu.ithaca.dragon.tecmap.io.reader.CSVReader;
+import edu.ithaca.dragon.tecmap.io.reader.TecmapCSVReader;
 import edu.ithaca.dragon.tecmap.io.reader.SakaiReader;
 import edu.ithaca.dragon.tecmap.io.record.ConceptGraphRecord;
 import edu.ithaca.dragon.tecmap.io.record.LearningResourceRecord;
@@ -29,7 +29,7 @@ public class PredictionSetSelectorTest {
     @Before
     public void setup() throws IOException {
         String filename = Settings.DEFAULT_TEST_DATASTORE_PATH + "Cs1ExamplePrediction/Cs1ExampleAssessments.csv";
-        CSVReader data = new SakaiReader(filename);
+        TecmapCSVReader data = new SakaiReader(filename);
         List<AssessmentItem> assessmentItems = data.getManualGradedLearningObjects();
 
         matrix = new ContinuousAssessmentMatrix(assessmentItems);

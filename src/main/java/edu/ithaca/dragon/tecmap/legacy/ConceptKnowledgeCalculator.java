@@ -4,7 +4,7 @@ import edu.ithaca.dragon.tecmap.Settings;
 import edu.ithaca.dragon.tecmap.conceptgraph.*;
 import edu.ithaca.dragon.tecmap.conceptgraph.eval.KnowledgeEstimateMatrix;
 import edu.ithaca.dragon.tecmap.conceptgraph.eval.RFunctions;
-import edu.ithaca.dragon.tecmap.io.reader.CSVReader;
+import edu.ithaca.dragon.tecmap.io.reader.TecmapCSVReader;
 import edu.ithaca.dragon.tecmap.io.reader.ReaderTools;
 import edu.ithaca.dragon.tecmap.io.reader.SakaiReader;
 import edu.ithaca.dragon.tecmap.io.record.CohortConceptGraphsRecord;
@@ -167,8 +167,8 @@ public class ConceptKnowledgeCalculator implements ConceptKnowledgeCalculatorAPI
         List<AssessmentItemResponse> assessments = new ArrayList<>();
 
         for (String aname: assessmentFiles){
-            CSVReader csvReader = new SakaiReader(aname);
-            List<AssessmentItemResponse> temp = csvReader.getManualGradedResponses();
+            TecmapCSVReader tecmapCsvReader = new SakaiReader(aname);
+            List<AssessmentItemResponse> temp = tecmapCsvReader.getManualGradedResponses();
             assessments.addAll(temp);
         }
 
@@ -681,8 +681,8 @@ public class ConceptKnowledgeCalculator implements ConceptKnowledgeCalculatorAPI
 
     @Override
     public boolean assessmentIsValid(String name) throws IOException {
-        CSVReader csvReader = new SakaiReader(name);
-        if (csvReader.getManualGradedResponses().size()>0){
+        TecmapCSVReader tecmapCsvReader = new SakaiReader(name);
+        if (tecmapCsvReader.getManualGradedResponses().size()>0){
             return true;
         }else{
             return false;

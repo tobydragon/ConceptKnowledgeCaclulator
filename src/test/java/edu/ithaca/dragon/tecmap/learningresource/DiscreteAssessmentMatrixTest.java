@@ -1,7 +1,7 @@
 package edu.ithaca.dragon.tecmap.learningresource;
 
 import edu.ithaca.dragon.tecmap.Settings;
-import edu.ithaca.dragon.tecmap.io.reader.CSVReader;
+import edu.ithaca.dragon.tecmap.io.reader.TecmapCSVReader;
 import edu.ithaca.dragon.tecmap.io.reader.SakaiReader;
 import org.junit.Before;
 import org.junit.Test;
@@ -20,7 +20,7 @@ public class DiscreteAssessmentMatrixTest {
     @Before
     public void setup() throws IOException {
         String testFile = Settings.DEFAULT_TEST_DATASTORE_PATH + "Cs1ExamplePrediction/Cs1ExampleAssessments.csv";
-        CSVReader data = new SakaiReader(testFile);
+        TecmapCSVReader data = new SakaiReader(testFile);
         assessmentItems = data.getManualGradedLearningObjects();
 
         defaultGroupings = GradeDiscreteGroupings.buildFromJson(Settings.DEFAULT_TEST_PREDICTION_PATH + "discreteGroupings.json");

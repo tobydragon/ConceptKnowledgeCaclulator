@@ -2,7 +2,7 @@ package edu.ithaca.dragon.tecmap.prediction;
 
 import edu.ithaca.dragon.tecmap.Settings;
 import edu.ithaca.dragon.tecmap.conceptgraph.ConceptGraph;
-import edu.ithaca.dragon.tecmap.io.reader.CSVReader;
+import edu.ithaca.dragon.tecmap.io.reader.TecmapCSVReader;
 import edu.ithaca.dragon.tecmap.io.reader.SakaiReader;
 import edu.ithaca.dragon.tecmap.io.record.ConceptGraphRecord;
 import edu.ithaca.dragon.tecmap.io.record.LearningResourceRecord;
@@ -37,7 +37,7 @@ public class PredictorEffectivenessTest {
     @Before
     public void setup() throws IOException {
         String testFile = Settings.DEFAULT_TEST_DATASTORE_PATH + "Cs1ExamplePrediction/Cs1ExampleAssessments.csv";
-        CSVReader data = new SakaiReader(testFile);
+        TecmapCSVReader data = new SakaiReader(testFile);
         List<AssessmentItem> assessments = data.getManualGradedLearningObjects();
 
         continuousAssessmentMatrix = new ContinuousAssessmentMatrix(assessments);

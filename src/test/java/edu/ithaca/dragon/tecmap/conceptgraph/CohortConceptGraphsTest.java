@@ -1,7 +1,7 @@
 package edu.ithaca.dragon.tecmap.conceptgraph;
 
 import edu.ithaca.dragon.tecmap.Settings;
-import edu.ithaca.dragon.tecmap.io.reader.CSVReader;
+import edu.ithaca.dragon.tecmap.io.reader.TecmapCSVReader;
 import edu.ithaca.dragon.tecmap.io.reader.SakaiReader;
 import edu.ithaca.dragon.tecmap.io.record.CohortConceptGraphsRecord;
 import edu.ithaca.dragon.tecmap.io.record.ConceptGraphRecord;
@@ -144,10 +144,10 @@ public class CohortConceptGraphsTest {
     @Test
     public void buildCohortConceptTreeRecordComplexTest() {
         try{
-        CSVReader csvReader = new SakaiReader(Settings.TEST_RESOURCE_DIR + "ManuallyCreated/basicRealisticAssessment.csv");
+        TecmapCSVReader tecmapCsvReader = new SakaiReader(Settings.TEST_RESOURCE_DIR + "ManuallyCreated/basicRealisticAssessment.csv");
             ConceptGraph  structure = new ConceptGraph(ConceptGraphRecord.buildFromJson(Settings.TEST_RESOURCE_DIR + "ManuallyCreated/basicRealisticConceptGraph.json"),
                     LearningResourceRecord.createLearningResourceRecordsFromJsonFile(Settings.TEST_RESOURCE_DIR + "ManuallyCreated/basicRealisticResource.json" ));
-            CohortConceptGraphs group = new CohortConceptGraphs(structure, csvReader.getManualGradedResponses());
+            CohortConceptGraphs group = new CohortConceptGraphs(structure, tecmapCsvReader.getManualGradedResponses());
 
             CohortConceptGraphsRecord record = group.buildCohortConceptTreeRecord();
             matchingIdsForTreeCopies(group.getAvgGraph(), record.getGraphRecords().get(0));
@@ -165,10 +165,10 @@ public class CohortConceptGraphsTest {
 	@Test
     public void onlyOneLearningObject(){
         try {
-            CSVReader csvReader = new SakaiReader(Settings.TEST_RESOURCE_DIR + "ManuallyCreated/basicRealisticAssessment.csv");
+            TecmapCSVReader tecmapCsvReader = new SakaiReader(Settings.TEST_RESOURCE_DIR + "ManuallyCreated/basicRealisticAssessment.csv");
             ConceptGraph graph = new ConceptGraph(ConceptGraphRecord.buildFromJson(Settings.TEST_RESOURCE_DIR + "ManuallyCreated/basicRealisticConceptGraph.json"),
                     LearningResourceRecord.createLearningResourceRecordsFromJsonFile(Settings.TEST_RESOURCE_DIR + "ManuallyCreated/basicRealisticResource.json"));
-            CohortConceptGraphs gcg = new CohortConceptGraphs(graph,csvReader.getManualGradedResponses());
+            CohortConceptGraphs gcg = new CohortConceptGraphs(graph, tecmapCsvReader.getManualGradedResponses());
             ConceptGraph testGraph = gcg.getAvgGraph();
 
             ConceptNode groupNode = testGraph.findNodeById("Boolean");
@@ -184,16 +184,16 @@ public class CohortConceptGraphsTest {
 	@Test
     public void calcKnowledgeEstimateSameInCohortAndConceptGraphsTest(){
         try {
-            CSVReader csvReader = new SakaiReader(Settings.TEST_RESOURCE_DIR + "ManuallyCreated/basicRealisticAssessment.csv");
+            TecmapCSVReader tecmapCsvReader = new SakaiReader(Settings.TEST_RESOURCE_DIR + "ManuallyCreated/basicRealisticAssessment.csv");
 
             ConceptGraph singleGraph = new ConceptGraph(ConceptGraphRecord.buildFromJson(Settings.TEST_RESOURCE_DIR + "ManuallyCreated/basicRealisticConceptGraph.json"),
                     LearningResourceRecord.createLearningResourceRecordsFromJsonFile(Settings.TEST_RESOURCE_DIR + "ManuallyCreated/basicRealisticResource.json"),
-                    csvReader.getManualGradedResponses());
+                    tecmapCsvReader.getManualGradedResponses());
             singleGraph.calcKnowledgeEstimates();
 
             ConceptGraph graph = new ConceptGraph(ConceptGraphRecord.buildFromJson(Settings.TEST_RESOURCE_DIR + "ManuallyCreated/basicRealisticConceptGraph.json"),
                     LearningResourceRecord.createLearningResourceRecordsFromJsonFile(Settings.TEST_RESOURCE_DIR + "ManuallyCreated/basicRealisticResource.json"));
-            CohortConceptGraphs gcg = new CohortConceptGraphs(graph,csvReader.getManualGradedResponses());
+            CohortConceptGraphs gcg = new CohortConceptGraphs(graph, tecmapCsvReader.getManualGradedResponses());
             ConceptGraph testGraph = gcg.getAvgGraph();
 
             ConceptNode singleNode = singleGraph.findNodeById("Boolean");

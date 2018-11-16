@@ -1,7 +1,7 @@
 package edu.ithaca.dragon.tecmap.prediction.predictor;
 
 import edu.ithaca.dragon.tecmap.Settings;
-import edu.ithaca.dragon.tecmap.io.reader.CSVReader;
+import edu.ithaca.dragon.tecmap.io.reader.TecmapCSVReader;
 import edu.ithaca.dragon.tecmap.io.reader.SakaiReader;
 import edu.ithaca.dragon.tecmap.learningresource.AssessmentItem;
 import edu.ithaca.dragon.tecmap.learningresource.ContinuousAssessmentMatrix;
@@ -24,7 +24,7 @@ public class SimplePredictorTest {
     @Before
     public void setup() throws IOException {
         String testFile = Settings.DEFAULT_TEST_DATASTORE_PATH + "Cs1ExamplePrediction/Cs1ExampleAssessments.csv";
-        CSVReader data = new SakaiReader(testFile);
+        TecmapCSVReader data = new SakaiReader(testFile);
         List<AssessmentItem> assessmentItemList = new ArrayList<>();
         assessmentItemList.addAll(data.getManualGradedLearningObjects());
 

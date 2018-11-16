@@ -15,7 +15,7 @@ import java.util.List;
  */
 
 // make pull request from dev to commaTest
-public class CSVReaderTest {
+public class TecmapCSVReaderTest {
     @Test
     public void createQuestionsTest() {
         String file = Settings.TEST_RESOURCE_DIR + "ManuallyCreated/complexRealisticAssessment.csv";

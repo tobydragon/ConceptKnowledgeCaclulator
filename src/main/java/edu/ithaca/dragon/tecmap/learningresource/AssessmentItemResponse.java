@@ -1,6 +1,6 @@
 package edu.ithaca.dragon.tecmap.learningresource;
 
-import edu.ithaca.dragon.tecmap.io.reader.CSVReader;
+import edu.ithaca.dragon.tecmap.io.reader.TecmapCSVReader;
 import edu.ithaca.dragon.tecmap.io.reader.SakaiReader;
 import edu.ithaca.dragon.tecmap.util.DataUtil;
 
@@ -83,8 +83,8 @@ public class AssessmentItemResponse {
     public static List<AssessmentItemResponse> createAssessmentItemResponses(List<String> assessmentFiles) throws IOException {
         List<AssessmentItemResponse> assessments = new ArrayList<>();
         for (String aname: assessmentFiles){
-            CSVReader csvReader = new SakaiReader(aname);
-            List<AssessmentItemResponse> temp = csvReader.getManualGradedResponses();
+            TecmapCSVReader tecmapCsvReader = new SakaiReader(aname);
+            List<AssessmentItemResponse> temp = tecmapCsvReader.getManualGradedResponses();
             assessments.addAll(temp);
         }
         return assessments;
