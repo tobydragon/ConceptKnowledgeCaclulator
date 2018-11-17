@@ -6,7 +6,7 @@ import java.io.File;
 import java.io.IOException;
 import java.util.*;
 
-public class SakaiAnonymizer {
+public class SakaiAnonymizer implements CsvProcessor{
 
     private int numToUseNext;
     private Map<String, String> realId2anonId;
@@ -18,7 +18,15 @@ public class SakaiAnonymizer {
         realname2anonName = new HashMap<>();
     }
 
-    public void anonymize(List<String[]> rows) throws IOException {
+    public static SakaiAnonymizer SakaiAnonymizerCreator(String filepathAndName) {
+        try {
+            return Json.fromJsonFile(filepathAndName, SakaiAnonymizer.class);
+        } catch (IOException e) {
+            return new SakaiAnonymizer();
+        }
+    }
+
+    public void anonymize(List<String[]> rows) {
         Collections.shuffle(rows.subList(1, rows.size()));
         for(String[] row : rows.subList(1, rows.size())){
             if (row.length >1) {
@@ -37,6 +45,26 @@ public class SakaiAnonymizer {
             numToUseNext++;
         }
         return anon;
+    }
+
+    @Override
+    public boolean shouldProcessFile(String filename) {
+        return filename.contains("removeNames");
+    }
+
+    @Override
+    public void processRows(List<String[]> rows) {
+        anonymize(rows);
+    }
+
+    @Override
+    public String createProcessedFilename(String origFilename) {
+        return origFilename.replace("removeNames", "anon");
+    }
+
+    @Override
+    public void writeToFile(String filepath) throws IOException {
+        Json.toJsonFile(filepath+this.getClass().getSimpleName()+".json", this);
     }
 
     public int getNumToUseNext() {
@@ -62,4 +90,6 @@ public class SakaiAnonymizer {
     public void setRealname2anonName(Map<String, String> realname2anonName) {
         this.realname2anonName = realname2anonName;
     }
+
+
 }

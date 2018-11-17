@@ -1,8 +1,9 @@
 package edu.ithaca.dragon.tecmap.io.reader;
 
+import java.io.IOException;
 import java.util.List;
 
-public class PointsOffConverter {
+public class PointsOffConverter implements CsvProcessor {
 
     public static void addPointTotalsToQuestionLabels(String[] questionLabelsRow, String[] pointTotalsRow){
         for(int colIdx=2; colIdx<questionLabelsRow.length; colIdx++){
@@ -31,5 +32,25 @@ public class PointsOffConverter {
         String[] newBlankRow = new String[1];
         newBlankRow[0]="";
         rows.set(1, newBlankRow );
+    }
+
+    @Override
+    public boolean shouldProcessFile(String filename) {
+        return filename.contains("pointsOff");
+    }
+
+    @Override
+    public void processRows(List<String[]> rows) {
+        convertFromPointsOffToTotalPoints(rows);
+    }
+
+    @Override
+    public String createProcessedFilename(String origFilename) {
+        return origFilename.replace("pointsOff", "totalPoints");
+    }
+
+    @Override
+    public void writeToFile(String filepath) throws IOException {
+
     }
 }
