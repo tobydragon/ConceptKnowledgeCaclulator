@@ -18,8 +18,7 @@ public class SakaiAnonymizer {
         realname2anonName = new HashMap<>();
     }
 
-    public void anonymize(String origSakaiFilename, String sakaiFilenameToCreate) throws IOException {
-        List<String[]> rows = CsvRepresentation.parseRowsFromFile(origSakaiFilename);
+    public void anonymize(List<String[]> rows) throws IOException {
         Collections.shuffle(rows.subList(1, rows.size()));
         for(String[] row : rows.subList(1, rows.size())){
             if (row.length >1) {
@@ -28,7 +27,6 @@ public class SakaiAnonymizer {
                 numToUseNext++;
             }
         }
-        CsvRepresentation.writeRowsToFile(rows, sakaiFilenameToCreate);
     }
 
     static String getAnonStr(String str, Map<String, String> real2anon, String prefixForNewStrs, int numToUseNext){
@@ -39,47 +37,6 @@ public class SakaiAnonymizer {
             numToUseNext++;
         }
         return anon;
-    }
-
-    public static void main(String[] args){
-        //create anonymizer, either new or from old file
-        SakaiAnonymizer anonymizer;
-        try {
-            anonymizer = Json.fromJsonFile(
-                    "src/main/resources/anonHere/anonymizer.json", SakaiAnonymizer.class);
-        } catch (IOException e) {
-            anonymizer = new SakaiAnonymizer();
-        }
-        //anonymize all files in folder
-        try {
-            for (String filename : allCsvFilesInDirectory("src/main/resources/anonHere/")) {
-                if (!filename.contains("anon")) {
-                    anonymizer.anonymize("src/main/resources/anonHere/"+filename,
-                            "src/main/resources/anonHere/"+filename.substring(0, filename.length() - 4) + "-anon.csv");
-                }
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        //write new anonymizer file
-        try {
-            Json.toJsonFile("src/main/resources/anonHere/anonymizer.json", anonymizer);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
-
-    }
-
-    private static List<String> allCsvFilesInDirectory(String directory) {
-        List<String> textFiles = new ArrayList<>();
-        File dir = new File(directory);
-        for (File file : dir.listFiles()) {
-            if (file.getName().toLowerCase().endsWith((".csv"))) {
-                textFiles.add(file.getName());
-            }
-        }
-        return textFiles;
     }
 
     public int getNumToUseNext() {

@@ -19,11 +19,12 @@ public class PointsOffConverter {
         String[] pointTotalsRow = rows.get(1);
         for (String[] studentRow : rows.subList(2, rows.size())){
             for(int colIdx=2; colIdx<studentRow.length; colIdx++){
-                try {
-                    studentRow[colIdx] = String.valueOf(Integer.valueOf(pointTotalsRow[colIdx])-Integer.valueOf(studentRow[colIdx]));
-                }
-                catch (NumberFormatException numberFormatException){
-                    studentRow[colIdx] = String.valueOf(Double.valueOf(pointTotalsRow[colIdx])-Double.valueOf(studentRow[colIdx]));
+                if (!studentRow[colIdx].equals("")) {
+                    try {
+                        studentRow[colIdx] = String.valueOf(Integer.valueOf(pointTotalsRow[colIdx]) - Integer.valueOf(studentRow[colIdx]));
+                    } catch (NumberFormatException numberFormatException) {
+                        studentRow[colIdx] = String.valueOf(Double.valueOf(pointTotalsRow[colIdx]) - Double.valueOf(studentRow[colIdx]));
+                    }
                 }
             }
         }
