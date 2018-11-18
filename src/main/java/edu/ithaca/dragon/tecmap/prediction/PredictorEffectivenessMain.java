@@ -79,7 +79,7 @@ public class PredictorEffectivenessMain {
 
     public static void main(String[] args) throws IOException {
         //Testing for COMP220 Data
-        ConceptGraph conceptGraph220 = PredictionController.getConceptGraph("comp220Dragon", Settings.DEFAULT_MAIN_DATASTORE_PATH);
+        ConceptGraph conceptGraph220 = PredictionController.getConceptGraph("comp220Dragon-2017", Settings.DEFAULT_MAIN_DATASTORE_PATH);
 
         GradeDiscreteGroupings defaultGroupings = GradeDiscreteGroupings.buildFromJson(Settings.DEFAULT_MAIN_PREDICTION_PATH + "discreteGroupings.json");
         GradeDiscreteGroupings atriskGroupings = GradeDiscreteGroupings.buildFromJson(Settings.DEFAULT_MAIN_PREDICTION_PATH + "atriskGroupings.json");

@@ -40,7 +40,7 @@ public class LivePredictionMain {
 
     public static void main(String[] args) throws IOException {
         //Will all have to be in the tecmap
-        ConceptGraph comp220 = PredictionController.getConceptGraph("comp220Dragon", Settings.DEFAULT_MAIN_DATASTORE_PATH);
+        ConceptGraph comp220 = PredictionController.getConceptGraph("comp220Dragon-2017", Settings.DEFAULT_MAIN_DATASTORE_PATH);
         GradeDiscreteGroupings defaultGroupings = GradeDiscreteGroupings.buildFromJson(Settings.DEFAULT_MAIN_PREDICTION_PATH + "discreteGroupings.json");
         GradeDiscreteGroupings atriskGroupings = GradeDiscreteGroupings.buildFromJson(Settings.DEFAULT_MAIN_PREDICTION_PATH + "atriskGroupings.json");
         predictorMain(comp220, atriskGroupings);
