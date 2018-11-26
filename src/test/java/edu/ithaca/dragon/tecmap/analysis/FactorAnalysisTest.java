@@ -11,10 +11,9 @@ import edu.ithaca.dragon.tecmap.io.record.ContinuousMatrixRecord;
 import edu.ithaca.dragon.tecmap.learningresource.AssessmentItem;
 import org.junit.Assert;
 import org.junit.Test;
-import org.junit.jupiter.api.Assertions;
 
-import javax.validation.constraints.AssertFalse;
-import java.io.IOException;
+
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -33,7 +32,7 @@ public class FactorAnalysisTest {
     public void newCalculateExploratoryMatrixTest() {
         try {
             TecmapDatastore tecmapDatastore = TecmapFileDatastore.buildFromJsonFile(Settings.DEFAULT_TEST_DATASTORE_PATH);
-            SuggestingTecmapAPI analysisExample = tecmapDatastore.retrieveTecmapForId("AnalysisExample");
+            SuggestingTecmapAPI analysisExample = tecmapDatastore.retrieveTecmapForId("DocExample");
             //SuggestingTecmapAPI notConnectedExample = tecmapDatastore.retrieveTecmapForId("Cs1ExampleAssessmentAdded");
 
             ConceptGraph acg = analysisExample.getAverageConceptGraph();
@@ -64,7 +63,9 @@ public class FactorAnalysisTest {
             double[][] data = factorMatrix.getDataMatrix();
 
 
-            assertEquals(.134, data[0][0], .05);
+            assertEquals(-.12, data[0][0], .05);
+            //Multiple factors
+            assertEquals(.58, data[2][0], .02);
 
         }catch (Exception e){
             Assert.fail();

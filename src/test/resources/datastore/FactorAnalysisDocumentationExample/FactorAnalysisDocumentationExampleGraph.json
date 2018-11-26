@@ -1,0 +1,22 @@
+{
+  "name" : "FactorAnalysisDocumentationExampleGraph",
+  "concepts": [{
+    "id": "Reaction Time"
+  }, {
+    "id": "Precision"
+  } , {
+    "id": "Misc"
+  } , {
+    "id": "Skill"
+  }],
+  "links": [{
+    "parent": "Skill",
+    "child": "Reaction Time"
+  }, {
+    "parent": "Skill",
+    "child": "Precision"
+  }, {
+    "parent": "Skill",
+    "child": "Misc"
+  }]
+}

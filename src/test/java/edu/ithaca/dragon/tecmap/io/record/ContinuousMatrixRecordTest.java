@@ -19,7 +19,7 @@ public class ContinuousMatrixRecordTest {
 
     @Before
     public void setup() throws IOException {
-        String testFile = Settings.DEFAULT_TEST_DATASTORE_PATH + "AnalysisExample/AnalysisExample1.csv";
+        String testFile = Settings.DEFAULT_TEST_DATASTORE_PATH + "AnalysisExample/AthleticsDataOnTecMap.csv";
         CSVReader data = new SakaiReader(testFile);
         assessmentItems = data.getManualGradedLearningObjects();
     }

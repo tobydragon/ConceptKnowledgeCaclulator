@@ -8,11 +8,10 @@ calculateExploratoryMatrixTest <- function(){
 	
 	#CSV test data
 	
-	#data = read.csv("/Users/bleblanc2/Documents/AnalysisExample1copy.csv", sep=",", header = FALSE)
-	#data <- (t(data))
+	data = read.csv("/Users/bleblanc2/Documents/AthleticsDataOnR.csv", sep=",", header = FALSE)
 	#print(data)
-	
-	data <- spss.get("/Users/bleblanc2/Documents/AthleticsData.sav")
+	data <- (t(data))
+	#data <- spss.get("/Users/bleblanc2/Documents/AthleticsData.sav")
 	#data <- t(data)
 	print(data)
 	 
