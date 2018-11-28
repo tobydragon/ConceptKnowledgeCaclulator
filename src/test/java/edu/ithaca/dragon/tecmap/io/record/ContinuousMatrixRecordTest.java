@@ -31,6 +31,7 @@ public class ContinuousMatrixRecordTest {
         double[][] assessmentGrades = matrix.getDataMatrix();
 
 
+        /*
         List<String> students = matrix.getRowIds();
         for(String i:students){
             System.out.print(i + " ");
@@ -49,7 +50,7 @@ public class ContinuousMatrixRecordTest {
             }
             System.out.println();
         }
-
+*/
 
 
         assertEquals(7, assessmentGrades.length);
