@@ -54,7 +54,7 @@ findFactorCount <-function(data){
 }
 
 calculateExploratoryMatrix <- function(data){
-	data <- as.data.frame(t(data))
+	#data <- as.data.frame(t(data))
 	cleanedData <- getCleanedMatrix(data)
 	if(ncol(cleanedData) > 2){
 		numOfFactors <- findFactorCount(cleanedData)

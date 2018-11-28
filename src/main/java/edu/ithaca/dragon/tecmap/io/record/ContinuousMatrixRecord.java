@@ -80,6 +80,7 @@ public class ContinuousMatrixRecord {
      * @param assessmentItems
      * @return 2d array of knowledge estimates
      */
+    /*
     //TODO: rowIds should match rows and assessments should match columns
     double[][] createMatrix(List<AssessmentItem> assessmentItems) {
         double[][] gradeMatrix = new double[this.assessmentIds.size()][this.rowIds.size()];
@@ -96,6 +97,34 @@ public class ContinuousMatrixRecord {
             studentsWithoutResponse.removeAll(studentsWithResponse);
             for (String studentId : studentsWithoutResponse) {
                 gradeMatrix[assessmentIndex][rowIds.indexOf(studentId)] = 0.0;
+            }
+        }
+
+        return gradeMatrix;
+    }
+*/
+    /**
+     * Creates a matrix of the continuous variable knowledge estimates for each assessment and user pair
+     * Follows the indices given from the assessmentItem and the studentId list
+     * If no response for a given student, defaults to an estimate of 0
+     * @param assessmentItems
+     * @return 2d array of knowledge estimates
+     */
+    double[][] createMatrix(List<AssessmentItem> assessmentItems) {
+        double[][] gradeMatrix = new double[this.rowIds.size()][this.assessmentIds.size()];
+        for (AssessmentItem columnItem : assessmentItems) {
+            int assessmentIndex = assessmentIds.indexOf(columnItem.getId());
+            List<String> studentsWithResponse = new ArrayList<>();
+            for (AssessmentItemResponse response : columnItem.getResponses()) {
+                String currUserId = response.getUserId();
+                int studentIndex = rowIds.indexOf(currUserId);
+                gradeMatrix[studentIndex][assessmentIndex] = response.calcKnowledgeEstimate();
+                studentsWithResponse.add(currUserId);
+            }
+            List<String> studentsWithoutResponse = new ArrayList<>(rowIds);
+            studentsWithoutResponse.removeAll(studentsWithResponse);
+            for (String studentId : studentsWithoutResponse) {
+                gradeMatrix[rowIds.indexOf(studentId)][assessmentIndex] = 0.0;
             }
         }
 
