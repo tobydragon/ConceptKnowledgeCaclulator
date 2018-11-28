@@ -308,26 +308,30 @@ public class FactorAnalysis implements FactorAnalysisAPI{
         return newStringList;
     }
 
-    public static String modelMaker(CohortConceptGraphs ccg){
+    public static String modelMaker(ConceptGraph acg){
         String modelString = "";
-        ConceptGraph graph = ccg.getAvgGraph();
-        Collection<String> conceptStringList = graph.getAllNodeIds();
-        conceptStringList = duplicateCheck(graph, conceptStringList);
+        Collection<String> conceptStringList = acg.getAllNodeIds();
+        conceptStringList = duplicateCheck(acg, conceptStringList);
 
         for(String conceptString : conceptStringList){
-            ConceptNode concept = graph.findNodeById(conceptString);
+            int conceptIndex = 1;
+            ConceptNode concept = acg.findNodeById(conceptString);
             Map<String, AssessmentItem> loMap = concept.getAssessmentItemMap();
             Collection<AssessmentItem> loList = loMap.values();
+            int loListSize = loList.size();
+            int loListIndex = 1;
             for(AssessmentItem lo : loList){
 
-
-
                 //modelString += conceptString + " -> " + lo.getLearningResourceId() + ", " + lo.getLearningResourceId() + "To" + conceptString + ", NA \n";
-                modelString += conceptString + " -> " + lo.getId().replaceAll("\\s","") + ", " + lo.getId().replaceAll("\\s","") + "To" + conceptString + ", NA \n";
+                modelString += conceptString + " -> " + lo.getId().replaceAll("\\s", "") + ", " + lo.getId().replaceAll("\\s", "") + "To" + conceptString + ", NA \n";
 
             }
         }
 
+        //remove the last new line (\n) from the modelString
+        for(int i=0;i<2;i++) {
+            modelString = modelString.substring(0, modelString.length() - 1);
+        }
 
         modelString = modelString.replaceAll(":", "");
         modelString = modelString.replaceAll("\\.", "");
@@ -335,10 +339,9 @@ public class FactorAnalysis implements FactorAnalysisAPI{
     }
 
 
-
-    public static void modelToFile(CohortConceptGraphs ccg){
-        String modelString = modelMaker(ccg);
-        File file = new File(Settings.RESOURCE_DIR + "stats/model.txt");
+    public static void modelToFile(ConceptGraph acg){
+        String modelString = modelMaker(acg);
+        File file = new File("/Users/bleblanc2/IdeaProjects/tecmap/src/test/resources/model/model.txt");
         try{
 
               // creates the file
@@ -351,16 +354,16 @@ public class FactorAnalysis implements FactorAnalysisAPI{
               writer.write(modelString);
               writer.flush();
               writer.close();
-            System.out.println("File successfully created. File: ConceptKnowledgeCalculator/src/stats/model.txt");
+            System.out.println("File successfully created. File: /Users/bleblanc2/IdeaProjects/tecmap/src/test/resources/model/model.txt");
         }catch (IOException e){
             e.printStackTrace();
             System.out.println("Error occurred in exporting data model to file.");
         }
     }
 
-    public void displayConfirmatoryGraph(ContinuousMatrixRecord assessmentMatrix, CohortConceptGraphs ccg){
+    public void displayConfirmatoryGraph(ContinuousMatrixRecord assessmentMatrix, ConceptGraph acg){
             try {
-                modelToFile(ccg);
+                modelToFile(acg);
 
                 RCaller rCaller = RCallerVariable();
                 RCode code = createRMatrix(assessmentMatrix);
@@ -390,12 +393,12 @@ public class FactorAnalysis implements FactorAnalysisAPI{
     }
 
     //TODO: dataSem.dhp$A returns the values wanted but not in necessarily correct format. Also, many 0s are present.
-    public double[][] calculateConfirmatoryMatrix(ContinuousMatrixRecord assessmentMatrix, CohortConceptGraphs ccg){
+    public double[][] calculateConfirmatoryMatrix(ContinuousMatrixRecord assessmentMatrix, ConceptGraph acg){
         int matrixSize = assessmentMatrix.getDataMatrix().length;
         try {
-            String modelString = modelMaker(ccg);
+            String modelString = modelMaker(acg);
 
-            modelToFile(ccg);
+            modelToFile(acg);
 
             RCaller rCaller = RCallerVariable();
             RCode code = createRMatrix(assessmentMatrix);

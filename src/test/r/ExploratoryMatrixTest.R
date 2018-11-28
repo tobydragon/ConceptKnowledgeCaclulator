@@ -69,10 +69,13 @@ getCleanedMatrixTest <- function(){
 
 #TEST
 calculateConfirmatoryMatrixTest <- function(){
-	data = read.csv("/Users/bleblanc2/Documents/AnalysisExample1copy.csv", sep=",", header = FALSE)
-	
-	modelString <- ("Loops -> Intro CS, theta01, NA \n If Statements -> Intro CS, theta02, NA\nBoolean Expressions -> If Statements, theta03, NA\nWhile Loops -> Loops, theta04, NA\nFor Loops -> Loops, theta05, NA\nBoolean Expressions -> While Loops")
-	print(modelString)
+	data = read.csv("/Users/bleblanc2/Documents/AthleticsDataOnTecMap.csv", sep=",", header = TRUE)
+	#data <- as.data.frame(data)
+	modelFile <- '/Users/bleblanc2/IdeaProjects/tecmap/src/test/resources/model/model.txt'
+	resultMatrix = calculateConfirmatoryMatrix(data, modelFile)
+
+
+	print(resultMatrix)
 	
 }
 
@@ -80,5 +83,5 @@ source("/Users/bleblanc2/IdeaProjects/tecmap/src/main/r/ExploratoryMatrix.R")
 
 #getCleanedMatrixTest()
 #findFactorCountTest()
-calculateExploratoryMatrixTest()
-#calculateConfirmatoryMatrixTest()
+#calculateExploratoryMatrixTest()
+calculateConfirmatoryMatrixTest()

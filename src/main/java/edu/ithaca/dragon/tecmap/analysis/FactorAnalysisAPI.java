@@ -1,6 +1,7 @@
 package edu.ithaca.dragon.tecmap.analysis;
 
 import edu.ithaca.dragon.tecmap.conceptgraph.CohortConceptGraphs;
+import edu.ithaca.dragon.tecmap.conceptgraph.ConceptGraph;
 import edu.ithaca.dragon.tecmap.io.record.ContinuousMatrixRecord;
 import edu.ithaca.dragon.tecmap.learningresource.ContinuousAssessmentMatrix;
 
@@ -29,17 +30,17 @@ public interface FactorAnalysisAPI {
     /**
      * displays a graph with connections (given by user) between assessments and higher up objects with strengths in connection
      * @param assessmentMatrix
-     * @param ccg
+     * @param acg
      */
-    void displayConfirmatoryGraph(ContinuousMatrixRecord assessmentMatrix, CohortConceptGraphs ccg);
+    void displayConfirmatoryGraph(ContinuousMatrixRecord assessmentMatrix, ConceptGraph acg);
 
 
     /**
      * creates a matrix of factors in java using assessment matrix and connections given by user(factors=rows, LearningObjects=columns)
      * @param assessmentMatrix
-     * @param ccg
+     * @param acg
      * @return
      */
-    double[][] calculateConfirmatoryMatrix(ContinuousMatrixRecord assessmentMatrix, CohortConceptGraphs ccg);
+    double[][] calculateConfirmatoryMatrix(ContinuousMatrixRecord assessmentMatrix, ConceptGraph acg);
 
 }

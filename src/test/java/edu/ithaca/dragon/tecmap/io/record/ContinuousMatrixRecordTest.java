@@ -55,7 +55,7 @@ public class ContinuousMatrixRecordTest {
 
         assertEquals(7, assessmentGrades.length);
         assertEquals(5, assessmentGrades[0].length);
-        //Top left corner should be s01's Q1 grade (which is 0.5)
+
         assertEquals(0.9, assessmentGrades[0][0]);
         assertEquals(0.252, assessmentGrades[5][3]);
         assertEquals(.95, assessmentGrades[6][4]);

@@ -74,8 +74,7 @@ calculateConfirmatoryMatrix <- function(data, modelFile){
 	library(stringr)
 	library(readr)
 	
-	model.txt <- readLines(modelFile)
-	data.dhp <- specifyModel(text=model.txt)
+	data.dhp <- specifyModel(file=modelFile)
 	dataCorrelation <- cor(data)
 	dataSem.dhp <- sem(data.dhp, dataCorrelation, nrow(data))
 	resultMatrix <- dataSem.dhp$A
