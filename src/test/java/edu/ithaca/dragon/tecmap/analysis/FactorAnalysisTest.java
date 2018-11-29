@@ -81,6 +81,24 @@ public class FactorAnalysisTest {
 
     @Test
     public void calculateConfirmatoryMatrixTest() throws Exception{
+        TecmapDatastore tecmapDatastore = TecmapFileDatastore.buildFromJsonFile(Settings.DEFAULT_TEST_DATASTORE_PATH);
+        SuggestingTecmapAPI analysisExample = tecmapDatastore.retrieveTecmapForId("DocExample");
+        //SuggestingTecmapAPI notConnectedExample = tecmapDatastore.retrieveTecmapForId("Cs1ExampleAssessmentAdded");
+
+        ConceptGraph acg = analysisExample.getAverageConceptGraph();
+        double[][] factorMatrix = FactorAnalysis.calculateConfirmatoryMatrix(acg);
+
+        int rows = factorMatrix.length;
+        int cols = factorMatrix[0].length;
+        for(int i = 0; i<rows; i++)
+        {
+            for(int j = 0; j<cols; j++)
+            {
+                System.out.print(factorMatrix[i][j] + "  ");
+            }
+            System.out.println();
+        }
+
 
     }
 

@@ -37,10 +37,9 @@ public interface FactorAnalysisAPI {
 
     /**
      * creates a matrix of factors in java using assessment matrix and connections given by user(factors=rows, LearningObjects=columns)
-     * @param assessmentMatrix
      * @param acg
      * @return
      */
-    double[][] calculateConfirmatoryMatrix(ContinuousMatrixRecord assessmentMatrix, ConceptGraph acg);
+    //double[][] calculateConfirmatoryMatrix(ConceptGraph acg);
 
 }

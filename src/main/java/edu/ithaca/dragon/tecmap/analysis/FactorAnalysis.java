@@ -393,15 +393,26 @@ public class FactorAnalysis implements FactorAnalysisAPI{
     }
 
     //TODO: dataSem.dhp$A returns the values wanted but not in necessarily correct format. Also, many 0s are present.
-    public double[][] calculateConfirmatoryMatrix(ContinuousMatrixRecord assessmentMatrix, ConceptGraph acg){
-        int matrixSize = assessmentMatrix.getDataMatrix().length;
+    public static double[][] calculateConfirmatoryMatrix(ConceptGraph acg){
         try {
-            String modelString = modelMaker(acg);
+            Map<String, AssessmentItem> assessmentItemMap = acg.getAssessmentItemMap();
+            List<AssessmentItem> assessmentItems = new ArrayList<>(assessmentItemMap.values());
+            ContinuousMatrixRecord assessmentMatrix = new ContinuousMatrixRecord(assessmentItems);
 
             modelToFile(acg);
+            String modelFilePath = "/Users/bleblanc2/IdeaProjects/tecmap/src/test/resources/model/model.txt";
+
+
 
             RCaller rCaller = RCallerVariable();
             RCode code = createRMatrix(assessmentMatrix);
+
+            code.addString("modelFile", modelFilePath);
+
+
+
+
+            /*
             code.addRCode("library(sem)");
             code.addRCode("library(semPlot)");
             code.addRCode("library(stringr)");
@@ -415,6 +426,7 @@ public class FactorAnalysis implements FactorAnalysisAPI{
             code.addRCode("dataSem.dhp <- sem(data.dhp, dataCorrelation, rowCount)");
             //From R it comes as
             code.addRCode("data <- dataSem.dhp$A");
+            */
 
             rCaller.setRCode(code);
             rCaller.runAndReturnResult("data");
@@ -482,15 +494,6 @@ public class FactorAnalysis implements FactorAnalysisAPI{
     public static ContinuousMatrixRecord newCalculateExploratoryMatrix(ContinuousMatrixRecord assessmentMatrix)throws Exception{
         RCaller rCaller = RCallerVariable();
         rCaller.redirectROutputToStream(System.out);
-
-        /*
-        Get the dataMatrix of the ContinuousMatrixRecord and send it to an rMatrix
-        Source the ExploratoryMatrix.R
-        Call calculateExploratoryMatrix within the R script
-        return factorMatrix out of R and into Java
-        Place assessmentIds onto correct indices
-        create a ContinuousMatrixRecord of the factorMatrix
-*/
 
         RCode code = createRMatrix(assessmentMatrix);
         double[][] gradeMatrix = assessmentMatrix.getDataMatrix();
