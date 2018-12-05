@@ -25,7 +25,7 @@ public interface FactorAnalysisAPI {
      * @pre resource, assessment, structure files are all present and an R Matrix is created
      * @throws Exception
      */
-    void ExploratoryMatrix(ContinuousMatrixRecord assessmentMatrix)throws Exception;
+    ContinuousMatrixRecord ExploratoryMatrix(ContinuousMatrixRecord assessmentMatrix)throws Exception;
 
     /**
      * displays a graph with connections (given by user) between assessments and higher up objects with strengths in connection

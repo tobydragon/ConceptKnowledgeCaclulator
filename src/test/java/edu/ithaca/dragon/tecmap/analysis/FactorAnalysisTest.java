@@ -24,7 +24,7 @@ import java.util.stream.Stream;
 
 import static edu.ithaca.dragon.tecmap.analysis.FactorAnalysis.calculateExploratoryMatrix;
 import static edu.ithaca.dragon.tecmap.analysis.FactorAnalysis.modelToFile;
-import static edu.ithaca.dragon.tecmap.analysis.FactorAnalysis.newCalculateExploratoryMatrix;
+import static edu.ithaca.dragon.tecmap.analysis.FactorAnalysis.calculateExploratoryMatrix;
 import static edu.ithaca.dragon.tecmap.tecmapstate.TecmapState.assessmentAdded;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
@@ -34,7 +34,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 public class FactorAnalysisTest {
 
     @Test
-    public void newCalculateExploratoryMatrixTest() {
+    public void calculateExploratoryMatrixTest() {
         try {
             TecmapDatastore tecmapDatastore = TecmapFileDatastore.buildFromJsonFile(Settings.DEFAULT_TEST_DATASTORE_PATH);
             SuggestingTecmapAPI analysisExample = tecmapDatastore.retrieveTecmapForId("DocExample");
@@ -45,32 +45,25 @@ public class FactorAnalysisTest {
             List<AssessmentItem> assessmentItems = new ArrayList<>(assessmentItemMap.values());
             ContinuousMatrixRecord assessmentMatrix = new ContinuousMatrixRecord(assessmentItems);
 
-            double[][] testGradeMatrix = assessmentMatrix.getDataMatrix();
-
-            //System.out.println(testGradeMatrix[0][0]);
-            //System.out.println(testGradeMatrix[1][0]);
-            //System.out.println(testGradeMatrix[0][1]);
-
-            /*
-            int rows = testGradeMatrix.length;
-            int cols = testGradeMatrix[0].length;
-            for(int i = 0; i<rows; i++)
-            {
-                for(int j = 0; j<cols; j++)
-                {
-                    System.out.print(testGradeMatrix[i][j] + "  ");
-                }
-                System.out.println();
-            }
-            */
-
-            ContinuousMatrixRecord factorMatrix = FactorAnalysis.newCalculateExploratoryMatrix(assessmentMatrix);
+            ContinuousMatrixRecord factorMatrix = FactorAnalysis.calculateExploratoryMatrix(assessmentMatrix);
             double[][] data = factorMatrix.getDataMatrix();
-
+            List<String> expectedList = new ArrayList<>();
+            expectedList.add("Factor 1");
+            expectedList.add("Factor 2");
+            expectedList.add("Factor 3");
 
             assertEquals(-.12, data[0][0], .05);
             //Multiple factors
             assertEquals(.58, data[2][0], .02);
+            //dimensions of matrix
+            assertEquals(9, data.length);
+            assertEquals(3, data[0].length);
+
+            assertEquals(expectedList, factorMatrix.getAssessmentIds());
+
+            //List<String> factors = assessmentMatrix.getRowIds();
+            //System.out.println(factors);
+            //assertEquals(3, assessmentMatrix.getAssessmentIds().size());
 
         }catch (Exception e){
             Assert.fail();
@@ -88,6 +81,7 @@ public class FactorAnalysisTest {
         ConceptGraph acg = analysisExample.getAverageConceptGraph();
         double[][] factorMatrix = FactorAnalysis.calculateConfirmatoryMatrix(acg);
 
+        /*
         int rows = factorMatrix.length;
         int cols = factorMatrix[0].length;
         for(int i = 0; i<rows; i++)
@@ -98,7 +92,7 @@ public class FactorAnalysisTest {
             }
             System.out.println();
         }
-
+    */
 
     }
 

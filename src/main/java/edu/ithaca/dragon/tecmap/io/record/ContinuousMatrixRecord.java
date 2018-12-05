@@ -28,7 +28,6 @@ public class ContinuousMatrixRecord {
     }
 
 
-    //TODO: transpose data matrix so the factors are rows and assessments are columns and matrix matches that structure
     public ContinuousMatrixRecord(double[][] dataMatrix, List<String> factorList, List<AssessmentItem> assessmentItems){
         this.assessmentItems = assessmentItems;
         this.assessmentIds = factorList;
