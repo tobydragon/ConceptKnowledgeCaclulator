@@ -6,17 +6,13 @@
     "id": "Precision"
   } , {
     "id": "Misc"
-  } , {
-    "id": "Skill"
   }],
   "links": [{
-    "parent": "Skill",
+    "parent": "Misc",
     "child": "Reaction Time"
   }, {
-    "parent": "Skill",
+    "parent": "Misc",
     "child": "Precision"
-  }, {
-    "parent": "Skill",
-    "child": "Misc"
-  }]
+  }
+  ]
 }

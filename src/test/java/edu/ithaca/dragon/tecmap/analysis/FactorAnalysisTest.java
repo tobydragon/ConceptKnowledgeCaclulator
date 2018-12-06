@@ -59,6 +59,17 @@ public class FactorAnalysisTest {
             assertEquals(9, data.length);
             assertEquals(3, data[0].length);
 
+            int rows = data.length;
+            int cols = data[0].length;
+            for(int i = 0; i<rows; i++)
+            {
+                for(int j = 0; j<cols; j++)
+                {
+                    System.out.print(data[i][j] + "  ");
+                }
+                System.out.println();
+            }
+
             assertEquals(expectedList, factorMatrix.getAssessmentIds());
 
             //List<String> factors = assessmentMatrix.getRowIds();
@@ -79,9 +90,16 @@ public class FactorAnalysisTest {
         //SuggestingTecmapAPI notConnectedExample = tecmapDatastore.retrieveTecmapForId("Cs1ExampleAssessmentAdded");
 
         ConceptGraph acg = analysisExample.getAverageConceptGraph();
-        double[][] factorMatrix = FactorAnalysis.calculateConfirmatoryMatrix(acg);
+        ContinuousMatrixRecord confirmatoryFactorMatrix = FactorAnalysis.calculateConfirmatoryMatrix(acg);
 
-        /*
+        double[][] factorMatrix = confirmatoryFactorMatrix.getDataMatrix();
+
+        assertEquals(.79, factorMatrix[0][0], .01);
+        List<String> factors = confirmatoryFactorMatrix.getAssessmentIds();
+        //System.out.println(factors);
+        //System.out.println(acg.getAllNodeIds());
+        //System.out.println(confirmatoryFactorMatrix.getAssessmentIds());
+/*
         int rows = factorMatrix.length;
         int cols = factorMatrix[0].length;
         for(int i = 0; i<rows; i++)
@@ -92,7 +110,9 @@ public class FactorAnalysisTest {
             }
             System.out.println();
         }
-    */
+
+*/
+
 
     }
 

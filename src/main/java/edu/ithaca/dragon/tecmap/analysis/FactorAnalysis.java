@@ -29,141 +29,6 @@ import java.util.logging.Logger;
 public class FactorAnalysis implements FactorAnalysisAPI{
 
 
-    /**
-     * Using RCode, the average of knowledgeEstimates of a AssessmentItem across all user's is calculated
-     * @param loMatrix the current graph being searched
-     * @param lo the AssessmentItem that is selected to have an average taken from
-     * @return an average of all knowledgeEstimates in a single AssessmentItem
-     */
-//    public static double LearningObjectAvg(KnowledgeEstimateMatrix loMatrix, AssessmentItem lo){
-//        RCaller rCaller = RCallerVariable();
-//
-//        int loIndex = loMatrix.getloIndex(lo);
-//        RCode code = loMatrix.getrMatrix();
-//        loIndex++;
-//        code.addInt("loIndex", loIndex);
-//        code.addRCode("classAvg <- mean(matrix[, loIndex])");
-//        rCaller.setRCode(code);
-//        rCaller.runAndReturnResult("classAvg");
-//        double[] results = rCaller.getParser().getAsDoubleArray("classAvg");
-//        double actual = results[0];
-//        return actual;
-//
-//    }
-
-    /**
-     * Using RCode, a user's average of knowledgeEstimates across all LearningObjects is calculated
-     * @param assessmentMatrix the current graph being searched
-     * @return an average of the student's knowledge estimates across all learning objects
-     * within the graph in the form of a double
-     */
-//    public static double StudentKnowledgeEstAvg(KnowledgeEstimateMatrix assessmentMatrix, String user){
-//        RCaller rCaller = RCallerVariable();
-//
-//        rCaller.redirectROutputToStream(System.out);
-//        List<String> userIdList = assessmentMatrix.getUserIdList();
-//
-//        int stuIndex = userIdList.indexOf(user);
-//        RCode code = assessmentMatrix.getrMatrix();
-//        stuIndex++;
-//        code.addInt("stuIndex", stuIndex);
-//        //code.addRCode("stuIndex <- stuIndex + 1");
-//        //code.addRCode("print(matrix)");
-//        code.addRCode("stuAvgList <- rowMeans(matrix, na.rm = TRUE)");
-//        //code.addRCode("print(stuAvg)");
-//        code.addRCode("stuAvg <- stuAvgList[stuIndex]");
-//        rCaller.setRCode(code);
-//        rCaller.runAndReturnResult("stuAvg");
-//        double[] results = rCaller.getParser().getAsDoubleArray("stuAvg");
-//        double actual = results[0];
-//        return actual;
-//    }
-
-
-
-
-
-    /**
-     * A helper function for getFactorCount() that deletes columns of the matrix that will crash R/is unnecessary data
-     * and finds the amount of columns that will be used in getFactorCount()
-     * @param assessmentMatrix
-     * @return result the amount of columns valid for use in factor analysis
-     */
-    public static int getColumnCount(ContinuousMatrixRecord assessmentMatrix){
-        RCaller rCaller = RLibrary.RCallerVariable();
-
-        RCode code = RLibrary.createRMatrix(assessmentMatrix);
-        int numOfFactors = 0;
-
-        code.addInt("numOfFactors", numOfFactors);
-        code.addRCode("columnCount <- ncol(matrix)");
-
-        //delete any columns that have no variance in data
-        code.addRCode("deleteVector = c()");
-        code.addRCode("vectorIndex <- 0");
-        code.addRCode("for(i in columnCount:1){" +
-                "if(matrix[1,i] == mean(matrix[,i])){");
-        code.addRCode("vectorIndex <- vectorIndex + 1");
-        code.addRCode("deleteVector[vectorIndex] <- names(matrix[i])");
-        code.addRCode("matrix <- matrix[,-c(i)]" +
-                "}" +
-                "}");
-        code.addRCode("if(vectorIndex > 0){" +
-                "print(\"The LearningObjects directly below were removed due to 0 variance throughout all responses:\")");
-        code.addRCode("print(deleteVector)");
-        code.addRCode("}");
-
-        code.addRCode("columnCount <- ncol(matrix)");
-        rCaller.setRCode(code);
-        rCaller.runAndReturnResult("columnCount");
-        int[] result = rCaller.getParser().getAsIntArray("columnCount");
-        return result[0];
-    }
-
-    /**
-     * A helper function for getFactorMatrix() that finds the best number of factors to use in factor analysis
-     * @param assessmentMatrix KnowledgeEstimateMatrix
-     * @return result the number of factors to be used in factor analysis on the current matrix
-     * @throws Exception
-     */
-    public static int findFactorCount(ContinuousMatrixRecord assessmentMatrix)throws NoVarianceException{
-        RCaller rCaller = RLibrary.RCallerVariable();
-
-        RCode code = RLibrary.createRMatrix(assessmentMatrix);
-        int numOfFactors = 0;
-
-        code.addInt("numOfFactors", numOfFactors);
-        int columnCount = getColumnCount(assessmentMatrix);
-        if(columnCount > 2) {
-            code.addInt("columnCount", columnCount);
-
-            //sets a limit on how high R will go to find the factor amount based on how many columns exist
-            code.addRCode("if(columnCount %% 2 == 0){" +
-                    "upperlimit <- (columnCount/2) - 1" +
-                    "}else{" +
-                    "upperlimit <- (columnCount/2) - 0.5" +
-                    "}");
-
-            //put all p-values of the factor analysis into a list
-            //run through the list and take the factor number with the first p-value above .05
-            code.addRCode("vector = c()");
-            code.addRCode("for(i in 1:upperlimit){" +
-                    "vector[i] <- factanal(matrix, i, method = 'mle')$PVAL" +
-                    "}");
-            code.addRCode("for(i in 1:upperlimit){" +
-                    "if(vector[i] < .05){" +
-                    "numOfFactors <- i + 1" +
-                    "}" +
-                    "}");
-            rCaller.setRCode(code);
-            rCaller.runAndReturnResult("numOfFactors");
-            int[] result = rCaller.getParser().getAsIntArray("numOfFactors");
-            return result[0];
-        }else{
-            throw new NoVarianceException();
-        }
-    }
-
 
     /**
      * Prints out a factor matrix connecting learning objects to similar higher up objects
@@ -171,7 +36,9 @@ public class FactorAnalysis implements FactorAnalysisAPI{
      * @pre resource, assessment, structure files are all present and an R Matrix is created
      * @throws Exception
      */
+
     public void displayExploratoryGraph(ContinuousMatrixRecord assessmentMatrix)throws Exception {
+        /*
         try{
 
 
@@ -200,6 +67,7 @@ public class FactorAnalysis implements FactorAnalysisAPI{
     }catch(Exception e){
         Logger.getLogger(FactorAnalysis.class.getName()).log(Level.SEVERE, e.getMessage());
     }
+    */
     }
 
     public ContinuousMatrixRecord ExploratoryMatrix(ContinuousMatrixRecord assessmentMatrix)throws Exception{
@@ -358,7 +226,7 @@ public class FactorAnalysis implements FactorAnalysisAPI{
     }
 
     //TODO: dataSem.dhp$A returns the values wanted but not in necessarily correct format. Also, many 0s are present.
-    public static double[][] calculateConfirmatoryMatrix(ConceptGraph acg){
+    public static ContinuousMatrixRecord calculateConfirmatoryMatrix(ConceptGraph acg){
         try {
             Map<String, AssessmentItem> assessmentItemMap = acg.getAssessmentItemMap();
             List<AssessmentItem> assessmentItems = new ArrayList<>(assessmentItemMap.values());
@@ -366,44 +234,46 @@ public class FactorAnalysis implements FactorAnalysisAPI{
 
             modelToFile(acg);
             String modelFilePath = "/Users/bleblanc2/IdeaProjects/tecmap/src/test/resources/model/model.txt";
-
-
-
             RCaller rCaller = RLibrary.RCallerVariable();
             RCode code = RLibrary.createRMatrix(assessmentMatrix);
             double[][] gradeMatrix = assessmentMatrix.getDataMatrix();
-
             code.addString("modelFile", modelFilePath);
-
             code.addRCode("source('/Users/bleblanc2/IdeaProjects/tecmap/src/main/r/ExploratoryMatrix.R')");
             code.addDoubleMatrix("data", gradeMatrix);
             //code.addRCode("data <- as.data.frame(t(data))");
-            code.addRCode("factorMatrix <- calculateExploratoryMatrix(data)");
-
-
-
-
-
-            /*
-            code.addRCode("library(sem)");
-            code.addRCode("library(semPlot)");
-            code.addRCode("library(stringr)");
-            code.addRCode("library(readr)");
-
-            code.addRCode("model.txt <- readLines('resources/stats/model.txt')");
-            code.addRCode("data.dhp <- specifyModel(text=model.txt)");
-            //code.addRCode("data.dhp <- specifyModel(text=\"" + modelString + "\")");
-            code.addRCode("dataCorrelation <- cor(matrix)");
-            code.addRCode("rowCount <- nrow(matrix)");
-            code.addRCode("dataSem.dhp <- sem(data.dhp, dataCorrelation, rowCount)");
-            //From R it comes as
-            code.addRCode("data <- dataSem.dhp$A");
-            */
-
+            code.addRCode("factorMatrix <- calculateConfirmatoryMatrix(data, modelFile)");
             rCaller.setRCode(code);
-            rCaller.runAndReturnResult("data");
-            double[][] confirmatoryMatrix = rCaller.getParser().getAsDoubleMatrix("data");
-            return (confirmatoryMatrix);
+            rCaller.runAndReturnResult("factorMatrix");
+            double[][] confirmatoryMatrix = rCaller.getParser().getAsDoubleMatrix("factorMatrix");
+
+            //The matrix has # of columns and rows equal to the sum of number of factors and number of assessments
+            //Most of the data is irrelevant and is a 0. This loop makes a smaller loop that is just assessments by factors
+            List<Integer> indicesToAdd = new ArrayList<>();
+            for(int i=0;i<confirmatoryMatrix.length; i++){
+                for(int j=0;j<confirmatoryMatrix[0].length; j++){
+                    if(confirmatoryMatrix[i][j] != 0){
+                        if(false == indicesToAdd.contains(i)){
+                            indicesToAdd.add(i);
+                        }
+
+                    }
+                }
+            }
+            double[][] cleanedMatrix = new double[confirmatoryMatrix[0].length][indicesToAdd.size()];
+            int newIndex = 0;
+            for(int rowIndex :indicesToAdd){
+                for (int j = 0; j < confirmatoryMatrix[0].length; j++) {
+                    cleanedMatrix[j][newIndex] = confirmatoryMatrix[rowIndex][j];
+                }
+                newIndex++;
+            }
+            List<String> factorList = new ArrayList<String>();
+            Collection<String> nodeCollection = acg.getAllNodeIds();
+            for(String node : nodeCollection){
+                factorList.add(node);
+            }
+            ContinuousMatrixRecord confirmatoryMatrixRecord = new ContinuousMatrixRecord(cleanedMatrix, factorList, assessmentMatrix.getAssessmentItems());
+            return confirmatoryMatrixRecord;
         } catch (Exception e) {
             Logger.getLogger(FactorAnalysis.class.getName()).log(Level.SEVERE, e.getMessage());
             throw new IndexOutOfBoundsException();
