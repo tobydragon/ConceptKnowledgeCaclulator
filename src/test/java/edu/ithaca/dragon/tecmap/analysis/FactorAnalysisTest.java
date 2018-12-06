@@ -99,7 +99,7 @@ public class FactorAnalysisTest {
         //System.out.println(factors);
         //System.out.println(acg.getAllNodeIds());
         //System.out.println(confirmatoryFactorMatrix.getAssessmentIds());
-/*
+
         int rows = factorMatrix.length;
         int cols = factorMatrix[0].length;
         for(int i = 0; i<rows; i++)
@@ -111,7 +111,7 @@ public class FactorAnalysisTest {
             System.out.println();
         }
 
-*/
+
 
 
     }

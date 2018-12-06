@@ -233,6 +233,7 @@ public class FactorAnalysis implements FactorAnalysisAPI{
             ContinuousMatrixRecord assessmentMatrix = new ContinuousMatrixRecord(assessmentItems);
 
             modelToFile(acg);
+            //TODO: fix file path
             String modelFilePath = "/Users/bleblanc2/IdeaProjects/tecmap/src/test/resources/model/model.txt";
             RCaller rCaller = RLibrary.RCallerVariable();
             RCode code = RLibrary.createRMatrix(assessmentMatrix);
@@ -246,6 +247,7 @@ public class FactorAnalysis implements FactorAnalysisAPI{
             rCaller.runAndReturnResult("factorMatrix");
             double[][] confirmatoryMatrix = rCaller.getParser().getAsDoubleMatrix("factorMatrix");
 
+            //TODO: Put cleaning into own method (transposing, cleaning, etc.)
             //The matrix has # of columns and rows equal to the sum of number of factors and number of assessments
             //Most of the data is irrelevant and is a 0. This loop makes a smaller loop that is just assessments by factors
             List<Integer> indicesToAdd = new ArrayList<>();
@@ -267,11 +269,13 @@ public class FactorAnalysis implements FactorAnalysisAPI{
                 }
                 newIndex++;
             }
+
             List<String> factorList = new ArrayList<String>();
             Collection<String> nodeCollection = acg.getAllNodeIds();
             for(String node : nodeCollection){
                 factorList.add(node);
             }
+
             ContinuousMatrixRecord confirmatoryMatrixRecord = new ContinuousMatrixRecord(cleanedMatrix, factorList, assessmentMatrix.getAssessmentItems());
             return confirmatoryMatrixRecord;
         } catch (Exception e) {
