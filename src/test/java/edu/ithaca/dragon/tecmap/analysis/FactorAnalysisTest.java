@@ -18,6 +18,7 @@ import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Stream;
@@ -124,7 +125,15 @@ public class FactorAnalysisTest {
             //SuggestingTecmapAPI notConnectedExample = tecmapDatastore.retrieveTecmapForId("Cs1ExampleAssessmentAdded");
 
             ConceptGraph acg = analysisExample.getAverageConceptGraph();
-            String modelString = FactorAnalysis.modelMaker(acg);
+
+            List<String> factorList = new ArrayList<String>();
+            Collection<String> nodeCollection = acg.getAllNodeIds();
+            for(String node : nodeCollection){
+                factorList.add(node);
+            }
+
+
+            String modelString = FactorAnalysis.modelMaker(acg, factorList);
 
             //System.out.println(modelString);
 
@@ -155,9 +164,14 @@ public class FactorAnalysisTest {
             //SuggestingTecmapAPI notConnectedExample = tecmapDatastore.retrieveTecmapForId("Cs1ExampleAssessmentAdded");
 
             ConceptGraph acg = analysisExample.getAverageConceptGraph();
-            String modelString = FactorAnalysis.modelMaker(acg);
+            List<String> factorList = new ArrayList<String>();
+            Collection<String> nodeCollection = acg.getAllNodeIds();
+            for(String node : nodeCollection){
+                factorList.add(node);
+            }
+            String modelString = FactorAnalysis.modelMaker(acg, factorList);
 
-            FactorAnalysis.modelToFile(acg);
+            FactorAnalysis.modelToFile(modelString);
 
             String filePath = "/Users/bleblanc2/IdeaProjects/tecmap/src/test/resources/model/model.txt";
 

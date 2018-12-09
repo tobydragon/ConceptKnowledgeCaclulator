@@ -29,6 +29,9 @@ import java.util.logging.Logger;
 public class FactorAnalysis implements FactorAnalysisAPI{
 
 
+    public static String modelFilePath = "/Users/bleblanc2/IdeaProjects/tecmap/src/test/resources/model/model.txt";
+
+
 
     /**
      * Prints out a factor matrix connecting learning objects to similar higher up objects
@@ -112,9 +115,9 @@ public class FactorAnalysis implements FactorAnalysisAPI{
 
 
 
-    public static Collection<String> duplicateCheck(ConceptGraph graph, Collection<String> conceptStringList){
+    public static List<String> duplicateCheck(ConceptGraph graph, List<String> conceptStringList){
         List<String> removalList = new ArrayList<String>();
-        Collection<String> newStringList = new ArrayList<String>();
+        List<String> newStringList = new ArrayList<String>();
         //copy the collection of Concept strings into the new collection
         for(String curString : conceptStringList){
             newStringList.add(curString);
@@ -141,10 +144,12 @@ public class FactorAnalysis implements FactorAnalysisAPI{
         return newStringList;
     }
 
-    public static String modelMaker(ConceptGraph acg){
+    public static String modelMaker(ConceptGraph acg, List<String> nodeList){
         String modelString = "";
-        Collection<String> conceptStringList = acg.getAllNodeIds();
-        conceptStringList = duplicateCheck(acg, conceptStringList);
+        //Collection<String> conceptStringList = acg.getAllNodeIds();
+        //conceptStringList = duplicateCheck(acg, conceptStringList);
+
+        List<String> conceptStringList = duplicateCheck(acg, nodeList);
 
         for(String conceptString : conceptStringList){
             int conceptIndex = 1;
@@ -172,9 +177,8 @@ public class FactorAnalysis implements FactorAnalysisAPI{
     }
 
 
-    public static void modelToFile(ConceptGraph acg){
-        String modelString = modelMaker(acg);
-        File file = new File("/Users/bleblanc2/IdeaProjects/tecmap/src/test/resources/model/model.txt");
+    public static void modelToFile(String modelString){
+        File file = new File(modelFilePath);
         try{
 
               // creates the file
@@ -187,7 +191,7 @@ public class FactorAnalysis implements FactorAnalysisAPI{
               writer.write(modelString);
               writer.flush();
               writer.close();
-            System.out.println("File successfully created. File: /Users/bleblanc2/IdeaProjects/tecmap/src/test/resources/model/model.txt");
+            System.out.println("File successfully created. File: " + modelFilePath);
         }catch (IOException e){
             e.printStackTrace();
             System.out.println("Error occurred in exporting data model to file.");
@@ -196,7 +200,15 @@ public class FactorAnalysis implements FactorAnalysisAPI{
 
     public void displayConfirmatoryGraph(ContinuousMatrixRecord assessmentMatrix, ConceptGraph acg){
             try {
-                modelToFile(acg);
+
+                List<String> factorList = new ArrayList<String>();
+                Collection<String> nodeCollection = acg.getAllNodeIds();
+                for(String node : nodeCollection){
+                    factorList.add(node);
+                }
+
+                String modelString = modelMaker(acg, factorList);
+                modelToFile(modelString);
 
                 RCaller rCaller = RLibrary.RCallerVariable();
                 RCode code = RLibrary.createRMatrix(assessmentMatrix);
@@ -225,16 +237,22 @@ public class FactorAnalysis implements FactorAnalysisAPI{
             }
     }
 
-    //TODO: dataSem.dhp$A returns the values wanted but not in necessarily correct format. Also, many 0s are present.
     public static ContinuousMatrixRecord calculateConfirmatoryMatrix(ConceptGraph acg){
         try {
             Map<String, AssessmentItem> assessmentItemMap = acg.getAssessmentItemMap();
             List<AssessmentItem> assessmentItems = new ArrayList<>(assessmentItemMap.values());
             ContinuousMatrixRecord assessmentMatrix = new ContinuousMatrixRecord(assessmentItems);
 
-            modelToFile(acg);
+            List<String> factorList = new ArrayList<String>();
+            Collection<String> nodeCollection = acg.getAllNodeIds();
+            for(String node : nodeCollection){
+                factorList.add(node);
+            }
+
+            String modelString = modelMaker(acg, factorList);
+            modelToFile(modelString);
             //TODO: fix file path
-            String modelFilePath = "/Users/bleblanc2/IdeaProjects/tecmap/src/test/resources/model/model.txt";
+
             RCaller rCaller = RLibrary.RCallerVariable();
             RCode code = RLibrary.createRMatrix(assessmentMatrix);
             double[][] gradeMatrix = assessmentMatrix.getDataMatrix();
@@ -250,31 +268,8 @@ public class FactorAnalysis implements FactorAnalysisAPI{
             //TODO: Put cleaning into own method (transposing, cleaning, etc.)
             //The matrix has # of columns and rows equal to the sum of number of factors and number of assessments
             //Most of the data is irrelevant and is a 0. This loop makes a smaller loop that is just assessments by factors
-            List<Integer> indicesToAdd = new ArrayList<>();
-            for(int i=0;i<confirmatoryMatrix.length; i++){
-                for(int j=0;j<confirmatoryMatrix[0].length; j++){
-                    if(confirmatoryMatrix[i][j] != 0){
-                        if(false == indicesToAdd.contains(i)){
-                            indicesToAdd.add(i);
-                        }
-
-                    }
-                }
-            }
-            double[][] cleanedMatrix = new double[confirmatoryMatrix[0].length][indicesToAdd.size()];
-            int newIndex = 0;
-            for(int rowIndex :indicesToAdd){
-                for (int j = 0; j < confirmatoryMatrix[0].length; j++) {
-                    cleanedMatrix[j][newIndex] = confirmatoryMatrix[rowIndex][j];
-                }
-                newIndex++;
-            }
-
-            List<String> factorList = new ArrayList<String>();
-            Collection<String> nodeCollection = acg.getAllNodeIds();
-            for(String node : nodeCollection){
-                factorList.add(node);
-            }
+            double[][] removedMatrix = removeEmptyRowsFromMatrix(confirmatoryMatrix);
+            double[][] cleanedMatrix = transposeMatrix(removedMatrix);
 
             ContinuousMatrixRecord confirmatoryMatrixRecord = new ContinuousMatrixRecord(cleanedMatrix, factorList, assessmentMatrix.getAssessmentItems());
             return confirmatoryMatrixRecord;
@@ -284,6 +279,50 @@ public class FactorAnalysis implements FactorAnalysisAPI{
         }
     }
 
+    /**
+     * Creates a new matrix without useless all 0 rows
+     * @param confirmatoryMatrix
+     * @return double[][]
+     */
+    public static double[][] removeEmptyRowsFromMatrix(double[][] confirmatoryMatrix){
+        List<Integer> indicesToAdd = new ArrayList<>();
+        for(int i=0;i<confirmatoryMatrix.length; i++){
+            for(int j=0;j<confirmatoryMatrix[0].length; j++){
+                if(confirmatoryMatrix[i][j] != 0){
+                    if(false == indicesToAdd.contains(i)){
+                        indicesToAdd.add(i);
+                    }
+
+                }
+            }
+        }
+        double[][] cleanedMatrix = new double[indicesToAdd.size()][confirmatoryMatrix[0].length];
+
+        int newIndex = 0;
+        for(int rowIndex :indicesToAdd){
+            for (int j = 0; j < confirmatoryMatrix[0].length; j++) {
+                cleanedMatrix[newIndex][j] = confirmatoryMatrix[rowIndex][j];
+            }
+            newIndex++;
+        }
+        return cleanedMatrix;
+    }
+
+    /**
+     * Transposes a matrix of doubles [row][column] -> [column][row]
+     * @param originalMatrix
+     * @return
+     */
+    public static double[][] transposeMatrix(double[][] originalMatrix){
+        double[][] transposedMatrix = new double[originalMatrix[0].length][originalMatrix.length];
+        for (int i = 0; i < originalMatrix.length; i++) {
+            for (int j = 0; j < originalMatrix[0].length; j++) {
+                transposedMatrix[j][i] = originalMatrix[i][j];
+            }
+
+        }
+        return transposedMatrix;
+    }
 
     public static class NoVarianceException extends Exception {
         public NoVarianceException() { super(); }
