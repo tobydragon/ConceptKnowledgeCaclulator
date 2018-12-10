@@ -53,7 +53,7 @@ public class FactorAnalysisTest {
             expectedList.add("Factor 2");
             expectedList.add("Factor 3");
 
-/*
+            /*
             //Print factor matrix
             int rows = data.length;
             int cols = data[0].length;
@@ -66,6 +66,7 @@ public class FactorAnalysisTest {
                 System.out.println();
             }
             */
+
             List<String> assessmentIds = new ArrayList<>(assessmentItemMap.keySet());
             assertEquals(-.12, data[0][0], .05);
             //Multiple factors
