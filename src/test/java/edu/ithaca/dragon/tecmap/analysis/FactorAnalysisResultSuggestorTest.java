@@ -5,8 +5,7 @@ import edu.ithaca.dragon.tecmap.SuggestingTecmapAPI;
 import edu.ithaca.dragon.tecmap.conceptgraph.ConceptGraph;
 import edu.ithaca.dragon.tecmap.data.TecmapDatastore;
 import edu.ithaca.dragon.tecmap.data.TecmapFileDatastore;
-import edu.ithaca.dragon.tecmap.io.record.ContinuousMatrixRecord;
-import edu.ithaca.dragon.tecmap.io.record.LearningResourceRecord;
+import edu.ithaca.dragon.tecmap.io.record.*;
 import edu.ithaca.dragon.tecmap.learningresource.AssessmentItem;
 import org.junit.Assert;
 import org.junit.Test;
@@ -20,7 +19,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 public class FactorAnalysisResultSuggestorTest {
 
     @Test
-    public void learningResourceFromExploratoryFactorMatrixRecord(){
+    public void learningResourcesFromExploratoryFactorMatrixRecordTest(){
         try{
             TecmapDatastore tecmapDatastore = TecmapFileDatastore.buildFromJsonFile(Settings.DEFAULT_TEST_DATASTORE_PATH);
             SuggestingTecmapAPI analysisExample = tecmapDatastore.retrieveTecmapForId("DocExample");
@@ -33,16 +32,16 @@ public class FactorAnalysisResultSuggestorTest {
 
             ContinuousMatrixRecord factorMatrix = FactorAnalysis.calculateExploratoryMatrix(assessmentMatrix);
 
-            List<LearningResourceRecord> lrrlist = FactorAnalysisResultSuggestor.learningResourceFromExploratoryFactorMatrixRecord(factorMatrix);
+            List<LearningResourceRecord> lrrList = FactorAnalysisResultSuggestor.learningResourcesFromExploratoryFactorMatrixRecord(factorMatrix);
 
             //LRR emptyRecord should have no connections to factors so the conceptIds should be empty
-            LearningResourceRecord emptyRecord = lrrlist.get(0);
+            LearningResourceRecord emptyRecord = lrrList.get(0);
 
             assertEquals(assessmentItems.get(0).getId(), emptyRecord.getLearningResourceId());
             assertEquals(0, emptyRecord.getConceptIds().size());
 
             //LRR fullRecord should have all 3 connections to factors so the conceptID should have [Factor 1, Factor 2, Factor 3]
-            LearningResourceRecord fullRecord = lrrlist.get(2);
+            LearningResourceRecord fullRecord = lrrList.get(2);
             assertEquals((assessmentItems.get(2).getId()), fullRecord.getLearningResourceId());
             assertEquals(3, fullRecord.getConceptIds().size());
             if((!fullRecord.getConceptIds().contains("Factor 1")) || (!fullRecord.getConceptIds().contains("Factor 2")) || (!fullRecord.getConceptIds().contains("Factor 3"))){
@@ -50,6 +49,55 @@ public class FactorAnalysisResultSuggestorTest {
             }
 
 
+
+        }catch (Exception e){
+            Assert.fail();
+            e.printStackTrace();
+        }
+    }
+
+    @Test
+    public void conceptGraphRecordFromExploratoryMatrixRecordTest(){
+        try{
+
+            String testGraphName = "TestConceptGraphRecordName";
+
+            TecmapDatastore tecmapDatastore = TecmapFileDatastore.buildFromJsonFile(Settings.DEFAULT_TEST_DATASTORE_PATH);
+            SuggestingTecmapAPI analysisExample = tecmapDatastore.retrieveTecmapForId("DocExample");
+            //SuggestingTecmapAPI notConnectedExample = tecmapDatastore.retrieveTecmapForId("Cs1ExampleAssessmentAdded");
+
+            ConceptGraph acg = analysisExample.getAverageConceptGraph();
+            Map<String, AssessmentItem> assessmentItemMap = acg.getAssessmentItemMap();
+            List<AssessmentItem> assessmentItems = new ArrayList<>(assessmentItemMap.values());
+
+            ContinuousMatrixRecord assessmentMatrix = new ContinuousMatrixRecord(assessmentItems);
+            ContinuousMatrixRecord factorMatrix = FactorAnalysis.calculateExploratoryMatrix(assessmentMatrix);
+
+
+
+            ConceptGraphRecord conceptGraphRecord = FactorAnalysisResultSuggestor.conceptGraphFromExploratoryMatrixRecord(factorMatrix, testGraphName);
+
+            //Tests for LinkRecord
+            assertEquals(testGraphName, conceptGraphRecord.getName());
+            List<LinkRecord> linksList = conceptGraphRecord.getLinks();
+            //The First Link created is the index 0 in the list where the child and parent are both within index 1 of the list of factors and assessments
+            assertEquals(factorMatrix.getRowIds().get(1), linksList.get(0).getParent());
+            assertEquals(factorMatrix.getAssessmentIds().get(1), linksList.get(0).getChild());
+            assertEquals(11, linksList.size());
+
+            //Tests for Concepts
+            /*
+            assertEquals(9, conceptGraphRecord.getConcepts().size());
+
+            for (LinkRecord link : linksList) {
+                System.out.println(link.getChild() + " -> " + link.getParent());
+            }
+            System.out.println(conceptGraphRecord.getConcepts());
+            */
+
+            //TODO: Very first ContinuousMatrixRecord is made with AssessmentItems out of order so headers are in wrong order.
+            //currently creating ContinuousMatrixRecord with a Map which is unordered
+            //assertEquals("BILLIARDS", conceptGraphRecord.getConcepts().get(0).getId());
 
         }catch (Exception e){
             Assert.fail();

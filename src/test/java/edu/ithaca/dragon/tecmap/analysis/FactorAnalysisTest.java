@@ -46,6 +46,12 @@ public class FactorAnalysisTest {
             List<AssessmentItem> assessmentItems = new ArrayList<>(assessmentItemMap.values());
             ContinuousMatrixRecord assessmentMatrix = new ContinuousMatrixRecord(assessmentItems);
 
+
+            for(AssessmentItem assessment : assessmentItems){
+                System.out.print(assessment.getId() + " ");
+            }
+            System.out.println();
+
             ContinuousMatrixRecord factorMatrix = FactorAnalysis.calculateExploratoryMatrix(assessmentMatrix);
             double[][] data = factorMatrix.getDataMatrix();
             List<String> expectedList = new ArrayList<>();
@@ -53,8 +59,8 @@ public class FactorAnalysisTest {
             expectedList.add("Factor 2");
             expectedList.add("Factor 3");
 
-            /*
-            //Print factor matrix
+            //Print Matrix
+            System.out.println();
             int rows = data.length;
             int cols = data[0].length;
             for(int i = 0; i<rows; i++)
@@ -65,7 +71,7 @@ public class FactorAnalysisTest {
                 }
                 System.out.println();
             }
-            */
+
 
             List<String> assessmentIds = new ArrayList<>(assessmentItemMap.keySet());
             assertEquals(-.12, data[0][0], .05);

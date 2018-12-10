@@ -1,8 +1,7 @@
 package edu.ithaca.dragon.tecmap.analysis;
 
 import edu.ithaca.dragon.tecmap.conceptgraph.ConceptGraph;
-import edu.ithaca.dragon.tecmap.io.record.ContinuousMatrixRecord;
-import edu.ithaca.dragon.tecmap.io.record.LearningResourceRecord;
+import edu.ithaca.dragon.tecmap.io.record.*;
 import edu.ithaca.dragon.tecmap.learningresource.AssessmentItem;
 import edu.ithaca.dragon.tecmap.learningresource.LearningResourceType;
 
@@ -29,13 +28,12 @@ public class FactorAnalysisResultSuggestor {
      * @param factorMatrixRecord
      * @return List<LearningResourceRecord> LearningResourceRecordList
      */
-    public static List<LearningResourceRecord> learningResourceFromExploratoryFactorMatrixRecord(ContinuousMatrixRecord factorMatrixRecord){
+    public static List<LearningResourceRecord> learningResourcesFromExploratoryFactorMatrixRecord(ContinuousMatrixRecord factorMatrixRecord){
 
         List<LearningResourceRecord> learningResourceRecordList = new ArrayList<>();
         List<LearningResourceType> resourceTypeList = new ArrayList<>();
         resourceTypeList.add(resourceType);
 
-        List<LearningResourceRecord> resourceList = new ArrayList<>();
         double[][] dataMatrix = factorMatrixRecord.getDataMatrix();
 
         //holds onto the index of the assessment to match with the dataMatrix. Increments to the next index once all factors are checked within an assessment
@@ -59,9 +57,38 @@ public class FactorAnalysisResultSuggestor {
         }
         return learningResourceRecordList;
     }
-/*
-    public static ConceptGraph conceptGraphFromExploratoryMatrixRecord(ContinuousMatrixRecord factorMatrixRecord){
 
+    public static ConceptGraphRecord conceptGraphFromExploratoryMatrixRecord(ContinuousMatrixRecord factorMatrixRecord, String conceptGraphRecordName){
+        List<AssessmentItem> assessmentItems = factorMatrixRecord.getAssessmentItems();
+        double[][] dataMatrix = factorMatrixRecord.getDataMatrix();
+        //Create List<ConceptRecord>
+        List<ConceptRecord> conceptRecordList = new ArrayList<>();
+
+
+        //holds onto the index of the assessment to match with the dataMatrix. Increments to the next index once all factors are checked within an assessment
+        int matrixColumnIndexIterator = 0;
+        List<String> factorList = factorMatrixRecord.getRowIds();
+        //Create List<LinkRecord>
+        List<LinkRecord> linksList = new ArrayList<>();
+
+        for(AssessmentItem assessment : assessmentItems){
+            //System.out.println(assessment.getId());
+            //Add assessment as a ConceptRecord
+            ConceptRecord conceptRecord = new ConceptRecord(assessment.getId());
+            conceptRecordList.add(conceptRecord);
+
+            for (int row = 0; row < factorList.size(); row++) {
+                if(dataMatrix[row][matrixColumnIndexIterator] > connectionThreshold){
+                    LinkRecord linkRecord = new LinkRecord(factorList.get(row), assessment.getId());
+                    linksList.add(linkRecord);
+                }
+            }
+            matrixColumnIndexIterator++;
+
+        }
+
+        ConceptGraphRecord conceptGraphRecord = new ConceptGraphRecord(conceptGraphRecordName, conceptRecordList, linksList);
+        return conceptGraphRecord;
     }
-    */
+
 }
