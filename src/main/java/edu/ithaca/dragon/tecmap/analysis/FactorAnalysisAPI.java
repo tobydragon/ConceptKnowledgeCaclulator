@@ -25,7 +25,7 @@ public interface FactorAnalysisAPI {
      * @pre resource, assessment, structure files are all present and an R Matrix is created
      * @throws Exception
      */
-    ContinuousMatrixRecord ExploratoryMatrix(ContinuousMatrixRecord assessmentMatrix)throws Exception;
+    ContinuousMatrixRecord exploratoryMatrix(ContinuousMatrixRecord assessmentMatrix)throws Exception;
 
     /**
      * displays a graph with connections (given by user) between assessments and higher up objects with strengths in connection
@@ -36,10 +36,10 @@ public interface FactorAnalysisAPI {
 
 
     /**
-     * creates a matrix of factors in java using assessment matrix and connections given by user(factors=rows, LearningObjects=columns)
+     * creates a matrix with values measuring the strength of the connection between a learningResource and factor given by a resource.json file
      * @param acg
      * @return
      */
-    //double[][] calculateConfirmatoryMatrix(ConceptGraph acg);
+    ContinuousMatrixRecord confirmatoryMatrix(ConceptGraph acg)throws Exception;
 
 }

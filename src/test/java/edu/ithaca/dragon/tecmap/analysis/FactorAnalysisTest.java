@@ -53,13 +53,8 @@ public class FactorAnalysisTest {
             expectedList.add("Factor 2");
             expectedList.add("Factor 3");
 
-            assertEquals(-.12, data[0][0], .05);
-            //Multiple factors
-            assertEquals(.58, data[2][0], .02);
-            //dimensions of matrix
-            assertEquals(9, data.length);
-            assertEquals(3, data[0].length);
-
+/*
+            //Print factor matrix
             int rows = data.length;
             int cols = data[0].length;
             for(int i = 0; i<rows; i++)
@@ -70,12 +65,17 @@ public class FactorAnalysisTest {
                 }
                 System.out.println();
             }
+            */
+            List<String> assessmentIds = new ArrayList<>(assessmentItemMap.keySet());
+            assertEquals(-.12, data[0][0], .05);
+            //Multiple factors
+            assertEquals(-.02, data[2][0], .01);
+            //dimensions of matrix
+            assertEquals(3, data.length);
+            assertEquals(9, data[0].length);
+            assertEquals(assessmentIds, factorMatrix.getAssessmentIds());
+            assertEquals(expectedList, factorMatrix.getRowIds());
 
-            assertEquals(expectedList, factorMatrix.getAssessmentIds());
-
-            //List<String> factors = assessmentMatrix.getRowIds();
-            //System.out.println(factors);
-            //assertEquals(3, assessmentMatrix.getAssessmentIds().size());
 
         }catch (Exception e){
             Assert.fail();
@@ -97,10 +97,21 @@ public class FactorAnalysisTest {
 
         assertEquals(.79, factorMatrix[0][0], .01);
         List<String> factors = confirmatoryFactorMatrix.getAssessmentIds();
-        //System.out.println(factors);
-        //System.out.println(acg.getAllNodeIds());
-        //System.out.println(confirmatoryFactorMatrix.getAssessmentIds());
 
+
+        List<String> factorList = new ArrayList<String>();
+        Collection<String> nodeCollection = acg.getAllNodeIds();
+        for(String node : nodeCollection){
+            factorList.add(node);
+        }
+        Map<String, AssessmentItem> assessmentItemMap = acg.getAssessmentItemMap();
+        List<String> assessmentIds = new ArrayList<>(assessmentItemMap.keySet());
+        assertEquals(factorList, confirmatoryFactorMatrix.getRowIds());
+        assertEquals(assessmentIds, confirmatoryFactorMatrix.getAssessmentIds());
+        /*
+        //Print: List of factors (rows), list of assessments (columns), factor matrix
+        System.out.println("Factors in rows: " + confirmatoryFactorMatrix.getRowIds());
+        System.out.println("Assessments in columns: " + confirmatoryFactorMatrix.getAssessmentIds());
         int rows = factorMatrix.length;
         int cols = factorMatrix[0].length;
         for(int i = 0; i<rows; i++)
@@ -111,9 +122,7 @@ public class FactorAnalysisTest {
             }
             System.out.println();
         }
-
-
-
+*/
 
     }
 

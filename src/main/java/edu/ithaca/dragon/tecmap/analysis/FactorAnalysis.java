@@ -73,7 +73,7 @@ public class FactorAnalysis implements FactorAnalysisAPI{
     */
     }
 
-    public ContinuousMatrixRecord ExploratoryMatrix(ContinuousMatrixRecord assessmentMatrix)throws Exception{
+    public ContinuousMatrixRecord exploratoryMatrix(ContinuousMatrixRecord assessmentMatrix)throws Exception{
         ContinuousMatrixRecord factorMatrix = calculateExploratoryMatrix(assessmentMatrix);
         return factorMatrix;
     }
@@ -89,9 +89,9 @@ public class FactorAnalysis implements FactorAnalysisAPI{
     public static ContinuousMatrixRecord calculateExploratoryMatrix(ContinuousMatrixRecord assessmentMatrix)throws Exception{
         RCaller rCaller = RLibrary.RCallerVariable();
         rCaller.redirectROutputToStream(System.out);
-
         RCode code = RLibrary.createRMatrix(assessmentMatrix);
         double[][] gradeMatrix = assessmentMatrix.getDataMatrix();
+        //Call file
         code.addRCode("source('/Users/bleblanc2/IdeaProjects/tecmap/src/main/r/ExploratoryMatrix.R')");
         code.addDoubleMatrix("data", gradeMatrix);
         //code.addRCode("data <- as.data.frame(t(data))");
@@ -100,16 +100,14 @@ public class FactorAnalysis implements FactorAnalysisAPI{
         rCaller.runAndReturnResult("factorMatrix");
         double[][] factorMatrix = rCaller.getParser().getAsDoubleMatrix("factorMatrix");
 
-
         //Create List of factors for being placed into the columns
         int numOfFactors = factorMatrix[0].length;
         List<String> factorList = new ArrayList<>();
         for(int i=0; i<numOfFactors; i++){
             factorList.add("Factor "+(i+1));
         }
-
-        ContinuousMatrixRecord factorMatrixRecord = new ContinuousMatrixRecord(factorMatrix, factorList, assessmentMatrix.getAssessmentItems());
-
+        double[][] transposedFactorMatrix = MatrixTransforms.transposeMatrix(factorMatrix);
+        ContinuousMatrixRecord factorMatrixRecord = new ContinuousMatrixRecord(transposedFactorMatrix, factorList, assessmentMatrix.getAssessmentItems());
         return factorMatrixRecord;
     }
 
@@ -146,9 +144,6 @@ public class FactorAnalysis implements FactorAnalysisAPI{
 
     public static String modelMaker(ConceptGraph acg, List<String> nodeList){
         String modelString = "";
-        //Collection<String> conceptStringList = acg.getAllNodeIds();
-        //conceptStringList = duplicateCheck(acg, conceptStringList);
-
         List<String> conceptStringList = duplicateCheck(acg, nodeList);
 
         for(String conceptString : conceptStringList){
@@ -156,16 +151,13 @@ public class FactorAnalysis implements FactorAnalysisAPI{
             ConceptNode concept = acg.findNodeById(conceptString);
             Map<String, AssessmentItem> loMap = concept.getAssessmentItemMap();
             Collection<AssessmentItem> loList = loMap.values();
-            int loListSize = loList.size();
-            int loListIndex = 1;
-            for(AssessmentItem lo : loList){
 
+            for(AssessmentItem lo : loList){
                 //modelString += conceptString + " -> " + lo.getLearningResourceId() + ", " + lo.getLearningResourceId() + "To" + conceptString + ", NA \n";
                 modelString += conceptString + " -> " + lo.getId().replaceAll("\\s", "") + ", " + lo.getId().replaceAll("\\s", "") + "To" + conceptString + ", NA \n";
 
             }
         }
-
         //remove the last new line (\n) from the modelString
         for(int i=0;i<2;i++) {
             modelString = modelString.substring(0, modelString.length() - 1);
@@ -237,7 +229,12 @@ public class FactorAnalysis implements FactorAnalysisAPI{
             }
     }
 
-    public static ContinuousMatrixRecord calculateConfirmatoryMatrix(ConceptGraph acg){
+    public ContinuousMatrixRecord confirmatoryMatrix(ConceptGraph acg)throws Exception{
+        ContinuousMatrixRecord factorMatrix = calculateConfirmatoryMatrix(acg);
+        return factorMatrix;
+    }
+
+    public static ContinuousMatrixRecord calculateConfirmatoryMatrix(ConceptGraph acg)throws Exception{
         try {
             Map<String, AssessmentItem> assessmentItemMap = acg.getAssessmentItemMap();
             List<AssessmentItem> assessmentItems = new ArrayList<>(assessmentItemMap.values());
@@ -251,7 +248,6 @@ public class FactorAnalysis implements FactorAnalysisAPI{
 
             String modelString = modelMaker(acg, factorList);
             modelToFile(modelString);
-            //TODO: fix file path
 
             RCaller rCaller = RLibrary.RCallerVariable();
             RCode code = RLibrary.createRMatrix(assessmentMatrix);
@@ -265,13 +261,12 @@ public class FactorAnalysis implements FactorAnalysisAPI{
             rCaller.runAndReturnResult("factorMatrix");
             double[][] confirmatoryMatrix = rCaller.getParser().getAsDoubleMatrix("factorMatrix");
 
-            //TODO: Put cleaning into own method (transposing, cleaning, etc.)
             //The matrix has # of columns and rows equal to the sum of number of factors and number of assessments
             //Most of the data is irrelevant and is a 0. This loop makes a smaller loop that is just assessments by factors
-            double[][] removedMatrix = removeEmptyRowsFromMatrix(confirmatoryMatrix);
-            double[][] cleanedMatrix = transposeMatrix(removedMatrix);
+            double[][] removedMatrix = MatrixTransforms.removeEmptyRowsFromMatrix(confirmatoryMatrix);
+            //double[][] cleanedMatrix = MatrixTransforms.transposeMatrix(removedMatrix);
 
-            ContinuousMatrixRecord confirmatoryMatrixRecord = new ContinuousMatrixRecord(cleanedMatrix, factorList, assessmentMatrix.getAssessmentItems());
+            ContinuousMatrixRecord confirmatoryMatrixRecord = new ContinuousMatrixRecord(removedMatrix, factorList, assessmentMatrix.getAssessmentItems());
             return confirmatoryMatrixRecord;
         } catch (Exception e) {
             Logger.getLogger(FactorAnalysis.class.getName()).log(Level.SEVERE, e.getMessage());
@@ -279,55 +274,6 @@ public class FactorAnalysis implements FactorAnalysisAPI{
         }
     }
 
-    /**
-     * Creates a new matrix without useless all 0 rows
-     * @param confirmatoryMatrix
-     * @return double[][]
-     */
-    public static double[][] removeEmptyRowsFromMatrix(double[][] confirmatoryMatrix){
-        List<Integer> indicesToAdd = new ArrayList<>();
-        for(int i=0;i<confirmatoryMatrix.length; i++){
-            for(int j=0;j<confirmatoryMatrix[0].length; j++){
-                if(confirmatoryMatrix[i][j] != 0){
-                    if(false == indicesToAdd.contains(i)){
-                        indicesToAdd.add(i);
-                    }
 
-                }
-            }
-        }
-        double[][] cleanedMatrix = new double[indicesToAdd.size()][confirmatoryMatrix[0].length];
-
-        int newIndex = 0;
-        for(int rowIndex :indicesToAdd){
-            for (int j = 0; j < confirmatoryMatrix[0].length; j++) {
-                cleanedMatrix[newIndex][j] = confirmatoryMatrix[rowIndex][j];
-            }
-            newIndex++;
-        }
-        return cleanedMatrix;
-    }
-
-    /**
-     * Transposes a matrix of doubles [row][column] -> [column][row]
-     * @param originalMatrix
-     * @return
-     */
-    public static double[][] transposeMatrix(double[][] originalMatrix){
-        double[][] transposedMatrix = new double[originalMatrix[0].length][originalMatrix.length];
-        for (int i = 0; i < originalMatrix.length; i++) {
-            for (int j = 0; j < originalMatrix[0].length; j++) {
-                transposedMatrix[j][i] = originalMatrix[i][j];
-            }
-
-        }
-        return transposedMatrix;
-    }
-
-    public static class NoVarianceException extends Exception {
-        public NoVarianceException() { super(); }
-        public NoVarianceException(String message) { super(message); }
-        public NoVarianceException(String message, Throwable cause) { super(message, cause); }
-        public NoVarianceException(Throwable cause) { super(cause); }
-    }
 }
+

@@ -11,7 +11,7 @@ import java.util.List;
 /**
  * Created by Benjamin on 9/18/2018.
  * This class represents all information that can be held as a matrix of doubles
- * Student(row) Assessment(column) grades(matrix) or Factor(column) Assessment(row) Link Strength(matrix)
+ * Student(row) Assessment(column) grades(matrix) or Factor(row) Assessment(column) Link Strength(matrix)
  */
 public class ContinuousMatrixRecord {
 
@@ -27,11 +27,10 @@ public class ContinuousMatrixRecord {
         this.dataMatrix = createMatrix(assessmentItems);
     }
 
-
     public ContinuousMatrixRecord(double[][] dataMatrix, List<String> factorList, List<AssessmentItem> assessmentItems){
         this.assessmentItems = assessmentItems;
-        this.assessmentIds = factorList;
-        this.rowIds = getAssessmentIds(assessmentItems);
+        this.assessmentIds = getAssessmentIds(assessmentItems);
+        this.rowIds = factorList;
         this.dataMatrix = dataMatrix;
 
     }
