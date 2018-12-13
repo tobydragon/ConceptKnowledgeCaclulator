@@ -73,31 +73,18 @@ public class FactorAnalysisResultSuggestorTest {
             ContinuousMatrixRecord assessmentMatrix = new ContinuousMatrixRecord(assessmentItems);
             ContinuousMatrixRecord factorMatrix = FactorAnalysis.calculateExploratoryMatrix(assessmentMatrix);
 
-
-
             ConceptGraphRecord conceptGraphRecord = FactorAnalysisResultSuggestor.conceptGraphFromExploratoryMatrixRecord(factorMatrix, testGraphName);
 
             //Tests for LinkRecord
             assertEquals(testGraphName, conceptGraphRecord.getName());
             List<LinkRecord> linksList = conceptGraphRecord.getLinks();
-            //The First Link created is the index 0 in the list where the child and parent are both within index 1 of the list of factors and assessments
-            assertEquals(factorMatrix.getRowIds().get(1), linksList.get(0).getParent());
-            assertEquals(factorMatrix.getAssessmentIds().get(1), linksList.get(0).getChild());
-            assertEquals(11, linksList.size());
+            assertEquals(0, linksList.size());
+
 
             //Tests for Concepts
-            /*
+
             assertEquals(9, conceptGraphRecord.getConcepts().size());
 
-            for (LinkRecord link : linksList) {
-                System.out.println(link.getChild() + " -> " + link.getParent());
-            }
-            System.out.println(conceptGraphRecord.getConcepts());
-            */
-
-            //TODO: Very first ContinuousMatrixRecord is made with AssessmentItems out of order so headers are in wrong order.
-            //currently creating ContinuousMatrixRecord with a Map which is unordered
-            //assertEquals("BILLIARDS", conceptGraphRecord.getConcepts().get(0).getId());
 
         }catch (Exception e){
             Assert.fail();

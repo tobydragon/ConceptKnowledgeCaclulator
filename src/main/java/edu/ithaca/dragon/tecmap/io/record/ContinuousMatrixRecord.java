@@ -100,23 +100,7 @@ public class ContinuousMatrixRecord {
         return gradeMatrix;
     }
 
-    public RCode createRMatrix(double[][] studentKnowledgeEstimates){
 
-        int objLength = assessmentItems.size();
-
-        //object list into string array
-
-        int i = 0;
-        String[] objStr = new String[objLength];
-        for(AssessmentItem obj: assessmentItems){
-            objStr[i] = obj.getId();
-            i++;
-        }
-
-
-        RCode rMatrix = RFunctions.JavaToR(studentKnowledgeEstimates, objStr);
-        return rMatrix;
-    }
 
     public List<AssessmentItem> getAssessmentItems() {
         return assessmentItems;

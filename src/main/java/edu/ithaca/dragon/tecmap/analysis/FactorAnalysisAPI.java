@@ -16,7 +16,7 @@ public interface FactorAnalysisAPI {
      * @pre resource, assessment, structure files are all present and an R Matrix is created
      * @throws Exception
      */
-    void displayExploratoryGraph(ContinuousMatrixRecord assessmentMatrix)throws Exception;
+    void exploratoryGraph(ContinuousMatrixRecord assessmentMatrix)throws Exception;
 
     /**
      * creates a matrix of factors in java using assessment matrix(factors=rows, LearningObjects=columns)

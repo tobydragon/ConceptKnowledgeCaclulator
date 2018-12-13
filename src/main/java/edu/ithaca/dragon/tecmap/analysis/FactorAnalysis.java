@@ -40,7 +40,11 @@ public class FactorAnalysis implements FactorAnalysisAPI{
      * @throws Exception
      */
 
-    public void displayExploratoryGraph(ContinuousMatrixRecord assessmentMatrix)throws Exception {
+    public void exploratoryGraph(ContinuousMatrixRecord assessmentMatrix)throws Exception{
+        displayExploratoryGraph(assessmentMatrix);
+    }
+
+    public static void displayExploratoryGraph(ContinuousMatrixRecord assessmentMatrix)throws Exception {
         /*
         try{
 
@@ -71,6 +75,46 @@ public class FactorAnalysis implements FactorAnalysisAPI{
         Logger.getLogger(FactorAnalysis.class.getName()).log(Level.SEVERE, e.getMessage());
     }
     */
+
+        try {
+            List<AssessmentItem> assessments = assessmentMatrix.getAssessmentItems();
+            int assessmentIterator = 0;
+            String[] assessmentArr = new String[assessments.size()];
+            for(AssessmentItem assessment : assessments){
+                assessmentArr[assessmentIterator] = assessment.getId();
+                assessmentIterator++;
+            }
+
+            List<String> students = assessmentMatrix.getRowIds();
+            String[] studentArr= new String[students.size()];
+            int studentIterator = 0;
+            for(String student : students){
+                studentArr[studentIterator] = student;
+                studentIterator++;
+            }
+
+            RCaller rCaller = RLibrary.RCallerVariable();
+            rCaller.redirectROutputToStream(System.out);
+            RCode code = RLibrary.createRMatrix(assessmentMatrix);
+            double[][] gradeMatrix = assessmentMatrix.getDataMatrix();
+            //Call file
+            File file = code.startPlot();
+            code.addRCode("source('/Users/bleblanc2/IdeaProjects/tecmap/src/main/r/ExploratoryMatrix.R')");
+            code.addStringArray("students", studentArr);
+            code.addDoubleMatrix("data", gradeMatrix);
+            //code.addRCode("data <- as.data.frame(t(data))");
+            code.addRCode("factorMatrix <- calculateExploratoryMatrix(data)");
+            rCaller.setRCode(code);
+            rCaller.runOnly();
+            //rCaller.runAndReturnResult("factorMatrix");
+            //double[][] factorMatrix = rCaller.getParser().getAsDoubleMatrix("factorMatrix");
+            code.getPlot(file);
+            code.showPlot(file);
+        }catch(Exception e){
+            Logger.getLogger(FactorAnalysis.class.getName()).log(Level.SEVERE, e.getMessage());
+        }
+
+
     }
 
     public ContinuousMatrixRecord exploratoryMatrix(ContinuousMatrixRecord assessmentMatrix)throws Exception{

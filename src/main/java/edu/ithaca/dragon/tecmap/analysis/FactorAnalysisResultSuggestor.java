@@ -1,13 +1,24 @@
 package edu.ithaca.dragon.tecmap.analysis;
 
+import edu.ithaca.dragon.tecmap.Settings;
+import edu.ithaca.dragon.tecmap.SuggestingTecmap;
+import edu.ithaca.dragon.tecmap.SuggestingTecmapAPI;
 import edu.ithaca.dragon.tecmap.conceptgraph.ConceptGraph;
+import edu.ithaca.dragon.tecmap.data.TecmapDatastore;
+import edu.ithaca.dragon.tecmap.data.TecmapFileData;
+import edu.ithaca.dragon.tecmap.data.TecmapFileDatastore;
+import edu.ithaca.dragon.tecmap.io.reader.ReaderTools;
 import edu.ithaca.dragon.tecmap.io.record.*;
 import edu.ithaca.dragon.tecmap.learningresource.AssessmentItem;
+import edu.ithaca.dragon.tecmap.learningresource.AssessmentItemResponse;
 import edu.ithaca.dragon.tecmap.learningresource.LearningResourceType;
 
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
+import java.util.Map;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import static edu.ithaca.dragon.tecmap.learningresource.LearningResourceType.ASSESSMENT;
 
@@ -64,31 +75,70 @@ public class FactorAnalysisResultSuggestor {
         //Create List<ConceptRecord>
         List<ConceptRecord> conceptRecordList = new ArrayList<>();
 
-
         //holds onto the index of the assessment to match with the dataMatrix. Increments to the next index once all factors are checked within an assessment
         int matrixColumnIndexIterator = 0;
         List<String> factorList = factorMatrixRecord.getRowIds();
         //Create List<LinkRecord>
         List<LinkRecord> linksList = new ArrayList<>();
 
+        //Create List<LinkRecord> between assessment and factor
         for(AssessmentItem assessment : assessmentItems){
             //System.out.println(assessment.getId());
             //Add assessment as a ConceptRecord
             ConceptRecord conceptRecord = new ConceptRecord(assessment.getId());
             conceptRecordList.add(conceptRecord);
-
-            for (int row = 0; row < factorList.size(); row++) {
-                if(dataMatrix[row][matrixColumnIndexIterator] > connectionThreshold){
-                    LinkRecord linkRecord = new LinkRecord(factorList.get(row), assessment.getId());
-                    linksList.add(linkRecord);
-                }
-            }
-            matrixColumnIndexIterator++;
-
         }
+
 
         ConceptGraphRecord conceptGraphRecord = new ConceptGraphRecord(conceptGraphRecordName, conceptRecordList, linksList);
         return conceptGraphRecord;
     }
 
+//TODO: parameter List of AssessmentItem with connected responses
+    public static void createGraphAndResourceFromAssessment(String idToRetrieve)throws Exception {
+  /*
+        try {
+            //TODO: full version of buildFromJSonFile(Settings should not use DEFAULT_TEST_DATASTORE_PATH
+            TecmapDatastore tecmapDatastore = TecmapFileDatastore.buildFromJsonFile(Settings.DEFAULT_TEST_DATASTORE_PATH);
+            SuggestingTecmapAPI tecmap = tecmapDatastore.retrieveTecmapForId(idToRetrieve);
+
+            ConceptGraph acg = tecmap.getAverageConceptGraph();
+            Map<String, AssessmentItem> assessmentItemMap = acg.getAssessmentItemMap();
+
+            //Get list of AssessmentItems for new SuggestingTecmap
+            List<AssessmentItem> assessmentItems = new ArrayList<>(assessmentItemMap.values());
+
+            //Get List of all ItemResponses connected to AssessmentItems for SuggestingTecmap
+
+            //TODO: Make into function in AssessmentItem class
+            List<AssessmentItemResponse> assessmentItemResponses = new ArrayList<>();
+            for(AssessmentItem assessment : assessmentItems){
+                List<AssessmentItemResponse> responses = new ArrayList<>();
+                for(AssessmentItemResponse response : responses){
+                    assessmentItemResponses.add(response);
+                }
+            }
+
+            //TODO: Make function in AssessmentItem class that gets a copy of assessmentItem but are not connected to responses
+
+            ContinuousMatrixRecord assessmentMatrix = new ContinuousMatrixRecord(assessmentItems);
+            ContinuousMatrixRecord factorMatrix = FactorAnalysis.calculateExploratoryMatrix(assessmentMatrix);
+
+            List<LearningResourceRecord> lrrList = learningResourcesFromExploratoryFactorMatrixRecord(factorMatrix);
+            ConceptGraphRecord conceptGraphRecord = conceptGraphFromExploratoryMatrixRecord(factorMatrix, idToRetrieve + "ConceptGraph");
+
+        return new SuggestingTecmap(new ConceptGraph(conceptGraphRecord), lrrList, assessmentItemsWithoutResponses, assessmentItemResponses);
+                /*
+                //TODO: hardcoded to sakai csv, need to hold a list of CSVReaders, or the information about which kind of reader it is...
+                ReaderTools.learningObjectsFromCSVList(2, files.getAssessmentFiles()),
+                AssessmentItemResponse.createAssessmentItemResponses(files.getAssessmentFiles()));
+
+
+        }catch (Exception e){
+            Logger.getLogger(FactorAnalysisResultSuggestor.class.getName()).log(Level.SEVERE, e.getMessage());
+            throw new Exception("Could not create graph or resource file");
+        }
+  */
+
+    }
 }

@@ -81,4 +81,25 @@ calculateConfirmatoryMatrix <- function(data, modelFile){
 	return(resultMatrix)
 }
 
+displayExploratoryMatrix <- function(data){
+	library(sem)
+	library(semPlot)
+	library(stringr)
+	library(readr)
+	#data <- as.data.frame(t(data))
+	cleanedData <- getCleanedMatrix(data)
+	if(ncol(cleanedData) > 2){
+		numOfFactors <- findFactorCount(cleanedData)
+	}else{
+		#Not enough columns to find a factor count
+		return(-1)
+	}
+
+	matrixOfLoadings <- factanal(data, factors = numOfFactors, method='mle')
+	factorMatrix <- matrixOfLoadings$loadings
+	semPaths(matrixOfLoadings, 'est')
+	#return(factorMatrix)
+}
+
+
 
