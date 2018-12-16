@@ -10,6 +10,11 @@
     "resourceFiles" : [ "src/test/resources/datastore/FactorAnalysisDocumentationExample/FactorAnalysisDocumentationExampleResource.json" ],
     "assessmentFiles" : [ "src/test/resources/datastore/FactorAnalysisDocumentationExample/AthleticsDataOnTecMap.csv" ]
   }, {
+    "id" : "AssessmentToExploratoryGraphTest",
+    "graphFile" : "src/test/resources/datastore/FactorAnalysisDocumentationExample/FactorAnalysisDocumentationExampleGraph.json",
+    "resourceFiles" : [ ],
+    "assessmentFiles" : [ "src/test/resources/datastore/FactorAnalysisDocumentationExample/AthleticsDataOnTecMap.csv" ]
+  }, {
     "id" : "Cs1Example",
     "graphFile" : "src/test/resources/datastore/Cs1Example/Cs1ExampleGraph.json",
     "resourceFiles" : [ "src/test/resources/datastore/Cs1Example/Cs1ExampleResources.json" ],

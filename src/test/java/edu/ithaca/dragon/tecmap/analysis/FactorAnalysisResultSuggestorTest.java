@@ -91,4 +91,22 @@ public class FactorAnalysisResultSuggestorTest {
             e.printStackTrace();
         }
     }
+
+    @Test
+    public void createGraphAndResourceResourceFromAssessmentTest(){
+        try {
+            TecmapDatastore tecmapDatastore = TecmapFileDatastore.buildFromJsonFile(Settings.DEFAULT_TEST_DATASTORE_PATH);
+            //TODO: This crashes when running a tecmap without a resourcefile Also test does not show DocExample works. It just does not crash
+            SuggestingTecmapAPI analysisExample = tecmapDatastore.retrieveTecmapForId("DocExample");
+            ConceptGraph acg = analysisExample.getAverageConceptGraph();
+            Map<String, AssessmentItem> assessmentItemMap = acg.getAssessmentItemMap();
+            List<AssessmentItem> assessmentItems = new ArrayList<>(assessmentItemMap.values());
+
+            FactorAnalysisResultSuggestor.createGraphAndResourceFromAssessment(assessmentItems);
+
+        }catch (Exception e){
+            Assert.fail();
+            e.printStackTrace();
+        }
+    }
 }

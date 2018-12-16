@@ -95,50 +95,31 @@ public class FactorAnalysisResultSuggestor {
     }
 
 //TODO: parameter List of AssessmentItem with connected responses
-    public static void createGraphAndResourceFromAssessment(String idToRetrieve)throws Exception {
-  /*
+    public static void createGraphAndResourceFromAssessment(List <AssessmentItem> assessmentItems)throws Exception {
+
         try {
-            //TODO: full version of buildFromJSonFile(Settings should not use DEFAULT_TEST_DATASTORE_PATH
-            TecmapDatastore tecmapDatastore = TecmapFileDatastore.buildFromJsonFile(Settings.DEFAULT_TEST_DATASTORE_PATH);
-            SuggestingTecmapAPI tecmap = tecmapDatastore.retrieveTecmapForId(idToRetrieve);
-
-            ConceptGraph acg = tecmap.getAverageConceptGraph();
-            Map<String, AssessmentItem> assessmentItemMap = acg.getAssessmentItemMap();
-
-            //Get list of AssessmentItems for new SuggestingTecmap
-            List<AssessmentItem> assessmentItems = new ArrayList<>(assessmentItemMap.values());
-
             //Get List of all ItemResponses connected to AssessmentItems for SuggestingTecmap
-
-            //TODO: Make into function in AssessmentItem class
-            List<AssessmentItemResponse> assessmentItemResponses = new ArrayList<>();
-            for(AssessmentItem assessment : assessmentItems){
-                List<AssessmentItemResponse> responses = new ArrayList<>();
-                for(AssessmentItemResponse response : responses){
-                    assessmentItemResponses.add(response);
-                }
-            }
-
-            //TODO: Make function in AssessmentItem class that gets a copy of assessmentItem but are not connected to responses
-
+            List<AssessmentItemResponse> assessmentItemResponses = AssessmentItem.getItemResponsesFromAssessmentList(assessmentItems);
+            //Make AssessmentItems list copy that does not have connections to its itemResponses
+            List<AssessmentItem> assessmentItemsWithoutResponses = AssessmentItem.getAssessmentCopyWithoutResponses(assessmentItems);
             ContinuousMatrixRecord assessmentMatrix = new ContinuousMatrixRecord(assessmentItems);
             ContinuousMatrixRecord factorMatrix = FactorAnalysis.calculateExploratoryMatrix(assessmentMatrix);
 
             List<LearningResourceRecord> lrrList = learningResourcesFromExploratoryFactorMatrixRecord(factorMatrix);
-            ConceptGraphRecord conceptGraphRecord = conceptGraphFromExploratoryMatrixRecord(factorMatrix, idToRetrieve + "ConceptGraph");
+            ConceptGraphRecord conceptGraphRecord = conceptGraphFromExploratoryMatrixRecord(factorMatrix, "newConceptGraphRecord");
 
-        return new SuggestingTecmap(new ConceptGraph(conceptGraphRecord), lrrList, assessmentItemsWithoutResponses, assessmentItemResponses);
+        new SuggestingTecmap(new ConceptGraph(conceptGraphRecord), lrrList, assessmentItemsWithoutResponses, assessmentItemResponses);
                 /*
                 //TODO: hardcoded to sakai csv, need to hold a list of CSVReaders, or the information about which kind of reader it is...
                 ReaderTools.learningObjectsFromCSVList(2, files.getAssessmentFiles()),
                 AssessmentItemResponse.createAssessmentItemResponses(files.getAssessmentFiles()));
-
+*/
 
         }catch (Exception e){
             Logger.getLogger(FactorAnalysisResultSuggestor.class.getName()).log(Level.SEVERE, e.getMessage());
             throw new Exception("Could not create graph or resource file");
         }
-  */
+
 
     }
 }
