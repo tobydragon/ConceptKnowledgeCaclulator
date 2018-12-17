@@ -81,6 +81,7 @@ public class FactorAnalysisResultSuggestor {
         //Create List<LinkRecord>
         List<LinkRecord> linksList = new ArrayList<>();
 
+        //TODO: Make factorList IDs be used to make conceptRecord instead of assessment IDs
         //Create List<LinkRecord> between assessment and factor
         for(AssessmentItem assessment : assessmentItems){
             //System.out.println(assessment.getId());
@@ -94,8 +95,8 @@ public class FactorAnalysisResultSuggestor {
         return conceptGraphRecord;
     }
 
-//TODO: parameter List of AssessmentItem with connected responses
-    public static void createGraphAndResourceFromAssessment(List <AssessmentItem> assessmentItems)throws Exception {
+
+    public static SuggestingTecmap createGraphAndResourceFromAssessment(List <AssessmentItem> assessmentItems)throws Exception {
 
         try {
             //Get List of all ItemResponses connected to AssessmentItems for SuggestingTecmap
@@ -108,7 +109,7 @@ public class FactorAnalysisResultSuggestor {
             List<LearningResourceRecord> lrrList = learningResourcesFromExploratoryFactorMatrixRecord(factorMatrix);
             ConceptGraphRecord conceptGraphRecord = conceptGraphFromExploratoryMatrixRecord(factorMatrix, "newConceptGraphRecord");
 
-        new SuggestingTecmap(new ConceptGraph(conceptGraphRecord), lrrList, assessmentItemsWithoutResponses, assessmentItemResponses);
+        return new SuggestingTecmap(new ConceptGraph(conceptGraphRecord), lrrList, assessmentItemsWithoutResponses, assessmentItemResponses);
                 /*
                 //TODO: hardcoded to sakai csv, need to hold a list of CSVReaders, or the information about which kind of reader it is...
                 ReaderTools.learningObjectsFromCSVList(2, files.getAssessmentFiles()),

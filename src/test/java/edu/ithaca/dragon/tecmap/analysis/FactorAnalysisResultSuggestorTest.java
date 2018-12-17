@@ -1,6 +1,7 @@
 package edu.ithaca.dragon.tecmap.analysis;
 
 import edu.ithaca.dragon.tecmap.Settings;
+import edu.ithaca.dragon.tecmap.SuggestingTecmap;
 import edu.ithaca.dragon.tecmap.SuggestingTecmapAPI;
 import edu.ithaca.dragon.tecmap.conceptgraph.ConceptGraph;
 import edu.ithaca.dragon.tecmap.data.TecmapDatastore;
@@ -102,7 +103,11 @@ public class FactorAnalysisResultSuggestorTest {
             Map<String, AssessmentItem> assessmentItemMap = acg.getAssessmentItemMap();
             List<AssessmentItem> assessmentItems = new ArrayList<>(assessmentItemMap.values());
 
-            FactorAnalysisResultSuggestor.createGraphAndResourceFromAssessment(assessmentItems);
+            SuggestingTecmap exploratoryTecmap = FactorAnalysisResultSuggestor.createGraphAndResourceFromAssessment(assessmentItems);
+            ConceptGraph newAcg = exploratoryTecmap.getAverageConceptGraph();
+            Map<String, AssessmentItem> newAssessmentItemMap = newAcg.getAssessmentItemMap();
+            List<AssessmentItem> newAssessmentItems = new ArrayList<>(newAssessmentItemMap.values());
+            assertEquals(assessmentItems, newAssessmentItems);
 
         }catch (Exception e){
             Assert.fail();
