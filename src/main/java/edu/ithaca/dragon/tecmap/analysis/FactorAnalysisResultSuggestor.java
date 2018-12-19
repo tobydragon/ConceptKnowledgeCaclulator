@@ -83,13 +83,19 @@ public class FactorAnalysisResultSuggestor {
 
         //TODO: Make factorList IDs be used to make conceptRecord instead of assessment IDs
         //Create List<LinkRecord> between assessment and factor
+        /*
         for(AssessmentItem assessment : assessmentItems){
             //System.out.println(assessment.getId());
             //Add assessment as a ConceptRecord
             ConceptRecord conceptRecord = new ConceptRecord(assessment.getId());
             conceptRecordList.add(conceptRecord);
         }
+*/
 
+        for(String factor : factorList){
+            ConceptRecord conceptRecord = new ConceptRecord(factor);
+            conceptRecordList.add(conceptRecord);
+        }
 
         ConceptGraphRecord conceptGraphRecord = new ConceptGraphRecord(conceptGraphRecordName, conceptRecordList, linksList);
         return conceptGraphRecord;
