@@ -31,6 +31,7 @@ public class FactorAnalysis implements FactorAnalysisAPI{
 
     public static String modelFilePath = "/Users/bleblanc2/IdeaProjects/tecmap/src/test/resources/model/model.txt";
 
+    //TODO: make absolute paths variables set up as class variables
 
 
     /**
@@ -44,6 +45,7 @@ public class FactorAnalysis implements FactorAnalysisAPI{
         displayExploratoryGraph(assessmentMatrix);
     }
 
+    //TODO: Get working in ExploratoryMatrix.R
     public static void displayExploratoryGraph(ContinuousMatrixRecord assessmentMatrix)throws Exception {
         /*
         try{
@@ -233,7 +235,7 @@ public class FactorAnalysis implements FactorAnalysisAPI{
             System.out.println("Error occurred in exporting data model to file.");
         }
     }
-
+//TODO: Get working in ExploratoryMatrix.R
     public void displayConfirmatoryGraph(ContinuousMatrixRecord assessmentMatrix, ConceptGraph acg){
             try {
 
