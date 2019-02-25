@@ -8,7 +8,9 @@ import edu.ithaca.dragon.tecmap.data.TecmapFileDatastore;
 import edu.ithaca.dragon.tecmap.io.Json;
 import edu.ithaca.dragon.tecmap.io.record.CohortConceptGraphsRecord;
 import edu.ithaca.dragon.tecmap.io.record.ConceptGraphRecord;
+import edu.ithaca.dragon.tecmap.io.record.LearningMaterialRecord;
 import edu.ithaca.dragon.tecmap.io.record.LearningResourceRecord;
+import edu.ithaca.dragon.tecmap.learningresource.LearningMaterial;
 import edu.ithaca.dragon.tecmap.suggester.GroupSuggester.Group;
 import edu.ithaca.dragon.tecmap.tecmapExamples.Cs1ExampleJsonStrings;
 import edu.ithaca.dragon.tecmap.ui.TecmapUserAction;
@@ -203,4 +205,35 @@ public class TecmapServiceTest {
         assertEquals(3, validMap.get("Cs1Example").size());
         assertThat(validMap.get("Cs1Example"), containsInAnyOrder(TecmapUserAction.structureTree, TecmapUserAction.connectResources, TecmapUserAction.cohortTree));
     }
+
+    @Test
+    public void retrieveLearningMaterialRecordsTest() {
+        String id = "none";
+        List<LearningMaterialRecord> records = null;
+
+        try {
+            records = tecmapService.retrieveLearningMaterialRecords(id);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        String content0 = "What's are advantages of using while loops instead of for loops?";
+        String content1 = "How many choices are possible when executing an if-statement?";
+        String content2 = "When does an 'else' conditional get executed in a function?";
+        String content3 = "https://www.learncpp.com/cpp-tutorial/52-if-statements/";
+        String content4 = "https://www.programiz.com/c-programming/c-if-else-statement";
+        String content5 = "https://programming.guide/go/for-loop.html";
+
+        assertEquals(6, records.size());
+
+        assertEquals(content0, records.get(0).getContent());
+        assertEquals(content1, records.get(1).getContent());
+        assertEquals(content2, records.get(2).getContent());
+        assertEquals(content3, records.get(3).getContent());
+        assertEquals(content4, records.get(4).getContent());
+        assertEquals(content5, records.get(5).getContent());
+
+    }
+
+
 }

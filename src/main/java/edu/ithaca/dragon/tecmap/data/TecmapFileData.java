@@ -13,12 +13,23 @@ public class TecmapFileData {
     private List<String> resourceFiles;
     private List<String> assessmentFiles;
 
+    private List<String> learningMaterialRecordFiles;
+
     public TecmapFileData(String id, String graphFile, List<String> resourceFiles, List<String> assessmentFiles) {
         this.id = id;
         this.graphFile = graphFile;
         this.resourceFiles = resourceFiles;
         this.assessmentFiles = assessmentFiles;
         this.availableState = TecmapState.checkAvailableState(resourceFiles, assessmentFiles);
+    }
+
+    public TecmapFileData(String id, String graphFile, List<String> resourceFiles, List<String> assessmentFiles, List<String> learningMaterialRecordFiles) {
+        this.id = id;
+        this.graphFile = graphFile;
+        this.resourceFiles = resourceFiles;
+        this.assessmentFiles = assessmentFiles;
+        this.availableState = TecmapState.checkAvailableState(resourceFiles, assessmentFiles);
+        this.learningMaterialRecordFiles = learningMaterialRecordFiles;
     }
 
     public TecmapFileData(TecmapDataFilesRecord recordIn){
@@ -46,6 +57,8 @@ public class TecmapFileData {
     public TecmapState getAvailableState(){
         return availableState;
     }
+
+    public List<String> getLearningMaterialRecordFiles() { return learningMaterialRecordFiles; }
 
     public void updateResourceFiles(String filename) {
         resourceFiles.clear();

@@ -6,6 +6,7 @@ import edu.ithaca.dragon.tecmap.data.TecmapDatastore;
 import edu.ithaca.dragon.tecmap.data.TecmapFileDatastore;
 import edu.ithaca.dragon.tecmap.io.record.CohortConceptGraphsRecord;
 import edu.ithaca.dragon.tecmap.io.record.ConceptGraphRecord;
+import edu.ithaca.dragon.tecmap.io.record.LearningMaterialRecord;
 import edu.ithaca.dragon.tecmap.io.record.LearningResourceRecord;
 import edu.ithaca.dragon.tecmap.suggester.GroupSuggester.*;
 import edu.ithaca.dragon.tecmap.suggester.OrganizedLearningResourceSuggestions;
@@ -17,6 +18,8 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
+
+import static edu.ithaca.dragon.tecmap.io.record.LearningMaterialRecord.jsonToLearningMaterialRecords;
 
 @Service
 public class TecmapService {
@@ -79,6 +82,10 @@ public class TecmapService {
             return tecmap.currentLearningResourceRecords();
         }
         return null;
+    }
+
+    public List<LearningMaterialRecord> retrieveLearningMaterialRecords(String id) throws IOException {
+        return jsonToLearningMaterialRecords("src/test/resources/datastore/Cs1Example/Cs1ExampleLearningMaterial.json");
     }
 
     /**
