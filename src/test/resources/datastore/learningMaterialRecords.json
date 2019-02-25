@@ -1,0 +1,25 @@
+[{
+  "types" : [ "INFORMATION" ],
+  "id" : "INFORMATION 1",
+  "content" : "Test content one",
+  "url" : "",
+  "tagsMap" : {
+    "Scales" : 1
+  }
+},{
+  "types" : [ "INFORMATION" ],
+  "id" : "INFORMATION 1",
+  "content" : "Test content one",
+  "url" : "",
+  "tagsMap" : {
+    "Scales" : 1
+  }
+},{
+  "types" : [ "ASSESSMENT", "INFORMATION" ],
+  "id" : "INFORMATION 2",
+  "content" : "Test content one",
+  "url" : "www.google.com",
+  "tagsMap" : {
+    "Scales" : 1
+  }
+}]

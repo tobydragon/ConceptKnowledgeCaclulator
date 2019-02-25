@@ -1,0 +1,70 @@
+[{
+  "types" : [ "ASSESSMENT" ],
+  "id" : "[ASSESSMENT] 1 [Cs1]",
+  "content" : "What's are advantages of using while loops instead of for loops?",
+  "url" : "",
+  "tagsMap" : {
+    "Cs1" : 1,
+    "using" : 1,
+    "advantages" : 1
+  }
+},{
+  "types" : [ "ASSESSMENT" ],
+  "id" : "[ASSESSMENT] 2 [Cs1]",
+  "content" : "How many choices are possible when executing an if-statement?",
+  "url" : "",
+  "tagsMap" : {
+    "Cs1" : 1,
+    "if-statement" : 1,
+    "executing" : 1
+  }
+},{
+  "types" : [ "ASSESSMENT" ],
+  "id" : "[ASSESSMENT] 3 [Cs1]",
+  "content" : "When does an 'else' conditional get executed in a function?",
+  "url" : "",
+  "tagsMap" : {
+    "Cs1" : 1,
+    "conditional" : 1,
+    "does" : 1
+  }
+},{
+  "types" : [ "INFORMATION" ],
+  "id" : "[INFORMATION] 4 [Cs1]",
+  "content" : "https://www.learncpp.com/cpp-tutorial/52-if-statements/",
+  "url" : "https://www.learncpp.com/cpp-tutorial/52-if-statements/",
+  "tagsMap" : {
+    "Cs1" : 1,
+    "implicit" : 1,
+    "using" : 2,
+    "operator=" : 1,
+    "conditional" : 2,
+    "blocks" : 1,
+    "operator==" : 1,
+    "dangling" : 1,
+    "statements" : 6,
+    "logical" : 1,
+    "null" : 2,
+    "operators" : 1,
+    "uses" : 1,
+    "returns" : 1,
+    "nesting" : 1,
+    "chaining" : 1
+  }
+},{
+  "types" : [ "INFORMATION" ],
+  "id" : "[INFORMATION] 5 [Cs1]",
+  "content" : "https://www.programiz.com/c-programming/c-if-else-statement",
+  "url" : "https://www.programiz.com/c-programming/c-if-else-statement",
+  "tagsMap" : {
+    "Cs1" : 1
+  }
+},{
+  "types" : [ "INFORMATION" ],
+  "id" : "[INFORMATION] 6 [Cs1]",
+  "content" : "https://programming.guide/go/for-loop.html",
+  "url" : "https://programming.guide/go/for-loop.html",
+  "tagsMap" : {
+    "Cs1" : 1
+  }
+}]
