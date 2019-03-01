@@ -36,4 +36,10 @@ public class WebController {
         model.addAttribute("courseId", courseId);
         return "ConnectResources";
     }
+
+    @GetMapping("/learningMaterials")
+    public String viewLearningMaterials(){
+        return "LearningMaterials";
+    }
+
 }

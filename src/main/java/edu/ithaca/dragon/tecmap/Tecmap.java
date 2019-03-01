@@ -3,13 +3,17 @@ package edu.ithaca.dragon.tecmap;
 import edu.ithaca.dragon.tecmap.conceptgraph.ConceptGraph;
 import edu.ithaca.dragon.tecmap.io.record.CohortConceptGraphsRecord;
 import edu.ithaca.dragon.tecmap.io.record.ConceptGraphRecord;
+import edu.ithaca.dragon.tecmap.io.record.LearningMaterialRecord;
 import edu.ithaca.dragon.tecmap.io.record.LearningResourceRecord;
 import edu.ithaca.dragon.tecmap.learningresource.AssessmentItem;
 import edu.ithaca.dragon.tecmap.learningresource.AssessmentItemResponse;
 import edu.ithaca.dragon.tecmap.tecmapstate.*;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+
+import static edu.ithaca.dragon.tecmap.io.record.LearningMaterialRecord.jsonToLearningMaterialRecords;
 
 public class Tecmap implements TecmapAPI {
 
@@ -104,6 +108,16 @@ public class Tecmap implements TecmapAPI {
         else {
             return TecmapState.noAssessment;
         }
+    }
+
+    @Override
+    public List<LearningMaterialRecord> retrieveLearningMaterialRecords() {
+        try {
+            return jsonToLearningMaterialRecords("src/test/resources/datastore/Cs1Example/Cs1ExampleLearningMaterial.json");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return new ArrayList<LearningMaterialRecord>();
     }
 
 

@@ -2,6 +2,7 @@ package edu.ithaca.dragon.tecmap.ui.springbootui.controller;
 
 import edu.ithaca.dragon.tecmap.io.record.CohortConceptGraphsRecord;
 import edu.ithaca.dragon.tecmap.io.record.ConceptGraphRecord;
+import edu.ithaca.dragon.tecmap.io.record.LearningMaterialRecord;
 import edu.ithaca.dragon.tecmap.io.record.LearningResourceRecord;
 import edu.ithaca.dragon.tecmap.suggester.GroupSuggester.Group;
 import edu.ithaca.dragon.tecmap.suggester.OrganizedLearningResourceSuggestions;
@@ -12,6 +13,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -81,5 +84,14 @@ public class ApiController {
     @GetMapping("/actions")
     public Map<String, List<TecmapUserAction>> getValidIdsAndActions() {
         return tecmapService.retrieveValidIdsAndActions();
+    }
+
+    @GetMapping("/learningMaterials/{courseID}")
+    public List<LearningMaterialRecord> getLearningMaterialRecords(@PathVariable("courseID") String courseID){
+        try {
+            return tecmapService.retrieveLearningMaterialRecords(courseID);
+        } catch (IOException e) {
+            return new ArrayList<>();
+        }
     }
 }

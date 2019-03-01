@@ -6,6 +6,7 @@ import edu.ithaca.dragon.tecmap.data.TecmapDatastore;
 import edu.ithaca.dragon.tecmap.data.TecmapFileDatastore;
 import edu.ithaca.dragon.tecmap.io.Json;
 import edu.ithaca.dragon.tecmap.io.record.ConceptGraphRecord;
+import edu.ithaca.dragon.tecmap.io.record.LearningMaterialRecord;
 import edu.ithaca.dragon.tecmap.tecmapExamples.Cs1ExampleJsonStrings;
 import edu.ithaca.dragon.tecmap.tecmapstate.TecmapState;
 import org.junit.jupiter.api.BeforeEach;
@@ -82,6 +83,5 @@ class TecmapAPITest {
         //Assert that it has data
         assertEquals(10, avgGraph.getAssessmentItemMap().values().size());
     }
-
 
 }

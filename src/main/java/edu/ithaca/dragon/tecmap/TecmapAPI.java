@@ -3,6 +3,7 @@ package edu.ithaca.dragon.tecmap;
 import edu.ithaca.dragon.tecmap.conceptgraph.ConceptGraph;
 import edu.ithaca.dragon.tecmap.io.record.CohortConceptGraphsRecord;
 import edu.ithaca.dragon.tecmap.io.record.ConceptGraphRecord;
+import edu.ithaca.dragon.tecmap.io.record.LearningMaterialRecord;
 import edu.ithaca.dragon.tecmap.io.record.LearningResourceRecord;
 import edu.ithaca.dragon.tecmap.tecmapstate.TecmapState;
 
@@ -43,5 +44,10 @@ public interface TecmapAPI {
      * @return the current state of the object, denoted as a TecmapState enum
      */
     TecmapState getCurrentState();
+
+    /**
+     * @return list of LearningMaterialRecords created through the jsonToLearningMaterialRecord method
+     */
+    List<LearningMaterialRecord> retrieveLearningMaterialRecords();
 
 }
