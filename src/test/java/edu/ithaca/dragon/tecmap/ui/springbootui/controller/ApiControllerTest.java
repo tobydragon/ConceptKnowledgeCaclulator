@@ -28,6 +28,7 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 
+import static edu.ithaca.dragon.tecmap.io.record.LearningMaterialRecord.jsonToLearningMaterialRecords;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.ArgumentMatchers.*;
@@ -476,5 +477,25 @@ public class ApiControllerTest {
         String expected = Json.toJsonString(tecmapService.retrieveValidIdsAndActions());
 
         JSONAssert.assertEquals(expected, result.getResponse().getContentAsString(), false);
+    }
+
+    @Test
+    public void getLearningMaterialRecords() throws Exception {
+        String courseId = "Cs1Example";
+        Mockito.when(tecmapServiceMock.retrieveLearningMaterialRecords(anyString())).
+                thenReturn(tecmapService.retrieveLearningMaterialRecords(courseId));
+
+        RequestBuilder requestBuilder = MockMvcRequestBuilders.get("/api/learningMaterials").accept(MediaType.APPLICATION_JSON);
+
+        MvcResult result = mockMvc.perform(requestBuilder).andReturn();
+
+        System.out.println(result.getResponse().getContentAsString());
+        assertEquals(jsonToLearningMaterialRecords("src/test/resources/datastore/Cs1Example/Cs1ExampleLearningMaterial.json"), result.getResponse().getContentAsString());
+
+
+
+
+
+
     }
 }

@@ -1,3 +1,4 @@
-const records = readJson("src/test/resources/datastore/Cs1Example/Cs1ExampleLearningMaterial.json");
-console.log("HERE");
-document.getElementById("records").innerHTML = records;
+const file = "/api/learningMaterials";
+const records = readJson(file);
+const recordsStrings = JSON.stringify(records);
+document.getElementById("records").innerHTML = recordsStrings;
