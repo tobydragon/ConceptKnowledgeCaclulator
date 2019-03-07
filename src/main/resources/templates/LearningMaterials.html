@@ -6,14 +6,49 @@
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap.min.css">
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+        <style>
+
+            h1 {
+                text-align: center;
+            }
+
+            li {
+                margin: 5px 0px;
+            }
+
+            #container {
+                display: grid;
+                width: 100vw;
+                grid-template-columns: 40% 40%;
+                margin-top: 30px;
+            }
+
+            .listHeader {
+                font-weight: bold;
+                font-size: 1.5em;
+            }
+
+        </style>
+
     </head>
 
     <body>
+
         <h1 id="records">LearningMaterials</h1>
 
-        <ul id="recordsList">
+        <div id="container">
 
-        </ul>
+            <ul id="recordsList">
+                <span class="listHeader">Content</span>
+            </ul>
+
+            <ul id="tagsList">
+                <span class="listHeader">Tags</span>
+            </ul>
+
+        </div>
+
 
     </body>
 
