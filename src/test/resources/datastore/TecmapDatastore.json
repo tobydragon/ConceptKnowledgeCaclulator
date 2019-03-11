@@ -5,11 +5,6 @@
     "resourceFiles" : [ "src/test/resources/datastore/BayesTest/test4ColResources.json" ],
     "assessmentFiles" : [ "src/test/resources/datastore/BayesTest/sanityCheckWNoise.csv" ]
   }, {
-      "id" : "GraphTest",
-      "graphFile" : "src/test/resources/datastore/Cs1Example/Cs1ExampleGraph.json",
-      "resourceFiles" : [ "src/test/resources/datastore/Cs1Example/Cs1ExampleResources.json" ],
-      "assessmentFiles" : [ "src/test/resources/datastore/GraphTest/Cs1GraphTest.csv" ]
-  }, {
     "id" : "Cs1Example",
     "graphFile" : "src/test/resources/datastore/Cs1Example/Cs1ExampleGraph.json",
     "resourceFiles" : [ "src/test/resources/datastore/Cs1Example/Cs1ExampleResources.json" ],
@@ -24,5 +19,10 @@
     "graphFile" : "src/test/resources/datastore/Cs1Example/Cs1ExampleGraph.json",
     "resourceFiles" : [ ],
     "assessmentFiles" : [ ]
+  }, {
+    "id" : "GraphTest",
+    "graphFile" : "src/test/resources/datastore/Cs1Example/Cs1ExampleGraph.json",
+    "resourceFiles" : [ "src/test/resources/datastore/Cs1Example/Cs1ExampleResources.json" ],
+    "assessmentFiles" : [ "src/test/resources/datastore/GraphTest/Cs1GraphTest.csv" ]
   } ]
 }

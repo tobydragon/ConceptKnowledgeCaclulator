@@ -195,7 +195,7 @@ public class TecmapServiceTest {
     public void retrieveValidIdsAndActions() {
         //Will be the same for all of the Services, because they all use the same datastore
         Map<String, List<TecmapUserAction>> validMap = tecmapService.retrieveValidIdsAndActions();
-        assertEquals(3, validMap.size());
+        assertEquals(5, validMap.size());
         assertEquals(1, validMap.get("Cs1ExampleStructure").size());
         assertThat(validMap.get("Cs1ExampleStructure"), containsInAnyOrder(TecmapUserAction.structureTree));
         assertEquals(2, validMap.get("Cs1ExampleAssessmentAdded").size());
