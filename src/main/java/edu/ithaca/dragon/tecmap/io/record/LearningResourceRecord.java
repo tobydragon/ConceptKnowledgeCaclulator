@@ -56,10 +56,10 @@ public class LearningResourceRecord {
         return mapper.readValue(new File(fullFileName), new TypeReference<List<LearningResourceRecord>>(){});
     }
 
-    public static List<LearningResourceRecord> createLearningResourceRecordsFromAssessmentItems(Collection<AssessmentItem> assessmentItems){
+    public static List<LearningResourceRecord> createLearningResourceRecordsFromAssessmentItems(Collection<AssessmentItem> columnItems){
         List<LearningResourceRecord> lolrList = new ArrayList<LearningResourceRecord>();
-        for(AssessmentItem assessmentItem : assessmentItems){
-            lolrList.add( new LearningResourceRecord(assessmentItem));
+        for(AssessmentItem columnItem : columnItems){
+            lolrList.add( new LearningResourceRecord(columnItem));
         }
         return lolrList;
     }

@@ -28,6 +28,7 @@ public class SimplePredictorTest {
         List<AssessmentItem> assessmentItemList = new ArrayList<>();
         assessmentItemList.addAll(data.getManualGradedLearningObjects());
 
+
         testingMatrix = new ContinuousAssessmentMatrix(assessmentItemList);
 
         atriskGroupings = GradeDiscreteGroupings.buildFromJson(Settings.DEFAULT_TEST_PREDICTION_PATH + "atriskGroupings.json");

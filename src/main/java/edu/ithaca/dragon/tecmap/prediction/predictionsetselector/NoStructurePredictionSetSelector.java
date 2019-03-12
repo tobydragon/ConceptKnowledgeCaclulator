@@ -58,20 +58,20 @@ public class NoStructurePredictionSetSelector implements PredictionSetSelector {
         double minResponseRate = Double.MAX_VALUE;
         AssessmentItem lowestResponseRateAssessment = null;
         List<AssessmentItem> currentAssessments = new ArrayList<>(); //holds assessments for currentPredictionSet
-        for (AssessmentItem assessmentItem : allAssessments) {
-            if (currentPredictionSet.contains(assessmentItem.getId())) {
-                if (assessmentItem.getResponses().size() > maxResponses) {
-                    maxResponses = assessmentItem.getResponses().size(); //Number of
+        for (AssessmentItem columnItem : allAssessments) {
+            if (currentPredictionSet.contains(columnItem.getId())) {
+                if (columnItem.getResponses().size() > maxResponses) {
+                    maxResponses = columnItem.getResponses().size(); //Number of
                 }
-                currentAssessments.add(assessmentItem);
+                currentAssessments.add(columnItem);
             }
         }
-        for (AssessmentItem assessmentItem : currentAssessments) {
-            List<AssessmentItemResponse> responses = assessmentItem.getResponses();
+        for (AssessmentItem columnItem : currentAssessments) {
+            List<AssessmentItemResponse> responses = columnItem.getResponses();
             double responseRate = (double) responses.size()/maxResponses;
-            if (responseRate < minResponseRate && responseRate != 1.0 && !assessmentItem.getId().equals(assessmentToPredict)) {
+            if (responseRate < minResponseRate && responseRate != 1.0 && !columnItem.getId().equals(assessmentToPredict)) {
                 minResponseRate = responseRate;
-                lowestResponseRateAssessment = assessmentItem;
+                lowestResponseRateAssessment = columnItem;
             }
         }
         if (lowestResponseRateAssessment != null) {

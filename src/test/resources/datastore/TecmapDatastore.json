@@ -1,5 +1,15 @@
 {
   "allRecords" : [ {
+    "id" : "AnalysisExample",
+    "graphFile" : "src/test/resources/datastore/AnalysisExample/AnalysisGraph.json",
+    "resourceFiles" : [ "src/test/resources/datastore/AnalysisExample/AnalysisResources.json" ],
+    "assessmentFiles" : [ "src/test/resources/datastore/AnalysisExample/AnalysisExample1.csv" ]
+  }, {
+    "id" : "AssessmentToExploratoryGraphTest",
+    "graphFile" : "src/test/resources/datastore/FactorAnalysisDocumentationExample/FactorAnalysisDocumentationExampleGraph.json",
+    "resourceFiles" : [ ],
+    "assessmentFiles" : [ "src/test/resources/datastore/FactorAnalysisDocumentationExample/AthleticsDataOnTecMap.csv" ]
+  }, {
     "id" : "BayesTest",
     "graphFile" : "src/test/resources/datastore/BayesTest/test4ColGraph.json",
     "resourceFiles" : [ "src/test/resources/datastore/BayesTest/test4ColResources.json" ],
@@ -19,6 +29,11 @@
     "graphFile" : "src/test/resources/datastore/Cs1Example/Cs1ExampleGraph.json",
     "resourceFiles" : [ ],
     "assessmentFiles" : [ ]
+  }, {
+    "id" : "DocExample",
+    "graphFile" : "src/test/resources/datastore/FactorAnalysisDocumentationExample/FactorAnalysisDocumentationExampleGraph.json",
+    "resourceFiles" : [ "src/test/resources/datastore/FactorAnalysisDocumentationExample/FactorAnalysisDocumentationExampleResource.json" ],
+    "assessmentFiles" : [ "src/test/resources/datastore/FactorAnalysisDocumentationExample/AthleticsDataOnTecMap.csv" ]
   }, {
     "id" : "GraphTest",
     "graphFile" : "src/test/resources/datastore/Cs1Example/Cs1ExampleGraph.json",

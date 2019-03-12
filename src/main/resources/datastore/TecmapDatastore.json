@@ -34,5 +34,10 @@
     "graphFile" : "src/main/resources/datastore/comp220Dragon-2018/comp220DragonGraph.json",
     "resourceFiles" : [ "src/main/resources/datastore/comp220Dragon-2018/comp220Dragon-2018Resources.json" ],
     "assessmentFiles" : [ "src/main/resources/datastore/comp220Dragon-2018/private/220-Exam1Grades-totalPoints-removeNames.csv", "src/main/resources/datastore/comp220Dragon-2018/private/comp220-gradebook-2018-removeNames.csv" ]
-  } ]
+  }, {
+      "id" : "AnalysisExample",
+      "graphFile" : "src/test/resources/datastore/AnalysisExample/AnalysisGraph.json",
+      "resourceFiles" : [ "src/test/resources/datastore/AnalysisExample/AnalysisResources.json" ],
+      "assessmentFiles" : [ "src/test/resources/datastore/AnalysisExample/AnalysisExample1.csv" ]
+    } ]
 }

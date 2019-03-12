@@ -1,32 +1,35 @@
 package edu.ithaca.dragon.tecmap.learningresource;
 
+import com.github.rcaller.rstuff.RCode;
+import edu.ithaca.dragon.tecmap.conceptgraph.eval.RFunctions;
+
 import java.util.ArrayList;
 import java.util.List;
 
 public class ContinuousAssessmentMatrix {
 
-    private List<AssessmentItem> assessmentItems;
+    private List<AssessmentItem> columnItems;
     private List<String> assessmentIds;
     private List<String> studentIds;
     private double[][] studentAssessmentGrades;
 
-    public ContinuousAssessmentMatrix(List<AssessmentItem> assessmentItems) {
-        this.assessmentItems = assessmentItems;
-        this.assessmentIds = getAssessmentIdList(assessmentItems);
-        this.studentIds = getStudentIds(assessmentItems);
-        this.studentAssessmentGrades = createMatrix(assessmentItems);
+    public ContinuousAssessmentMatrix(List<AssessmentItem> columnItems) {
+        this.columnItems = columnItems;
+        this.assessmentIds = getAssessmentIdList(columnItems);
+        this.studentIds = getStudentIds(columnItems);
+        this.studentAssessmentGrades = createMatrix(columnItems);
     }
 
     /**
      * Gets a list of strings of all of the assessmentIds from a list of assessment items
-     * @param assessmentItems
+     * @param columnItems
      * @return assessmentId list
      */
-    static List<String> getAssessmentIdList(List<AssessmentItem> assessmentItems) {
+    static List<String> getAssessmentIdList(List<AssessmentItem> columnItems) {
         List<String> assessmentIds = new ArrayList<>();
 
-        for (AssessmentItem assessmentItem : assessmentItems) {
-            assessmentIds.add(assessmentItem.getId());
+        for (AssessmentItem columnItem : columnItems) {
+            assessmentIds.add(columnItem.getId());
         }
 
         return assessmentIds;
@@ -35,14 +38,14 @@ public class ContinuousAssessmentMatrix {
     /**
      * Gets a list of strings of all of the studentIds from a list of assessment items' responses in the order
      * that the studentIds appear
-     * @param assessmentItems
+     * @param columnItems
      * @return studentId list
      */
-    static List<String> getStudentIds(List<AssessmentItem> assessmentItems) {
+    static List<String> getStudentIds(List<AssessmentItem> columnItems) {
         List<String> userIds = new ArrayList<>();
 
-        for (AssessmentItem assessmentItem : assessmentItems) {
-            for (AssessmentItemResponse response : assessmentItem.getResponses()) {
+        for (AssessmentItem columnItem : columnItems) {
+            for (AssessmentItemResponse response : columnItem.getResponses()) {
                 String currId = response.getUserId();
                 if (!userIds.contains(currId)) {
                     userIds.add(currId);
@@ -57,15 +60,15 @@ public class ContinuousAssessmentMatrix {
      * Creates a matrix of the continuous variable knowledge estimates for each assessment and user pair
      * Follows the indices given from the assessmentItem and the studentId list
      * If no response for a given student, defaults to an estimate of 0
-     * @param assessmentItems
+     * @param columnItems
      * @return 2d array of knowledge estimates
      */
-    double[][] createMatrix(List<AssessmentItem> assessmentItems) {
+    double[][] createMatrix(List<AssessmentItem> columnItems) {
         double[][] gradeMatrix = new double[this.assessmentIds.size()][this.studentIds.size()];
-        for (AssessmentItem assessmentItem : assessmentItems) {
-            int assessmentIndex = assessmentIds.indexOf(assessmentItem.getId());
+        for (AssessmentItem columnItem : columnItems) {
+            int assessmentIndex = assessmentIds.indexOf(columnItem.getId());
             List<String> studentsWithResponse = new ArrayList<>();
-            for (AssessmentItemResponse response : assessmentItem.getResponses()) {
+            for (AssessmentItemResponse response : columnItem.getResponses()) {
                 String currUserId = response.getUserId();
                 int studentIndex = studentIds.indexOf(currUserId);
                 gradeMatrix[assessmentIndex][studentIndex] = response.calcKnowledgeEstimate();
@@ -81,8 +84,26 @@ public class ContinuousAssessmentMatrix {
         return gradeMatrix;
     }
 
-    public List<AssessmentItem> getAssessmentItems() {
-        return assessmentItems;
+    public RCode createRMatrix(double[][] studentKnowledgeEstimates){
+
+        int objLength = columnItems.size();
+
+        //object list into string array
+
+        int i = 0;
+        String[] objStr = new String[objLength];
+        for(AssessmentItem obj: columnItems){
+            objStr[i] = obj.getId();
+            i++;
+        }
+
+
+        RCode rMatrix = RFunctions.JavaToR(studentKnowledgeEstimates, objStr);
+        return rMatrix;
+    }
+
+    public List<AssessmentItem> getColumnItems() {
+        return columnItems;
     }
 
     public double[][] getStudentAssessmentGrades() {

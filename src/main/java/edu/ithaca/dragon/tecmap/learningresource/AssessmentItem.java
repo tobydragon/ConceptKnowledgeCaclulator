@@ -3,6 +3,7 @@ package edu.ithaca.dragon.tecmap.learningresource;
 import edu.ithaca.dragon.tecmap.io.record.LearningResourceRecord;
 import edu.ithaca.dragon.tecmap.util.DataUtil;
 
+import java.lang.reflect.Array;
 import java.util.*;
 
 /**
@@ -117,9 +118,9 @@ public class AssessmentItem {
         return getId() + "   Est:" + DataUtil.format(calcKnowledgeEstimate()) + "  Imp:" + DataUtil.format(getDataImportance()) + "  ResponseCount:" + getResponses().size();
     }
 
-    public void setMatchingKnowledgeEstimates(Collection<AssessmentItem> assessmentItems, Map<String, AssessmentItem> loMap){
+    public void setMatchingKnowledgeEstimates(Collection<AssessmentItem> columnItems, Map<String, AssessmentItem> loMap){
         List<AssessmentItem> loList= new ArrayList<AssessmentItem>(loMap.values());
-        for(AssessmentItem fromList: assessmentItems){
+        for(AssessmentItem fromList: columnItems){
             for(AssessmentItem toList: loList){
                 if(fromList == toList){
                     toList.setMaxPossibleKnowledgeEstimate(fromList.getMaxPossibleKnowledgeEstimate());
@@ -142,6 +143,26 @@ public class AssessmentItem {
             }
         }
         return new ArrayList<>(assessments.values());
+    }
+
+    public static List<AssessmentItemResponse> getItemResponsesFromAssessmentList(List<AssessmentItem> assessmentItems){
+        List<AssessmentItemResponse> assessmentItemResponses = new ArrayList<>();
+        for(AssessmentItem assessment : assessmentItems){
+            List<AssessmentItemResponse> responses = assessment.getResponses();
+            for(AssessmentItemResponse response : responses){
+                assessmentItemResponses.add(response);
+            }
+        }
+        return assessmentItemResponses;
+    }
+
+    public static List<AssessmentItem> getAssessmentCopyWithoutResponses(List<AssessmentItem> assessmentItems){
+        List<AssessmentItem> assessmentsListNoResponses = new ArrayList<>();
+        for(AssessmentItem assessment : assessmentItems){
+            AssessmentItem newAssessment = new AssessmentItem(assessment.getId(), assessment.getMaxPossibleKnowledgeEstimate());
+            assessmentsListNoResponses.add(newAssessment);
+        }
+        return assessmentsListNoResponses;
     }
 
 }

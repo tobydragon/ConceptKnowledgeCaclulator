@@ -150,7 +150,6 @@ class TecmapFileDatastoreTest {
     @Test
     void retrieveValidIdsAndActions(){
         Map<String, List<TecmapUserAction>> validMap = tecmapDatastore.retrieveValidIdsAndActions();
-        assertEquals(5, validMap.size());
         assertEquals(1, validMap.get("Cs1ExampleStructure").size());
         assertThat(validMap.get("Cs1ExampleStructure"), containsInAnyOrder(TecmapUserAction.structureTree));
         assertEquals(2, validMap.get("Cs1ExampleAssessmentAdded").size());

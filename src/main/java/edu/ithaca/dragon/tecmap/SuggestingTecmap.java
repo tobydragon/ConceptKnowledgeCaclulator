@@ -13,15 +13,14 @@ import edu.ithaca.dragon.tecmap.suggester.GroupSuggester.Suggester;
 import edu.ithaca.dragon.tecmap.suggester.OrganizedLearningResourceSuggestions;
 import edu.ithaca.dragon.tecmap.tecmapstate.AssessmentConnectedState;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
 public class SuggestingTecmap extends Tecmap implements SuggestingTecmapAPI{
 
-    public SuggestingTecmap(ConceptGraph graph, List<LearningResourceRecord> links, List<AssessmentItem> assessmentItemsStructureList, List<AssessmentItemResponse> assessmentItemResponses) {
-        super(graph, links, assessmentItemsStructureList, assessmentItemResponses);
+    public SuggestingTecmap(ConceptGraph graph, List<LearningResourceRecord> links, List<AssessmentItem> columnItemsStructureList, List<AssessmentItemResponse> assessmentItemResponses) {
+        super(graph, links, columnItemsStructureList, assessmentItemResponses);
     }
 
     public List<String> suggestConceptsForUser(String userId){

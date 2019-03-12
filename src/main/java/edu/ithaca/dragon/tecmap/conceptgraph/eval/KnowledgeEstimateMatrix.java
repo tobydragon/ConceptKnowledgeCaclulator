@@ -39,16 +39,16 @@ public class KnowledgeEstimateMatrix {
      * Creates a 2D array from a list of LearningObjects and their responses held within the objects.
      * The columns are sorted by LearningObjects. The rows are sorted by the userId held within the responses.
      * A userIdList is also created to track the userIds to the correct row.
-     * @param assessmentItems collection of assessmentItems
-     * @return a 2D Array of learningObjectResponses based on the list of assessmentItems
+     * @param columnItems collection of columnItems
+     * @return a 2D Array of learningObjectResponses based on the list of columnItems
      * @post userListId is changed to add each new user found within the LORs
      */
 
-    public double[][] createMatrix(Collection<AssessmentItem> assessmentItems) throws IOException {
+    public double[][] createMatrix(Collection<AssessmentItem> columnItems) throws IOException {
         //number of rows and columns needed check
-        int columns = assessmentItems.size();
+        int columns = columnItems.size();
         int rows = 0;
-        for(AssessmentItem obj: assessmentItems){
+        for(AssessmentItem obj: columnItems){
             List<AssessmentItemResponse> responses = obj.getResponses();
             if(responses.size() > rows){
                 rows = responses.size();
@@ -62,7 +62,7 @@ public class KnowledgeEstimateMatrix {
 
         List<String> assessmentItemIDs = new ArrayList<>();
 
-        for(AssessmentItem obj: assessmentItems) {
+        for(AssessmentItem obj: columnItems) {
             if (assessmentItemIDs.contains(obj.getId())) {
                 throw new IOException("Cannot Add Multiple Assessments With Same ID");
             }
@@ -153,12 +153,12 @@ public class KnowledgeEstimateMatrix {
     public List<AssessmentItem> getObjList(){return this.objList;}
 
     public List<String> getAssessmentIdList() {
-        List<AssessmentItem> assessmentItems = getObjList();
+        List<AssessmentItem> columnItems = getObjList();
 
         List<String> assessmentIds = new ArrayList<>();
 
-        for (AssessmentItem assessmentItem : assessmentItems) {
-            assessmentIds.add(assessmentItem.getId());
+        for (AssessmentItem columnItem : columnItems) {
+            assessmentIds.add(columnItem.getId());
         }
 
         return assessmentIds;

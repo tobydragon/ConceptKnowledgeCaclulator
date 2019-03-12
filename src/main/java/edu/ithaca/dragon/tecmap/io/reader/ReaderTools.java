@@ -70,15 +70,15 @@ public class ReaderTools {
                 String maxScoreStr = question.substring(begin + 1, end);
                 double maxScore = Double.parseDouble(maxScoreStr);
                 question = question.substring(0, begin - 1);
-                AssessmentItem assessmentItem = new AssessmentItem(question);
-                assessmentItem.setMaxPossibleKnowledgeEstimate(maxScore);
-                loList.add(assessmentItem);
+                AssessmentItem columnItem = new AssessmentItem(question);
+                columnItem.setMaxPossibleKnowledgeEstimate(maxScore);
+                loList.add(columnItem);
             }
             else {
                 //logger.error("No max score found for string:"+question+"\t defaulting to 1, which is probably wrong");
-                AssessmentItem assessmentItem = new AssessmentItem(question);
-                assessmentItem.setMaxPossibleKnowledgeEstimate(1);
-                loList.add(assessmentItem);
+                AssessmentItem columnItem = new AssessmentItem(question);
+                columnItem.setMaxPossibleKnowledgeEstimate(1);
+                loList.add(columnItem);
             }
             i++;
         }
@@ -101,8 +101,8 @@ public class ReaderTools {
             loList = ReaderTools.learningObjectsFromList(indexMark,lineList.get(0));
 
             //adding current csvfile's LOs to the full list of LOs
-            for(AssessmentItem assessmentItem : loList) {
-                fullLoList.add(assessmentItem);
+            for(AssessmentItem columnItem : loList) {
+                fullLoList.add(columnItem);
             }
         }
         return fullLoList;

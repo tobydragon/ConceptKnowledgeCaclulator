@@ -19,16 +19,16 @@ public class AssessmentConnectedState extends AssessmentAddedState {
      *
      * @param structureGraph
      * @param links
-     * @param assessmentItemsStructureList
+     * @param columnItemsStructureList
      * @param assessmentItemResponses
      * @param linksNeedToBeAdded if coming from a ResourcesNoAssessmentState, links have already been added
      */
     public AssessmentConnectedState(ConceptGraph structureGraph,
                                     List<LearningResourceRecord> links,
-                                    List<AssessmentItem> assessmentItemsStructureList,
+                                    List<AssessmentItem> columnItemsStructureList,
                                     List<AssessmentItemResponse> assessmentItemResponses,
                                     boolean linksNeedToBeAdded) {
-        super(structureGraph, assessmentItemsStructureList, assessmentItemResponses);
+        super(structureGraph, columnItemsStructureList, assessmentItemResponses);
         this.links = links;
         if (linksNeedToBeAdded) {
             structureGraph.addLearningResourcesFromRecords(links);
@@ -40,15 +40,15 @@ public class AssessmentConnectedState extends AssessmentAddedState {
      *
      * @param structureGraph
      * @param links
-     * @param assessmentItemsStructureList
+     * @param columnItemsStructureList
      * @param assessmentItemResponses
      * @post links will be added to structureGraph before cohortGraphs are made
      */
     public AssessmentConnectedState(ConceptGraph structureGraph,
                                     List<LearningResourceRecord> links,
-                                    List<AssessmentItem> assessmentItemsStructureList,
+                                    List<AssessmentItem> columnItemsStructureList,
                                     List<AssessmentItemResponse> assessmentItemResponses) {
-        this(structureGraph, links, assessmentItemsStructureList, assessmentItemResponses, true);
+        this(structureGraph, links, columnItemsStructureList, assessmentItemResponses, true);
     }
 
     public CohortConceptGraphsRecord createCohortTree(){

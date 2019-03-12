@@ -1,0 +1,7 @@
+Factor 2 -> GOLF, GOLFToFactor 2, NA 
+Factor 2 -> CURL, CURLToFactor 2, NA 
+Factor 2 -> X2KROW, X2KROWToFactor 2, NA 
+Factor 3 -> CURL, CURLToFactor 3, NA 
+Factor 3 -> BILLIARD, BILLIARDToFactor 3, NA 
+Factor 3 -> PINBALL, PINBALLToFactor 3, NA 
+Factor 3 -> X1500M, X1500MToFactor 3, NA

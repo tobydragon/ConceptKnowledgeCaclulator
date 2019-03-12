@@ -80,7 +80,7 @@ public class PredictorEffectiveness {
         Map<String, String> expectedResults = new HashMap<>();
 
         //Correct way of getting expected, because not everyone will have an AssessmentItemResponse, but the Matrix will have the data
-        List<AssessmentItem> assessments = testingMatrix.getAssessmentItems();
+        List<AssessmentItem> assessments = testingMatrix.getColumnItems();
         for (int i = 0; i < assessments.size(); i++) {
             AssessmentItem currAssessment = assessments.get(i);
             if (currAssessment.getId().equals(assessmentToLearn)) {
