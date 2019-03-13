@@ -24,6 +24,11 @@ public interface TecmapAPI {
      */
     List<String> conceptIdList();
 
+
+    /**
+     * @return the current ResourceRecords if they exist. If not, it makes a new list from assessments if they exist.
+     *          If there are no assessments and no current links, returns an empty list
+     */
     List<LearningResourceRecord> currentLearningResourceRecords();
 
     /**
