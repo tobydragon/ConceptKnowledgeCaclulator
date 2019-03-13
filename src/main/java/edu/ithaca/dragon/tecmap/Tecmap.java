@@ -10,6 +10,7 @@ import edu.ithaca.dragon.tecmap.tecmapstate.*;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 public class Tecmap implements TecmapAPI {
 
@@ -85,6 +86,22 @@ public class Tecmap implements TecmapAPI {
     public ConceptGraph getAverageConceptGraph() {
         if (state instanceof AssessmentConnectedState) {
             return ((AssessmentConnectedState)state).getAverageGraph();
+        } else {
+            return null;
+        }
+    }
+
+    public ConceptGraph getConceptGraphForUser(String userId){
+        if (state instanceof AssessmentConnectedState) {
+            return ((AssessmentConnectedState)state).getGraphForUser(userId);
+        } else {
+            return null;
+        }
+    }
+
+    public Map<String, ConceptGraph> getUserToConceptGraphMap(){
+        if (state instanceof AssessmentConnectedState) {
+            return ((AssessmentConnectedState)state).getCohortConceptGraphs().getUserToGraph();
         } else {
             return null;
         }

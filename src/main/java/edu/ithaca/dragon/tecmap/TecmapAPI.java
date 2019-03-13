@@ -7,6 +7,7 @@ import edu.ithaca.dragon.tecmap.io.record.LearningResourceRecord;
 import edu.ithaca.dragon.tecmap.tecmapstate.TecmapState;
 
 import java.util.List;
+import java.util.Map;
 
 public interface TecmapAPI {
 
@@ -38,6 +39,16 @@ public interface TecmapAPI {
      * @return an average conceptGraph for a tecmap, null if not available
      */
     ConceptGraph getAverageConceptGraph();
+
+    /**
+     * @return the ConceptGraph associated with the userId, null if not available
+     */
+    ConceptGraph getConceptGraphForUser(String userId);
+
+    /**
+     * @return a map of all userIds to their ConceptGraphs, null if not available
+     */
+    Map<String, ConceptGraph> getUserToConceptGraphMap();
 
     /**
      * @return the current state of the object, denoted as a TecmapState enum

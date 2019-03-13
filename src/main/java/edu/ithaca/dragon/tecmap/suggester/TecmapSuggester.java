@@ -1,34 +1,30 @@
-package edu.ithaca.dragon.tecmap;
+package edu.ithaca.dragon.tecmap.suggester;
 
-import edu.ithaca.dragon.tecmap.conceptgraph.CohortConceptGraphs;
+import edu.ithaca.dragon.tecmap.TecmapAPI;
 import edu.ithaca.dragon.tecmap.conceptgraph.ConceptGraph;
 import edu.ithaca.dragon.tecmap.conceptgraph.ConceptNode;
-import edu.ithaca.dragon.tecmap.io.record.LearningResourceRecord;
-import edu.ithaca.dragon.tecmap.learningresource.AssessmentItem;
-import edu.ithaca.dragon.tecmap.learningresource.AssessmentItemResponse;
-import edu.ithaca.dragon.tecmap.suggester.ConceptGraphSuggesterLibrary;
 import edu.ithaca.dragon.tecmap.suggester.GroupSuggester.Group;
 import edu.ithaca.dragon.tecmap.suggester.GroupSuggester.GroupSuggester;
 import edu.ithaca.dragon.tecmap.suggester.GroupSuggester.Suggester;
-import edu.ithaca.dragon.tecmap.suggester.OrganizedLearningResourceSuggestions;
-import edu.ithaca.dragon.tecmap.tecmapstate.AssessmentConnectedState;
+import edu.ithaca.dragon.tecmap.tecmapstate.TecmapState;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Map;
 
-public class SuggestingTecmap extends Tecmap implements SuggestingTecmapAPI{
+public class TecmapSuggester implements  TecmapSuggesterAPI {
+    TecmapAPI tecmapAPI;
 
-    public SuggestingTecmap(ConceptGraph graph, List<LearningResourceRecord> links, List<AssessmentItem> columnItemsStructureList, List<AssessmentItemResponse> assessmentItemResponses) {
-        super(graph, links, columnItemsStructureList, assessmentItemResponses);
+    public TecmapSuggester(TecmapAPI tecmapAPI) {
+       this.tecmapAPI = tecmapAPI;
     }
 
     public List<String> suggestConceptsForUser(String userId){
-        if (state instanceof AssessmentConnectedState){
-            ConceptGraph userGraph = ((AssessmentConnectedState)state).getGraphForUser(userId);
+        if (tecmapAPI.getCurrentState() == TecmapState.assessmentConnected){
+            ConceptGraph userGraph = tecmapAPI.getConceptGraphForUser(userId);
             if (userGraph != null){
                 List<ConceptNode> nodeList = ConceptGraphSuggesterLibrary.suggestConcepts(userGraph);
-
                 //TODO make functional style for parallelism
                 List<String> suggestedConceptIDList = new ArrayList<>();
                 for (ConceptNode node : nodeList) {
@@ -41,19 +37,19 @@ public class SuggestingTecmap extends Tecmap implements SuggestingTecmapAPI{
     }
 
     public OrganizedLearningResourceSuggestions suggestResourcesForUser (String userId){
-        if (state instanceof AssessmentConnectedState){
-            ConceptGraph userGraph = ((AssessmentConnectedState)state).getGraphForUser(userId);
+        if (tecmapAPI.getCurrentState() == TecmapState.assessmentConnected){
+            ConceptGraph userGraph = tecmapAPI.getConceptGraphForUser(userId);
             if (userGraph != null){
                 List<ConceptNode> concepts = ConceptGraphSuggesterLibrary.suggestConcepts(userGraph);
                 return new OrganizedLearningResourceSuggestions(userGraph, concepts);
             }
         }
         return null;
-    } // //calcIndividualGraphSuggestions
+    } //used to be calcIndividualGraphSuggestions
 
     public OrganizedLearningResourceSuggestions suggestResourcesForSpecificConceptForUser(String userId, String conceptId){
-        if (state instanceof AssessmentConnectedState){
-            ConceptGraph userGraph = ((AssessmentConnectedState)state).getGraphForUser(userId);
+        if (tecmapAPI.getCurrentState() == TecmapState.assessmentConnected){
+            ConceptGraph userGraph = tecmapAPI.getConceptGraphForUser(userId);
             if (userGraph != null){
                 ConceptNode node = userGraph.findNodeById(conceptId);
                 if (node != null) {
@@ -63,15 +59,13 @@ public class SuggestingTecmap extends Tecmap implements SuggestingTecmapAPI{
             }
         }
         return null;
-    } //calcIndividualSpecificConceptSuggestions
+    } //used to be calcIndividualSpecificConceptSuggestions
 
     public List<Group> suggestGroups(List<Suggester> groupTypeList, int groupSize) {
-        if (state instanceof AssessmentConnectedState) {
-            CohortConceptGraphs userGraphs = ((AssessmentConnectedState)state).getCohortConceptGraphs();
+        if (tecmapAPI.getCurrentState() == TecmapState.assessmentConnected){
+            Map<String, ConceptGraph> userToConceptGraphMap = tecmapAPI.getUserToConceptGraphMap();
             GroupSuggester sug = new GroupSuggester();
-
-            List<Group> initialGroup = GroupSuggester.getGroupList(userGraphs.getUserToGraph());
-
+            List<Group> initialGroup = GroupSuggester.getGroupList(userToConceptGraphMap);
             return sug.grouping(initialGroup, groupSize, groupTypeList);
         }
         return null;
