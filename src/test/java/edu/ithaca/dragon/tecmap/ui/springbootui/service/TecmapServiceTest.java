@@ -2,7 +2,6 @@ package edu.ithaca.dragon.tecmap.ui.springbootui.service;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import edu.ithaca.dragon.tecmap.Settings;
-import edu.ithaca.dragon.tecmap.SuggestingTecmapAPI;
 import edu.ithaca.dragon.tecmap.data.TecmapDatastore;
 import edu.ithaca.dragon.tecmap.data.TecmapFileDatastore;
 import edu.ithaca.dragon.tecmap.io.Json;
@@ -26,7 +25,6 @@ import java.util.List;
 import java.util.Map;
 
 import static org.hamcrest.Matchers.containsInAnyOrder;
-import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertThat;
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -40,19 +38,6 @@ public class TecmapServiceTest {
         TecmapDatastore tecmapDatastore = TecmapFileDatastore.buildFromJsonFile(Settings.DEFAULT_TEST_DATASTORE_PATH);
 
         tecmapService = new TecmapService(tecmapDatastore);
-    }
-
-    @Test
-    public void retreiveSuggestingTecmapAPI() {
-        SuggestingTecmapAPI structureTecmap = tecmapService.retrieveSuggestingTecmapAPI("Cs1ExampleStructure");
-        SuggestingTecmapAPI addedTecmap = tecmapService.retrieveSuggestingTecmapAPI("Cs1ExampleAssessmentAdded");
-        SuggestingTecmapAPI connectedTecmap = tecmapService.retrieveSuggestingTecmapAPI("Cs1Example");
-        assertNotNull(structureTecmap);
-        assertNotNull(addedTecmap);
-        assertNotNull(connectedTecmap);
-
-        SuggestingTecmapAPI nullTecmap = tecmapService.retrieveSuggestingTecmapAPI("NoPath");
-        assertNull(nullTecmap);
     }
 
     @Test

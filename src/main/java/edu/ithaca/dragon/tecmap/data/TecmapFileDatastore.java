@@ -1,8 +1,8 @@
 package edu.ithaca.dragon.tecmap.data;
 
 import edu.ithaca.dragon.tecmap.Settings;
-import edu.ithaca.dragon.tecmap.SuggestingTecmap;
-import edu.ithaca.dragon.tecmap.SuggestingTecmapAPI;
+import edu.ithaca.dragon.tecmap.Tecmap;
+import edu.ithaca.dragon.tecmap.TecmapAPI;
 import edu.ithaca.dragon.tecmap.conceptgraph.ConceptGraph;
 import edu.ithaca.dragon.tecmap.io.Json;
 import edu.ithaca.dragon.tecmap.io.reader.ReaderTools;
@@ -67,7 +67,7 @@ public class TecmapFileDatastore implements TecmapDatastore {
     }
 
     @Override
-    public SuggestingTecmapAPI retrieveTecmapForId(String idToRetrieve) {
+    public TecmapAPI retrieveTecmapForId(String idToRetrieve) {
         TecmapFileData files = idToMap.get(idToRetrieve);
         if (files != null) {
             return retrieveTecmapForId(idToRetrieve, files.getAvailableState());
@@ -79,12 +79,12 @@ public class TecmapFileDatastore implements TecmapDatastore {
     }
 
     @Override
-    public SuggestingTecmapAPI retrieveTecmapForId(String idToRetrieve, TecmapState desiredState) {
+    public TecmapAPI retrieveTecmapForId(String idToRetrieve, TecmapState desiredState) {
         TecmapFileData files = idToMap.get(idToRetrieve);
         if (files != null){
             try {
                 if (desiredState == TecmapState.assessmentConnected) {
-                    return new SuggestingTecmap(new ConceptGraph(ConceptGraphRecord.buildFromJson(files.getGraphFile())),
+                    return new Tecmap(new ConceptGraph(ConceptGraphRecord.buildFromJson(files.getGraphFile())),
                             LearningResourceRecord.createLearningResourceRecordsFromJsonFiles(files.getResourceFiles()),
                             //TODO: hardcoded to sakai csv, need to hold a list of CSVReaders, or the information about which kind of reader it is...
                             ReaderTools.learningObjectsFromCSVList(2, files.getAssessmentFiles()),
@@ -93,7 +93,7 @@ public class TecmapFileDatastore implements TecmapDatastore {
                 }
                 else if (desiredState == TecmapState.assessmentAdded) {
 
-                    return new SuggestingTecmap(new ConceptGraph(ConceptGraphRecord.buildFromJson(files.getGraphFile())),
+                    return new Tecmap(new ConceptGraph(ConceptGraphRecord.buildFromJson(files.getGraphFile())),
                             null,
                             //TODO: hardcoded to sakai csv, need to hold a list of CSVReaders, or the information about which kind of reader it is...
                             ReaderTools.learningObjectsFromCSVList(2, files.getAssessmentFiles()),
@@ -101,14 +101,14 @@ public class TecmapFileDatastore implements TecmapDatastore {
                     );
                 }
                 else if (desiredState == TecmapState.resourcesNoAssessment){
-                    return new SuggestingTecmap(new ConceptGraph(ConceptGraphRecord.buildFromJson(files.getGraphFile())),
+                    return new Tecmap(new ConceptGraph(ConceptGraphRecord.buildFromJson(files.getGraphFile())),
                             LearningResourceRecord.createLearningResourceRecordsFromJsonFiles(files.getResourceFiles()),
                             null,
                             null
                     );
                 }
                 else if (desiredState == TecmapState.noAssessment) {
-                    return new SuggestingTecmap(new ConceptGraph(ConceptGraphRecord.buildFromJson(files.getGraphFile())), null,null, null);
+                    return new Tecmap(new ConceptGraph(ConceptGraphRecord.buildFromJson(files.getGraphFile())), null,null, null);
                 }
                 else {
                     throw new RuntimeException("Unrecognized state desired, can't retrieve tecmap");
