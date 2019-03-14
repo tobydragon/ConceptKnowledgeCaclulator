@@ -9,7 +9,7 @@ import edu.ithaca.dragon.tecmap.learningresource.AssessmentItemResponse;
 
 import java.util.List;
 
-public class AssessmentConnectedState extends AssessmentAddedState {
+public class AssessmentLinkedState extends AssessmentNoLinksState {
 
     private CohortConceptGraphs cohortConceptGraphs;
     //these link records are also represented within the graph as the connections from concepts to resources
@@ -21,13 +21,13 @@ public class AssessmentConnectedState extends AssessmentAddedState {
      * @param links
      * @param columnItemsStructureList
      * @param assessmentItemResponses
-     * @param linksNeedToBeAdded if coming from a ResourcesNoAssessmentState, links have already been added
+     * @param linksNeedToBeAdded if coming from a LinksNoAssessmentState, links have already been added
      */
-    public AssessmentConnectedState(ConceptGraph structureGraph,
-                                    List<LearningResourceRecord> links,
-                                    List<AssessmentItem> columnItemsStructureList,
-                                    List<AssessmentItemResponse> assessmentItemResponses,
-                                    boolean linksNeedToBeAdded) {
+    public AssessmentLinkedState(ConceptGraph structureGraph,
+                                 List<LearningResourceRecord> links,
+                                 List<AssessmentItem> columnItemsStructureList,
+                                 List<AssessmentItemResponse> assessmentItemResponses,
+                                 boolean linksNeedToBeAdded) {
         super(structureGraph, columnItemsStructureList, assessmentItemResponses);
         this.links = links;
         if (linksNeedToBeAdded) {
@@ -44,10 +44,10 @@ public class AssessmentConnectedState extends AssessmentAddedState {
      * @param assessmentItemResponses
      * @post links will be added to structureGraph before cohortGraphs are made
      */
-    public AssessmentConnectedState(ConceptGraph structureGraph,
-                                    List<LearningResourceRecord> links,
-                                    List<AssessmentItem> columnItemsStructureList,
-                                    List<AssessmentItemResponse> assessmentItemResponses) {
+    public AssessmentLinkedState(ConceptGraph structureGraph,
+                                 List<LearningResourceRecord> links,
+                                 List<AssessmentItem> columnItemsStructureList,
+                                 List<AssessmentItemResponse> assessmentItemResponses) {
         this(structureGraph, links, columnItemsStructureList, assessmentItemResponses, true);
     }
 

@@ -13,23 +13,23 @@ import java.util.Collection;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-class NoAssessmentStateTest {
+class OnlyGraphStructureStateTest {
 
-    NoAssessmentState noAssessmentState;
+    OnlyGraphStructureState onlyGraphStructureState;
 
     @BeforeEach
     void setup() throws IOException {
-        noAssessmentState = new NoAssessmentState(new ConceptGraph(ConceptGraphRecord.buildFromJson(Settings.TEST_RESOURCE_DIR + "tecmapExamples/Cs1ExampleGraph.json")));
+        onlyGraphStructureState = new OnlyGraphStructureState(new ConceptGraph(ConceptGraphRecord.buildFromJson(Settings.TEST_RESOURCE_DIR + "tecmapExamples/Cs1ExampleGraph.json")));
     }
 
     @Test
     void createStructureTree() throws JsonProcessingException {
-        assertEquals(Cs1ExampleJsonStrings.structureAsTreeString, noAssessmentState.createStructureTree().toJsonString());
+        assertEquals(Cs1ExampleJsonStrings.structureAsTreeString, onlyGraphStructureState.createStructureTree().toJsonString());
     }
 
     @Test
     void createConceptIdListToPrint() {
-        Collection<String> concepts = noAssessmentState.conceptIdList();
+        Collection<String> concepts = onlyGraphStructureState.conceptIdList();
         //System.out.println(concepts.toString());
         assertEquals(Cs1ExampleJsonStrings.allConceptsString, concepts.toString());
     }

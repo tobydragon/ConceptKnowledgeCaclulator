@@ -13,11 +13,11 @@ import static org.junit.jupiter.api.Assertions.*;
 import org.junit.jupiter.api.Test;
 
 
-class ResourcesNoAssessmentStateTest {
+class LinksNoAssessmentStateTest {
 
     @Test
     public void getResourceRecordLinksTest() throws IOException {
-        ResourcesNoAssessmentState state = new ResourcesNoAssessmentState(
+        LinksNoAssessmentState state = new LinksNoAssessmentState(
                 new ConceptGraph(ConceptGraphRecord.buildFromJson(Settings.DEFAULT_TEST_DATASTORE_PATH + "Cs1Example/Cs1ExampleGraph.json")),
                 LearningResourceRecord.createLearningResourceRecordsFromJsonFile(Settings.DEFAULT_TEST_DATASTORE_PATH + "Cs1Example/Cs1ExampleResources.json")
         );

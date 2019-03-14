@@ -9,11 +9,11 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
-public class NoAssessmentState {
+public class OnlyGraphStructureState {
 
     private ConceptGraph structureGraph;
 
-    public NoAssessmentState(ConceptGraph structureGraph){
+    public OnlyGraphStructureState(ConceptGraph structureGraph){
         this.structureGraph = structureGraph;
     }
 

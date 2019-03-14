@@ -83,7 +83,7 @@ public class TecmapFileDatastore implements TecmapDatastore {
         TecmapFileData files = idToMap.get(idToRetrieve);
         if (files != null){
             try {
-                if (desiredState == TecmapState.assessmentConnected) {
+                if (desiredState == TecmapState.AssessmentLinked) {
                     return new Tecmap(new ConceptGraph(ConceptGraphRecord.buildFromJson(files.getGraphFile())),
                             LearningResourceRecord.createLearningResourceRecordsFromJsonFiles(files.getResourceFiles()),
                             //TODO: hardcoded to sakai csv, need to hold a list of CSVReaders, or the information about which kind of reader it is...
@@ -91,7 +91,7 @@ public class TecmapFileDatastore implements TecmapDatastore {
                             AssessmentItemResponse.createAssessmentItemResponses(files.getAssessmentFiles())
                     );
                 }
-                else if (desiredState == TecmapState.assessmentAdded) {
+                else if (desiredState == TecmapState.AssessmentNoLinks) {
 
                     return new Tecmap(new ConceptGraph(ConceptGraphRecord.buildFromJson(files.getGraphFile())),
                             null,
@@ -100,14 +100,14 @@ public class TecmapFileDatastore implements TecmapDatastore {
                             AssessmentItemResponse.createAssessmentItemResponses(files.getAssessmentFiles())
                     );
                 }
-                else if (desiredState == TecmapState.resourcesNoAssessment){
+                else if (desiredState == TecmapState.LinksNoAssessment){
                     return new Tecmap(new ConceptGraph(ConceptGraphRecord.buildFromJson(files.getGraphFile())),
                             LearningResourceRecord.createLearningResourceRecordsFromJsonFiles(files.getResourceFiles()),
                             null,
                             null
                     );
                 }
-                else if (desiredState == TecmapState.noAssessment) {
+                else if (desiredState == TecmapState.OnlyGraphStructureState) {
                     return new Tecmap(new ConceptGraph(ConceptGraphRecord.buildFromJson(files.getGraphFile())), null,null, null);
                 }
                 else {

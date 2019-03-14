@@ -7,7 +7,7 @@ import edu.ithaca.dragon.tecmap.learningresource.AssessmentItemResponse;
 
 import java.util.List;
 
-public class AssessmentAddedState extends NoAssessmentState {
+public class AssessmentNoLinksState extends OnlyGraphStructureState {
 
     // Since these AssessmentItems will be used for the structure graph (which will be copied for each user),
     // the assessmentItemsStructureList should not be connected to the assessmentItemResponses within this object.
@@ -24,7 +24,7 @@ public class AssessmentAddedState extends NoAssessmentState {
      * @param assessmentItemResponses a list of assessmentItemResponses that represent all data for the tecmap.
      *                                Note: data should not be already connected to assessmentItemsStructureList (this will happen when the data is connected to the StructureGraph)
      */
-    public AssessmentAddedState(ConceptGraph structureGraph, List<AssessmentItem> assessmentItemsStructureList, List<AssessmentItemResponse> assessmentItemResponses) {
+    public AssessmentNoLinksState(ConceptGraph structureGraph, List<AssessmentItem> assessmentItemsStructureList, List<AssessmentItemResponse> assessmentItemResponses) {
         super(structureGraph);
         this.assessmentItemsStructureList = assessmentItemsStructureList;
         this.assessmentItemResponses = assessmentItemResponses;

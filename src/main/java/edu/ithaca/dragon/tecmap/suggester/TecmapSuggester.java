@@ -21,7 +21,7 @@ public class TecmapSuggester implements  TecmapSuggesterAPI {
     }
 
     public List<String> suggestConceptsForUser(String userId){
-        if (tecmapAPI.getCurrentState() == TecmapState.assessmentConnected){
+        if (tecmapAPI.getCurrentState() == TecmapState.AssessmentLinked){
             ConceptGraph userGraph = tecmapAPI.getConceptGraphForUser(userId);
             if (userGraph != null){
                 List<ConceptNode> nodeList = ConceptGraphSuggesterLibrary.suggestConcepts(userGraph);
@@ -37,7 +37,7 @@ public class TecmapSuggester implements  TecmapSuggesterAPI {
     }
 
     public OrganizedLearningResourceSuggestions suggestResourcesForUser (String userId){
-        if (tecmapAPI.getCurrentState() == TecmapState.assessmentConnected){
+        if (tecmapAPI.getCurrentState() == TecmapState.AssessmentLinked){
             ConceptGraph userGraph = tecmapAPI.getConceptGraphForUser(userId);
             if (userGraph != null){
                 List<ConceptNode> concepts = ConceptGraphSuggesterLibrary.suggestConcepts(userGraph);
@@ -48,7 +48,7 @@ public class TecmapSuggester implements  TecmapSuggesterAPI {
     } //used to be calcIndividualGraphSuggestions
 
     public OrganizedLearningResourceSuggestions suggestResourcesForSpecificConceptForUser(String userId, String conceptId){
-        if (tecmapAPI.getCurrentState() == TecmapState.assessmentConnected){
+        if (tecmapAPI.getCurrentState() == TecmapState.AssessmentLinked){
             ConceptGraph userGraph = tecmapAPI.getConceptGraphForUser(userId);
             if (userGraph != null){
                 ConceptNode node = userGraph.findNodeById(conceptId);
@@ -62,7 +62,7 @@ public class TecmapSuggester implements  TecmapSuggesterAPI {
     } //used to be calcIndividualSpecificConceptSuggestions
 
     public List<Group> suggestGroups(List<Suggester> groupTypeList, int groupSize) {
-        if (tecmapAPI.getCurrentState() == TecmapState.assessmentConnected){
+        if (tecmapAPI.getCurrentState() == TecmapState.AssessmentLinked){
             Map<String, ConceptGraph> userToConceptGraphMap = tecmapAPI.getUserToConceptGraphMap();
             GroupSuggester sug = new GroupSuggester();
             List<Group> initialGroup = GroupSuggester.getGroupList(userToConceptGraphMap);

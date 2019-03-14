@@ -1,7 +1,5 @@
 package edu.ithaca.dragon.tecmap.tecmapstate;
 
-import edu.ithaca.dragon.tecmap.io.record.LearningResourceRecord;
-import edu.ithaca.dragon.tecmap.learningresource.AssessmentItemResponse;
 import edu.ithaca.dragon.tecmap.ui.TecmapUserAction;
 
 import java.util.ArrayList;
@@ -10,36 +8,36 @@ import java.util.Collections;
 import java.util.List;
 
 public enum TecmapState {
-    noAssessment,
-    resourcesNoAssessment,
-    assessmentAdded,
-    assessmentConnected;
+    OnlyGraphStructureState,
+    LinksNoAssessment,
+    AssessmentNoLinks,
+    AssessmentLinked;
 
     public static <LinkRecordType, AssessmentRecordType> TecmapState checkAvailableState(List<LinkRecordType> links, List<AssessmentRecordType> assessmentItemResponses) {
         if (assessmentItemResponses == null || assessmentItemResponses.size() < 1){
             if (links == null || links.size() < 1){
-                return TecmapState.noAssessment;
+                return TecmapState.OnlyGraphStructureState;
             }
             else {
-                return TecmapState.resourcesNoAssessment;
+                return TecmapState.LinksNoAssessment;
             }
         }
         else if (links == null || links.size() < 1){
-            return TecmapState.assessmentAdded;
+            return TecmapState.AssessmentNoLinks;
         }
         else {
-            return TecmapState.assessmentConnected;
+            return TecmapState.AssessmentLinked;
         }
     }
 
     public List<TecmapUserAction> getAvailableActions(){
-        if (this == noAssessment){
+        if (this == OnlyGraphStructureState){
             return(new ArrayList<>(Collections.singletonList(TecmapUserAction.structureTree)));
         }
-        else if (this == assessmentAdded || this == resourcesNoAssessment){
+        else if (this == AssessmentNoLinks || this == LinksNoAssessment){
             return(new ArrayList<>(Arrays.asList(TecmapUserAction.structureTree, TecmapUserAction.connectResources)));
         }
-        else if (this == assessmentConnected){
+        else if (this == AssessmentLinked){
             return(new ArrayList<>(Arrays.asList(TecmapUserAction.structureTree, TecmapUserAction.connectResources, TecmapUserAction.cohortTree)));
         }
         else{

@@ -28,9 +28,9 @@ class TecmapAPITest {
     void setup()throws IOException {
         TecmapDatastore tecmapDatastore = TecmapFileDatastore.buildFromJsonFile(Settings.DEFAULT_TEST_DATASTORE_PATH);
 
-        onlyStructureTecmap = tecmapDatastore.retrieveTecmapForId("Cs1Example", TecmapState.noAssessment);
-        twoAssessmentsAddedTecmap = tecmapDatastore.retrieveTecmapForId("Cs1Example", TecmapState.assessmentAdded);
-        twoAssessmentsConnectedTecmap = tecmapDatastore.retrieveTecmapForId("Cs1Example", TecmapState.assessmentConnected);
+        onlyStructureTecmap = tecmapDatastore.retrieveTecmapForId("Cs1Example", TecmapState.OnlyGraphStructureState);
+        twoAssessmentsAddedTecmap = tecmapDatastore.retrieveTecmapForId("Cs1Example", TecmapState.AssessmentNoLinks);
+        twoAssessmentsConnectedTecmap = tecmapDatastore.retrieveTecmapForId("Cs1Example", TecmapState.AssessmentLinked);
     }
 
     @Test
