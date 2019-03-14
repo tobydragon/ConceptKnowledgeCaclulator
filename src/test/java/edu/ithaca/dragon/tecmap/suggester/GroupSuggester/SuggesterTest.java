@@ -23,7 +23,7 @@ import java.util.Map;
  */
 public class SuggesterTest {
 
-    private CohortConceptGraphs graphs;
+    private Map<String, ConceptGraph> graphs;
 
     @BeforeEach
     public void setup() throws IOException {
@@ -31,7 +31,7 @@ public class SuggesterTest {
         List<AssessmentItemResponse> assessmentItemResponses2 = AssessmentItemResponse.createAssessmentItemResponses(Arrays.asList(Settings.TEST_RESOURCE_DIR + "ManuallyCreated/researchAssessment2.csv"));
         List<LearningResourceRecord> links2 = LearningResourceRecord.createLearningResourceRecordsFromJsonFiles(Arrays.asList(Settings.TEST_RESOURCE_DIR + "ManuallyCreated/researchResource2.json"));
         graph2.addLearningResourcesFromRecords(links2);
-        graphs = new CohortConceptGraphs(graph2, assessmentItemResponses2);
+        graphs = new CohortConceptGraphs(graph2, assessmentItemResponses2).getUserToGraph();
     }
 
 
@@ -126,8 +126,6 @@ public class SuggesterTest {
 
     @Test
     public void conceptTest(){
-        Map<String, ConceptGraph> mapGraph = graphs.getUserToGraph();
-
         List<Group> list = GroupSuggester.getGroupList(graphs);
 
 
@@ -135,11 +133,11 @@ public class SuggesterTest {
         List<Group> actualGroupings = new ArrayList<>();
 
         Group group = new Group();
-        group.addMember("mia", mapGraph.get("s1"));
-        group.addMember("don", mapGraph.get("s3"));
-        group.addMember("bob", mapGraph.get("s1"));
-        group.addMember("kayli", mapGraph.get("s3"));
-        group.addMember("dan", mapGraph.get("s5"));
+        group.addMember("mia", graphs.get("s1"));
+        group.addMember("don", graphs.get("s3"));
+        group.addMember("bob", graphs.get("s1"));
+        group.addMember("kayli", graphs.get("s3"));
+        group.addMember("dan", graphs.get("s5"));
         actualGroupings.add(group);
 
         ConceptSuggester sug  = new ConceptSuggester();

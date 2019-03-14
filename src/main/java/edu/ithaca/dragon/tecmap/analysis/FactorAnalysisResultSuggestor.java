@@ -1,13 +1,8 @@
 package edu.ithaca.dragon.tecmap.analysis;
 
-import edu.ithaca.dragon.tecmap.Settings;
-import edu.ithaca.dragon.tecmap.SuggestingTecmap;
-import edu.ithaca.dragon.tecmap.SuggestingTecmapAPI;
+import edu.ithaca.dragon.tecmap.Tecmap;
+import edu.ithaca.dragon.tecmap.TecmapAPI;
 import edu.ithaca.dragon.tecmap.conceptgraph.ConceptGraph;
-import edu.ithaca.dragon.tecmap.data.TecmapDatastore;
-import edu.ithaca.dragon.tecmap.data.TecmapFileData;
-import edu.ithaca.dragon.tecmap.data.TecmapFileDatastore;
-import edu.ithaca.dragon.tecmap.io.reader.ReaderTools;
 import edu.ithaca.dragon.tecmap.io.record.*;
 import edu.ithaca.dragon.tecmap.learningresource.AssessmentItem;
 import edu.ithaca.dragon.tecmap.learningresource.AssessmentItemResponse;
@@ -16,9 +11,6 @@ import edu.ithaca.dragon.tecmap.learningresource.LearningResourceType;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
-import java.util.Map;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 import static edu.ithaca.dragon.tecmap.learningresource.LearningResourceType.ASSESSMENT;
 
@@ -92,8 +84,8 @@ public class FactorAnalysisResultSuggestor {
     }
 
 
-    public static SuggestingTecmap createGraphAndResourceFromAssessment(List <AssessmentItem> assessmentItems) {
-        //Get List of all ItemResponses connected to AssessmentItems for SuggestingTecmap
+    public static TecmapAPI createGraphAndResourceFromAssessment(List <AssessmentItem> assessmentItems) {
+        //Get List of all ItemResponses connected to AssessmentItems for Tecmap
         List<AssessmentItemResponse> assessmentItemResponses = AssessmentItem.getItemResponsesFromAssessmentList(assessmentItems);
         //Make AssessmentItems list copy that does not have connections to its itemResponses
         List<AssessmentItem> assessmentItemsWithoutResponses = AssessmentItem.getAssessmentCopyWithoutResponses(assessmentItems);
@@ -103,7 +95,7 @@ public class FactorAnalysisResultSuggestor {
         List<LearningResourceRecord> lrrList = learningResourcesFromExploratoryFactorMatrixRecord(factorMatrix);
         ConceptGraphRecord conceptGraphRecord = conceptGraphFromExploratoryMatrixRecord(factorMatrix, "newConceptGraphRecord");
 
-        return new SuggestingTecmap(new ConceptGraph(conceptGraphRecord), lrrList, assessmentItemsWithoutResponses, assessmentItemResponses);
+        return new Tecmap(new ConceptGraph(conceptGraphRecord), lrrList, assessmentItemsWithoutResponses, assessmentItemResponses);
         /*
         //TODO: hardcoded to sakai csv, need to hold a list of CSVReaders, or the information about which kind of reader it is...
         ReaderTools.learningObjectsFromCSVList(2, files.getAssessmentFiles()),

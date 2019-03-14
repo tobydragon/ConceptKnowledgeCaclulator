@@ -10,31 +10,32 @@ import edu.ithaca.dragon.tecmap.tecmapstate.*;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 public class Tecmap implements TecmapAPI {
 
-    protected NoAssessmentState state;
+    protected OnlyGraphStructureState state; //All states inherit from OnlyGraphStructureState, it could be any child type
 
     /**
      *
      * @param structureGraph
      * @param links a list of LearningResourceRecords, or null if data is not connected to the graph
-     * @param columnItemsStructureList a list of AssessmentItems to copy for the structure of the graph
-     * @param assessmentItemResponses a list of AssessmentItemResponses containing all data (not connectes to the structureList above)
+     * @param assessmentItemsStructureList a list of AssessmentItems to copy for the structure of the graph
+     * @param assessmentItemResponses a list of AssessmentItemResponses containing all data (not connected to the structureList above)
      */
-    public Tecmap(ConceptGraph structureGraph, List<LearningResourceRecord> links, List<AssessmentItem> columnItemsStructureList, List<AssessmentItemResponse> assessmentItemResponses) {
+    public Tecmap(ConceptGraph structureGraph, List<LearningResourceRecord> links, List<AssessmentItem> assessmentItemsStructureList, List<AssessmentItemResponse> assessmentItemResponses) {
         TecmapState stateEnum = TecmapState.checkAvailableState(links, assessmentItemResponses);
-        if (stateEnum == TecmapState.noAssessment){
-            state = new NoAssessmentState(structureGraph);
+        if (stateEnum == TecmapState.OnlyGraphStructureState){
+            state = new OnlyGraphStructureState(structureGraph);
         }
-        else if (stateEnum == TecmapState.resourcesNoAssessment){
-            state = new ResourcesNoAssessmentState(structureGraph, links);
+        else if (stateEnum == TecmapState.LinksNoAssessment){
+            state = new LinksNoAssessmentState(structureGraph, links);
         }
-        else if (stateEnum == TecmapState.assessmentAdded){
-            state = new AssessmentAddedState(structureGraph, columnItemsStructureList, assessmentItemResponses);
+        else if (stateEnum == TecmapState.AssessmentNoLinks){
+            state = new AssessmentNoLinksState(structureGraph, assessmentItemsStructureList, assessmentItemResponses);
         }
-        else if (stateEnum == TecmapState.assessmentConnected){
-            state = new AssessmentConnectedState(structureGraph, links, columnItemsStructureList, assessmentItemResponses);
+        else if (stateEnum == TecmapState.AssessmentLinked){
+            state = new AssessmentLinkedState(structureGraph, links, assessmentItemsStructureList, assessmentItemResponses);
         }
         else {
             throw new RuntimeException("State not recognized, cannot build");
@@ -54,16 +55,16 @@ public class Tecmap implements TecmapAPI {
 
     @Override
     public List<LearningResourceRecord> currentLearningResourceRecords() {
-        if (state instanceof AssessmentConnectedState){
-            return ((AssessmentConnectedState)state).getResourceRecordLinks();
+        if (state instanceof AssessmentLinkedState){
+            return ((AssessmentLinkedState)state).getResourceRecordLinks();
         }
-        else if (state instanceof ResourcesNoAssessmentState) {
-            return ((ResourcesNoAssessmentState)state).getResourceRecordLinks();
+        else if (state instanceof LinksNoAssessmentState) {
+            return ((LinksNoAssessmentState)state).getResourceRecordLinks();
         }
-        else if (state instanceof AssessmentAddedState) {
-            return ((AssessmentAddedState)state).createBlankLearningResourceRecordsFromAssessment();
+        else if (state instanceof AssessmentNoLinksState) {
+            return ((AssessmentNoLinksState)state).createBlankLearningResourceRecordsFromAssessment();
         }
-        else if (state instanceof NoAssessmentState){
+        else if (state instanceof OnlyGraphStructureState){
             return new ArrayList<>();
         }
         else {
@@ -73,8 +74,8 @@ public class Tecmap implements TecmapAPI {
 
     @Override
     public CohortConceptGraphsRecord createCohortTree() {
-        if (state instanceof AssessmentConnectedState) {
-            return ((AssessmentConnectedState)state).createCohortTree();
+        if (state instanceof AssessmentLinkedState) {
+            return ((AssessmentLinkedState)state).createCohortTree();
         }
         else {
             return null;
@@ -83,8 +84,24 @@ public class Tecmap implements TecmapAPI {
 
     @Override
     public ConceptGraph getAverageConceptGraph() {
-        if (state instanceof AssessmentConnectedState) {
-            return ((AssessmentConnectedState)state).getAverageGraph();
+        if (state instanceof AssessmentLinkedState) {
+            return ((AssessmentLinkedState)state).getAverageGraph();
+        } else {
+            return null;
+        }
+    }
+
+    public ConceptGraph getConceptGraphForUser(String userId){
+        if (state instanceof AssessmentLinkedState) {
+            return ((AssessmentLinkedState)state).getGraphForUser(userId);
+        } else {
+            return null;
+        }
+    }
+
+    public Map<String, ConceptGraph> getUserToConceptGraphMap(){
+        if (state instanceof AssessmentLinkedState) {
+            return ((AssessmentLinkedState)state).getCohortConceptGraphs().getUserToGraph();
         } else {
             return null;
         }
@@ -92,17 +109,17 @@ public class Tecmap implements TecmapAPI {
 
     @Override
     public TecmapState getCurrentState() {
-        if (state instanceof AssessmentConnectedState) {
-            return TecmapState.assessmentConnected;
+        if (state instanceof AssessmentLinkedState) {
+            return TecmapState.AssessmentLinked;
         }
-        else if (state instanceof AssessmentAddedState) {
-            return TecmapState.assessmentAdded;
+        else if (state instanceof AssessmentNoLinksState) {
+            return TecmapState.AssessmentNoLinks;
         }
-        else if (state instanceof ResourcesNoAssessmentState) {
-            return TecmapState.resourcesNoAssessment;
+        else if (state instanceof LinksNoAssessmentState) {
+            return TecmapState.LinksNoAssessment;
         }
         else {
-            return TecmapState.noAssessment;
+            return TecmapState.OnlyGraphStructureState;
         }
     }
 

@@ -1,7 +1,7 @@
 package edu.ithaca.dragon.tecmap.ui.springbootui.service;
 
 import edu.ithaca.dragon.tecmap.Settings;
-import edu.ithaca.dragon.tecmap.SuggestingTecmapAPI;
+import edu.ithaca.dragon.tecmap.TecmapAPI;
 import edu.ithaca.dragon.tecmap.data.TecmapDatastore;
 import edu.ithaca.dragon.tecmap.data.TecmapFileDatastore;
 import edu.ithaca.dragon.tecmap.io.record.CohortConceptGraphsRecord;
@@ -9,6 +9,7 @@ import edu.ithaca.dragon.tecmap.io.record.ConceptGraphRecord;
 import edu.ithaca.dragon.tecmap.io.record.LearningResourceRecord;
 import edu.ithaca.dragon.tecmap.suggester.GroupSuggester.*;
 import edu.ithaca.dragon.tecmap.suggester.OrganizedLearningResourceSuggestions;
+import edu.ithaca.dragon.tecmap.suggester.TecmapSuggester;
 import edu.ithaca.dragon.tecmap.ui.TecmapUserAction;
 import org.springframework.stereotype.Service;
 
@@ -25,7 +26,6 @@ public class TecmapService {
 
     public TecmapService() throws IOException{
         tecmapDatastore = TecmapFileDatastore.buildFromJsonFile(Settings.DEFAULT_MAIN_DATASTORE_PATH);
-
 //        tecmapDatastore = TecmapFileDatastore.buildFromJsonFile(Settings.DEFAULT_TEST_DATASTORE_PATH);
     }
 
@@ -35,21 +35,12 @@ public class TecmapService {
     }
 
     /**
-     * Gets a tecmap from the datastore with the given id
-     * @param id from datastore
-     * @return SuggestingTecmap that corresponds to a given id in the Datastore, null if not found
-     */
-    public SuggestingTecmapAPI retrieveSuggestingTecmapAPI(String id) {
-        return tecmapDatastore.retrieveTecmapForId(id);
-    }
-
-    /**
      * Gets structure tree related to tecmap with id
      * @param id
      * @return ConceptGraphRecord used for building trees, null if id not found
      */
     public ConceptGraphRecord retrieveStructureTree(String id) {
-        SuggestingTecmapAPI tecmap = retrieveSuggestingTecmapAPI(id);
+        TecmapAPI tecmap = tecmapDatastore.retrieveTecmapForId(id);
         if (tecmap != null) {
             return tecmap.createStructureTree();
         }
@@ -62,7 +53,7 @@ public class TecmapService {
      * @return List of concepts as strings (with quotes), null if id not found
      */
     public List<String> retrieveConceptIdList(String id) {
-        SuggestingTecmapAPI tecmap = retrieveSuggestingTecmapAPI(id);
+        TecmapAPI tecmap = tecmapDatastore.retrieveTecmapForId(id);
         if (tecmap != null) {
             return tecmap.conceptIdList();
         }
@@ -74,7 +65,7 @@ public class TecmapService {
      * @return List of LearningResourceRecords with no concepts, null if not found
      */
     public List<LearningResourceRecord> currentLearningResourceRecords(String id) {
-        SuggestingTecmapAPI tecmap = retrieveSuggestingTecmapAPI(id);
+        TecmapAPI tecmap = tecmapDatastore.retrieveTecmapForId(id);
         if (tecmap != null) {
             return tecmap.currentLearningResourceRecords();
         }
@@ -97,7 +88,7 @@ public class TecmapService {
      * @return CohortConceptGraphsRecord of all students, null if not found
      */
     public CohortConceptGraphsRecord retrieveCohortTree(String id) {
-        SuggestingTecmapAPI tecmap = retrieveSuggestingTecmapAPI(id);
+        TecmapAPI tecmap = tecmapDatastore.retrieveTecmapForId(id);
         if (tecmap != null) {
             CohortConceptGraphsRecord cohortTree = tecmap.createCohortTree();
             if (cohortTree != null) {
@@ -114,9 +105,10 @@ public class TecmapService {
      * @return List of suggested conceptIds, null if not found
      */
     public List<String> retrieveConceptSuggestionsForUser(String courseId, String userId) {
-        SuggestingTecmapAPI tecmap = retrieveSuggestingTecmapAPI(courseId);
+        TecmapAPI tecmap = tecmapDatastore.retrieveTecmapForId(courseId);
         if (tecmap != null) {
-            return tecmap.suggestConceptsForUser(userId);
+            TecmapSuggester tecmapSuggester = new TecmapSuggester(tecmap);
+            return tecmapSuggester.suggestConceptsForUser(userId);
         }
         return null;
     }
@@ -129,9 +121,10 @@ public class TecmapService {
      */
     //TODO: UNTESTED
     public OrganizedLearningResourceSuggestions retrieveResourceSuggestionsForUser(String courseId, String userId) {
-        SuggestingTecmapAPI tecmap = tecmapDatastore.retrieveTecmapForId(courseId);
+        TecmapAPI tecmap = tecmapDatastore.retrieveTecmapForId(courseId);
         if (tecmap != null) {
-            return tecmap.suggestResourcesForUser(userId);
+            TecmapSuggester tecmapSuggester = new TecmapSuggester(tecmap);
+            return tecmapSuggester.suggestResourcesForUser(userId);
         }
         return null;
     }
@@ -146,9 +139,10 @@ public class TecmapService {
      */
     //TODO: UNTESTED
     public OrganizedLearningResourceSuggestions retrieveResourceSuggestionsForSpecificConceptForUser(String courseId, String userId, String conceptId) {
-        SuggestingTecmapAPI tecmap = tecmapDatastore.retrieveTecmapForId(courseId);
+        TecmapAPI tecmap = tecmapDatastore.retrieveTecmapForId(courseId);
         if (tecmap != null) {
-            return tecmap.suggestResourcesForSpecificConceptForUser(userId, conceptId);
+            TecmapSuggester tecmapSuggester = new TecmapSuggester(tecmap);
+            return tecmapSuggester.suggestResourcesForSpecificConceptForUser(userId, conceptId);
         }
         return null;
     }
@@ -162,8 +156,10 @@ public class TecmapService {
      * @throws Exception
      */
     public List<Group> retrieveGroupSuggestions(String courseId, String sortType, int size) throws Exception {
-        SuggestingTecmapAPI tecmap = tecmapDatastore.retrieveTecmapForId(courseId);
+        TecmapAPI tecmap = tecmapDatastore.retrieveTecmapForId(courseId);
         if (tecmap != null) {
+            TecmapSuggester tecmapSuggester = new TecmapSuggester(tecmap);
+
             //setup suggesters
 
             //setup group buckets
@@ -199,7 +195,7 @@ public class TecmapService {
             } else {
                 return null;
             }
-            return tecmap.suggestGroups(suggesterList, size);
+            return tecmapSuggester.suggestGroups(suggesterList, size);
         }
         return null;
     }

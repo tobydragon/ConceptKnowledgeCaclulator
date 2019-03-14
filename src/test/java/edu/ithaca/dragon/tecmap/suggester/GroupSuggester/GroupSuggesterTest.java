@@ -23,8 +23,8 @@ import java.util.Map;
  */
 public class GroupSuggesterTest {
 
-    private CohortConceptGraphs simpleGraphs;
-    private CohortConceptGraphs researchGraphs;
+    private Map<String, ConceptGraph> simpleGraphs;
+    private Map<String, ConceptGraph> researchGraphs;
 
     @BeforeEach
     public void setup() throws IOException {
@@ -32,13 +32,13 @@ public class GroupSuggesterTest {
         List<AssessmentItemResponse> assessmentItemResponses = AssessmentItemResponse.createAssessmentItemResponses(Arrays.asList(Settings.TEST_RESOURCE_DIR + "ManuallyCreated/simpleAssessmentTest.csv"));
         List<LearningResourceRecord> links = LearningResourceRecord.createLearningResourceRecordsFromJsonFiles(Arrays.asList(Settings.TEST_RESOURCE_DIR + "ManuallyCreated/simpleResourceTest.json"));
         graph.addLearningResourcesFromRecords(links);
-        simpleGraphs = new CohortConceptGraphs(graph, assessmentItemResponses);
+        simpleGraphs = new CohortConceptGraphs(graph, assessmentItemResponses).getUserToGraph();
 
         ConceptGraph graph2 = new ConceptGraph(ConceptGraphRecord.buildFromJson(Settings.TEST_RESOURCE_DIR + "ManuallyCreated/researchConceptGraph.json"));
         List<AssessmentItemResponse> assessmentItemResponses2 = AssessmentItemResponse.createAssessmentItemResponses(Arrays.asList(Settings.TEST_RESOURCE_DIR + "ManuallyCreated/researchAssessment2.csv"));
         List<LearningResourceRecord> links2 = LearningResourceRecord.createLearningResourceRecordsFromJsonFiles(Arrays.asList(Settings.TEST_RESOURCE_DIR + "ManuallyCreated/researchResource2.json"));
         graph2.addLearningResourcesFromRecords(links2);
-        researchGraphs = new CohortConceptGraphs(graph2, assessmentItemResponses2);
+        researchGraphs = new CohortConceptGraphs(graph2, assessmentItemResponses2).getUserToGraph();
     }
 
     @Test
@@ -168,8 +168,6 @@ public class GroupSuggesterTest {
         Assert.assertNotEquals(researchGraphs, null);
         GroupSuggester sug = new GroupSuggester();
 
-        Map<String, ConceptGraph> mapGraph = researchGraphs.getUserToGraph();
-
         List<Group> groupings1 = sug.getGroupList(researchGraphs);
 
         //groups of 2
@@ -254,8 +252,6 @@ public class GroupSuggesterTest {
         Assert.assertNotEquals(researchGraphs, null);
         GroupSuggester sug = new GroupSuggester();
 
-        Map<String, ConceptGraph> mapGraph = researchGraphs.getUserToGraph();
-
         List<Group> groupings1 = sug.getGroupList(researchGraphs);
 
 //        groups of 2
@@ -277,14 +273,14 @@ public class GroupSuggesterTest {
         List<Group> actualGroupings = new ArrayList<>();
 
         Group group = new Group();
-        group.addMember("mia", mapGraph.get("s1"));
-        group.addMember("don", mapGraph.get("s3"));
-        group.addMember("bob", mapGraph.get("s1"));
+        group.addMember("mia", researchGraphs.get("s1"));
+        group.addMember("don", researchGraphs.get("s3"));
+        group.addMember("bob", researchGraphs.get("s1"));
         actualGroupings.add(group);
 
         Group group2 = new Group();
-        group2.addMember("kayli", mapGraph.get("s3"));
-        group2.addMember("dan", mapGraph.get("s5"));
+        group2.addMember("kayli", researchGraphs.get("s3"));
+        group2.addMember("dan", researchGraphs.get("s5"));
         actualGroupings.add(group2);
 
         List<Suggester> suggesterList2 = new ArrayList<>();
@@ -426,16 +422,15 @@ public class GroupSuggesterTest {
             GroupSuggester sug = new GroupSuggester();
 
             List<Group> groupings = sug.getGroupList(researchGraphs);
-            Map<String, ConceptGraph> mapGraph = researchGraphs.getUserToGraph();
 
             List<Group> actualGroupings = new ArrayList<>();
             Group group = new Group();
-            group.addMember("mia", mapGraph.get("s3"));
-            group.addMember("don", mapGraph.get("s4"));
-            group.addMember("bob", mapGraph.get("s2"));
-            group.addMember("alena", mapGraph.get("s3"));
-            group.addMember("kayli", mapGraph.get("s5"));
-            group.addMember("dan", mapGraph.get("s2"));
+            group.addMember("mia", researchGraphs.get("s3"));
+            group.addMember("don", researchGraphs.get("s4"));
+            group.addMember("bob", researchGraphs.get("s2"));
+            group.addMember("alena", researchGraphs.get("s3"));
+            group.addMember("kayli", researchGraphs.get("s5"));
+            group.addMember("dan", researchGraphs.get("s2"));
             actualGroupings.add(group);
 
             List<Suggester> suggesterList = new ArrayList<>();

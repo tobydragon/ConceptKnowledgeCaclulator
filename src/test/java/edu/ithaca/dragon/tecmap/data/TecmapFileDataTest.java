@@ -23,9 +23,9 @@ public class TecmapFileDataTest {
 
     @Test
     public void updateResourceFiles() {
-        assertEquals(TecmapState.assessmentAdded, tecmapFileData.getAvailableState());
+        assertEquals(TecmapState.AssessmentNoLinks, tecmapFileData.getAvailableState());
         tecmapFileData.updateResourceFiles("fakeFile");
-        assertEquals(TecmapState.assessmentConnected, tecmapFileData.getAvailableState());
+        assertEquals(TecmapState.AssessmentLinked, tecmapFileData.getAvailableState());
     }
 
 }

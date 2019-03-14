@@ -1,9 +1,7 @@
 package edu.ithaca.dragon.tecmap.analysis;
 
 import edu.ithaca.dragon.tecmap.Settings;
-import edu.ithaca.dragon.tecmap.SuggestingTecmap;
-import edu.ithaca.dragon.tecmap.SuggestingTecmapAPI;
-import edu.ithaca.dragon.tecmap.Tecmap;
+import edu.ithaca.dragon.tecmap.TecmapAPI;
 import edu.ithaca.dragon.tecmap.conceptgraph.ConceptGraph;
 import edu.ithaca.dragon.tecmap.data.TecmapDatastore;
 import edu.ithaca.dragon.tecmap.data.TecmapFileDatastore;
@@ -23,10 +21,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Stream;
 
-import static edu.ithaca.dragon.tecmap.analysis.FactorAnalysis.calculateExploratoryMatrix;
-import static edu.ithaca.dragon.tecmap.analysis.FactorAnalysis.modelToFile;
-import static edu.ithaca.dragon.tecmap.analysis.FactorAnalysis.calculateExploratoryMatrix;
-import static edu.ithaca.dragon.tecmap.tecmapstate.TecmapState.assessmentAdded;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 /**
@@ -37,8 +31,7 @@ public class FactorAnalysisTest {
     @Test
     public void calculateExploratoryMatrixTest() throws IOException {
         TecmapDatastore tecmapDatastore = TecmapFileDatastore.buildFromJsonFile(Settings.DEFAULT_TEST_DATASTORE_PATH);
-        SuggestingTecmapAPI analysisExample = tecmapDatastore.retrieveTecmapForId("DocExample");
-        //SuggestingTecmapAPI notConnectedExample = tecmapDatastore.retrieveTecmapForId("Cs1ExampleAssessmentAdded");
+        TecmapAPI analysisExample = tecmapDatastore.retrieveTecmapForId("DocExample");
 
         ConceptGraph acg = analysisExample.getAverageConceptGraph();
         Map<String, AssessmentItem> assessmentItemMap = acg.getAssessmentItemMap();
@@ -82,8 +75,7 @@ public class FactorAnalysisTest {
     @Test
     public void displayExploratoryGraphTest()throws Exception{
         TecmapDatastore tecmapDatastore = TecmapFileDatastore.buildFromJsonFile(Settings.DEFAULT_TEST_DATASTORE_PATH);
-        SuggestingTecmapAPI analysisExample = tecmapDatastore.retrieveTecmapForId("DocExample");
-        //SuggestingTecmapAPI notConnectedExample = tecmapDatastore.retrieveTecmapForId("Cs1ExampleAssessmentAdded");
+        TecmapAPI analysisExample = tecmapDatastore.retrieveTecmapForId("DocExample");
 
         ConceptGraph acg = analysisExample.getAverageConceptGraph();
         Map<String, AssessmentItem> assessmentItemMap = acg.getAssessmentItemMap();
@@ -97,8 +89,7 @@ public class FactorAnalysisTest {
     @Test
     public void calculateConfirmatoryMatrixTest() throws Exception{
         TecmapDatastore tecmapDatastore = TecmapFileDatastore.buildFromJsonFile(Settings.DEFAULT_TEST_DATASTORE_PATH);
-        SuggestingTecmapAPI analysisExample = tecmapDatastore.retrieveTecmapForId("DocExample");
-        //SuggestingTecmapAPI notConnectedExample = tecmapDatastore.retrieveTecmapForId("Cs1ExampleAssessmentAdded");
+        TecmapAPI analysisExample = tecmapDatastore.retrieveTecmapForId("DocExample");
 
         ConceptGraph acg = analysisExample.getAverageConceptGraph();
         ContinuousMatrixRecord confirmatoryFactorMatrix = FactorAnalysis.calculateConfirmatoryMatrix(acg);
@@ -140,8 +131,7 @@ public class FactorAnalysisTest {
     public void modelMakerTest(){
         try {
             TecmapDatastore tecmapDatastore = TecmapFileDatastore.buildFromJsonFile(Settings.DEFAULT_TEST_DATASTORE_PATH);
-            SuggestingTecmapAPI analysisExample = tecmapDatastore.retrieveTecmapForId("DocExample");
-            //SuggestingTecmapAPI notConnectedExample = tecmapDatastore.retrieveTecmapForId("Cs1ExampleAssessmentAdded");
+            TecmapAPI analysisExample = tecmapDatastore.retrieveTecmapForId("DocExample");
 
             ConceptGraph acg = analysisExample.getAverageConceptGraph();
 
@@ -179,8 +169,7 @@ public class FactorAnalysisTest {
     public void modelToFileTest(){
         try {
             TecmapDatastore tecmapDatastore = TecmapFileDatastore.buildFromJsonFile(Settings.DEFAULT_TEST_DATASTORE_PATH);
-            SuggestingTecmapAPI analysisExample = tecmapDatastore.retrieveTecmapForId("DocExample");
-            //SuggestingTecmapAPI notConnectedExample = tecmapDatastore.retrieveTecmapForId("Cs1ExampleAssessmentAdded");
+            TecmapAPI analysisExample = tecmapDatastore.retrieveTecmapForId("DocExample");
 
             ConceptGraph acg = analysisExample.getAverageConceptGraph();
             List<String> factorList = new ArrayList<String>();

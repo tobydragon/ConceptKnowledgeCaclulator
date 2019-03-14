@@ -1,8 +1,8 @@
 package edu.ithaca.dragon.tecmap.learningresource;
 
 import edu.ithaca.dragon.tecmap.Settings;
+import edu.ithaca.dragon.tecmap.TecmapAPI;
 import edu.ithaca.dragon.tecmap.io.reader.TecmapCSVReader;
-import edu.ithaca.dragon.tecmap.SuggestingTecmapAPI;
 import edu.ithaca.dragon.tecmap.conceptgraph.ConceptGraph;
 import edu.ithaca.dragon.tecmap.data.TecmapDatastore;
 import edu.ithaca.dragon.tecmap.data.TecmapFileDatastore;
@@ -75,8 +75,7 @@ public class ContinuousAssessmentMatrixTest {
     public void noRelianceOnIndicesTest(){
         try {
             TecmapDatastore tecmapDatastore = TecmapFileDatastore.buildFromJsonFile(Settings.DEFAULT_TEST_DATASTORE_PATH);
-            SuggestingTecmapAPI analysisExample = tecmapDatastore.retrieveTecmapForId("DocExample");
-            //SuggestingTecmapAPI notConnectedExample = tecmapDatastore.retrieveTecmapForId("Cs1ExampleAssessmentAdded");
+            TecmapAPI analysisExample = tecmapDatastore.retrieveTecmapForId("DocExample");
 
             ConceptGraph acg = analysisExample.getAverageConceptGraph();
             Map<String, AssessmentItem> assessmentItemMap = acg.getAssessmentItemMap();

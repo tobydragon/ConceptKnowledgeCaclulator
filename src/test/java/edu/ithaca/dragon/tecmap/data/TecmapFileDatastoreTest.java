@@ -40,13 +40,13 @@ class TecmapFileDatastoreTest {
 
         //Assessment Connected, All Good Files
         assertNotNull(tecmapDatastore.retrieveTecmapForId("Cs1Example"));
-        assertEquals(TecmapState.assessmentConnected, tecmapDatastore.retrieveTecmapForId("Cs1Example").getCurrentState());
+        assertEquals(TecmapState.AssessmentLinked, tecmapDatastore.retrieveTecmapForId("Cs1Example").getCurrentState());
         //No Assessment, All Good Files
         assertNotNull(tecmapDatastore.retrieveTecmapForId("Cs1ExampleStructure"));
-        assertEquals(TecmapState.noAssessment, tecmapDatastore.retrieveTecmapForId("Cs1ExampleStructure").getCurrentState());
+        assertEquals(TecmapState.OnlyGraphStructureState, tecmapDatastore.retrieveTecmapForId("Cs1ExampleStructure").getCurrentState());
         //Assessment Added, All Good Files
         assertNotNull(tecmapDatastore.retrieveTecmapForId("Cs1ExampleAssessmentAdded"));
-        assertEquals(TecmapState.assessmentAdded, tecmapDatastore.retrieveTecmapForId("Cs1ExampleAssessmentAdded").getCurrentState());
+        assertEquals(TecmapState.AssessmentNoLinks, tecmapDatastore.retrieveTecmapForId("Cs1ExampleAssessmentAdded").getCurrentState());
     }
 
     //Test that makes sure that a datastore with bad paths creates the correct tecmaps using
@@ -74,19 +74,19 @@ class TecmapFileDatastoreTest {
 
         //Assessment Connected, All Good Files
         assertNotNull(badPathsDatastore.retrieveTecmapForId("Cs1Example"));
-        assertEquals(TecmapState.assessmentConnected, badPathsDatastore.retrieveTecmapForId("Cs1Example").getCurrentState());
+        assertEquals(TecmapState.AssessmentLinked, badPathsDatastore.retrieveTecmapForId("Cs1Example").getCurrentState());
         //No Assessment, All Good Files
         assertNotNull(badPathsDatastore.retrieveTecmapForId("Cs1ExampleStructure"));
-        assertEquals(TecmapState.noAssessment, badPathsDatastore.retrieveTecmapForId("Cs1ExampleStructure").getCurrentState());
+        assertEquals(TecmapState.OnlyGraphStructureState, badPathsDatastore.retrieveTecmapForId("Cs1ExampleStructure").getCurrentState());
         //Assessment Added, All Good Files
         assertNotNull(badPathsDatastore.retrieveTecmapForId("Cs1ExampleAssessmentAdded"));
-        assertEquals(TecmapState.assessmentAdded, badPathsDatastore.retrieveTecmapForId("Cs1ExampleAssessmentAdded").getCurrentState());
+        assertEquals(TecmapState.AssessmentNoLinks, badPathsDatastore.retrieveTecmapForId("Cs1ExampleAssessmentAdded").getCurrentState());
         //Assessment Added, Bad Resource Files
         assertNotNull(badPathsDatastore.retrieveTecmapForId("Cs1ExampleBadResources"));
-        assertEquals(TecmapState.assessmentAdded, badPathsDatastore.retrieveTecmapForId("Cs1ExampleBadResources").getCurrentState());
+        assertEquals(TecmapState.AssessmentNoLinks, badPathsDatastore.retrieveTecmapForId("Cs1ExampleBadResources").getCurrentState());
         //NoAssessment, Bad Assessment Files
         assertNotNull(badPathsDatastore.retrieveTecmapForId("Cs1ExampleBadAssessment"));
-        assertEquals(TecmapState.resourcesNoAssessment, badPathsDatastore.retrieveTecmapForId("Cs1ExampleBadAssessment").getCurrentState());
+        assertEquals(TecmapState.LinksNoAssessment, badPathsDatastore.retrieveTecmapForId("Cs1ExampleBadAssessment").getCurrentState());
     }
 
     @Test
@@ -118,30 +118,30 @@ class TecmapFileDatastoreTest {
     @Test
     void retrieveTecmapForIdTestForDifferentStates() {
         TecmapAPI cs1ExampleMap = tecmapDatastore.retrieveTecmapForId("Cs1Example");
-        assertEquals(TecmapState.assessmentConnected, cs1ExampleMap.getCurrentState());
+        assertEquals(TecmapState.AssessmentLinked, cs1ExampleMap.getCurrentState());
         TecmapAPI cs1ExampleMapNoResources = tecmapDatastore.retrieveTecmapForId("Cs1ExampleAssessmentAdded");
-        assertEquals(TecmapState.assessmentAdded, cs1ExampleMapNoResources.getCurrentState());
+        assertEquals(TecmapState.AssessmentNoLinks, cs1ExampleMapNoResources.getCurrentState());
         TecmapAPI cs1ExampleMapNoAssessment = tecmapDatastore.retrieveTecmapForId("Cs1ExampleStructure");
-        assertEquals(TecmapState.noAssessment, cs1ExampleMapNoAssessment.getCurrentState());
+        assertEquals(TecmapState.OnlyGraphStructureState, cs1ExampleMapNoAssessment.getCurrentState());
     }
 
     @Test
     void retrieveTecmapForIdExtraParameter(){
-        TecmapAPI noAssessmentModeMap = tecmapDatastore.retrieveTecmapForId("Cs1Example", TecmapState.noAssessment);
-        TecmapAPI assessmentAddedModeMap = tecmapDatastore.retrieveTecmapForId("Cs1Example", TecmapState.assessmentAdded);
-        TecmapAPI assessmentConnectedModeMap = tecmapDatastore.retrieveTecmapForId("Cs1Example", TecmapState.assessmentConnected);
+        TecmapAPI noAssessmentModeMap = tecmapDatastore.retrieveTecmapForId("Cs1Example", TecmapState.OnlyGraphStructureState);
+        TecmapAPI assessmentAddedModeMap = tecmapDatastore.retrieveTecmapForId("Cs1Example", TecmapState.AssessmentNoLinks);
+        TecmapAPI assessmentConnectedModeMap = tecmapDatastore.retrieveTecmapForId("Cs1Example", TecmapState.AssessmentLinked);
 
-        assertEquals(TecmapState.noAssessment, noAssessmentModeMap.getCurrentState());
+        assertEquals(TecmapState.OnlyGraphStructureState, noAssessmentModeMap.getCurrentState());
         assertNotNull(noAssessmentModeMap.createStructureTree());
         assertEquals(0, noAssessmentModeMap.currentLearningResourceRecords().size());
         assertNull( noAssessmentModeMap.createCohortTree());
 
-        assertEquals(TecmapState.assessmentAdded, assessmentAddedModeMap.getCurrentState());
+        assertEquals(TecmapState.AssessmentNoLinks, assessmentAddedModeMap.getCurrentState());
         assertNotNull(assessmentAddedModeMap.createStructureTree());
         assertEquals(10, assessmentAddedModeMap.currentLearningResourceRecords().size());
         assertNull(assessmentAddedModeMap.createCohortTree());
 
-        assertEquals(TecmapState.assessmentConnected, assessmentConnectedModeMap.getCurrentState());
+        assertEquals(TecmapState.AssessmentLinked, assessmentConnectedModeMap.getCurrentState());
         assertNotNull(assessmentConnectedModeMap.createStructureTree());
         assertEquals(10, assessmentConnectedModeMap.currentLearningResourceRecords().size());
         assertNotNull(assessmentConnectedModeMap.createCohortTree());

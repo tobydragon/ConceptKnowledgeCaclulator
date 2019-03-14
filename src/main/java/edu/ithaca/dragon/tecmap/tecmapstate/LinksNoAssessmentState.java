@@ -5,11 +5,11 @@ import edu.ithaca.dragon.tecmap.io.record.LearningResourceRecord;
 
 import java.util.List;
 
-public class ResourcesNoAssessmentState extends NoAssessmentState {
+public class LinksNoAssessmentState extends OnlyGraphStructureState {
 
     private List<LearningResourceRecord> links;
 
-    public ResourcesNoAssessmentState(ConceptGraph structureGraph, List<LearningResourceRecord> links) {
+    public LinksNoAssessmentState(ConceptGraph structureGraph, List<LearningResourceRecord> links) {
         super(structureGraph);
         this.links = links;
         structureGraph.addLearningResourcesFromRecords(links);

@@ -1,8 +1,7 @@
 package edu.ithaca.dragon.tecmap.analysis;
 
 import edu.ithaca.dragon.tecmap.Settings;
-import edu.ithaca.dragon.tecmap.SuggestingTecmap;
-import edu.ithaca.dragon.tecmap.SuggestingTecmapAPI;
+import edu.ithaca.dragon.tecmap.TecmapAPI;
 import edu.ithaca.dragon.tecmap.conceptgraph.ConceptGraph;
 import edu.ithaca.dragon.tecmap.data.TecmapDatastore;
 import edu.ithaca.dragon.tecmap.data.TecmapFileDatastore;
@@ -24,8 +23,7 @@ public class FactorAnalysisResultSuggestorTest {
     public void learningResourcesFromExploratoryFactorMatrixRecordTest(){
         try{
             TecmapDatastore tecmapDatastore = TecmapFileDatastore.buildFromJsonFile(Settings.DEFAULT_TEST_DATASTORE_PATH);
-            SuggestingTecmapAPI analysisExample = tecmapDatastore.retrieveTecmapForId("DocExample");
-            //SuggestingTecmapAPI notConnectedExample = tecmapDatastore.retrieveTecmapForId("Cs1ExampleAssessmentAdded");
+            TecmapAPI analysisExample = tecmapDatastore.retrieveTecmapForId("DocExample");
 
             ConceptGraph acg = analysisExample.getAverageConceptGraph();
             Map<String, AssessmentItem> assessmentItemMap = acg.getAssessmentItemMap();
@@ -65,8 +63,7 @@ public class FactorAnalysisResultSuggestorTest {
             String testGraphName = "TestConceptGraphRecordName";
 
             TecmapDatastore tecmapDatastore = TecmapFileDatastore.buildFromJsonFile(Settings.DEFAULT_TEST_DATASTORE_PATH);
-            SuggestingTecmapAPI analysisExample = tecmapDatastore.retrieveTecmapForId("DocExample");
-            //SuggestingTecmapAPI notConnectedExample = tecmapDatastore.retrieveTecmapForId("Cs1ExampleAssessmentAdded");
+            TecmapAPI analysisExample = tecmapDatastore.retrieveTecmapForId("DocExample");
 
             ConceptGraph acg = analysisExample.getAverageConceptGraph();
             Map<String, AssessmentItem> assessmentItemMap = acg.getAssessmentItemMap();
@@ -102,12 +99,12 @@ public class FactorAnalysisResultSuggestorTest {
     public void createGraphAndResourceResourceFromAssessmentTest() throws IOException {
         TecmapDatastore tecmapDatastore = TecmapFileDatastore.buildFromJsonFile(Settings.DEFAULT_TEST_DATASTORE_PATH);
 
-        SuggestingTecmapAPI analysisExample = tecmapDatastore.retrieveTecmapForId("DocExample");
+        TecmapAPI analysisExample = tecmapDatastore.retrieveTecmapForId("DocExample");
         ConceptGraph acg = analysisExample.getAverageConceptGraph();
         Map<String, AssessmentItem> assessmentItemMap = acg.getAssessmentItemMap();
         List<AssessmentItem> assessmentItems = new ArrayList<>(assessmentItemMap.values());
 
-        SuggestingTecmap exploratoryTecmap = FactorAnalysisResultSuggestor.createGraphAndResourceFromAssessment(assessmentItems);
+        TecmapAPI exploratoryTecmap = FactorAnalysisResultSuggestor.createGraphAndResourceFromAssessment(assessmentItems);
         ConceptGraph newAcg = exploratoryTecmap.getAverageConceptGraph();
         Map<String, AssessmentItem> newAssessmentItemMap = newAcg.getAssessmentItemMap();
         List<AssessmentItem> newAssessmentItems = new ArrayList<>(newAssessmentItemMap.values());
@@ -125,12 +122,12 @@ public class FactorAnalysisResultSuggestorTest {
     public void createExploratoryTecmapAndCalculateConfirmatoryTest() throws IOException {
         TecmapDatastore tecmapDatastore = TecmapFileDatastore.buildFromJsonFile(Settings.DEFAULT_TEST_DATASTORE_PATH);
 
-        SuggestingTecmapAPI analysisExample = tecmapDatastore.retrieveTecmapForId("DocExample");
+        TecmapAPI analysisExample = tecmapDatastore.retrieveTecmapForId("DocExample");
         ConceptGraph acg = analysisExample.getAverageConceptGraph();
         Map<String, AssessmentItem> assessmentItemMap = acg.getAssessmentItemMap();
         List<AssessmentItem> assessmentItems = new ArrayList<>(assessmentItemMap.values());
 
-        SuggestingTecmap exploratoryTecmap = FactorAnalysisResultSuggestor.createGraphAndResourceFromAssessment(assessmentItems);
+        TecmapAPI exploratoryTecmap = FactorAnalysisResultSuggestor.createGraphAndResourceFromAssessment(assessmentItems);
         ConceptGraph ecg = exploratoryTecmap.getAverageConceptGraph();
         ContinuousMatrixRecord factorMatrix = FactorAnalysis.calculateConfirmatoryMatrix(ecg);
     }

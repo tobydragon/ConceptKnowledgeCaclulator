@@ -1,6 +1,6 @@
 package edu.ithaca.dragon.tecmap.prediction;
 
-import edu.ithaca.dragon.tecmap.SuggestingTecmapAPI;
+import edu.ithaca.dragon.tecmap.TecmapAPI;
 import edu.ithaca.dragon.tecmap.conceptgraph.ConceptGraph;
 import edu.ithaca.dragon.tecmap.data.TecmapFileDatastore;
 import edu.ithaca.dragon.tecmap.learningresource.AssessmentItem;
@@ -38,7 +38,7 @@ public class PredictionController {
     static ConceptGraph getConceptGraph(String courseName, String datastorePath) throws IOException {
         //Get assessment filenames
         TecmapFileDatastore courseDatastore = TecmapFileDatastore.buildFromJsonFile(datastorePath);
-        SuggestingTecmapAPI courseTecmap = courseDatastore.retrieveTecmapForId(courseName);
+        TecmapAPI courseTecmap = courseDatastore.retrieveTecmapForId(courseName);
         return courseTecmap.getAverageConceptGraph();
     }
 

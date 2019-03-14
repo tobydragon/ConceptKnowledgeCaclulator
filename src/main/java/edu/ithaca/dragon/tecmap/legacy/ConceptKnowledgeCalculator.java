@@ -486,7 +486,7 @@ public class ConceptKnowledgeCalculator implements ConceptKnowledgeCalculatorAPI
         if(currentMode== Mode.COHORTGRAPH) {
             GroupSuggester sug = new GroupSuggester();
 
-            List<Group> initialGroup = GroupSuggester.getGroupList(this.cohortConceptGraphs);
+            List<Group> initialGroup = GroupSuggester.getGroupList(this.cohortConceptGraphs.getUserToGraph());
 
 
 //            List<Group> initialGroup = sug.getGroupList(this.cohortConceptGraphs);
