@@ -37,8 +37,8 @@ public class ApiController {
         return tecmapService.retrieveConceptIdList(courseId);
     }
 
-    @GetMapping("/blankLRRecords/{courseId}")
-    public List<LearningResourceRecord> getBlankLearningResourceRecordsFromAssessment(@PathVariable("courseId") String courseId) {
+    @GetMapping("/currentResourceLinks/{courseId}")
+    public List<LearningResourceRecord> currentResourceLinks(@PathVariable("courseId") String courseId) {
         return tecmapService.currentLearningResourceRecords(courseId);
     }
 
