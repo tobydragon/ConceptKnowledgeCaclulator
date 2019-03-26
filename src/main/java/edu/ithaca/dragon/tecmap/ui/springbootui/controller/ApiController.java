@@ -86,10 +86,10 @@ public class ApiController {
         return tecmapService.retrieveValidIdsAndActions();
     }
 
-    @GetMapping("/learningMaterials")
-    public List<LearningMaterialRecord> getLearningMaterialRecords(){
+    @GetMapping("/learningMaterials/{courseId}")
+    public List<LearningMaterialRecord> getLearningMaterialRecords(@PathVariable("courseId") String courseId){
         try {
-            return tecmapService.retrieveLearningMaterialRecords("test");
+            return tecmapService.retrieveLearningMaterialRecords(courseId);
         } catch (IOException e) {
             return new ArrayList<>();
         }

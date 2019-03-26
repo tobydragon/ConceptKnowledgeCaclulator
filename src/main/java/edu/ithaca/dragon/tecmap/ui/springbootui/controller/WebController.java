@@ -37,8 +37,8 @@ public class WebController {
         return "ConnectResources";
     }
 
-    @GetMapping("/learningMaterials")
-    public String viewLearningMaterials(){
+    @GetMapping("/learningMaterials/{courseId}")
+    public String viewLearningMaterials(@PathVariable("courseId") String courseId){
         return "LearningMaterials";
     }
 
