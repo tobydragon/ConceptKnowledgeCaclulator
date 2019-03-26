@@ -1,4 +1,4 @@
-const recordsFile = "/api/learningMaterials/Cs1Example";
+const recordsFile = "/api/connectMaterials/Cs1Example";
 const conceptsFile = "/api/conceptList/Cs1Example";
 
 const records = readJson(recordsFile);
@@ -12,7 +12,7 @@ let content
 let tags;
 let color = '%c';
 
-console.log(color.concat(JSON.stringify(concepts)), 'color: red; font-weight: bold;');
+console.log(color.concat(JSON.stringify(concepts)), 'color: blue; font-weight: bold;');
 
 for (let i = 0; i < records.length; i++) {
     listItem = document.createElement("li");

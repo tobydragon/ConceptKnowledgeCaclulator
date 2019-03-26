@@ -484,7 +484,7 @@ public class ApiControllerTest {
         String courseId = "Cs1Example";
         Mockito.when(tecmapServiceMock.retrieveLearningMaterialRecords(anyString())).thenReturn(tecmapService.retrieveLearningMaterialRecords(courseId));
 
-        RequestBuilder requestBuilder = MockMvcRequestBuilders.get("/api/learningMaterials/Cs1Example").accept(MediaType.APPLICATION_JSON);
+        RequestBuilder requestBuilder = MockMvcRequestBuilders.get("/api/connectMaterials/Cs1Example").accept(MediaType.APPLICATION_JSON);
 
         MvcResult result = mockMvc.perform(requestBuilder).andReturn();
 

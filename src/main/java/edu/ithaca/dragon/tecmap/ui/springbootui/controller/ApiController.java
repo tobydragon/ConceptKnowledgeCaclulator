@@ -86,7 +86,7 @@ public class ApiController {
         return tecmapService.retrieveValidIdsAndActions();
     }
 
-    @GetMapping("/learningMaterials/{courseId}")
+    @GetMapping("/connectMaterials/{courseId}")
     public List<LearningMaterialRecord> getLearningMaterialRecords(@PathVariable("courseId") String courseId){
         try {
             return tecmapService.retrieveLearningMaterialRecords(courseId);
