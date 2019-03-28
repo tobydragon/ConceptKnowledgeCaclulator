@@ -1,6 +1,6 @@
 package edu.ithaca.dragon.tecmap.prediction;
 
-import edu.ithaca.dragon.tecmap.SuggestingTecmapAPI;
+import edu.ithaca.dragon.tecmap.TecmapAPI;
 import edu.ithaca.dragon.tecmap.conceptgraph.ConceptGraph;
 import edu.ithaca.dragon.tecmap.data.TecmapFileDatastore;
 import edu.ithaca.dragon.tecmap.learningresource.AssessmentItem;
@@ -38,7 +38,7 @@ public class PredictionController {
     static ConceptGraph getConceptGraph(String courseName, String datastorePath) throws IOException {
         //Get assessment filenames
         TecmapFileDatastore courseDatastore = TecmapFileDatastore.buildFromJsonFile(datastorePath);
-        SuggestingTecmapAPI courseTecmap = courseDatastore.retrieveTecmapForId(courseName);
+        TecmapAPI courseTecmap = courseDatastore.retrieveTecmapForId(courseName);
         return courseTecmap.getAverageConceptGraph();
     }
 
@@ -64,7 +64,7 @@ public class PredictionController {
         //For nonRatioMatrix
         List<AssessmentItem> nonRatioAssessments = new ArrayList<>();
 
-        List<AssessmentItem> allAssessments = originalMatrix.getAssessmentItems();
+        List<AssessmentItem> allAssessments = originalMatrix.getColumnItems();
         for (AssessmentItem item : allAssessments) {
             AssessmentItem ratioItem = new AssessmentItem(item.getId(), item.getMaxPossibleKnowledgeEstimate());
             AssessmentItem nonRatioItem = new AssessmentItem(item.getId(), item.getMaxPossibleKnowledgeEstimate());
@@ -95,10 +95,10 @@ public class PredictionController {
     static List<AssessmentItem> getAssessmentsForStudentsWithAllResponses(List<AssessmentItem> allAssessments, List<String> assessmentsToInclude) {
         Map<String, List<AssessmentItemResponse>> studentResponses = new HashMap<>();
         Map<String, Double> originalMaxKnowledgeEstimates = new HashMap<>();
-        for (AssessmentItem assessmentItem : allAssessments) {
-            if (assessmentsToInclude.contains(assessmentItem.getId())) {
-                originalMaxKnowledgeEstimates.put(assessmentItem.getId(), assessmentItem.getMaxPossibleKnowledgeEstimate());
-                for (AssessmentItemResponse response : assessmentItem.getResponses()) {
+        for (AssessmentItem columnItem : allAssessments) {
+            if (assessmentsToInclude.contains(columnItem.getId())) {
+                originalMaxKnowledgeEstimates.put(columnItem.getId(), columnItem.getMaxPossibleKnowledgeEstimate());
+                for (AssessmentItemResponse response : columnItem.getResponses()) {
                     if (studentResponses.containsKey(response.getUserId())) {
                         studentResponses.get(response.getUserId()).add(response);
                     } else {
@@ -125,8 +125,8 @@ public class PredictionController {
      * @return
      */
     public ContinuousAssessmentMatrix getMatrix(List<AssessmentItem> allAssessments, List<String> predictionSet) {
-        List<AssessmentItem> assessmentItemsWithValidStudents = getAssessmentsForStudentsWithAllResponses(allAssessments, predictionSet);
-        return new ContinuousAssessmentMatrix(assessmentItemsWithValidStudents);
+        List<AssessmentItem> columnItemsWithValidStudents = getAssessmentsForStudentsWithAllResponses(allAssessments, predictionSet);
+        return new ContinuousAssessmentMatrix(columnItemsWithValidStudents);
     }
 
     /**

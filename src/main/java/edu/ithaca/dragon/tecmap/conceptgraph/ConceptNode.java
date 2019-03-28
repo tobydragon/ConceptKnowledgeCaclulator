@@ -107,12 +107,12 @@ public class ConceptNode {
         for (Map.Entry<String, AssessmentItem> entry: nodeToCopy.learningObjectMap.entrySet()){
 
             //check the map first to see if that learningObject has already been created
-            AssessmentItem newAssessmentItem = graphLearningObjectMap.get(entry.getKey());
-            if (newAssessmentItem == null) {
-                newAssessmentItem = new AssessmentItem(entry.getValue());
-                graphLearningObjectMap.put(entry.getKey(), newAssessmentItem);
+            AssessmentItem newColumnItem = graphLearningObjectMap.get(entry.getKey());
+            if (newColumnItem == null) {
+                newColumnItem = new AssessmentItem(entry.getValue());
+                graphLearningObjectMap.put(entry.getKey(), newColumnItem);
             }
-            this.learningObjectMap.put(entry.getKey(), newAssessmentItem);
+            this.learningObjectMap.put(entry.getKey(), newColumnItem);
         }
         this.learningMaterialMap = new HashMap<>();
         for (Map.Entry<String, LearningMaterial> entry: nodeToCopy.learningMaterialMap.entrySet()){
@@ -196,8 +196,8 @@ public class ConceptNode {
 	 */
 	public void calcDataImportance(){
 		double tempDI=0;
-		for(AssessmentItem assessmentItem : learningObjectMap.values()){
-			tempDI+= assessmentItem.getDataImportance();
+		for(AssessmentItem columnItem : learningObjectMap.values()){
+			tempDI+= columnItem.getDataImportance();
 		}
 
 		for (ConceptNode child: children){
@@ -214,8 +214,8 @@ public class ConceptNode {
 	public void calcKnowledgeEstimate() {
 		//calculate estimate from learning objects directly connected to this node
         double currentConceptEstimate = 0;
-		for (AssessmentItem assessmentItem : learningObjectMap.values()){
-			currentConceptEstimate += assessmentItem.calcKnowledgeEstimate()* assessmentItem.getDataImportance();
+		for (AssessmentItem columnItem : learningObjectMap.values()){
+			currentConceptEstimate += columnItem.calcKnowledgeEstimate()* columnItem.getDataImportance();
 		}
 
         //calculate estimate from children
@@ -270,8 +270,8 @@ public class ConceptNode {
 	}
 
 	//////////////////  Simple Methods  //////////////////////
-	public void addAssessmentItem(AssessmentItem assessmentItem) {
-		learningObjectMap.put(assessmentItem.getId(), assessmentItem);
+	public void addAssessmentItem(AssessmentItem columnItem) {
+		learningObjectMap.put(columnItem.getId(), columnItem);
 	}
 
 	public void addLearningMaterial(LearningMaterial learningObject) {

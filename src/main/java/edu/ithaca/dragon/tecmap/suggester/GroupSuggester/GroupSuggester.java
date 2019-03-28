@@ -97,34 +97,16 @@ public class GroupSuggester {
         return actualGroupings;
     }
 
-
-    private static Map<String, ConceptGraph> getUserMap(CohortConceptGraphs graphs){
-        Map<String, ConceptGraph> map = new HashMap<>();
-
-        Map<String, ConceptGraph> userToGraph = graphs.getUserToGraph();
-
-        map.putAll(userToGraph);
-
-        return map;
-    }
-
-
-    public static List<Group> getGroupList (CohortConceptGraphs graphs){
-        Map<String, ConceptGraph> userMap = getUserMap(graphs);
-
+    public static List<Group> getGroupList ( Map<String, ConceptGraph> userMap){
         List<Group> groupings1 = new ArrayList<>();
         Group gr = new Group();
 
         for(String name: userMap.keySet()){
-
             Map<String, ConceptGraph> student = new HashMap<>();
             student.put(name, userMap.get(name));
             gr.addMember(student);
-
         }
-
         groupings1.add(gr);
-
         return groupings1;
     }
 

@@ -1,12 +1,11 @@
-package edu.ithaca.dragon.tecmap;
+package edu.ithaca.dragon.tecmap.suggester;
 
 import edu.ithaca.dragon.tecmap.suggester.GroupSuggester.Group;
 import edu.ithaca.dragon.tecmap.suggester.GroupSuggester.Suggester;
-import edu.ithaca.dragon.tecmap.suggester.OrganizedLearningResourceSuggestions;
 
 import java.util.List;
 
-public interface SuggestingTecmapAPI extends TecmapAPI {
+public interface TecmapSuggesterAPI {
 
     /**
      * Suggest the concepts on which to focus for a specific user

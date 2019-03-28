@@ -93,19 +93,20 @@ public class KnowledgeEstimateMatrixTest {
     public void createMatrixWithRepeatedAssessmentItems() throws IOException {
         String file = Settings.DEFAULT_TEST_DATASTORE_PATH + "Cs1Example/Cs1ExampleAssessment1.csv";
         TecmapCSVReader data = new SakaiReader(file);
-        List<AssessmentItem> assessmentItems = data.getManualGradedLearningObjects();
+
+        List<AssessmentItem> columnItems = data.getManualGradedLearningObjects();
         file = Settings.DEFAULT_TEST_DATASTORE_PATH + "Cs1Example/Cs1ExampleAssessment2.csv";
         data = new SakaiReader(file);
-        assessmentItems.addAll(data.getManualGradedLearningObjects());
+        columnItems.addAll(data.getManualGradedLearningObjects());
 
         //Try and add repeated assessments
         file = Settings.DEFAULT_TEST_DATASTORE_PATH + "Cs1ExamplePrediction/Cs1ExampleAssessments.csv";
         data = new SakaiReader(file);
-        assessmentItems.addAll(data.getManualGradedLearningObjects());
+        columnItems.addAll(data.getManualGradedLearningObjects());
 
 
         assertThrows(IOException.class, () -> {
-            KnowledgeEstimateMatrix matrix = new KnowledgeEstimateMatrix(assessmentItems);
+            KnowledgeEstimateMatrix matrix = new KnowledgeEstimateMatrix(columnItems);
         });
 
     }

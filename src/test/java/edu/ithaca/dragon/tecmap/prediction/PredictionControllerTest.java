@@ -72,16 +72,16 @@ public class PredictionControllerTest {
 
     @Test
     public void getAssessmentsForStudentsWithAllResponses() {
-        List<AssessmentItem> assessmentItems = continuousAssessmentMatrix.getAssessmentItems();
+        List<AssessmentItem> columnItems = continuousAssessmentMatrix.getColumnItems();
         List<String> assessmentsToInclude = new ArrayList<>();
 
-        List<AssessmentItem> studentsWithResponses = PredictionController.getAssessmentsForStudentsWithAllResponses(assessmentItems, assessmentsToInclude);
+        List<AssessmentItem> studentsWithResponses = PredictionController.getAssessmentsForStudentsWithAllResponses(columnItems, assessmentsToInclude);
 
         assertEquals(0, studentsWithResponses.size());
 
         //Check with an assessment that everyone has
         assessmentsToInclude.add("HW4");
-        studentsWithResponses = PredictionController.getAssessmentsForStudentsWithAllResponses(assessmentItems, assessmentsToInclude);
+        studentsWithResponses = PredictionController.getAssessmentsForStudentsWithAllResponses(columnItems, assessmentsToInclude);
         assertEquals(1, studentsWithResponses.size());
         assertEquals(1, studentsWithResponses.get(0).getMaxPossibleKnowledgeEstimate());
         assertEquals(6, studentsWithResponses.get(0).getResponses().size());
@@ -89,7 +89,7 @@ public class PredictionControllerTest {
 
         //Check with an assessment that s06 is missing
         assessmentsToInclude.add("Q2");
-        studentsWithResponses = PredictionController.getAssessmentsForStudentsWithAllResponses(assessmentItems, assessmentsToInclude);
+        studentsWithResponses = PredictionController.getAssessmentsForStudentsWithAllResponses(columnItems, assessmentsToInclude);
         //Should have omitted s06 since has no HW5
         assertEquals(1, studentsWithResponses.size());
         assertEquals(5, studentsWithResponses.get(0).getMaxPossibleKnowledgeEstimate());
@@ -97,14 +97,14 @@ public class PredictionControllerTest {
 
         //Check with a second assessment that s06 is missing
         assessmentsToInclude.add("HW5");
-        studentsWithResponses = PredictionController.getAssessmentsForStudentsWithAllResponses(assessmentItems, assessmentsToInclude);
+        studentsWithResponses = PredictionController.getAssessmentsForStudentsWithAllResponses(columnItems, assessmentsToInclude);
         //Should have omitted s06 since has no HW5
         assertEquals(2, studentsWithResponses.size());
         assertEquals(1, studentsWithResponses.get(1).getMaxPossibleKnowledgeEstimate());
         assertEquals(5, studentsWithResponses.get(1).getResponses().size());
 
         assessmentsToInclude.add("HW3");
-        studentsWithResponses = PredictionController.getAssessmentsForStudentsWithAllResponses(assessmentItems, assessmentsToInclude);
+        studentsWithResponses = PredictionController.getAssessmentsForStudentsWithAllResponses(columnItems, assessmentsToInclude);
         //Should have omitted s06 since no HW5 & no Q2
         assertEquals(3, studentsWithResponses.size());
         assertEquals(1, studentsWithResponses.get(2).getMaxPossibleKnowledgeEstimate());
@@ -115,7 +115,7 @@ public class PredictionControllerTest {
 
     @Test
     public void getMatrix() {
-        List<AssessmentItem> allAssessments = continuousAssessmentMatrix.getAssessmentItems();
+        List<AssessmentItem> allAssessments = continuousAssessmentMatrix.getColumnItems();
         List<String> predictionSet = new ArrayList<>();
         predictionSet.add("Q4");
         ContinuousAssessmentMatrix predictionMatrix = testController.getMatrix(allAssessments, predictionSet);

@@ -21,6 +21,7 @@ public class DiscreteAssessmentMatrixTest {
     public void setup() throws IOException {
         String testFile = Settings.DEFAULT_TEST_DATASTORE_PATH + "Cs1ExamplePrediction/Cs1ExampleAssessments.csv";
         TecmapCSVReader data = new SakaiReader(testFile);
+
         assessmentItems = data.getManualGradedLearningObjects();
 
         defaultGroupings = GradeDiscreteGroupings.buildFromJson(Settings.DEFAULT_TEST_PREDICTION_PATH + "discreteGroupings.json");

@@ -22,7 +22,7 @@ public class TecmapCSVReaderTest {
         try {
             SakaiReader readfile = new SakaiReader(file);
             List<AssessmentItemResponse> manualGradedResponseList = readfile.getManualGradedResponses();
-            List<AssessmentItem> manualGradedAssessmentItemList = readfile.getManualGradedLearningObjects();
+            List<AssessmentItem> manualGradedColumnItemList = readfile.getManualGradedLearningObjects();
             //testing title entries from the csv files
 
             //Testing for first entry in the CSV
@@ -44,15 +44,15 @@ public class TecmapCSVReaderTest {
             Assert.assertEquals(testQ2.getLearningObjectId(), manualGradedResponseList.get(lastIndex).getLearningObjectId());
 
             //Testing for the Learning Objects
-            Assert.assertEquals(9, manualGradedAssessmentItemList.size());
-            Assert.assertEquals(25, manualGradedAssessmentItemList.get(0).getResponses().size());
+            Assert.assertEquals(9, manualGradedColumnItemList.size());
+            Assert.assertEquals(25, manualGradedColumnItemList.get(0).getResponses().size());
             //Making sure the first item in the ManualGradedResponses list is the first item in the first learning object of the learning object list
-            Assert.assertEquals(manualGradedResponseList.get(0).calcKnowledgeEstimate(), manualGradedAssessmentItemList.get(0).getResponses().get(0).calcKnowledgeEstimate(), 0);
-            Assert.assertEquals(manualGradedResponseList.get(0).getUserId(), manualGradedAssessmentItemList.get(0).getResponses().get(0).getUserId());
-            Assert.assertEquals(manualGradedResponseList.get(0).getLearningObjectId(), manualGradedAssessmentItemList.get(0).getResponses().get(0).getLearningObjectId());
+            Assert.assertEquals(manualGradedResponseList.get(0).calcKnowledgeEstimate(), manualGradedColumnItemList.get(0).getResponses().get(0).calcKnowledgeEstimate(), 0);
+            Assert.assertEquals(manualGradedResponseList.get(0).getUserId(), manualGradedColumnItemList.get(0).getResponses().get(0).getUserId());
+            Assert.assertEquals(manualGradedResponseList.get(0).getLearningObjectId(), manualGradedColumnItemList.get(0).getResponses().get(0).getLearningObjectId());
             //Can't access these but they are tested above
-            //Assert.assertEquals(manualGradedResponseList.get(0).getNonNormalizedScore(),manualGradedAssessmentItemList.get(0).getResponses().get(0).getNonNormalizedScore(),0);
-            //Assert.assertEquals(manualGradedResponseList.get(0).getMaxPossibleScore(),manualGradedAssessmentItemList.get(0).getResponses().get(0).getMaxPossibleScore(),0);
+            //Assert.assertEquals(manualGradedResponseList.get(0).getNonNormalizedScore(),manualGradedColumnItemList.get(0).getResponses().get(0).getNonNormalizedScore(),0);
+            //Assert.assertEquals(manualGradedResponseList.get(0).getMaxPossibleScore(),manualGradedColumnItemList.get(0).getResponses().get(0).getMaxPossibleScore(),0);
         } catch (IOException e) {
             Assert.fail();
         }

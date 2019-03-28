@@ -80,7 +80,7 @@ public class PredictorEffectiveness {
         Map<String, String> expectedResults = new HashMap<>();
 
         //Correct way of getting expected, because not everyone will have an AssessmentItemResponse, but the Matrix will have the data
-        List<AssessmentItem> assessments = testingMatrix.getAssessmentItems();
+        List<AssessmentItem> assessments = testingMatrix.getColumnItems();
         for (int i = 0; i < assessments.size(); i++) {
             AssessmentItem currAssessment = assessments.get(i);
             if (currAssessment.getId().equals(assessmentToLearn)) {
@@ -148,6 +148,18 @@ public class PredictorEffectiveness {
         List<AssessmentItem> allAssessments = new ArrayList<>(conceptGraph.getAssessmentItemMap().values());
         //List of learningAssessments based on the first student's assessments
         List<String> learningAssessments = predictionSetSelector.getPredictionSetForGivenStudent(allAssessments, allAssessments.get(0).getResponses().get(0).getUserId(), assessmentToLearn);
+        //remove lowest 11 response rate assessment here for research!
+        predictionSetSelector.removeLowestResponseRateAssessment(allAssessments, learningAssessments, assessmentToLearn);
+        predictionSetSelector.removeLowestResponseRateAssessment(allAssessments, learningAssessments, assessmentToLearn);
+        predictionSetSelector.removeLowestResponseRateAssessment(allAssessments, learningAssessments, assessmentToLearn);
+        predictionSetSelector.removeLowestResponseRateAssessment(allAssessments, learningAssessments, assessmentToLearn);
+        predictionSetSelector.removeLowestResponseRateAssessment(allAssessments, learningAssessments, assessmentToLearn);
+        predictionSetSelector.removeLowestResponseRateAssessment(allAssessments, learningAssessments, assessmentToLearn);
+        predictionSetSelector.removeLowestResponseRateAssessment(allAssessments, learningAssessments, assessmentToLearn);
+        predictionSetSelector.removeLowestResponseRateAssessment(allAssessments, learningAssessments, assessmentToLearn);
+        predictionSetSelector.removeLowestResponseRateAssessment(allAssessments, learningAssessments, assessmentToLearn);
+        predictionSetSelector.removeLowestResponseRateAssessment(allAssessments, learningAssessments, assessmentToLearn);
+        predictionSetSelector.removeLowestResponseRateAssessment(allAssessments, learningAssessments, assessmentToLearn);
 
         PredictionController controller = new PredictionController(predictor, predictionSetSelector);
 
@@ -180,6 +192,19 @@ public class PredictorEffectiveness {
         List<AssessmentItem> allAssessments = new ArrayList<>(conceptGraph.getAssessmentItemMap().values());
         PredictionController predictionController = new PredictionController(simplePredictor, predictionSetSelector);
         List<String> testingAssessments = predictionController.getPredictionSet(allAssessments, allAssessments.get(0).getResponses().get(0).getUserId() , assessmentToPredict);
+        //remove lowest 2 response rate assessment here for research!
+        predictionSetSelector.removeLowestResponseRateAssessment(allAssessments, testingAssessments, assessmentToPredict);
+        predictionSetSelector.removeLowestResponseRateAssessment(allAssessments, testingAssessments, assessmentToPredict);
+        predictionSetSelector.removeLowestResponseRateAssessment(allAssessments, testingAssessments, assessmentToPredict);
+        predictionSetSelector.removeLowestResponseRateAssessment(allAssessments, testingAssessments, assessmentToPredict);
+        predictionSetSelector.removeLowestResponseRateAssessment(allAssessments, testingAssessments, assessmentToPredict);
+        predictionSetSelector.removeLowestResponseRateAssessment(allAssessments, testingAssessments, assessmentToPredict);
+        predictionSetSelector.removeLowestResponseRateAssessment(allAssessments, testingAssessments, assessmentToPredict);
+        predictionSetSelector.removeLowestResponseRateAssessment(allAssessments, testingAssessments, assessmentToPredict);
+        predictionSetSelector.removeLowestResponseRateAssessment(allAssessments, testingAssessments, assessmentToPredict);
+        predictionSetSelector.removeLowestResponseRateAssessment(allAssessments, testingAssessments, assessmentToPredict);
+        predictionSetSelector.removeLowestResponseRateAssessment(allAssessments, testingAssessments, assessmentToPredict);
+
 
         ContinuousAssessmentMatrix originalMatrix = predictionController.getMatrix(allAssessments, testingAssessments);
 

@@ -147,7 +147,7 @@ public class ApiControllerTest {
                 thenReturn(tecmapService.currentLearningResourceRecords(courseId));
 
         RequestBuilder requestBuilder = MockMvcRequestBuilders.get(
-                "/api/blankLRRecords/thisIsACourse").accept(
+                "/api/currentResourceLinks/thisIsACourse").accept(
                  MediaType.APPLICATION_JSON);
 
         //Test Structure

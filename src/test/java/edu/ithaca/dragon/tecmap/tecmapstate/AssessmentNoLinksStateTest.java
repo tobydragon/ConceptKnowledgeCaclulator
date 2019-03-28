@@ -16,12 +16,12 @@ import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-class AssessmentAddedStateTest {
+class AssessmentNoLinksStateTest {
 
     @Test
     void createBlankLearningResourceRecordsFromAssessment1File() throws IOException {
         List<String> assessmentFiles = new ArrayList<>(Arrays.asList(Settings.TEST_RESOURCE_DIR + "tecmapExamples/Cs1ExampleAssessment1.csv"));
-        AssessmentAddedState state = new AssessmentAddedState(
+        AssessmentNoLinksState state = new AssessmentNoLinksState(
                 new ConceptGraph(ConceptGraphRecord.buildFromJson(Settings.TEST_RESOURCE_DIR + "tecmapExamples/Cs1ExampleGraph.json")),
                 //TODO: hardcoded to sakai csv, need to hold a list of CSVReaders, or the information about which kind of reader it is...
                 ReaderTools.learningObjectsFromCSVList(2, assessmentFiles),
@@ -36,7 +36,7 @@ class AssessmentAddedStateTest {
         List<String> assessmentFiles = new ArrayList<>(Arrays.asList(Settings.TEST_RESOURCE_DIR + "tecmapExamples/Cs1ExampleAssessment1.csv",
                 Settings.TEST_RESOURCE_DIR + "tecmapExamples/Cs1ExampleAssessment2.csv"));
 
-        AssessmentAddedState state = new AssessmentAddedState(
+        AssessmentNoLinksState state = new AssessmentNoLinksState(
                 new ConceptGraph(ConceptGraphRecord.buildFromJson(Settings.TEST_RESOURCE_DIR + "tecmapExamples/Cs1ExampleGraph.json")),
                 //TODO: hardcoded to sakai csv, need to hold a list of CSVReaders, or the information about which kind of reader it is...
                 ReaderTools.learningObjectsFromCSVList(2, assessmentFiles),

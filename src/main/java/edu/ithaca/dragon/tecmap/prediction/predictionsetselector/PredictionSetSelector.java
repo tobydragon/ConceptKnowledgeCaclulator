@@ -20,7 +20,7 @@ public interface PredictionSetSelector {
     /**
      * Removes the assessment with the lowest response rate from the currentPredictionSet
      * @param allAssessments
-     * @param currentPredictionSet mutated in the
+     * @param currentPredictionSet mutated in the method
      * @param assessmentToPredict
      */
     void removeLowestResponseRateAssessment(List<AssessmentItem> allAssessments, List<String> currentPredictionSet, String assessmentToPredict);

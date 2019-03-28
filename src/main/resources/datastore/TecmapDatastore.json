@@ -1,61 +1,43 @@
 {
-  "allRecords" : [
-    {
-      "id" : "Cs1Example",
-      "graphFile" : "src/test/resources/datastore/Cs1Example/Cs1ExampleGraph.json",
-      "resourceFiles" : [ "src/test/resources/datastore/Cs1Example/Cs1ExampleResources.json" ],
-      "assessmentFiles" : [ "src/test/resources/datastore/Cs1Example/Cs1ExampleAssessment1.csv", "src/test/resources/author/tecmapExamples/Cs1ExampleAssessment2.csv" ]
-    },
-    {
-      "id" : "comp171Dragon",
-      "graphFile" : "src/main/resources/datastore/comp171Dragon/comp171DragonGraph.json",
-      "resourceFiles" : [  ],
-      "assessmentFiles" : [  ]
-    },
-    {
-      "id" : "comp220Dragon-2018",
-      "graphFile" : "src/main/resources/datastore/comp220Dragon-2018/comp220DragonGraph.json",
-      "resourceFiles" : [
-
-      ],
-      "assessmentFiles" : [
-        "src/main/resources/datastore/comp220Dragon-2017/private/220-Exam1Grades-totalPoints-removeNames.csv",
-        "src/main/resources/datastore/comp220Dragon-2017/private/comp220-gradebook-2018-removeNames.csv"
-      ]
-    },
-    {
-      "id" : "comp220Dragon-2017",
-      "graphFile" : "src/main/resources/datastore/comp220Dragon-2017/comp220DragonGraph.json",
-      "resourceFiles" : [
-        "src/main/resources/datastore/comp220Dragon-2017/comp220Resources-courseWork.json",
-        "src/main/resources/datastore/comp220Dragon-2017/comp220Resources-e1.json",
-        "src/main/resources/datastore/comp220Dragon-2017/comp220Resources-e2.json",
-        "src/main/resources/datastore/comp220Dragon-2017/comp220Resources-finalExam.json"
-      ],
-      "assessmentFiles" : [
-        "src/main/resources/datastore/comp220Dragon-2017/private/comp220Assessment-courseWork.csv",
-        "src/main/resources/datastore/comp220Dragon-2017/private/comp220Assessment-e1.csv",
-        "src/main/resources/datastore/comp220Dragon-2017/private/comp220Assessment-e2.csv",
-        "src/main/resources/datastore/comp220Dragon-2017/private/comp220Assessment-finalExam.csv"
-      ]
-    },
-    {
-      "id" : "comp105",
-      "graphFile" : "src/main/resources/datastore/comp105/comp105Graph.json",
-      "resourceFiles" : [ "src/main/resources/datastore/comp105/comp105Resources.json" ],
-      "assessmentFiles" : [  ]
-    },
-    {
-      "id" : "comp110",
-      "graphFile" : "src/main/resources/datastore/comp110/comp110Graph.json",
-      "resourceFiles" : [ "src/main/resources/datastore/comp110/comp110Resources.json" ],
-      "assessmentFiles" : [  ]
-    },
-    {
-      "id" : "comp115",
-      "graphFile" : "src/main/resources/datastore/comp115/comp115Graph.json",
-      "resourceFiles" : [ "src/main/resources/datastore/comp115/comp115Resources.json" ],
-      "assessmentFiles" : [  ]
-    }
-  ]
+  "allRecords" : [ {
+    "id" : "Cs1Example",
+    "graphFile" : "src/test/resources/datastore/Cs1Example/Cs1ExampleGraph.json",
+    "resourceFiles" : [ "src/test/resources/datastore/Cs1Example/Cs1ExampleResources.json" ],
+    "assessmentFiles" : [ "src/test/resources/datastore/Cs1Example/Cs1ExampleAssessment1.csv", "src/test/resources/author/tecmapExamples/Cs1ExampleAssessment2.csv" ]
+  }, {
+    "id" : "comp105",
+    "graphFile" : "src/main/resources/datastore/comp105/comp105Graph.json",
+    "resourceFiles" : [ "src/main/resources/datastore/comp105/comp105Resources.json" ],
+    "assessmentFiles" : [ ]
+  }, {
+    "id" : "comp110",
+    "graphFile" : "src/main/resources/datastore/comp110/comp110Graph.json",
+    "resourceFiles" : [ "src/main/resources/datastore/comp110/comp110Resources.json" ],
+    "assessmentFiles" : [ ]
+  }, {
+    "id" : "comp115",
+    "graphFile" : "src/main/resources/datastore/comp115/comp115Graph.json",
+    "resourceFiles" : [ "src/main/resources/datastore/comp115/comp115Resources.json" ],
+    "assessmentFiles" : [ ]
+  }, {
+    "id" : "comp171Dragon",
+    "graphFile" : "src/main/resources/datastore/comp171Dragon/comp171DragonGraph.json",
+    "resourceFiles" : [ ],
+    "assessmentFiles" : [ ]
+  }, {
+    "id" : "comp220Dragon-2017",
+    "graphFile" : "src/main/resources/datastore/comp220Dragon-2017/comp220DragonGraph.json",
+    "resourceFiles" : [ "src/main/resources/datastore/comp220Dragon-2017/comp220Resources-courseWork.json", "src/main/resources/datastore/comp220Dragon-2017/comp220Resources-e1.json", "src/main/resources/datastore/comp220Dragon-2017/comp220Resources-e2.json", "src/main/resources/datastore/comp220Dragon-2017/comp220Resources-finalExam.json" ],
+    "assessmentFiles" : [ ]
+  }, {
+    "id" : "comp220Dragon-2018",
+    "graphFile" : "src/main/resources/datastore/comp220Dragon-2018/comp220DragonGraph.json",
+    "resourceFiles" : [ "src/main/resources/datastore/comp220Dragon-2018/comp220Dragon-2018Resources.json" ],
+    "assessmentFiles" : [ "src/main/resources/datastore/comp220Dragon-2018/private/220-Exam1Grades-totalPoints-removeNames.csv", "src/main/resources/datastore/comp220Dragon-2018/private/comp220-gradebook-2018-removeNames.csv" ]
+  }, {
+      "id" : "AnalysisExample",
+      "graphFile" : "src/test/resources/datastore/AnalysisExample/AnalysisGraph.json",
+      "resourceFiles" : [ "src/test/resources/datastore/AnalysisExample/AnalysisResources.json" ],
+      "assessmentFiles" : [ "src/test/resources/datastore/AnalysisExample/AnalysisExample1.csv" ]
+    } ]
 }

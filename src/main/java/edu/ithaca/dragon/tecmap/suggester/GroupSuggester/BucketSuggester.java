@@ -48,7 +48,7 @@ public class BucketSuggester extends Suggester {
                 for(String student:knowledgeSums.keySet()){
 
                     if ( knowledgeSums.get(student)>r.get(0) && knowledgeSums.get(student) <= r.get(1) ){
-                        System.out.println("name "+ student + " knowledge " + knowledgeSums.get(student) +" range " + r.get(0) + " to " + r.get(1));
+                        //System.out.println("name "+ student + " knowledge " + knowledgeSums.get(student) +" range " + r.get(0) + " to " + r.get(1));
 
                         map.put(student,group.get(student));
                     }

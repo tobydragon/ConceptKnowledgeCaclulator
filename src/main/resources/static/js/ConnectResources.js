@@ -1,6 +1,6 @@
 
 var courseId, //defined in html
-    resourceRecords = readJson("/api/blankLRRecords/" + courseId),
+    resourceRecords = readJson("/api/currentResourceLinks/" + courseId),
     conceptList = readJson("/api/conceptList/" + courseId);
 
 //linked to the submit button in the html page

@@ -1,0 +1,31 @@
+[ {
+  "learningResourceId" : "Q1",
+  "resourceTypes" : [ "ASSESSMENT" ],
+  "conceptIds" : [ "If Statements"],
+  "dataImportance" : 0.0,
+  "maxPossibleKnowledgeEstimate" : 10.0
+}, {
+  "learningResourceId" : "Q2",
+  "resourceTypes" : [ "ASSESSMENT" ],
+  "conceptIds" : [ "While Loops"],
+  "dataImportance" : 0.0,
+  "maxPossibleKnowledgeEstimate" : 5.0
+}, {
+  "learningResourceId" : "Q3",
+  "resourceTypes" : [ "ASSESSMENT" ],
+  "conceptIds" : [ "For Loops"],
+  "dataImportance" : 0.0,
+  "maxPossibleKnowledgeEstimate" : 10.0
+}, {
+  "learningResourceId" : "Q4",
+  "resourceTypes" : [ "ASSESSMENT" ],
+  "conceptIds" : [ "Loops"],
+  "dataImportance" : 0.0,
+  "maxPossibleKnowledgeEstimate" : 5.0
+}, {
+  "learningResourceId" : "Q5",
+  "resourceTypes" : [ "ASSESSMENT" ],
+  "conceptIds" : [ "Intro CS"],
+  "dataImportance" : 0.0,
+  "maxPossibleKnowledgeEstimate" : 100.0
+} ]

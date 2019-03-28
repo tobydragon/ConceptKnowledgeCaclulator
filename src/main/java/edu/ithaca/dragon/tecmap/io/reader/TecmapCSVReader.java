@@ -24,7 +24,7 @@ public abstract class TecmapCSVReader {
 
     String filename;
     BufferedReader csvBuffer = null;
-    List<AssessmentItem> assessmentItemList;
+    List<AssessmentItem> columnItemList;
     List<AssessmentItemResponse> manualGradedResponseList;
     ReaderTools toolBox = new ReaderTools();
 
@@ -39,7 +39,7 @@ public abstract class TecmapCSVReader {
     public TecmapCSVReader(String filename, int gradeStartCoulmnIndex)throws IOException{
         this.filename = filename;
         manualGradedResponseList = new ArrayList<>();
-        assessmentItemList = new ArrayList<>();
+        columnItemList = new ArrayList<>();
         try {
             String line;
             this.csvBuffer = new BufferedReader(new FileReader(filename));
@@ -61,7 +61,7 @@ public abstract class TecmapCSVReader {
                 //learning object list
                 if(firstIteration){
                     firstIteration = false;
-                    this.assessmentItemList = toolBox.learningObjectsFromList(gradeStartCoulmnIndex,singleList);
+                    this.columnItemList = toolBox.learningObjectsFromList(gradeStartCoulmnIndex,singleList);
                 } else {
                     try {
                         //goes through and adds all the questions to their proper learning object, as well as adds them to
@@ -81,7 +81,7 @@ public abstract class TecmapCSVReader {
 
     public List<AssessmentItemResponse> getManualGradedResponses(){return this.manualGradedResponseList;}
 
-    public List<AssessmentItem> getManualGradedLearningObjects(){return this.assessmentItemList;}
+    public List<AssessmentItem> getManualGradedLearningObjects(){return this.columnItemList;}
 
     public abstract String makeFullName(List<String> dataLine, List<String> studentNames);
 
@@ -94,15 +94,15 @@ public abstract class TecmapCSVReader {
     public void lorLister(ArrayList<String> singleList,int gradeMark)throws NullPointerException{
         int i = gradeMark;
         String stdID = makeFullName(singleList, studentNames);
-        if (assessmentItemList.size() + gradeMark < singleList.size()) {
+        if (columnItemList.size() + gradeMark < singleList.size()) {
             logger.warn("More data than learning objects on line for id:" + stdID);
-        } else if (assessmentItemList.size() + gradeMark > singleList.size()) {
+        } else if (columnItemList.size() + gradeMark > singleList.size()) {
             logger.warn("More learning objects than data on line for id:" + stdID);
         }
         //need to make sure we don't go out of bounds on either list
-        while (i < singleList.size() && i < assessmentItemList.size() + gradeMark) {
-            AssessmentItem currentAssessmentItem = this.assessmentItemList.get(i - gradeMark);
-            String qid = currentAssessmentItem.getId();
+        while (i < singleList.size() && i < columnItemList.size() + gradeMark) {
+            AssessmentItem currentColumnItem = this.columnItemList.get(i - gradeMark);
+            String qid = currentColumnItem.getId();
             if (!("".equals(singleList.get(i)))) {
                 double studentGrade;
                 String number = toolBox.pullNumber(singleList.get(i));
@@ -112,9 +112,9 @@ public abstract class TecmapCSVReader {
                 else{
                     studentGrade = Double.parseDouble(number);
                 }
-                ManualGradedResponse response = new ManualGradedResponse(qid, currentAssessmentItem.getMaxPossibleKnowledgeEstimate(), studentGrade, stdID);
+                ManualGradedResponse response = new ManualGradedResponse(qid, currentColumnItem.getMaxPossibleKnowledgeEstimate(), studentGrade, stdID);
                 if(response != null) {
-                    currentAssessmentItem.addResponse(response);
+                    currentColumnItem.addResponse(response);
                     this.manualGradedResponseList.add(response);
                 }else{
                     throw new NullPointerException();

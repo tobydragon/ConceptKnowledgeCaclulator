@@ -1,5 +1,10 @@
 package edu.ithaca.dragon.tecmap.learningresource;
 
+import edu.ithaca.dragon.tecmap.Settings;
+import edu.ithaca.dragon.tecmap.TecmapAPI;
+import edu.ithaca.dragon.tecmap.conceptgraph.ConceptGraph;
+import edu.ithaca.dragon.tecmap.data.TecmapDatastore;
+import edu.ithaca.dragon.tecmap.data.TecmapFileDatastore;
 import org.junit.Assert;
 import org.junit.Test;
 
@@ -71,9 +76,57 @@ public class AssessmentItemTest {
         maxKnowledgeEstimatesForAssessments.put("AI1", 1.0);
         maxKnowledgeEstimatesForAssessments.put("AI2", 2.0);
 
-        List<AssessmentItem> assessmentItems = AssessmentItem.buildListFromAssessmentItemResponses(responseList, maxKnowledgeEstimatesForAssessments);
-        assertEquals(2, assessmentItems.size());
-        assertEquals("AI1", assessmentItems.get(0).getId());
-        assertEquals("AI2", assessmentItems.get(1).getId());
+        List<AssessmentItem> columnItems = AssessmentItem.buildListFromAssessmentItemResponses(responseList, maxKnowledgeEstimatesForAssessments);
+        assertEquals(2, columnItems.size());
+        assertEquals("AI1", columnItems.get(0).getId());
+        assertEquals("AI2", columnItems.get(1).getId());
+    }
+
+    @Test
+    public void getAssessmentCopyWithoutResponsesTest() {
+        try {
+            TecmapDatastore tecmapDatastore = TecmapFileDatastore.buildFromJsonFile(Settings.DEFAULT_TEST_DATASTORE_PATH);
+            TecmapAPI analysisExample = tecmapDatastore.retrieveTecmapForId("DocExample");
+            ConceptGraph acg = analysisExample.getAverageConceptGraph();
+            Map<String, AssessmentItem> assessmentItemMap = acg.getAssessmentItemMap();
+            List<AssessmentItem> assessmentItems = new ArrayList<>(assessmentItemMap.values());
+            List<AssessmentItem> copyWithoutResponses = AssessmentItem.getAssessmentCopyWithoutResponses(assessmentItems);
+
+            assertEquals(assessmentItems.size(), copyWithoutResponses.size());
+            //The original should have responses
+            for(AssessmentItem assessment : assessmentItems){
+                if(assessment.getResponses().size() == 0){
+                    Assert.fail();
+                }
+            }
+            //The copy should not have responses
+            for(AssessmentItem blankAssessment : copyWithoutResponses){
+                if(blankAssessment.getResponses().size() != 0){
+                    Assert.fail();
+                }
+            }
+        }catch (Exception e){
+            Assert.fail();
+            e.printStackTrace();
+        }
+    }
+
+    @Test
+    public void getItemResponsesFromAssessmentListTest(){
+        try{
+            TecmapDatastore tecmapDatastore = TecmapFileDatastore.buildFromJsonFile(Settings.DEFAULT_TEST_DATASTORE_PATH);
+            TecmapAPI analysisExample = tecmapDatastore.retrieveTecmapForId("DocExample");
+            ConceptGraph acg = analysisExample.getAverageConceptGraph();
+            Map<String, AssessmentItem> assessmentItemMap = acg.getAssessmentItemMap();
+            List<AssessmentItem> assessmentItems = new ArrayList<>(assessmentItemMap.values());
+
+            List<AssessmentItemResponse> responses = AssessmentItem.getItemResponsesFromAssessmentList(assessmentItems);
+            assertEquals(9000, responses.size());
+
+
+        }catch (Exception e){
+            Assert.fail();
+            e.printStackTrace();
+        }
     }
 }
