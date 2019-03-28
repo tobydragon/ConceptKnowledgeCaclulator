@@ -483,4 +483,12 @@ public class Cs1ExampleJsonStrings {
             "  \"dataImportance\" : 0.0,\n" +
             "  \"maxPossibleKnowledgeEstimate\" : 1.0\n" +
             "} ]";
+
+    public static final String learningMaterialsLinks = "[ {\n" +
+            "  \"learningResourceId\" : \"[INFORMATION] 4 [Cs1]\",\n" +
+            "  \"resourceTypes\" : [ \"PRACTICE\" ],\n" +
+            "  \"conceptIds\" : [ \"If Statements\" ],\n" +
+            "  \"dataImportance\" : 0.0,\n" +
+            "  \"maxPossibleKnowledgeEstimate\" : 10.0\n" +
+            "} ]";
 }

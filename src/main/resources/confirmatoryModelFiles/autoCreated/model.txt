@@ -1,7 +1,9 @@
-Factor 2 -> GOLF, GOLFToFactor 2, NA 
-Factor 2 -> CURL, CURLToFactor 2, NA 
-Factor 2 -> X2KROW, X2KROWToFactor 2, NA 
-Factor 3 -> CURL, CURLToFactor 3, NA 
-Factor 3 -> BILLIARD, BILLIARDToFactor 3, NA 
-Factor 3 -> PINBALL, PINBALLToFactor 3, NA 
-Factor 3 -> X1500M, X1500MToFactor 3, NA
+Precision -> GOLF, GOLFToPrecision, NA 
+Precision -> CURL, CURLToPrecision, NA 
+Precision -> BILLIARD, BILLIARDToPrecision, NA 
+Misc -> X12MINTR, X12MINTRToMisc, NA 
+Misc -> X2KROW, X2KROWToMisc, NA 
+Misc -> X1500M, X1500MToMisc, NA 
+Reaction Time -> BENCH, BENCHToReaction Time, NA 
+Reaction Time -> PINBALL, PINBALLToReaction Time, NA 
+Reaction Time -> MAXPUSHU, MAXPUSHUToReaction Time, NA
