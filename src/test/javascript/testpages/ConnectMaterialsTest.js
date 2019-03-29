@@ -1,14 +1,17 @@
-const recordsFile = "/api/connectMaterials/Cs1Example";
-const conceptsFile = "/api/conceptList/Cs1Example";
+var courseId = "Cs1Example";
+var resourceRecords = readJson("../../resources/datastore/Cs1Example/Cs1ExampleMaterials.json");
+var conceptList = ["While Loops","For Loops","Boolean Expressions","Intro CS", "Loops", "If Statements"];
+
+const recordsFile = "../../resources/datastore/Cs1Example/Cs1ExampleLearningMaterial.json";
 
 const records = readJson(recordsFile);
-const concepts = readJson(conceptsFile);
+const concepts = conceptList;
 
 const recordsList = document.getElementById("recordsList");
 const tagsList = document.getElementById("tagsList");
 var listItem;
 var tagItem;
-var content
+var content;
 var tags;
 var color = '%c';
 
@@ -26,5 +29,8 @@ for (var i = 0; i < records.length; i++) {
 
     tagsList.appendChild(tagItem);
     recordsList.appendChild(listItem);
+
+    console.log(color.concat(content.wholeText), 'color: red; font-weight: bold;')
 }
 
+console.log(color.concat(JSON.stringify(resourceRecords)), 'color: green; font-weight: bold;');

@@ -1,0 +1,65 @@
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Connect Materials</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+    <style>
+
+        h1 {
+            text-align: center;
+        }
+
+        li {
+            margin: 5px 0px;
+        }
+
+        #container {
+            display: grid;
+            width: 100vw;
+            grid-template-columns: 40% 40%;
+            margin-top: 30px;
+        }
+
+        .listHeader {
+            font-weight: bold;
+            font-size: 1.5em;
+        }
+
+    </style>
+
+</head>
+
+<body>
+
+    <h1 id="records">LearningMaterials</h1>
+
+    <div id="container">
+
+        <ul id="recordsList">
+            <span class="listHeader">Content</span>
+        </ul>
+
+        <ul id="tagsList">
+            <span class="listHeader">Tags</span>
+        </ul>
+
+    </div>
+
+    <script src="../../../main/resources/static/js/Comm.js"></script>
+    <!--<script src="../../../main/resources/static/js/CheckboxMatrixFunctions.js"></script>-->
+    <script src="ConnectMaterialsTest.js"></script>
+
+    <script type="text/javascript" th:src="@{/js/Comm.js}"></script>
+    <script th:src="@{/js/ConnectMaterialsTest.js}"></script>
+
+    <script th:inline="javascript">
+        courseId = [[${courseId}]];
+    </script>
+
+</body>
+
+</html>
