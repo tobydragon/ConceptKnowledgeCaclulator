@@ -490,7 +490,7 @@ public class ApiControllerTest {
 
         MvcResult result = mockMvc.perform(requestBuilder).andReturn();
 
-        assertEquals(jsonToLearningMaterialRecords(path), result.getResponse().getContentAsString());
+        JSONAssert.assertEquals(Cs1ExampleJsonStrings.learningMaterials, result.getResponse().getContentAsString(), false);
 
     }
 }

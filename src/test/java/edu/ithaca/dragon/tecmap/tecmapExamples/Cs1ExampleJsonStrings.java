@@ -491,4 +491,75 @@ public class Cs1ExampleJsonStrings {
             "  \"dataImportance\" : 0.0,\n" +
             "  \"maxPossibleKnowledgeEstimate\" : 10.0\n" +
             "} ]";
+
+    public static final String learningMaterials = "[{\n" +
+            "  \"types\" : [ \"ASSESSMENT\" ],\n" +
+            "  \"id\" : \"[ASSESSMENT] 1 [Cs1]\",\n" +
+            "  \"content\" : \"What's are advantages of using while loops instead of for loops?\",\n" +
+            "  \"url\" : \"\",\n" +
+            "  \"tagsMap\" : {\n" +
+            "    \"Cs1\" : 1,\n" +
+            "    \"using\" : 1,\n" +
+            "    \"advantages\" : 1\n" +
+            "  }\n" +
+            "},{\n" +
+            "  \"types\" : [ \"ASSESSMENT\" ],\n" +
+            "  \"id\" : \"[ASSESSMENT] 2 [Cs1]\",\n" +
+            "  \"content\" : \"How many choices are possible when executing an if-statement?\",\n" +
+            "  \"url\" : \"\",\n" +
+            "  \"tagsMap\" : {\n" +
+            "    \"Cs1\" : 1,\n" +
+            "    \"if-statement\" : 1,\n" +
+            "    \"executing\" : 1\n" +
+            "  }\n" +
+            "},{\n" +
+            "  \"types\" : [ \"ASSESSMENT\" ],\n" +
+            "  \"id\" : \"[ASSESSMENT] 3 [Cs1]\",\n" +
+            "  \"content\" : \"When does an 'else' conditional get executed in a function?\",\n" +
+            "  \"url\" : \"\",\n" +
+            "  \"tagsMap\" : {\n" +
+            "    \"Cs1\" : 1,\n" +
+            "    \"conditional\" : 1,\n" +
+            "    \"does\" : 1\n" +
+            "  }\n" +
+            "},{\n" +
+            "  \"types\" : [ \"INFORMATION\" ],\n" +
+            "  \"id\" : \"[INFORMATION] 4 [Cs1]\",\n" +
+            "  \"content\" : \"https://www.learncpp.com/cpp-tutorial/52-if-statements/\",\n" +
+            "  \"url\" : \"https://www.learncpp.com/cpp-tutorial/52-if-statements/\",\n" +
+            "  \"tagsMap\" : {\n" +
+            "    \"Cs1\" : 1,\n" +
+            "    \"implicit\" : 1,\n" +
+            "    \"using\" : 2,\n" +
+            "    \"operator=\" : 1,\n" +
+            "    \"conditional\" : 2,\n" +
+            "    \"blocks\" : 1,\n" +
+            "    \"operator==\" : 1,\n" +
+            "    \"dangling\" : 1,\n" +
+            "    \"statements\" : 6,\n" +
+            "    \"logical\" : 1,\n" +
+            "    \"null\" : 2,\n" +
+            "    \"operators\" : 1,\n" +
+            "    \"uses\" : 1,\n" +
+            "    \"returns\" : 1,\n" +
+            "    \"nesting\" : 1,\n" +
+            "    \"chaining\" : 1\n" +
+            "  }\n" +
+            "},{\n" +
+            "  \"types\" : [ \"INFORMATION\" ],\n" +
+            "  \"id\" : \"[INFORMATION] 5 [Cs1]\",\n" +
+            "  \"content\" : \"https://www.programiz.com/c-programming/c-if-else-statement\",\n" +
+            "  \"url\" : \"https://www.programiz.com/c-programming/c-if-else-statement\",\n" +
+            "  \"tagsMap\" : {\n" +
+            "    \"Cs1\" : 1\n" +
+            "  }\n" +
+            "},{\n" +
+            "  \"types\" : [ \"INFORMATION\" ],\n" +
+            "  \"id\" : \"[INFORMATION] 6 [Cs1]\",\n" +
+            "  \"content\" : \"https://programming.guide/go/for-loop.html\",\n" +
+            "  \"url\" : \"https://programming.guide/go/for-loop.html\",\n" +
+            "  \"tagsMap\" : {\n" +
+            "    \"Cs1\" : 1\n" +
+            "  }\n" +
+            "}]";
 }
