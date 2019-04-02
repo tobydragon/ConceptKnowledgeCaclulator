@@ -24,4 +24,12 @@ describe('ConnectMaterialsSpecs', function() {
         resourceRecords = readJson('../resources/datastore/Cs1Example/Cs1ExampleMaterials.json');
     });
 
+    it('add conceptIds to existing LearningResourceRecord', function(){
+        expect(resourceRecords.length).toEqual(1);
+        expect(resourceRecords[0].conceptIds.length).toEqual(0);
+        updateResourceRecords(resourceRecords, '[INFORMATION] 4 [Cs1]', 'Boolean Expressions');
+        expect(resourceRecords[0].conceptIds.length).toEqual(1);
+        resourceRecords = readJson('../resources/datastore/Cs1Example/Cs1ExampleMaterials.json');
+    });
+
 });
