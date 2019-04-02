@@ -4,4 +4,10 @@
   "conceptIds" : [],
   "dataImportance" : 1.0,
   "maxPossibleKnowledgeEstimate" : 10.0
+}, {
+  "learningResourceId" : "[INFORMATION] 2 [Cs1]",
+  "resourceTypes" : ["PRACTICE"],
+  "conceptIds" : ["If-Statements"],
+  "dataImportance" : 1.0,
+  "maxPossibleKnowledgeEstimate" : 10.0
 } ]
