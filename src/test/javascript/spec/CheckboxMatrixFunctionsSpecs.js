@@ -8,42 +8,6 @@ describe("ConceptMatrixFunctionsSpecs", function() {
         expect(resourceRecords[0].learningResourceId).toEqual("Q1");
     });
     
-    it("updateResourceRecords to add a connection", function() {  
-      updateResourceRecords(resourceRecords, "Q1", "While Loops");
-      expect(resourceRecords[0].conceptIds).toEqual(["If Statements", "While Loops"]);
-    });
-    
-    it("updateResourceRecords to remove a connection", function() {  
-      updateResourceRecords(resourceRecords, "Q2", "While Loops");
-      expect(resourceRecords[1].conceptIds.length).toEqual(0);
-    });
-
-    it("addResourceToRecords adding a new resource", function() {
-        expect(resourceRecords.length).toEqual(10);
-        addResourceToRecords(resourceRecords, "newResource", 1);
-        expect(resourceRecords.length).toEqual(11);
-        expect(resourceRecords[10].conceptIds.length).toEqual(0);
-        expect(resourceRecords[10].resourceTypes.length).toEqual(0);
-        expect(resourceRecords[10].maxPossibleKnowledgeEstimate).toEqual(1);
-        //reset resourceRecords afterwards
-        resourceRecords = readJson("../resources/datastore/Cs1Example/Cs1ExampleResources.json");
-    });
-
-    it("updateResourceType to add a resource type", function() {
-        updateResourceType(resourceRecords, "Q1", "INFORMATION");
-        expect(resourceRecords[0].resourceTypes.length).toEqual(3);
-    });
-
-    it("updateResourceType to remove a resource type", function() {
-        updateResourceType(resourceRecords, "Q2", "PRACTICE");
-        expect(resourceRecords[1].resourceTypes.length).toEqual(1);
-    });
-    
-    it("createResourceIdsList", function() {  
-      var resourceIds = createResourceIdsList(resourceRecords);
-      expect(resourceIds).toEqual(["Q1", "Q2", "Q3", "Q4", "Q5", "HW1", "HW2", "HW3", "HW4", "HW5"]);
-    });
-    
     it("createResourceCheckedListForConcept", function() {  
       var resourceIds = createResourceCheckedListForConcept("For Loops", resourceRecords);
       expect(resourceIds).toEqual([false, false, true, false, false, false, false, false, false, true]);
@@ -58,17 +22,17 @@ describe("ConceptMatrixFunctionsSpecs", function() {
     });
     
     it("buildCheckboxHtmlString unchecked box", function(){
-        expect(buildTableCheckboxHtmlString("If Statements", "Q1", false)).toEqual("<td class='text-center'><input id='If Statements_Q1' type='checkbox' onclick='updateResourceRecords(resourceRecords, \"Q1\", \"If Statements\")'></td>");
+        expect(buildTableCheckboxHtmlString("If Statements", "Q1", false)).toEqual("<td class='text-center'><input id='If Statements_Q1' type='checkbox' onclick='updateConceptId(resourceRecords, \"Q1\", \"If Statements\")'></td>");
     });
     
     it("buildCheckboxHtmlString checked box", function(){
-        expect(buildTableCheckboxHtmlString("If Statements", "Q1", true)).toEqual("<td class='text-center'><input id='If Statements_Q1' type='checkbox' checked='true' onclick='updateResourceRecords(resourceRecords, \"Q1\", \"If Statements\")'></td>");
+        expect(buildTableCheckboxHtmlString("If Statements", "Q1", true)).toEqual("<td class='text-center'><input id='If Statements_Q1' type='checkbox' checked='true' onclick='updateConceptId(resourceRecords, \"Q1\", \"If Statements\")'></td>");
     });
     
     it("buildTableRowHtmlString", function(){
         console.log(buildTableRowHtmlString("If Statements", ["Q1", "Q2", "Q3"], [true, false, false]));
         expect(buildTableRowHtmlString("If Statements", ["Q1", "Q2", "Q3"], [true, false, false]))
-              .toEqual("<tr><th scope='row'>If Statements</th><td class='text-center'><input id='If Statements_Q1' type='checkbox' checked='true' onclick='updateResourceRecords(resourceRecords, \"Q1\", \"If Statements\")'></td><td class='text-center'><input id='If Statements_Q2' type='checkbox' onclick='updateResourceRecords(resourceRecords, \"Q2\", \"If Statements\")'></td><td class='text-center'><input id='If Statements_Q3' type='checkbox' onclick='updateResourceRecords(resourceRecords, \"Q3\", \"If Statements\")'></td></tr>");
+              .toEqual("<tr><th scope='row'>If Statements</th><td class='text-center'><input id='If Statements_Q1' type='checkbox' checked='true' onclick='updateConceptId(resourceRecords, \"Q1\", \"If Statements\")'></td><td class='text-center'><input id='If Statements_Q2' type='checkbox' onclick='updateConceptId(resourceRecords, \"Q2\", \"If Statements\")'></td><td class='text-center'><input id='If Statements_Q3' type='checkbox' onclick='updateConceptId(resourceRecords, \"Q3\", \"If Statements\")'></td></tr>");
     });
     
    it("buildTableBodyHtmlString", function(){
