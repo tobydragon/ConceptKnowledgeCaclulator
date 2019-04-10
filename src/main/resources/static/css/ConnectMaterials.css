@@ -25,6 +25,14 @@ nav > p, nav > button {
     display: inline-flex;
 }
 
+div > button {
+    color: #FF0707;
+}
+
+div > button:hover {
+    text-decoration-line: underline;
+}
+
 button {
     border: none;
     font-size: 16px;
