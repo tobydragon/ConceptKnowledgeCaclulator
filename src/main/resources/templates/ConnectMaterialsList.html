@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <meta charset="UTF-8">
+        <title>Learning Materials</title>
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap.min.css">
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+        <script th:src="@{/js/Comm.js}"></script>
+        <script>
+            // This should not be hardcoded
+            learningMaterials = readJson("/api/connectMaterials/Cs1Example")
+        </script>
+        <style>
+
+            #nav {
+                width: 100%;
+                text-align: center;
+                margin-bottom: 10px;
+            }
+
+            nav > p, nav > button {
+                display: inline-flex;
+            }
+
+            button {
+                border: none;
+                font-size: 16px;
+            }
+
+        </style>
+
+    </head>
+    <body>
+
+    <div id="nav">
+        <h1>Learning Materials</h1>
+        <nav>
+            <button id="prev"> < </button>
+            <p id="index"></p>
+            <button id="next"> > </button>
+        </nav>
+
+        <button>Save Changes</button>
+
+    </div>
+
+    <ul id="recordsList">
+    </ul>
+
+
+
+    <script th:src="@{/js/ConnectMaterialsList.js}"></script>
+    </body>
+</html>

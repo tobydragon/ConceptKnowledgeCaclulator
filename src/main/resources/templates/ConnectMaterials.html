@@ -29,22 +29,55 @@
                 font-size: 1.5em;
             }
 
+            #nav {
+                width: 100%;
+                text-align: center;
+                margin-bottom: 10px;
+            }
+
+            nav > p, nav > button {
+                display: inline-flex;
+            }
+
+            button {
+                border: none;
+                font-size: 16px;
+            }
+
+            .learningMaterialID, .suggestedTags {
+                font-size: 18px;
+            }
+
+            .suggestedTags {
+                font-weight: bold;
+            }
         </style>
 
     </head>
 
     <body>
 
-        <h1 id="records">LearningMaterials</h1>
+        <div id="nav">
+            <h1>Learning Materials</h1>
+            <nav>
+                <button id="prev"> < </button>
+                <p id="index"></p>
+                <button id="next"> > </button>
+            </nav>
+
+            <button>Save Changes</button>
+
+        </div>
 
         <div id="container">
 
-            <ul id="recordsList">
-                <span class="listHeader">Content</span>
-            </ul>
+            <ul id="learningMaterialInfo">
+                <p class="learningMaterialID"></p>
+                <p class="learningMaterialContent"></p>
+                <p class="suggestedTags">Suggested Tags:</p>
+                <ul class="suggestedTags">
 
-            <ul id="tagsList">
-                <span class="listHeader">Tags</span>
+                </ul>
             </ul>
 
         </div>

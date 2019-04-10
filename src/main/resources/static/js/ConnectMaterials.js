@@ -1,30 +1,24 @@
-const recordsFile = "/api/connectMaterials/Cs1Example";
+const materialsFile = "/api/connectMaterials/Cs1Example";
 const conceptsFile = "/api/conceptList/Cs1Example";
 
-const records = readJson(recordsFile);
+const materials = readJson(materialsFile);
 const concepts = readJson(conceptsFile);
 
-const recordsList = document.getElementById("recordsList");
-const tagsList = document.getElementById("tagsList");
-var listItem;
 var tagItem;
-var content
-var tags;
-var color = '%c';
+var content;
+var tags = Object.keys(materials[0].tagsMap);
 
-console.log(color.concat(JSON.stringify(concepts)), 'color: blue; font-weight: bold;');
+$('.learningMaterialID').text(materials[0].id);
+$('.learningMaterialContent').text(materials[0].content);
 
-for (var i = 0; i < records.length; i++) {
-    listItem = document.createElement("li");
+for (var i = 0; i < tags.length; i++){
     tagItem = document.createElement("li");
-
-    content = document.createTextNode(records[i].content);
-    tags = document.createTextNode(Object.keys(records[i].tagsMap));
-
-    tagItem.appendChild(tags);
-    listItem.appendChild(content);
-
-    tagsList.appendChild(tagItem);
-    recordsList.appendChild(listItem);
+    tagItem.appendChild(document.createTextNode(tags[i]));
+    $('ul.suggestedTags').append(tagItem);
 }
+
+console.log(tags.length);
+
+
+
 
