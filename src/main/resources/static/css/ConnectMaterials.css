@@ -1,0 +1,44 @@
+h1 {
+    text-align: center;
+}
+
+li {
+    margin: 5px 0px;
+}
+
+#container {
+    display: grid;
+    width: 100vw;
+    grid-template-columns: 50% 20%;
+    margin-top: 30px;
+    margin-left: 15%;
+    margin-right: 15%;
+}
+
+#nav {
+    width: 100%;
+    text-align: center;
+    margin-bottom: 10px;
+}
+
+nav > p, nav > button {
+    display: inline-flex;
+}
+
+button {
+    border: none;
+    font-size: 16px;
+}
+
+table {
+    border-collapse: separate;
+    border-spacing: 15px;
+}
+
+.learningMaterialID, .suggestedTags {
+    font-size: 18px;
+}
+
+.suggestedTags {
+    font-weight: bold;
+}

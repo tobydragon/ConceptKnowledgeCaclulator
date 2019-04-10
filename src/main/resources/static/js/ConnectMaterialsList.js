@@ -7,6 +7,7 @@ index = index.concat(numOfLearningMaterials);
 
 nav.text(index);
 
+
 for (var i = 0; i < numOfLearningMaterials; i++) {
     listItem = document.createElement("li");
     content = document.createTextNode(learningMaterials[i].id);
