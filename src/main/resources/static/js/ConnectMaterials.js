@@ -1,40 +1,36 @@
-const materialsFile = "/api/connectMaterials/Cs1Example";
-const conceptsFile = "/api/conceptList/Cs1Example";
-
-const materials = readJson(materialsFile);
-const concepts = readJson(conceptsFile);
-
-var tagItem;
-var content;
-
-var row;
-var conceptName;
-var box;
+var courseId, //defined in html
+    materials = readJson("/api/connectMaterials/" + courseId),
+    concepts = readJson("/api/conceptList/" + courseId);
 
 var index = 0;
-var navText;
 
 $(document).ready(function() {
-    updateIndexAndMaterials();
+
+    updateConceptsString(concepts);
+
+
 });
 
-
-
-for (var i = 0; i < concepts.length; i++){
-    row = document.createElement("tr");
-
-    conceptName = document.createElement("td");
-    box = document.createElement("td");
-
-    conceptName.appendChild(document.createTextNode(concepts[i]));
-    box.insertAdjacentHTML('afterbegin',"<input type='checkbox'>");
-
-    row.appendChild(conceptName);
-    row.appendChild(box);
-    $('table').append(row);
+function nextMaterial(increment){
+    updateIndex(increment, index, materials.length);
 }
 
-function updateIndexAndMaterials(increment){
+function updateConceptsString(concepts){
+
+    var typeString = "";
+
+    for (var i = 0; i < concepts.length; i++){
+        typeString += "<tr><td>";
+        typeString += concepts[i];
+        typeString += "</td><td><input type='checkbox'></td></tr>";
+    }
+
+    return typeString;
+
+}
+
+function updateIndex(increment, index, numberOfMaterials){
+
     if (increment){
         index++;
     } else {
@@ -42,38 +38,46 @@ function updateIndexAndMaterials(increment){
     }
 
     if (index < 0){
-        index = 0;
+        return 0;
     }
 
-    if (index >= materials.length){
-        index = materials.length - 1;
+    if (index >= numberOfMaterials){
+        return numberOfMaterials;
     }
 
-    updateMaterials();
-    updateNav();
+    return index;
 
 }
 
-function updateMaterials(){
+function updateMaterialsString(id, content, tags){
 
-    $('.learningMaterialID').text(materials[index].id);
-    $('.learningMaterialContent').text(materials[index].content);
-    $('ul.suggestedTags').empty();
+    var typeString = "<p class=\"learningMaterialID\">";
+    typeString += id;
+    typeString += "</p><p class=\"learningMaterialContent\">";
+    typeString += content;
+    typeString += "</p><p class=\"suggestedTags\">Suggested Tags:</p><ul class=\"suggestedTags\">";
 
-    var tags = Object.keys(materials[index].tagsMap);
+    tags = Object.keys(tags);
 
     for (var i = 0; i < tags.length; i++){
-        tagItem = document.createElement("li");
-        tagItem.appendChild(document.createTextNode(tags[i]));
-        $('ul.suggestedTags').append(tagItem);
+        typeString += "<li>";
+        typeString += tags[i];
+        typeString += "</li>";
     }
+
+    return typeString + "</ul>";
 }
 
-function updateNav(){
-    navText = (index+1).toString();
+
+function updateNavString(index, numberOfMaterials){
+    var navText = (index).toString();
     navText = navText.concat("/");
-    navText = navText.concat(materials.length);
-    $('#index').text(navText);
+    navText = navText.concat(numberOfMaterials);
+
+    //$('#index').text(navText);
+    return navText;
+
+
 }
 
 

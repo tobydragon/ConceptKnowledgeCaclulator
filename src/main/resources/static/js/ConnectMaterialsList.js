@@ -1,7 +1,7 @@
 var numOfLearningMaterials = learningMaterials.length;
 
-const recordsList = document.getElementById("recordsList");
-const nav = $("#index");
+var recordsList = document.getElementById("recordsList");
+var nav = $("#index");
 var index = "0/";
 var listItem;
 var anchor;
