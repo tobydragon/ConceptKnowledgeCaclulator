@@ -6,13 +6,17 @@ var index = 0;
 
 $(document).ready(function() {
 
-    updateConceptsString(concepts);
-
+    document.getElementById("conceptList").innerHTML = updateConceptsString(concepts);
+    document.getElementById("learningMaterialInfo").innerHTML = updateMaterialsString(materials[index].id, materials[index].content, materials[index].tagsMap);
+    $('#index').text(updateNavString(index, materials.length));
 
 });
 
 function nextMaterial(increment){
-    updateIndex(increment, index, materials.length);
+    index = updateIndex(increment, index, materials.length);
+    document.getElementById("learningMaterialInfo").innerHTML = updateMaterialsString(materials[index].id, materials[index].content, materials[index].tagsMap);
+    $('#index').text(updateNavString(index, materials.length));
+    console.log(index);
 }
 
 function updateConceptsString(concepts){
@@ -42,7 +46,7 @@ function updateIndex(increment, index, numberOfMaterials){
     }
 
     if (index >= numberOfMaterials){
-        return numberOfMaterials;
+        return numberOfMaterials - 1;
     }
 
     return index;
@@ -70,14 +74,10 @@ function updateMaterialsString(id, content, tags){
 
 
 function updateNavString(index, numberOfMaterials){
-    var navText = (index).toString();
+    var navText = (index + 1).toString();
     navText = navText.concat("/");
     navText = navText.concat(numberOfMaterials);
-
-    //$('#index').text(navText);
     return navText;
-
-
 }
 
 

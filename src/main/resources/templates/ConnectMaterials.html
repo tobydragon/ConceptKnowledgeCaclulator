@@ -14,9 +14,9 @@
         <div id="nav">
             <h1>Learning Materials</h1>
             <nav>
-                <button id="prev" onclick="updateIndexAndMaterials()"> < </button>
+                <button id="prev" onclick="nextMaterial(false)"> < </button>
                 <p id="index"></p>
-                <button id="next" onclick="updateIndexAndMaterials('increment')"> > </button>
+                <button id="next" onclick="nextMaterial(true)"> > </button>
             </nav>
 
             <button>Save Changes</button>
@@ -26,15 +26,10 @@
         <div id="container">
 
             <ul id="learningMaterialInfo">
-                <p class="learningMaterialID"></p>
-                <p class="learningMaterialContent"></p>
-                <p class="suggestedTags">Suggested Tags:</p>
-                <ul class="suggestedTags">
 
-                </ul>
             </ul>
 
-            <table>
+            <table id="conceptList">
 
             </table>
 
