@@ -1,0 +1,110 @@
+[{
+  "types" : [ "ASSESSMENT" ],
+  "id" : "[ASSESSMENT] 1 [220]",
+  "content" : "Which of the following points is/are true about Linked List data structure when it is compared with array",
+  "url" : "",
+  "tagsMap" : {
+    "220" : 1,
+    "Test1" : 1,
+    "Test2" : 1,
+    "Test3" : 1,
+    "Test4" : 1,
+    "Test5" : 1,
+    "Test6" : 1,
+    "Test7" : 1,
+    "Test8" : 1,
+    "Test9" : 1
+  }
+},{
+  "types" : [ "ASSESSMENT" ],
+  "id" : "[ASSESSMENT] 2 [220]",
+  "content" : "Which of the following sorting algorithms can be used to sort a random linked list with minimum time complexity?",
+  "url" : "",
+  "tagsMap" : {
+    "220" : 1,
+    "Test1" : 1,
+    "Test2" : 1,
+    "Test3" : 1,
+    "Test4" : 1,
+    "Test5" : 1,
+    "Test6" : 1,
+    "Test7" : 1,
+    "Test8" : 1,
+    "Test9" : 1
+  }
+},{
+  "types" : [ "ASSESSMENT" ],
+  "id" : "[ASSESSMENT] 3 [220]",
+  "content" : "Is it possible to create a doubly linked list using only one pointer with every node?",
+  "url" : "",
+  "tagsMap" : {
+    "220" : 1,
+    "Test0" : 1,
+    "Test1" : 1,
+    "Test2" : 1,
+    "Test3" : 1,
+    "Test4" : 1,
+    "Test5" : 1,
+    "Test6" : 1,
+    "Test7" : 1,
+    "Test8" : 1,
+    "Test9" : 1
+  }
+},{
+  "types" : [ "INFORMATION" ],
+  "id" : "[INFORMATION] 4 [220]",
+  "content" : "You are given pointers to first and last nodes of a singly linked list, which of the following operations are dependent on the length of the linked list?",
+  "url" : "geeksforgeeks.org",
+  "tagsMap" : {
+    "220" : 1,
+    "Test0" : 1,
+    "Test1" : 1,
+    "Test2" : 1,
+    "Test3" : 1,
+    "Test4" : 1,
+    "Test5" : 1,
+    "Test6" : 1,
+    "Test7" : 1,
+    "Test8" : 1,
+    "Test9" : 1,
+    "Test10": 1,
+    "Test11": 1,
+    "Test12": 1
+  }
+},{
+  "types" : [ "INFORMATION" ],
+  "id" : "[INFORMATION] 5 [220]",
+  "content" : "Let A be a square matrix of size n x n. Consider the following program. What is the expected output?",
+  "url" : "",
+  "tagsMap" : {
+    "220" : 1,
+    "Test0" : 1,
+    "Test2" : 1,
+    "Test3" : 1,
+    "Test5" : 1,
+    "Test6" : 1,
+    "Test7" : 1,
+    "Test8" : 1,
+    "Test9" : 1,
+    "Test10": 1,
+    "Test11": 1,
+    "Test12": 1
+  }
+},{
+  "types" : [ "INFORMATION" ],
+  "id" : "[INFORMATION] 6 [220]",
+  "content" : "What is the expected number of inversions in any permutation on n elements?",
+  "url" : "",
+  "tagsMap" : {
+    "220" : 1,
+    "Test0" : 1,
+    "Test2" : 1,
+    "Test5" : 1,
+    "Test6" : 1,
+    "Test7" : 1,
+    "Test9" : 1,
+    "Test10": 1,
+    "Test11": 1,
+    "Test12": 1
+  }
+}]

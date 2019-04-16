@@ -1,6 +1,6 @@
-var courseId, //defined in html
+var courseId, //defined in html, concepts should not be hardcoded
     materials = readJson("/api/connectMaterials/" + courseId),
-    concepts = readJson("/api/conceptList/" + courseId);
+    concepts = readJson("/api/conceptList/Cs1Example");
 
 var index = 0;
 
@@ -16,7 +16,6 @@ function nextMaterial(increment){
     index = updateIndex(increment, index, materials.length);
     document.getElementById("learningMaterialInfo").innerHTML = updateMaterialsString(materials[index].id, materials[index].content, materials[index].tagsMap);
     $('#index').text(updateNavString(index, materials.length));
-    console.log(index);
 }
 
 function updateConceptsString(concepts){
