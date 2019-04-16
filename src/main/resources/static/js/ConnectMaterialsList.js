@@ -1,19 +1,24 @@
-var numOfLearningMaterials = learningMaterials.length;
+$(document).ready(function(){
+    document.getElementById("recordsList").innerHTML = createListOfLearningRecordsString(learningMaterials);
+    $("#index").text(loadNavString(learningMaterials.length));
+});
 
-var recordsList = document.getElementById("recordsList");
-var nav = $("#index");
-var index = "0/";
-var listItem;
-var anchor;
 
-index = index.concat(numOfLearningMaterials);
+function loadNavString(numOfLearningMaterials){
+    var index = "0/";
+    return index.concat(numOfLearningMaterials);
+}
 
-nav.text(index);
+function createListOfLearningRecordsString(learningRecords) {
 
-for (var i = 0; i < numOfLearningMaterials; i++) {
-    listItem = document.createElement("li");
-    anchor = document.createElement("a");
-    anchor.appendChild(document.createTextNode(learningMaterials[i].id));
-    listItem.appendChild(anchor);
-    recordsList.appendChild(listItem);
+    var typeString = "";
+
+    for (var i = 0; i < learningRecords.length; i++) {
+        typeString += "<li><a>";
+        typeString += learningRecords[i].id;
+        typeString += "</a></li>";
+
+    }
+
+    return typeString;
 }
