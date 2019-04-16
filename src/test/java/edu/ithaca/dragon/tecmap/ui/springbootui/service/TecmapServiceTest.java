@@ -192,7 +192,7 @@ public class TecmapServiceTest {
 
     @Test
     public void retrieveLearningMaterialRecordsTest() {
-        String id = "none";
+        String id = "Cs1Example";
         List<LearningMaterialRecord> records = null;
 
         try {
