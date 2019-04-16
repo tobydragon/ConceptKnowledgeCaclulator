@@ -94,4 +94,13 @@ public class ApiController {
             return new ArrayList<>();
         }
     }
+
+    @GetMapping("/connectMaterialsList/{courseId}")
+    public List<LearningMaterialRecord> getLearningMaterialRecordsList(@PathVariable("courseId") String courseId){
+        try {
+            return tecmapService.retrieveLearningMaterialRecords(courseId);
+        } catch (IOException e) {
+            return new ArrayList<>();
+        }
+    }
 }

@@ -7,10 +7,6 @@
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
         <script th:src="@{/js/Comm.js}"></script>
-        <script>
-            //TODO: This should not be hardcoded
-            learningMaterials = readJson("/api/connectMaterials/Cs1Example")
-        </script>
         <style>
 
             #nav {
@@ -71,8 +67,11 @@
     <ul id="recordsList">
     </ul>
 
-
+    <script th:inline="javascript">
+        courseId = [[${courseId}]];
+    </script>
 
     <script th:src="@{/js/ConnectMaterialsList.js}"></script>
+
     </body>
 </html>

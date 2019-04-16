@@ -1,6 +1,9 @@
+var materials = readJson("/api/connectMaterials/" + courseId);
+
 $(document).ready(function(){
-    document.getElementById("recordsList").innerHTML = createListOfLearningRecordsString(learningMaterials);
-    $("#index").text(loadNavString(learningMaterials.length));
+
+    document.getElementById("recordsList").innerHTML = createListOfLearningRecordsString(materials);
+    $("#index").text(loadNavString(materials.length));
 });
 
 
