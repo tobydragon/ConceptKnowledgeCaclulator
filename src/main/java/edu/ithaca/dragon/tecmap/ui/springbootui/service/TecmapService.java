@@ -77,7 +77,6 @@ public class TecmapService {
 
     public List<LearningMaterialRecord> retrieveLearningMaterialRecords(String id) throws IOException {
         String path = "src/test/resources/datastore/" + id + "/" + id + "LearningMaterial.json";
-        System.out.println(path);
         return jsonToLearningMaterialRecords(path);
     }
 

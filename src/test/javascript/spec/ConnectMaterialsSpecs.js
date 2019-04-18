@@ -28,6 +28,15 @@ describe("ConnectMaterialsSpecs", function() {
         var tags = {"Quick":1};
         expect(updateMaterialsString(id, content, tags)).toEqual("<p class=\"learningMaterialID\">123</p><p class=\"learningMaterialContent\">The quick brown fox</p><p class=\"suggestedTags\">Suggested Tags:</p><ul class=\"suggestedTags\"><li>Quick</li></ul>"
         );
-    })
+    });
+
+    it("updateMaterialsWithURLString", function () {
+        var id = 123;
+        var content = "The quick brown fox";
+        var tags = {"Quick":1};
+        var url = "google.com";
+        expect(updateMaterialsWithURLString(id, content, tags, url)).toEqual("<p class=\"learningMaterialID\">123</p><a href=\"google.com\" target=\"_blank\" class=\"learningMaterialContent\">The quick brown fox</a><p class=\"suggestedTags\">Suggested Tags:</p><ul class=\"suggestedTags\"><li>Quick</li></ul>"
+        );
+    });
 
 });

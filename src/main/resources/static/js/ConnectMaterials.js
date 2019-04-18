@@ -7,14 +7,26 @@ var index = 0;
 $(document).ready(function() {
 
     document.getElementById("conceptList").innerHTML = updateConceptsString(concepts);
-    document.getElementById("learningMaterialInfo").innerHTML = updateMaterialsString(materials[index].id, materials[index].content, materials[index].tagsMap);
+
+    if (materials[index].url !== ""){
+        document.getElementById("learningMaterialInfo").innerHTML = updateMaterialsWithURLString(materials[index].id, materials[index].content, materials[index].tagsMap, materials[index].url);
+    } else {
+        document.getElementById("learningMaterialInfo").innerHTML = updateMaterialsString(materials[index].id, materials[index].content, materials[index].tagsMap);
+    }
+
     $('#index').text(updateNavString(index + 1, materials.length));
 
 });
 
 function nextMaterial(increment){
     index = updateIndex(increment, index, materials.length);
-    document.getElementById("learningMaterialInfo").innerHTML = updateMaterialsString(materials[index].id, materials[index].content, materials[index].tagsMap);
+
+    if (materials[index].url !== ""){
+        document.getElementById("learningMaterialInfo").innerHTML = updateMaterialsWithURLString(materials[index].id, materials[index].content, materials[index].tagsMap, materials[index].url);
+    } else {
+        document.getElementById("learningMaterialInfo").innerHTML = updateMaterialsString(materials[index].id, materials[index].content, materials[index].tagsMap);
+    }
+
     $('#index').text(updateNavString(index + 1, materials.length));
 }
 
@@ -68,6 +80,27 @@ function updateMaterialsString(id, content, tags){
         typeString += "</li>";
     }
 
+    return typeString + "</ul>";
+}
+
+function updateMaterialsWithURLString(id, content, tags, url){
+
+    var typeString = "<p class=\"learningMaterialID\">";
+    typeString += id;
+    typeString += "</p><a href=\"";
+    typeString += url;
+    typeString += "\" target=\"_blank\" class=\"learningMaterialContent\">";
+    typeString += content;
+    typeString += "</a><p class=\"suggestedTags\">Suggested Tags:</p><ul class=\"suggestedTags\">";
+
+    tags = Object.keys(tags);
+
+    for (var i = 0; i < tags.length; i++){
+        typeString += "<li>";
+        typeString += tags[i];
+        typeString += "</li>";
+    }
+    console.log(typeString);
     return typeString + "</ul>";
 }
 
