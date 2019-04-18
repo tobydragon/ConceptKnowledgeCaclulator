@@ -1,7 +1,7 @@
 var materials = readJson("/api/connectMaterials/" + courseId);
 
 $(document).ready(function(){
-
+    document.getElementById("recordsList").insertAdjacentHTML("beforebegin", "<h3>CourseID: " + courseId + "</h3>")
     document.getElementById("recordsList").innerHTML = createListOfLearningRecordsString(materials);
     $("#index").text(loadNavString(materials.length));
 });

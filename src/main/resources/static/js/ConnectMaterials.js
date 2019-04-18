@@ -1,6 +1,6 @@
 var courseId, //defined in html, concepts should not be hardcoded
     materials = readJson("/api/connectMaterials/" + courseId),
-    concepts = readJson("/api/conceptList/Cs1Example");
+    concepts = readJson("/api/conceptList/" + courseId);
 
 var index = 0;
 
