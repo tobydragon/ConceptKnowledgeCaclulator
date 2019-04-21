@@ -8,8 +8,8 @@ describe("ConnectMaterialsListSpecs", function() {
         expect(loadNavString(10)).toEqual("0/10");
     });
 
-    it("updateMaterialsString", function () {
+    it("createListOfLearningRecordsString", function () {
         expect(createListOfLearningRecordsString(materials)).toContain("[ASSESSMENT] 3 [Cs1]");
-    })
+    });
 
 });

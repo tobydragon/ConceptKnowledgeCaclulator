@@ -42,8 +42,8 @@ public class WebController {
         return "connectMaterialsList";
     }
 
-    @GetMapping("/connectMaterials/{courseId}")
-    public String viewLearningMaterials(@PathVariable("courseId") String courseId){
+    @GetMapping("/connectMaterials/{courseId}/{index}")
+    public String viewLearningMaterials(@PathVariable("courseId") String courseId, @PathVariable("index") int index){
         return "ConnectMaterials";
     }
 

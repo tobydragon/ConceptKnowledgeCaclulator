@@ -6,6 +6,10 @@ li {
     margin: 5px 0px;
 }
 
+button {
+    background-color: transparent;
+}
+
 #container {
     display: grid;
     width: 100%;
@@ -33,6 +37,10 @@ div > button:hover {
     text-decoration-line: underline;
 }
 
+nav > button:active {
+    color: #808080;
+}
+
 button {
     border: none;
     font-size: 16px;
@@ -53,7 +61,8 @@ table {
 
 ul.suggestedTags {
     height: 50vh;
-    overflow: scroll;
+    overflow-y: scroll;
+    overflow-x: hidden;
 }
 
 #conceptList {
@@ -62,5 +71,6 @@ ul.suggestedTags {
 
 #conceptListContainer {
     height: 50vh;
-    overflow: scroll;
+    overflow-y: scroll;
+    overflow-x: hidden;
 }

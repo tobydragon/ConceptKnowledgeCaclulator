@@ -17,10 +17,11 @@ function createListOfLearningRecordsString(learningRecords) {
     var typeString = "";
 
     for (var i = 0; i < learningRecords.length; i++) {
-        typeString += "<li><a>";
+        typeString += "<li><a href=\"/view/connectMaterials/";
+        typeString += courseId;
+        typeString += "/" + i + "\">";
         typeString += learningRecords[i].id;
         typeString += "</a></li>";
-
     }
 
     return typeString;

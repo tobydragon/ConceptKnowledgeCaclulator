@@ -2,7 +2,8 @@ var courseId, //defined in html, concepts should not be hardcoded
     materials = readJson("/api/connectMaterials/" + courseId),
     concepts = readJson("/api/conceptList/" + courseId);
 
-var index = 0;
+//index gets set to path variable indicating which learning material to load
+var index = materialIndex;
 
 $(document).ready(function() {
 
@@ -19,7 +20,7 @@ $(document).ready(function() {
 });
 
 function nextMaterial(increment){
-    index = updateIndex(increment, index, materials.length);
+    index = updateIndex(increment, index, materials.length - 1);
 
     if (materials[index].url !== ""){
         document.getElementById("learningMaterialInfo").innerHTML = updateMaterialsWithURLString(materials[index].id, materials[index].content, materials[index].tagsMap, materials[index].url);
@@ -100,7 +101,6 @@ function updateMaterialsWithURLString(id, content, tags, url){
         typeString += tags[i];
         typeString += "</li>";
     }
-    console.log(typeString);
     return typeString + "</ul>";
 }
 
