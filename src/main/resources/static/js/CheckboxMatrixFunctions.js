@@ -1,4 +1,7 @@
 'use strict';
+function createResourceCheckedForConcept(conceptId, resourceRecord) {
+    return resourceRecord.conceptIds.includes(conceptId);
+}
 
 function createResourceCheckedListForConcept(conceptId, resourceRecords) {
     var checks = [],

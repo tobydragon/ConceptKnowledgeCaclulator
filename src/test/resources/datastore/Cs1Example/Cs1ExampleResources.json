@@ -13,7 +13,7 @@
 }, {
   "learningResourceId" : "Q3",
   "resourceTypes" : [ "ASSESSMENT", "PRACTICE" ],
-  "conceptIds" : [ "For Loops"],
+  "conceptIds" : [ "For Loops", "Conditional"],
   "dataImportance" : 0.0,
   "maxPossibleKnowledgeEstimate" : 10.0
 }, {

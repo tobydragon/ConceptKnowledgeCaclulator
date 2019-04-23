@@ -1,13 +1,15 @@
 var courseId, //defined in html, concepts should not be hardcoded
     materials = readJson("/api/connectMaterials/" + courseId),
-    concepts = readJson("/api/conceptList/" + courseId);
+    concepts = readJson("/api/conceptList/" + courseId),
+    resourceRecords = readJson("/api/currentResourceLinks/" + courseId);
+
 
 //index gets set to path variable indicating which learning material to load
 var index = materialIndex;
 
 $(document).ready(function() {
 
-    document.getElementById("conceptList").innerHTML = updateConceptsString(concepts);
+    document.getElementById("conceptList").innerHTML = updateConceptsString(concepts, resourceRecords[0]);
 
     if (materials[index].url !== ""){
         document.getElementById("learningMaterialInfo").innerHTML = updateMaterialsWithURLString(materials[index].id, materials[index].content, materials[index].tagsMap, materials[index].url);
@@ -31,15 +33,21 @@ function nextMaterial(increment){
     $('#index').text(updateNavString(index + 1, materials.length));
 }
 
-function updateConceptsString(concepts){
+function updateConceptsString(concepts, resourceRecord){
 
     var typeString = "";
+    var resourcesChecked = [];
+
+    console.log(resourceRecord);
 
     for (var i = 0; i < concepts.length; i++){
+        console.log(concepts[i]);
+        resourcesChecked = createResourceCheckedListForConcept(concepts[i], resourceRecord);
         typeString += "<tr><td>";
         typeString += concepts[i];
         typeString += "</td><td><input type='checkbox'></td></tr>";
     }
+
 
     return typeString;
 

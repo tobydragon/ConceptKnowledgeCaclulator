@@ -7,6 +7,10 @@ describe("ConceptMatrixFunctionsSpecs", function() {
         expect(resourceRecords.length).toEqual(10);
         expect(resourceRecords[0].learningResourceId).toEqual("Q1");
     });
+
+    it("createResourceCheckedForConcept", function() {
+        expect(createResourceCheckedForConcept("If Statements", resourceRecords[0])).toEqual(true);
+    });
     
     it("createResourceCheckedListForConcept", function() {  
       var resourceIds = createResourceCheckedListForConcept("For Loops", resourceRecords);
