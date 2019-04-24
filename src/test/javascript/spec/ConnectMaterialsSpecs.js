@@ -3,6 +3,7 @@
 describe("ConnectMaterialsSpecs", function() {
 
     var materials = readJson("../resources/datastore/Cs1Example/Cs1ExampleLearningMaterial.json");
+    var resourceRecords = readJson("../resources/datastore/Cs1Example/Cs1ExampleResources.json");
 
     it("updateIndex", function () {
         expect(updateIndex(true, 0, 6)).toEqual(1);
@@ -15,10 +16,13 @@ describe("ConnectMaterialsSpecs", function() {
         expect(updateNavString(3, 6)).toEqual("3/6");
     });
 
+    it("updateResourceRecordFromMaterial", function () {
+       expect(updateResourceRecordFromMaterial(resourceRecords, "Q5")).toEqual(resourceRecords[4]);
+    });
+
     it("updateConceptsString", function () {
         var conceptList = ["While Loops","For Loops"];
-        expect(updateConceptsString(conceptList)).toEqual(
-            "<tr><td>While Loops</td><td><input type='checkbox'></td></tr><tr><td>For Loops</td><td><input type='checkbox'></td></tr>"
+        expect(updateConceptsString(conceptList, resourceRecords[1])).toEqual("<tr><td>While Loops</td><td><input type='checkbox' checked='true'></td></tr><tr><td>For Loops</td><td><input type='checkbox'></td></tr>"
         );
     });
 

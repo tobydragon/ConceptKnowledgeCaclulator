@@ -9,7 +9,7 @@ describe("ConnectMaterialsListSpecs", function() {
     });
 
     it("createListOfLearningRecordsString", function () {
-        expect(createListOfLearningRecordsString(materials)).toContain("[ASSESSMENT] 3 [Cs1]");
+        expect(createListOfLearningRecordsString(materials)).toContain("HW2");
     });
 
 });

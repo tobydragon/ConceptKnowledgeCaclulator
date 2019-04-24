@@ -493,8 +493,8 @@ public class Cs1ExampleJsonStrings {
             "} ]";
 
     public static final String learningMaterials = "[{\n" +
-            "  \"types\" : [ \"ASSESSMENT\" ],\n" +
-            "  \"id\" : \"[ASSESSMENT] 1 [Cs1]\",\n" +
+            "  \"types\" : [ \"ASSESSMENT\", \"PRACTICE\" ],\n" +
+            "  \"id\" : \"Q1\",\n" +
             "  \"content\" : \"What's are advantages of using while loops instead of for loops?\",\n" +
             "  \"url\" : \"\",\n" +
             "  \"tagsMap\" : {\n" +
@@ -503,8 +503,8 @@ public class Cs1ExampleJsonStrings {
             "    \"advantages\" : 1\n" +
             "  }\n" +
             "},{\n" +
-            "  \"types\" : [ \"ASSESSMENT\" ],\n" +
-            "  \"id\" : \"[ASSESSMENT] 2 [Cs1]\",\n" +
+            "  \"types\" : [ \"ASSESSMENT\", \"PRACTICE\" ],\n" +
+            "  \"id\" : \"Q2\",\n" +
             "  \"content\" : \"How many choices are possible when executing an if-statement?\",\n" +
             "  \"url\" : \"\",\n" +
             "  \"tagsMap\" : {\n" +
@@ -513,8 +513,8 @@ public class Cs1ExampleJsonStrings {
             "    \"executing\" : 1\n" +
             "  }\n" +
             "},{\n" +
-            "  \"types\" : [ \"ASSESSMENT\" ],\n" +
-            "  \"id\" : \"[ASSESSMENT] 3 [Cs1]\",\n" +
+            "  \"types\" : [ \"ASSESSMENT\", \"PRACTICE\" ],\n" +
+            "  \"id\" : \"Q3\",\n" +
             "  \"content\" : \"When does an 'else' conditional get executed in a function?\",\n" +
             "  \"url\" : \"\",\n" +
             "  \"tagsMap\" : {\n" +
@@ -523,8 +523,8 @@ public class Cs1ExampleJsonStrings {
             "    \"does\" : 1\n" +
             "  }\n" +
             "},{\n" +
-            "  \"types\" : [ \"INFORMATION\" ],\n" +
-            "  \"id\" : \"[INFORMATION] 4 [Cs1]\",\n" +
+            "  \"types\" : [ \"ASSESSMENT\", \"PRACTICE\" ],\n" +
+            "  \"id\" : \"HW1\",\n" +
             "  \"content\" : \"https://www.learncpp.com/cpp-tutorial/52-if-statements/\",\n" +
             "  \"url\" : \"https://www.learncpp.com/cpp-tutorial/52-if-statements/\",\n" +
             "  \"tagsMap\" : {\n" +
@@ -546,16 +546,16 @@ public class Cs1ExampleJsonStrings {
             "    \"chaining\" : 1\n" +
             "  }\n" +
             "},{\n" +
-            "  \"types\" : [ \"INFORMATION\" ],\n" +
-            "  \"id\" : \"[INFORMATION] 5 [Cs1]\",\n" +
+            "  \"types\" : [ \"ASSESSMENT\", \"PRACTICE\" ],\n" +
+            "  \"id\" : \"HW2\",\n" +
             "  \"content\" : \"https://www.programiz.com/c-programming/c-if-else-statement\",\n" +
             "  \"url\" : \"https://www.programiz.com/c-programming/c-if-else-statement\",\n" +
             "  \"tagsMap\" : {\n" +
             "    \"Cs1\" : 1\n" +
             "  }\n" +
             "},{\n" +
-            "  \"types\" : [ \"INFORMATION\" ],\n" +
-            "  \"id\" : \"[INFORMATION] 6 [Cs1]\",\n" +
+            "  \"types\" : [ \"ASSESSMENT\", \"PRACTICE\" ],\n" +
+            "  \"id\" : \"HW3\",\n" +
             "  \"content\" : \"https://programming.guide/go/for-loop.html\",\n" +
             "  \"url\" : \"https://programming.guide/go/for-loop.html\",\n" +
             "  \"tagsMap\" : {\n" +

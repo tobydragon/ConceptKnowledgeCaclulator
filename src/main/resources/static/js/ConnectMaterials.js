@@ -9,43 +9,49 @@ var index = materialIndex;
 
 $(document).ready(function() {
 
-    document.getElementById("conceptList").innerHTML = updateConceptsString(concepts, resourceRecords[0]);
-
-    if (materials[index].url !== ""){
-        document.getElementById("learningMaterialInfo").innerHTML = updateMaterialsWithURLString(materials[index].id, materials[index].content, materials[index].tagsMap, materials[index].url);
-    } else {
-        document.getElementById("learningMaterialInfo").innerHTML = updateMaterialsString(materials[index].id, materials[index].content, materials[index].tagsMap);
-    }
-
-    $('#index').text(updateNavString(index + 1, materials.length));
+    updateMaterial(index);
 
 });
 
-function nextMaterial(increment){
-    index = updateIndex(increment, index, materials.length - 1);
-
+function updateMaterial(index){
     if (materials[index].url !== ""){
         document.getElementById("learningMaterialInfo").innerHTML = updateMaterialsWithURLString(materials[index].id, materials[index].content, materials[index].tagsMap, materials[index].url);
     } else {
         document.getElementById("learningMaterialInfo").innerHTML = updateMaterialsString(materials[index].id, materials[index].content, materials[index].tagsMap);
     }
 
+    document.getElementById("conceptList").innerHTML = updateConceptsString(concepts, updateResourceRecordFromMaterial(resourceRecords, materials[index].id));
     $('#index').text(updateNavString(index + 1, materials.length));
+}
+
+
+function nextMaterial(increment){
+    index = updateIndex(increment, index, materials.length - 1);
+    updateMaterial(index);
+}
+
+function updateResourceRecordFromMaterial(records, materialID){
+
+    for (var i = 0; i < records.length; i++){
+        if (records[i].learningResourceId === materialID){
+            return records[i];
+        }
+    }
 }
 
 function updateConceptsString(concepts, resourceRecord){
 
     var typeString = "";
-    var resourcesChecked = [];
-
-    console.log(resourceRecord);
 
     for (var i = 0; i < concepts.length; i++){
-        console.log(concepts[i]);
-        resourcesChecked = createResourceCheckedListForConcept(concepts[i], resourceRecord);
         typeString += "<tr><td>";
         typeString += concepts[i];
-        typeString += "</td><td><input type='checkbox'></td></tr>";
+        if (createResourceCheckedForConcept(concepts[i], resourceRecord)){
+            typeString += "</td><td><input type='checkbox' checked='true'></td></tr>";
+        } else {
+            typeString += "</td><td><input type='checkbox'></td></tr>";
+        }
+
     }
 
 
