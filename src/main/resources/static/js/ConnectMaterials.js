@@ -1,7 +1,8 @@
 var courseId, //defined in html, concepts should not be hardcoded
     materials = readJson("/api/connectMaterials/" + courseId),
     concepts = readJson("/api/conceptList/" + courseId),
-    resourceRecords = readJson("/api/currentResourceLinks/" + courseId);
+    resourceRecords = readJson("/api/currentResourceLinks/" + courseId),
+    resourceRecord; //needs to be defined in the global scope of this file so that the html has access to it, otherwise it will live inside the scope of the function
 
 
 //index gets set to path variable indicating which learning material to load
@@ -14,13 +15,14 @@ $(document).ready(function() {
 });
 
 function updateMaterial(index){
+     resourceRecord = updateResourceRecordFromMaterial(resourceRecords, materials[index].id)
     if (materials[index].url !== ""){
         document.getElementById("learningMaterialInfo").innerHTML = updateMaterialsWithURLString(materials[index].id, materials[index].content, materials[index].tagsMap, materials[index].url);
     } else {
         document.getElementById("learningMaterialInfo").innerHTML = updateMaterialsString(materials[index].id, materials[index].content, materials[index].tagsMap);
     }
 
-    document.getElementById("conceptList").innerHTML = updateConceptsString(concepts, updateResourceRecordFromMaterial(resourceRecords, materials[index].id));
+    document.getElementById("conceptList").innerHTML = updateConceptsString(concepts, resourceRecord);
     $('#index').text(updateNavString(index + 1, materials.length));
 }
 
@@ -47,9 +49,11 @@ function updateConceptsString(concepts, resourceRecord){
         typeString += "<tr><td>";
         typeString += concepts[i];
         if (createResourceCheckedForConcept(concepts[i], resourceRecord)){
-            typeString += "</td><td><input type='checkbox' checked='true'></td></tr>";
+            typeString += "</td><td><input type='checkbox' checked='true' ";
+            typeString += "onclick='updateConceptIdForSingleRecord(resourceRecord, \"" + resourceRecord.learningResourceId + "\", \"" + concepts[i] + "\")\'></td></tr>";
         } else {
-            typeString += "</td><td><input type='checkbox'></td></tr>";
+            typeString += "</td><td><input type='checkbox' ";
+            typeString += "onclick='updateConceptIdForSingleRecord(resourceRecord, \"" + resourceRecord.learningResourceId + "\", \"" + concepts[i] + "\")\'></td></tr>";
         }
 
     }

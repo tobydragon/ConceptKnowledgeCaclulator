@@ -21,9 +21,9 @@ describe("ConnectMaterialsSpecs", function() {
     });
 
     it("updateConceptsString", function () {
-        var conceptList = ["While Loops","For Loops"];
-        expect(updateConceptsString(conceptList, resourceRecords[1])).toEqual("<tr><td>While Loops</td><td><input type='checkbox' checked='true'></td></tr><tr><td>For Loops</td><td><input type='checkbox'></td></tr>"
-        );
+        var conceptList = ["If Statements","For Loops"];
+        var resourceRecord = resourceRecords[0];
+        expect(updateConceptsString(conceptList, resourceRecord)).toEqual("<tr><td>If Statements</td><td><input type='checkbox' checked='true' onclick='updateConceptIdForSingleRecord(resourceRecord, \"Q1\", \"If Statements\")'></td></tr><tr><td>For Loops</td><td><input type='checkbox' onclick='updateConceptIdForSingleRecord(resourceRecord, \"Q1\", \"For Loops\")'></td></tr>");
     });
 
     it("updateMaterialsString", function () {

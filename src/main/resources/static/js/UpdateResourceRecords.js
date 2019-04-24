@@ -1,4 +1,11 @@
 'use strict';
+function updateConceptIdForSingleRecord(resourceRecord, resourceId, conceptId) {
+    if (resourceRecord.conceptIds.includes(conceptId)){
+        resourceRecord.conceptIds.pop(conceptId);
+    } else {
+        resourceRecord.conceptIds.push(conceptId);
+    }
+}
 
 function updateConceptId(resourceRecords, resourceId, conceptId) {
     var toChange,
