@@ -7,7 +7,7 @@
   }, {
     "id" : "Cs1Example",
     "graphFile" : "src/test/resources/datastore/Cs1Example/Cs1ExampleGraph.json",
-    "resourceFiles" : [ "src/test/resources/datastore/Cs1Example/Cs1ExampleResources.json" ],
+    "resourceFiles" : [ "src/main/resources/datastore/Cs1Example/Cs1ExampleResources.json" ],
     "assessmentFiles" : [ "src/test/resources/datastore/Cs1Example/Cs1ExampleAssessment1.csv", "src/test/resources/author/tecmapExamples/Cs1ExampleAssessment2.csv" ]
   }, {
     "id" : "comp105",

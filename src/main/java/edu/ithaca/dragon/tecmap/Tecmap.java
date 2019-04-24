@@ -127,6 +127,9 @@ public class Tecmap implements TecmapAPI {
         }
     }
 
+    /**
+     * Should be using the TecmapFileDataStore to create LearningMaterialRecords instead of using a hardcoded path
+     */
     @Override
     public List<LearningMaterialRecord> retrieveLearningMaterialRecords() {
         try {

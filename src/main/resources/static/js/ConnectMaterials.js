@@ -1,4 +1,4 @@
-var courseId, //defined in html, concepts should not be hardcoded
+var courseId,
     materials = readJson("/api/connectMaterials/" + courseId),
     concepts = readJson("/api/conceptList/" + courseId),
     resourceRecords = readJson("/api/currentResourceLinks/" + courseId),
@@ -128,6 +128,23 @@ function updateNavString(index, numberOfMaterials){
     navText = navText.concat("/");
     navText = navText.concat(numberOfMaterials);
     return navText;
+}
+
+function updateSaveButtonColor(isGreen){
+    if (isGreen) {
+        $("#save").addClass("saved");
+    } else {
+        $("#save").removeClass("saved");
+    }
+
+}
+
+function submit() {
+    submitToAPI("/api/connectResources/" + courseId, resourceRecords);
+}
+
+function goBackToList() {
+    document.location.replace("/view/connectMaterialsList/" + courseId);
 }
 
 

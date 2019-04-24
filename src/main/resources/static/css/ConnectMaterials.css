@@ -33,7 +33,7 @@ div > button {
     color: #FF0707;
 }
 
-div > button:hover {
+div > button:hover, #back:hover {
     text-decoration-line: underline;
 }
 
@@ -73,4 +73,13 @@ ul.suggestedTags {
     height: 50vh;
     overflow-y: scroll;
     overflow-x: hidden;
+}
+
+.saved {
+    color: #0C8D21;
+}
+
+#back {
+    position: absolute;
+    margin-left: 15%;
 }
