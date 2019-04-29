@@ -20,14 +20,18 @@ function createListOfLearningRecordsString(materials, resourceRecords) {
     for (var i = 0; i < materials.length; i++) {
         if (isMaterialLinked(materials[i].id, resourceRecords)) {
             typeString += "<li><a class=\"linked\" href=\"/view/connectMaterials/";
+            typeString += courseId;
+            typeString += "/" + i + "\">";
+            typeString += materials[i].id;
+            typeString += " - Linked</a></li>";
         } else {
             typeString += "<li><a href=\"/view/connectMaterials/";
+            typeString += courseId;
+            typeString += "/" + i + "\">";
+            typeString += materials[i].id;
+            typeString += "</a></li>";
         }
 
-        typeString += courseId;
-        typeString += "/" + i + "\">";
-        typeString += materials[i].id;
-        typeString += " - Linked</a></li>";
     }
 
     return typeString;
