@@ -2,14 +2,17 @@ var materials = readJson("/api/connectMaterials/" + courseId);
 var resourceRecords = readJson("/api/currentResourceLinks/" + courseId);
 
 $(document).ready(function(){
+    createLearningRecordsFromMaterials(materials);
     document.getElementById("recordsList").insertAdjacentHTML("beforebegin", "<h3>CourseID: " + courseId + "</h3>")
     document.getElementById("recordsList").innerHTML = createListOfLearningRecordsString(materials, resourceRecords);
     $("#index").text(loadNavString(materials.length));
 });
 
-function createLearingRecords(materials){
+function createLearningRecordsFromMaterials(materials){
     for (var i = 0; i < materials.length; i++) {
-
+        if (isMaterialLinkedWithoutConceptIDs(materials[i].id, resourceRecords)){
+            addResourceToRecords(resourceRecords,materials[i].id, 0);
+        }
     }
 }
 
@@ -22,7 +25,6 @@ function loadNavString(numOfLearningMaterials){
 function createListOfLearningRecordsString(materials, resourceRecords) {
 
     var typeString = "";
-    //TODO: Create a resource links before displaying the list. Links will have an empty list of concept ID's
 
     for (var i = 0; i < materials.length; i++) {
         if (isMaterialLinked(materials[i].id, resourceRecords)) {
