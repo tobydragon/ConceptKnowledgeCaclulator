@@ -7,6 +7,12 @@ $(document).ready(function(){
     $("#index").text(loadNavString(materials.length));
 });
 
+function createLearingRecords(materials){
+    for (var i = 0; i < materials.length; i++) {
+
+    }
+}
+
 
 function loadNavString(numOfLearningMaterials){
     var index = "0/";
@@ -16,6 +22,7 @@ function loadNavString(numOfLearningMaterials){
 function createListOfLearningRecordsString(materials, resourceRecords) {
 
     var typeString = "";
+    //TODO: Create a resource links before displaying the list. Links will have an empty list of concept ID's
 
     for (var i = 0; i < materials.length; i++) {
         if (isMaterialLinked(materials[i].id, resourceRecords)) {
@@ -38,11 +45,22 @@ function createListOfLearningRecordsString(materials, resourceRecords) {
 }
 
 function isMaterialLinked(materialID, records) {
+
     for (var i = 0; i < records.length; i++){
-        if (materialID === records[i].learningResourceId){
+        if (records[i].conceptIds === undefined || records[i].conceptIds.length == 0){
+            return false;
+        } else if (materialID === records[i].learningResourceId) {
             return true;
         }
     }
+    return false;
+}
 
+function isMaterialLinkedWithoutConceptIDs(materialID, records) {
+    for (var i = 0; i < records.length; i++){
+         if (materialID === records[i].learningResourceId && (records[i].conceptIds === undefined || records[i].conceptIds.length == 0)) {
+            return true;
+        }
+    }
     return false;
 }
