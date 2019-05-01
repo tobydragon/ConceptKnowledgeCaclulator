@@ -33,17 +33,19 @@ div > button {
     color: #0C8D21;
 }
 
-div > button:hover, #back:hover {
-    text-decoration-line: underline;
-}
-
 nav > button:active {
     color: #808080;
 }
 
 button {
-    border: none;
+    border: 1px solid rgba(0,0,0,0.2);
+    border-radius: 25px;
     font-size: 16px;
+    transition: 400ms;
+}
+
+button:hover {
+    border: 1px solid rgba(0,0,0,0.9);
 }
 
 table {

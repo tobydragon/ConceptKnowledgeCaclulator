@@ -1,7 +1,7 @@
 [ {
   "learningResourceId" : "Q1",
   "resourceTypes" : [ "PRACTICE" ],
-  "conceptIds" : [ "While Loops" ],
+  "conceptIds" : [ ],
   "dataImportance" : 0.0,
   "maxPossibleKnowledgeEstimate" : 10.0
 }, {
@@ -61,7 +61,7 @@
 }, {
   "learningResourceId" : "HW10",
   "resourceTypes" : [ "PRACTICE" ],
-  "conceptIds" : [ "While Loops" ],
+  "conceptIds" : [ "While Loops", "For Loops" ],
   "dataImportance" : 0.0,
   "maxPossibleKnowledgeEstimate" : 0.0
 } ]
