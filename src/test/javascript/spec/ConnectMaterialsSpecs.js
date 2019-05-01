@@ -43,4 +43,12 @@ describe("ConnectMaterialsSpecs", function() {
         );
     });
 
+    it("createResourceCheckedFromMaterials", function () {
+       var concept = "Tree";
+       var tagsList = ["apple", "tree", "water"];
+       expect(createResourceCheckedFromMaterials(concept, tagsList)).toEqual(true);
+       tagsList = ["apple", "water"];
+       expect(createResourceCheckedFromMaterials(concept, tagsList)).toEqual(false);
+    });
+
 });

@@ -9,6 +9,7 @@ function readJson(url){
 }
 
 function submitToAPI(url, objectToSubmit) {
+    console.log(objectToSubmit);
     var request = new XMLHttpRequest();
     request.open("POST", url);
     request.setRequestHeader("Content-Type", "application/json;charset=UTF-8");

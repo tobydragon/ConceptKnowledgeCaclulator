@@ -9,9 +9,17 @@ $(document).ready(function(){
 });
 
 function createLearningRecordsFromMaterials(materials){
-    for (var i = 0; i < materials.length; i++) {
-        if (isMaterialLinkedWithoutConceptIDs(materials[i].id, resourceRecords)){
+
+    var conceptIDs = [];
+
+    for (var i = 0; i < resourceRecords.length; i++){
+        conceptIDs.push(resourceRecords[i].learningResourceId);
+    }
+
+    for (i = 0; i < materials.length; i++) {
+        if (!conceptIDs.includes(materials[i].id)){
             addResourceToRecords(resourceRecords,materials[i].id, 0);
+            submitToAPI("/api/connectResources/" + courseId, resourceRecords);
         }
     }
 }
@@ -22,12 +30,12 @@ function loadNavString(numOfLearningMaterials){
     return index.concat(numOfLearningMaterials);
 }
 
-function createListOfLearningRecordsString(materials, resourceRecords) {
+function createListOfLearningRecordsString(materials, records) {
 
     var typeString = "";
 
     for (var i = 0; i < materials.length; i++) {
-        if (isMaterialLinked(materials[i].id, resourceRecords)) {
+        if (isMaterialLinked(materials[i].id, records)) {
             typeString += "<li><a class=\"linked\" href=\"/view/connectMaterials/";
             typeString += courseId;
             typeString += "/" + i + "\">";
@@ -47,11 +55,8 @@ function createListOfLearningRecordsString(materials, resourceRecords) {
 }
 
 function isMaterialLinked(materialID, records) {
-
     for (var i = 0; i < records.length; i++){
-        if (records[i].conceptIds === undefined || records[i].conceptIds.length == 0){
-            return false;
-        } else if (materialID === records[i].learningResourceId) {
+        if (records[i].conceptIds !== undefined && records[i].conceptIds.length !== 0 && materialID === records[i].learningResourceId) {
             return true;
         }
     }

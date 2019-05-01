@@ -15,7 +15,7 @@ $(document).ready(function() {
 });
 
 function updateMaterial(index){
-     resourceRecord = updateResourceRecordFromMaterial(resourceRecords, materials[index].id)
+     resourceRecord = updateResourceRecordFromMaterial(resourceRecords, materials[index].id);
     if (materials[index].url !== ""){
         document.getElementById("learningMaterialInfo").innerHTML = updateMaterialsWithURLString(materials[index].id, materials[index].content, materials[index].tagsMap, materials[index].url);
     } else {
@@ -32,6 +32,7 @@ function nextMaterial(increment){
     updateMaterial(index);
 }
 
+//Gets the current resource record for the LearningMaterial
 function updateResourceRecordFromMaterial(records, materialID){
 
     for (var i = 0; i < records.length; i++){
@@ -58,9 +59,32 @@ function updateConceptsString(concepts, resourceRecord){
 
     }
 
+    return typeString;
+}
+
+function suggestWithMaterialTags(){
+    document.getElementById("conceptList").innerHTML = updateConceptsStringWithSuggestedTags(concepts, resourceRecord);
+}
+
+function updateConceptsStringWithSuggestedTags(concepts, resourceRecord){
+
+    var typeString = "";
+
+    for (var i = 0; i < concepts.length; i++){
+        var tags = Object.keys(materials[index].tagsMap);
+        typeString += "<tr><td>";
+        typeString += concepts[i];
+        if (createResourceCheckedForConcept(concepts[i], resourceRecord) || createResourceCheckedFromMaterials(concepts[i], tags)){
+            typeString += "</td><td><input type='checkbox' checked='true' ";
+            typeString += "onclick='updateConceptIdForSingleRecord(resourceRecord, \"" + resourceRecord.learningResourceId + "\", \"" + concepts[i] + "\")\'></td></tr>";
+        } else {
+            typeString += "</td><td><input type='checkbox' ";
+            typeString += "onclick='updateConceptIdForSingleRecord(resourceRecord, \"" + resourceRecord.learningResourceId + "\", \"" + concepts[i] + "\")\'></td></tr>";
+        }
+
+    }
 
     return typeString;
-
 }
 
 function updateIndex(increment, index, numberOfMaterials){
@@ -130,13 +154,14 @@ function updateNavString(index, numberOfMaterials){
     return navText;
 }
 
-function updateSaveButtonColor(isGreen){
-    if (isGreen) {
-        $("#save").addClass("saved");
-    } else {
-        $("#save").removeClass("saved");
+function createResourceCheckedFromMaterials(concept, tags){
+    for (var i = 0; i < tags.length; i++){
+        if (tags[i].toLowerCase().includes(concept.toLowerCase())){
+            return true;
+        }
     }
 
+    return false;
 }
 
 function submit() {

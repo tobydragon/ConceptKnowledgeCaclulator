@@ -1,19 +1,19 @@
 [ {
   "learningResourceId" : "Q1",
   "resourceTypes" : [ "PRACTICE" ],
-  "conceptIds" : [ "Intro CS", "While Loops", "For Loops", "Boolean Expressions", "Loops", "If Statements" ],
+  "conceptIds" : [ "While Loops" ],
   "dataImportance" : 0.0,
   "maxPossibleKnowledgeEstimate" : 10.0
 }, {
   "learningResourceId" : "Q2",
   "resourceTypes" : [ "PRACTICE" ],
-  "conceptIds" : [ "While Loops", "For Loops" ],
+  "conceptIds" : [ "While Loops" ],
   "dataImportance" : 0.0,
   "maxPossibleKnowledgeEstimate" : 5.0
 }, {
   "learningResourceId" : "Q3",
   "resourceTypes" : [ "PRACTICE" ],
-  "conceptIds" : [ "For Loops" ],
+  "conceptIds" : [ "While Loops" ],
   "dataImportance" : 0.0,
   "maxPossibleKnowledgeEstimate" : 10.0
 }, {
@@ -37,13 +37,13 @@
 }, {
   "learningResourceId" : "HW2",
   "resourceTypes" : [ "PRACTICE" ],
-  "conceptIds" : [ "Boolean Expressions" ],
+  "conceptIds" : [ ],
   "dataImportance" : 0.0,
   "maxPossibleKnowledgeEstimate" : 5.0
 }, {
   "learningResourceId" : "HW3",
   "resourceTypes" : [ "PRACTICE" ],
-  "conceptIds" : [ "If Statements" ],
+  "conceptIds" : [ "While Loops" ],
   "dataImportance" : 0.0,
   "maxPossibleKnowledgeEstimate" : 2.0
 }, {
@@ -58,4 +58,10 @@
   "conceptIds" : [ "For Loops" ],
   "dataImportance" : 0.0,
   "maxPossibleKnowledgeEstimate" : 1.0
+}, {
+  "learningResourceId" : "HW10",
+  "resourceTypes" : [ "PRACTICE" ],
+  "conceptIds" : [ "While Loops" ],
+  "dataImportance" : 0.0,
+  "maxPossibleKnowledgeEstimate" : 0.0
 } ]

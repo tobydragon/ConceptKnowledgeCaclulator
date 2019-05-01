@@ -529,7 +529,7 @@ public class Cs1ExampleJsonStrings {
             "  \"url\" : \"https://www.learncpp.com/cpp-tutorial/52-if-statements/\",\n" +
             "  \"tagsMap\" : {\n" +
             "    \"Cs1\" : 1,\n" +
-            "    \"implicit\" : 1,\n" +
+            "    \"loops\" : 1,\n" +
             "    \"using\" : 2,\n" +
             "    \"operator=\" : 1,\n" +
             "    \"conditional\" : 2,\n" +
