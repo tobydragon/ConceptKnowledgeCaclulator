@@ -1,13 +1,13 @@
 [ {
   "learningResourceId" : "Q1",
   "resourceTypes" : [ "PRACTICE" ],
-  "conceptIds" : [ "While Loops", "Boolean Expressions" ],
+  "conceptIds" : [ ],
   "dataImportance" : 0.0,
   "maxPossibleKnowledgeEstimate" : 10.0
 }, {
   "learningResourceId" : "Q2",
   "resourceTypes" : [ "PRACTICE" ],
-  "conceptIds" : [ "While Loops" ],
+  "conceptIds" : [ ],
   "dataImportance" : 0.0,
   "maxPossibleKnowledgeEstimate" : 5.0
 }, {

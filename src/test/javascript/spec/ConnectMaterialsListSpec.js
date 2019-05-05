@@ -16,12 +16,12 @@ describe("ConnectMaterialsListSpecs", function() {
     it("isMaterialLinked", function () {
         expect(isMaterialLinked("Q4", resourceRecords)).toEqual(true);
         expect(isMaterialLinked("Q10", resourceRecords)).toEqual(false);
-        updateConceptIdForSingleRecord(resourceRecords[3], "Q4", "Loops");
+        updateConceptId(resourceRecords, "Q4", "Loops");
         expect(isMaterialLinked("Q4", resourceRecords)).toEqual(false);
     });
 
     it("isMaterialLinkedWithoutConceptIDs", function () {
-        updateConceptIdForSingleRecord(resourceRecords[4], "Q5", "Intro CS");
+        updateConceptId(resourceRecords, "Q5", "Intro CS");
         expect(isMaterialLinkedWithoutConceptIDs("Q5", resourceRecords)).toEqual(true);
     });
 

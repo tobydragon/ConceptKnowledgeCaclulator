@@ -51,10 +51,10 @@ function updateConceptsString(concepts, resourceRecord){
         typeString += concepts[i];
         if (createResourceCheckedForConcept(concepts[i], resourceRecord)){
             typeString += "</td><td><input type='checkbox' checked='true' ";
-            typeString += "onclick='updateConceptIdForSingleRecord(resourceRecord, \"" + resourceRecord.learningResourceId + "\", \"" + concepts[i] + "\")\'></td></tr>";
+            typeString += "onclick='updateConceptId(resourceRecords, \"" + resourceRecord.learningResourceId + "\", \"" + concepts[i] + "\")\'></td></tr>";
         } else {
             typeString += "</td><td><input type='checkbox' ";
-            typeString += "onclick='updateConceptIdForSingleRecord(resourceRecord, \"" + resourceRecord.learningResourceId + "\", \"" + concepts[i] + "\")\'></td></tr>";
+            typeString += "onclick='updateConceptId(resourceRecords, \"" + resourceRecord.learningResourceId + "\", \"" + concepts[i] + "\")\'></td></tr>";
         }
 
     }
@@ -75,11 +75,12 @@ function updateConceptsStringWithSuggestedTags(concepts, resourceRecord){
         typeString += "<tr><td>";
         typeString += concepts[i];
         if (createResourceCheckedForConcept(concepts[i], resourceRecord) || createResourceCheckedFromMaterials(concepts[i], tags)){
+            updateConceptId(resourceRecords, resourceRecord.learningResourceId, concepts[i]);
             typeString += "</td><td><input type='checkbox' checked='true' ";
-            typeString += "onclick='updateConceptIdForSingleRecord(resourceRecord, \"" + resourceRecord.learningResourceId + "\", \"" + concepts[i] + "\")\'></td></tr>";
+            typeString += "onclick='updateConceptId(resourceRecords, \"" + resourceRecord.learningResourceId + "\", \"" + concepts[i] + "\")\'></td></tr>";
         } else {
             typeString += "</td><td><input type='checkbox' ";
-            typeString += "onclick='updateConceptIdForSingleRecord(resourceRecord, \"" + resourceRecord.learningResourceId + "\", \"" + concepts[i] + "\")\'></td></tr>";
+            typeString += "onclick='updateConceptId(resourceRecords, \"" + resourceRecord.learningResourceId + "\", \"" + concepts[i] + "\")\'></td></tr>";
         }
 
     }
@@ -165,7 +166,15 @@ function createResourceCheckedFromMaterials(concept, tags){
 }
 
 function submit() {
-    submitToAPI("/api/connectResources/" + courseId, resourceRecords);
+    if (submitToAPINoAlert("/api/connectResources/" + courseId, resourceRecords)){
+        window.alert("Saved successfully");
+        console.log("Concepts saved");
+    } else {
+        window.alert("There was an error saving the file");
+        //window.location.replace("/error");
+        console.log("Error");
+    }
+
 }
 
 function goBackToList() {

@@ -23,3 +23,18 @@ function submitToAPI(url, objectToSubmit) {
         }
     };
 }
+
+function submitToAPINoAlert(url, objectToSubmit) {
+    console.log(objectToSubmit);
+    var request = new XMLHttpRequest();
+    request.open("POST", url);
+    request.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
+    request.send(JSON.stringify(objectToSubmit));
+    request.onreadystatechange = function() {
+        if (request.status === 200 && request.readyState === 4) {
+            return true;
+        } else {
+            return false;
+        }
+    };
+}

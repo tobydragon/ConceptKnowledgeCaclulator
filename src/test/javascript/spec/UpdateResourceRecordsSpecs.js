@@ -8,16 +8,6 @@ describe("UpdateResourceRecordsSpecs", function() {
         expect(resourceRecords[0].learningResourceId).toEqual("Q1");
     });
 
-    it("updateConceptIdForSingleRecord to add a connection", function () {
-       updateConceptIdForSingleRecord(resourceRecords[8], "HW4", "Booleans");
-       expect(resourceRecords[8].conceptIds).toEqual(["While Loops", "Booleans"]);
-    });
-
-    it("updateConceptIdForSingleRecord to remove a connection", function () {
-        updateConceptIdForSingleRecord(resourceRecords[3], "Q4", "Loops");
-        expect(resourceRecords[3].conceptIds.length).toEqual(0);
-    });
-
     it("updateConceptId to add a connection", function () {
         updateConceptId(resourceRecords, "Q1", "While Loops");
         expect(resourceRecords[0].conceptIds).toEqual(["If Statements", "While Loops"]);
