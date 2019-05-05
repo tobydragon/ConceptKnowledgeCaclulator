@@ -15,6 +15,10 @@
                 margin-bottom: 10px;
             }
 
+            #suggest, #back {
+                color: #000000;
+            }
+
             nav {
                 opacity: 0.4;
                 cursor: default;
@@ -30,14 +34,13 @@
             }
 
             button {
+                opacity: 0.4;
+                cursor: default;
+                pointer-events: none;
                 border: 1px solid rgba(0,0,0,0.2);
                 border-radius: 25px;
                 font-size: 16px;
                 transition: 400ms;
-            }
-
-            button:hover {
-                border: 1px solid rgba(0,0,0,0.9);
             }
 
             ul, h3 {
@@ -66,7 +69,9 @@
             <button id="next"> > </button>
         </nav>
 
-        <button>Save Changes</button>
+        <button id="back">Return to List</button>
+        <button id="save">Save Changes</button>
+        <button id="suggest">Suggest Tags</button>
 
     </div>
 

@@ -11,18 +11,17 @@
 
     <body>
 
-        <button id="back" onclick="goBackToList()">Return to List</button>
-        <button onclick="suggestWithMaterialTags()">Suggest Tags</button>
-
         <div id="nav">
-            <h1>Learning Materials</h1>
+            <h1>Link Learning Materials</h1>
             <nav>
                 <button id="prev" onclick="nextMaterial(false)"> < </button>
                 <p id="index"></p>
                 <button id="next" onclick="nextMaterial(true)"> > </button>
             </nav>
 
+            <button id="back" onclick="goBackToList()">Return to List</button>
             <button id="save" onclick="submit()">Save Changes</button>
+            <button id="suggest" onclick="suggestWithMaterialTags()">Suggest Tags</button>
 
         </div>
 
@@ -32,12 +31,18 @@
 
             </ul>
 
-            <div id="conceptListContainer">
-                <table id="conceptList">
+            <div>
 
-                </table>
+                <div id="conceptListContainer">
+                    <h2>Concept List:</h2>
+                    <div id="conceptTableContainer">
+                        <table id="conceptList">
+
+                        </table>
+                    </div>
+                </div>
+
             </div>
-
 
         </div>
 

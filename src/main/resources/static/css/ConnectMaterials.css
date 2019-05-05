@@ -25,6 +25,10 @@ button {
     margin-bottom: 10px;
 }
 
+#suggest, #back {
+    color: #000000;
+}
+
 nav > p, nav > button {
     display: inline-flex;
 }
@@ -57,10 +61,6 @@ table {
     font-size: 18px;
 }
 
-.suggestedTags {
-    font-weight: bold;
-}
-
 ul.suggestedTags {
     height: 50vh;
     overflow-y: scroll;
@@ -71,7 +71,7 @@ ul.suggestedTags {
     height: 50vh;
 }
 
-#conceptListContainer {
+#conceptTableContainer {
     height: 50vh;
     overflow-y: scroll;
     overflow-x: hidden;
@@ -79,9 +79,4 @@ ul.suggestedTags {
 
 .saved {
     color: #0C8D21;
-}
-
-#back {
-    position: absolute;
-    margin-left: 15%;
 }
