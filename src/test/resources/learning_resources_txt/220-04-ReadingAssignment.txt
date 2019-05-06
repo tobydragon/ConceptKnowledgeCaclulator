@@ -1,0 +1,17 @@
+Reading
+
+From Learncpp.com: Read section 6.9 and 6.9a
+
+From www.cplusplus.com/doc/tutorial/: Read the "Dynamic memory" page.
+
+http://www.learncpp.com/
+
+http://www.cplusplus.com/doc/tutorial/dynamic/
+Questions
+
+Why might allocation of memory fail when using the new operator? What aspect of a computer  (amount of hard drive space, amount of RAM, processor speed, number of processors, etc.) would make it more likely that allocation would fail?
+
+What is the difference between a dangling pointer and a memory leak? Why is each of them important?
+
+What is  the main difference between arrays on the stack and arrays on the heap? What is a good reason to make an array on the heap instead of the stack?
+

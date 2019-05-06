@@ -1,0 +1,19 @@
+Pass by reference
+
+Reading
+
+https://www.ibm.com/support/knowledgecenter/en/SSLTBW_2.3.0/com.ibm.zos.v2r3.cbclx01/cplr233.htm
+
+http://www.geeksforgeeks.org/passing-by-pointer-vs-passing-by-reference-in-c/
+
+http://www.learncpp.com/cpp-tutorial/71-function-parameters-and-arguments/
+
+Questions
+
+What is the difference between pass-by-value and pass-by-reference?
+
+What are advantages of using pass-by-reference over pass-by-pointer (i.e., when would you use pass-by-reference)?
+
+What are the disadvantages of using pass-by-reference over pass-by-pointer (i.e., when would you use pass-by-pointer)?
+
+Now that you see both pass-by-reference and pass-by-pointer, which would you use to pass the line counting parameter in our array library code? Why?

@@ -1,0 +1,17 @@
+Cs1
+
+Questions
+
+What's are advantages of using while loops instead of for loops?
+
+How many choices are possible when executing an if-statement?
+
+When does an 'else' conditional get executed in a function?
+
+Reading
+
+https://www.learncpp.com/cpp-tutorial/52-if-statements/
+
+https://www.programiz.com/c-programming/c-if-else-statement
+
+https://programming.guide/go/for-loop.html
