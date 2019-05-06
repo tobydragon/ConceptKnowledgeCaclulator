@@ -1,7 +1,7 @@
 package edu.ithaca.dragon.tecmap.learningresource;
 
-import edu.ithaca.dragon.tecmap.io.reader.TecmapCSVReader;
 import edu.ithaca.dragon.tecmap.io.reader.SakaiReader;
+import edu.ithaca.dragon.tecmap.io.reader.TecmapCSVReader;
 import edu.ithaca.dragon.tecmap.util.DataUtil;
 
 import java.io.IOException;

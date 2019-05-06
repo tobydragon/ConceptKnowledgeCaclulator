@@ -4,7 +4,6 @@ import edu.ithaca.dragon.tecmap.conceptgraph.ConceptGraph;
 import edu.ithaca.dragon.tecmap.conceptgraph.TreeConverter;
 import edu.ithaca.dragon.tecmap.io.record.ConceptGraphRecord;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;

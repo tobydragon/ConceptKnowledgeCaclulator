@@ -1,8 +1,8 @@
 package edu.ithaca.dragon.tecmap.prediction.predictor;
 
 import edu.ithaca.dragon.tecmap.Settings;
-import edu.ithaca.dragon.tecmap.io.reader.TecmapCSVReader;
 import edu.ithaca.dragon.tecmap.io.reader.SakaiReader;
+import edu.ithaca.dragon.tecmap.io.reader.TecmapCSVReader;
 import edu.ithaca.dragon.tecmap.learningresource.AssessmentItem;
 import edu.ithaca.dragon.tecmap.learningresource.ContinuousAssessmentMatrix;
 import edu.ithaca.dragon.tecmap.learningresource.GradeDiscreteGroupings;

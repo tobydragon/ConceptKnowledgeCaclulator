@@ -2,9 +2,9 @@ package edu.ithaca.dragon.tecmap.tecmapstate;
 
 import edu.ithaca.dragon.tecmap.Settings;
 import edu.ithaca.dragon.tecmap.conceptgraph.ConceptGraph;
+import edu.ithaca.dragon.tecmap.io.Json;
 import edu.ithaca.dragon.tecmap.io.reader.ReaderTools;
 import edu.ithaca.dragon.tecmap.io.record.ConceptGraphRecord;
-import edu.ithaca.dragon.tecmap.io.Json;
 import edu.ithaca.dragon.tecmap.io.record.LearningResourceRecord;
 import edu.ithaca.dragon.tecmap.learningresource.AssessmentItemResponse;
 import edu.ithaca.dragon.tecmap.tecmapExamples.Cs1ExampleJsonStrings;

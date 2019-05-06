@@ -2,9 +2,11 @@ package edu.ithaca.dragon.tecmap.io.reader;
 
 import edu.ithaca.dragon.tecmap.io.Json;
 
-import java.io.File;
 import java.io.IOException;
-import java.util.*;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 public class SakaiAnonymizer implements CsvProcessor{
 

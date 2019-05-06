@@ -2,12 +2,11 @@ package edu.ithaca.dragon.tecmap.learningresource;
 
 import edu.ithaca.dragon.tecmap.Settings;
 import edu.ithaca.dragon.tecmap.TecmapAPI;
-import edu.ithaca.dragon.tecmap.io.reader.TecmapCSVReader;
 import edu.ithaca.dragon.tecmap.conceptgraph.ConceptGraph;
 import edu.ithaca.dragon.tecmap.data.TecmapDatastore;
 import edu.ithaca.dragon.tecmap.data.TecmapFileDatastore;
-
 import edu.ithaca.dragon.tecmap.io.reader.SakaiReader;
+import edu.ithaca.dragon.tecmap.io.reader.TecmapCSVReader;
 import edu.ithaca.dragon.tecmap.io.record.ContinuousMatrixRecord;
 import org.junit.Assert;
 import org.junit.Before;
@@ -19,7 +18,6 @@ import java.util.List;
 import java.util.Map;
 
 import static org.hamcrest.collection.IsIterableContainingInAnyOrder.containsInAnyOrder;
-
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class ContinuousAssessmentMatrixTest {

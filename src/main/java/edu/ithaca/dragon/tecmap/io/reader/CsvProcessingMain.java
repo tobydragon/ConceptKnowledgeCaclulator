@@ -1,7 +1,5 @@
 package edu.ithaca.dragon.tecmap.io.reader;
 
-import edu.ithaca.dragon.tecmap.io.Json;
-
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;

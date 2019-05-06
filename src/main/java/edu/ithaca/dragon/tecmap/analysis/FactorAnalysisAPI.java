@@ -1,9 +1,7 @@
 package edu.ithaca.dragon.tecmap.analysis;
 
-import edu.ithaca.dragon.tecmap.conceptgraph.CohortConceptGraphs;
 import edu.ithaca.dragon.tecmap.conceptgraph.ConceptGraph;
 import edu.ithaca.dragon.tecmap.io.record.ContinuousMatrixRecord;
-import edu.ithaca.dragon.tecmap.learningresource.ContinuousAssessmentMatrix;
 
 import java.io.IOException;
 

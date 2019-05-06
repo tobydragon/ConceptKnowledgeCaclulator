@@ -6,11 +6,11 @@ import edu.ithaca.dragon.tecmap.io.Json;
 import edu.ithaca.dragon.tecmap.io.record.ConceptGraphRecord;
 import edu.ithaca.dragon.tecmap.io.record.LearningResourceRecord;
 import edu.ithaca.dragon.tecmap.tecmapExamples.Cs1ExampleJsonStrings;
+import org.junit.jupiter.api.Test;
 
 import java.io.IOException;
 
-import static org.junit.jupiter.api.Assertions.*;
-import org.junit.jupiter.api.Test;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 
 class LinksNoAssessmentStateTest {

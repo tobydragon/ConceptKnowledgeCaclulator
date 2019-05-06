@@ -2,10 +2,10 @@ package edu.ithaca.dragon.tecmap.suggester;
 
 import edu.ithaca.dragon.tecmap.Settings;
 import edu.ithaca.dragon.tecmap.conceptgraph.*;
+import edu.ithaca.dragon.tecmap.io.reader.SakaiReader;
 import edu.ithaca.dragon.tecmap.io.reader.TecmapCSVReader;
 import edu.ithaca.dragon.tecmap.io.record.ConceptGraphRecord;
 import edu.ithaca.dragon.tecmap.io.record.LearningResourceRecord;
-import edu.ithaca.dragon.tecmap.io.reader.SakaiReader;
 import edu.ithaca.dragon.tecmap.learningresource.AssessmentItemResponse;
 import edu.ithaca.dragon.tecmap.learningresource.ExampleLearningObjectLinkRecordFactory;
 import edu.ithaca.dragon.tecmap.learningresource.ExampleLearningObjectResponseFactory;

@@ -2,8 +2,8 @@ package edu.ithaca.dragon.tecmap.prediction.predictor;
 
 import ch.netzwerg.paleo.*;
 import edu.ithaca.dragon.tecmap.Settings;
-import edu.ithaca.dragon.tecmap.io.reader.TecmapCSVReader;
 import edu.ithaca.dragon.tecmap.io.reader.SakaiReader;
+import edu.ithaca.dragon.tecmap.io.reader.TecmapCSVReader;
 import edu.ithaca.dragon.tecmap.learningresource.AssessmentItem;
 import edu.ithaca.dragon.tecmap.learningresource.DiscreteAssessmentMatrix;
 import edu.ithaca.dragon.tecmap.learningresource.GradeDiscreteGroupings;

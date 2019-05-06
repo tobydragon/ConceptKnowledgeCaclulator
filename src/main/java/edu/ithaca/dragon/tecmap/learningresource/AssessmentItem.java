@@ -3,7 +3,6 @@ package edu.ithaca.dragon.tecmap.learningresource;
 import edu.ithaca.dragon.tecmap.io.record.LearningResourceRecord;
 import edu.ithaca.dragon.tecmap.util.DataUtil;
 
-import java.lang.reflect.Array;
 import java.util.*;
 
 /**

@@ -1,6 +1,5 @@
 package edu.ithaca.dragon.tecmap.io.reader;
 
-import edu.ithaca.dragon.tecmap.io.reader.ReaderTools;
 import org.junit.Assert;
 import org.junit.Test;
 

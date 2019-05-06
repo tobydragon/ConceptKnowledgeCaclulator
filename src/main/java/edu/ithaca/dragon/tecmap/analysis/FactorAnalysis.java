@@ -1,12 +1,9 @@
 package edu.ithaca.dragon.tecmap.analysis;
 
-import com.github.rcaller.rstuff.*;
-import com.github.rcaller.util.Globals;
-import edu.ithaca.dragon.tecmap.Settings;
-import edu.ithaca.dragon.tecmap.conceptgraph.CohortConceptGraphs;
+import com.github.rcaller.rstuff.RCaller;
+import com.github.rcaller.rstuff.RCode;
 import edu.ithaca.dragon.tecmap.conceptgraph.ConceptGraph;
 import edu.ithaca.dragon.tecmap.conceptgraph.ConceptNode;
-import edu.ithaca.dragon.tecmap.conceptgraph.eval.RFunctions;
 import edu.ithaca.dragon.tecmap.io.record.ContinuousMatrixRecord;
 import edu.ithaca.dragon.tecmap.learningresource.AssessmentItem;
 

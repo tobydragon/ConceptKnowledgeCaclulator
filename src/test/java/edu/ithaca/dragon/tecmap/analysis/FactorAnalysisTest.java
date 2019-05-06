@@ -10,7 +10,6 @@ import edu.ithaca.dragon.tecmap.learningresource.AssessmentItem;
 import org.junit.Assert;
 import org.junit.Test;
 
-
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;

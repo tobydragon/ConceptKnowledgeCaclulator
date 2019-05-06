@@ -1,19 +1,24 @@
 package edu.ithaca.dragon.tecmap.legacy;
 
 import edu.ithaca.dragon.tecmap.Settings;
-import edu.ithaca.dragon.tecmap.conceptgraph.*;
+import edu.ithaca.dragon.tecmap.conceptgraph.CohortConceptGraphs;
+import edu.ithaca.dragon.tecmap.conceptgraph.ConceptGraph;
+import edu.ithaca.dragon.tecmap.conceptgraph.ConceptNode;
+import edu.ithaca.dragon.tecmap.conceptgraph.TreeConverter;
 import edu.ithaca.dragon.tecmap.conceptgraph.eval.KnowledgeEstimateMatrix;
 import edu.ithaca.dragon.tecmap.conceptgraph.eval.RFunctions;
-import edu.ithaca.dragon.tecmap.io.reader.TecmapCSVReader;
 import edu.ithaca.dragon.tecmap.io.reader.ReaderTools;
 import edu.ithaca.dragon.tecmap.io.reader.SakaiReader;
+import edu.ithaca.dragon.tecmap.io.reader.TecmapCSVReader;
 import edu.ithaca.dragon.tecmap.io.record.CohortConceptGraphsRecord;
 import edu.ithaca.dragon.tecmap.io.record.ConceptGraphRecord;
 import edu.ithaca.dragon.tecmap.io.record.LearningResourceRecord;
 import edu.ithaca.dragon.tecmap.learningresource.AssessmentItem;
 import edu.ithaca.dragon.tecmap.learningresource.AssessmentItemResponse;
-import edu.ithaca.dragon.tecmap.suggester.GroupSuggester.*;
 import edu.ithaca.dragon.tecmap.suggester.ConceptGraphSuggesterLibrary;
+import edu.ithaca.dragon.tecmap.suggester.GroupSuggester.Group;
+import edu.ithaca.dragon.tecmap.suggester.GroupSuggester.GroupSuggester;
+import edu.ithaca.dragon.tecmap.suggester.GroupSuggester.Suggester;
 import edu.ithaca.dragon.tecmap.suggester.OrganizedLearningResourceSuggestions;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;

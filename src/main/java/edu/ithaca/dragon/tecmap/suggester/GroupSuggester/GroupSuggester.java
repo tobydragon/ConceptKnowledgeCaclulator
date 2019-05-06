@@ -1,6 +1,5 @@
 package edu.ithaca.dragon.tecmap.suggester.GroupSuggester;
 
-import edu.ithaca.dragon.tecmap.conceptgraph.CohortConceptGraphs;
 import edu.ithaca.dragon.tecmap.conceptgraph.ConceptGraph;
 
 import java.util.ArrayList;

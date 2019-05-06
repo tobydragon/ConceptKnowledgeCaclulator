@@ -1,7 +1,5 @@
 package edu.ithaca.dragon.tecmap.io.record;
 
-import com.github.rcaller.rstuff.RCode;
-import edu.ithaca.dragon.tecmap.conceptgraph.eval.RFunctions;
 import edu.ithaca.dragon.tecmap.learningresource.AssessmentItem;
 import edu.ithaca.dragon.tecmap.learningresource.AssessmentItemResponse;
 

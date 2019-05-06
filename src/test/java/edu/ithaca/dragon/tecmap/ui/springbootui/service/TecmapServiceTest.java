@@ -9,7 +9,6 @@ import edu.ithaca.dragon.tecmap.io.record.CohortConceptGraphsRecord;
 import edu.ithaca.dragon.tecmap.io.record.ConceptGraphRecord;
 import edu.ithaca.dragon.tecmap.io.record.LearningMaterialRecord;
 import edu.ithaca.dragon.tecmap.io.record.LearningResourceRecord;
-import edu.ithaca.dragon.tecmap.learningresource.LearningMaterial;
 import edu.ithaca.dragon.tecmap.suggester.GroupSuggester.Group;
 import edu.ithaca.dragon.tecmap.tecmapExamples.Cs1ExampleJsonStrings;
 import edu.ithaca.dragon.tecmap.ui.TecmapUserAction;
