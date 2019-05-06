@@ -83,9 +83,9 @@ public class TagLearningResources {
      * @param files -  array of files (or directory) containing the LearningMaterials
      * @return - list of LearningMaterials
      */
-    public static List<LearningMaterial> findLearningResources(File[] files) {
+    public static List<LearningMaterial> findLearningResources(File[] files) throws IOException {
 
-        final String jsonFile = "src/test/resources/learningMaterialRecordsTags.json";
+        final String jsonFile = "src/test/resources/datastore/Cs1Example/Cs1ExampleLearningMaterial.json";
         int startingNum = learningMaterialsCount(jsonFile);
 
         List<LearningMaterial> learningMaterials = new ArrayList<>();

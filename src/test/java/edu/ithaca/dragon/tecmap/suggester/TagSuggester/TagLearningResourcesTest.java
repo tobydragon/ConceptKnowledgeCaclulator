@@ -3,6 +3,7 @@ package edu.ithaca.dragon.tecmap.suggester.TagSuggester;
 import org.junit.jupiter.api.Test;
 
 import java.io.File;
+import java.io.IOException;
 
 import static edu.ithaca.dragon.tecmap.suggester.TagSuggester.TagLearningResources.findLearningResources;
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -15,15 +16,27 @@ class TagLearningResourcesTest {
     @Test
     void findLearningResourcesTest() {
         File[] files = new File(directory).listFiles();
-        findLearningResources(files);
+        try {
+            findLearningResources(files);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
 
-        assertEquals(34, findLearningResources(files).size());
+        try {
+            assertEquals(34, findLearningResources(files).size());
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     @Test
     void cs1LearningMaterialTest(){
         File[] file = new File[] {new File(cs1Example)};
-        assertEquals(6, findLearningResources(file).size());
+        try {
+            assertEquals(6, findLearningResources(file).size());
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
 }

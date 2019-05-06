@@ -4,10 +4,13 @@ import edu.ithaca.dragon.tecmap.learningresource.LearningMaterial;
 import edu.ithaca.dragon.tecmap.learningresource.LearningResourceType;
 import smile.nlp.tokenizer.SimpleTokenizer;
 
+import java.io.IOException;
 import java.nio.file.Paths;
 import java.util.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+
+import static edu.ithaca.dragon.tecmap.io.record.LearningMaterialRecord.jsonToLearningMaterialRecords;
 
 public class TagSuggesterUtil {
 
@@ -116,14 +119,9 @@ public class TagSuggesterUtil {
      * @param learningMaterialsJSON - json file containing LearningMaterials
      * @return integer representing the number of LearningMaterials in a given json file
      */
-    public static int learningMaterialsCount(String learningMaterialsJSON){
-        //TODO: Rewrite so it looks for json objects
-        Matcher matcher = Pattern.compile("id").matcher(readFile(learningMaterialsJSON));
-        int count = 0;
-        while (matcher.find()){
-            count++;
-        }
-        return count;
+    public static int learningMaterialsCount(String learningMaterialsJSON) throws IOException {
+
+        return jsonToLearningMaterialRecords(learningMaterialsJSON).size();
     }
 
     public static List<String> generateAssessmentDocuments(List<LearningMaterial> learningMaterials){

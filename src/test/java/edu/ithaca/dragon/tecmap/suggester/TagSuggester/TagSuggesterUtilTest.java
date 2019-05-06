@@ -2,10 +2,12 @@ package edu.ithaca.dragon.tecmap.suggester.TagSuggester;
 
 import org.junit.jupiter.api.Test;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
 import static edu.ithaca.dragon.tecmap.suggester.TagSuggester.TagSuggesterUtil.isCommonWord;
+import static edu.ithaca.dragon.tecmap.suggester.TagSuggester.TagSuggesterUtil.learningMaterialsCount;
 import static edu.ithaca.dragon.tecmap.suggester.TagSuggester.TagSuggesterUtil.removeCommonWords;
 import static org.junit.Assert.assertEquals;
 
@@ -30,6 +32,11 @@ class TagSuggesterUtilTest {
     void isCommonWordTest(){
         assertEquals("Word is a common word", true, isCommonWord("plane"));
         assertEquals("Word is not a common word", false, isCommonWord("photoshop"));
+    }
+
+    @Test
+    void learningMaterialsCountTest() throws IOException {
+        assertEquals(6, learningMaterialsCount("src/test/resources/datastore/Cs1Example/Cs1ExampleLearningMaterial.json"));
     }
 
 }
