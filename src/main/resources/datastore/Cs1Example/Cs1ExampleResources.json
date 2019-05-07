@@ -1,7 +1,7 @@
 [ {
   "learningResourceId" : "Q1",
   "resourceTypes" : [ "PRACTICE" ],
-  "conceptIds" : [ ],
+  "conceptIds" : [ "While Loops" ],
   "dataImportance" : 0.0,
   "maxPossibleKnowledgeEstimate" : 10.0
 }, {
@@ -60,6 +60,210 @@
   "maxPossibleKnowledgeEstimate" : 1.0
 }, {
   "learningResourceId" : "HW10",
+  "resourceTypes" : [ "PRACTICE" ],
+  "conceptIds" : [ ],
+  "dataImportance" : 0.0,
+  "maxPossibleKnowledgeEstimate" : 0.0
+}, {
+  "learningResourceId" : "[ASSESSMENT] 7 [Reading]",
+  "resourceTypes" : [ "PRACTICE" ],
+  "conceptIds" : [ ],
+  "dataImportance" : 0.0,
+  "maxPossibleKnowledgeEstimate" : 0.0
+}, {
+  "learningResourceId" : "[ASSESSMENT] 8 [Reading]",
+  "resourceTypes" : [ "PRACTICE" ],
+  "conceptIds" : [ ],
+  "dataImportance" : 0.0,
+  "maxPossibleKnowledgeEstimate" : 0.0
+}, {
+  "learningResourceId" : "[ASSESSMENT] 9 [Reading]",
+  "resourceTypes" : [ "PRACTICE" ],
+  "conceptIds" : [ ],
+  "dataImportance" : 0.0,
+  "maxPossibleKnowledgeEstimate" : 0.0
+}, {
+  "learningResourceId" : "[INFORMATION] 10 [Reading]",
+  "resourceTypes" : [ "PRACTICE" ],
+  "conceptIds" : [ ],
+  "dataImportance" : 0.0,
+  "maxPossibleKnowledgeEstimate" : 0.0
+}, {
+  "learningResourceId" : "[INFORMATION] 11 [Reading]",
+  "resourceTypes" : [ "PRACTICE" ],
+  "conceptIds" : [ ],
+  "dataImportance" : 0.0,
+  "maxPossibleKnowledgeEstimate" : 0.0
+}, {
+  "learningResourceId" : "[INFORMATION] 12 [Reading]",
+  "resourceTypes" : [ "PRACTICE" ],
+  "conceptIds" : [ ],
+  "dataImportance" : 0.0,
+  "maxPossibleKnowledgeEstimate" : 0.0
+}, {
+  "learningResourceId" : "[INFORMATION] 13 [Reading]",
+  "resourceTypes" : [ "PRACTICE" ],
+  "conceptIds" : [ ],
+  "dataImportance" : 0.0,
+  "maxPossibleKnowledgeEstimate" : 0.0
+}, {
+  "learningResourceId" : "[ASSESSMENT] 14 [Cs1]",
+  "resourceTypes" : [ "PRACTICE" ],
+  "conceptIds" : [ "Loops", "Boolean Expressions" ],
+  "dataImportance" : 0.0,
+  "maxPossibleKnowledgeEstimate" : 0.0
+}, {
+  "learningResourceId" : "[ASSESSMENT] 15 [Cs1]",
+  "resourceTypes" : [ "PRACTICE" ],
+  "conceptIds" : [ ],
+  "dataImportance" : 0.0,
+  "maxPossibleKnowledgeEstimate" : 0.0
+}, {
+  "learningResourceId" : "[ASSESSMENT] 16 [Cs1]",
+  "resourceTypes" : [ "PRACTICE" ],
+  "conceptIds" : [ ],
+  "dataImportance" : 0.0,
+  "maxPossibleKnowledgeEstimate" : 0.0
+}, {
+  "learningResourceId" : "[INFORMATION] 17 [Cs1]",
+  "resourceTypes" : [ "PRACTICE" ],
+  "conceptIds" : [ ],
+  "dataImportance" : 0.0,
+  "maxPossibleKnowledgeEstimate" : 0.0
+}, {
+  "learningResourceId" : "[INFORMATION] 18 [Cs1]",
+  "resourceTypes" : [ "PRACTICE" ],
+  "conceptIds" : [ ],
+  "dataImportance" : 0.0,
+  "maxPossibleKnowledgeEstimate" : 0.0
+}, {
+  "learningResourceId" : "[INFORMATION] 19 [Cs1]",
+  "resourceTypes" : [ "PRACTICE" ],
+  "conceptIds" : [ ],
+  "dataImportance" : 0.0,
+  "maxPossibleKnowledgeEstimate" : 0.0
+}, {
+  "learningResourceId" : "[ASSESSMENT] 20 [Pass by reference]",
+  "resourceTypes" : [ "PRACTICE" ],
+  "conceptIds" : [ ],
+  "dataImportance" : 0.0,
+  "maxPossibleKnowledgeEstimate" : 0.0
+}, {
+  "learningResourceId" : "[ASSESSMENT] 21 [Pass by reference]",
+  "resourceTypes" : [ "PRACTICE" ],
+  "conceptIds" : [ ],
+  "dataImportance" : 0.0,
+  "maxPossibleKnowledgeEstimate" : 0.0
+}, {
+  "learningResourceId" : "[ASSESSMENT] 22 [Pass by reference]",
+  "resourceTypes" : [ "PRACTICE" ],
+  "conceptIds" : [ ],
+  "dataImportance" : 0.0,
+  "maxPossibleKnowledgeEstimate" : 0.0
+}, {
+  "learningResourceId" : "[ASSESSMENT] 23 [Pass by reference]",
+  "resourceTypes" : [ "PRACTICE" ],
+  "conceptIds" : [ ],
+  "dataImportance" : 0.0,
+  "maxPossibleKnowledgeEstimate" : 0.0
+}, {
+  "learningResourceId" : "[INFORMATION] 24 [Pass by reference]",
+  "resourceTypes" : [ "PRACTICE" ],
+  "conceptIds" : [ ],
+  "dataImportance" : 0.0,
+  "maxPossibleKnowledgeEstimate" : 0.0
+}, {
+  "learningResourceId" : "[INFORMATION] 25 [Pass by reference]",
+  "resourceTypes" : [ "PRACTICE" ],
+  "conceptIds" : [ ],
+  "dataImportance" : 0.0,
+  "maxPossibleKnowledgeEstimate" : 0.0
+}, {
+  "learningResourceId" : "[INFORMATION] 26 [Pass by reference]",
+  "resourceTypes" : [ "PRACTICE" ],
+  "conceptIds" : [ ],
+  "dataImportance" : 0.0,
+  "maxPossibleKnowledgeEstimate" : 0.0
+}, {
+  "learningResourceId" : "[ASSESSMENT] 27 [More Misc]",
+  "resourceTypes" : [ "PRACTICE" ],
+  "conceptIds" : [ ],
+  "dataImportance" : 0.0,
+  "maxPossibleKnowledgeEstimate" : 0.0
+}, {
+  "learningResourceId" : "[ASSESSMENT] 28 [More Misc]",
+  "resourceTypes" : [ "PRACTICE" ],
+  "conceptIds" : [ ],
+  "dataImportance" : 0.0,
+  "maxPossibleKnowledgeEstimate" : 0.0
+}, {
+  "learningResourceId" : "[ASSESSMENT] 29 [More Misc]",
+  "resourceTypes" : [ "PRACTICE" ],
+  "conceptIds" : [ ],
+  "dataImportance" : 0.0,
+  "maxPossibleKnowledgeEstimate" : 0.0
+}, {
+  "learningResourceId" : "[ASSESSMENT] 30 [More Misc]",
+  "resourceTypes" : [ "PRACTICE" ],
+  "conceptIds" : [ ],
+  "dataImportance" : 0.0,
+  "maxPossibleKnowledgeEstimate" : 0.0
+}, {
+  "learningResourceId" : "[INFORMATION] 31 [More Misc]",
+  "resourceTypes" : [ "PRACTICE" ],
+  "conceptIds" : [ ],
+  "dataImportance" : 0.0,
+  "maxPossibleKnowledgeEstimate" : 0.0
+}, {
+  "learningResourceId" : "[INFORMATION] 32 [More Misc]",
+  "resourceTypes" : [ "PRACTICE" ],
+  "conceptIds" : [ ],
+  "dataImportance" : 0.0,
+  "maxPossibleKnowledgeEstimate" : 0.0
+}, {
+  "learningResourceId" : "[INFORMATION] 33 [More Misc]",
+  "resourceTypes" : [ "PRACTICE" ],
+  "conceptIds" : [ ],
+  "dataImportance" : 0.0,
+  "maxPossibleKnowledgeEstimate" : 0.0
+}, {
+  "learningResourceId" : "[ASSESSMENT] 34 [Misc]",
+  "resourceTypes" : [ "PRACTICE" ],
+  "conceptIds" : [ ],
+  "dataImportance" : 0.0,
+  "maxPossibleKnowledgeEstimate" : 0.0
+}, {
+  "learningResourceId" : "[ASSESSMENT] 35 [Misc]",
+  "resourceTypes" : [ "PRACTICE" ],
+  "conceptIds" : [ ],
+  "dataImportance" : 0.0,
+  "maxPossibleKnowledgeEstimate" : 0.0
+}, {
+  "learningResourceId" : "[ASSESSMENT] 36 [Misc]",
+  "resourceTypes" : [ "PRACTICE" ],
+  "conceptIds" : [ ],
+  "dataImportance" : 0.0,
+  "maxPossibleKnowledgeEstimate" : 0.0
+}, {
+  "learningResourceId" : "[ASSESSMENT] 37 [Misc]",
+  "resourceTypes" : [ "PRACTICE" ],
+  "conceptIds" : [ ],
+  "dataImportance" : 0.0,
+  "maxPossibleKnowledgeEstimate" : 0.0
+}, {
+  "learningResourceId" : "[INFORMATION] 38 [Misc]",
+  "resourceTypes" : [ "PRACTICE" ],
+  "conceptIds" : [ ],
+  "dataImportance" : 0.0,
+  "maxPossibleKnowledgeEstimate" : 0.0
+}, {
+  "learningResourceId" : "[INFORMATION] 39 [Misc]",
+  "resourceTypes" : [ "PRACTICE" ],
+  "conceptIds" : [ ],
+  "dataImportance" : 0.0,
+  "maxPossibleKnowledgeEstimate" : 0.0
+}, {
+  "learningResourceId" : "[INFORMATION] 40 [Misc]",
   "resourceTypes" : [ "PRACTICE" ],
   "conceptIds" : [ ],
   "dataImportance" : 0.0,

@@ -19,7 +19,11 @@ function createLearningRecordsFromMaterials(materials){
     for (i = 0; i < materials.length; i++) {
         if (!conceptIDs.includes(materials[i].id)){
             addResourceToRecords(resourceRecords,materials[i].id, 0);
-            submitToAPI("/api/connectResources/" + courseId, resourceRecords);
+            if (submitToAPINoAlert("/api/connectResources/" + courseId, resourceRecords)){
+                window.alert("Saved successfully");
+            } else {
+                window.alert("There was an error saving the file");
+            }
         }
     }
 }

@@ -106,9 +106,15 @@ public class LearningMaterialRecord {
 
     public static void learningMaterialRecordsToJson(List<LearningMaterialRecord> learningMaterialsRecords, String jsonFile) throws IOException {
 
-        Boolean overwrite = false;
-        FileWriter writer = new FileWriter(jsonFile, overwrite);
-        writer.append("[");
+        FileWriter writer = null;
+        try {
+            writer = new FileWriter(jsonFile, false);
+            writer.append("[");
+        } catch (IOException e) {
+            System.out.println("File or directory does not exist");
+            e.printStackTrace();
+        }
+
         for (int i = 0; i < learningMaterialsRecords.size(); i++){
 
             try {

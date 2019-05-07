@@ -168,11 +168,8 @@ function createResourceCheckedFromMaterials(concept, tags){
 function submit() {
     if (submitToAPINoAlert("/api/connectResources/" + courseId, resourceRecords)){
         window.alert("Saved successfully");
-        console.log("Concepts saved");
     } else {
         window.alert("There was an error saving the file");
-        //window.location.replace("/error");
-        console.log("Error");
     }
 
 }

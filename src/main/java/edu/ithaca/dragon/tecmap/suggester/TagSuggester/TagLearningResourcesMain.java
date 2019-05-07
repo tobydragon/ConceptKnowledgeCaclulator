@@ -19,9 +19,11 @@ import static edu.ithaca.dragon.tecmap.suggester.TagSuggester.LearnCPPUtil.isLea
 import static edu.ithaca.dragon.tecmap.suggester.TagSuggester.TagSuggester.calculateTagsTFIDF;
 import static edu.ithaca.dragon.tecmap.suggester.TagSuggester.TagSuggesterUtil.*;
 
-public class TagLearningResources {
+public class TagLearningResourcesMain {
 
     public static void main(String[] args) throws IOException {
+
+        //path for test directory is "src/test/resources/learning_resources_txt"
 
         writeMaterialsToJson();
 
@@ -34,10 +36,15 @@ public class TagLearningResources {
         System.out.println("What directory would you like to use?");
         String directory = scan.nextLine();
 
-        System.out.println("What is the destination?");
-        String dest = scan.nextLine();
+        System.out.println("What is the course name?");
+        String courseId = scan.nextLine();
+
+        String dest = "src/main/resources/datastore/" + courseId + "/" + courseId + "LearningMaterial.json";
 
         File[] files = new File(directory).listFiles();
+
+        System.out.println("Tagging learning materials - this may take a few minutes...");
+
         List<LearningMaterial> learningMaterials = tagLearningMaterials(findLearningResources(files));
         List<LearningMaterialRecord> learningMaterialRecords = new ArrayList<>();
 
@@ -85,6 +92,7 @@ public class TagLearningResources {
      */
     public static List<LearningMaterial> findLearningResources(File[] files) throws IOException {
 
+        //jsonFile used to create id's for learning materials
         final String jsonFile = "src/test/resources/datastore/Cs1Example/Cs1ExampleLearningMaterial.json";
         int startingNum = learningMaterialsCount(jsonFile);
 

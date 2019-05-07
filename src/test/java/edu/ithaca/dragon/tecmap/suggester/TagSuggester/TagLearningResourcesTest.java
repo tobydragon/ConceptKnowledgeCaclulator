@@ -5,7 +5,7 @@ import org.junit.jupiter.api.Test;
 import java.io.File;
 import java.io.IOException;
 
-import static edu.ithaca.dragon.tecmap.suggester.TagSuggester.TagLearningResources.findLearningResources;
+import static edu.ithaca.dragon.tecmap.suggester.TagSuggester.TagLearningResourcesMain.findLearningResources;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 class TagLearningResourcesTest {
