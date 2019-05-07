@@ -34,7 +34,8 @@ public class TagLearningResourcesMain {
         Scanner scan = new Scanner(System.in);
 
         System.out.println("What directory would you like to use?");
-        String directory = scan.nextLine();
+        //String directory = scan.nextLine();
+        String directory = "src/test/resources/learning_resources_txt";
 
         System.out.println("What is the course name?");
         String courseId = scan.nextLine();

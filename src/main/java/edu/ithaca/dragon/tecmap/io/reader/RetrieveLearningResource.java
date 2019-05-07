@@ -73,7 +73,7 @@ public class RetrieveLearningResource {
     }
 
     public static String generateID(String tags, String types){
-        return types + " " + count.incrementAndGet() + " " + tags;
+        return types + " " + count.incrementAndGet();
     }
 
     /**
@@ -95,7 +95,6 @@ public class RetrieveLearningResource {
 
         int start = lowerCaseLines.indexOf(learningMaterialToFind) + 1;
         int end = lowerCaseLines.indexOf(endingWord);
-        tags.add(lines.get(0));
 
         if (start > end){
             end = lines.size();

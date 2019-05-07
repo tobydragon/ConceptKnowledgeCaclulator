@@ -1,10 +1,9 @@
 [{
   "types" : [ "ASSESSMENT" ],
-  "id" : "[ASSESSMENT] 7 [Reading]",
+  "id" : "[ASSESSMENT] 7",
   "content" : "Why might allocation of memory fail when using the new operator? What aspect of a computer  (amount of hard drive space, amount of RAM, processor speed, number of processors, etc.) would make it more likely that allocation would fail?",
   "url" : "",
   "tagsMap" : {
-    "Reading" : 1,
     "allocation" : 1,
     "using" : 1,
     "processors" : 1,
@@ -13,93 +12,79 @@
   }
 },{
   "types" : [ "ASSESSMENT" ],
-  "id" : "[ASSESSMENT] 8 [Reading]",
+  "id" : "[ASSESSMENT] 8",
   "content" : "What is the difference between a dangling pointer and a memory leak? Why is each of them important?",
   "url" : "",
   "tagsMap" : {
     "leak" : 1,
-    "Reading" : 1,
     "pointer" : 1
   }
 },{
   "types" : [ "ASSESSMENT" ],
-  "id" : "[ASSESSMENT] 9 [Reading]",
+  "id" : "[ASSESSMENT] 9",
   "content" : "What is  the main difference between arrays on the stack and arrays on the heap? What is a good reason to make an array on the heap instead of the stack?",
   "url" : "",
   "tagsMap" : {
-    "Reading" : 1,
     "stack" : 1,
     "arrays" : 1
   }
 },{
   "types" : [ "INFORMATION" ],
-  "id" : "[INFORMATION] 10 [Reading]",
+  "id" : "[INFORMATION] 10",
   "content" : "From Learncpp.com: Read section 6.9 and 6.9a",
   "url" : "From Learncpp.com: Read section 6.9 and 6.9a",
-  "tagsMap" : {
-    "Reading" : 1
-  }
+  "tagsMap" : { }
 },{
   "types" : [ "INFORMATION" ],
-  "id" : "[INFORMATION] 11 [Reading]",
+  "id" : "[INFORMATION] 11",
   "content" : "From www.cplusplus.com/doc/tutorial/: Read the \"Dynamic memory\" page.",
   "url" : "From www.cplusplus.com/doc/tutorial/: Read the \"Dynamic memory\" page.",
-  "tagsMap" : {
-    "Reading" : 1
-  }
+  "tagsMap" : { }
 },{
   "types" : [ "INFORMATION" ],
-  "id" : "[INFORMATION] 12 [Reading]",
+  "id" : "[INFORMATION] 12",
   "content" : "http://www.learncpp.com/",
   "url" : "http://www.learncpp.com/",
-  "tagsMap" : {
-    "Reading" : 1
-  }
+  "tagsMap" : { }
 },{
   "types" : [ "INFORMATION" ],
-  "id" : "[INFORMATION] 13 [Reading]",
+  "id" : "[INFORMATION] 13",
   "content" : "http://www.cplusplus.com/doc/tutorial/dynamic/",
   "url" : "http://www.cplusplus.com/doc/tutorial/dynamic/",
-  "tagsMap" : {
-    "Reading" : 1
-  }
+  "tagsMap" : { }
 },{
   "types" : [ "ASSESSMENT" ],
-  "id" : "[ASSESSMENT] 14 [Cs1]",
+  "id" : "[ASSESSMENT] 14",
   "content" : "What's are advantages of using while loops instead of for loops?",
   "url" : "",
   "tagsMap" : {
-    "Cs1" : 1,
     "advantages" : 1,
     "loops" : 1
   }
 },{
   "types" : [ "ASSESSMENT" ],
-  "id" : "[ASSESSMENT] 15 [Cs1]",
+  "id" : "[ASSESSMENT] 15",
   "content" : "How many choices are possible when executing an if-statement?",
   "url" : "",
   "tagsMap" : {
-    "Cs1" : 1,
     "if-statement" : 1,
     "executing" : 1
   }
 },{
   "types" : [ "ASSESSMENT" ],
-  "id" : "[ASSESSMENT] 16 [Cs1]",
+  "id" : "[ASSESSMENT] 16",
   "content" : "When does an 'else' conditional get executed in a function?",
   "url" : "",
   "tagsMap" : {
-    "Cs1" : 1,
     "conditional" : 1,
     "does" : 1
   }
 },{
   "types" : [ "INFORMATION" ],
-  "id" : "[INFORMATION] 17 [Cs1]",
+  "id" : "[INFORMATION] 17",
   "content" : "https://www.learncpp.com/cpp-tutorial/52-if-statements/",
   "url" : "https://www.learncpp.com/cpp-tutorial/52-if-statements/",
   "tagsMap" : {
-    "Cs1" : 1,
     "implicit" : 1,
     "using" : 2,
     "operator=" : 1,
@@ -118,58 +103,50 @@
   }
 },{
   "types" : [ "INFORMATION" ],
-  "id" : "[INFORMATION] 18 [Cs1]",
+  "id" : "[INFORMATION] 18",
   "content" : "https://www.programiz.com/c-programming/c-if-else-statement",
   "url" : "https://www.programiz.com/c-programming/c-if-else-statement",
-  "tagsMap" : {
-    "Cs1" : 1
-  }
+  "tagsMap" : { }
 },{
   "types" : [ "INFORMATION" ],
-  "id" : "[INFORMATION] 19 [Cs1]",
+  "id" : "[INFORMATION] 19",
   "content" : "https://programming.guide/go/for-loop.html",
   "url" : "https://programming.guide/go/for-loop.html",
-  "tagsMap" : {
-    "Cs1" : 1
-  }
+  "tagsMap" : { }
 },{
   "types" : [ "ASSESSMENT" ],
-  "id" : "[ASSESSMENT] 20 [Pass by reference]",
+  "id" : "[ASSESSMENT] 20",
   "content" : "What is the difference between pass-by-value and pass-by-reference?",
   "url" : "",
   "tagsMap" : {
-    "Pass by reference" : 1,
     "pass-by-value" : 1,
     "pass-by-reference" : 1
   }
 },{
   "types" : [ "ASSESSMENT" ],
-  "id" : "[ASSESSMENT] 21 [Pass by reference]",
+  "id" : "[ASSESSMENT] 21",
   "content" : "What are advantages of using pass-by-reference over pass-by-pointer (i.e., when would you use pass-by-reference)?",
   "url" : "",
   "tagsMap" : {
-    "Pass by reference" : 1,
     "using" : 1,
     "advantages" : 1
   }
 },{
   "types" : [ "ASSESSMENT" ],
-  "id" : "[ASSESSMENT] 22 [Pass by reference]",
+  "id" : "[ASSESSMENT] 22",
   "content" : "What are the disadvantages of using pass-by-reference over pass-by-pointer (i.e., when would you use pass-by-pointer)?",
   "url" : "",
   "tagsMap" : {
-    "Pass by reference" : 1,
     "using" : 1,
     "disadvantages" : 1
   }
 },{
   "types" : [ "ASSESSMENT" ],
-  "id" : "[ASSESSMENT] 23 [Pass by reference]",
+  "id" : "[ASSESSMENT] 23",
   "content" : "Now that you see both pass-by-reference and pass-by-pointer, which would you use to pass the line counting parameter in our array library code? Why?",
   "url" : "",
   "tagsMap" : {
     "counting" : 1,
-    "Pass by reference" : 1,
     "array" : 1,
     "parameter" : 1,
     "pass-by-pointer" : 1,
@@ -177,79 +154,68 @@
   }
 },{
   "types" : [ "INFORMATION" ],
-  "id" : "[INFORMATION] 24 [Pass by reference]",
+  "id" : "[INFORMATION] 24",
   "content" : "https://www.ibm.com/support/knowledgecenter/en/SSLTBW_2.3.0/com.ibm.zos.v2r3.cbclx01/cplr233.htm",
   "url" : "https://www.ibm.com/support/knowledgecenter/en/SSLTBW_2.3.0/com.ibm.zos.v2r3.cbclx01/cplr233.htm",
-  "tagsMap" : {
-    "Pass by reference" : 1
-  }
+  "tagsMap" : { }
 },{
   "types" : [ "INFORMATION" ],
-  "id" : "[INFORMATION] 25 [Pass by reference]",
+  "id" : "[INFORMATION] 25",
   "content" : "http://www.geeksforgeeks.org/passing-by-pointer-vs-passing-by-reference-in-c/",
   "url" : "http://www.geeksforgeeks.org/passing-by-pointer-vs-passing-by-reference-in-c/",
-  "tagsMap" : {
-    "Pass by reference" : 1
-  }
+  "tagsMap" : { }
 },{
   "types" : [ "INFORMATION" ],
-  "id" : "[INFORMATION] 26 [Pass by reference]",
+  "id" : "[INFORMATION] 26",
   "content" : "http://www.learncpp.com/cpp-tutorial/71-function-parameters-and-arguments/",
   "url" : "http://www.learncpp.com/cpp-tutorial/71-function-parameters-and-arguments/",
-  "tagsMap" : {
-    "Pass by reference" : 1
-  }
+  "tagsMap" : { }
 },{
   "types" : [ "ASSESSMENT" ],
-  "id" : "[ASSESSMENT] 27 [More Misc]",
+  "id" : "[ASSESSMENT] 27",
   "content" : "What is the difference between pass-by-value and pass-by-reference?",
   "url" : "",
   "tagsMap" : {
-    "More Misc" : 1,
     "pass-by-value" : 1,
     "pass-by-reference" : 1
   }
 },{
   "types" : [ "ASSESSMENT" ],
-  "id" : "[ASSESSMENT] 28 [More Misc]",
+  "id" : "[ASSESSMENT] 28",
   "content" : "What are advantages of using pass-by-reference over pass-by-pointer (i.e., when would you use pass-by-reference)?",
   "url" : "",
   "tagsMap" : {
     "using" : 1,
-    "advantages" : 1,
-    "More Misc" : 1
+    "advantages" : 1
   }
 },{
   "types" : [ "ASSESSMENT" ],
-  "id" : "[ASSESSMENT] 29 [More Misc]",
+  "id" : "[ASSESSMENT] 29",
   "content" : "What are the disadvantages of using pass-by-reference over pass-by-pointer (i.e., when would you use pass-by-pointer)?",
   "url" : "",
   "tagsMap" : {
     "using" : 1,
-    "disadvantages" : 1,
-    "More Misc" : 1
+    "disadvantages" : 1
   }
 },{
   "types" : [ "ASSESSMENT" ],
-  "id" : "[ASSESSMENT] 30 [More Misc]",
+  "id" : "[ASSESSMENT] 30",
   "content" : "Now that you see both pass-by-reference and pass-by-pointer, which would you use to pass the line counting parameter in our array library code? Why?",
   "url" : "",
   "tagsMap" : {
     "counting" : 1,
     "array" : 1,
     "parameter" : 1,
-    "More Misc" : 1,
     "pass-by-pointer" : 1,
     "pass-by-reference" : 1
   }
 },{
   "types" : [ "INFORMATION" ],
-  "id" : "[INFORMATION] 31 [More Misc]",
+  "id" : "[INFORMATION] 31",
   "content" : "https://www.learncpp.com/cpp-tutorial/27-chars/",
   "url" : "https://www.learncpp.com/cpp-tutorial/27-chars/",
   "tagsMap" : {
     "static" : 1,
-    "More Misc" : 1,
     "sequences" : 1,
     "ascii" : 2,
     "printing" : 1,
@@ -257,7 +223,7 @@
   }
 },{
   "types" : [ "INFORMATION" ],
-  "id" : "[INFORMATION] 32 [More Misc]",
+  "id" : "[INFORMATION] 32",
   "content" : "https://www.learncpp.com/cpp-tutorial/3-8a-bit-flags-and-bit-masks/",
   "url" : "https://www.learncpp.com/cpp-tutorial/3-8a-bit-flags-and-bit-masks/",
   "tagsMap" : {
@@ -268,7 +234,6 @@
     "rgba" : 1,
     "using" : 1,
     "c++11" : 1,
-    "More Misc" : 1,
     "flags" : 7,
     "bits" : 4,
     "answers" : 1,
@@ -284,7 +249,7 @@
   }
 },{
   "types" : [ "INFORMATION" ],
-  "id" : "[INFORMATION] 33 [More Misc]",
+  "id" : "[INFORMATION] 33",
   "content" : "https://www.learncpp.com/cpp-tutorial/66-c-style-strings/",
   "url" : "https://www.learncpp.com/cpp-tutorial/66-c-style-strings/",
   "tagsMap" : {
@@ -293,62 +258,56 @@
     "null-terminated" : 1,
     "manipulating" : 1,
     "don’t" : 1,
-    "More Misc" : 1,
     "c-style" : 5,
     "terminator" : 1,
     "std::cin" : 1
   }
 },{
   "types" : [ "ASSESSMENT" ],
-  "id" : "[ASSESSMENT] 34 [Misc]",
+  "id" : "[ASSESSMENT] 34",
   "content" : "What is the difference between pass-by-value and pass-by-reference?",
   "url" : "",
   "tagsMap" : {
-    "Misc" : 1,
     "pass-by-value" : 1,
     "pass-by-reference" : 1
   }
 },{
   "types" : [ "ASSESSMENT" ],
-  "id" : "[ASSESSMENT] 35 [Misc]",
+  "id" : "[ASSESSMENT] 35",
   "content" : "What are advantages of using pass-by-reference over pass-by-pointer (i.e., when would you use pass-by-reference)?",
   "url" : "",
   "tagsMap" : {
     "using" : 1,
-    "advantages" : 1,
-    "Misc" : 1
+    "advantages" : 1
   }
 },{
   "types" : [ "ASSESSMENT" ],
-  "id" : "[ASSESSMENT] 36 [Misc]",
+  "id" : "[ASSESSMENT] 36",
   "content" : "What are the disadvantages of using pass-by-reference over pass-by-pointer (i.e., when would you use pass-by-pointer)?",
   "url" : "",
   "tagsMap" : {
     "using" : 1,
-    "disadvantages" : 1,
-    "Misc" : 1
+    "disadvantages" : 1
   }
 },{
   "types" : [ "ASSESSMENT" ],
-  "id" : "[ASSESSMENT] 37 [Misc]",
+  "id" : "[ASSESSMENT] 37",
   "content" : "Now that you see both pass-by-reference and pass-by-pointer, which would you use to pass the line counting parameter in our array library code? Why?",
   "url" : "",
   "tagsMap" : {
     "counting" : 1,
     "array" : 1,
     "parameter" : 1,
-    "Misc" : 1,
     "pass-by-pointer" : 1,
     "pass-by-reference" : 1
   }
 },{
   "types" : [ "INFORMATION" ],
-  "id" : "[INFORMATION] 38 [Misc]",
+  "id" : "[INFORMATION] 38",
   "content" : "https://www.learncpp.com/cpp-tutorial/13-a-first-look-at-variables-initialization-and-assignment/",
   "url" : "https://www.learncpp.com/cpp-tutorial/13-a-first-look-at-variables-initialization-and-assignment/",
   "tagsMap" : {
     "identifier" : 1,
-    "Misc" : 1,
     "runtime" : 1,
     "integer" : 1,
     "ram" : 1,
@@ -357,23 +316,21 @@
   }
 },{
   "types" : [ "INFORMATION" ],
-  "id" : "[INFORMATION] 39 [Misc]",
+  "id" : "[INFORMATION] 39",
   "content" : "https://www.learncpp.com/cpp-tutorial/26-boolean-values/",
   "url" : "https://www.learncpp.com/cpp-tutorial/26-boolean-values/",
   "tagsMap" : {
     "boolean" : 1,
-    "bool" : 1,
-    "Misc" : 1
+    "bool" : 1
   }
 },{
   "types" : [ "INFORMATION" ],
-  "id" : "[INFORMATION] 40 [Misc]",
+  "id" : "[INFORMATION] 40",
   "content" : "https://www.learncpp.com/cpp-tutorial/4-3c-using-statements/",
   "url" : "https://www.learncpp.com/cpp-tutorial/4-3c-using-statements/",
   "tagsMap" : {
     "using" : 6,
     "directives" : 1,
-    "Misc" : 1,
     "replacing" : 1,
     "limiting" : 1,
     "declaration" : 2,
