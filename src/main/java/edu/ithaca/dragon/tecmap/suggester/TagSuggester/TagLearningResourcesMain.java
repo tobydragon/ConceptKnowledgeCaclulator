@@ -101,7 +101,7 @@ public class TagLearningResourcesMain {
         RetrieveLearningResource retrieveLearningResource = new RetrieveLearningResource(startingNum);
 
         for (File file : files) {
-            learningMaterials.addAll(retrieveLearningResource.findLearningMaterial(readFile(file.getPath())));
+            learningMaterials.addAll(retrieveLearningResource.findLearningMaterials(readFile(file.getPath())));
         }
 
         return learningMaterials;

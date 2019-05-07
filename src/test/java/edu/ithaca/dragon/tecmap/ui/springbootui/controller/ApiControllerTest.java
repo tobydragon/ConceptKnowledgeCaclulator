@@ -478,18 +478,4 @@ public class ApiControllerTest {
         JSONAssert.assertEquals(expected, result.getResponse().getContentAsString(), false);
     }
 
-    @Test
-    public void getLearningMaterialRecords() throws Exception {
-        String courseId = "Cs1Example";
-        String path = "src/test/resources/datastore/Cs1Example/Cs1ExampleLearningMaterial.json";
-
-        Mockito.when(tecmapServiceMock.retrieveLearningMaterialRecords(anyString())).thenReturn(tecmapService.retrieveLearningMaterialRecords(courseId));
-
-        RequestBuilder requestBuilder = MockMvcRequestBuilders.get("/api/connectMaterials/" + courseId).accept(MediaType.APPLICATION_JSON);
-
-        MvcResult result = mockMvc.perform(requestBuilder).andReturn();
-
-        JSONAssert.assertEquals(Cs1ExampleJsonStrings.learningMaterials, result.getResponse().getContentAsString(), false);
-
-    }
 }

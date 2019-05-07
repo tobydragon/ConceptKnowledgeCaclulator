@@ -3,6 +3,13 @@ var resourceRecords = readJson("/api/currentResourceLinks/" + courseId);
 
 $(document).ready(function(){
     createLearningRecordsFromMaterials(materials);
+
+    if (submitToAPINoAlert("/api/connectResources/" + courseId, resourceRecords)){
+        window.alert("Saved successfully");
+    } else {
+        //window.alert("There was an error saving the file");
+    }
+
     document.getElementById("recordsList").insertAdjacentHTML("beforebegin", "<h3>CourseID: " + courseId + "</h3>")
     document.getElementById("recordsList").innerHTML = createListOfLearningRecordsString(materials, resourceRecords);
     $("#index").text(loadNavString(materials.length));
@@ -19,11 +26,6 @@ function createLearningRecordsFromMaterials(materials){
     for (i = 0; i < materials.length; i++) {
         if (!conceptIDs.includes(materials[i].id)){
             addResourceToRecords(resourceRecords,materials[i].id, 0);
-            if (submitToAPINoAlert("/api/connectResources/" + courseId, resourceRecords)){
-                window.alert("Saved successfully");
-            } else {
-                window.alert("There was an error saving the file");
-            }
         }
     }
 }

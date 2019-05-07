@@ -33,7 +33,7 @@ public class RetrieveLearningResource {
     public static List<LearningMaterial> findInformation(String text) {
         String information = "reading";
         String endingWord = "questions";
-        return findLearningMaterial(buildStringsFromFile(text), information, endingWord);
+        return findLearningMaterials(buildStringsFromFile(text), information, endingWord);
     }
 
     /**
@@ -44,7 +44,7 @@ public class RetrieveLearningResource {
     public static List<LearningMaterial> findAssessments(String text) {
         String information = "questions";
         String endingWord = "reading";
-        return findLearningMaterial(buildStringsFromFile(text), information, endingWord);
+        return findLearningMaterials(buildStringsFromFile(text), information, endingWord);
     }
 
     /**
@@ -62,7 +62,7 @@ public class RetrieveLearningResource {
         return text.matches(urlPattern.pattern());
     }
 
-    public static List<LearningMaterial> findLearningMaterial(String text){
+    public static List<LearningMaterial> findLearningMaterials(String text){
 
         List<LearningMaterial> learningMaterials = new ArrayList<>();
         learningMaterials.addAll(findAssessments(text));
@@ -83,7 +83,7 @@ public class RetrieveLearningResource {
      * @param endingWord - string with the opposite learningMaterialToFind
      * @return arraylist populated with learning materials created from text file
      */
-    public static List<LearningMaterial> findLearningMaterial(List<String> lines, String learningMaterialToFind, String endingWord){
+    public static List<LearningMaterial> findLearningMaterials(List<String> lines, String learningMaterialToFind, String endingWord){
         List<LearningMaterial> learningMaterials = new ArrayList<>();
         List<String> tags = new ArrayList<>();
         List<LearningResourceType> types = new ArrayList<>();
@@ -108,7 +108,12 @@ public class RetrieveLearningResource {
         } else {
             types.add(LearningResourceType.INFORMATION);
             for (int i = start; i < end; i++) {
-                learningMaterials.add(new LearningMaterial(generateID(tags.toString(), types.toString()), types, lines.get(i), tags, lines.get(i)));
+                if (isURL(lines.get(i))){
+                    learningMaterials.add(new LearningMaterial(generateID(tags.toString(), types.toString()), types, lines.get(i), tags, lines.get(i)));
+                } else {
+                    learningMaterials.add(new LearningMaterial(generateID(tags.toString(), types.toString()), types, lines.get(i), tags));
+                }
+
             }
         }
 

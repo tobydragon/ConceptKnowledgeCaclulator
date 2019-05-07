@@ -32,13 +32,13 @@
   "types" : [ "INFORMATION" ],
   "id" : "[INFORMATION] 10",
   "content" : "From Learncpp.com: Read section 6.9 and 6.9a",
-  "url" : "From Learncpp.com: Read section 6.9 and 6.9a",
+  "url" : "",
   "tagsMap" : { }
 },{
   "types" : [ "INFORMATION" ],
   "id" : "[INFORMATION] 11",
   "content" : "From www.cplusplus.com/doc/tutorial/: Read the \"Dynamic memory\" page.",
-  "url" : "From www.cplusplus.com/doc/tutorial/: Read the \"Dynamic memory\" page.",
+  "url" : "",
   "tagsMap" : { }
 },{
   "types" : [ "INFORMATION" ],

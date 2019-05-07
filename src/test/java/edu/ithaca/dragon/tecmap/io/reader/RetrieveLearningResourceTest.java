@@ -102,25 +102,21 @@ class RetrieveLearningResourceTest {
         for (int i = 0; i < assessmentsFileTwo.size(); i++) {
             assertEquals("Incorrect learning resource type for learning material", assessmentType, assessmentsFileTwo.get(i).getLearningResourceType());
             assertEquals("Content does not match", questionsFileTwo.get(i), assessmentsFileTwo.get(i).getContent());
-            assertEquals("Incorrent URL", "", assessmentsFileTwo.get(i).getUrl());
         }
 
         for (int i = 0; i < informationFileTwo.size(); i++) {
             assertEquals("Incorrect learning resource type for learning material", informationType, informationFileTwo.get(i).getLearningResourceType());
             assertEquals("Content does not match", infoFileTwo.get(i), informationFileTwo.get(i).getContent());
-            assertEquals("Incorrent URL", infoFileTwo.get(i), informationFileTwo.get(i).getUrl());
         }
 
         for (int i = 0; i < assessmentsFileOne.size(); i++) {
             assertEquals("Incorrect learning resource type for learning material", assessmentType, assessmentsFileOne.get(i).getLearningResourceType());
             assertEquals("Content does not match", questionsFileOne.get(i), assessmentsFileOne.get(i).getContent());
-            assertEquals("Incorrent URL", "", assessmentsFileOne.get(i).getUrl());
         }
 
         for (int i = 0; i < informationFileOne.size(); i++) {
             assertEquals("Incorrect learning resource type for learning material", informationType, informationFileOne.get(i).getLearningResourceType());
             assertEquals("Content does not match", infoFileOne.get(i), informationFileOne.get(i).getContent());
-            assertEquals("Incorrent URL", infoFileOne.get(i), informationFileOne.get(i).getUrl());
         }
 
     }
