@@ -23,7 +23,7 @@ describe("ConnectMaterialsSpecs", function() {
     it("updateConceptsString", function () {
         var conceptList = ["If Statements","For Loops"];
         var resourceRecord = resourceRecords[0];
-        expect(updateConceptsString(conceptList, resourceRecord)).toEqual("<tr><td>If Statements</td><td><input type='checkbox' checked='true' onclick='updateConceptId(resourceRecords, \"Q1\", \"If Statements\")'></td></tr><tr><td>For Loops</td><td><input type='checkbox' onclick='updateConceptId(resourceRecords, \"Q1\", \"For Loops\")'></td></tr>");
+        expect(updateConceptsString(conceptList, resourceRecord)).toEqual("<tr><td>If Statements</td><td><input type='checkbox' checked='true' onclick='updateConceptId(resourceRecords, \"Q1\", \"If Statements\");updateSaveChangesButton()'></td></tr><tr><td>For Loops</td><td><input type='checkbox' onclick='updateConceptId(resourceRecords, \"Q1\", \"For Loops\");updateSaveChangesButton()'></td></tr>");
     });
 
     it("updateMaterialsString", function () {

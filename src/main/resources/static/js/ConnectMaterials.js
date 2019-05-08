@@ -2,6 +2,7 @@ var courseId,
     materials = readJson("/api/connectMaterials/" + courseId),
     concepts = readJson("/api/conceptList/" + courseId),
     resourceRecords = readJson("/api/currentResourceLinks/" + courseId),
+    originalResourceRecords = JSON.parse(JSON.stringify(resourceRecords)),
     resourceRecord; //needs to be defined in the global scope of this file so that the html has access to it, otherwise it will live inside the scope of the function
 
 
@@ -51,10 +52,10 @@ function updateConceptsString(concepts, resourceRecord){
         typeString += concepts[i];
         if (createResourceCheckedForConcept(concepts[i], resourceRecord)){
             typeString += "</td><td><input type='checkbox' checked='true' ";
-            typeString += "onclick='updateConceptId(resourceRecords, \"" + resourceRecord.learningResourceId + "\", \"" + concepts[i] + "\")\'></td></tr>";
+            typeString += "onclick='updateConceptId(resourceRecords, \"" + resourceRecord.learningResourceId + "\", \"" + concepts[i] + "\");updateSaveChangesButton()\'></td></tr>";
         } else {
             typeString += "</td><td><input type='checkbox' ";
-            typeString += "onclick='updateConceptId(resourceRecords, \"" + resourceRecord.learningResourceId + "\", \"" + concepts[i] + "\")\'></td></tr>";
+            typeString += "onclick='updateConceptId(resourceRecords, \"" + resourceRecord.learningResourceId + "\", \"" + concepts[i] + "\");updateSaveChangesButton()\'></td></tr>";
         }
 
     }
@@ -64,6 +65,7 @@ function updateConceptsString(concepts, resourceRecord){
 
 function suggestWithMaterialTags(){
     document.getElementById("conceptList").innerHTML = updateConceptsStringWithSuggestedTags(concepts, resourceRecord);
+    updateSaveChangesButton();
 }
 
 function updateConceptsStringWithSuggestedTags(concepts, resourceRecord){
@@ -77,10 +79,10 @@ function updateConceptsStringWithSuggestedTags(concepts, resourceRecord){
         if (createResourceCheckedForConcept(concepts[i], resourceRecord) || createResourceCheckedFromMaterials(concepts[i], tags)){
             updateConceptId(resourceRecords, resourceRecord.learningResourceId, concepts[i]);
             typeString += "</td><td><input type='checkbox' checked='true' ";
-            typeString += "onclick='updateConceptId(resourceRecords, \"" + resourceRecord.learningResourceId + "\", \"" + concepts[i] + "\")\'></td></tr>";
+            typeString += "onclick='updateConceptId(resourceRecords, \"" + resourceRecord.learningResourceId + "\", \"" + concepts[i] + "\");updateSaveChangesButton()\'></td></tr>";
         } else {
             typeString += "</td><td><input type='checkbox' ";
-            typeString += "onclick='updateConceptId(resourceRecords, \"" + resourceRecord.learningResourceId + "\", \"" + concepts[i] + "\")\'></td></tr>";
+            typeString += "onclick='updateConceptId(resourceRecords, \"" + resourceRecord.learningResourceId + "\", \"" + concepts[i] + "\");updateSaveChangesButton()\'></td></tr>";
         }
 
     }
@@ -163,6 +165,14 @@ function createResourceCheckedFromMaterials(concept, tags){
     }
 
     return false;
+}
+
+function updateSaveChangesButton() {
+    if (!checkForChangesInRecords(originalResourceRecords, resourceRecords)) {
+        $('#save').css("color", "#FF0707");
+    } else {
+        $('#save').css("color", "#0C8D21");
+    }
 }
 
 function submit() {

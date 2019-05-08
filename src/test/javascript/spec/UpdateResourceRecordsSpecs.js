@@ -46,7 +46,7 @@ describe("UpdateResourceRecordsSpecs", function() {
 
     it("checkForChangesInRecords", function () {
         var originalRecords = readJson("../resources/datastore/Cs1Example/Cs1ExampleResources.json");
-        var newRecords = JSON.parse(JSON.stringify(originalRecords))
+        var newRecords = JSON.parse(JSON.stringify(originalRecords));
         expect(checkForChangesInRecords(originalRecords, newRecords)).toEqual(true);
         expect(checkForChangesInRecords(resourceRecords, addResourceToRecords(newRecords, "newResource", 1))).toEqual(false);
     });
