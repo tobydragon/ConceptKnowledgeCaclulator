@@ -54,3 +54,7 @@ function createResourceIdsList(resourceRecords) {
     }
     return resourceIds;
 }
+
+function checkForChangesInRecords(originalRecords, newRecords) {
+    return JSON.stringify(originalRecords) === JSON.stringify(newRecords);
+}

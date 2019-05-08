@@ -44,6 +44,13 @@ describe("UpdateResourceRecordsSpecs", function() {
         expect(resourceIds).toEqual(["Q1", "Q2", "Q3", "Q4", "Q5", "HW1", "HW2", "HW3", "HW4", "HW5"]);
     });
 
+    it("checkForChangesInRecords", function () {
+        var originalRecords = readJson("../resources/datastore/Cs1Example/Cs1ExampleResources.json");
+        var newRecords = JSON.parse(JSON.stringify(originalRecords))
+        expect(checkForChangesInRecords(originalRecords, newRecords)).toEqual(true);
+        expect(checkForChangesInRecords(resourceRecords, addResourceToRecords(newRecords, "newResource", 1))).toEqual(false);
+    });
+
 
 
 });
