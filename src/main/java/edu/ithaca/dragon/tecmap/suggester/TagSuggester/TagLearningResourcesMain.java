@@ -14,8 +14,7 @@ import java.util.List;
 import java.util.Scanner;
 
 import static edu.ithaca.dragon.tecmap.io.record.LearningMaterialRecord.learningMaterialRecordsToJson;
-import static edu.ithaca.dragon.tecmap.suggester.TagSuggester.LearnCPPUtil.findTagsFromBoldWords;
-import static edu.ithaca.dragon.tecmap.suggester.TagSuggester.LearnCPPUtil.isLearnCPPURL;
+import static edu.ithaca.dragon.tecmap.suggester.TagSuggester.LearnCPPUtil.*;
 import static edu.ithaca.dragon.tecmap.suggester.TagSuggester.TagSuggester.calculateTagsTFIDF;
 import static edu.ithaca.dragon.tecmap.suggester.TagSuggester.TagSuggesterUtil.*;
 
@@ -32,6 +31,7 @@ public class TagLearningResourcesMain {
     public static void writeMaterialsToJson() throws IOException {
 
         Scanner scan = new Scanner(System.in);
+        List<LearningMaterial> learningMaterials;
 
         System.out.println("What directory would you like to use?");
         //String directory = scan.nextLine();
@@ -41,12 +41,20 @@ public class TagLearningResourcesMain {
         String courseId = scan.nextLine();
 
         String dest = "src/main/resources/datastore/" + courseId + "/" + courseId + "LearningMaterial.json";
-
         File[] files = new File(directory).listFiles();
 
-        System.out.println("Tagging learning materials - this may take a few minutes...");
+        System.out.println("Would you like to use TFIDF for ranking terms gathered from websites? (y/n)");
 
-        List<LearningMaterial> learningMaterials = tagLearningMaterials(findLearningResources(files));
+        if (scan.nextLine().toLowerCase().equals("y")) {
+            System.out.println("Tagging learning materials - this may take a few minutes...");
+            learningMaterials = tagLearningMaterials(findLearningResources(files), true);
+        } else {
+            System.out.println("Tagging learning materials - this may take a few minutes...");
+            learningMaterials = tagLearningMaterials(findLearningResources(files), false);
+        }
+
+
+
         List<LearningMaterialRecord> learningMaterialRecords = new ArrayList<>();
 
 
@@ -64,17 +72,20 @@ public class TagLearningResourcesMain {
      * @param learningMaterials - list of learningMaterials to be tagged
      * @return the same learningMaterial objects that were passed in, but with additional tags
      */
-    public static List<LearningMaterial> tagLearningMaterials(List<LearningMaterial> learningMaterials) throws IOException {
+    public static List<LearningMaterial> tagLearningMaterials(List<LearningMaterial> learningMaterials, boolean tfidf) throws IOException {
 
-        //List<String> learnCPPDocuments = generateDocumentsFromIndex();
         List<String> assessmentDocuments = generateAssessmentDocuments(learningMaterials);
 
         for (LearningMaterial learningMaterial : learningMaterials){
 
             if (isLearnCPPURL(learningMaterial.getUrl()) && learningMaterial.getLearningResourceType().contains(LearningResourceType.INFORMATION)){
-                //learningMaterial.addTagsMap(calculateTagsTFIDF(findParagraph(learningMaterial.getUrl()), learnCPPDocuments));
                 Document doc = Jsoup.connect(learningMaterial.getUrl()).timeout(10000).validateTLSCertificates(false).get();
-                learningMaterial.addTagsMap(findTagsFromBoldWords(doc));
+                if (tfidf) {
+                    learningMaterial.addTagsMap(calculateTagsTFIDF(findParagraph(doc), generateDocumentsFromIndex()));
+                } else {
+                    learningMaterial.addTagsMap(findTagsFromBoldWords(doc));
+                }
+
             }
 
             else if (learningMaterial.getLearningResourceType().contains(LearningResourceType.ASSESSMENT)){
