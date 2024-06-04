@@ -1,5 +1,6 @@
 package edu.ithaca.dragon.tecmap.io.reader;
 
+import com.opencsv.exceptions.CsvException;
 import edu.ithaca.dragon.tecmap.Settings;
 import org.junit.jupiter.api.Test;
 
@@ -13,7 +14,7 @@ import static org.junit.jupiter.api.Assertions.*;
 class CsvRepresentationTest {
 
     @Test
-    void parseAllRowsFromFileTest() throws IOException {
+    void parseAllRowsFromFileTest() throws IOException, CsvException {
         List<String[]> rows = CsvRepresentation.parseRowsFromFile(Settings.DEFAULT_TEST_DATASTORE_PATH + "Cs1Example/Cs1ExampleAssessment1.csv");
         assertEquals("student ID", rows.get(0)[0]);
         assertEquals("", rows.get(1)[0]);
@@ -22,7 +23,7 @@ class CsvRepresentationTest {
     }
 
     @Test
-    void writeRowsToFileTest() throws IOException{
+    void writeRowsToFileTest() throws IOException, CsvException {
         List<String[]> rows = CsvRepresentation.parseRowsFromFile(Settings.DEFAULT_TEST_DATASTORE_PATH + "Cs1Example/Cs1ExampleAssessment1.csv");
         //change some stuff to wrote to the file
         rows.get(2)[0] ="s100";

@@ -121,44 +121,12 @@ public interface ConceptKnowledgeCalculatorAPI {
     OrganizedLearningResourceSuggestions calcIndividualSpecificConceptSuggestions(String userId, String conceptId) throws Exception;
 
     /**
-     * Calculates average knowledgeEstimates of a AssessmentItem across all students
-     * @param learningObject matrix, Learningobject
-     * @return average knowledgeEstimates for given AssessmentItem
-     */
-    double getLearningObjectAvg(String learningObject) throws Exception;
-
-    /**
      * Collects a list of students from the current graph.
      * @pre a user selects to view a list of all users within the graph
      * @return list of userIds
      */
     List<String> getUserIdList() throws Exception;
 
-    /**
-     * Calculates a student's average knowledgeEstimates across all LearningObjects
-     * @param user
-     * @return the average of knowledgeEstimates
-     */
-    double getStudentAvg(String user);
-
-    /**
-     * Prints a matrix of factors (columns) and learning objects (rows) that tell how  connected multiple learning
-     * objects are to just a few factors
-     * @pre resource, assessment, structure files are all present and an R Matrix is created
-     */
-    void getFactorMatrix();
-
-    /**
-     * Uses data from the students and the structure given by the user to create a graph showing the weights
-     * between the bottom layer of data and the concepts they influence.
-     */
-    void createConfirmatoryGraph();
-
-    /**
-     * Takes connections stored in CohortConceptGraphs and creates a text file
-     * in the format readable for confirmatory graphing
-     */
-    void createModelFile();
 
     /**
      * Calculates a list of conceptNode based on an individual graph , returns a the list of ConceptNodes

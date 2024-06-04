@@ -5,15 +5,14 @@ import edu.ithaca.dragon.tecmap.TecmapAPI;
 import edu.ithaca.dragon.tecmap.conceptgraph.ConceptGraph;
 import edu.ithaca.dragon.tecmap.data.TecmapDatastore;
 import edu.ithaca.dragon.tecmap.data.TecmapFileDatastore;
-import org.junit.Assert;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.*;
 
 public class AssessmentItemTest {
     @Test
@@ -24,11 +23,11 @@ public class AssessmentItemTest {
         AssessmentItemResponse lor3 = new AssessmentItemResponse("student2", "Q2", 1);
         AssessmentItemResponse lor4 = new AssessmentItemResponse("student3", "Q2", 0);
 
-        Assert.assertEquals(true, lor0.equals(lor1));
-        Assert.assertEquals(false, lor0.equals(lor2));
-        Assert.assertEquals(false, lor0.equals(lor3));
-        Assert.assertEquals(false, lor0.equals(lor4));
-        Assert.assertEquals(false, lor3.equals(lor4));
+        assertEquals(true, lor0.equals(lor1));
+        assertEquals(false, lor0.equals(lor2));
+        assertEquals(false, lor0.equals(lor3));
+        assertEquals(false, lor0.equals(lor4));
+        assertEquals(false, lor3.equals(lor4));
     }
 
     @Test
@@ -45,8 +44,8 @@ public class AssessmentItemTest {
         lo3.addResponse(new AssessmentItemResponse("student1", "Q2", 1));
         lo3.addResponse(new AssessmentItemResponse("student1", "Q2", 1));
 
-        Assert.assertEquals(true, lo1.equals(lo2));
-        Assert.assertEquals(false, lo1.equals(lo3));
+        assertEquals(true, lo1.equals(lo2));
+        assertEquals(false, lo1.equals(lo3));
     }
 
     @Test
@@ -56,13 +55,13 @@ public class AssessmentItemTest {
 
         for (AssessmentItem orig : toCopy.values()){
             AssessmentItem copy = newMap.get(orig.getId());
-            Assert.assertEquals(orig, copy);
-            Assert.assertFalse(orig == copy);
+            assertEquals(orig, copy);
+            assertNotSame(orig, copy);
         }
 
         //probably redundant with above, but just being safe
-        Assert.assertFalse(toCopy == newMap);
-        Assert.assertEquals(toCopy, newMap);
+        assertNotSame(toCopy, newMap);
+        assertEquals(toCopy, newMap);
     }
 
     @Test
@@ -96,17 +95,17 @@ public class AssessmentItemTest {
             //The original should have responses
             for(AssessmentItem assessment : assessmentItems){
                 if(assessment.getResponses().size() == 0){
-                    Assert.fail();
+                    fail();
                 }
             }
             //The copy should not have responses
             for(AssessmentItem blankAssessment : copyWithoutResponses){
                 if(blankAssessment.getResponses().size() != 0){
-                    Assert.fail();
+                    fail();
                 }
             }
         }catch (Exception e){
-            Assert.fail();
+            fail();
             e.printStackTrace();
         }
     }
@@ -125,7 +124,7 @@ public class AssessmentItemTest {
 
 
         }catch (Exception e){
-            Assert.fail();
+            fail();
             e.printStackTrace();
         }
     }

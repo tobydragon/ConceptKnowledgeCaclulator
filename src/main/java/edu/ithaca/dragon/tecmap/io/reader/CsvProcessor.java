@@ -1,5 +1,7 @@
 package edu.ithaca.dragon.tecmap.io.reader;
 
+import com.opencsv.exceptions.CsvException;
+
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -13,7 +15,7 @@ public interface CsvProcessor {
     void writeToFile(String filepath) throws IOException;
 
 
-    static void processFilesInDirectory(CsvProcessor processor, String directoryToProcess) throws IOException {
+    static void processFilesInDirectory(CsvProcessor processor, String directoryToProcess) throws IOException, CsvException {
         for (String filename : allCsvFilesInDirectory(directoryToProcess)) {
             if (processor.shouldProcessFile(filename)) {
                 List<String[]> rows = CsvRepresentation.parseRowsFromFile(directoryToProcess+filename);

@@ -1,7 +1,7 @@
 package edu.ithaca.dragon.tecmap.data;
 
 import edu.ithaca.dragon.tecmap.Settings;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 import java.io.IOException;
 import java.nio.file.Files;

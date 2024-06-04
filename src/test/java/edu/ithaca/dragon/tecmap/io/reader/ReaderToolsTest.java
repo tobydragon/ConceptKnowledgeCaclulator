@@ -1,11 +1,12 @@
 package edu.ithaca.dragon.tecmap.io.reader;
 
-import edu.ithaca.dragon.tecmap.io.reader.ReaderTools;
-import org.junit.Assert;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 import java.util.Arrays;
 import java.util.List;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.fail;
 
 /**
  * Created by Ryan on 11/29/2017.
@@ -16,11 +17,11 @@ public class ReaderToolsTest {
         String object = "total Score - 25";
         String outCome = "25";
         try {
-            Assert.assertEquals(outCome, ReaderTools.pullNumber(object));
+            assertEquals(outCome, ReaderTools.pullNumber(object));
         }
         catch (Exception e){
             e.printStackTrace();
-            Assert.fail();
+            fail();
         }
     }
     @Test
@@ -28,11 +29,11 @@ public class ReaderToolsTest {
         String object = "total Score - 25.3.2";
         String outCome = "";
         try {
-            Assert.assertEquals(outCome,ReaderTools.pullNumber(object));
+            assertEquals(outCome,ReaderTools.pullNumber(object));
         }
         catch (Exception e){
             e.printStackTrace();
-            Assert.fail();
+            fail();
         }
     }
     @Test
@@ -40,11 +41,11 @@ public class ReaderToolsTest {
         String object = "total Score - -25.34";
         String outCome = "-25.34";
         try {
-            Assert.assertEquals(outCome,ReaderTools.pullNumber(object));
+            assertEquals(outCome,ReaderTools.pullNumber(object));
         }
         catch (Exception e){
             e.printStackTrace();
-            Assert.fail();
+            fail();
         }
     }
     @Test
@@ -52,11 +53,11 @@ public class ReaderToolsTest {
         String object = "total Score - N/A";
         String outCome = "";
         try {
-            Assert.assertEquals(outCome,ReaderTools.pullNumber(object));
+            assertEquals(outCome,ReaderTools.pullNumber(object));
         }
         catch (Exception e){
             e.printStackTrace();
-            Assert.fail();
+            fail();
         }
     }
     @Test
@@ -64,11 +65,11 @@ public class ReaderToolsTest {
         String titles = "this is, a title to test. this, will not work";
         List<String> myList = Arrays.asList("this is","a title to test. this","will not work");
         try {
-            Assert.assertEquals(myList, ReaderTools.lineToList(titles));
+            assertEquals(myList, ReaderTools.lineToList(titles));
         }
         catch(Exception e){
             e.printStackTrace();
-            Assert.fail();
+            fail();
         }
     }
     @Test
@@ -76,11 +77,11 @@ public class ReaderToolsTest {
         String titles = "another test, to fail again, lets see how this goes";
         List<String> myList = Arrays.asList("another test", "to fail again", "lets see how this goes");
         try {
-            Assert.assertEquals(myList, ReaderTools.lineToList(titles));
+            assertEquals(myList, ReaderTools.lineToList(titles));
         }
         catch(Exception e){
             e.printStackTrace();
-            Assert.fail();
+            fail();
         }
     }
     @Test
@@ -88,11 +89,11 @@ public class ReaderToolsTest {
         String titles = "hello, a third test, maybe \"this one will pass\". Probably not";
         List<String> myList = Arrays.asList("hello", "a third test" , "maybe this one will pass. Probably not");
         try {
-            Assert.assertEquals(myList, ReaderTools.lineToList(titles));
+            assertEquals(myList, ReaderTools.lineToList(titles));
         }
         catch(Exception e){
             e.printStackTrace();
-            Assert.fail();
+            fail();
         }
     }
     @Test
@@ -100,11 +101,11 @@ public class ReaderToolsTest {
         String titles = "hello, a \"fourth\" test, *Breaks here*";
         List<String> myList = Arrays.asList("hello", "a fourth test" , "*Breaks here*");
         try {
-            Assert.assertEquals(myList, ReaderTools.lineToList(titles));
+            assertEquals(myList, ReaderTools.lineToList(titles));
         }
         catch(Exception e){
             e.printStackTrace();
-            Assert.fail();
+            fail();
         }
     }
     @Test
@@ -112,11 +113,11 @@ public class ReaderToolsTest {
         String titles = "Test 5: another break, \"maybe, maybe-not?\"";
         List<String> myList = Arrays.asList("Test 5: another break", "maybe, maybe-not?");
         try {
-            Assert.assertEquals(myList, ReaderTools.lineToList(titles));
+            assertEquals(myList, ReaderTools.lineToList(titles));
         }
         catch(Exception e){
             e.printStackTrace();
-            Assert.fail();
+            fail();
         }
     }
 }

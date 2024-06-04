@@ -2,12 +2,13 @@ package edu.ithaca.dragon.tecmap.io.writer;
 
 import edu.ithaca.dragon.tecmap.learningresource.AssessmentItemResponse;
 import edu.ithaca.dragon.tecmap.learningresource.ExampleLearningObjectResponseFactory;
-import org.junit.Assert;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 import java.util.List;
 import java.util.SortedSet;
 import java.util.TreeSet;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 /**
  * Created by willsuchanek on 2/28/17.
@@ -31,9 +32,9 @@ public class CSVOutputterTest {
 
         SortedSet<String> outputterSet = CSVOutputter.questionsToSortedSet(outputter.studentsToQuestions);
 
-        Assert.assertEquals(testSet.first(),outputterSet.first());
-        Assert.assertEquals(testSet.last(),outputterSet.last());
-        Assert.assertEquals(testSet, outputterSet);
+        assertEquals(testSet.first(),outputterSet.first());
+        assertEquals(testSet.last(),outputterSet.last());
+        assertEquals(testSet, outputterSet);
 
     }
 
@@ -48,7 +49,7 @@ public class CSVOutputterTest {
                 +"student2,1,1,1,0,0,0,\n"
                 +"student3,1,1,0,0,,,\n";
 
-        Assert.assertEquals(testString,outputter.makeCSV());
+        assertEquals(testString,outputter.makeCSV());
     }
 
 }

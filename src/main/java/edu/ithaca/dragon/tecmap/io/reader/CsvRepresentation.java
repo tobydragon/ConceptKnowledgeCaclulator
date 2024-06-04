@@ -2,13 +2,14 @@ package edu.ithaca.dragon.tecmap.io.reader;
 
 import com.opencsv.CSVReader;
 import com.opencsv.CSVWriter;
+import com.opencsv.exceptions.CsvException;
 
 import java.io.*;
 import java.util.List;
 
 public class CsvRepresentation {
 
-    public static List<String[]> parseRowsFromFile(String filename) throws IOException {
+    public static List<String[]> parseRowsFromFile(String filename) throws IOException, CsvException {
         Reader reader = new BufferedReader(new FileReader(filename));
         CSVReader csvReader = new CSVReader(reader);
         List<String[]> list = csvReader.readAll();

@@ -3,8 +3,7 @@ package edu.ithaca.dragon.tecmap.conceptgraph;
 import edu.ithaca.dragon.tecmap.Settings;
 import edu.ithaca.dragon.tecmap.io.record.ConceptGraphRecord;
 import edu.ithaca.dragon.tecmap.io.record.LearningResourceRecord;
-import org.junit.Assert;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 import java.io.IOException;
 import java.util.HashMap;
@@ -20,29 +19,29 @@ public class ConceptNodeTest {
 
         ConceptNode node = orig.findNodeById("C");
         boolean num = orig.findNodeById("A").isAncestorOf(node);
-        Assert.assertEquals(true,num);
+        assertEquals(true,num);
 
         ConceptNode node2 = orig.findNodeById("F");
         boolean num2 = orig.findNodeById("A").isAncestorOf(node2);
-        Assert.assertEquals(true,num2);
+        assertEquals(true,num2);
 
 
         ConceptNode node3 = orig.findNodeById("D");
         boolean num3 = orig.findNodeById("B").isAncestorOf(node3);
-        Assert.assertEquals(true,num3);
+        assertEquals(true,num3);
 
 
         ConceptNode node4 = orig.findNodeById("D");
         boolean num4 = orig.findNodeById("G").isAncestorOf(node4);
-        Assert.assertEquals(false,num4);
+        assertEquals(false,num4);
 
         ConceptNode node5 = orig.findNodeById("F");
         boolean num5 = orig.findNodeById("A").isAncestorOf(node5);
-        Assert.assertEquals(true,num5);
+        assertEquals(true,num5);
 
         ConceptNode node6 = orig.findNodeById("D");
         boolean num6 = orig.findNodeById("A").isAncestorOf(node6);
-        Assert.assertEquals(true,num6);
+        assertEquals(true,num6);
     }
 
     @Test
@@ -58,15 +57,15 @@ public class ConceptNodeTest {
 
         HashMap<String, Integer> testA = new HashMap<String, Integer>();
         graph.findNodeById("A").buildLearningMaterialPathCount(testA);
-        Assert.assertEquals(6, testA.size());
+        assertEquals(6, testA.size());
 
         HashMap<String, Integer> testB = new HashMap<String, Integer>();
         graph.findNodeById("B").buildLearningMaterialPathCount(testB);
-        Assert.assertEquals(6,testB.size());
+        assertEquals(6,testB.size());
 
         HashMap<String, Integer> testC = new HashMap<String, Integer>();
         graph.findNodeById("C").buildLearningMaterialPathCount(testC);
-        Assert.assertEquals(4, testC.size());
+        assertEquals(4, testC.size());
 //
     }
 

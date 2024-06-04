@@ -4,11 +4,12 @@ import edu.ithaca.dragon.tecmap.io.record.ConceptGraphRecord;
 import edu.ithaca.dragon.tecmap.io.record.ConceptRecord;
 import edu.ithaca.dragon.tecmap.learningresource.AssessmentItem;
 import edu.ithaca.dragon.tecmap.util.DataUtil;
-import org.junit.Assert;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 import java.util.List;
 import java.util.Map;
+
+import static org.junit.jupiter.api.Assertions.*;
 
 /**
  * Created by home on 5/19/17.
@@ -17,11 +18,11 @@ public class TreeConverterTest {
 
     @Test
     public void makeNextIdTest() {
-        Assert.assertEquals("Title-1", TreeConverter.makeNextId("Title"));
-        Assert.assertEquals("Title-4",TreeConverter.makeNextId("Title-3"));
-        Assert.assertEquals("Title-35", TreeConverter.makeNextId("Title-34"));
-        Assert.assertEquals("MyTitle-4", TreeConverter.makeNextId("My-Title-3"));
-        Assert.assertEquals("MyTitleName-1", TreeConverter.makeNextId("My-Title-Name"));
+        assertEquals("Title-1", TreeConverter.makeNextId("Title"));
+        assertEquals("Title-4",TreeConverter.makeNextId("Title-3"));
+        assertEquals("Title-35", TreeConverter.makeNextId("Title-34"));
+        assertEquals("MyTitle-4", TreeConverter.makeNextId("My-Title-3"));
+        assertEquals("MyTitleName-1", TreeConverter.makeNextId("My-Title-Name"));
     }
 
     @Test
@@ -41,9 +42,9 @@ public class TreeConverterTest {
                 numC++;
             }
         }
-        Assert.assertEquals(1, numA);
-        Assert.assertEquals(1, numB);
-        Assert.assertEquals(2, numC);
+        assertEquals(1, numA);
+        assertEquals(1, numB);
+        assertEquals(2, numC);
     }
 
     @Test
@@ -56,27 +57,27 @@ public class TreeConverterTest {
 
     public void checkTreeConversionByNodesAndLinksNumbers(ConceptGraph graphToTest, int expectedGraphNodeCount, int expectedGraphLinkCount, int expectedTreeNodeCount, int expectedTreeLinkCount, int expectedResourcesCount, int expectedResponsesCount){
         ConceptGraphRecord graphLists = graphToTest.buildConceptGraphRecord();
-        Assert.assertEquals(expectedGraphNodeCount, graphLists.getConcepts().size());
-        Assert.assertEquals(expectedGraphLinkCount, graphLists.getLinks().size());
+        assertEquals(expectedGraphNodeCount, graphLists.getConcepts().size());
+        assertEquals(expectedGraphLinkCount, graphLists.getLinks().size());
 
         ConceptGraph tree = TreeConverter.makeTreeCopy(graphToTest);
         ConceptGraphRecord treeLists = tree.buildConceptGraphRecord();
         //System.out.println(treeLists);
 
-        Assert.assertEquals(expectedTreeNodeCount, treeLists.getConcepts().size());
-        Assert.assertEquals(expectedTreeLinkCount, treeLists.getLinks().size());
+        assertEquals(expectedTreeNodeCount, treeLists.getConcepts().size());
+        assertEquals(expectedTreeLinkCount, treeLists.getLinks().size());
 
         //Resources and responses are not nodes in the tree, and so their objects are linked to multiple nodes, and so
         //there should be the same number in both graphs
-        Assert.assertEquals(expectedResourcesCount, graphToTest.getAssessmentItemMap().size());
-        Assert.assertEquals(expectedResponsesCount, graphToTest.responsesCount());
-        Assert.assertEquals(expectedResourcesCount, tree.getAssessmentItemMap().size());
-        Assert.assertEquals(expectedResponsesCount, tree.responsesCount());
+        assertEquals(expectedResourcesCount, graphToTest.getAssessmentItemMap().size());
+        assertEquals(expectedResponsesCount, graphToTest.responsesCount());
+        assertEquals(expectedResourcesCount, tree.getAssessmentItemMap().size());
+        assertEquals(expectedResponsesCount, tree.responsesCount());
         //but they should be different, equivalent objects across tree and graph
         for (Map.Entry<String, AssessmentItem> entry: graphToTest.getAssessmentItemMap().entrySet()){
             AssessmentItem treeCopy = tree.getAssessmentItemMap().get(entry.getKey());
-            Assert.assertEquals(entry.getValue(), treeCopy);
-            Assert.assertTrue(entry.getValue() != treeCopy);
+            assertEquals(entry.getValue(), treeCopy);
+            assertNotSame(entry.getValue(), treeCopy);
         }
 
         //check that each tree copy of the same node in the graph has the same links
@@ -84,8 +85,8 @@ public class TreeConverterTest {
             ConceptNode first = tree.findNodeById(nodeCopies.get(0));
             for (String nodeCopyId : nodeCopies){
                 ConceptNode next = tree.findNodeById(nodeCopyId);
-                Assert.assertEquals(first.getKnowledgeEstimate() , next.getKnowledgeEstimate(), DataUtil.OK_FLOAT_MARGIN);
-                Assert.assertEquals(first.getAssessmentItemMap().size() , next.getAssessmentItemMap().size());
+                assertEquals(first.getKnowledgeEstimate() , next.getKnowledgeEstimate(), DataUtil.OK_FLOAT_MARGIN);
+                assertEquals(first.getAssessmentItemMap().size() , next.getAssessmentItemMap().size());
             }
         }
 
@@ -104,8 +105,8 @@ public class TreeConverterTest {
         ConceptGraph treeFromTree = TreeConverter.makeTreeCopy(treeToTest);
 
         ConceptGraphRecord postLists = treeFromTree.buildConceptGraphRecord();
-        Assert.assertEquals(postLists.getConcepts().size(), initialLists.getConcepts().size());
-        Assert.assertEquals(postLists.getLinks().size(), initialLists.getLinks().size());
+        assertEquals(postLists.getConcepts().size(), initialLists.getConcepts().size());
+        assertEquals(postLists.getLinks().size(), initialLists.getLinks().size());
     }
 
     @Test
@@ -117,9 +118,9 @@ public class TreeConverterTest {
         ConceptGraphRecord lists2 = myTree.buildConceptGraphRecord();
         ConceptGraphRecord lists3 = myTree2.buildConceptGraphRecord();
 
-        Assert.assertEquals(lists2.getConcepts().size(), lists3.getConcepts().size());
-        Assert.assertEquals(lists2.getLinks().size(), lists3.getLinks().size());
-        Assert.assertEquals(lists3.getLinks().size() + 1, lists3.getConcepts().size());
+        assertEquals(lists2.getConcepts().size(), lists3.getConcepts().size());
+        assertEquals(lists2.getLinks().size(), lists3.getLinks().size());
+        assertEquals(lists3.getLinks().size() + 1, lists3.getConcepts().size());
     }
 
 }

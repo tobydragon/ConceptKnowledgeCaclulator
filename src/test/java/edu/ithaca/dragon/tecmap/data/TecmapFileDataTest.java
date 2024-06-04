@@ -1,8 +1,8 @@
 package edu.ithaca.dragon.tecmap.data;
 
 import edu.ithaca.dragon.tecmap.tecmapstate.TecmapState;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -14,7 +14,7 @@ public class TecmapFileDataTest {
 
     private TecmapFileData tecmapFileData;
 
-    @Before
+    @BeforeEach
     public void setup() throws IOException {
 
         tecmapFileData = new TecmapFileData("Cs1ExampleAssessmentAdded", "src/test/resources/datastore/Cs1ExampleAssessmentAdded/Cs1ExampleGraph.json", new ArrayList<String>(), Arrays.asList("src/test/resources/datastore/Cs1ExampleAssessmentAdded/Cs1ExampleAssessment1.csv", "src/test/resources/datastore/Cs1ExampleAssessmentAdded/Cs1ExampleAssessment2.csv"));

@@ -1,5 +1,6 @@
 package edu.ithaca.dragon.tecmap.io.reader;
 
+import com.opencsv.exceptions.CsvException;
 import org.junit.jupiter.api.Test;
 
 import java.io.IOException;
@@ -11,7 +12,7 @@ class PointsOffConverterTest {
 
 
     @Test
-    void addPointTotalsToQuestionLabelsTest()throws IOException{
+    void addPointTotalsToQuestionLabelsTest()throws IOException, CsvException {
         List<String[]> rowsToConvert = CsvRepresentation.parseRowsFromFile("src/test/resources/singleUseFiles/pointsOffExample.csv");
         PointsOffConverter.addPointTotalsToQuestionLabels(rowsToConvert.get(0), rowsToConvert.get(1));
 
@@ -26,7 +27,7 @@ class PointsOffConverterTest {
     }
 
     @Test
-    void convertFromPointsOffToTotalPointsTest()throws IOException {
+    void convertFromPointsOffToTotalPointsTest()throws IOException, CsvException  {
         List<String[]> rowsToConvert = CsvRepresentation.parseRowsFromFile("src/test/resources/singleUseFiles/pointsOffExample.csv");
         PointsOffConverter.convertFromPointsOffToTotalPoints(rowsToConvert);
 

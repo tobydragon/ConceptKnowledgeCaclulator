@@ -7,12 +7,13 @@ import edu.ithaca.dragon.tecmap.conceptgraph.ConceptNode;
 import edu.ithaca.dragon.tecmap.io.record.ConceptGraphRecord;
 import edu.ithaca.dragon.tecmap.io.record.LearningResourceRecord;
 import edu.ithaca.dragon.tecmap.learningresource.AssessmentItemResponse;
-import org.junit.Assert;
 import org.junit.jupiter.api.Test;
 
 import java.io.IOException;
 import java.util.Arrays;
 import java.util.List;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 class ComplementaryKnowledgeSuggesterTest {
 
@@ -37,9 +38,9 @@ class ComplementaryKnowledgeSuggesterTest {
         ConceptNode node4 = gr4.findNodeById("A");
 
         try {
-            Assert.assertEquals(ComplementaryKnowledgeSuggester.isComplementary(node1, node2), true);
-            Assert.assertEquals(ComplementaryKnowledgeSuggester.isComplementary(node1, node3), false);
-            Assert.assertEquals(ComplementaryKnowledgeSuggester.isComplementary(node1, node4), false);
+            assertEquals(ComplementaryKnowledgeSuggester.isComplementary(node1, node2), true);
+            assertEquals(ComplementaryKnowledgeSuggester.isComplementary(node1, node3), false);
+            assertEquals(ComplementaryKnowledgeSuggester.isComplementary(node1, node4), false);
         } catch (Exception e) {
             e.printStackTrace();
         }

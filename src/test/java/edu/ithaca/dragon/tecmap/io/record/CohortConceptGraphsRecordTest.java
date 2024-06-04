@@ -4,12 +4,13 @@ import edu.ithaca.dragon.tecmap.Settings;
 import edu.ithaca.dragon.tecmap.conceptgraph.CohortConceptGraphs;
 import edu.ithaca.dragon.tecmap.conceptgraph.ExampleConceptGraphFactory;
 import edu.ithaca.dragon.tecmap.learningresource.ExampleLearningObjectResponseFactory;
-import org.junit.Assert;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 import java.io.IOException;
 
 import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.junit.jupiter.api.Assertions.fail;
 
 /**
  * Created by home on 5/20/17.
@@ -27,11 +28,11 @@ public class CohortConceptGraphsRecordTest {
 
             CohortConceptGraphsRecord fromFile = CohortConceptGraphsRecord.buildFromJson(file);
 
-            Assert.assertThat(toFile.getGraphRecords(), is(fromFile.getGraphRecords()));
+            assertThat(toFile.getGraphRecords(), is(fromFile.getGraphRecords()));
         }
         catch (IOException e){
             e.printStackTrace();
-            Assert.fail();
+            fail();
         }
     }
 
@@ -44,7 +45,7 @@ public class CohortConceptGraphsRecordTest {
 
             CohortConceptGraphsRecord fromFile = CohortConceptGraphsRecord.buildFromJson(file);
 
-            Assert.assertThat(toFile.getGraphRecords(), is(fromFile.getGraphRecords()));
+            assertThat(toFile.getGraphRecords(), is(fromFile.getGraphRecords()));
         }
         catch (IOException e){
             e.printStackTrace();

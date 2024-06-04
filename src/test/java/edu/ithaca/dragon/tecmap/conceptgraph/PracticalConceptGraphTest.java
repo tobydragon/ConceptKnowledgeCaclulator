@@ -8,11 +8,12 @@ import edu.ithaca.dragon.tecmap.io.reader.SakaiReader;
 import edu.ithaca.dragon.tecmap.io.record.ConceptGraphRecord;
 import edu.ithaca.dragon.tecmap.io.record.LearningResourceRecord;
 import edu.ithaca.dragon.tecmap.util.DataUtil;
-import org.junit.Assert;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 import java.io.File;
 import java.util.List;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 /**
  * Created by willsuchanek on 5/2/17.
@@ -40,9 +41,9 @@ public class PracticalConceptGraphTest {
             graph.calcDataImportance();
             graph.calcKnowledgeEstimates();
 
-            Assert.assertEquals("Intro CS", graph.findNodeById("Intro CS").getID());
-            Assert.assertEquals(5,graph.findNodeById("Boolean").getAssessmentItemMap().size());
-            Assert.assertEquals(15,graph.getAssessmentItemMap().size());
+            assertEquals("Intro CS", graph.findNodeById("Intro CS").getID());
+            assertEquals(5,graph.findNodeById("Boolean").getAssessmentItemMap().size());
+            assertEquals(15,graph.getAssessmentItemMap().size());
 
             ConceptGraphRecord tree = TreeConverter.makeTreeCopy(graph).buildConceptGraphRecord();
             //Object to JSON in file
@@ -75,17 +76,17 @@ public class PracticalConceptGraphTest {
             ConceptGraph testGraph = gcg.getAvgGraph();
 
 
-            Assert.assertEquals("Intro CS", testGraph.findNodeById("Intro CS").getID());
-            Assert.assertEquals(7, testGraph.findNodeById("Boolean").getAssessmentItemMap().size());
-            Assert.assertEquals(15,testGraph.getAssessmentItemMap().size());
+            assertEquals("Intro CS", testGraph.findNodeById("Intro CS").getID());
+            assertEquals(7, testGraph.findNodeById("Boolean").getAssessmentItemMap().size());
+            assertEquals(15,testGraph.getAssessmentItemMap().size());
 
 
-            Assert.assertEquals(0.806, testGraph.findNodeById("Boolean").getKnowledgeEstimate(), DataUtil.OK_FLOAT_MARGIN);
-            Assert.assertEquals(0.783090, testGraph.findNodeById("Boolean Expressions").getKnowledgeEstimate(), DataUtil.OK_FLOAT_MARGIN);
-            Assert.assertEquals(0.746, testGraph.findNodeById("If Statement").getKnowledgeEstimate(), DataUtil.OK_FLOAT_MARGIN);
-            Assert.assertEquals(0.722, testGraph.findNodeById("While Loop").getKnowledgeEstimate(), DataUtil.OK_FLOAT_MARGIN);
-            Assert.assertEquals(0.566, testGraph.findNodeById("Counting").getKnowledgeEstimate(), DataUtil.OK_FLOAT_MARGIN);
-            Assert.assertEquals(0.575, testGraph.findNodeById("For Loop").getKnowledgeEstimate(), DataUtil.OK_FLOAT_MARGIN);
+            assertEquals(0.806, testGraph.findNodeById("Boolean").getKnowledgeEstimate(), DataUtil.OK_FLOAT_MARGIN);
+            assertEquals(0.783090, testGraph.findNodeById("Boolean Expressions").getKnowledgeEstimate(), DataUtil.OK_FLOAT_MARGIN);
+            assertEquals(0.746, testGraph.findNodeById("If Statement").getKnowledgeEstimate(), DataUtil.OK_FLOAT_MARGIN);
+            assertEquals(0.722, testGraph.findNodeById("While Loop").getKnowledgeEstimate(), DataUtil.OK_FLOAT_MARGIN);
+            assertEquals(0.566, testGraph.findNodeById("Counting").getKnowledgeEstimate(), DataUtil.OK_FLOAT_MARGIN);
+            assertEquals(0.575, testGraph.findNodeById("For Loop").getKnowledgeEstimate(), DataUtil.OK_FLOAT_MARGIN);
 
 
         }catch (Exception e){
@@ -115,9 +116,9 @@ public class PracticalConceptGraphTest {
             graph.calcKnowledgeEstimates();
 
 
-            Assert.assertEquals("Intro CS", graph.findNodeById("Intro CS").getID());
-            Assert.assertEquals(5, graph.findNodeById("Boolean").getAssessmentItemMap().size());
-            Assert.assertEquals(15,graph.getAssessmentItemMap().size());
+            assertEquals("Intro CS", graph.findNodeById("Intro CS").getID());
+            assertEquals(5, graph.findNodeById("Boolean").getAssessmentItemMap().size());
+            assertEquals(15,graph.getAssessmentItemMap().size());
 
 
 
@@ -148,12 +149,12 @@ public class PracticalConceptGraphTest {
             graph.calcKnowledgeEstimates();
 
 
-            Assert.assertEquals("Intro CS", graph.findNodeById("Intro CS").getID());
-            Assert.assertEquals(5, graph.findNodeById("Boolean").getAssessmentItemMap().size());
-            Assert.assertEquals(15, graph.getAssessmentItemMap().size());
-            Assert.assertEquals(-.5,graph.findNodeById("Sequence Types").getKnowledgeEstimate(), DataUtil.OK_FLOAT_MARGIN);
-            Assert.assertEquals(-0.545,graph.findNodeById("For Loop").getKnowledgeEstimate(), DataUtil.OK_FLOAT_MARGIN);
-            Assert.assertEquals(.346,graph.findNodeById("Loops").getKnowledgeEstimate(), DataUtil.OK_FLOAT_MARGIN);
+            assertEquals("Intro CS", graph.findNodeById("Intro CS").getID());
+            assertEquals(5, graph.findNodeById("Boolean").getAssessmentItemMap().size());
+            assertEquals(15, graph.getAssessmentItemMap().size());
+            assertEquals(-.5,graph.findNodeById("Sequence Types").getKnowledgeEstimate(), DataUtil.OK_FLOAT_MARGIN);
+            assertEquals(-0.545,graph.findNodeById("For Loop").getKnowledgeEstimate(), DataUtil.OK_FLOAT_MARGIN);
+            assertEquals(.346,graph.findNodeById("Loops").getKnowledgeEstimate(), DataUtil.OK_FLOAT_MARGIN);
 
 
 

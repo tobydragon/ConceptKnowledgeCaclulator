@@ -250,20 +250,20 @@ public class ConsoleUI {
                     } else if (num == 10) {
                         getUserList();
 
-                    } else if (num == 11) {
-                        resourceAverage(scanner);
+//                    } else if (num == 11) {
+//                        resourceAverage(scanner);
 
-                    } else if (num == 12) {
-                        studentAverage(scanner);
-                    } else if (num == 13) {
-                        getFactorMatrix();
-                    } else if (num == 14) {
-                        createConfirmatoryGraph();
-                    } else if (num == 15) {
-                        switchToStructuremode();
-                    } else if (num == 16) {
-
-                        createModelFile();
+//                    } else if (num == 12) {
+//                        studentAverage(scanner);
+//                    } else if (num == 13) {
+//                        getFactorMatrix();
+//                    } else if (num == 14) {
+//                        createConfirmatoryGraph();
+//                    } else if (num == 15) {
+//                        switchToStructuremode();
+//                    } else if (num == 16) {
+//
+//                        createModelFile();
 
                     } else if (num == 17) {
                         calculateSmallGroups(scanner);
@@ -579,17 +579,17 @@ public class ConsoleUI {
     }
 
 
-    public void resourceAverage(Scanner scanner){
-        System.out.println("Get average learning object Grade");
-
-        System.out.println("What learning object do you want to calculate?");
-        String conceptNode = scanner.nextLine();
-        try {
-            System.out.println("The average is: " + ckc.getLearningObjectAvg(conceptNode));
-        } catch (Exception e) {
-            System.out.println("Can't find " + conceptNode);
-        }
-    }
+//    public void resourceAverage(Scanner scanner){
+//        System.out.println("Get average learning object Grade");
+//
+//        System.out.println("What learning object do you want to calculate?");
+//        String conceptNode = scanner.nextLine();
+//        try {
+//            System.out.println("The average is: " + ckc.getLearningObjectAvg(conceptNode));
+//        } catch (Exception e) {
+//            System.out.println("Can't find " + conceptNode);
+//        }
+//    }
 
     public void getUserList(){
         try {
@@ -600,33 +600,33 @@ public class ConsoleUI {
         }
     }
 
-    public void studentAverage(Scanner scanner){
-        System.out.println("Get user's average grade");
-        System.out.println("Which user would you like to calculate an average for?");
-        String user = scanner.nextLine();
+//    public void studentAverage(Scanner scanner){
+//        System.out.println("Get user's average grade");
+//        System.out.println("Which user would you like to calculate an average for?");
+//        String user = scanner.nextLine();
+//
+//        try{
+//            double result = ckc.getStudentAvg(user);
+//            System.out.println("The average is: " + result);
+//        }catch(NullPointerException e){
+//            System.out.println("Cannot find " + user);
+//        }
+//    }
 
-        try{
-            double result = ckc.getStudentAvg(user);
-            System.out.println("The average is: " + result);
-        }catch(NullPointerException e){
-            System.out.println("Cannot find " + user);
-        }
-    }
-
-    public void getFactorMatrix(){
-        System.out.println("Collecting data and linking strengths of learning objects to different factors...\n");
-        ckc.getFactorMatrix();
-    }
-
-    public void createConfirmatoryGraph(){
-        System.out.println("Creating graphs showing strengths between questions and concepts user has specified\n");
-        ckc.createConfirmatoryGraph();
-    }
-
-    public void createModelFile(){
-        System.out.println("Creating model file for graph making in confirmatoryScript.R");
-        ckc.createModelFile();
-    }
+//    public void getFactorMatrix(){
+//        System.out.println("Collecting data and linking strengths of learning objects to different factors...\n");
+//        ckc.getFactorMatrix();
+//    }
+//
+//    public void createConfirmatoryGraph(){
+//        System.out.println("Creating graphs showing strengths between questions and concepts user has specified\n");
+//        ckc.createConfirmatoryGraph();
+//    }
+//
+//    public void createModelFile(){
+//        System.out.println("Creating model file for graph making in confirmatoryScript.R");
+//        ckc.createModelFile();
+//    }
 
 
     public void switchToStructuremode() {

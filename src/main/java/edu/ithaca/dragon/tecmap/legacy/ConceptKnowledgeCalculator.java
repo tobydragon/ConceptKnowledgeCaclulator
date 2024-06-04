@@ -2,8 +2,6 @@ package edu.ithaca.dragon.tecmap.legacy;
 
 import edu.ithaca.dragon.tecmap.Settings;
 import edu.ithaca.dragon.tecmap.conceptgraph.*;
-import edu.ithaca.dragon.tecmap.conceptgraph.eval.KnowledgeEstimateMatrix;
-import edu.ithaca.dragon.tecmap.conceptgraph.eval.RFunctions;
 import edu.ithaca.dragon.tecmap.io.reader.TecmapCSVReader;
 import edu.ithaca.dragon.tecmap.io.reader.ReaderTools;
 import edu.ithaca.dragon.tecmap.io.reader.SakaiReader;
@@ -544,72 +542,6 @@ public class ConceptKnowledgeCalculator implements ConceptKnowledgeCalculatorAPI
         }
     }
 
-    public double getLearningObjectAvg(String learningObject) throws Exception {
-        if(currentMode== Mode.COHORTGRAPH) {
-            ConceptGraph graph = cohortConceptGraphs.getAvgGraph();
-            Map<String, AssessmentItem> loMap = graph.getAssessmentItemMap();
-            Collection<AssessmentItem> objList = loMap.values();
-            ArrayList<AssessmentItem> list;
-            list = new ArrayList<AssessmentItem>(objList);
-            KnowledgeEstimateMatrix myMatrix = new KnowledgeEstimateMatrix(list);
-            AssessmentItem concept = loMap.get(learningObject);
-
-            if (concept != null) {
-                double result = RFunctions.LearningObjectAvg(myMatrix, concept);
-                return result;
-            } else {
-                throw new NullPointerException();
-            }
-        }else {
-            throw new Exception("Wrong Mode");
-        }
-    }
-
-    public double getStudentAvg(String user)throws NullPointerException{
-        try {
-            ConceptGraph graph = cohortConceptGraphs.getAvgGraph();
-            Map<String, AssessmentItem> loMap = graph.getAssessmentItemMap();
-            List<AssessmentItem> objList = new ArrayList<AssessmentItem>(loMap.values());
-            KnowledgeEstimateMatrix myMatrix = new KnowledgeEstimateMatrix(objList);
-            List<String> userIdList = myMatrix.getUserIdList();
-
-            if (userIdList.contains(user)) {
-                return RFunctions.StudentKnowledgeEstAvg(myMatrix, user);
-            } else {
-                throw new NullPointerException();
-            }
-        } catch (IOException e) {
-            logger.warn(e.getMessage());
-            return 0;
-        }
-    }
-
-    public void getFactorMatrix(){
-        try {
-            if (currentMode == Mode.COHORTGRAPH) {
-                ConceptGraph graph = cohortConceptGraphs.getAvgGraph();
-                Map<String, AssessmentItem> loMap = graph.getAssessmentItemMap();
-                List<AssessmentItem> objList = new ArrayList<AssessmentItem>(loMap.values());
-                KnowledgeEstimateMatrix myMatrix = new KnowledgeEstimateMatrix(objList);
-
-                try {
-                    RFunctions.getFactorMatrix(myMatrix);
-                } catch (Exception e) {
-                    System.out.println("Insufficient data to perform factor analysis. Please refer to the guidelines of the data below:\n" +
-                            "- Learning objects without any variance in scores between students will be ignored \n" +
-                            "- There must be at least 3 valid learning objects present\n" +
-                            "- There must be more students than learning objects\n");
-
-                }
-            } else {
-                throw new NullPointerException();
-            }
-        } catch (IOException e) {
-            logger.warn(e.getMessage());
-        }
-
-    }
-
     public void createConfirmatoryGraph(){
         if(currentMode== Mode.COHORTGRAPH){
             ConceptGraph graph = cohortConceptGraphs.getAvgGraph();
@@ -628,17 +560,6 @@ public class ConceptKnowledgeCalculator implements ConceptKnowledgeCalculatorAPI
         }
     }
 
-    public void createModelFile(){
-        if(currentMode== Mode.COHORTGRAPH){
-            try{
-                RFunctions.modelToFile(cohortConceptGraphs);
-            }catch (Exception e){
-                System.out.println("Error in creating file. Check links in structure file.");
-            }
-        }
-    }
-
-
     @Override
     public List<String> currentAssessment(){
         List<String> temp = assessmentFiles;
@@ -656,8 +577,6 @@ public class ConceptKnowledgeCalculator implements ConceptKnowledgeCalculatorAPI
         List<String> temp = structureFiles;
         return temp;
     }
-
-
 
     @Override
     public boolean structureIsValid(String name) throws IOException {

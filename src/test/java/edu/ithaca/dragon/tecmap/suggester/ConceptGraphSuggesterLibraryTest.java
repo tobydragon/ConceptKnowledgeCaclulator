@@ -10,11 +10,12 @@ import edu.ithaca.dragon.tecmap.learningresource.AssessmentItemResponse;
 import edu.ithaca.dragon.tecmap.learningresource.ExampleLearningObjectLinkRecordFactory;
 import edu.ithaca.dragon.tecmap.learningresource.ExampleLearningObjectResponseFactory;
 import edu.ithaca.dragon.tecmap.learningresource.LearningResourceType;
-import org.junit.Assert;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 import java.io.IOException;
 import java.util.*;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 /**
  * Created by home on 5/20/17.
@@ -30,12 +31,12 @@ public class ConceptGraphSuggesterLibraryTest {
         List<LearningResourceSuggestion> incomTest = res.incompleteList;
         List<LearningResourceSuggestion> wrongTest = res.wrongList;
 
-        Assert.assertEquals(wrongTest.size(), 3);
-        Assert.assertEquals(wrongTest.get(0).getId(), "Q3");
-        Assert.assertEquals(wrongTest.get(1).getId(), "Q4");
-        Assert.assertEquals(wrongTest.get(2).getId(), "Q5");
+        assertEquals(wrongTest.size(), 3);
+        assertEquals(wrongTest.get(0).getId(), "Q3");
+        assertEquals(wrongTest.get(1).getId(), "Q4");
+        assertEquals(wrongTest.get(2).getId(), "Q5");
 
-        Assert.assertEquals(incomTest.size(), 0);
+        assertEquals(incomTest.size(), 0);
     }
 
     @Test
@@ -48,16 +49,16 @@ public class ConceptGraphSuggesterLibraryTest {
         List<LearningResourceSuggestion> incomTest = res.incompleteList;
         List<LearningResourceSuggestion> wrongTest = res.wrongList;
 
-        Assert.assertEquals(incomTest.size(), 3);
-        Assert.assertEquals(incomTest.get(0).getId(), "Q6");
-        Assert.assertEquals(incomTest.get(1).getId(), "Q13");
-        Assert.assertEquals(incomTest.get(2).getId(), "Q10");
+        assertEquals(incomTest.size(), 3);
+        assertEquals(incomTest.get(0).getId(), "Q6");
+        assertEquals(incomTest.get(1).getId(), "Q13");
+        assertEquals(incomTest.get(2).getId(), "Q10");
 
-        Assert.assertEquals(wrongTest.size(), 4);
-        Assert.assertEquals(wrongTest.get(0).getId(), "Q7");
-        Assert.assertEquals(wrongTest.get(1).getId(), "Q15");
-        Assert.assertEquals(wrongTest.get(2).getId(), "Q9");
-        Assert.assertEquals(wrongTest.get(3).getId(), "Q14");
+        assertEquals(wrongTest.size(), 4);
+        assertEquals(wrongTest.get(0).getId(), "Q7");
+        assertEquals(wrongTest.get(1).getId(), "Q15");
+        assertEquals(wrongTest.get(2).getId(), "Q9");
+        assertEquals(wrongTest.get(3).getId(), "Q14");
 
     }
 
@@ -67,10 +68,10 @@ public class ConceptGraphSuggesterLibraryTest {
 
         List<ConceptNode> concepts = ConceptGraphSuggesterLibrary.suggestConcepts(orig);
 
-        Assert.assertEquals(concepts.size(), 2);
+        assertEquals(concepts.size(), 2);
 
-        Assert.assertEquals(concepts.get(0).getID(), "Boolean");
-        Assert.assertEquals(concepts.get(1).getID(), "Counting");
+        assertEquals(concepts.get(0).getID(), "Boolean");
+        assertEquals(concepts.get(1).getID(), "Counting");
 
     }
 
@@ -94,10 +95,10 @@ public class ConceptGraphSuggesterLibraryTest {
         ConceptGraph userGraph = cohortConceptGraphs.getUserGraph("s04");
         List<ConceptNode> concepts = ConceptGraphSuggesterLibrary.suggestConcepts(userGraph);
 
-        Assert.assertEquals(concepts.size(), 3);
-        Assert.assertEquals(concepts.get(0).getID(), "Recursion");
-        Assert.assertEquals(concepts.get(1).getID(), "Pointers");
-        Assert.assertEquals(concepts.get(2).getID(), "List");
+        assertEquals(concepts.size(), 3);
+        assertEquals(concepts.get(0).getID(), "Recursion");
+        assertEquals(concepts.get(1).getID(), "Pointers");
+        assertEquals(concepts.get(2).getID(), "List");
 
     }
 
@@ -121,17 +122,17 @@ public class ConceptGraphSuggesterLibraryTest {
 
         ConceptGraph userGraph = cohortConceptGraphs.getUserGraph("s03");
         List<ConceptNode> concepts = ConceptGraphSuggesterLibrary.suggestConcepts(userGraph);
-        Assert.assertEquals(concepts.size(), 0);
+        assertEquals(concepts.size(), 0);
 
 
 
 
         ConceptGraph userGraph2 = cohortConceptGraphs.getUserGraph("s02");
         List<ConceptNode> concepts2 = ConceptGraphSuggesterLibrary.suggestConcepts(userGraph2);
-        Assert.assertEquals(concepts2.size(), 3);
-        Assert.assertEquals(concepts2.get(0).getID(), "Recursion");
-        Assert.assertEquals(concepts2.get(1).getID(), "Pointers");
-        Assert.assertEquals(concepts2.get(2).getID(), "List");
+        assertEquals(concepts2.size(), 3);
+        assertEquals(concepts2.get(0).getID(), "Recursion");
+        assertEquals(concepts2.get(1).getID(), "Pointers");
+        assertEquals(concepts2.get(2).getID(), "List");
 
     }
 
@@ -147,8 +148,8 @@ public class ConceptGraphSuggesterLibraryTest {
 
         //what it should be
         List<LearningResourceSuggestion> testList3 = new ArrayList<>();
-        Assert.assertEquals(1, objectSuggestionMap.size());
-        Assert.assertEquals(testList3, objectSuggestionMap.get("C"));
+        assertEquals(1, objectSuggestionMap.size());
+        assertEquals(testList3, objectSuggestionMap.get("C"));
 
     }
 
@@ -159,11 +160,11 @@ public class ConceptGraphSuggesterLibraryTest {
         List<ConceptNode> concepts = ConceptGraphSuggesterLibrary.suggestConcepts(orig);
         HashMap<String, List<LearningResourceSuggestion>> objectSuggestionMap = ConceptGraphSuggesterLibrary.buildSuggestionMap(concepts, 1, orig);
 
-        Assert.assertEquals(2, objectSuggestionMap.size());
+        assertEquals(2, objectSuggestionMap.size());
 
-        Assert.assertEquals(objectSuggestionMap.get("Boolean").get(0).getId(), "Q6");
-        Assert.assertEquals(objectSuggestionMap.get("Boolean").get(1).getId(), "Q10");
-        Assert.assertEquals(objectSuggestionMap.get("Counting").get(0).getId(), "Q13");
+        assertEquals(objectSuggestionMap.get("Boolean").get(0).getId(), "Q6");
+        assertEquals(objectSuggestionMap.get("Boolean").get(1).getId(), "Q10");
+        assertEquals(objectSuggestionMap.get("Counting").get(0).getId(), "Q13");
 
     }
 
@@ -189,7 +190,7 @@ public class ConceptGraphSuggesterLibraryTest {
 
 
         //makes sure that buildLearningMaterialPathCount works
-        Assert.assertEquals(testCompareA, learningSummaryFromA);
+        assertEquals(testCompareA, learningSummaryFromA);
 
         //build the suggested learning object list
         List<LearningResourceSuggestion> suggestedList = ConceptGraphSuggesterLibrary.buildLearningObjectSuggestionList(learningSummaryFromA, orig.getAssessmentItemMap(), "A", linkMap);
@@ -210,10 +211,10 @@ public class ConceptGraphSuggesterLibraryTest {
 
         for (int i = 0; i < suggestedList.size(); i++) {
 
-            Assert.assertEquals(suggestedList.get(i).getId(), suggestListTest.get(i).getId());
-            Assert.assertEquals(suggestedList.get(i).getPathNum(), suggestListTest.get(i).getPathNum());
-            Assert.assertEquals(suggestedList.get(i).getLevel(), suggestListTest.get(i).getLevel());
-            Assert.assertEquals(suggestedList.get(i).getReasoning(), suggestListTest.get(i).getReasoning());
+            assertEquals(suggestedList.get(i).getId(), suggestListTest.get(i).getId());
+            assertEquals(suggestedList.get(i).getPathNum(), suggestListTest.get(i).getPathNum());
+            assertEquals(suggestedList.get(i).getLevel(), suggestListTest.get(i).getLevel());
+            assertEquals(suggestedList.get(i).getReasoning(), suggestListTest.get(i).getReasoning());
 
         }
     }
@@ -232,12 +233,12 @@ public class ConceptGraphSuggesterLibraryTest {
         String wrongString = res.toString(1);
 
 
-        Assert.assertEquals(incomString, "Resource: Q6\t Concepts it relates to: Boolean\t Importance: 1\t Direct Concept Links: 1" +
+        assertEquals(incomString, "Resource: Q6\t Concepts it relates to: Boolean\t Importance: 1\t Direct Concept Links: 1" +
                 "\nResource: Q13\t Concepts it relates to: Counting\t Importance: 1\t Direct Concept Links: 1"+
                 "\nResource: Q10\t Concepts it relates to: Boolean\t Importance: 1\t Direct Concept Links: 4\n");
 
 
-        Assert.assertEquals(wrongString, "Resource: Q7\t Concepts it relates to: Boolean\t Importance: 1\t Direct Concept Links: 1" +
+        assertEquals(wrongString, "Resource: Q7\t Concepts it relates to: Boolean\t Importance: 1\t Direct Concept Links: 1" +
                 "\nResource: Q15\t Concepts it relates to: Counting\t Importance: 1\t Direct Concept Links: 1"+
                 "\nResource: Q9\t Concepts it relates to: Boolean\t Importance: 1\t Direct Concept Links: 3"+
                 "\nResource: Q14\t Concepts it relates to: Counting\t Importance: 1\t Direct Concept Links: 1\n");
@@ -274,9 +275,9 @@ public class ConceptGraphSuggesterLibraryTest {
         String wrongString = res.toString(1);
 
 
-        Assert.assertEquals(incomString, "");
+        assertEquals(incomString, "");
 
-        Assert.assertEquals(wrongString,"Resource: Lab 3: Comparing Array Library Efficiency\t Concepts it relates to: Abstract Data Types & Array\t Importance: 5\t Direct Concept Links: 3" +
+        assertEquals(wrongString,"Resource: Lab 3: Comparing Array Library Efficiency\t Concepts it relates to: Abstract Data Types & Array\t Importance: 5\t Direct Concept Links: 3" +
                 "\nResource: Lab 5: Comparing Searches\t Concepts it relates to: Recursion\t Importance: 1\t Direct Concept Links: 3"+
                 "\nResource: Lab 8: Comparing Arrays and Linked Lists\t Concepts it relates to: Abstract Data Types & Array\t Importance: 1\t Direct Concept Links: 2"+
                 "\nResource: Lab 6: ArrayList and Testing\t Concepts it relates to: Abstract Data Types & Array\t Importance: 1\t Direct Concept Links: 2" +

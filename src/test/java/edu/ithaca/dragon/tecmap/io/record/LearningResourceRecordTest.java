@@ -9,12 +9,14 @@ import edu.ithaca.dragon.tecmap.learningresource.AssessmentItem;
 import edu.ithaca.dragon.tecmap.learningresource.LearningMaterial;
 import edu.ithaca.dragon.tecmap.learningresource.LearningResourceType;
 import edu.ithaca.dragon.tecmap.util.DataUtil;
-import org.junit.Assert;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 import java.io.File;
 import java.io.IOException;
 import java.util.*;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.fail;
 
 public class LearningResourceRecordTest {
 
@@ -41,11 +43,11 @@ public class LearningResourceRecordTest {
                     materials.add(new LearningMaterial(record));
                 }
             }
-            Assert.assertEquals(2, assessments.size());
-            Assert.assertEquals(3, materials.size());
+            assertEquals(2, assessments.size());
+            assertEquals(3, materials.size());
         } catch (IOException e) {
             e.printStackTrace();
-            Assert.fail();
+            fail();
         }
     }
 
@@ -104,14 +106,14 @@ public class LearningResourceRecordTest {
         concepts.add("Concept 1");
         String id = "id 1";
         LearningResourceRecord loObject = new LearningResourceRecord(id,Arrays.asList(LearningResourceType.ASSESSMENT, LearningResourceType.PRACTICE), concepts, 1, 1);
-        Assert.assertEquals("Concept 1",loObject.getConceptIds().iterator().next());
-        Assert.assertEquals(1,loObject.getConceptIds().size());
-        Assert.assertEquals("id 1", loObject.getLearningResourceId());
+        assertEquals("Concept 1",loObject.getConceptIds().iterator().next());
+        assertEquals(1,loObject.getConceptIds().size());
+        assertEquals("id 1", loObject.getLearningResourceId());
         loObject.addConceptId("Concept 2");
         Iterator<String> checker = loObject.getConceptIds().iterator();
         checker.next();
-        Assert.assertEquals("Concept 2", checker.next());
-        Assert.assertEquals(2,loObject.getConceptIds().size());
+        assertEquals("Concept 2", checker.next());
+        assertEquals(2,loObject.getConceptIds().size());
     }
 
     @Test
@@ -121,7 +123,7 @@ public class LearningResourceRecordTest {
         concepts.add("Concept 2");
         String id = "id 1";
         LearningResourceRecord loObject = new LearningResourceRecord(id,Arrays.asList(LearningResourceType.ASSESSMENT, LearningResourceType.PRACTICE), concepts, 1, 1);
-        Assert.assertEquals("(Learning Resource ID: id 1 Concept IDs: Concept 1, Concept 2)",loObject.toString());
+        assertEquals("(Learning Resource ID: id 1 Concept IDs: Concept 1, Concept 2)",loObject.toString());
     }
 
     @Test
@@ -145,11 +147,11 @@ public class LearningResourceRecordTest {
         try {
             LearningResourceRecord  record = mapper.readValue(new File(Settings.TEST_RESOURCE_DIR + "practicalExamples/SystemCreated/recordToJson.json"), LearningResourceRecord.class);
 
-            Assert.assertEquals("id 1", record.getLearningResourceId());
-            Assert.assertEquals(2, record.getConceptIds().size());
+            assertEquals("id 1", record.getLearningResourceId());
+            assertEquals(2, record.getConceptIds().size());
             Iterator<String> checker = loObject.getConceptIds().iterator();
             checker.next();
-            Assert.assertEquals("Concept 2", checker.next());
+            assertEquals("Concept 2", checker.next());
 
         } catch (IOException e) {
             e.printStackTrace();
@@ -165,17 +167,17 @@ public class LearningResourceRecordTest {
 
             List<LearningResourceRecord> list = LearningResourceRecord.createLearningResourceRecordsFromJsonFile(Settings.TEST_RESOURCE_DIR + "ManuallyCreated/simpleResource.json");
 
-            Assert.assertEquals(6, list.size());
-            Assert.assertEquals("Q1", list.get(0).getLearningResourceId());
-            Assert.assertEquals(1, list.get(0).getConceptIds().size());
-            Assert.assertEquals("C", list.get(2).getConceptIds().iterator().next());
-            Assert.assertEquals(1, list.get(0).getDataImportance(), DataUtil.OK_FLOAT_MARGIN);
-            Assert.assertEquals(1, list.get(1).getDataImportance(), DataUtil.OK_FLOAT_MARGIN);
-            Assert.assertEquals(.3, list.get(2).getDataImportance(), DataUtil.OK_FLOAT_MARGIN);
+            assertEquals(6, list.size());
+            assertEquals("Q1", list.get(0).getLearningResourceId());
+            assertEquals(1, list.get(0).getConceptIds().size());
+            assertEquals("C", list.get(2).getConceptIds().iterator().next());
+            assertEquals(1, list.get(0).getDataImportance(), DataUtil.OK_FLOAT_MARGIN);
+            assertEquals(1, list.get(1).getDataImportance(), DataUtil.OK_FLOAT_MARGIN);
+            assertEquals(.3, list.get(2).getDataImportance(), DataUtil.OK_FLOAT_MARGIN);
         }
         catch(Exception e){
             e.printStackTrace();
-            Assert.fail();
+            fail();
         }
     }
 
@@ -195,10 +197,10 @@ public class LearningResourceRecordTest {
             for (AssessmentItem lo : list2) {
                 list2string.add(lo.getId());
             }
-            Assert.assertEquals(list2string.toString(), resultString.toString());
+            assertEquals(list2string.toString(), resultString.toString());
         }catch (IOException e){
             e.printStackTrace();
-            Assert.fail();
+            fail();
         }
     }
 }

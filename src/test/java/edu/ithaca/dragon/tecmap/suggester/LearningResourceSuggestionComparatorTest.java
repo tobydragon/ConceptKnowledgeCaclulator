@@ -7,12 +7,13 @@ package edu.ithaca.dragon.tecmap.suggester;
 import edu.ithaca.dragon.tecmap.conceptgraph.ConceptGraphTest;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.junit.Assert;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class LearningResourceSuggestionComparatorTest {
     static Logger logger = LogManager.getLogger(ConceptGraphTest.class);
@@ -35,9 +36,9 @@ public class LearningResourceSuggestionComparatorTest {
 
         for (int i =0; i<suggestList.size(); i++){
 
-            Assert.assertEquals(suggestList.get(i).getId(),suggestListTest.get(i).getId());
-            Assert.assertEquals(suggestList.get(i).getPathNum(),suggestListTest.get(i).getPathNum());
-            Assert.assertEquals(suggestList.get(i).getLevel(),suggestListTest.get(i).getLevel());
+            assertEquals(suggestList.get(i).getId(),suggestListTest.get(i).getId());
+            assertEquals(suggestList.get(i).getPathNum(),suggestListTest.get(i).getPathNum());
+            assertEquals(suggestList.get(i).getLevel(),suggestListTest.get(i).getLevel());
 
         }
 
@@ -57,9 +58,9 @@ public class LearningResourceSuggestionComparatorTest {
 
         for (int i =0; i<suggestList.size(); i++){
 
-            Assert.assertEquals(suggestList.get(i).getId(),suggestListTest.get(i).getId());
-            Assert.assertEquals(suggestList.get(i).getPathNum(),suggestListTest.get(i).getPathNum());
-            Assert.assertEquals(suggestList.get(i).getLevel(),suggestListTest.get(i).getLevel());
+            assertEquals(suggestList.get(i).getId(),suggestListTest.get(i).getId());
+            assertEquals(suggestList.get(i).getPathNum(),suggestListTest.get(i).getPathNum());
+            assertEquals(suggestList.get(i).getLevel(),suggestListTest.get(i).getLevel());
 
         }
 
@@ -80,9 +81,9 @@ public class LearningResourceSuggestionComparatorTest {
 
         for (int i =0; i<suggestList.size(); i++){
 
-            Assert.assertEquals(suggestList.get(i).getId(),suggestListTest.get(i).getId());
-            Assert.assertEquals(suggestList.get(i).getPathNum(),suggestListTest.get(i).getPathNum());
-            Assert.assertEquals(suggestList.get(i).getLevel(),suggestListTest.get(i).getLevel());
+            assertEquals(suggestList.get(i).getId(),suggestListTest.get(i).getId());
+            assertEquals(suggestList.get(i).getPathNum(),suggestListTest.get(i).getPathNum());
+            assertEquals(suggestList.get(i).getLevel(),suggestListTest.get(i).getLevel());
 
         }
     }
@@ -102,9 +103,9 @@ public class LearningResourceSuggestionComparatorTest {
 
         for (int i =0; i<suggestList.size(); i++){
 
-            Assert.assertEquals(suggestList.get(i).getId(),suggestListTest.get(i).getId());
-            Assert.assertEquals(suggestList.get(i).getPathNum(),suggestListTest.get(i).getPathNum());
-            Assert.assertEquals(suggestList.get(i).getLevel(),suggestListTest.get(i).getLevel());
+            assertEquals(suggestList.get(i).getId(),suggestListTest.get(i).getId());
+            assertEquals(suggestList.get(i).getPathNum(),suggestListTest.get(i).getPathNum());
+            assertEquals(suggestList.get(i).getLevel(),suggestListTest.get(i).getLevel());
 
         }
     }
@@ -124,9 +125,9 @@ public class LearningResourceSuggestionComparatorTest {
 
         for (int i =0; i<suggestList.size(); i++){
 
-            Assert.assertEquals(suggestList.get(i).getId(),suggestListTest.get(i).getId());
-            Assert.assertEquals(suggestList.get(i).getPathNum(),suggestListTest.get(i).getPathNum());
-            Assert.assertEquals(suggestList.get(i).getLevel(),suggestListTest.get(i).getLevel());
+            assertEquals(suggestList.get(i).getId(),suggestListTest.get(i).getId());
+            assertEquals(suggestList.get(i).getPathNum(),suggestListTest.get(i).getPathNum());
+            assertEquals(suggestList.get(i).getLevel(),suggestListTest.get(i).getLevel());
 
         }
     }
@@ -146,9 +147,9 @@ public class LearningResourceSuggestionComparatorTest {
 
         for (int i =0; i<suggestList.size(); i++){
 
-            Assert.assertEquals(suggestList.get(i).getId(),suggestListTest.get(i).getId());
-            Assert.assertEquals(suggestList.get(i).getPathNum(),suggestListTest.get(i).getPathNum());
-            Assert.assertEquals(suggestList.get(i).getLevel(),suggestListTest.get(i).getLevel());
+            assertEquals(suggestList.get(i).getId(),suggestListTest.get(i).getId());
+            assertEquals(suggestList.get(i).getPathNum(),suggestListTest.get(i).getPathNum());
+            assertEquals(suggestList.get(i).getLevel(),suggestListTest.get(i).getLevel());
 
         }
     }
@@ -174,9 +175,9 @@ public class LearningResourceSuggestionComparatorTest {
 
         for (int i =0; i<suggestList.size(); i++){
 
-            Assert.assertEquals(suggestList.get(i).getId(),suggestListTest.get(i).getId());
-            Assert.assertEquals(suggestList.get(i).getPathNum(),suggestListTest.get(i).getPathNum());
-            Assert.assertEquals(suggestList.get(i).getLevel(),suggestListTest.get(i).getLevel());
+            assertEquals(suggestList.get(i).getId(),suggestListTest.get(i).getId());
+            assertEquals(suggestList.get(i).getPathNum(),suggestListTest.get(i).getPathNum());
+            assertEquals(suggestList.get(i).getLevel(),suggestListTest.get(i).getLevel());
 
         }
     }
@@ -200,9 +201,9 @@ public class LearningResourceSuggestionComparatorTest {
 
         for (int i =0; i<suggestListTest.size(); i++){
 
-            Assert.assertEquals(suggestList.get(i).getId(),suggestListTest.get(i).getId());
-            Assert.assertEquals(suggestList.get(i).getPathNum(),suggestListTest.get(i).getPathNum());
-            Assert.assertEquals(suggestList.get(i).getLevel(),suggestListTest.get(i).getLevel());
+            assertEquals(suggestList.get(i).getId(),suggestListTest.get(i).getId());
+            assertEquals(suggestList.get(i).getPathNum(),suggestListTest.get(i).getPathNum());
+            assertEquals(suggestList.get(i).getLevel(),suggestListTest.get(i).getLevel());
 
         }
 
@@ -227,9 +228,9 @@ public class LearningResourceSuggestionComparatorTest {
 
         for (int i =0; i<suggestList.size(); i++){
 
-            Assert.assertEquals(suggestList.get(i).getId(),suggestListTest.get(i).getId());
-            Assert.assertEquals(suggestList.get(i).getPathNum(),suggestListTest.get(i).getPathNum());
-            Assert.assertEquals(suggestList.get(i).getLevel(),suggestListTest.get(i).getLevel());
+            assertEquals(suggestList.get(i).getId(),suggestListTest.get(i).getId());
+            assertEquals(suggestList.get(i).getPathNum(),suggestListTest.get(i).getPathNum());
+            assertEquals(suggestList.get(i).getLevel(),suggestListTest.get(i).getLevel());
 
         }
 
@@ -249,9 +250,9 @@ public class LearningResourceSuggestionComparatorTest {
 
         for (int i =0; i<suggestList.size(); i++){
 
-            Assert.assertEquals(suggestList.get(i).getId(),suggestListTest.get(i).getId());
-            Assert.assertEquals(suggestList.get(i).getPathNum(),suggestListTest.get(i).getPathNum());
-            Assert.assertEquals(suggestList.get(i).getLevel(),suggestListTest.get(i).getLevel());
+            assertEquals(suggestList.get(i).getId(),suggestListTest.get(i).getId());
+            assertEquals(suggestList.get(i).getPathNum(),suggestListTest.get(i).getPathNum());
+            assertEquals(suggestList.get(i).getLevel(),suggestListTest.get(i).getLevel());
 
         }
 
@@ -272,9 +273,9 @@ public class LearningResourceSuggestionComparatorTest {
 
         for (int i =0; i<suggestList.size(); i++){
 
-            Assert.assertEquals(suggestList.get(i).getId(),suggestListTest.get(i).getId());
-            Assert.assertEquals(suggestList.get(i).getPathNum(),suggestListTest.get(i).getPathNum());
-            Assert.assertEquals(suggestList.get(i).getLevel(),suggestListTest.get(i).getLevel());
+            assertEquals(suggestList.get(i).getId(),suggestListTest.get(i).getId());
+            assertEquals(suggestList.get(i).getPathNum(),suggestListTest.get(i).getPathNum());
+            assertEquals(suggestList.get(i).getLevel(),suggestListTest.get(i).getLevel());
 
         }
     }
@@ -307,9 +308,9 @@ public class LearningResourceSuggestionComparatorTest {
 
         for (int i =0; i<suggestList.size(); i++){
 
-            Assert.assertEquals(suggestList.get(i).getId(),suggestListTest.get(i).getId());
-            Assert.assertEquals(suggestList.get(i).getPathNum(),suggestListTest.get(i).getPathNum());
-            Assert.assertEquals(suggestList.get(i).getLevel(),suggestListTest.get(i).getLevel());
+            assertEquals(suggestList.get(i).getId(),suggestListTest.get(i).getId());
+            assertEquals(suggestList.get(i).getPathNum(),suggestListTest.get(i).getPathNum());
+            assertEquals(suggestList.get(i).getLevel(),suggestListTest.get(i).getLevel());
 
         }
 

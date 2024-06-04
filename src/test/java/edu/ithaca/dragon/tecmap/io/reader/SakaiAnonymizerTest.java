@@ -1,6 +1,7 @@
 package edu.ithaca.dragon.tecmap.io.reader;
 
 
+import com.opencsv.exceptions.CsvException;
 import edu.ithaca.dragon.tecmap.Settings;
 import edu.ithaca.dragon.tecmap.io.Json;
 import org.junit.jupiter.api.Test;
@@ -23,7 +24,7 @@ class SakaiAnonymizerTest {
 //    }
 
     @Test
-    public void anonymizeTest() throws IOException {
+    public void anonymizeTest() throws IOException , CsvException {
         List<String[]> newRows = CsvRepresentation.parseRowsFromFile(Settings.DEFAULT_TEST_DATASTORE_PATH+"Cs1Example/Cs1ExampleAssessment1.csv");
         SakaiAnonymizer anonymizer = new SakaiAnonymizer();
         anonymizer.anonymize(newRows);

@@ -5,10 +5,11 @@ import edu.ithaca.dragon.tecmap.conceptgraph.ConceptGraph;
 import edu.ithaca.dragon.tecmap.conceptgraph.ConceptNode;
 import edu.ithaca.dragon.tecmap.conceptgraph.ExampleConceptGraphFactory;
 import edu.ithaca.dragon.tecmap.conceptgraph.ExampleConceptGraphRecordFactory;
-import org.junit.Assert;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 /**
  * Created by tdragon on 5/3/17.
@@ -26,16 +27,16 @@ public class ConceptGraphRecordTest {
 
             ConceptGraphRecord fromFile = ConceptGraphRecord.buildFromJson(file);
 
-            Assert.assertThat(toFile.getConcepts(), is(fromFile.getConcepts()));
-            Assert.assertThat(toFile.getLinks(), is(fromFile.getLinks()));
+            assertThat(toFile.getConcepts(), is(fromFile.getConcepts()));
+            assertThat(toFile.getLinks(), is(fromFile.getLinks()));
 
             file = TEST_DIR + "superComplex.json";
             toFile = ExampleConceptGraphRecordFactory.makeSuperComplex();
             toFile.writeToJson(file);
             fromFile = ConceptGraphRecord.buildFromJson(file);
 
-            Assert.assertThat(toFile.getConcepts(), is(fromFile.getConcepts()));
-            Assert.assertThat(toFile.getLinks(), is(fromFile.getLinks()));
+            assertThat(toFile.getConcepts(), is(fromFile.getConcepts()));
+            assertThat(toFile.getLinks(), is(fromFile.getLinks()));
         }
         catch(Exception e){
             e.printStackTrace();
@@ -49,7 +50,7 @@ public class ConceptGraphRecordTest {
         //Test for resources
         for (ConceptRecord conceptRecord: graphRecord.getConcepts()){
             ConceptNode node = graph.findNodeById(conceptRecord.getId());
-            Assert.assertEquals(node.getAssessmentItemMap().size(), conceptRecord.getResourceSummaries().size());
+            assertEquals(node.getAssessmentItemMap().size(), conceptRecord.getResourceSummaries().size());
         }
     }
 

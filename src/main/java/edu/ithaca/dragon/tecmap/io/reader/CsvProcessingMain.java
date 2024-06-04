@@ -17,7 +17,7 @@ public class CsvProcessingMain {
             try {
                 CsvProcessor.processFilesInDirectory(processor, "src/main/resources/anonHere/");
                 processor.writeToFile("src/main/resources/anonHere/");
-            } catch (IOException e) {
+            } catch (Exception e) {
                 e.printStackTrace();
             }
         }
