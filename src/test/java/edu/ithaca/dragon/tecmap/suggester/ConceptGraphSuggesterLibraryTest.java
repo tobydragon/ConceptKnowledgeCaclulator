@@ -13,6 +13,7 @@ import edu.ithaca.dragon.tecmap.learningresource.LearningResourceType;
 import org.junit.jupiter.api.Test;
 
 import java.io.IOException;
+import java.sql.SQLOutput;
 import java.util.*;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -65,7 +66,7 @@ public class ConceptGraphSuggesterLibraryTest {
     @Test
     public void conceptsToWorkOnTest() {
         ConceptGraph orig = ExampleConceptGraphFactory.willExampleConceptGraphTestOneStudent();
-
+        System.out.println(orig.getRoots());
         List<ConceptNode> concepts = ConceptGraphSuggesterLibrary.suggestConcepts(orig);
 
         assertEquals(concepts.size(), 2);

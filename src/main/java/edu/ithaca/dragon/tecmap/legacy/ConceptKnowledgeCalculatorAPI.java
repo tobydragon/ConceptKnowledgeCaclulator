@@ -90,7 +90,7 @@ public interface ConceptKnowledgeCalculatorAPI {
 
 
     /**
-     * Verifies the file is valid and then creates a new ckc without the removed files.
+     * Verifies the file is valid and then replaces a new ckc without the removed files.
      * @param assessmentFile
      * @throws Exception
      */
@@ -132,6 +132,7 @@ public interface ConceptKnowledgeCalculatorAPI {
      * Calculates a list of conceptNode based on an individual graph , returns a the list of ConceptNodes
      * @param userID
      * @return List of Concept Nodes
+     * @throws Exception if user is not present
      */
     List<String> calcIndividualConceptNodesSuggestions(String userID) throws Exception;
 

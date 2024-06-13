@@ -119,6 +119,7 @@ public class ComplementaryKnowledgeSuggester extends Suggester{
                     //compares if the concept for childOne's current child concept is the same as childTwo's.
 
                     double value = Math.abs(childOne.get(i).getKnowledgeEstimate() - childTwo.get(i).getKnowledgeEstimate());
+                    System.out.println(value);
 
                     if(value < 0.1){
                         //if the all the children are the same, but the difference between the current conceptNodes is less than 0.1 (this value can change)

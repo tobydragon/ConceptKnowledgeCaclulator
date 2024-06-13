@@ -119,15 +119,15 @@ public class ConceptGraphSuggesterLibrary {
         List<LearningResourceSuggestion> myList = new ArrayList<LearningResourceSuggestion>();
         for (String key : summaryList.keySet()){
             int lineNum = summaryList.get(key);
-            AssessmentItem node = learningObjectMap.get(key);
-            double estimate = node.calcKnowledgeEstimate();
+            AssessmentItem assessmentItem = learningObjectMap.get(key);
+            double estimate = assessmentItem.calcKnowledgeEstimate();
 
-            int directConceptLinkCount = directLinkMap.get(node.getId());
+            int directConceptLinkCount = directLinkMap.get(assessmentItem.getId());
 
             LearningResourceSuggestion.Level level;
             //fix to fit preconditions
             LearningResourceSuggestion.Level levelIn;
-            List<AssessmentItemResponse> resList = node.getResponses();
+            List<AssessmentItemResponse> resList = assessmentItem.getResponses();
 
             if(resList.size()==0){
                 levelIn = LearningResourceSuggestion.Level.INCOMPLETE;

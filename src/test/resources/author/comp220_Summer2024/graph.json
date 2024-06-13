@@ -1,0 +1,99 @@
+{
+  "name": "COMP 220",
+  "concepts": [
+    {"id":  "ADT/Interfaces For Modularity"},
+
+    {"id":  "Common ADTs"},
+    {"id":  "List"},
+    {"id":  "Stack"},
+    {"id":  "Queue"},
+    {"id":  "Priority Queue"},
+    {"id":  "Set"},
+    {"id":  "Map"},
+
+    {"id":  "Concrete Implementation Techniques/Tools"},
+    {"id":  "Hash Tables"},
+    {"id":  "Arrays"},
+    {"id":  "Linked Structures"},
+    {"id":  "Binary Trees"},
+    {"id":  "Chained Hash Tables"},
+
+    {"id":  "Runtime Efficiency Of Different Implementation Of Same ADT"},
+    {"id":  "BigO"},
+    {"id":  "Theoretical"},
+    {"id":  "Empirical"}
+  ],
+
+  "links": [
+    {
+      "parent": "ADT/Interfaces For Modularity",
+      "child": "Common ADTs"
+    }, {
+      "parent": "ADT/Interfaces For Modularity",
+      "child": "Concrete Implementation Techniques/Tools"
+    }, {
+      "parent": "ADT/Interfaces For Modularity",
+      "child": "Runtime Efficiency Of Different Implementation Of Same ADT"
+    },
+
+    {
+      "parent": "Common ADTs",
+      "child": "List"
+    }, {
+      "parent": "Common ADTs",
+      "child": "Stack"
+    }, {
+      "parent": "Common ADTs",
+      "child": "Queue"
+    }, {
+      "parent": "Common ADTs",
+      "child": "Priority Queue"
+    }, {
+      "parent": "Common ADTs",
+      "child": "Set"
+    }, {
+      "parent": "Common ADTs",
+      "child": "Map"
+    },
+
+    {
+      "parent": "Concrete Implementation Techniques/Tools",
+      "child": "Hash Tables"
+    }, {
+      "parent": "Concrete Implementation Techniques/Tools",
+      "child": "Arrays"
+    }, {
+      "parent": "Concrete Implementation Techniques/Tools",
+      "child": "Linked Structures"
+    }, {
+      "parent": "Concrete Implementation Techniques/Tools",
+      "child": "Binary Trees"
+    },
+
+    {
+      "parent": "Hash Tables",
+      "child": "Chained Hash Tables"
+    },
+
+    {
+      "parent": "Linked Structures",
+      "child": "Chained Hash Tables"
+    },
+
+    {
+      "parent": "Linked Structures",
+      "child": "Binary Trees"
+    },
+
+    {
+      "parent": "Runtime Efficiency Of Different Implementation Of Same ADT",
+      "child": "BigO"
+    }, {
+      "parent": "Runtime Efficiency Of Different Implementation Of Same ADT",
+      "child": "Theoretical"
+    }, {
+      "parent": "Runtime Efficiency Of Different Implementation Of Same ADT",
+      "child": "Empirical"
+    }
+  ]
+}
