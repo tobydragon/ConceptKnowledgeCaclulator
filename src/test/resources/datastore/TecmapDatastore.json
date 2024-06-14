@@ -22,7 +22,7 @@
   }, {
     "id" : "Cs1ExampleAssessmentAdded",
     "graphFile" : "src/test/resources/datastore/Cs1ExampleAssessmentAdded/Cs1ExampleGraph.json",
-    "resourceFiles" : [ "src/test/resources/datastore/Cs1ExampleAssessmentAdded/Cs1ExampleAssessmentAddedResources.json" ],
+    "resourceFiles" : [ ],
     "assessmentFiles" : [ "src/test/resources/datastore/Cs1ExampleAssessmentAdded/Cs1ExampleAssessment1.csv", "src/test/resources/datastore/Cs1ExampleAssessmentAdded/Cs1ExampleAssessment2.csv" ]
   }, {
     "id" : "Cs1ExampleStructure",

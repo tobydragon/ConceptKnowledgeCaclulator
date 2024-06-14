@@ -16,14 +16,14 @@ public class ConceptGraphSuggesterLibrary {
     /**
      * Suggest the concepts on which to focus, by finding the lowest children with knowledge estimate is less than MAX
      * @param graphForSuggestions
-     * @return a list of references to the actual ConceptNodes for the graphForSuggestions
+     * @return a list of references to the actual ConceptNodes for the graphForSuggestions // add to comment
      */
     public static List<ConceptNode> suggestConcepts(ConceptGraph graphForSuggestions){
         List<ConceptNode> suggestedConceptList = new ArrayList<>();
         //TODO: convert to functional style for parallelism
         for (String key : graphForSuggestions.getAllNodeIds()) {
             ConceptNode node = graphForSuggestions.findNodeById(key);
-            if (node.getKnowledgeEstimate() > 0 && node.getKnowledgeEstimate() <= MAX) {
+            if (node.getKnowledgeEstimate() > 0 && node.getKnowledgeEstimate() <= MAX) { // won't suggest concepts that students didn't take LM
                 addIfLowestDescendant(node, suggestedConceptList);
             }
         }
