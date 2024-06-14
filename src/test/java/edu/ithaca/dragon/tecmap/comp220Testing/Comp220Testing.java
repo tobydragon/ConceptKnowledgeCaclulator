@@ -89,6 +89,7 @@ public class Comp220Testing {
         List<LearningResourceSuggestion> incompleteTest2 = res2.incompleteList;
         List<LearningResourceSuggestion> wrongTest2 = res2.wrongList;
         System.out.println(wrongTest2);
+        // min concepts to encounter problem, try simpler concept, guess
 
         // tests should not fail but are failed
 //        assertEquals(incompleteTest2.size(), 0); // should be 1
