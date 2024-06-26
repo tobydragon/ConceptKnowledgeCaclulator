@@ -76,7 +76,6 @@ public class AssessmentItemTest {
         maxKnowledgeEstimatesForAssessments.put("AI2", 2.0);
 
         List<AssessmentItem> columnItems = AssessmentItem.buildListFromAssessmentItemResponses(responseList, maxKnowledgeEstimatesForAssessments);
-        System.out.println(columnItems);
         assertEquals(2, columnItems.size());
         assertEquals("AI1", columnItems.get(0).getId());
         assertEquals("AI2", columnItems.get(1).getId());

@@ -18,10 +18,10 @@ public class ComplementaryKnowledgeSuggester extends Suggester{
     @Override
     public List<Group> suggestGroup(Group groupSoFar, Group extraMembers) {
         List<Group > actualGroupings = new ArrayList<>();
-        Map<String, ConceptGraph> map = groupSoFar.getStudents();
+        Map<String, ConceptGraph> map = groupSoFar.getStudentGraphMap();
         List<String> studentlist = getCompleteStudentList(map);
         List<String> assignedStudents = new ArrayList<>();
-        List<String> questioningStudents = new ArrayList<>();
+        List<String> questioningStudents = new ArrayList<>(); // students unsure what group they go to yet
 
         for(int i =0; i< studentlist.size(); i++){
             for(int x=0; x< studentlist.size(); x++){
@@ -89,7 +89,7 @@ public class ComplementaryKnowledgeSuggester extends Suggester{
      */
     private boolean isComplementary(Map<String, ConceptGraph> map, String name1, String name2, Group groupSoFar) throws Exception {
         // if the current first student's concept isn't equal to "no suggestions" and the current second student isn't equal to "no suggestions"
-        //"no suggestions" as a the concept resource in the current group will return null because there is never a concept in the graph called "no suggestions"
+        //"no suggestions" as a concept resource in the current group will return null because there is never a concept in the graph called "no suggestions"
         if(map.get(name1).findNodeById(groupSoFar.getConcept()) != null && map.get(name2).findNodeById(groupSoFar.getConcept()) != null){
             return isComplementary(map.get(name1).findNodeById(groupSoFar.getConcept()), map.get(name2).findNodeById(groupSoFar.getConcept()));
         }else{
@@ -119,7 +119,6 @@ public class ComplementaryKnowledgeSuggester extends Suggester{
                     //compares if the concept for childOne's current child concept is the same as childTwo's.
 
                     double value = Math.abs(childOne.get(i).getKnowledgeEstimate() - childTwo.get(i).getKnowledgeEstimate());
-                    System.out.println(value);
 
                     if(value < 0.1){
                         //if the all the children are the same, but the difference between the current conceptNodes is less than 0.1 (this value can change)

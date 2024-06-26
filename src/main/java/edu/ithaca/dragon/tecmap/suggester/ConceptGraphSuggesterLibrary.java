@@ -15,6 +15,7 @@ public class ConceptGraphSuggesterLibrary {
 
     /**
      * Suggest the concepts on which to focus, by finding the lowest children with knowledge estimate is less than MAX
+     * Does not suggest concepts if students haven't taken the assessment because KE is 0
      * @param graphForSuggestions
      * @return a list of references to the actual ConceptNodes for the graphForSuggestions // add to comment
      */
@@ -23,7 +24,7 @@ public class ConceptGraphSuggesterLibrary {
         //TODO: convert to functional style for parallelism
         for (String key : graphForSuggestions.getAllNodeIds()) {
             ConceptNode node = graphForSuggestions.findNodeById(key);
-            if (node.getKnowledgeEstimate() > 0 && node.getKnowledgeEstimate() <= MAX) { // won't suggest concepts that students didn't take LM
+            if (node.getKnowledgeEstimate() > 0 && node.getKnowledgeEstimate() <= MAX) {
                 addIfLowestDescendant(node, suggestedConceptList);
             }
         }
@@ -57,10 +58,11 @@ public class ConceptGraphSuggesterLibrary {
 
 
     /**
-     *sorts the list of LearningObjectSuggestions and takes the incomplete learningObjects. (The list is ordered by incomplete, wrong, and right and within each of those categories based on the highest importance value to lowest).
+     *takes a list of suggested concepts (each list is ordered by incomplete, wrong, and right and within each of those categories based on the highest importance value to lowest).
+     * does not suggest LearningResource that is connected to concepts not on the suggestedConceptList
      *@param graph Concept graph
      *@param choice: 1= incomplete, 0 = wrong
-     *@return the map of incomplete learningObjectSuggestions in order of highest importance value to lowest
+     *@return the map of learningResourceSuggestions in order of highest importance value to lowest
      */
     public static HashMap<String, List<LearningResourceSuggestion>> buildSuggestionMap(List<ConceptNode> suggestedConceptList, Integer choice, ConceptGraph graph){
 
@@ -71,13 +73,12 @@ public class ConceptGraphSuggesterLibrary {
 
             List<LearningResourceSuggestion> testList = new ArrayList<>();
 
-            Map<String, Integer> map = graph.buildLearningMaterialPathCount(concept.getID());
+            Map<String, Integer> map = graph.buildLearningResourcePathCount(concept.getID());
             Map<String, Integer> linkMap = graph.buildDirectConceptLinkCount();
 
-            List<LearningResourceSuggestion> list = buildLearningObjectSuggestionList(map, graph.getAssessmentItemMap(), concept.getID(), linkMap);
+            List<LearningResourceSuggestion> list = buildLearningResourceSuggestionList(map, graph.getAssessmentItemMap(), concept.getID(), linkMap);
 
             sortSuggestions(list);
-
 
 
             for (int i = 0; i < list.size(); i++) {
@@ -91,12 +92,11 @@ public class ConceptGraphSuggesterLibrary {
                 } else {
                     if (list.get(i).getLevel().equals(LearningResourceSuggestion.Level.WRONG)) {
                         //then add it
-
                         testList.add(list.get(i));
                     }
                 }
-
             }
+//            System.out.println(suggestedConceptNodeMap);
             suggestedConceptNodeMap.put(concept.getID(), testList);
         }
         return suggestedConceptNodeMap;
@@ -110,16 +110,16 @@ public class ConceptGraphSuggesterLibrary {
 
     /**
     *takes a map of strings and creates a list of learningObjectSuggestion that holds if the learningObject was incomplete, wrong, or right, the pathNum, and the Concept that caused the AssessmentItem to be suggested
-    *@param summaryList- map of the summaryList (map of the LearningObjects and the pathNum from a certain start)
-    *@param  learningObjectMap- map of all of the learningObjects
-    *@param causedConcept- the ID of ConceptNode that the learningObject came from
-    *@returns a list of the created LearningObjectSuggestions
+    *@param summaryList- map of the summaryList (map of the LearningResource and the pathNum from a certain start)
+    *@param  assessmentItemMap- map of all AssessmentItem
+    *@param causedConcept- the ID of ConceptNode that the LearningResource came from
+    *@returns a list of the created LearningResourceSuggestions
     */
-    public static List<LearningResourceSuggestion> buildLearningObjectSuggestionList(Map<String, Integer> summaryList, Map<String, AssessmentItem> learningObjectMap, String causedConcept, Map<String, Integer> directLinkMap){
+    public static List<LearningResourceSuggestion> buildLearningResourceSuggestionList(Map<String, Integer> summaryList, Map<String, AssessmentItem> assessmentItemMap, String causedConcept, Map<String, Integer> directLinkMap){
         List<LearningResourceSuggestion> myList = new ArrayList<LearningResourceSuggestion>();
         for (String key : summaryList.keySet()){
             int lineNum = summaryList.get(key);
-            AssessmentItem assessmentItem = learningObjectMap.get(key);
+            AssessmentItem assessmentItem = assessmentItemMap.get(key);
             double estimate = assessmentItem.calcKnowledgeEstimate();
 
             int directConceptLinkCount = directLinkMap.get(assessmentItem.getId());
@@ -147,7 +147,6 @@ public class ConceptGraphSuggesterLibrary {
             }
 
         }
-
         return myList;
     }
 }

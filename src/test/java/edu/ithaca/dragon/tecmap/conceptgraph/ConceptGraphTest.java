@@ -32,7 +32,7 @@ public class ConceptGraphTest {
         testCompareA.put("Q5",2);
         testCompareA.put("Q6",2);
 
-        assertEquals(testCompareA, orig.buildLearningMaterialPathCount("A"));
+        assertEquals(testCompareA, orig.buildLearningResourcePathCount("A"));
 
         //from B node
         HashMap<String, Integer> testCompareB = new HashMap<String, Integer>();
@@ -43,7 +43,7 @@ public class ConceptGraphTest {
         testCompareB.put("Q5",1);
         testCompareB.put("Q6",1);
 
-        assertEquals(testCompareB, orig.buildLearningMaterialPathCount("B"));
+        assertEquals(testCompareB, orig.buildLearningResourcePathCount("B"));
 
 
         //from c node
@@ -53,10 +53,10 @@ public class ConceptGraphTest {
         testCompareC.put("Q5",1);
         testCompareC.put("Q6",1);
 
-        assertEquals(testCompareC, orig.buildLearningMaterialPathCount("C"));
+        assertEquals(testCompareC, orig.buildLearningResourcePathCount("C"));
 
         //from a node not in graph
-        assertEquals(null, orig.buildLearningMaterialPathCount("W"));
+        assertEquals(null, orig.buildLearningResourcePathCount("W"));
     }
 
 

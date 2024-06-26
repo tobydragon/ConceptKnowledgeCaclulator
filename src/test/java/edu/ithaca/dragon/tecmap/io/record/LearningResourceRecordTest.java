@@ -6,7 +6,7 @@ import edu.ithaca.dragon.tecmap.Settings;
 import edu.ithaca.dragon.tecmap.io.reader.TecmapCSVReader;
 import edu.ithaca.dragon.tecmap.io.reader.SakaiReader;
 import edu.ithaca.dragon.tecmap.learningresource.AssessmentItem;
-import edu.ithaca.dragon.tecmap.learningresource.LearningMaterial;
+import edu.ithaca.dragon.tecmap.learningresource.LearningResource;
 import edu.ithaca.dragon.tecmap.learningresource.LearningResourceType;
 import edu.ithaca.dragon.tecmap.util.DataUtil;
 import org.junit.jupiter.api.Test;
@@ -24,7 +24,7 @@ public class LearningResourceRecordTest {
     @Test
     public void testBuildingResourcesFromRecords(){
         Collection<AssessmentItem> assessments = new ArrayList<>();
-        Collection<LearningMaterial> materials = new ArrayList<>();
+        Collection<LearningResource> materials = new ArrayList<>();
         try {
             Collection<LearningResourceRecord> fromFile = LearningResourceRecord.createLearningResourceRecordsFromJsonFile(Settings.TEST_RESOURCE_DIR + "ManuallyCreated/LearningRecordResourceTest-MissingFields.json");
 
@@ -40,7 +40,7 @@ public class LearningResourceRecordTest {
                 if (record.isType(LearningResourceType.INFORMATION) || record.isType(LearningResourceType.PRACTICE)){
                     //since we've already added an assessment for this record, remove it so the list can be used to create the material directly from the list
                     record.getResourceTypes().remove(LearningResourceType.ASSESSMENT);
-                    materials.add(new LearningMaterial(record));
+                    materials.add(new LearningResource(record));
                 }
             }
             assertEquals(2, assessments.size());

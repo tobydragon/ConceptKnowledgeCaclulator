@@ -18,7 +18,7 @@
       "Array",
       "Pointers",
       "Stack vs. Heap",
-      "Timing"
+      "Testing Time Efficiency"
     ],
     "dataImportance": "1"
   },
@@ -35,7 +35,7 @@
       "Search",
       "Sort",
       "Recursion",
-      "Timing"
+      "Testing Time Efficiency"
     ],
     "dataImportance": "1"
   },
@@ -50,7 +50,7 @@
     "conceptIds":[
       "Linked Nodes",
       "List",
-      "ADT"
+      "Abstract Data Types"
     ],
     "dataImportance": "1"
   },
@@ -58,9 +58,9 @@
     "conceptIds":[
       "List",
       "Array",
-      "Linked Structure",
-      "Timing",
-      "ADT"
+      "Linked Nodes",
+      "Testing Time Efficiency",
+      "Abstract Data Types"
     ],
     "dataImportance": "1"
   }

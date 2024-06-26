@@ -31,7 +31,7 @@ public class BucketSuggester extends Suggester {
 
             Map<String, Double> knowledgeSums = new HashMap<>();
 
-            Map<String, ConceptGraph> group = groupSoFar.getStudents();
+            Map<String, ConceptGraph> group = groupSoFar.getStudentGraphMap();
 
 
             for(String name: group.keySet()){

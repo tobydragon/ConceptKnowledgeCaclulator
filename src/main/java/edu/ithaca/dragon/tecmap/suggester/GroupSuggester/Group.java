@@ -15,7 +15,7 @@ public class Group {
     Map<String, ConceptGraph> studentGraphMap;
     String id;
     String concept;
-    String rationale;
+    String rationale; // reason
     //rationale
     //resource
 
@@ -50,7 +50,7 @@ public class Group {
         this.concept = conceptString;
     }
 
-    public Map<String, ConceptGraph> getStudents(){
+    public Map<String, ConceptGraph> getStudentGraphMap(){
         return studentGraphMap;
     }
 
@@ -60,7 +60,7 @@ public class Group {
 
 
     public void combinegroups(Group addedMem){
-        this.studentGraphMap.putAll(addedMem.getStudents());
+        this.studentGraphMap.putAll(addedMem.getStudentGraphMap());
 
     }
 
@@ -72,7 +72,7 @@ public class Group {
 
 
     public void addMember(Group gr){
-        Map<String, ConceptGraph> list = gr.getStudents();
+        Map<String, ConceptGraph> list = gr.getStudentGraphMap();
         this.studentGraphMap.putAll(list);
 
     }

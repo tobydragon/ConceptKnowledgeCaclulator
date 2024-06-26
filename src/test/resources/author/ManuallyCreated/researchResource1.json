@@ -63,7 +63,7 @@
   },
   {"learningResourceId": "What are the differences and similarities between for loops and while loops?",
     "conceptIds": [
-    "For Loop",
+    "For Loops",
       "While Loops"
   ],
     "dataImportance": "1"
@@ -140,7 +140,7 @@
     "dataImportance": "0"
   },
   {
-    "learningResourceId": "What a key-value pair?",
+    "learningResourceId": "What’s key-value pairs",
     "conceptIds": [
       "Dictionaries"
     ],

@@ -1,0 +1,43 @@
+[ {
+  "learningResourceId" : "Q1",
+  "resourceTypes" : [ "ASSESSMENT", "PRACTICE" ],
+  "conceptIds" : [ "List", "Arrays"],
+  "dataImportance" : 0.0,
+  "maxPossibleKnowledgeEstimate" : 10.0
+}, {
+  "learningResourceId" : "Q2",
+  "resourceTypes" : [ "ASSESSMENT", "PRACTICE" ],
+  "conceptIds" : [ "Stack", "Queue", "List"],
+  "dataImportance" : 0.0,
+  "maxPossibleKnowledgeEstimate" : 10.0
+}, {
+  "learningResourceId" : "Q3",
+  "resourceTypes" : [ "ASSESSMENT", "PRACTICE" ],
+  "conceptIds" : [ "Map"],
+  "dataImportance" : 0.0,
+  "maxPossibleKnowledgeEstimate" : 5.0
+}, {
+  "learningResourceId" : "Q4",
+  "resourceTypes" : [ "ASSESSMENT", "PRACTICE" ],
+  "conceptIds" : [ "Binary Trees"],
+  "dataImportance" : 0.0,
+  "maxPossibleKnowledgeEstimate" : 5.0
+}, {
+  "learningResourceId" : "Q5",
+  "resourceTypes" : [ "ASSESSMENT", "PRACTICE" ],
+  "conceptIds" : [ "BigO", "Theoretical", "Empirical"],
+  "dataImportance" : 0.0,
+  "maxPossibleKnowledgeEstimate" : 100.0
+} , {
+  "learningResourceId" : "Q6",
+  "resourceTypes" : [ "ASSESSMENT", "PRACTICE" ],
+  "conceptIds" : [ "BigO", "Binary Trees", "Chained Hash Tables"],
+  "dataImportance" : 0.0,
+  "maxPossibleKnowledgeEstimate" : 50.0
+}, {
+  "learningResourceId" : "Q7",
+  "resourceTypes" : [ "ASSESSMENT", "PRACTICE" ],
+  "conceptIds" : [ "Concrete Implementation Techniques/Tools"],
+  "dataImportance" : 0.0,
+  "maxPossibleKnowledgeEstimate" : 100.0
+}]

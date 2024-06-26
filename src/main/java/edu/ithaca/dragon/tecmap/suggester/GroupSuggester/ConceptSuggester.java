@@ -40,11 +40,10 @@ public class ConceptSuggester extends Suggester {
         Map<String, Group> conceptMap= new HashMap<>();
             //concept, list of maps of users and their concept graphs
 
-        Map<String, ConceptGraph> totalStudents = new HashMap<>();
-        totalStudents = groupSoFar.getStudents();
+        Map<String, ConceptGraph> studentGraphMap = groupSoFar.getStudentGraphMap();
 
-        for(String name: totalStudents.keySet()){
-            List<String> conceptsToWorkOn = getConcepts(totalStudents.get(name));
+        for(String name: studentGraphMap.keySet()){
+            List<String> conceptsToWorkOn = getConcepts(studentGraphMap.get(name));
             String firstConcept = "no suggestions";
             if(conceptsToWorkOn.size()>0){
                 firstConcept = conceptsToWorkOn.get(0);
@@ -53,12 +52,12 @@ public class ConceptSuggester extends Suggester {
             if (conceptMap.containsKey(firstConcept)){
                 //the group of students associated to the already found concept
                 Group foundGroup = conceptMap.get(firstConcept);
-                foundGroup.addMember(name, totalStudents.get(name));
+                foundGroup.addMember(name, studentGraphMap.get(name));
 
             }else{
 
                 Map<String, ConceptGraph> addedGroup = new HashMap<>();
-                addedGroup.put(name, totalStudents.get(name));
+                addedGroup.put(name, studentGraphMap.get(name));
                 Group tempGroup = new Group(addedGroup, name);
 
                 conceptMap.put(firstConcept, tempGroup);
@@ -77,12 +76,10 @@ public class ConceptSuggester extends Suggester {
      */
     public static List<String> getConcepts(ConceptGraph graph){
         List<String> stringConcepts = new ArrayList<>();
-
         List<ConceptNode> nodes = ConceptGraphSuggesterLibrary.suggestConcepts(graph);
         for(ConceptNode node: nodes){
             stringConcepts.add(node.getID());
         }
-
         return stringConcepts;
         }
 

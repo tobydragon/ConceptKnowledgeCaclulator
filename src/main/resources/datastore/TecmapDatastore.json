@@ -39,5 +39,10 @@
       "graphFile" : "src/test/resources/datastore/AnalysisExample/AnalysisGraph.json",
       "resourceFiles" : [ "src/test/resources/datastore/AnalysisExample/AnalysisResources.json" ],
       "assessmentFiles" : [ "src/test/resources/datastore/AnalysisExample/AnalysisExample1.csv" ]
-    } ]
+    }, {
+    "id" : "comp220-2024",
+    "graphFile" : "src/main/resources/datastore/comp220-2024/graph.json",
+    "resourceFiles" : [ "src/main/resources/datastore/comp220-2024/learningMaterials.json" ],
+    "assessmentFiles" : [ "src/main/resources/datastore/comp220-2024/assessmentGrades.csv" ]
+  } ]
 }

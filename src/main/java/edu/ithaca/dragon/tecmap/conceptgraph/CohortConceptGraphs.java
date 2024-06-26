@@ -20,16 +20,16 @@ public class CohortConceptGraphs {
 	/**
 	 * Takes a graph (including LearningObjectLinks)
 	 * @param structureGraph
-	 * @param summaries
+	 * @param responses
 	 */
-	public CohortConceptGraphs(ConceptGraph structureGraph, List<AssessmentItemResponse> summaries){
+	public CohortConceptGraphs(ConceptGraph structureGraph, List<AssessmentItemResponse> responses){
 		if (structureGraph.responsesCount()>0){
 			logger.warn("StructureGraph contains responses that will be copied to all CohortGraphs");
 		}
 		averageGraph = new ConceptGraph(structureGraph, "Average Graph");
 //		averageGraph.calcPredictedScores();
 
-		Map<String, List<AssessmentItemResponse>> userIdToResponses = AssessmentItemResponse.getUserResponseMap(summaries);
+		Map<String, List<AssessmentItemResponse>> userIdToResponses = AssessmentItemResponse.getUserResponseMap(responses);
 		userToGraph = new HashMap<>();
 
 		for(String user: userIdToResponses.keySet()){
@@ -41,7 +41,7 @@ public class CohortConceptGraphs {
 		}
 
 		//Add data to average Graph after all other graphs have been created.
-		averageGraph.addAssessmentItemResponses(summaries);
+		averageGraph.addAssessmentItemResponses(responses);
 		averageGraph.calcKnowledgeEstimates();
 
 		calcDistanceFromAvg();

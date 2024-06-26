@@ -5,10 +5,10 @@ package edu.ithaca.dragon.tecmap.suggester;
  */
 public class LearningResourceSuggestion {
     private String id;
-    private int pathNum;
+    private int pathNum; // number of paths to LR from a node
     private String reasoning;
     private Level level;
-    private int directConceptLinkCount;
+    private int directConceptLinkCount; // how many concepts LR is linked to
 
     public enum Level{
         //used to create ordering for suggestion

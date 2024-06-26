@@ -28,8 +28,8 @@ public class BySizeSuggester extends Suggester {
         List<Group> actualGroupings = new ArrayList<>();
 
 
-        Map<String, ConceptGraph> group = groupSoFar.getStudents();
-        Map<String, ConceptGraph> exMem = extraMembers.getStudents();
+        Map<String, ConceptGraph> group = groupSoFar.getStudentGraphMap();
+        Map<String, ConceptGraph> exMem = extraMembers.getStudentGraphMap();
 
 
         List<String> copyGroups = new ArrayList<>();
@@ -64,7 +64,7 @@ public class BySizeSuggester extends Suggester {
 
                     }
                     if(!random){
-                        groups.addRationale(groupSoFar.getRationale()+ " ,By Size: "+ groupSize);
+                        groups.addRationale(groupSoFar.getRationale()+ " ,By Size: " + groupSize);
                     }
 
 

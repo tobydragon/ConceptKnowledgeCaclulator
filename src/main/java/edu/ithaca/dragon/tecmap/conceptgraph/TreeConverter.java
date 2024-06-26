@@ -1,7 +1,7 @@
 package edu.ithaca.dragon.tecmap.conceptgraph;
 
 import edu.ithaca.dragon.tecmap.learningresource.AssessmentItem;
-import edu.ithaca.dragon.tecmap.learningresource.LearningMaterial;
+import edu.ithaca.dragon.tecmap.learningresource.LearningResource;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -17,7 +17,7 @@ public class TreeConverter {
 
     public static ConceptGraph makeTreeCopy(ConceptGraph graphToCopy){
         Map<String, AssessmentItem> resourceMap = AssessmentItem.deepCopyLearningObjectMap(graphToCopy.getAssessmentItemMap());
-        Map<String, LearningMaterial> materialMap = LearningMaterial.deepCopyLearningMaterialMap(graphToCopy.getLearningMaterialMap());
+        Map<String, LearningResource> materialMap = LearningResource.deepCopyLearningResourceMap(graphToCopy.getLearningMaterialMap());
 
         Map<String, ConceptNode> nodeMap = new HashMap<>();
 
@@ -30,7 +30,7 @@ public class TreeConverter {
     }
 
 
-    public static ConceptNode makeTreeNodeCopy(ConceptNode nodeToMakeTreeCopyOf, HashMap<String, List<String>> labelToListOfIds, Map<String, ConceptNode>nodeMap, Map<String, AssessmentItem> resourceMap, Map<String, LearningMaterial> materialMap){
+    public static ConceptNode makeTreeNodeCopy(ConceptNode nodeToMakeTreeCopyOf, HashMap<String, List<String>> labelToListOfIds, Map<String, ConceptNode>nodeMap, Map<String, AssessmentItem> resourceMap, Map<String, LearningResource> materialMap){
         ConceptNode nodeCopy;
         List<String> idsList = labelToListOfIds.get(nodeToMakeTreeCopyOf.getLabel());
         //if there are no copies, make a new list to store all the copies and add it to the map

@@ -1,61 +1,73 @@
 [
-  {"learningResourceId":"Counting in binary to 10",
+  {
+    "learningResourceId":"Counting in binary to 10",
   "conceptIds":[
     "Counting"
   ],
   "dataImportance": "1"
   },
-  {"learningResourceId":"Write an algorithm to change a list of ints to be a list of strings",
+  {
+    "learningResourceId":"Write an algorithm to change a list of ints to be a list of strings",
   "conceptIds":[
     "Algorithms"
   ],
   "dataImportance": "1"
   },
-  {"learningResourceId":"What’s wrong with the following function definition?",
+  {
+    "learningResourceId":"What’s wrong with the following function definition?",
   "conceptIds":[
     "Functions"
   ],
     "dataImportance": "1"
   },
-  {"learningResourceId":"What will the following function return?",
+  {
+    "learningResourceId":"What will the following function return?",
     "conceptIds":[
       "Functions"
    ],
     "dataImportance": "1"
   },
-  {"learningResourceId":"Can a function be called several times by placing a function call in the body of a loop",
+  {
+    "learningResourceId":"Can a function be called several times by placing a function call in the body of a loop",
     "conceptIds":[
       "Functions"
    ],
   "dataImportance": "1"
   },
-  {"learningResourceId":"How many parameters can you have?",
+  {
+    "learningResourceId":"How many parameters can you have?",
   "conceptIds":[
     "Parameters"
   ],
   "dataImportance": "1"
   },
-  {"learningResourceId":"When do you want to cause a side effect?",
+  {
+    "learningResourceId":"When do you want to cause a side effect?",
     "conceptIds":[
       "Parameters",
       "Values and Data Types"
     ],
     "dataImportance": "1"
   },
-  {"learningResourceId":"When do you want to allow side effects?",
+  {
+    "learningResourceId":"When do you want to allow side effects?",
     "conceptIds":[
       "Lists",
       "Parameters"
     ],
     "dataImportance": "1"
-  },{"learningResourceId":"Describe how the following relate to a for loop: variable, terminating condition, loop body",
+  },
+  {
+    "learningResourceId":"Describe how the following relate to a for loop: variable, terminating condition, loop body",
     "conceptIds":[
       "For Loops"
     ],
     "dataImportance": "1"
-  }, {"learningResourceId": "What are the differences and similarities between for loops and while loops",
+  },
+  {
+    "learningResourceId": "What are the differences and similarities between for loops and while loops?",
     "conceptIds": [
-    "For Loop",
+    "For Loops",
     "While Loops"
   ],
     "dataImportance": "0"
@@ -69,14 +81,7 @@
     "dataImportance": "1"
   },
   {
-    "learningResourceId": "What is the proper while loop diction?",
-    "conceptIds": [
-      "While Loops"
-    ],
-    "dataImportance": "1"
-  },
-  {
-    "learningResourceId": "Describe the flow of a while loop?",
+    "learningResourceId": "Describe the flow of a while loop",
     "conceptIds": [
       "While Loops"
     ],
@@ -88,13 +93,6 @@
       "Expressions and Statements"
     ],
     "dataImportance": "0"
-  },
-  {
-    "learningResourceId": "What are some of the statements we have already seen?",
-    "conceptIds": [
-      "Expressions and Statements"
-    ],
-    "dataImportance": "1"
   },
   {
     "learningResourceId": "Write a function that will convert 645 mins into hours",

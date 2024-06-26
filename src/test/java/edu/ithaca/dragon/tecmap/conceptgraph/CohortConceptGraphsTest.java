@@ -223,13 +223,14 @@ public class CohortConceptGraphsTest {
         ConceptGraph gr2 = graphs.getUserGraph("s2");
         assertEquals(1.7999999999999998, gr2.calcTotalKnowledgeEstimate(), DataUtil.OK_FLOAT_MARGIN);
 
-
         ConceptGraph gr3 = graphs.getUserGraph("s3");
         assertEquals(1.7999999999999998, gr3.calcTotalKnowledgeEstimate(), DataUtil.OK_FLOAT_MARGIN);
 
         ConceptGraph gr4 = graphs.getUserGraph("s4");
         assertEquals(1.7999999999999998, gr4.calcTotalKnowledgeEstimate(), DataUtil.OK_FLOAT_MARGIN);
 
+        ConceptGraph gr5 = graphs.getUserGraph("s5");
+        assertEquals(1.65, gr5.calcTotalKnowledgeEstimate(), DataUtil.OK_FLOAT_MARGIN);
     }
 
 
@@ -244,29 +245,29 @@ public class CohortConceptGraphsTest {
         CohortConceptGraphs graphs = new CohortConceptGraphs(graph, assessmentItemResponses);
 
         ConceptGraph gr = graphs.getUserGraph("s1");
-        assertEquals(13.580, gr.calcTotalKnowledgeEstimate(), DataUtil.OK_FLOAT_MARGIN);
+        assertEquals(13.920, gr.calcTotalKnowledgeEstimate(), DataUtil.OK_FLOAT_MARGIN);
 
         ConceptGraph gr2 = graphs.getUserGraph("s2");
-        assertEquals(11.477, gr2.calcTotalKnowledgeEstimate(), DataUtil.OK_FLOAT_MARGIN);
+        assertEquals(11.683, gr2.calcTotalKnowledgeEstimate(), DataUtil.OK_FLOAT_MARGIN);
 
 
         ConceptGraph gr3 = graphs.getUserGraph("s3");
-        assertEquals(12.8326, gr3.calcTotalKnowledgeEstimate(), DataUtil.OK_FLOAT_MARGIN);
+        assertEquals(12.014, gr3.calcTotalKnowledgeEstimate(), DataUtil.OK_FLOAT_MARGIN);
 
         ConceptGraph gr4 = graphs.getUserGraph("s4");
-        assertEquals(1.0, gr4.calcTotalKnowledgeEstimate(), DataUtil.OK_FLOAT_MARGIN);
+        assertEquals(9.13, gr4.calcTotalKnowledgeEstimate(), DataUtil.OK_FLOAT_MARGIN);
 
 
         ConceptGraph gr5 = graphs.getUserGraph("s5");
-        assertEquals(12.872, gr5.calcTotalKnowledgeEstimate(), DataUtil.OK_FLOAT_MARGIN);
+        assertEquals(13.182, gr5.calcTotalKnowledgeEstimate(), DataUtil.OK_FLOAT_MARGIN);
 
 
         ConceptGraph gr6 = graphs.getUserGraph("s6");
-        assertEquals(12.7884, gr6.calcTotalKnowledgeEstimate(), DataUtil.OK_FLOAT_MARGIN);
+        assertEquals(11.85, gr6.calcTotalKnowledgeEstimate(), DataUtil.OK_FLOAT_MARGIN);
 
 
         ConceptGraph gr7 = graphs.getUserGraph("s7");
-        assertEquals(10.953, gr7.calcTotalKnowledgeEstimate(), DataUtil.OK_FLOAT_MARGIN);
+        assertEquals(11.587, gr7.calcTotalKnowledgeEstimate(), DataUtil.OK_FLOAT_MARGIN);
 
 
     }

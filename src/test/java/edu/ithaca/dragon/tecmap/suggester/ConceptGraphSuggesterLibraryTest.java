@@ -13,7 +13,6 @@ import edu.ithaca.dragon.tecmap.learningresource.LearningResourceType;
 import org.junit.jupiter.api.Test;
 
 import java.io.IOException;
-import java.sql.SQLOutput;
 import java.util.*;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -66,7 +65,6 @@ public class ConceptGraphSuggesterLibraryTest {
     @Test
     public void conceptsToWorkOnTest() {
         ConceptGraph orig = ExampleConceptGraphFactory.willExampleConceptGraphTestOneStudent();
-        System.out.println(orig.getRoots());
         List<ConceptNode> concepts = ConceptGraphSuggesterLibrary.suggestConcepts(orig);
 
         assertEquals(concepts.size(), 2);
@@ -96,10 +94,11 @@ public class ConceptGraphSuggesterLibraryTest {
         ConceptGraph userGraph = cohortConceptGraphs.getUserGraph("s04");
         List<ConceptNode> concepts = ConceptGraphSuggesterLibrary.suggestConcepts(userGraph);
 
-        assertEquals(concepts.size(), 3);
+        assertEquals(concepts.size(), 4);
         assertEquals(concepts.get(0).getID(), "Recursion");
-        assertEquals(concepts.get(1).getID(), "Pointers");
-        assertEquals(concepts.get(2).getID(), "List");
+        assertEquals(concepts.get(1).getID(), "Testing Time Efficiency");
+        assertEquals(concepts.get(2).getID(), "Pointers");
+        assertEquals(concepts.get(3).getID(), "List");
 
     }
 
@@ -123,17 +122,16 @@ public class ConceptGraphSuggesterLibraryTest {
 
         ConceptGraph userGraph = cohortConceptGraphs.getUserGraph("s03");
         List<ConceptNode> concepts = ConceptGraphSuggesterLibrary.suggestConcepts(userGraph);
-        assertEquals(concepts.size(), 0);
-
+        assertEquals(concepts.size(), 1);
+        assertEquals(concepts.get(0).getID(), "List");
 
 
 
         ConceptGraph userGraph2 = cohortConceptGraphs.getUserGraph("s02");
         List<ConceptNode> concepts2 = ConceptGraphSuggesterLibrary.suggestConcepts(userGraph2);
-        assertEquals(concepts2.size(), 3);
-        assertEquals(concepts2.get(0).getID(), "Recursion");
-        assertEquals(concepts2.get(1).getID(), "Pointers");
-        assertEquals(concepts2.get(2).getID(), "List");
+        assertEquals(concepts2.size(), 2);
+        assertEquals(concepts2.get(0).getID(), "Pointers");
+        assertEquals(concepts2.get(1).getID(), "List");
 
     }
 
@@ -186,7 +184,7 @@ public class ConceptGraphSuggesterLibraryTest {
         testCompareA.put("Q2", 1);
         testCompareA.put("Q10", 1);
 
-        Map<String, Integer> learningSummaryFromA = orig.buildLearningMaterialPathCount("A");
+        Map<String, Integer> learningSummaryFromA = orig.buildLearningResourcePathCount("A");
         Map<String, Integer> linkMap = orig.buildDirectConceptLinkCount();
 
 
@@ -194,7 +192,7 @@ public class ConceptGraphSuggesterLibraryTest {
         assertEquals(testCompareA, learningSummaryFromA);
 
         //build the suggested learning object list
-        List<LearningResourceSuggestion> suggestedList = ConceptGraphSuggesterLibrary.buildLearningObjectSuggestionList(learningSummaryFromA, orig.getAssessmentItemMap(), "A", linkMap);
+        List<LearningResourceSuggestion> suggestedList = ConceptGraphSuggesterLibrary.buildLearningResourceSuggestionList(learningSummaryFromA, orig.getAssessmentItemMap(), "A", linkMap);
 
 
         //this is ordered based on "level"
@@ -278,11 +276,10 @@ public class ConceptGraphSuggesterLibraryTest {
 
         assertEquals(incomString, "");
 
-        assertEquals(wrongString,"Resource: Lab 3: Comparing Array Library Efficiency\t Concepts it relates to: Abstract Data Types & Array\t Importance: 5\t Direct Concept Links: 3" +
-                "\nResource: Lab 5: Comparing Searches\t Concepts it relates to: Recursion\t Importance: 1\t Direct Concept Links: 3"+
-                "\nResource: Lab 8: Comparing Arrays and Linked Lists\t Concepts it relates to: Abstract Data Types & Array\t Importance: 1\t Direct Concept Links: 2"+
-                "\nResource: Lab 6: ArrayList and Testing\t Concepts it relates to: Abstract Data Types & Array\t Importance: 1\t Direct Concept Links: 2" +
-                "\nResource: Lab 7: Linked List\t Concepts it relates to: Abstract Data Types\t Importance: 1\t Direct Concept Links: 2\n");
+        assertEquals(wrongString,"Resource: Lab 4: Recursion\t Concepts it relates to: Pointers\t Importance: 1\t Direct Concept Links: 3" +
+                "\nResource: Lab 7: Linked List\t Concepts it relates to: List\t Importance: 1\t Direct Concept Links: 3"+
+                "\nResource: Lab 8: Comparing Arrays and Linked Lists\t Concepts it relates to: Testing Time Efficiency & List\t Importance: 1\t Direct Concept Links: 5"+
+                "\nResource: Lab 2: Array Library\t Concepts it relates to: Pointers\t Importance: 1\t Direct Concept Links: 3\n");
 
     }
 }

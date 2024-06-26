@@ -101,13 +101,13 @@
     "child": "Strings"
   }, {
     "parent": "Dictionaries",
-    "child": "Boolean"
+    "child": "Booleans"
   }, {
     "parent": "Lists",
     "child": "Strings"
   }, {
     "parent": "Lists",
-    "child": "Boolean"
+    "child": "Booleans"
   }, {
     "parent": "While Loops",
     "child": "Booleans"
