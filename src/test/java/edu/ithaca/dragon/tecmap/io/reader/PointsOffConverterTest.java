@@ -12,23 +12,9 @@ class PointsOffConverterTest {
 
 
     @Test
-    void addPointTotalsToQuestionLabelsTest()throws IOException, CsvException {
-        List<String[]> rowsToConvert = CsvRepresentation.parseRowsFromFile("src/test/resources/singleUseFiles/pointsOffExample.csv");
-        PointsOffConverter.addPointTotalsToQuestionLabels(rowsToConvert.get(0), rowsToConvert.get(1));
-
-        List<String[]> correctRowsExample = CsvRepresentation.parseRowsFromFile("src/test/resources/singleUseFiles/convertedPointsOffExample.csv");
-        String[] convertedRow = rowsToConvert.get(0);
-        String[] correctRowExample = correctRowsExample.get(0);
-        assertEquals(correctRowExample.length, convertedRow.length);
-        for (int colIdx=0; colIdx<convertedRow.length; colIdx++){
-            assertEquals(correctRowExample[colIdx], convertedRow[colIdx]);
-        }
-
-    }
-
-    @Test
     void convertFromPointsOffToTotalPointsTest()throws IOException, CsvException  {
         List<String[]> rowsToConvert = CsvRepresentation.parseRowsFromFile("src/test/resources/singleUseFiles/pointsOffExample.csv");
+        SakaiLabelProcessing.addPointTotalsToQuestionLabels(rowsToConvert.get(0), rowsToConvert.get(1), 2);
         PointsOffConverter.convertFromPointsOffToTotalPoints(rowsToConvert);
 
         List<String[]> correctRowsExample = CsvRepresentation.parseRowsFromFile("src/test/resources/singleUseFiles/convertedPointsOffExample.csv");

@@ -20,53 +20,7 @@ import static org.junit.jupiter.api.Assertions.fail;
 
 // make pull request from dev to commaTest
 public class ZybooksReaderTest {
-    //ReaderTools toolBox = new ReaderTools();
 
-    @Test
-    public void FullNameTest(){
-        String file = Settings.TEST_RESOURCE_DIR + "io/assessmentSources/zybook-comp115-DataExample.csv";
-        List<String> name = new ArrayList<>(Arrays.asList("DeBolt", "Ryan", "12", "100", "95"));
-        String returnName = "DeBolt Ryan1";
-        List<String> nameList = new ArrayList<>(Arrays.asList("DeBolt Ryan", "Suchanek Will", "Dragon Toby"));
-        try{
-            ZybooksReader readfile = new ZybooksReader(file);
-            assertEquals(returnName, readfile.makeFullName(name, nameList));
-        }
-        catch (Exception e){
-            e.printStackTrace();
-            fail();
-        }
-    }
-    @Test
-    public void FullNameTestnoConflict(){
-        String file = Settings.TEST_RESOURCE_DIR + "io/assessmentSources/zybook-comp115-DataExample.csv";
-        List<String> name = new ArrayList<>(Arrays.asList("DeBolt", "Ryan", "12", "100", "95"));
-        String returnName = "DeBolt Ryan";
-        List<String> nameList = new ArrayList<>(Arrays.asList("Lane Nicole", "Suchanek Will", "Dragon Toby"));
-        try{
-            ZybooksReader readfile = new ZybooksReader(file);
-            assertEquals(returnName, readfile.makeFullName(name, nameList));
-        }
-        catch (Exception e){
-            e.printStackTrace();
-            fail();
-        }
-    }
-    @Test
-    public void FullNameTestTwoConflicts(){
-        String file = Settings.TEST_RESOURCE_DIR + "io/assessmentSources/zybook-comp115-DataExample.csv";
-        List<String> name = new ArrayList<>(Arrays.asList("DeBolt", "Ryan", "12", "100", "95"));
-        String returnName = "DeBolt Ryan2";
-        List<String> nameList = new ArrayList<>(Arrays.asList("DeBolt Ryan", "DeBolt Ryan1", "Suchanek Will", "Dragon Toby"));
-        try{
-            ZybooksReader readfile = new ZybooksReader(file);
-            assertEquals(returnName, readfile.makeFullName(name, nameList));
-        }
-        catch (Exception e){
-            e.printStackTrace();
-            fail();
-        }
-    }
     @Test
     public void createQuestionsTest() {
         String file = Settings.TEST_RESOURCE_DIR + "io/assessmentSources/zybook-comp115-DataExample.csv";

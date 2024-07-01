@@ -40,28 +40,29 @@ public class ReaderTools {
     }
 
     /**
-     * This function take the list of assignments in a given file with thier max grades in the title, This program takes
-     * the name of the assignment separate from the max grade and returns a list of the learning objects
+     * This function take the list of assessments in a given file with their max grades in the title, This program takes
+     * the name of the assessment separate from the max grade and returns a list of the assessmentItems
      *
-     * @param indexMark the column index point where the recording of assignments and  grades start for the rest of the file
-     * @param singleList the line of the file that contains the list of assignments with the maximum grade
-     * @return loList -> a list of each assignment and its maximum grade
+     * @param indexMark the column index point where the recording of assessments and  grades start for the rest of the file
+     * @param singleList the line of the file that contains the list of assessments with the maximum grade
+     * @return aiList -> a list of each assessment and its maximum grade
      */
 
-    public static List<AssessmentItem> learningObjectsFromList(int indexMark, List<String> singleList) {
+    public static List<AssessmentItem> assessmentItemsFromList(int indexMark, List<String> singleList) {
         int i = indexMark;
-        List<AssessmentItem> loList = new ArrayList<AssessmentItem>();
+        List<AssessmentItem> aiList = new ArrayList<>();
         while(i<singleList.size()){
             String question = singleList.get(i);
             //used to find the max score of a question (won't be affected if there are other brackets in the question title
+            // zybooks format
             int begin = question.lastIndexOf('(');
             int end = question.lastIndexOf(')');
 
-            if (indexMark == 5){
-                begin = question.lastIndexOf('(');
-                end = question.lastIndexOf(')');
+            if (indexMark == 2){ // sakai format
+                begin = question.lastIndexOf('['); // important change for the outcome of the exercises
+                end = question.lastIndexOf(']');
             }
-            if (indexMark == 2){
+            else if (indexMark == 4){ // canvas format
                 begin = question.lastIndexOf('['); // important change for the outcome of the exercises
                 end = question.lastIndexOf(']');
             }
@@ -72,44 +73,43 @@ public class ReaderTools {
                 question = question.substring(0, begin - 1);
                 AssessmentItem columnItem = new AssessmentItem(question);
                 columnItem.setMaxPossibleKnowledgeEstimate(maxScore);
-                loList.add(columnItem);
+                aiList.add(columnItem);
             }
             else {
                 //logger.error("No max score found for string:"+question+"\t defaulting to 1, which is probably wrong");
                 AssessmentItem columnItem = new AssessmentItem(question);
                 columnItem.setMaxPossibleKnowledgeEstimate(1);
-                loList.add(columnItem);
+                aiList.add(columnItem);
             }
             i++;
         }
-        return loList;
+        return aiList;
     }
 
     /**
-     * takes a list of csv files and creates a single list of LearningObjects from all files
+     * takes a list of csv files and creates a single list of AssessmentItem from all files
      *
      * @param csvfiles
-     * @return a list of all LearningObjects across all files
+     * @return a list of all AssessmentItem across all files
      */
-    public static List<AssessmentItem> learningObjectsFromCSVList(int indexMark, List<String> csvfiles){
-        List<AssessmentItem> fullLoList = new ArrayList<AssessmentItem>();
+    public static List<AssessmentItem> assessmentItemsFromCSVList(int indexMark, List<String> csvfiles){
+        List<AssessmentItem> fullAIList = new ArrayList<>();
 
-        //Each csvfile has their LOs searched
+        //Each csvfile has their AIs searched
         for(String file: csvfiles){
             ArrayList<ArrayList<String>> lineList = ReaderTools.staticLineToList(file);
-            List<AssessmentItem> loList = new ArrayList<AssessmentItem>();
-            loList = ReaderTools.learningObjectsFromList(indexMark,lineList.get(0));
+            List<AssessmentItem> aiList = ReaderTools.assessmentItemsFromList(indexMark,lineList.get(0));
 
-            //adding current csvfile's LOs to the full list of LOs
-            for(AssessmentItem columnItem : loList) {
-                fullLoList.add(columnItem);
+            //adding current csvfile's LOs to the full list of AIs
+            for(AssessmentItem columnItem : aiList) {
+                fullAIList.add(columnItem);
             }
         }
-        return fullLoList;
+        return fullAIList;
     }
 
     /**
-     * This function can take a string and pull a number with a decimal and retrun that number,
+     * This function can take a string and pull a number with a decimal and return that number,
      * if no valid number is found then the function will return an empty string
      *
      * @param object a passed in string that we want to find a number from (one decimal is valid)
@@ -146,7 +146,7 @@ public class ReaderTools {
      * @return a properly separated list of strings
      */
     public static ArrayList<String> lineToList(String line) {
-        ArrayList<String> returnlist = new ArrayList<String>();
+        ArrayList<String> returnlist = new ArrayList<>();
         String item = "";
         Boolean betweenQuote = false;
         for (int i = 0; i < line.length(); i++){

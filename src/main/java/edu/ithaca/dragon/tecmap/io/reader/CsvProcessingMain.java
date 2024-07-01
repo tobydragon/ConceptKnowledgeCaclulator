@@ -11,7 +11,7 @@ public class CsvProcessingMain {
     public static void main(String[] args){
         List<CsvProcessor> processors = new ArrayList<>();
         //processors.add(new PointsOffConverter());
-        processors.add(SakaiAnonymizer.SakaiAnonymizerCreator("src/main/resources/anonHere/anonymizer.json"));
+        processors.add(SakaiAnonymizer.SakaiAnonymizerCreator("src/main/resources/anonHere/anonymizer.json", 2));
 
         for (CsvProcessor processor : processors){
             try {

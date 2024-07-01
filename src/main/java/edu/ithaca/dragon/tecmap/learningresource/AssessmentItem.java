@@ -7,7 +7,7 @@ import java.lang.reflect.Array;
 import java.util.*;
 
 /**
- * @uathor tdragon
+ * @author tdragon
  * 2/14/17.
  */
 public class AssessmentItem {

@@ -12,34 +12,28 @@ import java.util.List;
 
 public class ZybooksReader extends TecmapCSVReader {
     public ZybooksReader(String filename)throws IOException{
-        super(filename, 5);
+        super(filename, 5, 1);
     }
 
     /**
-     * This function will take a line of data from the CSV file that will contain all of the students data
-     * the last and first name are added together and then compared to the list of current students, if
-     * there is a repeat then a number is added to the end of the name
-     *
-     * @param dataLine - a row in the CSV file that has a students information and grades
-     * @param studentNames - a list that holds all the currently read in list of students
+     * This function takes in a line that holds all the info for a specific student and returns the full student name.
+     * @param dataLine - the line of the students info and grades
+     * @return the full name of the student
      */
     @Override
-    public String makeFullName(List<String> dataLine, List<String> studentNames){
+    public String getIDForAStudent(List<String> dataLine){
         String stdID = dataLine.get(0) + " " + dataLine.get(1);
-        boolean inList = false;
-        int sameNameCnt = 0;
-        String nameTest = stdID;
-        while(inList == false){
-            if (studentNames.indexOf(nameTest) > -1){
-                sameNameCnt += 1;
-                nameTest = stdID + Integer.toString(sameNameCnt);
-            }
-            else{
-                studentNames.add(nameTest);
-                stdID = nameTest;
-                inList = true;
-            }
-        }
         return stdID;
+    }
+
+    /**
+     * This function takes in a line that holds all the info for a specific student and returns the
+     * student name.
+     * @param dataLine - the line of the students info and grades
+     * @return the name of the student
+     */
+    @Override
+    public String getNameForAStudent(List<String> dataLine){
+        return dataLine.get(1);
     }
 }

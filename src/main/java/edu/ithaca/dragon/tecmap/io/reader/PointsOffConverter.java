@@ -5,18 +5,11 @@ import java.util.List;
 
 public class PointsOffConverter implements CsvProcessor {
 
-    public static void addPointTotalsToQuestionLabels(String[] questionLabelsRow, String[] pointTotalsRow){
-        for(int colIdx=2; colIdx<questionLabelsRow.length; colIdx++){
-            questionLabelsRow[colIdx] += " ["+pointTotalsRow[colIdx]+"]";
-        }
-    }
-
     /**
      *
      * @throws NumberFormatException if cells can't be converted to ints or doubles
      */
     public static void convertFromPointsOffToTotalPoints(List<String[]> rows){
-        addPointTotalsToQuestionLabels(rows.get(0), rows.get(1));
         String[] pointTotalsRow = rows.get(1);
         for (String[] studentRow : rows.subList(2, rows.size())){
             for(int colIdx=2; colIdx<studentRow.length; colIdx++){

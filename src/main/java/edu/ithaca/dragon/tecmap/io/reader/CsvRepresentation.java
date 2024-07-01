@@ -5,16 +5,27 @@ import com.opencsv.CSVWriter;
 import com.opencsv.exceptions.CsvException;
 
 import java.io.*;
+import java.util.ArrayList;
 import java.util.List;
 
 public class CsvRepresentation {
 
     public static List<String[]> parseRowsFromFile(String filename) throws IOException, CsvException {
-        Reader reader = new BufferedReader(new FileReader(filename));
-        CSVReader csvReader = new CSVReader(reader);
-        List<String[]> list = csvReader.readAll();
-        reader.close();
-        csvReader.close();
+        List<String[]> list = new ArrayList<>();
+        try {
+            Reader reader = new BufferedReader(new FileReader(filename));
+            CSVReader csvReader = new CSVReader(reader);
+            String[] nextLine;
+            while ((nextLine = csvReader.readNext()) != null) {
+                for (int i = 0; i < nextLine.length; i++) {
+                    nextLine[i] = nextLine[i].replace("\uFEFF", ""); // Remove ZWNBSP
+                }
+                list.add(nextLine);
+            }
+        }
+        catch (IOException e) {
+            e.printStackTrace();
+        }
         return list;
     }
 

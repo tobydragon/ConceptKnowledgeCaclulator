@@ -28,7 +28,7 @@ class AssessmentLinkedStateTest {
                 new ConceptGraph(ConceptGraphRecord.buildFromJson(Settings.TEST_RESOURCE_DIR + "tecmapExamples/Cs1ExampleGraph.json")),
                 LearningResourceRecord.createLearningResourceRecordsFromJsonFiles(new ArrayList<>(Arrays.asList(Settings.TEST_RESOURCE_DIR + "tecmapExamples/Cs1ExampleResources.json"))),
                 //TODO: hardcoded to sakai csv, need to hold a list of CSVReaders, or the information about which kind of reader it is...
-                ReaderTools.learningObjectsFromCSVList(2, assessmentFiles),
+                ReaderTools.assessmentItemsFromCSVList(2, assessmentFiles),
                 AssessmentItemResponse.createAssessmentItemResponses(assessmentFiles)
 
         );

@@ -87,7 +87,7 @@ public class TecmapFileDatastore implements TecmapDatastore {
                     return new Tecmap(new ConceptGraph(ConceptGraphRecord.buildFromJson(files.getGraphFile())),
                             LearningResourceRecord.createLearningResourceRecordsFromJsonFiles(files.getResourceFiles()),
                             //TODO: hardcoded to sakai csv, need to hold a list of CSVReaders, or the information about which kind of reader it is...
-                            ReaderTools.learningObjectsFromCSVList(2, files.getAssessmentFiles()),
+                            ReaderTools.assessmentItemsFromCSVList(2, files.getAssessmentFiles()),
                             AssessmentItemResponse.createAssessmentItemResponses(files.getAssessmentFiles())
                     );
                 }
@@ -96,7 +96,7 @@ public class TecmapFileDatastore implements TecmapDatastore {
                     return new Tecmap(new ConceptGraph(ConceptGraphRecord.buildFromJson(files.getGraphFile())),
                             null,
                             //TODO: hardcoded to sakai csv, need to hold a list of CSVReaders, or the information about which kind of reader it is...
-                            ReaderTools.learningObjectsFromCSVList(2, files.getAssessmentFiles()),
+                            ReaderTools.assessmentItemsFromCSVList(2, files.getAssessmentFiles()),
                             AssessmentItemResponse.createAssessmentItemResponses(files.getAssessmentFiles())
                     );
                 }

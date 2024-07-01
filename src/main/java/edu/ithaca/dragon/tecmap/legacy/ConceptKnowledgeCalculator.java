@@ -514,7 +514,7 @@ public class ConceptKnowledgeCalculator implements ConceptKnowledgeCalculatorAPI
 
     public static void csvToResource(List<String> assessmentFiles, String destinationFilepath) throws Exception{
         //TODO: hardcoded to sakai csv, need to hold a list of CSVReaders, or the information about which kind of reader it is...
-        List<AssessmentItem> fullLoList = ReaderTools.learningObjectsFromCSVList(2, assessmentFiles);
+        List<AssessmentItem> fullLoList = ReaderTools.assessmentItemsFromCSVList(2, assessmentFiles);
         List<LearningResourceRecord> lolrList = LearningResourceRecord.createLearningResourceRecordsFromAssessmentItems(fullLoList);
         LearningResourceRecord.resourceRecordsToJSON(lolrList, destinationFilepath);
     }

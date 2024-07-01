@@ -27,6 +27,9 @@ public abstract class TecmapCSVReader {
     List<AssessmentItem> columnItemList;
     List<AssessmentItemResponse> manualGradedResponseList;
     ReaderTools toolBox = new ReaderTools();
+    int gradeStartColumnIndex;
+    int nameStartRowIndex;
+    List<String> studentNames = new ArrayList<>();
 
     /**
      * This function is passed a filename of a gradebook directly exported from Sakai's built in gradebook.
@@ -34,16 +37,18 @@ public abstract class TecmapCSVReader {
      * this function also takes an index mark that will determine where grades are first recorded in the
      * CSV file.
      * @param filename
-     * @param gradeStartCoulmnIndex
+     * @param gradeStartColumnIndex
      */
-    public TecmapCSVReader(String filename, int gradeStartCoulmnIndex)throws IOException{
+    public TecmapCSVReader(String filename, int gradeStartColumnIndex, int nameStartRowIndex)throws IOException{
         this.filename = filename;
         manualGradedResponseList = new ArrayList<>();
         columnItemList = new ArrayList<>();
+        this.gradeStartColumnIndex = gradeStartColumnIndex;
+        this.nameStartRowIndex = nameStartRowIndex;
         try {
             String line;
             this.csvBuffer = new BufferedReader(new FileReader(filename));
-            ArrayList<ArrayList<String>> lineList = new ArrayList<ArrayList<String>>();
+            ArrayList<ArrayList<String>> lineList = new ArrayList<>();
             //Takes the file being read in and calls a function to convert each line into a list split at
             //every comma, then pust all the lists returned into a list of lists lineList[line][item in line]
             while((line = this.csvBuffer.readLine())!= null){
@@ -53,55 +58,48 @@ public abstract class TecmapCSVReader {
                 }
             }
 
-            boolean firstIteration = true;
-            for(ArrayList<String> singleList: lineList){
-
-                //The first list in the list of lists, is the Learning objects (questions)
-                //so we go through the first line and pull out all the learning objects and put them into the
-                //learning object list
-                if(firstIteration){
-                    firstIteration = false;
-                    this.columnItemList = toolBox.learningObjectsFromList(gradeStartCoulmnIndex,singleList);
-                } else {
-                    try {
-                        //goes through and adds all the questions to their proper learning object, as well as adds them to
-                        //the general list of manual graded responses
-                        lorLister(singleList, gradeStartCoulmnIndex);
-                    }catch (NullPointerException e) {
-                        System.out.println("No Responses added to one or more LearningObjects");
-                    }
+//           The first list in the list of lists is the assessments (questions) so we go through the first line and
+//           pull out all the learning objects and put them into the columnItemList
+            this.columnItemList = toolBox.assessmentItemsFromList(gradeStartColumnIndex, lineList.get(0));
+            for (int i = nameStartRowIndex; i < lineList.size(); i++) {
+                studentNames.add(getNameForAStudent(lineList.get(i)));
+                try {
+                    //goes through and adds all the questions to their proper learning object, as well as adds them to
+                    //the general list of manual graded responses
+                    createManualGradedResponseList(lineList.get(i));
+                } catch (NullPointerException e) {
+                    System.out.println("No Responses added to one or more LearningObjects");
                 }
             }
         } catch (IOException e) {
 //            e.printStackTrace();
         }
     }
-    List<String> studentNames = new ArrayList<>();
-
 
     public List<AssessmentItemResponse> getManualGradedResponses(){return this.manualGradedResponseList;}
 
     public List<AssessmentItem> getManualGradedLearningObjects(){return this.columnItemList;}
 
-    public abstract String makeFullName(List<String> dataLine, List<String> studentNames);
+    public abstract String getIDForAStudent(List<String> dataLine);
+
+    public abstract String getNameForAStudent(List<String> dataLine);
 
     /**
      * This function takes a list of student data and creates a manual graded response for that user
      * @param singleList - a list with each line in the csv file holding LORs
-     * @param gradeMark - used to keep track of which index in the list of LORs the function is currently on
      * @throws NullPointerException if the ManualGradedResponse is null
      */
-    public void lorLister(ArrayList<String> singleList,int gradeMark)throws NullPointerException{
-        int i = gradeMark;
-        String stdID = makeFullName(singleList, studentNames);
-        if (columnItemList.size() + gradeMark < singleList.size()) {
-            logger.warn("More data than learning objects on line for id:" + stdID);
-        } else if (columnItemList.size() + gradeMark > singleList.size()) {
+    public void createManualGradedResponseList(ArrayList<String> singleList)throws NullPointerException{
+        int i = gradeStartColumnIndex;
+        String stdID = getIDForAStudent(singleList);
+        if (columnItemList.size() + gradeStartColumnIndex < singleList.size()) {
+            logger.error("More data than learning objects on line for id:" + stdID);
+        } else if (columnItemList.size() + gradeStartColumnIndex > singleList.size()) {
             logger.warn("More learning objects than data on line for id:" + stdID);
         }
         //need to make sure we don't go out of bounds on either list
-        while (i < singleList.size() && i < columnItemList.size() + gradeMark) {
-            AssessmentItem currentColumnItem = this.columnItemList.get(i - gradeMark);
+        while (i < singleList.size() && i < columnItemList.size() + gradeStartColumnIndex) {
+            AssessmentItem currentColumnItem = this.columnItemList.get(i - gradeStartColumnIndex);
             String qid = currentColumnItem.getId();
             if (!("".equals(singleList.get(i)))) {
                 double studentGrade;

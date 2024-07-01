@@ -2,7 +2,6 @@ package edu.ithaca.dragon.tecmap.io.reader;
 
 import edu.ithaca.dragon.tecmap.io.Json;
 
-import java.io.File;
 import java.io.IOException;
 import java.util.*;
 
@@ -11,24 +10,26 @@ public class SakaiAnonymizer implements CsvProcessor{
     private int numToUseNext;
     private Map<String, String> realId2anonId;
     private Map<String, String> realname2anonName;
+    private int gradeStartColumnIndex; // canvas 3, sakai 2
 
-    public SakaiAnonymizer(){
+    public SakaiAnonymizer(int gradeStartColumnIndex){
         numToUseNext =1;
         realId2anonId = new HashMap<>();
         realname2anonName = new HashMap<>();
+        this.gradeStartColumnIndex = gradeStartColumnIndex;
     }
 
-    public static SakaiAnonymizer SakaiAnonymizerCreator(String filepathAndName) {
+    public static SakaiAnonymizer SakaiAnonymizerCreator(String filepathAndName, int gradeStartIndex) {
         try {
             return Json.fromJsonFile(filepathAndName, SakaiAnonymizer.class);
         } catch (IOException e) {
-            return new SakaiAnonymizer();
+            return new SakaiAnonymizer(gradeStartIndex);
         }
     }
 
     public void anonymize(List<String[]> rows) {
-        Collections.shuffle(rows.subList(1, rows.size()));
-        for(String[] row : rows.subList(1, rows.size())){
+        Collections.shuffle(rows.subList(gradeStartColumnIndex, rows.size())); // 3 add a param
+        for(String[] row : rows.subList(gradeStartColumnIndex, rows.size())){
             if (row.length >1) {
                 row[0] = getAnonStr(row[0], realId2anonId, "s", numToUseNext);
                 row[1] = getAnonStr(row[1], realname2anonName, "student", numToUseNext);

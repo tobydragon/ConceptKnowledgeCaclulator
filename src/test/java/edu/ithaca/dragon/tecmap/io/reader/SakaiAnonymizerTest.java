@@ -26,7 +26,7 @@ class SakaiAnonymizerTest {
     @Test
     public void anonymizeTest() throws IOException , CsvException {
         List<String[]> newRows = CsvRepresentation.parseRowsFromFile(Settings.DEFAULT_TEST_DATASTORE_PATH+"Cs1Example/Cs1ExampleAssessment1.csv");
-        SakaiAnonymizer anonymizer = new SakaiAnonymizer();
+        SakaiAnonymizer anonymizer = new SakaiAnonymizer(2);
         anonymizer.anonymize(newRows);
 
         //check labels werent disturbed
