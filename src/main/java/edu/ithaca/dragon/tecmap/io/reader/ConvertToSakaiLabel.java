@@ -10,8 +10,6 @@ public class ConvertToSakaiLabel implements CsvProcessor {
             questionLabelsRow[colIdx] += " ["+pointTotalsRow[colIdx]+"]";
         }
     }
-    // turn [] to max score row, change tecmap reader to read numbers in row,
-    // contructor build new row, rows where grade found is 0
 
     @Override
     public boolean shouldProcessFile(String filename) {

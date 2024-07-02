@@ -25,9 +25,9 @@ public class CanvasTest {
                 Settings.DEFAULT_TEST_DATASTORE_PATH + "CanvasFiles/CanvasGradeExample.csv");
 
         // check labels weren't disturbed
-        for (int i = 0; i < anonymizer.getGradeStartColumnIndex(); i++) {
-            for (int j = 0; j < origRows.get(0).length; j++) {
-                assertEquals(origRows.get(i)[j], newRows.get(i)[j]);
+        for (int row = 0; row < anonymizer.getGradeStartColumnIndex(); row++) {
+            for (int column = 0; column < origRows.get(0).length; column++) {
+                assertEquals(origRows.get(row)[column], newRows.get(row)[column]);
             }
         }
 
@@ -46,10 +46,10 @@ public class CanvasTest {
                 }
             }
         }
-        for (int i = 3; i < newRows.size() - 1; i++) {
-            for (int j = i + 1; j < newRows.size(); j++) {
-                assertNotEquals(newRows.get(i)[0], newRows.get(j)[0]); // check if anonName is unique (different from the rest)
-                assertNotEquals(newRows.get(i)[1], newRows.get(j)[1]); // check if anonId is unique (different from the rest)
+        for (int row = 3; row < newRows.size() - 1; row++) {
+            for (int column = row + 1; column < newRows.size(); column++) {
+                assertNotEquals(newRows.get(row)[0], newRows.get(column)[0]); // check if anonName is unique (different from the rest)
+                assertNotEquals(newRows.get(row)[1], newRows.get(column)[1]); // check if anonId is unique (different from the rest)
             }
         }
     }
