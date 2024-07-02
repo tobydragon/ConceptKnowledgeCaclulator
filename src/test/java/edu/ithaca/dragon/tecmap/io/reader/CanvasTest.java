@@ -8,42 +8,48 @@ import edu.ithaca.dragon.tecmap.learningresource.ManualGradedResponse;
 import org.junit.jupiter.api.Test;
 
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.fail;
+import static org.junit.jupiter.api.Assertions.*;
 
 public class CanvasTest {
 
     @Test
     public void anonymizeTest() throws IOException, CsvException {
         List<String[]> newRows = CsvRepresentation.parseRowsFromFile(Settings.DEFAULT_TEST_DATASTORE_PATH+"CanvasFiles/CanvasGradeExample.csv");
-        SakaiAnonymizer anonymizer = new SakaiAnonymizer(3);
+        Anonymizer anonymizer = new Anonymizer(3);
         anonymizer.anonymize(newRows);
-
-        //check labels weren't disturbed
-        assertEquals("Student", newRows.get(0)[0]);
-        assertEquals("ID", newRows.get(0)[1]);
-        assertEquals("SIS Login ID", newRows.get(0)[2]);
-        assertEquals("Section", newRows.get(0)[3]);
 
         List<String[]> origRows = CsvRepresentation.parseRowsFromFile(
                 Settings.DEFAULT_TEST_DATASTORE_PATH + "CanvasFiles/CanvasGradeExample.csv");
+
+        // check labels weren't disturbed
+        for (int i = 0; i < anonymizer.getGradeStartColumnIndex(); i++) {
+            for (int j = 0; j < origRows.get(0).length; j++) {
+                assertEquals(origRows.get(i)[j], newRows.get(i)[j]);
+            }
+        }
 
         Map<String, String> real2anonId = anonymizer.getRealId2anonId();
         //make sure look up of orig matches new for all numbers
         for(String[] origRow: origRows){
             for (String[] newRow : newRows) {
                 if (newRow[0].equals(real2anonId.get(origRow[0]))){
-                    for (int i=4; i<newRow.length; i++){
+                    for (int i=4; i<newRow.length; i++){ // check if the grades are matched
                         if (!newRow[i].equals(origRow[i])){
                             fail("not matching values for new row:"+ newRow[0] + " and orig row:" + origRow[0]);
                         }
                     }
+
+
                 }
+            }
+        }
+        for (int i = 3; i < newRows.size() - 1; i++) {
+            for (int j = i + 1; j < newRows.size(); j++) {
+                assertNotEquals(newRows.get(i)[0], newRows.get(j)[0]); // check if anonName is unique (different from the rest)
+                assertNotEquals(newRows.get(i)[1], newRows.get(j)[1]); // check if anonId is unique (different from the rest)
             }
         }
     }
@@ -52,7 +58,7 @@ public class CanvasTest {
     @Test
     void createQuestionsTest() throws IOException, CsvException {
         // need to convert from Canvas to Sakai label or use converted file
-        CanvasReader file = new CanvasReader(Settings.DEFAULT_TEST_DATASTORE_PATH + "CanvasFiles/convertedCanvasToSakaiLabel.csv");
+        CanvasReader file = new CanvasReader(Settings.DEFAULT_TEST_DATASTORE_PATH + "CanvasFiles/convertedCanvasGradeExample.csv");
         List<AssessmentItemResponse> manualGradedResponseList = file.getManualGradedResponses();
         List<AssessmentItem> manualGradedColumnItemList = file.getManualGradedLearningObjects();
         //testing title entries from the csv files

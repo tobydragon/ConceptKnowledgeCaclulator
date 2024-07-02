@@ -14,7 +14,7 @@ class PointsOffConverterTest {
     @Test
     void convertFromPointsOffToTotalPointsTest()throws IOException, CsvException  {
         List<String[]> rowsToConvert = CsvRepresentation.parseRowsFromFile("src/test/resources/singleUseFiles/pointsOffExample.csv");
-        SakaiLabelProcessing.addPointTotalsToQuestionLabels(rowsToConvert.get(0), rowsToConvert.get(1), 2);
+        ConvertToSakaiLabel.addPointTotalsToQuestionLabels(rowsToConvert.get(0), rowsToConvert.get(1), 2);
         PointsOffConverter.convertFromPointsOffToTotalPoints(rowsToConvert);
 
         List<String[]> correctRowsExample = CsvRepresentation.parseRowsFromFile("src/test/resources/singleUseFiles/convertedPointsOffExample.csv");

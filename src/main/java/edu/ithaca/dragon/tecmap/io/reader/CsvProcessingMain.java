@@ -1,8 +1,5 @@
 package edu.ithaca.dragon.tecmap.io.reader;
 
-import edu.ithaca.dragon.tecmap.io.Json;
-
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -11,7 +8,7 @@ public class CsvProcessingMain {
     public static void main(String[] args){
         List<CsvProcessor> processors = new ArrayList<>();
         //processors.add(new PointsOffConverter());
-        processors.add(SakaiAnonymizer.SakaiAnonymizerCreator("src/main/resources/anonHere/anonymizer.json", 2));
+        processors.add(Anonymizer.AnonymizerCreator("src/main/resources/anonHere/anonymizer.json", 2));
 
         for (CsvProcessor processor : processors){
             try {

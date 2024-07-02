@@ -19,7 +19,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-public abstract class TecmapCSVReader {
+public abstract class TecmapCSVReader { // differences between reader and processor
+    // maybe take a list of csv processors, and list of string[] then delete the file
+    // change convert to sakai label to processor
     static Logger logger = LogManager.getLogger(TecmapCSVReader.class);
 
     String filename;
