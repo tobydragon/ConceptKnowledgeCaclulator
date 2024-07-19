@@ -1,5 +1,6 @@
 package edu.ithaca.dragon.tecmap.tecmapstate;
 
+import com.opencsv.exceptions.CsvException;
 import edu.ithaca.dragon.tecmap.Settings;
 import edu.ithaca.dragon.tecmap.conceptgraph.ConceptGraph;
 import edu.ithaca.dragon.tecmap.io.reader.ReaderTools;
@@ -20,7 +21,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 class AssessmentLinkedStateTest {
 
     @Test
-    void createCohortTree()  throws IOException {
+    void createCohortTree() throws IOException, CsvException {
 
         List<String> assessmentFiles = new ArrayList<>(Arrays.asList(Settings.TEST_RESOURCE_DIR + "tecmapExamples/Cs1ExampleAssessment1.csv",
                 Settings.TEST_RESOURCE_DIR + "tecmapExamples/Cs1ExampleAssessment2.csv"));
@@ -28,7 +29,7 @@ class AssessmentLinkedStateTest {
                 new ConceptGraph(ConceptGraphRecord.buildFromJson(Settings.TEST_RESOURCE_DIR + "tecmapExamples/Cs1ExampleGraph.json")),
                 LearningResourceRecord.createLearningResourceRecordsFromJsonFiles(new ArrayList<>(Arrays.asList(Settings.TEST_RESOURCE_DIR + "tecmapExamples/Cs1ExampleResources.json"))),
                 //TODO: hardcoded to sakai csv, need to hold a list of CSVReaders, or the information about which kind of reader it is...
-                ReaderTools.assessmentItemsFromCSVList(2, assessmentFiles),
+                ReaderTools.assessmentItemsFromCSVList(assessmentFiles),
                 AssessmentItemResponse.createAssessmentItemResponses(assessmentFiles)
 
         );

@@ -104,9 +104,9 @@ public class OrganizedLearningResourceSuggestions {
             int itr = 0;
             while (itr < max) {
                 for (int i = 0; i < suggestionOrder.size(); i++) {
-                    List<LearningResourceSuggestion> LOSList = suggestionMap.get(suggestionOrder.get(i));
-                    if (itr < LOSList.size()) {
-                        LearningResourceSuggestion sug = LOSList.get(itr);
+                    List<LearningResourceSuggestion> LRSList = suggestionMap.get(suggestionOrder.get(i));
+                    if (itr < LRSList.size()) {
+                        LearningResourceSuggestion sug = LRSList.get(itr);
 
                         if (choice == 1) {
                             incompleteList.add(sug);

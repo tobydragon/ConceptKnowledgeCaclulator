@@ -17,7 +17,7 @@ public class TreeConverter {
 
     public static ConceptGraph makeTreeCopy(ConceptGraph graphToCopy){
         Map<String, AssessmentItem> resourceMap = AssessmentItem.deepCopyLearningObjectMap(graphToCopy.getAssessmentItemMap());
-        Map<String, LearningResource> materialMap = LearningResource.deepCopyLearningResourceMap(graphToCopy.getLearningMaterialMap());
+        Map<String, LearningResource> materialMap = LearningResource.deepCopyLearningResourceMap(graphToCopy.getLearningResourceMap());
 
         Map<String, ConceptNode> nodeMap = new HashMap<>();
 

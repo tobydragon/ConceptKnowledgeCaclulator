@@ -1,12 +1,12 @@
 package edu.ithaca.dragon.tecmap.legacy;
 
+import com.opencsv.exceptions.CsvException;
 import edu.ithaca.dragon.tecmap.Settings;
 import edu.ithaca.dragon.tecmap.conceptgraph.CohortConceptGraphs;
 import edu.ithaca.dragon.tecmap.conceptgraph.ConceptGraph;
 import edu.ithaca.dragon.tecmap.io.record.LearningResourceRecord;
 import edu.ithaca.dragon.tecmap.learningresource.AssessmentItem;
 import edu.ithaca.dragon.tecmap.learningresource.AssessmentItemResponse;
-import edu.ithaca.dragon.tecmap.suggester.ConceptGraphSuggesterLibrary;
 import edu.ithaca.dragon.tecmap.suggester.GroupSuggester.*;
 import edu.ithaca.dragon.tecmap.suggester.LearningResourceSuggestion;
 import edu.ithaca.dragon.tecmap.suggester.OrganizedLearningResourceSuggestions;
@@ -38,10 +38,9 @@ public class ConceptKnowledgeCalculatorTest {
             ckc = new ConceptKnowledgeCalculator(Settings.TEST_RESOURCE_DIR + "ManuallyCreated/researchConceptGraph.json",
                     Settings.TEST_RESOURCE_DIR + "ManuallyCreated/researchResource1.json",
                     Settings.TEST_RESOURCE_DIR + "ManuallyCreated/researchAssessment1.csv");
-        } catch (IOException e) {
+        } catch (IOException | CsvException e) {
             fail("Unable to load default files. Test unable to run");
         }
-
         //set up for buckets
         List<List<Integer>> ranges = new ArrayList<>();
         List<Integer> temp = new ArrayList<>();
@@ -95,7 +94,7 @@ public class ConceptKnowledgeCalculatorTest {
             ckc = new ConceptKnowledgeCalculator(Settings.TEST_RESOURCE_DIR + "ManuallyCreated/basicRealisticConceptGraph.json", Settings.TEST_RESOURCE_DIR + "ManuallyCreated/basicRealisticResource.json", Settings.TEST_RESOURCE_DIR + "ManuallyCreated/basicRealisticAssessment.csv");
             assertEquals(ckc.getCurrentMode(), ConceptKnowledgeCalculator.Mode.COHORTGRAPH);
 
-        } catch (IOException e) {
+        } catch (IOException | CsvException e) {
             fail("Unable to load default files. Test unable to run");
         }
     }
@@ -106,7 +105,7 @@ public class ConceptKnowledgeCalculatorTest {
         try {
             ckc = new ConceptKnowledgeCalculator(Settings.TEST_RESOURCE_DIR + "ManuallyCreated/basicRealisticConceptGraph.json", Settings.TEST_RESOURCE_DIR + "ManuallyCreated/basicRealisticResource.json", Settings.TEST_RESOURCE_DIR + "ManuallyCreated/basicRealisticAssessment.csv");
             assertEquals(ckc.currentStructure().get(0),Settings.TEST_RESOURCE_DIR + "ManuallyCreated/basicRealisticConceptGraph.json" );
-        } catch (IOException e) {
+        } catch (IOException | CsvException e) {
             fail("Unable to load default files. Test unable to run");
         }
     }
@@ -117,7 +116,7 @@ public class ConceptKnowledgeCalculatorTest {
         ConceptKnowledgeCalculatorAPI ckc = null;
         try {
             ckc = new ConceptKnowledgeCalculator(Settings.TEST_RESOURCE_DIR + "ManuallyCreated/basicRealisticConceptGraph.json", Settings.TEST_RESOURCE_DIR + "ManuallyCreated/basicRealisticResource.json", Settings.TEST_RESOURCE_DIR + "ManuallyCreated/basicRealisticAssessment.csv");
-        } catch (IOException e) {
+        } catch (IOException | CsvException e) {
             fail("Unable to load default files. Test unable to run");
         }
 
@@ -253,7 +252,7 @@ public class ConceptKnowledgeCalculatorTest {
         ConceptKnowledgeCalculatorAPI ckc = null;
         try {
             ckc = new ConceptKnowledgeCalculator(Settings.TEST_RESOURCE_DIR + "ManuallyCreated/basicRealisticConceptGraph.json", Settings.TEST_RESOURCE_DIR + "ManuallyCreated/basicRealisticResource.json", Settings.TEST_RESOURCE_DIR + "ManuallyCreated/basicRealisticAssessment.csv");
-        } catch (IOException e) {
+        } catch (IOException | CsvException e) {
             fail("Unable to load default files. Test unable to run");
         }
 
@@ -289,7 +288,7 @@ public class ConceptKnowledgeCalculatorTest {
                     Settings.TEST_RESOURCE_DIR + "ManuallyCreated/comp220Resources.json",
                     Settings.TEST_RESOURCE_DIR + "ManuallyCreated/exampleDataAssessment.csv");
 
-         } catch (IOException e) {
+         } catch (IOException | CsvException e) {
             fail("Unable to load default files. Test unable to run");
         }
 
@@ -332,7 +331,7 @@ public class ConceptKnowledgeCalculatorTest {
                     Settings.TEST_RESOURCE_DIR + "ManuallyCreated/comp220Resources.json",
                     Settings.TEST_RESOURCE_DIR + "ManuallyCreated/exampleDataAssessment.csv");
 
-        } catch (IOException e) {
+        } catch (IOException | CsvException e) {
             fail("Unable to load default files. Test unable to run");
         }
 
@@ -393,7 +392,7 @@ public class ConceptKnowledgeCalculatorTest {
         ConceptKnowledgeCalculatorAPI ckc = null;
         try {
             ckc = new ConceptKnowledgeCalculator(Settings.TEST_RESOURCE_DIR + "ManuallyCreated/basicRealisticConceptGraph.json", Settings.TEST_RESOURCE_DIR + "ManuallyCreated/basicRealisticResource.json", Settings.TEST_RESOURCE_DIR + "ManuallyCreated/basicRealisticAssessment.csv");
-        } catch (IOException e) {
+        } catch (IOException | CsvException e) {
             fail("Unable to load default files. Test unable to run");
 
 
@@ -437,20 +436,20 @@ public class ConceptKnowledgeCalculatorTest {
 
 
             assertEquals(originalMasterList.size(), 11);
-            assertEquals(originalMasterList.get(0).getLearningObjectId(), "Q1");
-            assertEquals(originalMasterList.get(1).getLearningObjectId(), "Q2");
-            assertEquals(originalMasterList.get(2).getLearningObjectId(), "Q4");
-            assertEquals(originalMasterList.get(3).getLearningObjectId(), "Q5");
-            assertEquals(originalMasterList.get(4).getLearningObjectId(), "Q7");
-            assertEquals(originalMasterList.get(5).getLearningObjectId(), "Q8");
-            assertEquals(originalMasterList.get(6).getLearningObjectId(), "Q9");
-            assertEquals(originalMasterList.get(7).getLearningObjectId(), "Q11");
-            assertEquals(originalMasterList.get(8).getLearningObjectId(), "Q12");
-            assertEquals(originalMasterList.get(9).getLearningObjectId(), "Q15");
-            assertEquals(originalMasterList.get(10).getLearningObjectId(), "Q14");
+            assertEquals(originalMasterList.get(0).getAssessmentItemId(), "Q1");
+            assertEquals(originalMasterList.get(1).getAssessmentItemId(), "Q2");
+            assertEquals(originalMasterList.get(2).getAssessmentItemId(), "Q4");
+            assertEquals(originalMasterList.get(3).getAssessmentItemId(), "Q5");
+            assertEquals(originalMasterList.get(4).getAssessmentItemId(), "Q7");
+            assertEquals(originalMasterList.get(5).getAssessmentItemId(), "Q8");
+            assertEquals(originalMasterList.get(6).getAssessmentItemId(), "Q9");
+            assertEquals(originalMasterList.get(7).getAssessmentItemId(), "Q11");
+            assertEquals(originalMasterList.get(8).getAssessmentItemId(), "Q12");
+            assertEquals(originalMasterList.get(9).getAssessmentItemId(), "Q15");
+            assertEquals(originalMasterList.get(10).getAssessmentItemId(), "Q14");
 
 
-        } catch (IOException e) {
+        } catch (IOException | CsvException e) {
             fail("Unable to load default files. Test unable to run");
 
         }
@@ -475,25 +474,25 @@ public class ConceptKnowledgeCalculatorTest {
 
 
             assertEquals(postMasterList1.size(), 19);
-            assertEquals(postMasterList1.get(0).getLearningObjectId(), "Q1");
-            assertEquals(postMasterList1.get(1).getLearningObjectId(), "Q2");
-            assertEquals(postMasterList1.get(2).getLearningObjectId(), "Q3");
-            assertEquals(postMasterList1.get(3).getLearningObjectId(), "Q4");
-            assertEquals(postMasterList1.get(4).getLearningObjectId(), "Q4");
-            assertEquals(postMasterList1.get(5).getLearningObjectId(), "Q5");
-            assertEquals(postMasterList1.get(6).getLearningObjectId(), "Q5");
-            assertEquals(postMasterList1.get(7).getLearningObjectId(), "Q6");
-            assertEquals(postMasterList1.get(8).getLearningObjectId(), "Q7");
-            assertEquals(postMasterList1.get(9).getLearningObjectId(), "Q7");
-            assertEquals(postMasterList1.get(10).getLearningObjectId(), "Q8");
-            assertEquals(postMasterList1.get(11).getLearningObjectId(), "Q9");
-            assertEquals(postMasterList1.get(12).getLearningObjectId(), "Q9");
-            assertEquals(postMasterList1.get(13).getLearningObjectId(), "Q11");
-            assertEquals(postMasterList1.get(14).getLearningObjectId(), "Q11");
-            assertEquals(postMasterList1.get(15).getLearningObjectId(), "Q12");
-            assertEquals(postMasterList1.get(16).getLearningObjectId(), "Q15");
-            assertEquals(postMasterList1.get(17).getLearningObjectId(), "Q14");
-            assertEquals(postMasterList1.get(18).getLearningObjectId(), "Q14");
+            assertEquals(postMasterList1.get(0).getAssessmentItemId(), "Q1");
+            assertEquals(postMasterList1.get(1).getAssessmentItemId(), "Q2");
+            assertEquals(postMasterList1.get(2).getAssessmentItemId(), "Q3");
+            assertEquals(postMasterList1.get(3).getAssessmentItemId(), "Q4");
+            assertEquals(postMasterList1.get(4).getAssessmentItemId(), "Q4");
+            assertEquals(postMasterList1.get(5).getAssessmentItemId(), "Q5");
+            assertEquals(postMasterList1.get(6).getAssessmentItemId(), "Q5");
+            assertEquals(postMasterList1.get(7).getAssessmentItemId(), "Q6");
+            assertEquals(postMasterList1.get(8).getAssessmentItemId(), "Q7");
+            assertEquals(postMasterList1.get(9).getAssessmentItemId(), "Q7");
+            assertEquals(postMasterList1.get(10).getAssessmentItemId(), "Q8");
+            assertEquals(postMasterList1.get(11).getAssessmentItemId(), "Q9");
+            assertEquals(postMasterList1.get(12).getAssessmentItemId(), "Q9");
+            assertEquals(postMasterList1.get(13).getAssessmentItemId(), "Q11");
+            assertEquals(postMasterList1.get(14).getAssessmentItemId(), "Q11");
+            assertEquals(postMasterList1.get(15).getAssessmentItemId(), "Q12");
+            assertEquals(postMasterList1.get(16).getAssessmentItemId(), "Q15");
+            assertEquals(postMasterList1.get(17).getAssessmentItemId(), "Q14");
+            assertEquals(postMasterList1.get(18).getAssessmentItemId(), "Q14");
 
         } catch (Exception e) {
             e.printStackTrace();
@@ -516,23 +515,23 @@ public class ConceptKnowledgeCalculatorTest {
             }
 
             assertEquals(postMasterList2.size(), 25);
-            assertEquals(postMasterList2.get(0).getLearningObjectId(), "Q1");
-            assertEquals(postMasterList2.get(1).getLearningObjectId(), "Q1");
-            assertEquals(postMasterList2.get(2).getLearningObjectId(), "Q2");
-            assertEquals(postMasterList2.get(3).getLearningObjectId(), "Q2");
-            assertEquals(postMasterList2.get(4).getLearningObjectId(), "Q3");
-            assertEquals(postMasterList2.get(5).getLearningObjectId(), "Q3");
-            assertEquals(postMasterList2.get(6).getLearningObjectId(), "Q4");
-            assertEquals(postMasterList2.get(8).getLearningObjectId(), "Q4");
-            assertEquals(postMasterList2.get(10).getLearningObjectId(), "Q5");
-            assertEquals(postMasterList2.get(12).getLearningObjectId(), "Q6");
-            assertEquals(postMasterList2.get(14).getLearningObjectId(), "Q7");
-            assertEquals(postMasterList2.get(16).getLearningObjectId(), "Q8");
-            assertEquals(postMasterList2.get(18).getLearningObjectId(), "Q9");
-            assertEquals(postMasterList2.get(20).getLearningObjectId(), "Q11");
-            assertEquals(postMasterList2.get(22).getLearningObjectId(), "Q15");
-            assertEquals(postMasterList2.get(23).getLearningObjectId(), "Q14");
-            assertEquals(postMasterList2.get(24).getLearningObjectId(), "Q14");
+            assertEquals(postMasterList2.get(0).getAssessmentItemId(), "Q1");
+            assertEquals(postMasterList2.get(1).getAssessmentItemId(), "Q1");
+            assertEquals(postMasterList2.get(2).getAssessmentItemId(), "Q2");
+            assertEquals(postMasterList2.get(3).getAssessmentItemId(), "Q2");
+            assertEquals(postMasterList2.get(4).getAssessmentItemId(), "Q3");
+            assertEquals(postMasterList2.get(5).getAssessmentItemId(), "Q3");
+            assertEquals(postMasterList2.get(6).getAssessmentItemId(), "Q4");
+            assertEquals(postMasterList2.get(8).getAssessmentItemId(), "Q4");
+            assertEquals(postMasterList2.get(10).getAssessmentItemId(), "Q5");
+            assertEquals(postMasterList2.get(12).getAssessmentItemId(), "Q6");
+            assertEquals(postMasterList2.get(14).getAssessmentItemId(), "Q7");
+            assertEquals(postMasterList2.get(16).getAssessmentItemId(), "Q8");
+            assertEquals(postMasterList2.get(18).getAssessmentItemId(), "Q9");
+            assertEquals(postMasterList2.get(20).getAssessmentItemId(), "Q11");
+            assertEquals(postMasterList2.get(22).getAssessmentItemId(), "Q15");
+            assertEquals(postMasterList2.get(23).getAssessmentItemId(), "Q14");
+            assertEquals(postMasterList2.get(24).getAssessmentItemId(), "Q14");
 
 
 
@@ -552,7 +551,7 @@ public class ConceptKnowledgeCalculatorTest {
             List<String> test = new ArrayList<>();
             test.add(Settings.TEST_RESOURCE_DIR + "ManuallyCreated/basicRealisticAssessment.csv");
             assertEquals(ckc.currentAssessment(),test);
-        } catch (IOException e) {
+        } catch (IOException | CsvException e) {
             fail("Unable to load default files. Test unable to run");
         }
 
@@ -638,7 +637,7 @@ public class ConceptKnowledgeCalculatorTest {
             assertEquals(originalMasterList.get(12).getId(), "Q12");
             assertEquals(originalMasterList.get(13).getId(), "Q15");
             assertEquals(originalMasterList.get(14).getId(), "Q14");
-        } catch (IOException e) {
+        } catch (IOException | CsvException e) {
             fail("Unable to load default files. Test unable to run");
 
         }
@@ -866,7 +865,7 @@ public class ConceptKnowledgeCalculatorTest {
             ckc = new ConceptKnowledgeCalculator("test.json", "test.json", "test.csv");
             assertNotEquals(ckc.getCurrentMode(), ConceptKnowledgeCalculator.Mode.NODATA);
 
-        } catch (IOException e) {
+        } catch (IOException | CsvException e) {
             ckc = new ConceptKnowledgeCalculator();
             assertEquals(ckc.getCurrentMode(), ConceptKnowledgeCalculator.Mode.NODATA);
         }
@@ -878,7 +877,7 @@ public class ConceptKnowledgeCalculatorTest {
         ConceptKnowledgeCalculatorAPI ckc = null;
         try {
             ckc = new ConceptKnowledgeCalculator(Settings.TEST_RESOURCE_DIR + "ManuallyCreated/basicRealisticConceptGraph.json", Settings.TEST_RESOURCE_DIR + "ManuallyCreated/basicRealisticResource.json", Settings.TEST_RESOURCE_DIR + "ManuallyCreated/basicRealisticAssessment.csv");
-        } catch (IOException e) {
+        } catch (IOException | CsvException e) {
             fail("Unable to load default files" + ErrorUtil.errorToStr(e));
         }
         List<String> actualList = new ArrayList<>();
@@ -918,7 +917,7 @@ public class ConceptKnowledgeCalculatorTest {
 
             List<LearningResourceRecord> recordsFromFile = LearningResourceRecord.createLearningResourceRecordsFromJsonFile(testFilepath);
             assertNotNull(recordsFromFile);
-            //TODO:test that these LOLRecords are good compared to the input csv file, they just won't have any concepts in their lists
+            //TODO:test that these LRRecords are good compared to the input csv file, they just won't have any concepts in their lists
             LearningResourceRecord currRec = recordsFromFile.get(0);
             assertEquals("Q1", currRec.getLearningResourceId());
             LearningResourceRecord nextRec = recordsFromFile.get(13);

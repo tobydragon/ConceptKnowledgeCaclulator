@@ -19,108 +19,89 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-public abstract class TecmapCSVReader { // differences between reader and processor
-    // maybe take a list of csv processors, and list of string[] then delete the file
-    // change convert to sakai label to processor
+public abstract class TecmapCSVReader {
     static Logger logger = LogManager.getLogger(TecmapCSVReader.class);
 
-    String filename;
-    BufferedReader csvBuffer = null;
     List<AssessmentItem> columnItemList;
     List<AssessmentItemResponse> manualGradedResponseList;
-    ReaderTools toolBox = new ReaderTools();
-    int gradeStartColumnIndex;
-    int nameStartRowIndex;
-    List<String> studentNames = new ArrayList<>();
+    List<String> studentNames;
 
     /**
-     * This function is passed a filename of a gradebook directly exported from Sakai's built in gradebook.
+     * This function is passed a filename of a gradebook directly exported from Canvas's built in gradebook.
      * (See DataCSVExample.csv in test/testresources/io for proper file format example)
-     * this function also takes an index mark that will determine where grades are first recorded in the
-     * CSV file.
-     * @param filename
-     * @param gradeStartColumnIndex
+     * @param rows a list of rows from the file
+     * @param processors a list of csv processors
      */
-    public TecmapCSVReader(String filename, int gradeStartColumnIndex, int nameStartRowIndex)throws IOException{
-        this.filename = filename;
+    public TecmapCSVReader(List<String[]> rows, List<CsvProcessor> processors) throws IOException{
         manualGradedResponseList = new ArrayList<>();
         columnItemList = new ArrayList<>();
-        this.gradeStartColumnIndex = gradeStartColumnIndex;
-        this.nameStartRowIndex = nameStartRowIndex;
-        try {
-            String line;
-            this.csvBuffer = new BufferedReader(new FileReader(filename));
-            ArrayList<ArrayList<String>> lineList = new ArrayList<>();
-            //Takes the file being read in and calls a function to convert each line into a list split at
-            //every comma, then pust all the lists returned into a list of lists lineList[line][item in line]
-            while((line = this.csvBuffer.readLine())!= null){
-                ArrayList<String> potentialLineList = toolBox.lineToList(line);
-                if (potentialLineList.size() > 1){
-                    lineList.add(potentialLineList);
-                }
-            }
-
-//           The first list in the list of lists is the assessments (questions) so we go through the first line and
-//           pull out all the learning objects and put them into the columnItemList
-            this.columnItemList = toolBox.assessmentItemsFromList(gradeStartColumnIndex, lineList.get(0));
-            for (int i = nameStartRowIndex; i < lineList.size(); i++) {
-                studentNames.add(getNameForAStudent(lineList.get(i)));
-                try {
-                    //goes through and adds all the questions to their proper learning object, as well as adds them to
-                    //the general list of manual graded responses
-                    createManualGradedResponseList(lineList.get(i));
-                } catch (NullPointerException e) {
-                    System.out.println("No Responses added to one or more LearningObjects");
-                }
-            }
-        } catch (IOException e) {
-//            e.printStackTrace();
-        }
+        studentNames = new ArrayList<>();
+        readFiles(rows, processors);
     }
 
     public List<AssessmentItemResponse> getManualGradedResponses(){return this.manualGradedResponseList;}
 
     public List<AssessmentItem> getManualGradedLearningObjects(){return this.columnItemList;}
 
-    public abstract String getIDForAStudent(List<String> dataLine);
+    public abstract String getIDForAStudent(String[] dataLine);
 
-    public abstract String getNameForAStudent(List<String> dataLine);
+    public abstract String getNameForAStudent(String[] dataLine);
 
     /**
      * This function takes a list of student data and creates a manual graded response for that user
-     * @param singleList - a list with each line in the csv file holding LORs
-     * @throws NullPointerException if the ManualGradedResponse is null
+     * @param row - a row in the file
      */
-    public void createManualGradedResponseList(ArrayList<String> singleList)throws NullPointerException{
-        int i = gradeStartColumnIndex;
-        String stdID = getIDForAStudent(singleList);
-        if (columnItemList.size() + gradeStartColumnIndex < singleList.size()) {
-            logger.error("More data than learning objects on line for id:" + stdID);
-        } else if (columnItemList.size() + gradeStartColumnIndex > singleList.size()) {
-            logger.warn("More learning objects than data on line for id:" + stdID);
+    public void createManualGradedResponseList(String[] row) throws Exception {
+        int i = 4;
+        String stdID = getIDForAStudent(row);
+        if (columnItemList.size() + 4 < row.length) {
+            logger.error("More data than learning objects on line for id: {}", stdID);
+        } else if (columnItemList.size() + 4 > row.length) {
+            logger.warn("More learning objects than data on line for id: {}", stdID);
         }
         //need to make sure we don't go out of bounds on either list
-        while (i < singleList.size() && i < columnItemList.size() + gradeStartColumnIndex) {
-            AssessmentItem currentColumnItem = this.columnItemList.get(i - gradeStartColumnIndex);
+        while (i < row.length && i < columnItemList.size() + 4) {
+            AssessmentItem currentColumnItem = this.columnItemList.get(i - 4);
             String qid = currentColumnItem.getId();
-            if (!("".equals(singleList.get(i)))) {
+            if (!("".equals(row[i]))) {
                 double studentGrade;
-                String number = toolBox.pullNumber(singleList.get(i));
-                if (number.equals("")){
-                    studentGrade = 0.0;
-                }
-                else{
+                String number = ReaderTools.pullNumber(row[i]);
+                if (!number.isEmpty()){
                     studentGrade = Double.parseDouble(number);
                 }
-                ManualGradedResponse response = new ManualGradedResponse(qid, currentColumnItem.getMaxPossibleKnowledgeEstimate(), studentGrade, stdID);
-                if(response != null) {
-                    currentColumnItem.addResponse(response);
-                    this.manualGradedResponseList.add(response);
-                }else{
-                    throw new NullPointerException();
+                // raise exception if there is anything other than numbers
+                else {
+                    throw new Exception("Typos where grades are expected.");
                 }
+                ManualGradedResponse response = new ManualGradedResponse(qid, currentColumnItem.getMaxPossibleKnowledgeEstimate(), studentGrade, stdID);
+                currentColumnItem.addResponse(response);
+                this.manualGradedResponseList.add(response);
             }
             i++;
+        }
+    }
+
+    public void readFiles(List<String[]> rows, List<CsvProcessor> processors) {
+//      The first list in the list of lists is the assessments (questions) so we go through the first line and
+//      pull out all the learning objects and put them into the columnItemList
+        if (!processors.isEmpty()) {
+            for (CsvProcessor processor : processors) {
+                processor.processRows(rows);
+            }
+        }
+        columnItemList = ReaderTools.assessmentItemsFromList(rows);
+        for (int i = 3; i < rows.size(); i++) {
+            String[] row = rows.get(i);
+            if (row.length > 1) {
+                studentNames.add(getNameForAStudent(row));
+                try {
+                    //goes through and adds all the questions to their proper learning object, as well as adds them to
+                    //the general list of manual graded responses
+                    createManualGradedResponseList(rows.get(i));
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
         }
     }
 }

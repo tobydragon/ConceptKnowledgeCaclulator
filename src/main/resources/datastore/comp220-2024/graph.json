@@ -1,135 +1,99 @@
 {
-  "name" : "COMP 220",
-  "concepts" : [
-    {"id" : "Comparing Data Structures"},
-    {"id" : "Interfaces"},
+  "name": "COMP 220",
+  "concepts": [
+    {"id":  "ADT/Interfaces For Modularity"},
 
+    {"id":  "Common ADTs"},
+    {"id":  "List"},
+    {"id":  "Stack"},
+    {"id":  "Queue"},
+    {"id":  "Priority Queue"},
+    {"id":  "Set"},
+    {"id":  "Map"},
 
-    {"id" : "Abstract Data Types"},
-    {"id" : "Stack"},
-    {"id" : "Queue"},
-    {"id" : "List"},
-    {"id" : "Object Oriented Programming"},
+    {"id":  "Concrete Implementation Techniques/Tools"},
+    {"id":  "Hash Tables"},
+    {"id":  "Arrays"},
+    {"id":  "Linked Structures"},
+    {"id":  "Binary Trees"},
+    {"id":  "Chained Hash Tables"},
 
-    {"id" : "Data Structure Implementations"},
-    {"id" : "Array"},
-    {"id" : "Linked Nodes"},
-
-    {"id" : "Pointers"},
-    {"id" : "Dangling Pointers"},
-    {"id" : "Stack vs. Heap"},
-    {"id" : "Memory Leak"},
-    {"id" : "Pass by Pointer"},
-    {"id" : "Deep vs. Shallow Copies"},
-    {"id" : "Pass by Value"},
-    {"id" : "Pass by Reference"},
-    {"id" : "Copy Constructor, Destructor, Assignment Operator"},
-
-    {"id" : "Search"},
-    {"id" : "Sort"},
-    {"id" : "Recursion"},
-
-    {"id" : "Testing Time Efficiency"}
-
+    {"id":  "Runtime Efficiency Of Different Implementation Of Same ADT"},
+    {"id":  "BigO"},
+    {"id":  "Theoretical"},
+    {"id":  "Empirical"}
   ],
-  "links" : [
+
+  "links": [
     {
-      "parent" : "Comparing Data Structures",
-      "child" : "Abstract Data Types"
+      "parent": "ADT/Interfaces For Modularity",
+      "child": "Common ADTs"
     }, {
-      "parent" : "Interfaces",
-      "child" : "Abstract Data Types"
+      "parent": "ADT/Interfaces For Modularity",
+      "child": "Concrete Implementation Techniques/Tools"
     }, {
-      "parent" : "Comparing Data Structures",
-      "child" : "Data Structure Implementations"
+      "parent": "ADT/Interfaces For Modularity",
+      "child": "Runtime Efficiency Of Different Implementation Of Same ADT"
     },
 
     {
-      "parent" : "Abstract Data Types",
-      "child" : "Stack"
+      "parent": "Common ADTs",
+      "child": "List"
     }, {
-      "parent" : "Abstract Data Types",
-      "child" : "Queue"
+      "parent": "Common ADTs",
+      "child": "Stack"
     }, {
-      "parent" : "Abstract Data Types",
-      "child" : "List"
+      "parent": "Common ADTs",
+      "child": "Queue"
+    }, {
+      "parent": "Common ADTs",
+      "child": "Priority Queue"
+    }, {
+      "parent": "Common ADTs",
+      "child": "Set"
+    }, {
+      "parent": "Common ADTs",
+      "child": "Map"
     },
 
     {
-      "parent" : "Data Structure Implementations",
-      "child" : "Array"
+      "parent": "Concrete Implementation Techniques/Tools",
+      "child": "Hash Tables"
     }, {
-      "parent" : "Data Structure Implementations",
-      "child" : "Linked Nodes"
+      "parent": "Concrete Implementation Techniques/Tools",
+      "child": "Arrays"
     }, {
-      "parent" : "Array",
-      "child" : "Pointers"
+      "parent": "Concrete Implementation Techniques/Tools",
+      "child": "Linked Structures"
     }, {
-      "parent" : "Linked Nodes",
-      "child" : "Pointers"
+      "parent": "Concrete Implementation Techniques/Tools",
+      "child": "Binary Trees"
     },
 
     {
-      "parent" : "Pointers",
-      "child" : "Dangling Pointers"
-    }, {
-      "parent" : "Pointers",
-      "child" : "Memory Leak"
-    }, {
-      "parent" : "Pointers",
-      "child" : "Pass by Pointer"
-    }, {
-      "parent" : "Stack vs. Heap",
-      "child" : "Pointers"
-    },{
-      "parent" : "Pass by Reference",
-      "child" : "Stack vs. Heap"
-    },{
-      "parent" : "Pass by Reference",
-      "child" : "Pointers"
-    },{
-      "parent" : "Deep vs. Shallow Copies",
-      "child" : "Pass by Value"
-    },{
-      "parent" : "Deep vs. Shallow Copies",
-      "child" : "Pass by Reference"
-    },{
-      "parent" : "Deep vs. Shallow Copies",
-      "child" : "Stack vs. Heap"
-    },{
-      "parent" : "Copy Constructor, Destructor, Assignment Operator",
-      "child" : "Deep vs. Shallow Copies"
-    },{
-      "parent" : "Object Oriented Programming",
-      "child" : "Copy Constructor, Destructor, Assignment Operator"
-    },{
-      "parent" : "Abstract Data Types",
-      "child" : "Object Oriented Programming"
+      "parent": "Hash Tables",
+      "child": "Chained Hash Tables"
     },
 
     {
-      "parent" : "Comparing Data Structures",
-      "child" : "Testing Time Efficiency"
+      "parent": "Linked Structures",
+      "child": "Chained Hash Tables"
+    },
+
+    {
+      "parent": "Linked Structures",
+      "child": "Binary Trees"
+    },
+
+    {
+      "parent": "Runtime Efficiency Of Different Implementation Of Same ADT",
+      "child": "BigO"
     }, {
-      "parent" : "Search",
-      "child" : "Testing Time Efficiency"
+      "parent": "Runtime Efficiency Of Different Implementation Of Same ADT",
+      "child": "Theoretical"
     }, {
-      "parent" : "Sort",
-      "child" : "Testing Time Efficiency"
-    }, {
-      "parent" : "Search",
-      "child" : "Recursion"
-    }, {
-      "parent" : "Sort",
-      "child" : "Recursion"
-    }, {
-      "parent" : "Search",
-      "child" : "Array"
-    }, {
-      "parent" : "Sort",
-      "child" : "Array"
-    }, {
-      "parent" : "Linked Nodes",
-      "child" : "Recursion"
-    } ]
+      "parent": "Runtime Efficiency Of Different Implementation Of Same ADT",
+      "child": "Empirical"
+    }
+  ]
 }

@@ -1,5 +1,6 @@
 package edu.ithaca.dragon.tecmap.suggester.GroupSuggester;
 
+import com.opencsv.exceptions.CsvException;
 import edu.ithaca.dragon.tecmap.Settings;
 import edu.ithaca.dragon.tecmap.conceptgraph.CohortConceptGraphs;
 import edu.ithaca.dragon.tecmap.conceptgraph.ConceptGraph;
@@ -23,7 +24,7 @@ public class ConceptSuggesterTest {
     private Map<String, ConceptGraph> researchGraphs;
 
     @BeforeEach
-    public void setup() throws IOException {
+    public void setup() throws IOException, CsvException {
         ConceptGraph graph1 = new ConceptGraph(ConceptGraphRecord.buildFromJson(Settings.TEST_RESOURCE_DIR + "ManuallyCreated/researchConceptGraph.json"));
         List<AssessmentItemResponse> assessmentItemResponses1 = AssessmentItemResponse.createAssessmentItemResponses(Arrays.asList(Settings.TEST_RESOURCE_DIR + "ManuallyCreated/researchAssessment2.csv"));
         List<LearningResourceRecord> links1 = LearningResourceRecord.createLearningResourceRecordsFromJsonFiles(Arrays.asList(Settings.TEST_RESOURCE_DIR + "ManuallyCreated/researchResource2.json"));

@@ -6,7 +6,6 @@ import java.util.List;
 public class PointsOffConverter implements CsvProcessor {
 
     /**
-     *
      * @throws NumberFormatException if cells can't be converted to ints or doubles
      */
     public static void convertFromPointsOffToTotalPoints(List<String[]> rows){
@@ -24,7 +23,7 @@ public class PointsOffConverter implements CsvProcessor {
         }
         String[] newBlankRow = new String[1];
         newBlankRow[0]="";
-        rows.set(1, newBlankRow );
+        rows.set(1, newBlankRow);
     }
 
     @Override

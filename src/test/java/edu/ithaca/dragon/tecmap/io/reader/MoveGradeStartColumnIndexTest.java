@@ -9,14 +9,14 @@ import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-public class CreateMaxScoreRowTest {
+public class MoveGradeStartColumnIndexTest {
 
     @Test
-    void createMaxScoreRowTest() throws IOException, CsvException {
-        List<String[]> newRows = CsvFileLibrary.parseRowsFromFile(Settings.DEFAULT_TEST_DATASTORE_PATH + "ConvertToCanvasFiles/WithoutMaxScoreRow.csv");
-        CreateMaxScoreRow.createMaxScoreRow(newRows);
+    void moveGradeStartColumnIndexTest() throws IOException, CsvException {
+        List<String[]> newRows = CsvFileLibrary.parseRowsFromFile(Settings.DEFAULT_TEST_DATASTORE_PATH + "ConvertToCanvasFiles/WrongGradeStartColumnIndex.csv");
+        MoveGradeStartColumnIndex.moveGradeStartColumnIndex(newRows);
 
-        List<String[]> orgRows = CsvFileLibrary.parseRowsFromFile(Settings.DEFAULT_TEST_DATASTORE_PATH + "ConvertToCanvasFiles/CanvasGradeExample.csv");
+        List<String[]> orgRows = CsvFileLibrary.parseRowsFromFile(Settings.DEFAULT_TEST_DATASTORE_PATH + "ConvertToCanvasFiles/CorrectGradeStartColumnIndex.csv");
 
         for (int row = 0; row < orgRows.size(); row++) {
             for (int column = 0; column < orgRows.get(row).length; column++) {

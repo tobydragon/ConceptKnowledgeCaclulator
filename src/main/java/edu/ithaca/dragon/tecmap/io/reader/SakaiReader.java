@@ -1,6 +1,9 @@
 package edu.ithaca.dragon.tecmap.io.reader;
 
+import com.opencsv.exceptions.CsvException;
+
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -9,8 +12,8 @@ import java.util.List;
  * Created by Ryan on 11/9/2017.
  */
 public class SakaiReader extends TecmapCSVReader {
-    public SakaiReader(String filename)throws IOException{
-        super(filename, 2, 1);
+    public SakaiReader(List<String[]> rows, List<CsvProcessor> processors) throws IOException, CsvException {
+        super(rows, processors);
     }
 
     /**
@@ -19,8 +22,8 @@ public class SakaiReader extends TecmapCSVReader {
      * @return the ID of the student
      */
     @Override
-    public String getIDForAStudent(List<String> dataLine) {
-        return dataLine.get(0);
+    public String getIDForAStudent(String[] dataLine) {
+        return dataLine[0];
     }
 
     /**
@@ -29,7 +32,7 @@ public class SakaiReader extends TecmapCSVReader {
      * @return the name of the student
      */
     @Override
-    public String getNameForAStudent(List<String> dataLine) {
-        return dataLine.get(1);
+    public String getNameForAStudent(String[] dataLine) {
+        return dataLine[1]; // 1
     }
 }

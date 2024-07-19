@@ -24,24 +24,24 @@ public class  ConceptGraph {
     // but also can be quickly looked up here (also allows checks for duplicates).
 	private Map<String, ConceptNode> nodeMap;
     private Map<String, AssessmentItem> assessmentItemMap;
-    private Map<String, LearningResource> learningMaterialMap;
+    private Map<String, LearningResource> learningResourceMap;
 
 
     public ConceptGraph(ConceptGraphRecord structureDef){
         this.name = structureDef.getName();
         buildStructureFromGraphRecord(structureDef);
         this.assessmentItemMap = new HashMap<>();
-        this.learningMaterialMap = new HashMap<>();
+        this.learningResourceMap = new HashMap<>();
     }
 
-    public ConceptGraph(ConceptGraphRecord structureDef, List<LearningResourceRecord> lolRecords){
+    public ConceptGraph(ConceptGraphRecord structureDef, List<LearningResourceRecord> learningResourceRecords){
         this(structureDef);
-        addLearningResourcesFromRecords(lolRecords);
+        addLearningResourcesFromRecords(learningResourceRecords);
     }
 
-    public ConceptGraph(ConceptGraphRecord structureDef, List<LearningResourceRecord> lolRecords, List<AssessmentItemResponse> AssessmentItemResponses){
-        this(structureDef, lolRecords);
-        addAssessmentItemResponses(AssessmentItemResponses);
+    public ConceptGraph(ConceptGraphRecord structureDef, List<LearningResourceRecord> learningResourceRecords, List<AssessmentItemResponse> assessmentItemResponses){
+        this(structureDef, learningResourceRecords);
+        addAssessmentItemResponses(assessmentItemResponses);
     }
 
     /**
@@ -62,19 +62,19 @@ public class  ConceptGraph {
      * e.g., when you are making a tree copy
      * @param other a graph to copy
      * @param newName the new name of the graph
-     * @param loMap a map of learning objects, which can be in any state of populated/not populated. This function will
+     * @param aiMap a map of learning objects, which can be in any state of populated/not populated. This function will
      *              connect the existing learning obejcts, or add any new ones necessary
      */
-    public ConceptGraph(ConceptGraph other, String newName, HashMap<String, AssessmentItem> loMap, HashMap<String, LearningResource> lmMap){
+    public ConceptGraph(ConceptGraph other, String newName, HashMap<String, AssessmentItem> aiMap, HashMap<String, LearningResource> lrMap){
         this.name = newName;
         this.roots = new ArrayList<>();
         nodeMap = new HashMap<>();
-        assessmentItemMap = loMap;
-        learningMaterialMap = lmMap;
+        assessmentItemMap = aiMap;
+        learningResourceMap = lrMap;
 
         //recursively copy entire graph
         for (ConceptNode otherRoot : other.roots) {
-            ConceptNode newRoot = new ConceptNode(otherRoot, nodeMap, assessmentItemMap, learningMaterialMap);
+            ConceptNode newRoot = new ConceptNode(otherRoot, nodeMap, assessmentItemMap, learningResourceMap);
             nodeMap.put(newRoot.getID(), newRoot);
             this.roots.add(newRoot);
         }
@@ -85,10 +85,10 @@ public class  ConceptGraph {
      * Used only by TreeConverter
      * @param rootsIn
      */
-    public ConceptGraph(List<ConceptNode> rootsIn, String name, Map<String, AssessmentItem> AssessmentItemMap, Map<String, LearningResource> learningMaterialMap, Map<String, ConceptNode> nodeMap){
+    public ConceptGraph(List<ConceptNode> rootsIn, String name, Map<String, AssessmentItem> AssessmentItemMap, Map<String, LearningResource> learningResourceMap, Map<String, ConceptNode> nodeMap){
         this.name = name;
         this.assessmentItemMap = AssessmentItemMap;
-        this.learningMaterialMap = learningMaterialMap;
+        this.learningResourceMap = learningResourceMap;
         this.nodeMap = nodeMap;
         this.roots = rootsIn;
     }
@@ -201,11 +201,11 @@ public class  ConceptGraph {
      */
     public int linkLearningMaterials(LearningResource toLink, Collection<String> conceptIds){
         int numAdded = 0;
-        if (learningMaterialMap.get(toLink.getId()) != null){
+        if (learningResourceMap.get(toLink.getId()) != null){
             logger.warn(toLink.getId()+" already exists in this graph. Nothing was added.");
             return -1;
         }
-        learningMaterialMap.put(toLink.getId(), toLink);
+        learningResourceMap.put(toLink.getId(), toLink);
         for (String id: conceptIds){
             if(nodeMap.get(id) != null){
                 numAdded++;
@@ -226,13 +226,14 @@ public class  ConceptGraph {
      */
     public void addAssessmentItemResponses(List<AssessmentItemResponse> assessmentItemResponses) {
         for (AssessmentItemResponse response : assessmentItemResponses){
-            AssessmentItem assessmentItem = assessmentItemMap.get(response.getLearningObjectId());
+            AssessmentItem assessmentItem = assessmentItemMap.get(response.getAssessmentItemId());
             if (assessmentItem != null){
                 assessmentItem.addResponse(response);
             }
             else {
-                logger.warn("No AssessmentItem:" + response.getLearningObjectId() + " for response: " + response.toString());
+                logger.warn("No AssessmentItem: " + response.getAssessmentItemId() + " for response: " + response.toString());
                 //TODO: maybe make a new list of unconnected learning objects???
+//                Thread.dumpStack();
             }
         }
     }
@@ -452,8 +453,8 @@ public class  ConceptGraph {
 	    return assessmentItemMap;
     }
 
-    public Map<String, LearningResource> getLearningMaterialMap() {
-        return learningMaterialMap;
+    public Map<String, LearningResource> getLearningResourceMap() {
+        return learningResourceMap;
     }
 
     public List<ConceptNode> getRoots() {return roots;}

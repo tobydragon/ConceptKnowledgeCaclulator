@@ -3,9 +3,11 @@ package edu.ithaca.dragon.tecmap.io.reader;
 import java.io.IOException;
 import java.util.List;
 
+
 public class CanvasReader extends TecmapCSVReader {
-    public CanvasReader(String filename)throws IOException {
-        super(filename, 4, 3);
+
+    public CanvasReader(List<String[]> rows, List<CsvProcessor> processors) throws IOException {
+        super(rows, processors);
     }
 
     /**
@@ -14,8 +16,8 @@ public class CanvasReader extends TecmapCSVReader {
      * @return the ID of the student
      */
     @Override
-    public String getIDForAStudent(List<String> dataLine) {
-        return dataLine.get(1);
+    public String getIDForAStudent(String[] dataLine) {
+        return dataLine[1];
     }
 
     /**
@@ -24,7 +26,7 @@ public class CanvasReader extends TecmapCSVReader {
      * @return the name of the student
      */
     @Override
-    public String getNameForAStudent(List<String> dataLine) {
-        return dataLine.get(0);
+    public String getNameForAStudent(String[] dataLine) {
+        return dataLine[0];
     }
 }

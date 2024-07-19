@@ -30,7 +30,7 @@ public class CSVOutputter {
         toCSV(filename);
     }
     /**
-     * Takes the list of LOR and converts them all into a CSV file based on whether or not they were answered
+     * Takes the list of AIR and converts them all into a CSV file based on whether or not they were answered
      * correctly. Read functions to find out more about the formatting (makeCSV())
      * @param summaries takes a list of Per User Per Problem Summaries
      */
@@ -55,7 +55,7 @@ public class CSVOutputter {
             //sets "correct" variable to 0 if incorrect and 1 if correct
             double correct = summary.calcKnowledgeEstimate();
             //gets the right map for the current user of this summary and adds to it
-            questionsToAnswer.put(summary.getLearningObjectId(), correct);
+            questionsToAnswer.put(summary.getAssessmentItemId(), correct);
         }
 
     }

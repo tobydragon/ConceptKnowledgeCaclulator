@@ -1,5 +1,7 @@
 package edu.ithaca.dragon.tecmap.io.reader;
 
+import com.opencsv.exceptions.CsvException;
+import edu.ithaca.dragon.tecmap.Settings;
 import edu.ithaca.dragon.tecmap.learningresource.AssessmentItem;
 
 import java.io.BufferedReader;
@@ -10,78 +12,32 @@ import java.util.List;
 
 /**
  * This class is a tool box class for CSV reader, these static functions are called by TecmapCSVReader
- * to to data specific and line reading tasks.
+ * to data specific and line reading tasks.
  * Created by Ryan on 10/25/2017.
  */
 public class ReaderTools {
 
-
-    /**
-     * staticLineToList takes a given CSV file and reads each line in the file and adds it to a list
-     * to be returned.
-     *
-     * @param filename the name of the file being read
-     * @return lineList, contains a list of each line in the file
-     */
-    public static ArrayList<ArrayList<String>> staticLineToList(String filename){
-        ArrayList<ArrayList<String>> lineList = new ArrayList<ArrayList<String>>();
-        try {
-            String line;
-            BufferedReader csvBuffer = new BufferedReader(new FileReader(filename));
-            //Takes the file being read in and calls a function to convert each line into a list split at
-            //every comma, then push all the lists returned into a list of lists lineList[line][item in line]
-            while ((line = csvBuffer.readLine()) != null) {
-                lineList.add(lineToList(line));
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        return lineList;
-    }
-
     /**
      * This function take the list of assessments in a given file with their max grades in the title, This program takes
      * the name of the assessment separate from the max grade and returns a list of the assessmentItems
-     *
-     * @param indexMark the column index point where the recording of assessments and  grades start for the rest of the file
-     * @param singleList the line of the file that contains the list of assessments with the maximum grade
+     * @param rows all rows of the file
      * @return aiList -> a list of each assessment and its maximum grade
      */
 
-    public static List<AssessmentItem> assessmentItemsFromList(int indexMark, List<String> singleList) {
-        int i = indexMark;
+    public static List<AssessmentItem> assessmentItemsFromList(List<String[]> rows) {
         List<AssessmentItem> aiList = new ArrayList<>();
-        while(i<singleList.size()){
-            String question = singleList.get(i);
-            //used to find the max score of a question (won't be affected if there are other brackets in the question title
-            // zybooks format
-            int begin = question.lastIndexOf('(');
-            int end = question.lastIndexOf(')');
-
-            if (indexMark == 2){ // sakai format
-                begin = question.lastIndexOf('['); // important change for the outcome of the exercises
-                end = question.lastIndexOf(']');
-            }
-            else if (indexMark == 4){ // canvas format
-                begin = question.lastIndexOf('['); // important change for the outcome of the exercises
-                end = question.lastIndexOf(']');
-            }
-
-            if (begin >= 0 && end >= 0) {
-                String maxScoreStr = question.substring(begin + 1, end);
+        for (int i = 4; i < rows.get(0).length; i++) {
+            String question = rows.get(0)[i];
+            String maxScoreStr = rows.get(2)[i];
+            if (!maxScoreStr.isEmpty()) {
                 double maxScore = Double.parseDouble(maxScoreStr);
-                question = question.substring(0, begin - 1);
-                AssessmentItem columnItem = new AssessmentItem(question);
-                columnItem.setMaxPossibleKnowledgeEstimate(maxScore);
+                AssessmentItem columnItem = new AssessmentItem(question, maxScore);
                 aiList.add(columnItem);
             }
             else {
-                //logger.error("No max score found for string:"+question+"\t defaulting to 1, which is probably wrong");
                 AssessmentItem columnItem = new AssessmentItem(question);
-                columnItem.setMaxPossibleKnowledgeEstimate(1);
                 aiList.add(columnItem);
             }
-            i++;
         }
         return aiList;
     }
@@ -92,13 +48,14 @@ public class ReaderTools {
      * @param csvfiles
      * @return a list of all AssessmentItem across all files
      */
-    public static List<AssessmentItem> assessmentItemsFromCSVList(int indexMark, List<String> csvfiles){
+    public static List<AssessmentItem> assessmentItemsFromCSVList(List<String> csvfiles) throws IOException, CsvException {
         List<AssessmentItem> fullAIList = new ArrayList<>();
 
-        //Each csvfile has their AIs searched
+        // Each csvfile has their AIs searched
         for(String file: csvfiles){
-            ArrayList<ArrayList<String>> lineList = ReaderTools.staticLineToList(file);
-            List<AssessmentItem> aiList = ReaderTools.assessmentItemsFromList(indexMark,lineList.get(0));
+            List<String[]> rows = CsvFileLibrary.parseRowsFromFile(file);
+            CanvasConverter.canvasConverter(rows);
+            List<AssessmentItem> aiList = ReaderTools.assessmentItemsFromList(rows);
 
             //adding current csvfile's LOs to the full list of AIs
             for(AssessmentItem columnItem : aiList) {

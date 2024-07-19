@@ -18,9 +18,9 @@ public interface CsvProcessor {
     static void processFilesInDirectory(CsvProcessor processor, String directoryToProcess) throws IOException, CsvException {
         for (String filename : allCsvFilesInDirectory(directoryToProcess)) {
             if (processor.shouldProcessFile(filename)) {
-                List<String[]> rows = CsvRepresentation.parseRowsFromFile(directoryToProcess+filename);
+                List<String[]> rows = CsvFileLibrary.parseRowsFromFile(directoryToProcess+filename);
                 processor.processRows(rows);
-                CsvRepresentation.writeRowsToFile(rows, directoryToProcess+processor.createProcessedFilename(filename));
+                CsvFileLibrary.writeRowsToFile(rows, directoryToProcess+processor.createProcessedFilename(filename));
             }
         }
     }

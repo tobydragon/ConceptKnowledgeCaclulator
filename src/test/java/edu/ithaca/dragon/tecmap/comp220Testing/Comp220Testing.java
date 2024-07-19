@@ -1,11 +1,11 @@
 package edu.ithaca.dragon.tecmap.comp220Testing;
 
+import com.opencsv.exceptions.CsvException;
 import edu.ithaca.dragon.tecmap.Settings;
 import edu.ithaca.dragon.tecmap.conceptgraph.CohortConceptGraphs;
 import edu.ithaca.dragon.tecmap.conceptgraph.ConceptGraph;
 import edu.ithaca.dragon.tecmap.conceptgraph.ConceptNode;
-import edu.ithaca.dragon.tecmap.io.reader.SakaiReader;
-import edu.ithaca.dragon.tecmap.io.reader.TecmapCSVReader;
+import edu.ithaca.dragon.tecmap.io.reader.*;
 import edu.ithaca.dragon.tecmap.io.record.ConceptGraphRecord;
 import edu.ithaca.dragon.tecmap.io.record.LearningResourceRecord;
 import edu.ithaca.dragon.tecmap.learningresource.AssessmentItemResponse;
@@ -16,6 +16,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -28,14 +29,17 @@ public class Comp220Testing {
     private CohortConceptGraphs cohortConceptGraphs;
 
     @BeforeEach
-    public void setup() throws IOException {
+    public void setup() throws IOException, CsvException {
         //create the graph structure to be copied for each user
         ConceptGraphRecord structureRecord = ConceptGraphRecord.buildFromJson(Settings.TEST_RESOURCE_DIR + "comp220_Summer2024/graph.json");
         List<LearningResourceRecord> linkRecord = LearningResourceRecord.createLearningResourceRecordsFromJsonFile(Settings.TEST_RESOURCE_DIR + "comp220_Summer2024/learningResources.json");
         ConceptGraph graph = new ConceptGraph(structureRecord, linkRecord);
 
         //create the data to be used to create and populate the graph copies
-        TecmapCSVReader tecmapCsvReader = new SakaiReader(Settings.TEST_RESOURCE_DIR + "comp220_Summer2024/assessmentGrades.csv");
+        List<String[]> rows = CsvFileLibrary.parseRowsFromFile(Settings.TEST_RESOURCE_DIR + "comp220_Summer2024/assessmentGrades.csv");
+        List<CsvProcessor> processors = new ArrayList<>();
+        processors.add(new CanvasConverter());
+        TecmapCSVReader tecmapCsvReader = new CanvasReader(rows, processors);
         List<AssessmentItemResponse> assessments = tecmapCsvReader.getManualGradedResponses();
 
         //create the average and individual graphs

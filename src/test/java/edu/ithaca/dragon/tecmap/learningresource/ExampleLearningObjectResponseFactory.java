@@ -50,7 +50,7 @@ public class ExampleLearningObjectResponseFactory {
         los.put("Q6", new AssessmentItem("Q6"));
 
         for (AssessmentItemResponse resp : makeSimpleResponses()){
-            los.get(resp.getLearningObjectId()).addResponse(resp);
+            los.get(resp.getAssessmentItemId()).addResponse(resp);
         }
         return los;
     }

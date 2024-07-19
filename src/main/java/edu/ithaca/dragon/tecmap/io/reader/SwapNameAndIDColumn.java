@@ -1,13 +1,18 @@
 package edu.ithaca.dragon.tecmap.io.reader;
 
+
 import java.io.IOException;
 import java.util.List;
 
-public class ConvertToSakaiLabel implements CsvProcessor {
+public class SwapNameAndIDColumn implements CsvProcessor {
 
-    public static void addPointTotalsToQuestionLabels(String[] questionLabelsRow, String[] pointTotalsRow, int gradeStartColumnIndex){
-        for(int colIdx=gradeStartColumnIndex; colIdx<questionLabelsRow.length; colIdx++){ // 2 for Sakai, 4 for Canvas
-            questionLabelsRow[colIdx] += " ["+pointTotalsRow[colIdx]+"]";
+    public static void swapNameAndIDColumn(List<String[]> rows) {
+        for (String[] row : rows) {
+            if ((row[0] != null && !row[0].isEmpty()) && (row[1] != null && !row[1].isEmpty())) {
+                String temp = row[0];
+                row[0] = row[1];
+                row[1] = temp;
+            }
         }
     }
 
@@ -18,6 +23,7 @@ public class ConvertToSakaiLabel implements CsvProcessor {
 
     @Override
     public void processRows(List<String[]> rows) {
+        swapNameAndIDColumn(rows);
     }
 
     @Override

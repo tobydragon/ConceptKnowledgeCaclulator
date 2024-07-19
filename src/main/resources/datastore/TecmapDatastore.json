@@ -1,5 +1,10 @@
 {
   "allRecords" : [ {
+    "id" : "AnalysisExample",
+    "graphFile" : "src/test/resources/datastore/AnalysisExample/AnalysisGraph.json",
+    "resourceFiles" : [ "src/test/resources/datastore/AnalysisExample/AnalysisResources.json" ],
+    "assessmentFiles" : [ "src/test/resources/datastore/AnalysisExample/AnalysisExample1.csv" ]
+  }, {
     "id" : "Cs1Example",
     "graphFile" : "src/test/resources/datastore/Cs1Example/Cs1ExampleGraph.json",
     "resourceFiles" : [ "src/test/resources/datastore/Cs1Example/Cs1ExampleResources.json" ],
@@ -25,6 +30,11 @@
     "resourceFiles" : [ ],
     "assessmentFiles" : [ ]
   }, {
+    "id" : "comp220-2024",
+    "graphFile" : "src/main/resources/datastore/comp220-2024/graph.json",
+    "resourceFiles" : [ "src/main/resources/datastore/comp220-2024/learningResources.json" ],
+    "assessmentFiles" : [ "src/main/resources/datastore/comp220-2024/assessmentGrades.csv" ]
+  }, {
     "id" : "comp220Dragon-2017",
     "graphFile" : "src/main/resources/datastore/comp220Dragon-2017/comp220DragonGraph.json",
     "resourceFiles" : [ "src/main/resources/datastore/comp220Dragon-2017/comp220Resources-courseWork.json", "src/main/resources/datastore/comp220Dragon-2017/comp220Resources-e1.json", "src/main/resources/datastore/comp220Dragon-2017/comp220Resources-e2.json", "src/main/resources/datastore/comp220Dragon-2017/comp220Resources-finalExam.json" ],
@@ -33,16 +43,6 @@
     "id" : "comp220Dragon-2018",
     "graphFile" : "src/main/resources/datastore/comp220Dragon-2018/comp220DragonGraph.json",
     "resourceFiles" : [ "src/main/resources/datastore/comp220Dragon-2018/comp220Dragon-2018Resources.json" ],
-    "assessmentFiles" : [ "src/main/resources/datastore/comp220Dragon-2018/private/220-Exam1Grades-totalPoints-removeNames.csv", "src/main/resources/datastore/comp220Dragon-2018/private/comp220-gradebook-2018-removeNames.csv" ]
-  }, {
-      "id" : "AnalysisExample",
-      "graphFile" : "src/test/resources/datastore/AnalysisExample/AnalysisGraph.json",
-      "resourceFiles" : [ "src/test/resources/datastore/AnalysisExample/AnalysisResources.json" ],
-      "assessmentFiles" : [ "src/test/resources/datastore/AnalysisExample/AnalysisExample1.csv" ]
-    }, {
-    "id" : "comp220-2024",
-    "graphFile" : "src/main/resources/datastore/comp220-2024/graph.json",
-    "resourceFiles" : [ "src/main/resources/datastore/comp220-2024/learningMaterials.json" ],
-    "assessmentFiles" : [ "src/main/resources/datastore/comp220-2024/assessmentGrades.csv" ]
+    "assessmentFiles" : [ ]
   } ]
 }

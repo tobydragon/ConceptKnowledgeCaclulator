@@ -3,7 +3,6 @@ package edu.ithaca.dragon.tecmap.learningresource;
 import edu.ithaca.dragon.tecmap.io.record.LearningResourceRecord;
 import edu.ithaca.dragon.tecmap.util.DataUtil;
 
-import java.lang.reflect.Array;
 import java.util.*;
 
 /**
@@ -49,11 +48,11 @@ public class AssessmentItem {
     }
 
     public void addResponse(AssessmentItemResponse response){
-        if (id.equals(response.getLearningObjectId())) {
+        if (id.equals(response.getAssessmentItemId())) {
             responses.add(response);
         }
         else{
-            throw new IllegalArgumentException("Response object id:"+ response.getLearningObjectId()
+            throw new IllegalArgumentException("Response object id:"+ response.getAssessmentItemId()
                     + " does not match LearningObjectId:" + id);
         }
     }
@@ -132,7 +131,7 @@ public class AssessmentItem {
     public static List<AssessmentItem> buildListFromAssessmentItemResponses(List<AssessmentItemResponse> responses, Map<String, Double> maxKnowledgeEstimates) {
         Map<String, AssessmentItem> assessments = new HashMap<>();
         for (AssessmentItemResponse response : responses) {
-            String assessmentId = response.getLearningObjectId();
+            String assessmentId = response.getAssessmentItemId();
             if (assessments.containsKey(assessmentId)) {
                 assessments.get(assessmentId).addResponse(response);
             } else {

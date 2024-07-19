@@ -9,12 +9,12 @@ import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-public class CreateMaxScoreRowTest {
+public class SwapNameAndIDColumnTest {
 
     @Test
-    void createMaxScoreRowTest() throws IOException, CsvException {
-        List<String[]> newRows = CsvFileLibrary.parseRowsFromFile(Settings.DEFAULT_TEST_DATASTORE_PATH + "ConvertToCanvasFiles/WithoutMaxScoreRow.csv");
-        CreateMaxScoreRow.createMaxScoreRow(newRows);
+    void swapNameAndIDColumnTest() throws IOException, CsvException {
+        List<String[]> newRows = CsvFileLibrary.parseRowsFromFile(Settings.DEFAULT_TEST_DATASTORE_PATH + "ConvertToCanvasFiles/WrongIdAndStudentColumn.csv");
+        SwapNameAndIDColumn.swapNameAndIDColumn(newRows);
 
         List<String[]> orgRows = CsvFileLibrary.parseRowsFromFile(Settings.DEFAULT_TEST_DATASTORE_PATH + "ConvertToCanvasFiles/CanvasGradeExample.csv");
 
