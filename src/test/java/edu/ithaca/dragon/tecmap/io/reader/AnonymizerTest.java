@@ -24,15 +24,15 @@ class AnonymizerTest {
 
     @Test
     public void anonymizeTest() throws IOException , CsvException {
-        List<String[]> newRows = CsvRepresentation.parseRowsFromFile(Settings.DEFAULT_TEST_DATASTORE_PATH+"Cs1Example/Cs1ExampleAssessment1.csv");
-        Anonymizer anonymizer = new Anonymizer(2);
+        List<String[]> newRows = CsvFileLibrary.parseRowsFromFile(Settings.DEFAULT_TEST_DATASTORE_PATH+"Cs1Example/Cs1ExampleAssessment1.csv");
+        Anonymizer anonymizer = new Anonymizer(2, 1, 0);
         anonymizer.anonymize(newRows);
 
         //check labels werent disturbed
         assertEquals("student ID", newRows.get(0)[0]);
         assertEquals("Name", newRows.get(0)[1]);
 
-        List<String[]> origRows = CsvRepresentation.parseRowsFromFile(
+        List<String[]> origRows = CsvFileLibrary.parseRowsFromFile(
                 Settings.DEFAULT_TEST_DATASTORE_PATH + "Cs1Example/Cs1ExampleAssessment1.csv");
 
         Map<String, String> real2anonId = anonymizer.getRealId2anonId();

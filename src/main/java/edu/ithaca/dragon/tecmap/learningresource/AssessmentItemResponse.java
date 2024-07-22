@@ -1,7 +1,7 @@
 package edu.ithaca.dragon.tecmap.learningresource;
 
-import edu.ithaca.dragon.tecmap.io.reader.TecmapCSVReader;
-import edu.ithaca.dragon.tecmap.io.reader.SakaiReader;
+import com.opencsv.exceptions.CsvException;
+import edu.ithaca.dragon.tecmap.io.reader.*;
 import edu.ithaca.dragon.tecmap.util.DataUtil;
 
 import java.io.IOException;
@@ -17,18 +17,18 @@ import java.util.TreeMap;
 public class AssessmentItemResponse {
 
     private String userId;
-    private String learningObjectId;
+    private String assessmentItemId;
     private double knowledgeEstimate;
 
-    public AssessmentItemResponse(String userId, String learningObjectId, double knowledgeEstimate) {
+    public AssessmentItemResponse(String userId, String assessmentItemId, double knowledgeEstimate) {
         this.userId = userId;
-        this.learningObjectId = learningObjectId;
+        this.assessmentItemId = assessmentItemId;
         this.knowledgeEstimate = knowledgeEstimate;
     }
 
     public AssessmentItemResponse(AssessmentItemResponse other){
         this.userId = other.userId;
-        this.learningObjectId = other.learningObjectId;
+        this.assessmentItemId = other.assessmentItemId;
         this.knowledgeEstimate = other.knowledgeEstimate;
     }
 
@@ -49,7 +49,7 @@ public class AssessmentItemResponse {
         return userIdToResponses;
     }
 
-    public String getLearningObjectId(){ return learningObjectId; }
+    public String getAssessmentItemId(){ return assessmentItemId; }
 
     public double calcKnowledgeEstimate(){
         return knowledgeEstimate;
@@ -69,7 +69,7 @@ public class AssessmentItemResponse {
         }
         AssessmentItemResponse otherNode = (AssessmentItemResponse) other;
         if(this.userId.equals(otherNode.userId) && DataUtil.equalsDoubles(this.knowledgeEstimate, otherNode.knowledgeEstimate)
-                && this.learningObjectId.equals(otherNode.learningObjectId)){
+                && this.assessmentItemId.equals(otherNode.assessmentItemId)){
             return true;
         } else {
             return false;
@@ -77,13 +77,16 @@ public class AssessmentItemResponse {
     }
 
     public String toString(){
-        return getLearningObjectId() + "\tuser: "+ getUserId() + "\t est: "+ calcKnowledgeEstimate();
+        return getAssessmentItemId() + "\tuser: "+ getUserId() + "\t est: "+ calcKnowledgeEstimate();
     }
 
-    public static List<AssessmentItemResponse> createAssessmentItemResponses(List<String> assessmentFiles) throws IOException {
+    public static List<AssessmentItemResponse> createAssessmentItemResponses(List<String> assessmentFiles) throws IOException, CsvException {
         List<AssessmentItemResponse> assessments = new ArrayList<>();
         for (String aname: assessmentFiles){
-            TecmapCSVReader tecmapCsvReader = new SakaiReader(aname);
+            List<String[]> rows = CsvFileLibrary.parseRowsFromFile(aname);
+            List<CsvProcessor> processors = new ArrayList<>();
+            processors.add(new CanvasConverter());
+            TecmapCSVReader tecmapCsvReader = new CanvasReader(rows, processors);
             List<AssessmentItemResponse> temp = tecmapCsvReader.getManualGradedResponses();
             assessments.addAll(temp);
         }

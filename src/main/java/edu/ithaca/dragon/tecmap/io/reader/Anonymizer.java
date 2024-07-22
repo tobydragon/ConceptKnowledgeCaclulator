@@ -10,13 +10,33 @@ public class Anonymizer implements CsvProcessor{
     private int numToUseNext;
     private Map<String, String> realId2anonId;
     private Map<String, String> realname2anonName;
-    private int gradeStartColumnIndex; // canvas 3, sakai 2
+    private final int nameStartRowIndex;
+    private final int nameColumnIndex;
+    private final int idColumnIndex;
 
-    public Anonymizer(int gradeStartColumnIndex){
-        numToUseNext =1;
+    // Default values
+    private static final int DEFAULT_NAME_COLUMN_INDEX = 0; // canvas format
+    private static final int DEFAULT_ID_COLUMN_INDEX = 1; // canvas format
+
+    public Anonymizer(int nameStartRowIndex, int nameColumnIndex, int idColumnIndex){
+        numToUseNext = 1;
         realId2anonId = new HashMap<>();
         realname2anonName = new HashMap<>();
-        this.gradeStartColumnIndex = gradeStartColumnIndex;
+        this.nameStartRowIndex = nameStartRowIndex;
+        this.nameColumnIndex = nameColumnIndex;
+        this.idColumnIndex = idColumnIndex;
+    }
+
+    public Anonymizer(int nameStartRowIndex) {
+        this(nameStartRowIndex, DEFAULT_NAME_COLUMN_INDEX, DEFAULT_ID_COLUMN_INDEX);
+    }
+
+    public static Anonymizer AnonymizerCreator(String filepathAndName, int nameStartRowIndex, int nameColumnIndex, int idColumnIndex) {
+        try {
+            return Json.fromJsonFile(filepathAndName, Anonymizer.class);
+        } catch (IOException e) {
+            return new Anonymizer(nameStartRowIndex, nameColumnIndex, idColumnIndex);
+        }
     }
 
     public static Anonymizer AnonymizerCreator(String filepathAndName, int gradeStartIndex) {
@@ -28,11 +48,11 @@ public class Anonymizer implements CsvProcessor{
     }
 
     public void anonymize(List<String[]> rows) {
-        Collections.shuffle(rows.subList(gradeStartColumnIndex, rows.size()));
-        for(String[] row : rows.subList(gradeStartColumnIndex, rows.size())){
-            if (row.length >1) { // canvas id column is 1
-                row[0] = getAnonStr(row[0], realname2anonName, "student", numToUseNext);
-                row[1] = getAnonStr(row[1], realId2anonId, "s", numToUseNext);
+        Collections.shuffle(rows.subList(nameStartRowIndex, rows.size()));
+        for(String[] row : rows.subList(nameStartRowIndex, rows.size())){
+            if (row.length > 1) {
+                row[nameColumnIndex] = getAnonStr(row[0], realname2anonName, "student", numToUseNext);
+                row[idColumnIndex] = getAnonStr(row[1], realId2anonId, "s", numToUseNext);
                 numToUseNext++;
             }
         }
@@ -68,7 +88,7 @@ public class Anonymizer implements CsvProcessor{
         Json.toJsonFile(filepath+this.getClass().getSimpleName()+".json", this);
     }
 
-    public int getGradeStartColumnIndex() { return gradeStartColumnIndex; }
+    public int getNameStartRowIndex() { return nameStartRowIndex; }
 
     public int getNumToUseNext() {
         return numToUseNext;

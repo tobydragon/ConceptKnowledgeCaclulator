@@ -1,11 +1,11 @@
 package edu.ithaca.dragon.tecmap.suggester;
 
+import com.opencsv.exceptions.CsvException;
 import edu.ithaca.dragon.tecmap.Settings;
 import edu.ithaca.dragon.tecmap.conceptgraph.*;
-import edu.ithaca.dragon.tecmap.io.reader.TecmapCSVReader;
+import edu.ithaca.dragon.tecmap.io.reader.*;
 import edu.ithaca.dragon.tecmap.io.record.ConceptGraphRecord;
 import edu.ithaca.dragon.tecmap.io.record.LearningResourceRecord;
-import edu.ithaca.dragon.tecmap.io.reader.SakaiReader;
 import edu.ithaca.dragon.tecmap.learningresource.AssessmentItemResponse;
 import edu.ithaca.dragon.tecmap.learningresource.ExampleLearningObjectLinkRecordFactory;
 import edu.ithaca.dragon.tecmap.learningresource.ExampleLearningObjectResponseFactory;
@@ -75,7 +75,7 @@ public class ConceptGraphSuggesterLibraryTest {
     }
 
     @Test
-    public void RealDataConceptsTOWorkOn() throws IOException {
+    public void RealDataConceptsTOWorkOn() throws IOException, CsvException {
 
         CohortConceptGraphs cohortConceptGraphs = null;
 
@@ -85,7 +85,10 @@ public class ConceptGraphSuggesterLibraryTest {
         ConceptGraph graph = new ConceptGraph(structureRecord, linkRecord);
 
         //create the data to be used to create and populate the graph copies
-        TecmapCSVReader tecmapCsvReader = new SakaiReader(Settings.TEST_RESOURCE_DIR + "ManuallyCreated/exampleDataAssessment.csv");
+        List<String[]> rows = CsvFileLibrary.parseRowsFromFile(Settings.TEST_RESOURCE_DIR + "ManuallyCreated/exampleDataAssessment.csv");
+        List<CsvProcessor> processors = new ArrayList<>();
+        processors.add(new CreateMaxScoreRow());
+        TecmapCSVReader tecmapCsvReader = new SakaiReader(rows, processors);
         List<AssessmentItemResponse> assessments = tecmapCsvReader.getManualGradedResponses();
 
         //create the average and individual graphs
@@ -104,7 +107,7 @@ public class ConceptGraphSuggesterLibraryTest {
 
 
     @Test
-    public void RealDataConceptsTOWorkOnZeroSugg() throws IOException {
+    public void RealDataConceptsTOWorkOnZeroSugg() throws IOException, CsvException {
 
         CohortConceptGraphs cohortConceptGraphs = null;
 
@@ -114,7 +117,10 @@ public class ConceptGraphSuggesterLibraryTest {
         ConceptGraph graph = new ConceptGraph(structureRecord, linkRecord);
 
         //create the data to be used to create and populate the graph copies
-        TecmapCSVReader tecmapCsvReader = new SakaiReader(Settings.TEST_RESOURCE_DIR + "ManuallyCreated/exampleDataAssessment.csv");
+        List<String[]> rows = CsvFileLibrary.parseRowsFromFile(Settings.TEST_RESOURCE_DIR + "ManuallyCreated/exampleDataAssessment.csv");
+        List<CsvProcessor> processors = new ArrayList<>();
+        processors.add(new CreateMaxScoreRow());
+        TecmapCSVReader tecmapCsvReader = new SakaiReader(rows, processors);
         List<AssessmentItemResponse> assessments = tecmapCsvReader.getManualGradedResponses();
 
         //create the average and individual graphs
@@ -226,10 +232,11 @@ public class ConceptGraphSuggesterLibraryTest {
         List<ConceptNode> concepts = ConceptGraphSuggesterLibrary.suggestConcepts(orig);
         OrganizedLearningResourceSuggestions res = new OrganizedLearningResourceSuggestions(orig, concepts);
 
-
         String incomString = res.toString(0);
+        System.out.println("incomplete: " + incomString);
 
         String wrongString = res.toString(1);
+        System.out.println("wrong: " + wrongString);
 
 
         assertEquals(incomString, "Resource: Q6\t Concepts it relates to: Boolean\t Importance: 1\t Direct Concept Links: 1" +
@@ -246,7 +253,7 @@ public class ConceptGraphSuggesterLibraryTest {
 
 
     @Test
-    public void toStringTest2()throws IOException{
+    public void toStringTest2() throws IOException, CsvException {
         CohortConceptGraphs cohortConceptGraphs = null;
 
         //create the graph structure to be copied for each user
@@ -255,7 +262,10 @@ public class ConceptGraphSuggesterLibraryTest {
         ConceptGraph graph = new ConceptGraph(structureRecord, linkRecord);
 
         //create the data to be used to create and populate the graph copies
-        TecmapCSVReader tecmapCsvReader = new SakaiReader(Settings.TEST_RESOURCE_DIR + "ManuallyCreated/exampleDataAssessment.csv");
+        List<String[]> rows = CsvFileLibrary.parseRowsFromFile(Settings.TEST_RESOURCE_DIR + "ManuallyCreated/exampleDataAssessment.csv");
+        List<CsvProcessor> processors = new ArrayList<>();
+        processors.add(new CanvasConverter());
+        TecmapCSVReader tecmapCsvReader = new CanvasReader(rows, processors);
         List<AssessmentItemResponse> assessments = tecmapCsvReader.getManualGradedResponses();
 
         //create the average and individual graphs

@@ -1,6 +1,7 @@
-student ID,Name,Q1 [10],Q2 [5],Q3 [10],Q4 [5],Q5 [100]
+Name,student ID,,,Q1,Q2,Q3,Q4,Q5
 
-s01,Bart,5,2.5,5,2.5,50
-s02,Lisa,10,5,10,5,100
-s03,Milhouse,10,4,8,2.5,75
+Points Possible,,,,10,5,10,5,100
+Bart,s01,,,5,2.5,5,2.5,50
+Lisa,s02,,,10,5,10,5,100
+Milhouse,s03,,,10,4,8,2.5,75
 

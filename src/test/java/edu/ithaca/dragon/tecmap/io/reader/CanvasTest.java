@@ -8,6 +8,7 @@ import edu.ithaca.dragon.tecmap.learningresource.ManualGradedResponse;
 import org.junit.jupiter.api.Test;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -17,17 +18,19 @@ public class CanvasTest {
 
     @Test
     public void anonymizeTest() throws IOException, CsvException {
-        List<String[]> newRows = CsvRepresentation.parseRowsFromFile(Settings.DEFAULT_TEST_DATASTORE_PATH+"CanvasFiles/CanvasGradeExample.csv");
+        List<String[]> newRows = CsvFileLibrary.parseRowsFromFile(Settings.DEFAULT_TEST_DATASTORE_PATH + "ConvertToCanvasFiles/CanvasGradeExample.csv");
         Anonymizer anonymizer = new Anonymizer(3);
         anonymizer.anonymize(newRows);
 
-        List<String[]> origRows = CsvRepresentation.parseRowsFromFile(
-                Settings.DEFAULT_TEST_DATASTORE_PATH + "CanvasFiles/CanvasGradeExample.csv");
+        List<String[]> origRows = CsvFileLibrary.parseRowsFromFile(
+                Settings.DEFAULT_TEST_DATASTORE_PATH + "ConvertToCanvasFiles/CanvasGradeExample.csv");
 
         // check labels weren't disturbed
-        for (int i = 0; i < anonymizer.getGradeStartColumnIndex(); i++) {
-            for (int j = 0; j < origRows.get(0).length; j++) {
-                assertEquals(origRows.get(i)[j], newRows.get(i)[j]);
+        for (int row = 0; row < anonymizer.getNameStartRowIndex(); row++) {
+            if (origRows.get(row).length > 1) {
+                for (int column = 0; column < origRows.get(0).length; column++) {
+                    assertEquals(origRows.get(row)[column], newRows.get(row)[column]);
+                }
             }
         }
 
@@ -46,10 +49,10 @@ public class CanvasTest {
                 }
             }
         }
-        for (int i = 3; i < newRows.size() - 1; i++) {
-            for (int j = i + 1; j < newRows.size(); j++) {
-                assertNotEquals(newRows.get(i)[0], newRows.get(j)[0]); // check if anonName is unique (different from the rest)
-                assertNotEquals(newRows.get(i)[1], newRows.get(j)[1]); // check if anonId is unique (different from the rest)
+        for (int row = 3; row < newRows.size() - 1; row++) {
+            for (int column = row + 1; column < newRows.size(); column++) {
+                assertNotEquals(newRows.get(row)[0], newRows.get(column)[0]); // check if anonName is unique (different from the rest)
+                assertNotEquals(newRows.get(row)[1], newRows.get(column)[1]); // check if anonId is unique (different from the rest)
             }
         }
     }
@@ -57,8 +60,10 @@ public class CanvasTest {
 
     @Test
     void createQuestionsTest() throws IOException, CsvException {
-        // need to convert from Canvas to Sakai label or use converted file
-        CanvasReader file = new CanvasReader(Settings.DEFAULT_TEST_DATASTORE_PATH + "CanvasFiles/convertedCanvasGradeExample.csv");
+        List<String[]> rows = CsvFileLibrary.parseRowsFromFile(Settings.DEFAULT_TEST_DATASTORE_PATH + "ConvertToCanvasFiles/CanvasGradeExample.csv");
+        List<CsvProcessor> processors = new ArrayList<>();
+
+        CanvasReader file = new CanvasReader(rows, processors);
         List<AssessmentItemResponse> manualGradedResponseList = file.getManualGradedResponses();
         List<AssessmentItem> manualGradedColumnItemList = file.getManualGradedLearningObjects();
         //testing title entries from the csv files
@@ -69,7 +74,7 @@ public class CanvasTest {
         assertEquals(testQ.getNonNormalizedScore(), ((ManualGradedResponse) manualGradedResponseList.get(0)).getNonNormalizedScore(), 0);
         assertEquals(testQ.getMaxPossibleScore(), ((ManualGradedResponse) manualGradedResponseList.get(0)).getMaxPossibleScore(), 0);
         assertEquals(testQ.getUserId(), manualGradedResponseList.get(0).getUserId());
-        assertEquals(testQ.getLearningObjectId(), manualGradedResponseList.get(0).getLearningObjectId());
+        assertEquals(testQ.getAssessmentItemId(), manualGradedResponseList.get(0).getAssessmentItemId());
 
         //Testing for last entry in CSV
         ManualGradedResponse testQ2 = new ManualGradedResponse("172-Task01-04- Tracing Objects (230529)", 3, 3, "8");
@@ -78,7 +83,7 @@ public class CanvasTest {
         assertEquals(testQ2.getNonNormalizedScore(), ((ManualGradedResponse) manualGradedResponseList.get(lastIndex)).getNonNormalizedScore(), 0);
         assertEquals(testQ2.getMaxPossibleScore(), ((ManualGradedResponse) manualGradedResponseList.get(lastIndex)).getMaxPossibleScore(), 0);
         assertEquals(testQ2.getUserId(), manualGradedResponseList.get(lastIndex).getUserId());
-        assertEquals(testQ2.getLearningObjectId(), manualGradedResponseList.get(lastIndex).getLearningObjectId());
+        assertEquals(testQ2.getAssessmentItemId(), manualGradedResponseList.get(lastIndex).getAssessmentItemId());
 
         //Testing for the Learning Objects
         assertEquals(9, manualGradedColumnItemList.size());
@@ -86,7 +91,7 @@ public class CanvasTest {
         //Making sure the first item in the ManualGradedResponses list is the first item in the first learning object of the learning object list
         assertEquals(manualGradedResponseList.get(0).calcKnowledgeEstimate(), manualGradedColumnItemList.get(0).getResponses().get(0).calcKnowledgeEstimate(), 0);
         assertEquals(manualGradedResponseList.get(0).getUserId(), manualGradedColumnItemList.get(0).getResponses().get(0).getUserId());
-        assertEquals(manualGradedResponseList.get(0).getLearningObjectId(), manualGradedColumnItemList.get(0).getResponses().get(0).getLearningObjectId());
+        assertEquals(manualGradedResponseList.get(0).getAssessmentItemId(), manualGradedColumnItemList.get(0).getResponses().get(0).getAssessmentItemId());
     }
 
 

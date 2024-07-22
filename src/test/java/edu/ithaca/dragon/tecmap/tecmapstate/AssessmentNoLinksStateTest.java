@@ -1,5 +1,6 @@
 package edu.ithaca.dragon.tecmap.tecmapstate;
 
+import com.opencsv.exceptions.CsvException;
 import edu.ithaca.dragon.tecmap.Settings;
 import edu.ithaca.dragon.tecmap.conceptgraph.ConceptGraph;
 import edu.ithaca.dragon.tecmap.io.Json;
@@ -19,12 +20,12 @@ import static org.junit.jupiter.api.Assertions.*;
 class AssessmentNoLinksStateTest {
 
     @Test
-    void createBlankLearningResourceRecordsFromAssessment1File() throws IOException {
+    void createBlankLearningResourceRecordsFromAssessment1File() throws IOException, CsvException {
         List<String> assessmentFiles = new ArrayList<>(Arrays.asList(Settings.TEST_RESOURCE_DIR + "tecmapExamples/Cs1ExampleAssessment1.csv"));
         AssessmentNoLinksState state = new AssessmentNoLinksState(
                 new ConceptGraph(ConceptGraphRecord.buildFromJson(Settings.TEST_RESOURCE_DIR + "tecmapExamples/Cs1ExampleGraph.json")),
-                //TODO: hardcoded to sakai csv, need to hold a list of CSVReaders, or the information about which kind of reader it is...
-                ReaderTools.assessmentItemsFromCSVList(2, assessmentFiles),
+                //TODO: hardcoded to canvas csv, need to hold a list of CSVReaders, or the information about which kind of reader it is...
+                ReaderTools.assessmentItemsFromCSVList(assessmentFiles),
                 AssessmentItemResponse.createAssessmentItemResponses(assessmentFiles)
 
         );
@@ -32,14 +33,14 @@ class AssessmentNoLinksStateTest {
     }
 
     @Test
-    void createBlankLearningResourceRecordsFromAssessment2Files() throws IOException {
+    void createBlankLearningResourceRecordsFromAssessment2Files() throws IOException, CsvException {
         List<String> assessmentFiles = new ArrayList<>(Arrays.asList(Settings.TEST_RESOURCE_DIR + "tecmapExamples/Cs1ExampleAssessment1.csv",
                 Settings.TEST_RESOURCE_DIR + "tecmapExamples/Cs1ExampleAssessment2.csv"));
 
         AssessmentNoLinksState state = new AssessmentNoLinksState(
                 new ConceptGraph(ConceptGraphRecord.buildFromJson(Settings.TEST_RESOURCE_DIR + "tecmapExamples/Cs1ExampleGraph.json")),
-                //TODO: hardcoded to sakai csv, need to hold a list of CSVReaders, or the information about which kind of reader it is...
-                ReaderTools.assessmentItemsFromCSVList(2, assessmentFiles),
+                //TODO: hardcoded to canvas csv, need to hold a list of CSVReaders, or the information about which kind of reader it is...
+                ReaderTools.assessmentItemsFromCSVList(assessmentFiles),
                 AssessmentItemResponse.createAssessmentItemResponses(assessmentFiles)
 
         );

@@ -1,5 +1,6 @@
 package edu.ithaca.dragon.tecmap.legacy;
 
+import com.opencsv.exceptions.CsvException;
 import edu.ithaca.dragon.tecmap.conceptgraph.CohortConceptGraphs;
 import edu.ithaca.dragon.tecmap.conceptgraph.ConceptGraph;
 import edu.ithaca.dragon.tecmap.suggester.GroupSuggester.Group;
@@ -32,7 +33,7 @@ public interface ConceptKnowledgeCalculatorAPI {
      * @param resourceFilename   a json file listing the resources and their links to the concepts
      * @param assessmentFilename a csv file containing rows of students and columns labeled with resourceIds
      */
-    void clearAndCreateCohortData(List<String> structureFilename, List<String> resourceFilename, List<String> assessmentFilename) throws IOException;
+    void clearAndCreateCohortData(List<String> structureFilename, List<String> resourceFilename, List<String> assessmentFilename) throws IOException, CsvException;
 
 
     /**
@@ -173,7 +174,7 @@ public interface ConceptKnowledgeCalculatorAPI {
      * @return true or false depending on if the file is valid
      * @throws IOException
      */
-    boolean assessmentIsValid(String name)throws IOException;
+    boolean assessmentIsValid(String name) throws IOException, CsvException;
 
     boolean structureIsValid(String name) throws IOException;
 

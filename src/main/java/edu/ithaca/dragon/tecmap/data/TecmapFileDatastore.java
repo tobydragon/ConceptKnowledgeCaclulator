@@ -1,5 +1,6 @@
 package edu.ithaca.dragon.tecmap.data;
 
+import com.opencsv.exceptions.CsvException;
 import edu.ithaca.dragon.tecmap.Settings;
 import edu.ithaca.dragon.tecmap.Tecmap;
 import edu.ithaca.dragon.tecmap.TecmapAPI;
@@ -86,8 +87,8 @@ public class TecmapFileDatastore implements TecmapDatastore {
                 if (desiredState == TecmapState.AssessmentLinked) {
                     return new Tecmap(new ConceptGraph(ConceptGraphRecord.buildFromJson(files.getGraphFile())),
                             LearningResourceRecord.createLearningResourceRecordsFromJsonFiles(files.getResourceFiles()),
-                            //TODO: hardcoded to sakai csv, need to hold a list of CSVReaders, or the information about which kind of reader it is...
-                            ReaderTools.assessmentItemsFromCSVList(2, files.getAssessmentFiles()),
+                            //TODO: hardcoded to canvas csv, need to hold a list of CSVReaders, or the information about which kind of reader it is...
+                            ReaderTools.assessmentItemsFromCSVList(files.getAssessmentFiles()),
                             AssessmentItemResponse.createAssessmentItemResponses(files.getAssessmentFiles())
                     );
                 }
@@ -95,8 +96,8 @@ public class TecmapFileDatastore implements TecmapDatastore {
 
                     return new Tecmap(new ConceptGraph(ConceptGraphRecord.buildFromJson(files.getGraphFile())),
                             null,
-                            //TODO: hardcoded to sakai csv, need to hold a list of CSVReaders, or the information about which kind of reader it is...
-                            ReaderTools.assessmentItemsFromCSVList(2, files.getAssessmentFiles()),
+                            //TODO: hardcoded to canvas csv, need to hold a list of CSVReaders, or the information about which kind of reader it is...
+                            ReaderTools.assessmentItemsFromCSVList(files.getAssessmentFiles()),
                             AssessmentItemResponse.createAssessmentItemResponses(files.getAssessmentFiles())
                     );
                 }
@@ -114,7 +115,7 @@ public class TecmapFileDatastore implements TecmapDatastore {
                     throw new RuntimeException("Unrecognized state desired, can't retrieve tecmap");
                 }
             }
-            catch (IOException e){
+            catch (IOException | CsvException e){
                 logger.warn("IOException when trying to create map for id: "+ idToRetrieve +"\tError:", e);
                 return null;
             }

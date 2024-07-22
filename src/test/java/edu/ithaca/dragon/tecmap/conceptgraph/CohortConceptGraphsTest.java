@@ -1,6 +1,9 @@
 package edu.ithaca.dragon.tecmap.conceptgraph;
 
+import com.opencsv.exceptions.CsvException;
 import edu.ithaca.dragon.tecmap.Settings;
+import edu.ithaca.dragon.tecmap.io.reader.CsvFileLibrary;
+import edu.ithaca.dragon.tecmap.io.reader.CsvProcessor;
 import edu.ithaca.dragon.tecmap.io.reader.TecmapCSVReader;
 import edu.ithaca.dragon.tecmap.io.reader.SakaiReader;
 import edu.ithaca.dragon.tecmap.io.record.CohortConceptGraphsRecord;
@@ -17,10 +20,7 @@ import org.apache.logging.log4j.Logger;
 import org.junit.jupiter.api.Test;
 
 import java.io.IOException;
-import java.util.Arrays;
-import java.util.Collection;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -145,7 +145,10 @@ public class CohortConceptGraphsTest {
     @Test
     public void buildCohortConceptTreeRecordComplexTest() {
         try{
-        TecmapCSVReader tecmapCsvReader = new SakaiReader(Settings.TEST_RESOURCE_DIR + "ManuallyCreated/basicRealisticAssessment.csv");
+            List<String[]> rows = CsvFileLibrary.parseRowsFromFile(Settings.TEST_RESOURCE_DIR + "ManuallyCreated/basicRealisticAssessment.csv");
+            List<CsvProcessor> processors = new ArrayList<>();
+            TecmapCSVReader tecmapCsvReader = new SakaiReader(rows, processors);
+
             ConceptGraph  structure = new ConceptGraph(ConceptGraphRecord.buildFromJson(Settings.TEST_RESOURCE_DIR + "ManuallyCreated/basicRealisticConceptGraph.json"),
                     LearningResourceRecord.createLearningResourceRecordsFromJsonFile(Settings.TEST_RESOURCE_DIR + "ManuallyCreated/basicRealisticResource.json" ));
             CohortConceptGraphs group = new CohortConceptGraphs(structure, tecmapCsvReader.getManualGradedResponses());
@@ -153,7 +156,7 @@ public class CohortConceptGraphsTest {
             CohortConceptGraphsRecord record = group.buildCohortConceptTreeRecord();
             matchingIdsForTreeCopies(group.getAvgGraph(), record.getGraphRecords().get(0));
 
-        } catch (IOException e) {
+        } catch (IOException | CsvException e) {
             e.printStackTrace();
             fail();
         }
@@ -166,7 +169,10 @@ public class CohortConceptGraphsTest {
 	@Test
     public void onlyOneLearningObject(){
         try {
-            TecmapCSVReader tecmapCsvReader = new SakaiReader(Settings.TEST_RESOURCE_DIR + "ManuallyCreated/basicRealisticAssessment.csv");
+            List<String[]> rows = CsvFileLibrary.parseRowsFromFile(Settings.TEST_RESOURCE_DIR + "ManuallyCreated/basicRealisticAssessment.csv");
+            List<CsvProcessor> processors = new ArrayList<>();
+            TecmapCSVReader tecmapCsvReader = new SakaiReader(rows, processors);
+
             ConceptGraph graph = new ConceptGraph(ConceptGraphRecord.buildFromJson(Settings.TEST_RESOURCE_DIR + "ManuallyCreated/basicRealisticConceptGraph.json"),
                     LearningResourceRecord.createLearningResourceRecordsFromJsonFile(Settings.TEST_RESOURCE_DIR + "ManuallyCreated/basicRealisticResource.json"));
             CohortConceptGraphs gcg = new CohortConceptGraphs(graph, tecmapCsvReader.getManualGradedResponses());
@@ -185,7 +191,9 @@ public class CohortConceptGraphsTest {
 	@Test
     public void calcKnowledgeEstimateSameInCohortAndConceptGraphsTest(){
         try {
-            TecmapCSVReader tecmapCsvReader = new SakaiReader(Settings.TEST_RESOURCE_DIR + "ManuallyCreated/basicRealisticAssessment.csv");
+            List<String[]> rows = CsvFileLibrary.parseRowsFromFile(Settings.TEST_RESOURCE_DIR + "ManuallyCreated/basicRealisticAssessment.csv");
+            List<CsvProcessor> processors = new ArrayList<>();
+            TecmapCSVReader tecmapCsvReader = new SakaiReader(rows, processors);
 
             ConceptGraph singleGraph = new ConceptGraph(ConceptGraphRecord.buildFromJson(Settings.TEST_RESOURCE_DIR + "ManuallyCreated/basicRealisticConceptGraph.json"),
                     LearningResourceRecord.createLearningResourceRecordsFromJsonFile(Settings.TEST_RESOURCE_DIR + "ManuallyCreated/basicRealisticResource.json"),
@@ -210,7 +218,7 @@ public class CohortConceptGraphsTest {
     }
 
     @Test
-    public void calcTotalKnowledgeEstimateTest() throws IOException {
+    public void calcTotalKnowledgeEstimateTest() throws IOException, CsvException {
         ConceptGraph graph = new ConceptGraph(ConceptGraphRecord.buildFromJson(Settings.TEST_RESOURCE_DIR + "ManuallyCreated/simpleConceptGraphTest.json"));
         List<AssessmentItemResponse> assessmentItemResponses = AssessmentItemResponse.createAssessmentItemResponses(Arrays.asList(Settings.TEST_RESOURCE_DIR + "ManuallyCreated/simpleAssessmentTest.csv"));
         List<LearningResourceRecord> links = LearningResourceRecord.createLearningResourceRecordsFromJsonFiles(Arrays.asList(Settings.TEST_RESOURCE_DIR + "ManuallyCreated/simpleResourceTest.json"));
@@ -237,7 +245,7 @@ public class CohortConceptGraphsTest {
 
 
     @Test
-    public void calcTotalKnowledgeEstimate2() throws IOException {
+    public void calcTotalKnowledgeEstimate2() throws IOException, CsvException {
         ConceptGraph graph = new ConceptGraph(ConceptGraphRecord.buildFromJson(Settings.TEST_RESOURCE_DIR + "ManuallyCreated/researchConceptGraph.json"));
         List<AssessmentItemResponse> assessmentItemResponses = AssessmentItemResponse.createAssessmentItemResponses(Arrays.asList(Settings.TEST_RESOURCE_DIR + "ManuallyCreated/researchAssessment1.csv"));
         List<LearningResourceRecord> links = LearningResourceRecord.createLearningResourceRecordsFromJsonFiles(Arrays.asList(Settings.TEST_RESOURCE_DIR + "ManuallyCreated/researchResource1.json"));

@@ -1,10 +1,9 @@
 package edu.ithaca.dragon.tecmap.legacy;
 
+import com.opencsv.exceptions.CsvException;
 import edu.ithaca.dragon.tecmap.Settings;
 import edu.ithaca.dragon.tecmap.conceptgraph.*;
-import edu.ithaca.dragon.tecmap.io.reader.TecmapCSVReader;
-import edu.ithaca.dragon.tecmap.io.reader.ReaderTools;
-import edu.ithaca.dragon.tecmap.io.reader.SakaiReader;
+import edu.ithaca.dragon.tecmap.io.reader.*;
 import edu.ithaca.dragon.tecmap.io.record.CohortConceptGraphsRecord;
 import edu.ithaca.dragon.tecmap.io.record.ConceptGraphRecord;
 import edu.ithaca.dragon.tecmap.io.record.LearningResourceRecord;
@@ -72,7 +71,7 @@ public class ConceptKnowledgeCalculator implements ConceptKnowledgeCalculatorAPI
         clearAndCreateStructureData(struct);
     }
 
-    public ConceptKnowledgeCalculator(String structureFilename, String resourceFilename, String assessmentFilename) throws IOException{
+    public ConceptKnowledgeCalculator(String structureFilename, String resourceFilename, String assessmentFilename) throws IOException, CsvException {
         this();
 
         List<String>  structure = new ArrayList<>();
@@ -87,7 +86,7 @@ public class ConceptKnowledgeCalculator implements ConceptKnowledgeCalculatorAPI
         clearAndCreateCohortData(structure, resource, assessment);
     }
 
-    public ConceptKnowledgeCalculator(List<String> structureFilenames, List<String> resourceFilenames, List<String> assessmentFilenames) throws IOException{
+    public ConceptKnowledgeCalculator(List<String> structureFilenames, List<String> resourceFilenames, List<String> assessmentFilenames) throws IOException, CsvException {
         this();
         clearAndCreateCohortData(structureFilenames, resourceFilenames, assessmentFilenames);
     }
@@ -135,7 +134,7 @@ public class ConceptKnowledgeCalculator implements ConceptKnowledgeCalculatorAPI
 
 
     @Override
-    public void clearAndCreateCohortData(List<String> structureFilename, List<String> resourceFilename, List<String> assessmentFilename) throws IOException {
+    public void clearAndCreateCohortData(List<String> structureFilename, List<String> resourceFilename, List<String> assessmentFilename) throws IOException, CsvException {
         structureGraph = null;
         cohortConceptGraphs=null;
         structureFiles.clear();
@@ -165,7 +164,10 @@ public class ConceptKnowledgeCalculator implements ConceptKnowledgeCalculatorAPI
         List<AssessmentItemResponse> assessments = new ArrayList<>();
 
         for (String aname: assessmentFiles){
-            TecmapCSVReader tecmapCsvReader = new SakaiReader(aname);
+            List<String[]> rows = CsvFileLibrary.parseRowsFromFile(aname);
+            List<CsvProcessor> processors = new ArrayList<>();
+            processors.add(new CanvasConverter());
+            TecmapCSVReader tecmapCsvReader = new CanvasReader(rows, processors);
             List<AssessmentItemResponse> temp = tecmapCsvReader.getManualGradedResponses();
             assessments.addAll(temp);
         }
@@ -513,10 +515,10 @@ public class ConceptKnowledgeCalculator implements ConceptKnowledgeCalculatorAPI
     }
 
     public static void csvToResource(List<String> assessmentFiles, String destinationFilepath) throws Exception{
-        //TODO: hardcoded to sakai csv, need to hold a list of CSVReaders, or the information about which kind of reader it is...
-        List<AssessmentItem> fullLoList = ReaderTools.assessmentItemsFromCSVList(2, assessmentFiles);
-        List<LearningResourceRecord> lolrList = LearningResourceRecord.createLearningResourceRecordsFromAssessmentItems(fullLoList);
-        LearningResourceRecord.resourceRecordsToJSON(lolrList, destinationFilepath);
+        //TODO: hardcoded to canvas csv, need to hold a list of CSVReaders, or the information about which kind of reader it is...
+        List<AssessmentItem> fullAIList = ReaderTools.assessmentItemsFromCSVList(assessmentFiles);
+        List<LearningResourceRecord> lrrList = LearningResourceRecord.createLearningResourceRecordsFromAssessmentItems(fullAIList);
+        LearningResourceRecord.resourceRecordsToJSON(lrrList, destinationFilepath);
     }
 
     public static void conceptIdsToTextFile(Collection<String> conceptIds, String destinationFilepath) throws Exception{
@@ -599,8 +601,11 @@ public class ConceptKnowledgeCalculator implements ConceptKnowledgeCalculatorAPI
     }
 
     @Override
-    public boolean assessmentIsValid(String name) throws IOException {
-        TecmapCSVReader tecmapCsvReader = new SakaiReader(name);
+    public boolean assessmentIsValid(String name) throws IOException, CsvException {
+        List<String[]> rows = CsvFileLibrary.parseRowsFromFile(name);
+        List<CsvProcessor> processors = new ArrayList<>();
+        processors.add(new CanvasConverter());
+        TecmapCSVReader tecmapCsvReader = new CanvasReader(rows, processors);
         if (tecmapCsvReader.getManualGradedResponses().size()>0){
             return true;
         }else{

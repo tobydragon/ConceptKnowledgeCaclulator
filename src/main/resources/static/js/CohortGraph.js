@@ -85,21 +85,21 @@ function findAndMakeChart(name, type){
 
 //creates the student buttons
 function writeMenu(){
-    var names = []; //list of names of the students
+    var ids = []; //list of ids of the students
 
-    //creates the list of student names from the master objectsArray
+    //creates the list of student ids from the master objectsArray
     for(var i = 0; i < cohortGraphs.graphRecords.length; i++){
-        names.push(cohortGraphs.graphRecords[i].name);
+        ids.push(cohortGraphs.graphRecords[i].name);
     }
     //defines a line of HTML to inject into the DOM
     //creates a list of button objects. The button click calls makeChart and passes the argument of the student's name
     //and a term "reg" or "avg" to tell whether the graph should display actualcomp or distfromavg
     var newCode = "<button class='accordion'>Section 1</button><div class='panel'><ul style='list-style: none;'>";
 
-    newCode += "<li><button type='button' onclick='findAndMakeChart(&quot;" + names[0] + "&quot;,&quot;reg&quot;)'>" + names[0] + "</button>";
-    for(var i = 1; i < names.length; i++){
-        newCode += "<li style='float: left'><button type='button' onclick='findAndMakeChart(&quot;" + names[i] + "&quot;,&quot;reg&quot;)'>" + names[i] + "</button>";
-        newCode +="<button type='button' onclick='findAndMakeChart(&quot;" + names[i] + "&quot;,&quot;avg&quot;)'>" + "DistAvg" + "</button></li>";
+    newCode += "<li><button type='button' onclick='findAndMakeChart(&quot;" + ids[1] + "&quot;,&quot;reg&quot;)'>" + ids[1] + "</button>";
+    for(var i = 1; i < ids.length; i++){
+        newCode += "<li style='float: left'><button type='button' onclick='findAndMakeChart(&quot;" + ids[i] + "&quot;,&quot;reg&quot;)'>" + ids[i] + "</button>";
+        newCode +="<button type='button' onclick='findAndMakeChart(&quot;" + ids[i] + "&quot;,&quot;avg&quot;)'>" + "DistAvg" + "</button></li>";
     }
     newCode += "</ul></div>";
     //insert the HTML code into the div with the ID "menu"

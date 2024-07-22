@@ -3,14 +3,14 @@ package edu.ithaca.dragon.tecmap.conceptgraph;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import edu.ithaca.dragon.tecmap.Settings;
-import edu.ithaca.dragon.tecmap.io.reader.TecmapCSVReader;
-import edu.ithaca.dragon.tecmap.io.reader.SakaiReader;
+import edu.ithaca.dragon.tecmap.io.reader.*;
 import edu.ithaca.dragon.tecmap.io.record.ConceptGraphRecord;
 import edu.ithaca.dragon.tecmap.io.record.LearningResourceRecord;
 import edu.ithaca.dragon.tecmap.util.DataUtil;
 import org.junit.jupiter.api.Test;
 
 import java.io.File;
+import java.util.ArrayList;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -27,7 +27,9 @@ public class PracticalConceptGraphTest {
 
         graphMapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
         try{
-        TecmapCSVReader tecmapCsvReader = new SakaiReader(TEST_DIR+"basicRealisticAssessment.csv");
+            List<String[]> rows = CsvFileLibrary.parseRowsFromFile(TEST_DIR+"basicRealisticAssessment.csv");
+            List<CsvProcessor> processors = new ArrayList<>();
+            TecmapCSVReader tecmapCsvReader = new SakaiReader(rows, processors);
 
 
             ConceptGraphRecord graphRecord = ConceptGraphRecord.buildFromJson(TEST_DIR+"mediumRealisticConceptGraph.json");
@@ -63,8 +65,10 @@ public class PracticalConceptGraphTest {
 
         graphMapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
         try{
-        TecmapCSVReader tecmapCsvReader = new SakaiReader(Settings.TEST_RESOURCE_DIR + "ManuallyCreated/basicRealisticAssessment.csv");
-
+            List<String[]> rows = CsvFileLibrary.parseRowsFromFile(Settings.TEST_RESOURCE_DIR + "ManuallyCreated/basicRealisticAssessment.csv");
+            List<CsvProcessor> processors = new ArrayList<>();
+            processors.add(new CanvasConverter());
+            TecmapCSVReader tecmapCsvReader = new CanvasReader(rows, processors);
 
             ConceptGraphRecord graphRecord = ConceptGraphRecord.buildFromJson(Settings.TEST_RESOURCE_DIR + "ManuallyCreated/basicRealisticConceptGraph.json");
 
@@ -103,8 +107,9 @@ public class PracticalConceptGraphTest {
 
         graphMapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
         try{
-        TecmapCSVReader tecmapCsvReader = new SakaiReader(TEST_DIR+"advancedRealisticAssessment.csv");
-
+            List<String[]> rows = CsvFileLibrary.parseRowsFromFile(TEST_DIR+"advancedRealisticAssessment.csv");
+            List<CsvProcessor> processors = new ArrayList<>();
+            TecmapCSVReader tecmapCsvReader = new SakaiReader(rows, processors);
 
             ConceptGraphRecord graphRecord = ConceptGraphRecord.buildFromJson(TEST_DIR+"mediumRealisticConceptGraph.json");
 
@@ -140,7 +145,10 @@ public class PracticalConceptGraphTest {
 
         graphMapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
         try{
-        TecmapCSVReader tecmapCsvReader = new SakaiReader(TEST_DIR+"singleStudentRealisticAssessment.csv");
+            List<String[]> rows = CsvFileLibrary.parseRowsFromFile(TEST_DIR+"singleStudentRealisticAssessment.csv");
+            List<CsvProcessor> processors = new ArrayList<>();
+            processors.add(new CreateMaxScoreRow());
+            TecmapCSVReader tecmapCsvReader = new SakaiReader(rows, processors);
 
             ConceptGraphRecord graphRecord = ConceptGraphRecord.buildFromJson(TEST_DIR+"mediumRealisticConceptGraph.json");
             List<LearningResourceRecord> LOLRlist = LearningResourceRecord.createLearningResourceRecordsFromJsonFile(TEST_DIR+"mediumRealisticResource.json");

@@ -8,7 +8,7 @@ import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
 
-public class CsvRepresentation {
+public class CsvFileLibrary {
 
     public static List<String[]> parseRowsFromFile(String filename) throws IOException, CsvException {
         List<String[]> list = new ArrayList<>();
