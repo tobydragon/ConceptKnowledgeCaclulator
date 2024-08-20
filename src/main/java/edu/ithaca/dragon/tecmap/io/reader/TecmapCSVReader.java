@@ -6,6 +6,7 @@ package edu.ithaca.dragon.tecmap.io.reader;
  * Created by willsuchanek on 3/6/17.
  */
 
+import edu.ithaca.dragon.tecmap.io.record.LearningResourceRecord;
 import edu.ithaca.dragon.tecmap.learningresource.AssessmentItem;
 import edu.ithaca.dragon.tecmap.learningresource.AssessmentItemResponse;
 import edu.ithaca.dragon.tecmap.learningresource.ManualGradedResponse;
@@ -62,7 +63,8 @@ public abstract class TecmapCSVReader {
         //need to make sure we don't go out of bounds on either list
         while (i < row.length && i < columnItemList.size() + 4) {
             AssessmentItem currentColumnItem = this.columnItemList.get(i - 4);
-            String qid = currentColumnItem.getId();
+            String assessmentItemId = currentColumnItem.getId();
+            String assessmentItemText = currentColumnItem.getText();
             if (!("".equals(row[i]))) {
                 double studentGrade;
                 String number = ReaderTools.pullNumber(row[i]);
@@ -73,7 +75,7 @@ public abstract class TecmapCSVReader {
                 else {
                     throw new Exception("Typos where grades are expected.");
                 }
-                ManualGradedResponse response = new ManualGradedResponse(qid, currentColumnItem.getMaxPossibleKnowledgeEstimate(), studentGrade, stdID);
+                ManualGradedResponse response = new ManualGradedResponse(assessmentItemId, assessmentItemText, currentColumnItem.getMaxPossibleKnowledgeEstimate(), studentGrade, stdID);
                 currentColumnItem.addResponse(response);
                 this.manualGradedResponseList.add(response);
             }

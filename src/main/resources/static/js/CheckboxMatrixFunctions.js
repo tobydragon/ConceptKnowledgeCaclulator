@@ -1,11 +1,11 @@
 'use strict';
 
-function updateResourceRecords(resourceRecords, resourceId, conceptId) {
+function updateResourceRecords(resourceRecords, resourceText, conceptId) {
     var toChange,
         i = 0;
 
     for (i = 0; i < resourceRecords.length; i += 1) {
-        if (resourceRecords[i].learningResourceId === resourceId) {
+        if (resourceRecords[i].learningResourceId === resourceText) {
             toChange = resourceRecords[i].conceptIds;
             if (toChange.includes(conceptId)) {
                 toChange.pop(conceptId);

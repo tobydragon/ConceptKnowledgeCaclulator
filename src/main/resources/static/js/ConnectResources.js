@@ -14,12 +14,12 @@ function goHome() {
 }
 
 //linked to the addResource button in the html page
-function addResource(newResourceId, maxKnowledgeEstimate) {
-    if (newResourceId === "" || newResourceId === "New Resource ID") {
-        window.alert("No Resource ID to Add");
+function addResource(newResourceText, maxKnowledgeEstimate) {
+    if (newResourceText === "" || newResourceText === "New Resource Text") {
+        window.alert("No Resource Text to Add");
     } else {
         //defined in CheckboxMatrixFunctions.js with other resourceRecords functions
-        addResourceToRecords(resourceRecords, newResourceId, maxKnowledgeEstimate);
+        addResourceToRecords(resourceRecords, newResourceText, maxKnowledgeEstimate);
         //defined in Comm.js
         submitToAPI("/api/connectResources/" + courseId, resourceRecords);
     }

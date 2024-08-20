@@ -3,25 +3,25 @@ package edu.ithaca.dragon.tecmap.learningresource;
 import edu.ithaca.dragon.tecmap.Settings;
 import edu.ithaca.dragon.tecmap.TecmapAPI;
 import edu.ithaca.dragon.tecmap.conceptgraph.ConceptGraph;
+import edu.ithaca.dragon.tecmap.conceptgraph.ConceptNode;
 import edu.ithaca.dragon.tecmap.data.TecmapDatastore;
 import edu.ithaca.dragon.tecmap.data.TecmapFileDatastore;
 import org.junit.jupiter.api.Test;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.containsInAnyOrder;
 import static org.junit.jupiter.api.Assertions.*;
 
 public class AssessmentItemTest {
     @Test
     public void lorEqualsTest(){
-        AssessmentItemResponse lor0 = new AssessmentItemResponse("student1", "Q1", 1);
-        AssessmentItemResponse lor1 = new AssessmentItemResponse("student1", "Q1", 1);
-        AssessmentItemResponse lor2 = new AssessmentItemResponse("student1", "Q2", 1);
-        AssessmentItemResponse lor3 = new AssessmentItemResponse("student2", "Q2", 1);
-        AssessmentItemResponse lor4 = new AssessmentItemResponse("student3", "Q2", 0);
+        AssessmentItemResponse lor0 = new AssessmentItemResponse("student1", "_PracticeProblem1", "Q1", 1);
+        AssessmentItemResponse lor1 = new AssessmentItemResponse("student1", "_PracticeProblem1", "Q1", 1);
+        AssessmentItemResponse lor2 = new AssessmentItemResponse("student1", "_PracticeProblem2", "Q2", 1);
+        AssessmentItemResponse lor3 = new AssessmentItemResponse("student2", "_PracticeProblem2", "Q2", 1);
+        AssessmentItemResponse lor4 = new AssessmentItemResponse("student3", "_PracticeProblem2", "Q2", 0);
 
         assertEquals(true, lor0.equals(lor1));
         assertEquals(false, lor0.equals(lor2));
@@ -32,17 +32,17 @@ public class AssessmentItemTest {
 
     @Test
     public void loEqualsTest(){
-        AssessmentItem lo1 = new AssessmentItem("Q1");
-        lo1.addResponse(new AssessmentItemResponse("student1", "Q1", 1));
-        lo1.addResponse(new AssessmentItemResponse("student1", "Q1", 1));
+        AssessmentItem lo1 = new AssessmentItem("_PracticeProblem1", "Q1");
+        lo1.addResponse(new AssessmentItemResponse("student1", "_PracticeProblem1", "Q1", 1));
+        lo1.addResponse(new AssessmentItemResponse("student1", "_PracticeProblem1", "Q1", 1));
 
-        AssessmentItem lo2 = new AssessmentItem("Q1");
-        lo2.addResponse(new AssessmentItemResponse("student1", "Q1", 1));
-        lo2.addResponse(new AssessmentItemResponse("student1", "Q1", 1));
+        AssessmentItem lo2 = new AssessmentItem("_PracticeProblem1", "Q1");
+        lo2.addResponse(new AssessmentItemResponse("student1", "_PracticeProblem1", "Q1", 1));
+        lo2.addResponse(new AssessmentItemResponse("student1", "_PracticeProblem1", "Q1", 1));
 
-        AssessmentItem lo3 = new AssessmentItem("Q2");
-        lo3.addResponse(new AssessmentItemResponse("student1", "Q2", 1));
-        lo3.addResponse(new AssessmentItemResponse("student1", "Q2", 1));
+        AssessmentItem lo3 = new AssessmentItem("_PracticeProblem2", "Q2");
+        lo3.addResponse(new AssessmentItemResponse("student1", "_PracticeProblem2", "Q2", 1));
+        lo3.addResponse(new AssessmentItemResponse("student1", "_PracticeProblem2", "Q2", 1));
 
         assertEquals(true, lo1.equals(lo2));
         assertEquals(false, lo1.equals(lo3));
@@ -54,7 +54,7 @@ public class AssessmentItemTest {
         Map<String, AssessmentItem> newMap = AssessmentItem.deepCopyLearningObjectMap(toCopy);
 
         for (AssessmentItem orig : toCopy.values()){
-            AssessmentItem copy = newMap.get(orig.getId());
+            AssessmentItem copy = newMap.get(orig.getText());
             assertEquals(orig, copy);
             assertNotSame(orig, copy);
         }
@@ -67,18 +67,19 @@ public class AssessmentItemTest {
     @Test
     public void buildListFromAssessmentItemResponses() {
         List<AssessmentItemResponse> responseList = new ArrayList<>();
-        responseList.add(new AssessmentItemResponse("s01", "AI1", 1));
-        responseList.add(new AssessmentItemResponse("s02", "AI1", 1));
-        responseList.add(new AssessmentItemResponse("s01", "AI2", 2));
-        responseList.add(new AssessmentItemResponse("s02", "AI2", 2));
+        responseList.add(new AssessmentItemResponse("s01", "_PracticeProblem1", "AI1", 1));
+        responseList.add(new AssessmentItemResponse("s02", "_PracticeProblem1", "AI1", 1));
+        responseList.add(new AssessmentItemResponse("s01", "_PracticeProblem2", "AI2", 2));
+        responseList.add(new AssessmentItemResponse("s02", "_PracticeProblem2", "AI2", 2));
         Map<String, Double> maxKnowledgeEstimatesForAssessments = new HashMap<>();
         maxKnowledgeEstimatesForAssessments.put("AI1", 1.0);
         maxKnowledgeEstimatesForAssessments.put("AI2", 2.0);
 
         List<AssessmentItem> columnItems = AssessmentItem.buildListFromAssessmentItemResponses(responseList, maxKnowledgeEstimatesForAssessments);
         assertEquals(2, columnItems.size());
-        assertEquals("AI1", columnItems.get(0).getId());
-        assertEquals("AI2", columnItems.get(1).getId());
+        List<String> expectedcolumnItems = Arrays.asList("AI1", "AI2");
+        List<String> conceptIds3 = columnItems.stream().map(AssessmentItem::getText).toList();
+        assertThat(conceptIds3, containsInAnyOrder(expectedcolumnItems.toArray()));
     }
 
     @Test

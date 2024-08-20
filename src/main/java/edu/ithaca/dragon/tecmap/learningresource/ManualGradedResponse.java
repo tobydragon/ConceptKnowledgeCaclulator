@@ -10,9 +10,9 @@ public class ManualGradedResponse extends AssessmentItemResponse {
     double maxPossibleScore;
     double studentScore;
 
-    public ManualGradedResponse(String learningObjectId, double max, double studentScore, String userId){
+    public ManualGradedResponse(String assessmentItemId, String text, double max, double studentScore, String userId){
 
-        super(userId,learningObjectId,studentScore/max);
+        super(userId, assessmentItemId, text,studentScore/max);
 
 
         this.maxPossibleScore = max;

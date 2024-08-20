@@ -1,17 +1,17 @@
 [
-  {"learningResourceId":"Q1",
+  {"text":"Q1",
   "conceptIds":[
     "If Statement"
   ],
   "dataImportance": "1"
   },
-  {"learningResourceId":"Q2",
+  {"text":"Q2",
   "conceptIds":[
     "If Statement"
   ],
   "dataImportance": "1"
   },
-  {"learningResourceId":"Q3",
+  {"text":"Q3",
    "conceptIds":[
       "For Loop",
       "Sequence Types",
@@ -19,7 +19,7 @@
     ],
     "dataImportance": "1"
   },
-  {"learningResourceId":"Q4",
+  {"text":"Q4",
   "conceptIds":[
     "Boolean Expressions",
     "Boolean",
@@ -27,7 +27,7 @@
   ],
   "dataImportance": "1"
   },
-  {"learningResourceId":"Q5",
+  {"text":"Q5",
   "conceptIds":[
     "Boolean Expressions",
     "Boolean",
@@ -35,25 +35,25 @@
   ],
   "dataImportance": "1"
   },
-  {"learningResourceId":"Q6",
+  {"text":"Q6",
     "conceptIds":[
       "Boolean"
     ],
     "dataImportance": "1"
   },
-  {"learningResourceId":"Q7",
+  {"text":"Q7",
     "conceptIds":[
       "Boolean",
       "Operators"
     ],
     "dataImportance": "1"
   },
-  {"learningResourceId":"Q8",
+  {"text":"Q8",
     "conceptIds":[
       "Operators"
     ],
     "dataImportance": "1"
-  },{"learningResourceId":"Q9",
+  },{"text":"Q9",
     "conceptIds":[
       "While Loop",
       "Boolean Expressions",
@@ -62,31 +62,31 @@
     ],
     "dataImportance": "1"
   },
-  {"learningResourceId":"Q10",
+  {"text":"Q10",
     "conceptIds":[
       "While Loop"
     ],
     "dataImportance": "1"
   },
-  {"learningResourceId":"Q11",
+  {"text":"Q11",
     "conceptIds":[
       "List"
     ],
     "dataImportance": "1"
   },
-  {"learningResourceId":"Q12",
+  {"text":"Q12",
     "conceptIds":[
       "String"
     ],
     "dataImportance": "1"
   },
-  {"learningResourceId":"Q13",
+  {"text":"Q13",
     "conceptIds":[
       "List"
     ],
     "dataImportance": "1"
   },
-  {"learningResourceId":"Q14",
+  {"text":"Q14",
     "conceptIds":[
       "Sequence Types",
       "String",
@@ -94,7 +94,7 @@
     ],
     "dataImportance": "1"
   },
-  {"learningResourceId":"Q15",
+  {"text":"Q15",
     "conceptIds":[
       "Sequence Types",
       "List"

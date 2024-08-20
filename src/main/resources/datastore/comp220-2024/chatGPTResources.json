@@ -1,0 +1,371 @@
+[
+    {"resourceTypes" : ["PRACTICE" ],
+      "conceptIds": [
+        "Queue",
+        "Linked Structures"
+      ],
+      "text": "Create a queue using a singly linked list. Implement all standard operations (enqueue, dequeue, front, and isEmpty)."
+    },
+    {"resourceTypes" : ["PRACTICE" ],
+      "conceptIds": [
+        "Queue",
+        "Stack"
+      ],
+      "text": "Design a queue implementation using two stacks. Implement the enqueue and dequeue operations."
+    },
+    {"resourceTypes" : ["PRACTICE" ],
+      "conceptIds": [
+        "Queue",
+        "Recursion"
+      ],
+      "text": "Write a function to reverse the elements of a queue. You can only use recursion and the queue itself."
+    },
+    {"resourceTypes" : ["PRACTICE" ],
+      "conceptIds": [
+        "Priority Queue"
+      ],
+      "text": "Implement a priority queue where each element has a priority associated with it. The queue should serve elements with higher priority first."
+    },
+    {"resourceTypes" : ["PRACTICE" ],
+      "conceptIds": [
+        "Queue"
+      ],
+      "text": "Implement a circular queue. Include methods for enqueue, dequeue, and checking if the queue is empty or full."
+    },
+    {"resourceTypes" : ["PRACTICE" ],
+      "conceptIds": [
+        "Queue",
+        "Arrays"
+      ],
+      "text": "Implement a queue using an array. Include methods for enqueue, dequeue, front, rear, and checking if the queue is empty or full."
+    },
+    {"resourceTypes" : ["PRACTICE" ],
+      "conceptIds": [
+        "Queue"
+      ],
+      "text": "Create a double-ended queue (deque) that supports insertion and deletion from both ends. Implement the necessary methods."
+    },
+    {"resourceTypes" : ["PRACTICE" ],
+      "conceptIds": [
+        "Queue",
+        "Linked Structures"
+      ],
+      "text": "Write a function to implement a queue using a single linked list. Include methods for enqueue, dequeue, and getting the size of the queue."
+    },
+    {"resourceTypes" : ["PRACTICE" ],
+      "conceptIds": [
+        "Queue"
+      ],
+      "text": "Design a queue that can also support getting the minimum element in constant time. Implement the necessary operations."
+    },
+    {"resourceTypes" : ["PRACTICE" ],
+      "conceptIds": [
+        "Queue"
+      ],
+      "text": "Simulate the process of a queue by implementing a ticketing system where customers are queued and processed based on their ticket numbers."
+    },
+    {"resourceTypes" : ["PRACTICE" ],
+      "conceptIds": [
+        "Queue",
+        "Arrays"
+      ],
+      "text": "Implement a queue using an array. Ensure to handle the scenario where the queue gets full and needs to be resized."
+    },
+    {"resourceTypes" : ["PRACTICE" ],
+      "conceptIds": [
+        "Queue"
+      ],
+      "text": "Create a double-ended queue (deque) implementation that allows insertion and deletion of elements from both ends."
+    },
+    {"resourceTypes" : ["PRACTICE" ],
+      "conceptIds": [
+        "Queue"
+      ],
+      "text": "Write an algorithm to check if a sequence of brackets is balanced using a queue."
+    },
+    {"resourceTypes" : ["PRACTICE" ],
+      "conceptIds": [
+        "Queue"
+      ],
+      "text": "Implement a queue that supports the following operations: enqueue, dequeue, and peek, and also allows you to retrieve the maximum element in constant time."
+    },
+    {"resourceTypes" : ["PRACTICE" ],
+      "conceptIds": [
+        "Queue"
+      ],
+      "text": "Simulate a queue of people waiting for a service, implementing the logic to serve customers based on their arrival time and service time."
+    },
+    {"resourceTypes" : ["PRACTICE" ],
+      "conceptIds": [
+        "Binary Trees"
+      ],
+      "text": "Write a function to perform an in-order traversal of a binary tree and return the values in an array."
+    },
+    {"resourceTypes" : ["PRACTICE" ],
+      "conceptIds": [
+        "Binary Trees"
+      ],
+      "text": "Implement a function to determine if a given binary tree is a valid binary search tree (BST)."
+    },
+    {"resourceTypes" : ["PRACTICE" ],
+      "conceptIds": [
+        "Binary Trees"
+      ],
+      "text": "Create a function that calculates the height of a binary tree."
+    },
+    {"resourceTypes" : ["PRACTICE" ],
+      "conceptIds": [
+        "Binary Trees"
+      ],
+      "text": "Write a function to find the lowest common ancestor of two nodes in a binary tree."
+    },
+    {"resourceTypes" : ["PRACTICE" ],
+      "conceptIds": [
+        "Binary Trees"
+      ],
+      "text": "Implement a function to serialize and deserialize a binary tree, allowing it to be stored in a string format."
+    },
+    {"resourceTypes" : ["PRACTICE" ],
+      "conceptIds": [
+        "BigO",
+        "Arrays"
+      ],
+      "text": "Analyze the time complexity of a function that calculates the sum of all elements in an array. Provide a Big O notation for your answer."
+    },
+    {"resourceTypes" : ["PRACTICE" ],
+      "conceptIds": [
+        "BigO",
+        "Arrays"
+      ],
+      "text": "Write a function that takes a sorted array and a target value, and uses binary search to determine if the target exists in the array. Explain the time complexity and provide the Big O notation."
+    },
+    {"resourceTypes" : ["PRACTICE" ],
+      "conceptIds": [
+        "BigO",
+        "Set"
+      ],
+      "text": "Create a function that generates all subsets of a given set of integers. Discuss the time complexity of your solution and express it in Big O notation."
+    },
+    {"resourceTypes" : ["PRACTICE" ],
+      "conceptIds": [
+        "BigO"
+      ],
+      "text": "Implement a bubble sort algorithm and analyze its time complexity in the worst, best, and average cases. Provide Big O notation for each."
+    },
+    {"resourceTypes" : ["PRACTICE" ],
+      "conceptIds": [
+        "BigO"
+      ],
+      "text": "Write a function that determines if a given string is a palindrome. Discuss the time complexity of your solution and the factors that impact it in terms of Big O notation."
+    },
+    {"resourceTypes" : ["PRACTICE" ],
+      "conceptIds": [
+        "Map"
+      ],
+      "text": "Implement a basic map data structure using an array of linked lists. Include methods for inserting, deleting, and searching for keys."
+    },
+    {"resourceTypes" : ["PRACTICE" ],
+      "conceptIds": [
+        "Map"
+      ],
+      "text": "Write a function that takes two maps and returns a new map that is the union of both. Keys should have the sum of their values in the resulting map."
+    },
+    {"resourceTypes" : ["PRACTICE" ],
+      "conceptIds": [
+        "Map"
+      ],
+      "text": "Create a method to find the first non-repeating character in a given string using a map to count occurrences."
+    },
+    {"resourceTypes" : ["PRACTICE" ],
+      "conceptIds": [
+        "Map"
+      ],
+      "text": "Implement a frequency map that takes an array and returns an object containing the number of times each unique element appears in the array."
+    },
+    {"resourceTypes" : ["PRACTICE" ],
+      "conceptIds": [
+        "Map"
+      ],
+      "text": "Design a function that checks whether two maps are equal, meaning they have the same keys with the same corresponding values."
+    },
+    {"resourceTypes" : ["PRACTICE" ],
+      "conceptIds": ["Hash Tables", "Chained Hash Tables"],
+      "text": "Implement a hash map from scratch, allowing for insertion, deletion, and retrieval of key-value pairs."
+    },
+    {"resourceTypes" : ["PRACTICE" ],
+      "conceptIds": ["Hash Tables", "Map"],
+      "text": "Write a function that returns the first non-repeating character in a given string using a hash map."
+    },
+    {"resourceTypes" : ["PRACTICE" ],
+      "conceptIds": ["Hash Tables", "Map"],
+      "text": "Create a function that groups an array of strings by their anagrams using a hash map."
+    },
+    {"resourceTypes" : ["PRACTICE" ],
+      "conceptIds": ["Hash Tables", "Chained Hash Tables", "BigO"],
+      "text": "Design a hash map that supports the following operations: insert, get, and remove. Each operation should run in average constant time."
+    },
+    {"resourceTypes" : ["PRACTICE" ],
+      "conceptIds": ["Hash Tables", "Map"],
+      "text": "Write a function that finds all pairs of integers in an array that sum up to a specific target using a hash map."
+    },
+    {"resourceTypes" : ["PRACTICE" ],
+      "conceptIds": ["Linked Structures", "List"],
+      "text": "Implement a singly linked list in your chosen programming language and include methods for adding, removing, and displaying elements."
+    },
+    {"resourceTypes" : ["PRACTICE" ],
+      "conceptIds": ["Linked Structures", "List"],
+      "text": "Write a function that reverses a singly linked list."
+    },
+    {"resourceTypes" : ["PRACTICE" ],
+      "conceptIds": ["Linked Structures", "List"],
+      "text": "Create a method that detects a cycle in a linked list and returns the node where the cycle begins."
+    },
+    {"resourceTypes" : ["PRACTICE" ],
+      "conceptIds": ["Linked Structures", "List"],
+      "text": "Develop a function that merges two sorted linked lists into one sorted linked list."
+    },
+    {"resourceTypes" : ["PRACTICE" ],
+      "conceptIds": ["Linked Structures", "List"],
+      "text": "Implement a doubly linked list and include methods for inserting and deleting nodes at both ends."
+    },
+    {"resourceTypes" : ["PRACTICE" ],
+      "conceptIds": ["Arrays", "List"],
+      "text": "Write a function that takes an array of integers and returns a new array with all the even numbers removed."
+    },
+    {"resourceTypes" : ["PRACTICE" ],
+      "conceptIds": ["Arrays", "List"],
+      "text": "Implement a function that takes an array of strings and returns the longest string. If there are multiple strings of the same longest length, return the first one."
+    },
+    {"resourceTypes" : ["PRACTICE" ],
+      "conceptIds": ["Arrays", "List"],
+      "text": "Create a function that rotates an array to the right by a given number of steps. For example, rotating [1,2,3,4,5] by 2 steps results in [4,5,1,2,3]."
+    },
+    {"resourceTypes" : ["PRACTICE" ],
+      "conceptIds": ["Arrays", "List"],
+      "text": "Write a function that merges two sorted arrays into a single sorted array without using additional space."
+    },
+    {"resourceTypes" : ["PRACTICE" ],
+      "conceptIds": ["Arrays", "Set"],
+      "text": "Design a function that accepts an array of integers and returns a new array containing only the unique elements from the original array."
+    },
+    {"resourceTypes" : ["PRACTICE" ],
+      "conceptIds": ["Chained Hash Tables", "Hash Tables"],
+      "text": "Implement a basic Chained Hash Table using an array of linked lists. Include methods for insertion, deletion, and searching."
+    },
+    {"resourceTypes" : ["PRACTICE" ],
+      "conceptIds": ["Chained Hash Tables", "Theoretical"],
+      "text": "Explain the advantages of using chained hashing over open addressing in handling collisions."
+    },
+    {"resourceTypes" : ["PRACTICE" ],
+      "conceptIds": ["Chained Hash Tables", "BigO"],
+      "text": "Write a function that returns the load factor of a chained hash table. Discuss how the load factor impacts the performance of the hash table."
+    },
+    {"resourceTypes" : ["PRACTICE" ],
+      "conceptIds": ["Chained Hash Tables", "Theoretical"],
+      "text": "Create a function that expands a chained hash table when the load factor exceeds a certain threshold. Describe the process involved in rehashing the elements."
+    },
+    {"resourceTypes" : ["PRACTICE" ],
+      "conceptIds": ["Chained Hash Tables", "Theoretical"],
+      "text": "Design a method to find the entry with the maximum number of collisions in your chained hash table implementation and explain why this might be significant."
+    },
+    {"resourceTypes" : ["PRACTICE" ],
+      "conceptIds": ["Priority Queue"],
+      "text": "Implement a min-heap based priority queue with methods to insert an element, remove the minimum element, and get the minimum element."
+    },
+    {"resourceTypes" : ["PRACTICE" ],
+      "conceptIds": ["Priority Queue", "BigO"],
+      "text": "Write a function that sorts an array of numbers using a priority queue. Describe the time complexity of your solution."
+    },
+    {"resourceTypes" : ["PRACTICE" ],
+      "conceptIds": ["Priority Queue"],
+      "text": "Design a method that merges two priority queues into one, ensuring that the resulting priority queue maintains the correct order."
+    },
+    {"resourceTypes" : ["PRACTICE" ],
+      "conceptIds": ["Priority Queue", "BigO"],
+      "text": "Create a function that returns the first k largest elements from a list using a priority queue. What is the complexity of your solution?"
+    },
+    {"resourceTypes" : ["PRACTICE" ],
+      "conceptIds": ["Priority Queue", "Theoretical"],
+      "text": "Develop a simulation of a hospital emergency room where patients are treated based on severity using a priority queue. How would you structure your queue?"
+    },
+    {"resourceTypes" : ["PRACTICE" ],
+      "conceptIds": ["List"],
+      "text": "Write a function that takes a list of integers and returns a new list containing only the even numbers."
+    },
+    {"resourceTypes" : ["PRACTICE" ],
+      "conceptIds": ["List"],
+      "text": "Implement a function that takes a list of strings and returns the longest string in the list. If there are multiple longest strings, return any one of them."
+    },
+    {"resourceTypes" : ["PRACTICE" ],
+      "conceptIds": ["List"],
+      "text": "Create a function that merges two sorted lists into a single sorted list."
+    },
+    {"resourceTypes" : ["PRACTICE" ],
+      "conceptIds": ["List"],
+      "text": "Write a function that rotates a list to the right by a given number of steps."
+    },
+    {"resourceTypes" : ["PRACTICE" ],
+      "conceptIds": ["List", "Set"],
+      "text": "Design a function that removes all duplicates from a list and returns a new list with unique items."
+    },
+    {"resourceTypes" : ["PRACTICE" ],
+      "conceptIds": ["Set"],
+      "text": "Write a function that takes two sets and returns a new set that is the union of both."
+    },
+    {"resourceTypes" : ["PRACTICE" ],
+      "conceptIds": ["Set"],
+      "text": "Create a function that accepts two sets and returns a new set that is the intersection of both."
+    },
+    {"resourceTypes" : ["PRACTICE" ],
+      "conceptIds": ["Set"],
+      "text": "Design a function that checks if a set is a subset of another set and returns a boolean value."
+    },
+    {"resourceTypes" : ["PRACTICE" ],
+      "conceptIds": ["Set"],
+      "text": "Implement a function that takes a set of numbers and returns a new set containing only the even numbers."
+    },
+    {"resourceTypes" : ["PRACTICE" ],
+      "conceptIds": ["Set"],
+      "text": "Write a function that generates the symmetric difference of two sets, returning the elements that are in either of the sets but not in both."
+    },
+    {"resourceTypes" : ["PRACTICE" ],
+      "conceptIds": ["Stack"],
+      "text": "Implement a stack using an array and provide methods for push, pop, and peek."
+    },
+    {"resourceTypes" : ["PRACTICE" ],
+      "conceptIds": ["Stack"],
+      "text": "Write a function that checks if a given string has balanced parentheses using a stack."
+    },
+    {"resourceTypes" : ["PRACTICE" ],
+      "conceptIds": ["Stack", "BigO"],
+      "text": "Design a stack that supports the following operations: push, pop, top, and retrieving the minimum element in constant time."
+    },
+    {"resourceTypes" : ["PRACTICE" ],
+      "conceptIds": ["Stack"],
+      "text": "Create a function that reverses a string using a stack."
+    },
+    {"resourceTypes" : ["PRACTICE" ],
+      "conceptIds": ["Stack"],
+      "text": "Implement a function that evaluates a postfix expression using a stack."
+    },
+    {"resourceTypes" : ["PRACTICE" ],
+      "conceptIds": ["List"],
+      "text": "Write a function that takes a list of integers and returns a new list containing only the even integers."
+    },
+    {"resourceTypes" : ["PRACTICE" ],
+      "conceptIds": ["List"],
+      "text": "Implement a function that merges two sorted lists into a single sorted list."
+    },
+    {"resourceTypes" : ["PRACTICE" ],
+      "conceptIds": ["List"],
+      "text": "Create a function that reverses a given list without using any built-in reverse functions."
+    },
+    {"resourceTypes" : ["PRACTICE" ],
+      "conceptIds": ["List", "Set"],
+      "text": "Write a function that removes duplicate elements from a list and returns a new list with unique elements."
+    },
+    {"resourceTypes" : ["PRACTICE" ],
+      "conceptIds": ["List"],
+      "text": "Design a function that finds the longest consecutive subsequence in a list of integers."
+    }
+]

@@ -1,19 +1,19 @@
 [ {
-  "resourceId" : "variableHiddenQuizQuestion",
+  "text" : "variableHiddenQuizQuestion",
   "conceptIds" : [ "Variables", "Assignments" ],
   "dataImportance" : 1.0
 }, {
-  "resourceId" : "reassignReturnedQuizQuestion",
+  "text" : "reassignReturnedQuizQuestion",
   "resourceTypes" : [ "ASSESSMENT" ],
   "conceptIds" : [ "Variables", "Assignments" ],
   "dataImportance" : 1.0
 }, {
-  "resourceId" : "VariablesChapter",
+  "text" : "VariablesChapter",
   "resourceTypes" : [ "INFORMATION" ],
   "conceptIds" : [ "Variables", "Assignments" ],
   "maxPossibleKnowledgeEstimate" : 1.0
 }, {
-  "resourceId" : "reassignQuizQuestion",
+  "text" : "reassignQuizQuestion",
   "resourceTypes" : [ "INFORMATION", "PRACTICE" ],
   "conceptIds" : [ "Variables", "Assignments" ],
   "dataImportance" : 1.0,

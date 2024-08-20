@@ -1,35 +1,35 @@
 [
-  {"learningResourceId":"Q1",
+  {"text":"Q1",
   "conceptIds":[
     "B"
   ],
   "dataImportance": "1"
   },
-  {"learningResourceId":"Q2",
+  {"text":"Q2",
   "conceptIds":[
     "B"
   ],
   "dataImportance": "1"
   },
-  {"learningResourceId":"Q3",
+  {"text":"Q3",
   "conceptIds":[
     "C"
   ],
   "dataImportance": "0.3"
   },
-  {"learningResourceId":"Q4",
+  {"text":"Q4",
   "conceptIds":[
     "C"
   ],
   "dataImportance": "1"
   },
-  {"learningResourceId":"Q5",
+  {"text":"Q5",
   "conceptIds":[
     "C"
   ],
   "dataImportance": "1"
   },
-  {"learningResourceId":"Q6",
+  {"text":"Q6",
     "conceptIds":[
       "C"
     ],

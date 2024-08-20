@@ -18,17 +18,20 @@ public class AssessmentItemResponse {
 
     private String userId;
     private String assessmentItemId;
+    private String assessmentItemText;
     private double knowledgeEstimate;
 
-    public AssessmentItemResponse(String userId, String assessmentItemId, double knowledgeEstimate) {
+    public AssessmentItemResponse(String userId, String assessmentItemId, String assessmentItemText, double knowledgeEstimate) {
         this.userId = userId;
         this.assessmentItemId = assessmentItemId;
+        this.assessmentItemText = assessmentItemText;
         this.knowledgeEstimate = knowledgeEstimate;
     }
 
     public AssessmentItemResponse(AssessmentItemResponse other){
         this.userId = other.userId;
         this.assessmentItemId = other.assessmentItemId;
+        this.assessmentItemText = other.assessmentItemText;
         this.knowledgeEstimate = other.knowledgeEstimate;
     }
 
@@ -59,6 +62,7 @@ public class AssessmentItemResponse {
         return userId;
     }
 
+    public String getAssessmentItemText(){ return assessmentItemText; }
 
     public boolean equals(Object other){
         if(other == null){
@@ -77,7 +81,7 @@ public class AssessmentItemResponse {
     }
 
     public String toString(){
-        return getAssessmentItemId() + "\tuser: "+ getUserId() + "\t est: "+ calcKnowledgeEstimate();
+        return getAssessmentItemText() + "\tuser: "+ getUserId() + "\t est: "+ calcKnowledgeEstimate();
     }
 
     public static List<AssessmentItemResponse> createAssessmentItemResponses(List<String> assessmentFiles) throws IOException, CsvException {

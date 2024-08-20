@@ -1,49 +1,49 @@
 [ {
-  "learningResourceId" : "1",
+  "text": "1",
   "conceptIds" : ["Interfaces", ".h and .cpp Files" ],
   "dataImportance" : 1.0
 }, {
-  "learningResourceId" : "2",
+  "text": "2",
   "conceptIds" : ["Arrays", "Comparing Data Structures" ],
   "dataImportance" : 1.0
 }, {
-  "learningResourceId" : "3",
+  "text": "3",
   "conceptIds" : ["const", "Pointers" ],
   "dataImportance" : 1.0
 }, {
-  "learningResourceId" : "4",
+  "text": "4",
   "conceptIds" : ["Memory Leaks", "Dangling Pointers" ],
   "dataImportance" : 1.0
 }, {
-  "learningResourceId" : "5",
+  "text": "5",
   "conceptIds" : ["Comparing Algorithms", "Binary Search", "Linear Search" ],
   "dataImportance" : 1.0
 }, {
-  "learningResourceId" : "6",
+  "text": "6",
   "conceptIds" : ["Big-O Notation" ],
   "dataImportance" : 1.0
 }, {
-  "learningResourceId" : "7",
+  "text": "7",
   "conceptIds" : [ "Memory Diagrams"],
   "dataImportance" : 1.0
 }, {
-  "learningResourceId" : "7-HG",
+  "text": "7-HG",
   "conceptIds" : ["Arrays",  "Linear Search", "Pointers"],
   "dataImportance" : 1.0
 }, {
-  "learningResourceId" : "7-AG",
+  "text": "7-AG",
   "conceptIds" : ["Recursion", "Arrays" ],
   "dataImportance" : 2.0
 }, {
-  "learningResourceId" : "7-SG",
+  "text": "7-SG",
   "conceptIds" : ["Bubble, Selection, Insert Sort", "Arrays" ],
   "dataImportance" : 1.0
 }, {
-  "learningResourceId" : "8",
+  "text": "8",
   "conceptIds" : [ "Comparing Algorithms", "Big-O Notation"],
   "dataImportance" : 2.0
 }, {
-  "learningResourceId" : "9",
+  "text": "9",
   "conceptIds" : ["Object Oriented Programming in C++", "Destructor" ],
   "dataImportance" : 1.0
 } ]

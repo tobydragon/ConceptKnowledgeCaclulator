@@ -13,7 +13,7 @@ public class Json {
     public static String toJsonString(Object objectToSerialize) throws JsonProcessingException {
         ObjectMapper mapper = new ObjectMapper();
         mapper.enable(SerializationFeature.INDENT_OUTPUT);
-        return mapper.writeValueAsString( objectToSerialize);
+        return mapper.writeValueAsString(objectToSerialize);
     }
 
     public static void toJsonFile(String filename, Object objectToSerialize) throws IOException {

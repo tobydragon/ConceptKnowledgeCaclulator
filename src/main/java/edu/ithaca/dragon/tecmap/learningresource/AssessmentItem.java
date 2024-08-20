@@ -9,24 +9,28 @@ import java.util.*;
  * @author tdragon
  * 2/14/17.
  */
+
 public class AssessmentItem {
 
     String id;
+    String text;
     List<AssessmentItemResponse> responses;
     double maxPossibleKnowledgeEstimate;
 
-    public AssessmentItem(String id){
-        this (id, 1);
+    public AssessmentItem(String id, String text){
+        this (id, text,1);
     }
 
-    public AssessmentItem(String id, double maxPossibleKnowledgeEstimate){
+    public AssessmentItem(String id, String text, double maxPossibleKnowledgeEstimate){
         this.id = id;
+        this.text = text;
         this.responses = new ArrayList<>();
         this.maxPossibleKnowledgeEstimate = maxPossibleKnowledgeEstimate;
     }
 
     public AssessmentItem(AssessmentItem other){
         this.id = other.id;
+        this.text = other.text;
         this.maxPossibleKnowledgeEstimate = other.maxPossibleKnowledgeEstimate;
         this.responses = new ArrayList<>();
         for (AssessmentItemResponse response : other.responses){
@@ -42,18 +46,19 @@ public class AssessmentItem {
 
     //temprary fucntion to get htings working before switching to LearningResourceRecords
     public AssessmentItem(LearningResourceRecord record){
-        this.id = record.getLearningResourceId();
+        this.id = record.getId();
+        this.text = record.getText();
         this.maxPossibleKnowledgeEstimate = record.getMaxPossibleKnowledgeEstimate();
         this.responses = new ArrayList<>();
     }
 
     public void addResponse(AssessmentItemResponse response){
-        if (id.equals(response.getAssessmentItemId())) {
+        if (text.equals(response.getAssessmentItemText())) {
             responses.add(response);
         }
         else{
-            throw new IllegalArgumentException("Response object id:"+ response.getAssessmentItemId()
-                    + " does not match LearningObjectId:" + id);
+            throw new IllegalArgumentException("AIR text: "+ response.getAssessmentItemText()
+                    + " does not match AssessmentItemText: " + text);
         }
     }
 
@@ -86,13 +91,15 @@ public class AssessmentItem {
 
     public double getMaxPossibleKnowledgeEstimate()  {return maxPossibleKnowledgeEstimate; }
 
-    public String getId() {
-        return id;
-    }
-
     public List<AssessmentItemResponse> getResponses() {
         return responses;
     }
+
+    public String getText() {
+        return text;
+    }
+
+    public String getId() {return id;}
 
     public boolean equals(Object other){
         if(other == null){
@@ -101,8 +108,8 @@ public class AssessmentItem {
         if(!AssessmentItem.class.isAssignableFrom(other.getClass())){
             return false;
         }
-        AssessmentItem otherNode = (AssessmentItem) other;
-        if(this.id.equals(otherNode.id) && this.responses.equals(otherNode.responses)){
+        AssessmentItem assessmentItem = (AssessmentItem) other;
+        if(this.text.equals(assessmentItem.text) && this.responses.equals(assessmentItem.responses)){
             return true;
         } else {
             return false;
@@ -110,11 +117,11 @@ public class AssessmentItem {
     }
 
     public String toString(){
-        return "LO ID:" + id + "\t" + "maxPossKnowEst:" + maxPossibleKnowledgeEstimate + "\t" + responses.toString();
+        return "AI Text: " + text + "\t" + "maxPossKnowEst: " + maxPossibleKnowledgeEstimate + "\t" + responses.toString();
     }
 
     public String getSummaryString(){
-        return getId() + "   Est:" + DataUtil.format(calcKnowledgeEstimate()) + "  Imp:" + DataUtil.format(getDataImportance()) + "  ResponseCount:" + getResponses().size();
+        return getText() + "   Est: " + DataUtil.format(calcKnowledgeEstimate()) + "  Imp: " + DataUtil.format(getDataImportance()) + "  ResponseCount: " + getResponses().size();
     }
 
     public void setMatchingKnowledgeEstimates(Collection<AssessmentItem> columnItems, Map<String, AssessmentItem> loMap){
@@ -132,11 +139,12 @@ public class AssessmentItem {
         Map<String, AssessmentItem> assessments = new HashMap<>();
         for (AssessmentItemResponse response : responses) {
             String assessmentId = response.getAssessmentItemId();
+            String assessmentText = response.getAssessmentItemText();
             if (assessments.containsKey(assessmentId)) {
                 assessments.get(assessmentId).addResponse(response);
             } else {
-                double maxKE = maxKnowledgeEstimates.get(assessmentId);
-                AssessmentItem newAssessment = new AssessmentItem(assessmentId, maxKE);
+                double maxKE = maxKnowledgeEstimates.get(assessmentText);
+                AssessmentItem newAssessment = new AssessmentItem(assessmentId, assessmentText, maxKE);
                 newAssessment.addResponse(response);
                 assessments.put(assessmentId, newAssessment);
             }
@@ -158,7 +166,7 @@ public class AssessmentItem {
     public static List<AssessmentItem> getAssessmentCopyWithoutResponses(List<AssessmentItem> assessmentItems){
         List<AssessmentItem> assessmentsListNoResponses = new ArrayList<>();
         for(AssessmentItem assessment : assessmentItems){
-            AssessmentItem newAssessment = new AssessmentItem(assessment.getId(), assessment.getMaxPossibleKnowledgeEstimate());
+            AssessmentItem newAssessment = new AssessmentItem(assessment.getId(), assessment.getText(), assessment.getMaxPossibleKnowledgeEstimate());
             assessmentsListNoResponses.add(newAssessment);
         }
         return assessmentsListNoResponses;

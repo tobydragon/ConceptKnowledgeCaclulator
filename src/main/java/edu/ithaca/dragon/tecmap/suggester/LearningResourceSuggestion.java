@@ -9,6 +9,7 @@ public class LearningResourceSuggestion {
     private String reasoning;
     private Level level;
     private int directConceptLinkCount; // how many concepts LR is linked to
+//    private String text;
 
     public enum Level{
         //used to create ordering for suggestion

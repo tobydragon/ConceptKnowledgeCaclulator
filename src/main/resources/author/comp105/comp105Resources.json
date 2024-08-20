@@ -1,49 +1,49 @@
 [ {
-  "learningResourceId" : "Final Project - Grade",
+  "text": "Final Project - Grade",
   "conceptIds" : [ "Content Outline", "Design", "Code", "Presentation", "Validation", "Asset Management" ],
   "dataImportance" : 1.0
 }, {
-  "learningResourceId" : "Reflection1 – Then and Now",
+  "text": "Reflection1 – Then and Now",
   "conceptIds" : [ "Presentation" ],
   "dataImportance" : 1.0
 }, {
-  "learningResourceId" : "Lab1 - Page One",
+  "text": "Lab1 - Page One",
   "conceptIds" : [ "Content Outline", "Validation", "Asset Management" ],
   "dataImportance" : 1.0
 }, {
-  "learningResourceId" : "Lab2 – Profile – HTML",
+  "text": "Lab2 – Profile – HTML",
   "conceptIds" : [ "Content Outline", "Validation", "Asset Management", "HTML"],
   "dataImportance" : 1.0
 }, {
-  "learningResourceId" : "Lab3 – Profile – Style and Layout ",
+  "text": "Lab3 – Profile – Style and Layout ",
   "conceptIds" : [ "Content Outline", "Validation", "Asset Management", "Design", "HTML", "CSS", "Grid System"],
   "dataImportance" : 1.0
 }, {
-  "learningResourceId" : "Reflection #2 – Mid-Term Project Postmortem",
+  "text": "Reflection #2 – Mid-Term Project Postmortem",
   "conceptIds" : [ "Presentation" ],
   "dataImportance" : 1.0
 }, {
-  "learningResourceId" : "Lab4 – Interactive Components",
+  "text": "Lab4 – Interactive Components",
   "conceptIds" : [ "Validation", "Asset Management", "Layout Sketchups", "HTML", "CSS", "Bootstrap Framework"],
   "dataImportance" : 1.0
 }, {
-  "learningResourceId" : "Lab5 – Site Theme",
+  "text": "Lab5 – Site Theme",
   "conceptIds" : [ "Validation", "Asset Management", "Design", "HTML", "CSS", "Bootstrap Framework"],
   "dataImportance" : 1.0
 }, {
-  "learningResourceId" : "Lab6 – Responsive Elements",
+  "text": "Lab6 – Responsive Elements",
   "conceptIds" : [ "Validation", "Asset Management", "Design", "Code", "Responsiveness"],
   "dataImportance" : 1.0
 }, {
-  "learningResourceId" : "Reflection#3 – Course Reflection",
+  "text": "Reflection#3 – Course Reflection",
   "conceptIds" : [ "Presentation" ],
   "dataImportance" : 1.0
 }, {
-  "learningResourceId" : "Mid-Term - Project Grade",
+  "text": "Mid-Term - Project Grade",
   "conceptIds" : [ "Content Outline", "Design", "HTML", "CSS", "Grid System", "Presentation", "Validation", "Asset Management"],
   "dataImportance" : 1.0
 }, {
-  "learningResourceId" : "Course Grade",
+  "text": "Course Grade",
   "conceptIds" : [ "Content Outline", "Design", "Code", "Presentation", "Validation", "Asset Management" ],
   "dataImportance" : 1.0
 } ]

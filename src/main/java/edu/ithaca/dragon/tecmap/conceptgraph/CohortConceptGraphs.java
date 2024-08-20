@@ -48,8 +48,8 @@ public class CohortConceptGraphs {
 
 	}
 	
-	public CohortConceptGraphs(String filename, ConceptGraph structureGraph, List<AssessmentItemResponse> summaries){
-		this(structureGraph,summaries);
+	public CohortConceptGraphs(String filename, ConceptGraph structureGraph, List<AssessmentItemResponse> responses){
+		this(structureGraph,responses);
 		//TODO: call CohortConceptGraphsRecord
 	}
 	

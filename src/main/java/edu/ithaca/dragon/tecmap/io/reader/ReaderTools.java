@@ -2,6 +2,7 @@ package edu.ithaca.dragon.tecmap.io.reader;
 
 import com.opencsv.exceptions.CsvException;
 import edu.ithaca.dragon.tecmap.Settings;
+import edu.ithaca.dragon.tecmap.io.record.LearningResourceRecord;
 import edu.ithaca.dragon.tecmap.learningresource.AssessmentItem;
 
 import java.io.BufferedReader;
@@ -9,6 +10,7 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 /**
  * This class is a tool box class for CSV reader, these static functions are called by TecmapCSVReader
@@ -27,15 +29,16 @@ public class ReaderTools {
     public static List<AssessmentItem> assessmentItemsFromList(List<String[]> rows) {
         List<AssessmentItem> aiList = new ArrayList<>();
         for (int i = 4; i < rows.get(0).length; i++) {
-            String question = rows.get(0)[i];
+            String text = rows.get(0)[i];
             String maxScoreStr = rows.get(2)[i];
+            String id = LearningResourceRecord.generateUniqueID(null);
             if (!maxScoreStr.isEmpty()) {
                 double maxScore = Double.parseDouble(maxScoreStr);
-                AssessmentItem columnItem = new AssessmentItem(question, maxScore);
+                AssessmentItem columnItem = new AssessmentItem(id, text, maxScore);
                 aiList.add(columnItem);
             }
             else {
-                AssessmentItem columnItem = new AssessmentItem(question);
+                AssessmentItem columnItem = new AssessmentItem(id, text);
                 aiList.add(columnItem);
             }
         }

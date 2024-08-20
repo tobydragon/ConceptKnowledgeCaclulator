@@ -176,7 +176,7 @@ public class ConceptGraphSuggesterLibraryTest {
     @Test
     public void suggestedOrderBuildLearningObjectListTest() {
         List<LearningResourceRecord> myList = ExampleLearningObjectLinkRecordFactory.makeSimpleLOLRecords();
-        myList.add(new LearningResourceRecord("Q10", Arrays.asList(LearningResourceType.ASSESSMENT, LearningResourceType.PRACTICE), Arrays.asList("A"), 1, 1));
+        myList.add(new LearningResourceRecord(Arrays.asList(LearningResourceType.ASSESSMENT, LearningResourceType.PRACTICE), Arrays.asList("A"), 1, 1, "Q10"));
         ConceptGraph orig = new ConceptGraph(ExampleConceptGraphRecordFactory.makeSimple(),
                 myList, ExampleLearningObjectResponseFactory.makeSimpleResponses());
 
@@ -193,12 +193,11 @@ public class ConceptGraphSuggesterLibraryTest {
         Map<String, Integer> learningSummaryFromA = orig.buildLearningResourcePathCount("A");
         Map<String, Integer> linkMap = orig.buildDirectConceptLinkCount();
 
-
         //makes sure that buildLearningMaterialPathCount works
         assertEquals(testCompareA, learningSummaryFromA);
 
         //build the suggested learning object list
-        List<LearningResourceSuggestion> suggestedList = ConceptGraphSuggesterLibrary.buildLearningResourceSuggestionList(learningSummaryFromA, orig.getAssessmentItemMap(), "A", linkMap);
+        List<LearningResourceSuggestion> suggestedList = ConceptGraphSuggesterLibrary.buildAssessmentItemSuggestionList(learningSummaryFromA, orig.getAssessmentItemMap(), "A", linkMap);
 
 
         //this is ordered based on "level"
@@ -291,5 +290,25 @@ public class ConceptGraphSuggesterLibraryTest {
                 "\nResource: Lab 8: Comparing Arrays and Linked Lists\t Concepts it relates to: Testing Time Efficiency & List\t Importance: 1\t Direct Concept Links: 5"+
                 "\nResource: Lab 2: Array Library\t Concepts it relates to: Pointers\t Importance: 1\t Direct Concept Links: 3\n");
 
+    }
+
+    @Test
+    void buildLearningMaterialSuggestionListTest() throws IOException, CsvException {
+        ConceptGraphRecord structureRecord = ConceptGraphRecord.buildFromJson(Settings.TEST_RESOURCE_DIR + "comp220_Summer2024/graph.json");
+        List<LearningResourceRecord> linkRecord = LearningResourceRecord.createLearningResourceRecordsFromJsonFile(Settings.TEST_RESOURCE_DIR + "comp220_Summer2024/learningResources.json");
+        ConceptGraph graph = new ConceptGraph(structureRecord, linkRecord);
+
+        //create the data to be used to create and populate the graph copies
+        List<String[]> rows = CsvFileLibrary.parseRowsFromFile(Settings.TEST_RESOURCE_DIR + "comp220_Summer2024/gradesCanvasFormat.csv");
+        List<CsvProcessor> processors = new ArrayList<>();
+        TecmapCSVReader tecmapCsvReader = new CanvasReader(rows, processors);
+        List<AssessmentItemResponse> assessments = tecmapCsvReader.getManualGradedResponses();
+
+        //create the average and individual graphs
+        CohortConceptGraphs cohortConceptGraphs = new CohortConceptGraphs(graph, assessments);
+        ConceptGraph userGraph3 = cohortConceptGraphs.getUserGraph("s03");
+        List<ConceptNode> concepts3 = ConceptGraphSuggesterLibrary.suggestConcepts(userGraph3);
+        List<LearningMaterialSuggestion> lmSuggestions = ConceptGraphSuggesterLibrary.buildLearningMaterialSuggestionList(concepts3);
+        System.out.println(lmSuggestions);
     }
 }

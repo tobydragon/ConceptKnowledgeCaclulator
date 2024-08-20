@@ -1,103 +1,100 @@
 [
-  {"learningResourceId":"Q1",
-  "conceptIds":[
+  {"conceptIds":[
     "If Statement"
   ],
-  "dataImportance": "1"
+  "dataImportance": "1",
+    "text":"Q1"
   },
-  {"learningResourceId":"Q2",
-  "conceptIds":[
+  {"conceptIds":[
     "If Statement"
   ],
-  "dataImportance": "1"
+  "dataImportance": "1",
+    "text":"Q2"
   },
-  {"learningResourceId":"Q3",
-  "conceptIds":[
+  {"conceptIds":[
     "If Statement",
     "For Loop"
   ],
-  "dataImportance": "1"
+  "dataImportance": "1",
+    "text":"Q3"
   },
-  {"learningResourceId":"Q4",
-  "conceptIds":[
+  {"conceptIds":[
     "Boolean Expressions",
     "Boolean"
   ],
-  "dataImportance": "1"
+  "dataImportance": "1",
+    "text":"Q4"
   },
-  {"learningResourceId":"Q5",
-  "conceptIds":[
+  {"conceptIds":[
     "Boolean Expressions",
     "Boolean"
   ],
-  "dataImportance": "1"
+  "dataImportance": "1",
+    "text":"Q5"
   },
-  {"learningResourceId":"Q6",
-    "conceptIds":[
+  {"conceptIds":[
       "Boolean"
     ],
-    "dataImportance": "1"
+    "dataImportance": "1",
+    "text":"Q6"
   },
-  {"learningResourceId":"Q7",
-    "conceptIds":[
+  {"conceptIds":[
       "Boolean"
     ],
-    "dataImportance": "1"
+    "dataImportance": "1",
+    "text":"Q7"
   },
-  {"learningResourceId":"Q8",
-    "conceptIds":[
+  {"conceptIds":[
       "Boolean"
     ],
-    "dataImportance": "1"
-  },{"learningResourceId":"Q9",
-    "conceptIds":[
+    "dataImportance": "1",
+    "text":"Q8"
+  },
+  {"conceptIds":[
       "While Loop",
       "Boolean Expressions",
       "Boolean"
     ],
-    "dataImportance": "1"
+    "dataImportance": "1",
+    "text":"Q9"
   },
-  {"learningResourceId":"Q10",
-    "conceptIds":[
+  {"conceptIds":[
       "While Loop",
       "If Statement",
       "Boolean Expressions",
       "Boolean"
     ],
-    "dataImportance": "1"
+    "dataImportance": "1",
+    "text":"Q10"
   },
-  {"learningResourceId": "Q11",
-    "conceptIds": [
+  {"conceptIds": [
     "For Loop"
   ],
-    "dataImportance": "1"
+    "dataImportance": "1",
+    "text": "Q11"
   },
-  {
-    "learningResourceId": "Q12",
-    "conceptIds": [
+  {"conceptIds": [
       "Counting"
     ],
-    "dataImportance": "1"
+    "dataImportance": "1",
+    "text": "Q12"
   },
-  {
-    "learningResourceId": "Q13",
-    "conceptIds": [
+  {"conceptIds": [
       "Counting"
     ],
-    "dataImportance": "1"
+    "dataImportance": "1",
+    "text": "Q13"
   },
-  {
-    "learningResourceId": "Q14",
-    "conceptIds": [
+  {"conceptIds": [
       "Counting"
     ],
-    "dataImportance": "1"
+    "dataImportance": "1",
+    "text": "Q14"
   },
-  {
-    "learningResourceId": "Q15",
-    "conceptIds": [
+  {"conceptIds": [
       "Counting"
     ],
-    "dataImportance": "1"
+    "dataImportance": "1",
+    "text": "Q15"
   }
 ]

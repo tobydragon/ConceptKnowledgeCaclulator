@@ -6,7 +6,7 @@ import edu.ithaca.dragon.tecmap.io.record.LearningResourceRecord;
 import edu.ithaca.dragon.tecmap.io.record.LinkRecord;
 import edu.ithaca.dragon.tecmap.learningresource.AssessmentItem;
 import edu.ithaca.dragon.tecmap.learningresource.AssessmentItemResponse;
-import edu.ithaca.dragon.tecmap.learningresource.LearningResource;
+import edu.ithaca.dragon.tecmap.learningresource.LearningMaterial;
 import edu.ithaca.dragon.tecmap.learningresource.LearningResourceType;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -24,14 +24,14 @@ public class  ConceptGraph {
     // but also can be quickly looked up here (also allows checks for duplicates).
 	private Map<String, ConceptNode> nodeMap;
     private Map<String, AssessmentItem> assessmentItemMap;
-    private Map<String, LearningResource> learningResourceMap;
+    private Map<String, LearningMaterial> learningMaterialMap;
 
 
     public ConceptGraph(ConceptGraphRecord structureDef){
         this.name = structureDef.getName();
         buildStructureFromGraphRecord(structureDef);
         this.assessmentItemMap = new HashMap<>();
-        this.learningResourceMap = new HashMap<>();
+        this.learningMaterialMap = new HashMap<>();
     }
 
     public ConceptGraph(ConceptGraphRecord structureDef, List<LearningResourceRecord> learningResourceRecords){
@@ -65,16 +65,16 @@ public class  ConceptGraph {
      * @param aiMap a map of learning objects, which can be in any state of populated/not populated. This function will
      *              connect the existing learning obejcts, or add any new ones necessary
      */
-    public ConceptGraph(ConceptGraph other, String newName, HashMap<String, AssessmentItem> aiMap, HashMap<String, LearningResource> lrMap){
+    public ConceptGraph(ConceptGraph other, String newName, HashMap<String, AssessmentItem> aiMap, HashMap<String, LearningMaterial> lmMap){
         this.name = newName;
         this.roots = new ArrayList<>();
         nodeMap = new HashMap<>();
         assessmentItemMap = aiMap;
-        learningResourceMap = lrMap;
+        learningMaterialMap = lmMap;
 
         //recursively copy entire graph
         for (ConceptNode otherRoot : other.roots) {
-            ConceptNode newRoot = new ConceptNode(otherRoot, nodeMap, assessmentItemMap, learningResourceMap);
+            ConceptNode newRoot = new ConceptNode(otherRoot, nodeMap, assessmentItemMap, learningMaterialMap);
             nodeMap.put(newRoot.getID(), newRoot);
             this.roots.add(newRoot);
         }
@@ -85,10 +85,10 @@ public class  ConceptGraph {
      * Used only by TreeConverter
      * @param rootsIn
      */
-    public ConceptGraph(List<ConceptNode> rootsIn, String name, Map<String, AssessmentItem> AssessmentItemMap, Map<String, LearningResource> learningResourceMap, Map<String, ConceptNode> nodeMap){
+    public ConceptGraph(List<ConceptNode> rootsIn, String name, Map<String, AssessmentItem> AssessmentItemMap, Map<String, LearningMaterial> learningMaterialMap, Map<String, ConceptNode> nodeMap){
         this.name = name;
         this.assessmentItemMap = AssessmentItemMap;
-        this.learningResourceMap = learningResourceMap;
+        this.learningMaterialMap = learningMaterialMap;
         this.nodeMap = nodeMap;
         this.roots = rootsIn;
     }
@@ -159,7 +159,7 @@ public class  ConceptGraph {
             if (record.isType(LearningResourceType.INFORMATION) || record.isType(LearningResourceType.PRACTICE)){
                 //since we've already added possibly an assessment for this record, remove it (if it were there) so the list can be used to create the material directly from the list
                 record.getResourceTypes().remove(LearningResourceType.ASSESSMENT);
-                linkLearningMaterials(new LearningResource(record), record.getConceptIds());
+                linkLearningMaterials(new LearningMaterial(record), record.getConceptIds());
             }
         }
     }
@@ -174,11 +174,11 @@ public class  ConceptGraph {
      */
     public int linkAssessmentItem (AssessmentItem toLink, Collection<String> conceptIds){
         int numAdded = 0;
-        if (assessmentItemMap.get(toLink.getId()) != null){
-            logger.warn(toLink.getId()+" already exists in this graph. Nothing was added.");
+        if (assessmentItemMap.get(toLink.getText()) != null){
+            logger.warn(toLink.getText()+" already exists in this graph. Nothing was added.");
             return -1;
         }
-        assessmentItemMap.put(toLink.getId(), toLink);
+        assessmentItemMap.put(toLink.getText(), toLink);
         for (String id: conceptIds){
             if(nodeMap.get(id) != null){
                 numAdded++;
@@ -199,13 +199,13 @@ public class  ConceptGraph {
      * @post   the LearningMaterial is added to the graph's map, and to all associated Concept's AssessmentItem maps
      * @return the number of concepts the LearningMaterial was added to, or -1 if the LearningMaterial already exists
      */
-    public int linkLearningMaterials(LearningResource toLink, Collection<String> conceptIds){
+    public int linkLearningMaterials(LearningMaterial toLink, Collection<String> conceptIds){
         int numAdded = 0;
-        if (learningResourceMap.get(toLink.getId()) != null){
-            logger.warn(toLink.getId()+" already exists in this graph. Nothing was added.");
+        if (learningMaterialMap.get(toLink.getText()) != null){
+            logger.warn(toLink.getText()+" already exists in this graph. Nothing was added.");
             return -1;
         }
-        learningResourceMap.put(toLink.getId(), toLink);
+        learningMaterialMap.put(toLink.getText(), toLink);
         for (String id: conceptIds){
             if(nodeMap.get(id) != null){
                 numAdded++;
@@ -226,14 +226,14 @@ public class  ConceptGraph {
      */
     public void addAssessmentItemResponses(List<AssessmentItemResponse> assessmentItemResponses) {
         for (AssessmentItemResponse response : assessmentItemResponses){
-            AssessmentItem assessmentItem = assessmentItemMap.get(response.getAssessmentItemId());
+            AssessmentItem assessmentItem = assessmentItemMap.get(response.getAssessmentItemText());
             if (assessmentItem != null){
                 assessmentItem.addResponse(response);
             }
             else {
-                logger.warn("No AssessmentItem: " + response.getAssessmentItemId() + " for response: " + response.toString());
+                logger.warn("No AssessmentItem: " + response.getAssessmentItemText() + " for response: " + response.toString());
                 //TODO: maybe make a new list of unconnected learning objects???
-//                Thread.dumpStack();
+                Thread.dumpStack();
             }
         }
     }
@@ -245,11 +245,11 @@ public class  ConceptGraph {
     public Map<String, Integer> buildDirectConceptLinkCount(){
         Map<String, Integer> directConceptLinkCountMap = new HashMap<>();
         for (ConceptNode node: nodeMap.values()){
-            for (LearningResource learningMaterial : node.getLearningMaterialMap().values()){
-                if(directConceptLinkCountMap.containsKey(learningMaterial.getId())){
-                    directConceptLinkCountMap.put(learningMaterial.getId(),directConceptLinkCountMap.get(learningMaterial.getId())+1);
+            for (LearningMaterial learningMaterial : node.getLearningMaterialMap().values()){
+                if(directConceptLinkCountMap.containsKey(learningMaterial.getText())){
+                    directConceptLinkCountMap.put(learningMaterial.getText(),directConceptLinkCountMap.get(learningMaterial.getText())+1);
                 }else{
-                    directConceptLinkCountMap.put(learningMaterial.getId(), 1);
+                    directConceptLinkCountMap.put(learningMaterial.getText(), 1);
                 }
             }
         }
@@ -261,12 +261,11 @@ public class  ConceptGraph {
      * @return a map from id -> pathCount to the given conceptNode
      */
 	public Map<String,Integer> buildLearningResourcePathCount(String node) {
-
 		ConceptNode findNode = findNodeById(node);
 		if (findNode != null) {
-			Map<String, Integer> idToPathCount = new HashMap<>();
-			findNode.buildLearningMaterialPathCount(idToPathCount);
-            return idToPathCount;
+			Map<String, Integer> textToPathCount = new HashMap<>();
+			findNode.buildLearningMaterialPathCount(textToPathCount);
+            return textToPathCount;
 		}else{
 			logger.warn("buildLearningMaterialPathCount:" + node + " is not found in the graph");
 			return null;
@@ -317,8 +316,8 @@ public class  ConceptGraph {
 
     public int responsesCount(){
 	    int total = 0;
-	    for (AssessmentItem lo : assessmentItemMap.values()){
-	        total += lo.getResponses().size();
+	    for (AssessmentItem assessmentItem : assessmentItemMap.values()){
+	        total += assessmentItem.getResponses().size();
         }
         return total;
     }
@@ -359,7 +358,7 @@ public class  ConceptGraph {
      * @return
      */
 	public List<String> getAssessmentsBelowAssessmentID(String assessmentId) {
-        List<ConceptNode> nodesWithAssessmentId = getNodesWithAssessmentId(assessmentId);
+        List<ConceptNode> nodesWithAssessmentId = getNodesWithAssessmentText(assessmentId);
 
         List<Integer> assessmentNodesPathLengths = new ArrayList<>();
         for (ConceptNode node : nodesWithAssessmentId) {
@@ -374,24 +373,24 @@ public class  ConceptGraph {
     }
 
     /**
-     * Gets list of assessmentItems that are x steps below the highest occurrence of the given assessmentId for each root
-     * @param assessmentId
+     * Gets list of assessmentItems that are x steps below the highest occurrence of the given assessmentText for each root
+     * @param assessmentText
      * @param stepsDown number of steps to take
      * @return List of assessments x steps down, null if there are negative stepsDown
      */
-    public List<String> getAssessmentsBelowAssessmentID(String assessmentId, int stepsDown) {
+    public List<String> getAssessmentsBelowAssessmentID(String assessmentText, int stepsDown) {
         if (stepsDown < 0) {
             return null;
         }
-        List<ConceptNode> nodesWithAssessmentId = getNodesWithAssessmentId(assessmentId);
+        List<ConceptNode> nodesWithAssessmentText = getNodesWithAssessmentText(assessmentText);
 
-        //Dictates that an assessmentId will only be included once
+        //Dictates that an assessmentText will only be included once
         Set<String> assessmentsBelow = new HashSet<>();
-        for (ConceptNode node : nodesWithAssessmentId) {
+        for (ConceptNode node : nodesWithAssessmentText) {
             getAssessmentsBelowNode(assessmentsBelow, node, stepsDown);
             for (AssessmentItem item : node.getAssessmentItemMap().values()) {
-                if (!assessmentsBelow.contains(item.getId()) && !item.getId().equals(assessmentId)) {
-                    assessmentsBelow.add(item.getId());
+                if (!assessmentsBelow.contains(item.getText()) && !item.getText().equals(assessmentText)) {
+                    assessmentsBelow.add(item.getText());
                 }
             }
         }
@@ -400,21 +399,21 @@ public class  ConceptGraph {
     }
 
     /**
-     * Finds the nodes from the graph with the given assessmentId in its list of assessments
-     * @param assessmentId
+     * Finds the nodes from the graph with the given assessmentText in its list of assessments
+     * @param assessmentText
      * @return
      */
-    public List<ConceptNode> getNodesWithAssessmentId(String assessmentId) {
-        List<ConceptNode> nodesWithAssessmentId = new ArrayList<>();
-        //Find the nodes with the given AssessmentId
+    public List<ConceptNode> getNodesWithAssessmentText(String assessmentText) {
+        List<ConceptNode> nodesWithAssessmentText = new ArrayList<>();
+        //Find the nodes with the given AssessmentText
         for (ConceptNode node : nodeMap.values()) {
             for (AssessmentItem item : node.getAssessmentItemMap().values()) {
-                if (item.getId().equals(assessmentId)) {
-                    nodesWithAssessmentId.add(node);
+                if (item.getText().equals(assessmentText)) {
+                    nodesWithAssessmentText.add(node);
                 }
             }
         }
-        return nodesWithAssessmentId;
+        return nodesWithAssessmentText;
     }
 
     /**
@@ -431,7 +430,7 @@ public class  ConceptGraph {
         } else {
             for (ConceptNode child : startNode.getChildren()) {
                 for (AssessmentItem item : child.getAssessmentItemMap().values()) {
-                    assessmentList.add(item.getId());
+                    assessmentList.add(item.getText());
                 }
                 assessmentList = getAssessmentsBelowNode(assessmentList, child, stepsToTake-1);
             }
@@ -453,8 +452,8 @@ public class  ConceptGraph {
 	    return assessmentItemMap;
     }
 
-    public Map<String, LearningResource> getLearningResourceMap() {
-        return learningResourceMap;
+    public Map<String, LearningMaterial> getLearningMaterialMap() {
+        return learningMaterialMap;
     }
 
     public List<ConceptNode> getRoots() {return roots;}

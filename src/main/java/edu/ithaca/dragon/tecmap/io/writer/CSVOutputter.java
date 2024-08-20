@@ -55,7 +55,7 @@ public class CSVOutputter {
             //sets "correct" variable to 0 if incorrect and 1 if correct
             double correct = summary.calcKnowledgeEstimate();
             //gets the right map for the current user of this summary and adds to it
-            questionsToAnswer.put(summary.getAssessmentItemId(), correct);
+            questionsToAnswer.put(summary.getAssessmentItemText(), correct);
         }
 
     }

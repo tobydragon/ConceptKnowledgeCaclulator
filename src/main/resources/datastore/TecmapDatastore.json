@@ -32,7 +32,7 @@
   }, {
     "id" : "comp220-2024",
     "graphFile" : "src/main/resources/datastore/comp220-2024/graph.json",
-    "resourceFiles" : [ "src/main/resources/datastore/comp220-2024/learningResources.json" ],
+    "resourceFiles" : [ "src/main/resources/datastore/comp220-2024/learningResources.json", "src/main/resources/datastore/comp220-2024/chatGPTResources.json" ],
     "assessmentFiles" : [ "src/main/resources/datastore/comp220-2024/assessmentGrades.csv" ]
   }, {
     "id" : "comp220Dragon-2017",

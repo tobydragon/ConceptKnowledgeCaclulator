@@ -4,6 +4,7 @@ import edu.ithaca.dragon.tecmap.conceptgraph.ConceptGraph;
 import edu.ithaca.dragon.tecmap.conceptgraph.ConceptNode;
 import edu.ithaca.dragon.tecmap.learningresource.AssessmentItem;
 import edu.ithaca.dragon.tecmap.learningresource.AssessmentItemResponse;
+import edu.ithaca.dragon.tecmap.learningresource.LearningMaterial;
 
 import java.util.*;
 
@@ -76,7 +77,7 @@ public class ConceptGraphSuggesterLibrary {
             Map<String, Integer> map = graph.buildLearningResourcePathCount(concept.getID());
             Map<String, Integer> linkMap = graph.buildDirectConceptLinkCount();
 
-            List<LearningResourceSuggestion> list = buildLearningResourceSuggestionList(map, graph.getAssessmentItemMap(), concept.getID(), linkMap);
+            List<LearningResourceSuggestion> list = buildAssessmentItemSuggestionList(map, graph.getAssessmentItemMap(), concept.getID(), linkMap);
 
             sortSuggestions(list);
 
@@ -115,14 +116,14 @@ public class ConceptGraphSuggesterLibrary {
     *@param causedConcept- the ID of ConceptNode that the LearningResource came from
     *@returns a list of the created LearningResourceSuggestions
     */
-    public static List<LearningResourceSuggestion> buildLearningResourceSuggestionList(Map<String, Integer> summaryList, Map<String, AssessmentItem> assessmentItemMap, String causedConcept, Map<String, Integer> directLinkMap){
+    public static List<LearningResourceSuggestion> buildAssessmentItemSuggestionList(Map<String, Integer> summaryList, Map<String, AssessmentItem> assessmentItemMap, String causedConcept, Map<String, Integer> directLinkMap){
         List<LearningResourceSuggestion> myList = new ArrayList<LearningResourceSuggestion>();
         for (String key : summaryList.keySet()){
             int lineNum = summaryList.get(key);
             AssessmentItem assessmentItem = assessmentItemMap.get(key);
             double estimate = assessmentItem.calcKnowledgeEstimate();
 
-            int directConceptLinkCount = directLinkMap.get(assessmentItem.getId());
+            int directConceptLinkCount = directLinkMap.get(assessmentItem.getText());
 
             LearningResourceSuggestion.Level level;
             //fix to fit preconditions
@@ -148,5 +149,21 @@ public class ConceptGraphSuggesterLibrary {
 
         }
         return myList;
+    }
+
+    /**
+     * takes in a list of suggested concepts and returns a list of learning materials associated with those concepts
+     * @param suggestedConceptList a list of suggested concepts
+     * @return a list of learning materials
+     */
+    public static List<LearningMaterialSuggestion> buildLearningMaterialSuggestionList(List<ConceptNode> suggestedConceptList) {
+        List<LearningMaterialSuggestion> list = new ArrayList<>();
+        for (ConceptNode concept : suggestedConceptList) {
+            for (LearningMaterial learningMaterial : concept.getLearningMaterialMap().values()) {
+                LearningMaterialSuggestion learningMaterialSuggestion = new LearningMaterialSuggestion(learningMaterial.getId(), concept.getID(), learningMaterial.getText());
+                list.add(learningMaterialSuggestion);
+            }
+        }
+        return list;
     }
 }

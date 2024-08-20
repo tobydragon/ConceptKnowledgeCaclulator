@@ -436,17 +436,17 @@ public class ConceptKnowledgeCalculatorTest {
 
 
             assertEquals(originalMasterList.size(), 11);
-            assertEquals(originalMasterList.get(0).getAssessmentItemId(), "Q1");
-            assertEquals(originalMasterList.get(1).getAssessmentItemId(), "Q2");
-            assertEquals(originalMasterList.get(2).getAssessmentItemId(), "Q4");
-            assertEquals(originalMasterList.get(3).getAssessmentItemId(), "Q5");
-            assertEquals(originalMasterList.get(4).getAssessmentItemId(), "Q7");
-            assertEquals(originalMasterList.get(5).getAssessmentItemId(), "Q8");
-            assertEquals(originalMasterList.get(6).getAssessmentItemId(), "Q9");
-            assertEquals(originalMasterList.get(7).getAssessmentItemId(), "Q11");
-            assertEquals(originalMasterList.get(8).getAssessmentItemId(), "Q12");
-            assertEquals(originalMasterList.get(9).getAssessmentItemId(), "Q15");
-            assertEquals(originalMasterList.get(10).getAssessmentItemId(), "Q14");
+            assertEquals(originalMasterList.get(0).getAssessmentItemText(), "Q1");
+            assertEquals(originalMasterList.get(1).getAssessmentItemText(), "Q2");
+            assertEquals(originalMasterList.get(2).getAssessmentItemText(), "Q4");
+            assertEquals(originalMasterList.get(3).getAssessmentItemText(), "Q5");
+            assertEquals(originalMasterList.get(4).getAssessmentItemText(), "Q7");
+            assertEquals(originalMasterList.get(5).getAssessmentItemText(), "Q8");
+            assertEquals(originalMasterList.get(6).getAssessmentItemText(), "Q9");
+            assertEquals(originalMasterList.get(7).getAssessmentItemText(), "Q11");
+            assertEquals(originalMasterList.get(8).getAssessmentItemText(), "Q12");
+            assertEquals(originalMasterList.get(9).getAssessmentItemText(), "Q15");
+            assertEquals(originalMasterList.get(10).getAssessmentItemText(), "Q14");
 
 
         } catch (IOException | CsvException e) {
@@ -474,25 +474,25 @@ public class ConceptKnowledgeCalculatorTest {
 
 
             assertEquals(postMasterList1.size(), 19);
-            assertEquals(postMasterList1.get(0).getAssessmentItemId(), "Q1");
-            assertEquals(postMasterList1.get(1).getAssessmentItemId(), "Q2");
-            assertEquals(postMasterList1.get(2).getAssessmentItemId(), "Q3");
-            assertEquals(postMasterList1.get(3).getAssessmentItemId(), "Q4");
-            assertEquals(postMasterList1.get(4).getAssessmentItemId(), "Q4");
-            assertEquals(postMasterList1.get(5).getAssessmentItemId(), "Q5");
-            assertEquals(postMasterList1.get(6).getAssessmentItemId(), "Q5");
-            assertEquals(postMasterList1.get(7).getAssessmentItemId(), "Q6");
-            assertEquals(postMasterList1.get(8).getAssessmentItemId(), "Q7");
-            assertEquals(postMasterList1.get(9).getAssessmentItemId(), "Q7");
-            assertEquals(postMasterList1.get(10).getAssessmentItemId(), "Q8");
-            assertEquals(postMasterList1.get(11).getAssessmentItemId(), "Q9");
-            assertEquals(postMasterList1.get(12).getAssessmentItemId(), "Q9");
-            assertEquals(postMasterList1.get(13).getAssessmentItemId(), "Q11");
-            assertEquals(postMasterList1.get(14).getAssessmentItemId(), "Q11");
-            assertEquals(postMasterList1.get(15).getAssessmentItemId(), "Q12");
-            assertEquals(postMasterList1.get(16).getAssessmentItemId(), "Q15");
-            assertEquals(postMasterList1.get(17).getAssessmentItemId(), "Q14");
-            assertEquals(postMasterList1.get(18).getAssessmentItemId(), "Q14");
+            assertEquals(postMasterList1.get(0).getAssessmentItemText(), "Q1");
+            assertEquals(postMasterList1.get(1).getAssessmentItemText(), "Q2");
+            assertEquals(postMasterList1.get(2).getAssessmentItemText(), "Q3");
+            assertEquals(postMasterList1.get(3).getAssessmentItemText(), "Q4");
+            assertEquals(postMasterList1.get(4).getAssessmentItemText(), "Q4");
+            assertEquals(postMasterList1.get(5).getAssessmentItemText(), "Q5");
+            assertEquals(postMasterList1.get(6).getAssessmentItemText(), "Q5");
+            assertEquals(postMasterList1.get(7).getAssessmentItemText(), "Q6");
+            assertEquals(postMasterList1.get(8).getAssessmentItemText(), "Q7");
+            assertEquals(postMasterList1.get(9).getAssessmentItemText(), "Q7");
+            assertEquals(postMasterList1.get(10).getAssessmentItemText(), "Q8");
+            assertEquals(postMasterList1.get(11).getAssessmentItemText(), "Q9");
+            assertEquals(postMasterList1.get(12).getAssessmentItemText(), "Q9");
+            assertEquals(postMasterList1.get(13).getAssessmentItemText(), "Q11");
+            assertEquals(postMasterList1.get(14).getAssessmentItemText(), "Q11");
+            assertEquals(postMasterList1.get(15).getAssessmentItemText(), "Q12");
+            assertEquals(postMasterList1.get(16).getAssessmentItemText(), "Q15");
+            assertEquals(postMasterList1.get(17).getAssessmentItemText(), "Q14");
+            assertEquals(postMasterList1.get(18).getAssessmentItemText(), "Q14");
 
         } catch (Exception e) {
             e.printStackTrace();
@@ -515,23 +515,23 @@ public class ConceptKnowledgeCalculatorTest {
             }
 
             assertEquals(postMasterList2.size(), 25);
-            assertEquals(postMasterList2.get(0).getAssessmentItemId(), "Q1");
-            assertEquals(postMasterList2.get(1).getAssessmentItemId(), "Q1");
-            assertEquals(postMasterList2.get(2).getAssessmentItemId(), "Q2");
-            assertEquals(postMasterList2.get(3).getAssessmentItemId(), "Q2");
-            assertEquals(postMasterList2.get(4).getAssessmentItemId(), "Q3");
-            assertEquals(postMasterList2.get(5).getAssessmentItemId(), "Q3");
-            assertEquals(postMasterList2.get(6).getAssessmentItemId(), "Q4");
-            assertEquals(postMasterList2.get(8).getAssessmentItemId(), "Q4");
-            assertEquals(postMasterList2.get(10).getAssessmentItemId(), "Q5");
-            assertEquals(postMasterList2.get(12).getAssessmentItemId(), "Q6");
-            assertEquals(postMasterList2.get(14).getAssessmentItemId(), "Q7");
-            assertEquals(postMasterList2.get(16).getAssessmentItemId(), "Q8");
-            assertEquals(postMasterList2.get(18).getAssessmentItemId(), "Q9");
-            assertEquals(postMasterList2.get(20).getAssessmentItemId(), "Q11");
-            assertEquals(postMasterList2.get(22).getAssessmentItemId(), "Q15");
-            assertEquals(postMasterList2.get(23).getAssessmentItemId(), "Q14");
-            assertEquals(postMasterList2.get(24).getAssessmentItemId(), "Q14");
+            assertEquals(postMasterList2.get(0).getAssessmentItemText(), "Q1");
+            assertEquals(postMasterList2.get(1).getAssessmentItemText(), "Q1");
+            assertEquals(postMasterList2.get(2).getAssessmentItemText(), "Q2");
+            assertEquals(postMasterList2.get(3).getAssessmentItemText(), "Q2");
+            assertEquals(postMasterList2.get(4).getAssessmentItemText(), "Q3");
+            assertEquals(postMasterList2.get(5).getAssessmentItemText(), "Q3");
+            assertEquals(postMasterList2.get(6).getAssessmentItemText(), "Q4");
+            assertEquals(postMasterList2.get(8).getAssessmentItemText(), "Q4");
+            assertEquals(postMasterList2.get(10).getAssessmentItemText(), "Q5");
+            assertEquals(postMasterList2.get(12).getAssessmentItemText(), "Q6");
+            assertEquals(postMasterList2.get(14).getAssessmentItemText(), "Q7");
+            assertEquals(postMasterList2.get(16).getAssessmentItemText(), "Q8");
+            assertEquals(postMasterList2.get(18).getAssessmentItemText(), "Q9");
+            assertEquals(postMasterList2.get(20).getAssessmentItemText(), "Q11");
+            assertEquals(postMasterList2.get(22).getAssessmentItemText(), "Q15");
+            assertEquals(postMasterList2.get(23).getAssessmentItemText(), "Q14");
+            assertEquals(postMasterList2.get(24).getAssessmentItemText(), "Q14");
 
 
 
@@ -622,21 +622,21 @@ public class ConceptKnowledgeCalculatorTest {
 
 
             assertEquals(originalMasterList.size(), 15);
-            assertEquals(originalMasterList.get(0).getId(), "Q1");
-            assertEquals(originalMasterList.get(1).getId(), "Q2");
-            assertEquals(originalMasterList.get(2).getId(), "Q3");
-            assertEquals(originalMasterList.get(3).getId(), "Q4");
-            assertEquals(originalMasterList.get(4).getId(), "Q5");
-            assertEquals(originalMasterList.get(5).getId(), "Q6");
-            assertEquals(originalMasterList.get(6).getId(), "Q7");
-            assertEquals(originalMasterList.get(7).getId(), "Q8");
-            assertEquals(originalMasterList.get(8).getId(), "Q9");
-            assertEquals(originalMasterList.get(9).getId(), "Q11");
-            assertEquals(originalMasterList.get(10).getId(), "Q10");
-            assertEquals(originalMasterList.get(11).getId(), "Q13");
-            assertEquals(originalMasterList.get(12).getId(), "Q12");
-            assertEquals(originalMasterList.get(13).getId(), "Q15");
-            assertEquals(originalMasterList.get(14).getId(), "Q14");
+            assertEquals(originalMasterList.get(0).getText(), "Q1");
+            assertEquals(originalMasterList.get(1).getText(), "Q2");
+            assertEquals(originalMasterList.get(2).getText(), "Q3");
+            assertEquals(originalMasterList.get(3).getText(), "Q4");
+            assertEquals(originalMasterList.get(4).getText(), "Q5");
+            assertEquals(originalMasterList.get(5).getText(), "Q6");
+            assertEquals(originalMasterList.get(6).getText(), "Q7");
+            assertEquals(originalMasterList.get(7).getText(), "Q8");
+            assertEquals(originalMasterList.get(8).getText(), "Q9");
+            assertEquals(originalMasterList.get(9).getText(), "Q11");
+            assertEquals(originalMasterList.get(10).getText(), "Q10");
+            assertEquals(originalMasterList.get(11).getText(), "Q13");
+            assertEquals(originalMasterList.get(12).getText(), "Q12");
+            assertEquals(originalMasterList.get(13).getText(), "Q15");
+            assertEquals(originalMasterList.get(14).getText(), "Q14");
         } catch (IOException | CsvException e) {
             fail("Unable to load default files. Test unable to run");
 
@@ -658,21 +658,21 @@ public class ConceptKnowledgeCalculatorTest {
 
 
             assertEquals(postMasterList.size(), 15);
-            assertEquals(postMasterList.get(0).getId(), "Q1");
-            assertEquals(postMasterList.get(1).getId(), "Q2");
-            assertEquals(postMasterList.get(2).getId(), "Q5");
-            assertEquals(postMasterList.get(3).getId(), "Q7");
-            assertEquals(postMasterList.get(4).getId(), "Q8");
-            assertEquals(postMasterList.get(5).getId(), "resource2");
-            assertEquals(postMasterList.get(6).getId(), "Q9");
-            assertEquals(postMasterList.get(7).getId(), "resource3");
-            assertEquals(postMasterList.get(8).getId(), "resource4");
-            assertEquals(postMasterList.get(9).getId(), "resource5");
-            assertEquals(postMasterList.get(10).getId(), "resource1");
-            assertEquals(postMasterList.get(11).getId(), "Q10");
-            assertEquals(postMasterList.get(12).getId(), "Q13");
-            assertEquals(postMasterList.get(13).getId(), "Q12");
-            assertEquals(postMasterList.get(14).getId(), "Q14");
+            assertEquals(postMasterList.get(0).getText(), "Q1");
+            assertEquals(postMasterList.get(1).getText(), "Q2");
+            assertEquals(postMasterList.get(2).getText(), "Q5");
+            assertEquals(postMasterList.get(3).getText(), "Q7");
+            assertEquals(postMasterList.get(4).getText(), "Q8");
+            assertEquals(postMasterList.get(5).getText(), "resource2");
+            assertEquals(postMasterList.get(6).getText(), "Q9");
+            assertEquals(postMasterList.get(7).getText(), "resource3");
+            assertEquals(postMasterList.get(8).getText(), "resource4");
+            assertEquals(postMasterList.get(9).getText(), "resource5");
+            assertEquals(postMasterList.get(10).getText(), "resource1");
+            assertEquals(postMasterList.get(11).getText(), "Q10");
+            assertEquals(postMasterList.get(12).getText(), "Q13");
+            assertEquals(postMasterList.get(13).getText(), "Q12");
+            assertEquals(postMasterList.get(14).getText(), "Q14");
 
         } catch (Exception e) {
             e.printStackTrace();
@@ -801,7 +801,7 @@ public class ConceptKnowledgeCalculatorTest {
             getTest.clear();
 
             getTest.add(Settings.TEST_RESOURCE_DIR + "ManuallyCreated/simpleResource.json");
-            assertEquals(ckc.currentResource(),  getTest);
+            assertEquals(ckc.currentResource(), getTest);
             getTest.clear();
 
             assertEquals(ckc.currentAssessment(), new ArrayList<>());
@@ -919,9 +919,9 @@ public class ConceptKnowledgeCalculatorTest {
             assertNotNull(recordsFromFile);
             //TODO:test that these LRRecords are good compared to the input csv file, they just won't have any concepts in their lists
             LearningResourceRecord currRec = recordsFromFile.get(0);
-            assertEquals("Q1", currRec.getLearningResourceId());
+            assertEquals("Q1", currRec.getText());
             LearningResourceRecord nextRec = recordsFromFile.get(13);
-            assertEquals("Q14", nextRec.getLearningResourceId());
+            assertEquals("Q14", nextRec.getText());
 
         }catch (Exception e){
             e.printStackTrace();

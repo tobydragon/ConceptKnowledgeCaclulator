@@ -133,7 +133,7 @@ public class ReaderToolsTest {
         // convert sakai file to canvas format
         CanvasConverter.canvasConverter(rows);
         List<AssessmentItem> aiList = ReaderTools.assessmentItemsFromList(rows);
-        List<String> ai = aiList.stream().map(AssessmentItem::getId).toList();
+        List<String> ai = aiList.stream().map(AssessmentItem::getText).toList();
         List<String> expectedAIList = Arrays.asList("Q1","Q2","Q3","Q4","Q5","Q6","Q7");
         assertEquals(expectedAIList, ai);
     }

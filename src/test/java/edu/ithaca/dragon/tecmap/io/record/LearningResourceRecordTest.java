@@ -9,7 +9,7 @@ import edu.ithaca.dragon.tecmap.io.reader.CsvProcessor;
 import edu.ithaca.dragon.tecmap.io.reader.TecmapCSVReader;
 import edu.ithaca.dragon.tecmap.io.reader.SakaiReader;
 import edu.ithaca.dragon.tecmap.learningresource.AssessmentItem;
-import edu.ithaca.dragon.tecmap.learningresource.LearningResource;
+import edu.ithaca.dragon.tecmap.learningresource.LearningMaterial;
 import edu.ithaca.dragon.tecmap.learningresource.LearningResourceType;
 import edu.ithaca.dragon.tecmap.util.DataUtil;
 import org.junit.jupiter.api.Test;
@@ -27,7 +27,7 @@ public class LearningResourceRecordTest {
     @Test
     public void testBuildingResourcesFromRecords(){
         Collection<AssessmentItem> assessments = new ArrayList<>();
-        Collection<LearningResource> materials = new ArrayList<>();
+        Collection<LearningMaterial> materials = new ArrayList<>();
         try {
             Collection<LearningResourceRecord> fromFile = LearningResourceRecord.createLearningResourceRecordsFromJsonFile(Settings.TEST_RESOURCE_DIR + "ManuallyCreated/LearningRecordResourceTest-MissingFields.json");
 
@@ -43,7 +43,7 @@ public class LearningResourceRecordTest {
                 if (record.isType(LearningResourceType.INFORMATION) || record.isType(LearningResourceType.PRACTICE)){
                     //since we've already added an assessment for this record, remove it so the list can be used to create the material directly from the list
                     record.getResourceTypes().remove(LearningResourceType.ASSESSMENT);
-                    materials.add(new LearningResource(record));
+                    materials.add(new LearningMaterial(record));
                 }
             }
             assertEquals(2, assessments.size());
@@ -58,35 +58,35 @@ public class LearningResourceRecordTest {
         Collection<LearningResourceRecord> list = new ArrayList<>();
 
         list.add( new LearningResourceRecord(
-                "variableHiddenQuizQuestion",
                 Arrays.asList(LearningResourceType.ASSESSMENT),
                 Arrays.asList("Variables", "Assignments"),
                 1,
-                1
+                1,
+                "variableHiddenQuizQuestion"
         ));
 
         list.add( new LearningResourceRecord(
-                "reassignReturnedQuizQuestion",
                 Arrays.asList(LearningResourceType.ASSESSMENT, LearningResourceType.PRACTICE),
                 Arrays.asList("Variables", "Assignments"),
                 1,
-                1
+                1,
+                "reassignReturnedQuizQuestion"
         ));
 
         list.add( new LearningResourceRecord(
-                "VariablesChapter",
                 Arrays.asList(LearningResourceType.INFORMATION),
                 Arrays.asList("Variables", "Assignments"),
                 1,
-                1
+                1,
+                "VariablesChapter"
         ));
 
         list.add( new LearningResourceRecord(
-                "reassignQuizQuestion",
                 Arrays.asList(LearningResourceType.INFORMATION, LearningResourceType.PRACTICE),
                 Arrays.asList("Variables", "Assignments"),
                 1,
-                1
+                1,
+                "reassignQuizQuestion"
         ));
 
         return list;
@@ -107,16 +107,16 @@ public class LearningResourceRecordTest {
     public void addConceptIDTest(){
         ArrayList<String> concepts = new ArrayList<>();
         concepts.add("Concept 1");
-        String id = "id 1";
-        LearningResourceRecord loObject = new LearningResourceRecord(id,Arrays.asList(LearningResourceType.ASSESSMENT, LearningResourceType.PRACTICE), concepts, 1, 1);
-        assertEquals("Concept 1",loObject.getConceptIds().iterator().next());
-        assertEquals(1,loObject.getConceptIds().size());
-        assertEquals("id 1", loObject.getLearningResourceId());
-        loObject.addConceptId("Concept 2");
-        Iterator<String> checker = loObject.getConceptIds().iterator();
+        String text = "text 1";
+        LearningResourceRecord learningResourceRecord = new LearningResourceRecord(Arrays.asList(LearningResourceType.ASSESSMENT, LearningResourceType.PRACTICE), concepts, 1, 1, text);
+        assertEquals("Concept 1",learningResourceRecord.getConceptIds().iterator().next());
+        assertEquals(1,learningResourceRecord.getConceptIds().size());
+        assertEquals("text 1", learningResourceRecord.getText());
+        learningResourceRecord.addConceptId("Concept 2");
+        Iterator<String> checker = learningResourceRecord.getConceptIds().iterator();
         checker.next();
         assertEquals("Concept 2", checker.next());
-        assertEquals(2,loObject.getConceptIds().size());
+        assertEquals(2,learningResourceRecord.getConceptIds().size());
     }
 
     @Test
@@ -124,9 +124,9 @@ public class LearningResourceRecordTest {
         ArrayList<String> concepts = new ArrayList<>();
         concepts.add("Concept 1");
         concepts.add("Concept 2");
-        String id = "id 1";
-        LearningResourceRecord loObject = new LearningResourceRecord(id,Arrays.asList(LearningResourceType.ASSESSMENT, LearningResourceType.PRACTICE), concepts, 1, 1);
-        assertEquals("(Learning Resource ID: id 1 Concept IDs: Concept 1, Concept 2)",loObject.toString());
+        String text = "text 1";
+        LearningResourceRecord learningResourceRecord = new LearningResourceRecord(Arrays.asList(LearningResourceType.ASSESSMENT, LearningResourceType.PRACTICE), concepts, 1, 1, text);
+        assertEquals("(Learning Resource Text: text 1 Concept IDs: Concept 1, Concept 2)", learningResourceRecord.toString());
     }
 
     @Test
@@ -134,8 +134,8 @@ public class LearningResourceRecordTest {
         ArrayList<String> concepts = new ArrayList<>();
         concepts.add("Concept 1");
         concepts.add("Concept 2");
-        String id = "id 1";
-        LearningResourceRecord loObject = new LearningResourceRecord(id,Arrays.asList(LearningResourceType.ASSESSMENT, LearningResourceType.PRACTICE), concepts, 1, 1);
+        String text = "text 1";
+        LearningResourceRecord loObject = new LearningResourceRecord(Arrays.asList(LearningResourceType.ASSESSMENT, LearningResourceType.PRACTICE), concepts, 1, 1, text);
 
         ObjectMapper mapper = new ObjectMapper();
         try {
@@ -150,7 +150,7 @@ public class LearningResourceRecordTest {
         try {
             LearningResourceRecord  record = mapper.readValue(new File(Settings.TEST_RESOURCE_DIR + "practicalExamples/SystemCreated/recordToJson.json"), LearningResourceRecord.class);
 
-            assertEquals("id 1", record.getLearningResourceId());
+            assertEquals("text 1", record.getText());
             assertEquals(2, record.getConceptIds().size());
             Iterator<String> checker = loObject.getConceptIds().iterator();
             checker.next();
@@ -171,7 +171,7 @@ public class LearningResourceRecordTest {
             List<LearningResourceRecord> list = LearningResourceRecord.createLearningResourceRecordsFromJsonFile(Settings.TEST_RESOURCE_DIR + "ManuallyCreated/simpleResource.json");
 
             assertEquals(6, list.size());
-            assertEquals("Q1", list.get(0).getLearningResourceId());
+            assertEquals("Q1", list.get(0).getText());
             assertEquals(1, list.get(0).getConceptIds().size());
             assertEquals("C", list.get(2).getConceptIds().iterator().next());
             assertEquals(1, list.get(0).getDataImportance(), DataUtil.OK_FLOAT_MARGIN);
@@ -192,15 +192,15 @@ public class LearningResourceRecordTest {
             TecmapCSVReader test = new SakaiReader(rows, processors);
             Collection<AssessmentItem> list = test.getManualGradedLearningObjects();
             List<AssessmentItem> list2 = test.getManualGradedLearningObjects();
-            List<LearningResourceRecord> lolrList = LearningResourceRecord.createLearningResourceRecordsFromAssessmentItems(list);
+            List<LearningResourceRecord> lrrList = LearningResourceRecord.createLearningResourceRecordsFromAssessmentItems(list);
             List<String> resultString = new ArrayList<String>();
-            for (LearningResourceRecord lolr : lolrList) {
-                resultString.add(lolr.getLearningResourceId());
+            for (LearningResourceRecord learningResourceRecord : lrrList) {
+                resultString.add(learningResourceRecord.getText());
             }
 
             List<String> list2string = new ArrayList<String>();
-            for (AssessmentItem lo : list2) {
-                list2string.add(lo.getId());
+            for (AssessmentItem assessmentItem : list2) {
+                list2string.add(assessmentItem.getText());
             }
             assertEquals(list2string.toString(), resultString.toString());
         }catch (IOException e){
