@@ -1,215 +1,215 @@
 [ {
-  "learningResourceId" : "exam1-1",
+  "text": "exam1-1",
   "resourceTypes" : [ "ASSESSMENT", "PRACTICE" ],
   "conceptIds" : [ ],
   "dataImportance" : 0.0,
   "maxPossibleKnowledgeEstimate" : 4.0
 }, {
-  "learningResourceId" : "exam1-2",
+  "text": "exam1-2",
   "resourceTypes" : [ "ASSESSMENT", "PRACTICE" ],
   "conceptIds" : [ ],
   "dataImportance" : 0.0,
   "maxPossibleKnowledgeEstimate" : 6.0
 }, {
-  "learningResourceId" : "exam1-3",
+  "text": "exam1-3",
   "resourceTypes" : [ "ASSESSMENT", "PRACTICE" ],
   "conceptIds" : [ ],
   "dataImportance" : 0.0,
   "maxPossibleKnowledgeEstimate" : 4.0
 }, {
-  "learningResourceId" : "exam1-4",
+  "text": "exam1-4",
   "resourceTypes" : [ "ASSESSMENT", "PRACTICE" ],
   "conceptIds" : [ ],
   "dataImportance" : 0.0,
   "maxPossibleKnowledgeEstimate" : 4.0
 }, {
-  "learningResourceId" : "exam1-5",
+  "text": "exam1-5",
   "resourceTypes" : [ "ASSESSMENT", "PRACTICE" ],
   "conceptIds" : [ ],
   "dataImportance" : 0.0,
   "maxPossibleKnowledgeEstimate" : 4.0
 }, {
-  "learningResourceId" : "exam1-6",
+  "text": "exam1-6",
   "resourceTypes" : [ "ASSESSMENT", "PRACTICE" ],
   "conceptIds" : [ ],
   "dataImportance" : 0.0,
   "maxPossibleKnowledgeEstimate" : 4.0
 }, {
-  "learningResourceId" : "exam1-7",
+  "text": "exam1-7",
   "resourceTypes" : [ "ASSESSMENT", "PRACTICE" ],
   "conceptIds" : [ ],
   "dataImportance" : 0.0,
   "maxPossibleKnowledgeEstimate" : 4.0
 }, {
-  "learningResourceId" : "exam1-8-trace",
+  "text": "exam1-8-trace",
   "resourceTypes" : [ "ASSESSMENT", "PRACTICE" ],
   "conceptIds" : [ ],
   "dataImportance" : 0.0,
   "maxPossibleKnowledgeEstimate" : 12.0
 }, {
-  "learningResourceId" : "exam1-8-traceComment",
+  "text": "exam1-8-traceComment",
   "resourceTypes" : [ "ASSESSMENT", "PRACTICE" ],
   "conceptIds" : [ ],
   "dataImportance" : 0.0,
   "maxPossibleKnowledgeEstimate" : 3.0
 }, {
-  "learningResourceId" : "exam1-8-traceRec",
+  "text": "exam1-8-traceRec",
   "resourceTypes" : [ "ASSESSMENT", "PRACTICE" ],
   "conceptIds" : [ ],
   "dataImportance" : 0.0,
   "maxPossibleKnowledgeEstimate" : 2.0
 }, {
-  "learningResourceId" : "exam1-8-traceMem",
+  "text": "exam1-8-traceMem",
   "resourceTypes" : [ "ASSESSMENT", "PRACTICE" ],
   "conceptIds" : [ ],
   "dataImportance" : 0.0,
   "maxPossibleKnowledgeEstimate" : 2.0
 }, {
-  "learningResourceId" : "exam1-8a",
+  "text": "exam1-8a",
   "resourceTypes" : [ "ASSESSMENT", "PRACTICE" ],
   "conceptIds" : [ ],
   "dataImportance" : 0.0,
   "maxPossibleKnowledgeEstimate" : 7.0
 }, {
-  "learningResourceId" : "exam1-8b",
+  "text": "exam1-8b",
   "resourceTypes" : [ "ASSESSMENT", "PRACTICE" ],
   "conceptIds" : [ ],
   "dataImportance" : 0.0,
   "maxPossibleKnowledgeEstimate" : 9.0
 }, {
-  "learningResourceId" : "exam1-8c",
+  "text": "exam1-8c",
   "resourceTypes" : [ "ASSESSMENT", "PRACTICE" ],
   "conceptIds" : [ ],
   "dataImportance" : 0.0,
   "maxPossibleKnowledgeEstimate" : 9.0
 }, {
-  "learningResourceId" : "exam1-8d",
+  "text": "exam1-8d",
   "resourceTypes" : [ "ASSESSMENT", "PRACTICE" ],
   "conceptIds" : [ ],
   "dataImportance" : 0.0,
   "maxPossibleKnowledgeEstimate" : 9.0
 }, {
-  "learningResourceId" : "exam1-9a",
+  "text": "exam1-9a",
   "resourceTypes" : [ "ASSESSMENT", "PRACTICE" ],
   "conceptIds" : [ ],
   "dataImportance" : 0.0,
   "maxPossibleKnowledgeEstimate" : 4.0
 }, {
-  "learningResourceId" : "exam1-9b",
+  "text": "exam1-9b",
   "resourceTypes" : [ "ASSESSMENT", "PRACTICE" ],
   "conceptIds" : [ ],
   "dataImportance" : 0.0,
   "maxPossibleKnowledgeEstimate" : 3.0
 }, {
-  "learningResourceId" : "CLion - IDE Setup",
+  "text": "CLion - IDE Setup",
   "resourceTypes" : [ "ASSESSMENT", "PRACTICE" ],
   "conceptIds" : [ ],
   "dataImportance" : 0.0,
   "maxPossibleKnowledgeEstimate" : 5.0
 }, {
-  "learningResourceId" : "Day 01 Reading - C++ Intro",
+  "text": "Day 01 Reading - C++ Intro",
   "resourceTypes" : [ "ASSESSMENT", "PRACTICE" ],
   "conceptIds" : [ ],
   "dataImportance" : 0.0,
   "maxPossibleKnowledgeEstimate" : 8.0
 }, {
-  "learningResourceId" : "Day 03 Reading - Pointers and Arrays",
+  "text": "Day 03 Reading - Pointers and Arrays",
   "resourceTypes" : [ "ASSESSMENT", "PRACTICE" ],
   "conceptIds" : [ ],
   "dataImportance" : 0.0,
   "maxPossibleKnowledgeEstimate" : 6.0
 }, {
-  "learningResourceId" : "Day 04 Reading - Dynamic Memory (the heap)",
+  "text": "Day 04 Reading - Dynamic Memory (the heap)",
   "resourceTypes" : [ "ASSESSMENT", "PRACTICE" ],
   "conceptIds" : [ ],
   "dataImportance" : 0.0,
   "maxPossibleKnowledgeEstimate" : 7.0
 }, {
-  "learningResourceId" : "Day 06 Practice - Trace",
+  "text": "Day 06 Practice - Trace",
   "resourceTypes" : [ "ASSESSMENT", "PRACTICE" ],
   "conceptIds" : [ ],
   "dataImportance" : 0.0,
   "maxPossibleKnowledgeEstimate" : 5.0
 }, {
-  "learningResourceId" : "Lab 1: Interfaces and Testing",
+  "text": "Lab 1: Interfaces and Testing",
   "resourceTypes" : [ "ASSESSMENT", "PRACTICE" ],
   "conceptIds" : [ ],
   "dataImportance" : 0.0,
   "maxPossibleKnowledgeEstimate" : 10.0
 }, {
-  "learningResourceId" : "Day 05 Reading - const",
+  "text": "Day 05 Reading - const",
   "resourceTypes" : [ "ASSESSMENT", "PRACTICE" ],
   "conceptIds" : [ ],
   "dataImportance" : 0.0,
   "maxPossibleKnowledgeEstimate" : 3.0
 }, {
-  "learningResourceId" : "Lab 2: Array Library",
+  "text": "Lab 2: Array Library",
   "resourceTypes" : [ "ASSESSMENT", "PRACTICE" ],
   "conceptIds" : [ ],
   "dataImportance" : 0.0,
   "maxPossibleKnowledgeEstimate" : 10.0
 }, {
-  "learningResourceId" : "Day 09 Reading - Recursion",
+  "text": "Day 09 Reading - Recursion",
   "resourceTypes" : [ "ASSESSMENT", "PRACTICE" ],
   "conceptIds" : [ ],
   "dataImportance" : 0.0,
   "maxPossibleKnowledgeEstimate" : 7.0
 }, {
-  "learningResourceId" : "Lab 3: Testing Array Efficiency",
+  "text": "Lab 3: Testing Array Efficiency",
   "resourceTypes" : [ "ASSESSMENT", "PRACTICE" ],
   "conceptIds" : [ ],
   "dataImportance" : 0.0,
   "maxPossibleKnowledgeEstimate" : 10.0
 }, {
-  "learningResourceId" : "Day 12 Reading - Big O",
+  "text": "Day 12 Reading - Big O",
   "resourceTypes" : [ "ASSESSMENT", "PRACTICE" ],
   "conceptIds" : [ ],
   "dataImportance" : 0.0,
   "maxPossibleKnowledgeEstimate" : 4.0
 }, {
-  "learningResourceId" : "Day 13 Reading - Parameter Passing",
+  "text": "Day 13 Reading - Parameter Passing",
   "resourceTypes" : [ "ASSESSMENT", "PRACTICE" ],
   "conceptIds" : [ ],
   "dataImportance" : 0.0,
   "maxPossibleKnowledgeEstimate" : 8.0
 }, {
-  "learningResourceId" : "Lab 4: Recursive Array Library",
+  "text": "Lab 4: Recursive Array Library",
   "resourceTypes" : [ "ASSESSMENT", "PRACTICE" ],
   "conceptIds" : [ ],
   "dataImportance" : 0.0,
   "maxPossibleKnowledgeEstimate" : 10.0
 }, {
-  "learningResourceId" : "Exam 1",
+  "text": "Exam 1",
   "resourceTypes" : [ "ASSESSMENT", "PRACTICE" ],
   "conceptIds" : [ ],
   "dataImportance" : 0.0,
   "maxPossibleKnowledgeEstimate" : 90.0
 }, {
-  "learningResourceId" : "Day 18 Reading - Classes in C++",
+  "text": "Day 18 Reading - Classes in C++",
   "resourceTypes" : [ "ASSESSMENT", "PRACTICE" ],
   "conceptIds" : [ ],
   "dataImportance" : 0.0,
   "maxPossibleKnowledgeEstimate" : 10.0
 }, {
-  "learningResourceId" : "Day 19 Reading - Deep vs. Shallow Copies",
+  "text": "Day 19 Reading - Deep vs. Shallow Copies",
   "resourceTypes" : [ "ASSESSMENT", "PRACTICE" ],
   "conceptIds" : [ ],
   "dataImportance" : 0.0,
   "maxPossibleKnowledgeEstimate" : 6.0
 }, {
-  "learningResourceId" : "Lab 06: ArrayList",
+  "text": "Lab 06: ArrayList",
   "resourceTypes" : [ "ASSESSMENT", "PRACTICE" ],
   "conceptIds" : [ ],
   "dataImportance" : 0.0,
   "maxPossibleKnowledgeEstimate" : 10.0
 }, {
-  "learningResourceId" : "Lab 07: Linked Stacks and Queues",
+  "text": "Lab 07: Linked Stacks and Queues",
   "resourceTypes" : [ "ASSESSMENT", "PRACTICE" ],
   "conceptIds" : [ ],
   "dataImportance" : 0.0,
   "maxPossibleKnowledgeEstimate" : 10.0
 }, {
-  "learningResourceId" : "Lab 08: The List ADT and LinkedList implementation",
+  "text": "Lab 08: The List ADT and LinkedList implementation",
   "resourceTypes" : [ "ASSESSMENT", "PRACTICE" ],
   "conceptIds" : [ ],
   "dataImportance" : 0.0,

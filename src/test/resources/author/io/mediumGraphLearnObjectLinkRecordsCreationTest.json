@@ -1,57 +1,57 @@
 [ {
-  "learningResourceId" : "Q1",
+  "text": "Q1",
   "conceptIds" : [ ],
   "dataImportance" : 1.0
 }, {
-  "learningResourceId" : "Q2",
+  "text": "Q2",
   "conceptIds" : [ ],
   "dataImportance" : 1.0
 }, {
-  "learningResourceId" : "Q3",
+  "text": "Q3",
   "conceptIds" : [ ],
   "dataImportance" : 1.0
 }, {
-  "learningResourceId" : "Q4",
+  "text": "Q4",
   "conceptIds" : [ ],
   "dataImportance" : 1.0
 }, {
-  "learningResourceId" : "Q5",
+  "text": "Q5",
   "conceptIds" : [ ],
   "dataImportance" : 1.0
 }, {
-  "learningResourceId" : "Q6",
+  "text": "Q6",
   "conceptIds" : [ ],
   "dataImportance" : 1.0
 }, {
-  "learningResourceId" : "Q7",
+  "text": "Q7",
   "conceptIds" : [ ],
   "dataImportance" : 1.0
 }, {
-  "learningResourceId" : "Q8",
+  "text": "Q8",
   "conceptIds" : [ ],
   "dataImportance" : 1.0
 }, {
-  "learningResourceId" : "Q9",
+  "text": "Q9",
   "conceptIds" : [ ],
   "dataImportance" : 1.0
 }, {
-  "learningResourceId" : "Q10",
+  "text": "Q10",
   "conceptIds" : [ ],
   "dataImportance" : 1.0
 }, {
-  "learningResourceId" : "Q11",
+  "text": "Q11",
   "conceptIds" : [ ],
   "dataImportance" : 1.0
 }, {
-  "learningResourceId" : "Q12",
+  "text": "Q12",
   "conceptIds" : [ ],
   "dataImportance" : 1.0
 }, {
-  "learningResourceId" : "Q13",
+  "text": "Q13",
   "conceptIds" : [ ],
   "dataImportance" : 1.0
 }, {
-  "learningResourceId" : "Q14",
+  "text": "Q14",
   "conceptIds" : [ ],
   "dataImportance" : 1.0
 } ]

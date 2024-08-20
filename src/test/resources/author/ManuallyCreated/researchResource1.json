@@ -1,67 +1,78 @@
 [
-  {"learningResourceId":"Counting in binary to 10",
+  {
+    "text":"Counting in binary to 10",
   "conceptIds":[
     "Counting"
   ],
   "dataImportance": "1"
   },
-  {"learningResourceId":"What’s an algorithm?",
+  {
+    "text":"What’s an algorithm?",
   "conceptIds":[
     "Algorithms"
   ],
   "dataImportance": "1"
   },
-  {"learningResourceId":"What’s a function?",
+  {
+    "text":"What’s a function?",
   "conceptIds":[
     "Functions"
   ],
   "dataImportance": "1"
   },
-  {"learningResourceId":"What’s the purpose of a function?",
+  {
+    "text":"What’s the purpose of a function?",
   "conceptIds":[
     "Functions"
   ],
   "dataImportance": "1"
   },
-  {"learningResourceId":"What are the parameters in the function?",
+  {
+    "text":"What are the parameters in the function?",
   "conceptIds":[
     "Parameters"
   ],
   "dataImportance": "0"
   },
-  {"learningResourceId":"What data types can be passed as a parameter?",
+  {
+    "text":"What data types can be passed as a parameter?",
     "conceptIds":[
       "Parameters",
       "Values and Data Types"
     ],
     "dataImportance": "1"
   },
-  {"learningResourceId":"Overwrite each element in the list with it’s double value using two functions.",
+  {
+    "text":"Overwrite each element in the list with it’s double value using two functions.",
     "conceptIds":[
       "Lists",
       "Parameters"
     ],
     "dataImportance": "1"
   },
-  {"learningResourceId":"What is a side effect?",
+  {
+    "text":"What is a side effect?",
     "conceptIds":[
       "Lists",
       "Parameters"
     ],
     "dataImportance": "1"
-  },{"learningResourceId":"What is the proper for loop diction?",
+  },{
+  "text":"What is the proper for loop diction?",
     "conceptIds":[
       "For Loops"
     ],
     "dataImportance": "1"
   },
-  {"learningResourceId":"What are the three things you need for a for loop",
+  {
+    "text":"What are the three things you need for a for loop",
     "conceptIds":[
       "For Loops"
     ],
     "dataImportance": "1"
   },
-  {"learningResourceId": "What are the differences and similarities between for loops and while loops?",
+  {
+    "text": "What are the differences and similarities between for loops and while loops?",
     "conceptIds": [
     "For Loops",
       "While Loops"
@@ -69,7 +80,7 @@
     "dataImportance": "1"
   },
   {
-    "learningResourceId": "How are while loops and booleans related?",
+    "text": "How are while loops and booleans related?",
     "conceptIds": [
       "While Loops",
       "Booleans"
@@ -77,77 +88,77 @@
     "dataImportance": "0"
   },
   {
-    "learningResourceId": "What is the proper while loop diction?",
+    "text": "What is the proper while loop diction?",
     "conceptIds": [
       "While Loops"
     ],
     "dataImportance": "1"
   },
   {
-    "learningResourceId": "What are the things you need for a while loop?",
+    "text": "What are the things you need for a while loop?",
     "conceptIds": [
       "While Loops"
     ],
     "dataImportance": "1"
   },
   {
-    "learningResourceId": "What is a statement?",
+    "text": "What is a statement?",
     "conceptIds": [
       "Expressions and Statements"
     ],
     "dataImportance": "1"
   },
   {
-    "learningResourceId": "What are some of the statements we have already seen?",
+    "text": "What are some of the statements we have already seen?",
     "conceptIds": [
       "Expressions and Statements"
     ],
     "dataImportance": "0"
   },
   {
-    "learningResourceId": "What is 5%7?",
+    "text": "What is 5%7?",
     "conceptIds": [
       "Expressions and Statements"
     ],
     "dataImportance": "0"
   },
   {
-    "learningResourceId": "What is an assignment statement?",
+    "text": "What is an assignment statement?",
     "conceptIds": [
       "Variables"
     ],
     "dataImportance": "0"
   },
   {
-    "learningResourceId": "Write the following in camel case",
+    "text": "Write the following in camel case",
     "conceptIds": [
       "Variables"
     ],
     "dataImportance": "1"
   },
   {
-    "learningResourceId": "What are the important rules for variable names?",
+    "text": "What are the important rules for variable names?",
     "conceptIds": [
       "Variables"
     ],
     "dataImportance": "1"
   },
   {
-    "learningResourceId": "What makes up a dictionary?",
+    "text": "What makes up a dictionary?",
     "conceptIds": [
       "Dictionaries"
     ],
     "dataImportance": "0"
   },
   {
-    "learningResourceId": "What’s key-value pairs",
+    "text": "What’s key-value pairs",
     "conceptIds": [
       "Dictionaries"
     ],
     "dataImportance": "0"
   },
   {
-    "learningResourceId": "Are strings mutable?",
+    "text": "Are strings mutable?",
     "conceptIds": [
       "Strings"
     ],

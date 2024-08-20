@@ -1,48 +1,48 @@
 [
   {
-    "learningResourceId":"Counting in binary to 10",
+    "text":"Counting in binary to 10",
   "conceptIds":[
     "Counting"
   ],
   "dataImportance": "1"
   },
   {
-    "learningResourceId":"Write an algorithm to change a list of ints to be a list of strings",
+    "text":"Write an algorithm to change a list of ints to be a list of strings",
   "conceptIds":[
     "Algorithms"
   ],
   "dataImportance": "1"
   },
   {
-    "learningResourceId":"What’s wrong with the following function definition?",
+    "text":"What’s wrong with the following function definition?",
   "conceptIds":[
     "Functions"
   ],
     "dataImportance": "1"
   },
   {
-    "learningResourceId":"What will the following function return?",
+    "text":"What will the following function return?",
     "conceptIds":[
       "Functions"
    ],
     "dataImportance": "1"
   },
   {
-    "learningResourceId":"Can a function be called several times by placing a function call in the body of a loop",
+    "text":"Can a function be called several times by placing a function call in the body of a loop",
     "conceptIds":[
       "Functions"
    ],
   "dataImportance": "1"
   },
   {
-    "learningResourceId":"How many parameters can you have?",
+    "text":"How many parameters can you have?",
   "conceptIds":[
     "Parameters"
   ],
   "dataImportance": "1"
   },
   {
-    "learningResourceId":"When do you want to cause a side effect?",
+    "text":"When do you want to cause a side effect?",
     "conceptIds":[
       "Parameters",
       "Values and Data Types"
@@ -50,7 +50,7 @@
     "dataImportance": "1"
   },
   {
-    "learningResourceId":"When do you want to allow side effects?",
+    "text":"When do you want to allow side effects?",
     "conceptIds":[
       "Lists",
       "Parameters"
@@ -58,14 +58,14 @@
     "dataImportance": "1"
   },
   {
-    "learningResourceId":"Describe how the following relate to a for loop: variable, terminating condition, loop body",
+    "text":"Describe how the following relate to a for loop: variable, terminating condition, loop body",
     "conceptIds":[
       "For Loops"
     ],
     "dataImportance": "1"
   },
   {
-    "learningResourceId": "What are the differences and similarities between for loops and while loops?",
+    "text": "What are the differences and similarities between for loops and while loops?",
     "conceptIds": [
     "For Loops",
     "While Loops"
@@ -73,7 +73,7 @@
     "dataImportance": "0"
   },
   {
-    "learningResourceId": "Describe how while loops can depend on booleans",
+    "text": "Describe how while loops can depend on booleans",
     "conceptIds": [
       "While Loops",
       "Booleans"
@@ -81,91 +81,91 @@
     "dataImportance": "1"
   },
   {
-    "learningResourceId": "Describe the flow of a while loop",
+    "text": "Describe the flow of a while loop",
     "conceptIds": [
       "While Loops"
     ],
     "dataImportance": "1"
   },
   {
-    "learningResourceId": "What’s the difference between a statement and an expression?",
+    "text": "What’s the difference between a statement and an expression?",
     "conceptIds": [
       "Expressions and Statements"
     ],
     "dataImportance": "0"
   },
   {
-    "learningResourceId": "Write a function that will convert 645 mins into hours",
+    "text": "Write a function that will convert 645 mins into hours",
     "conceptIds": [
       "Expressions and Statements"
     ],
     "dataImportance": "1"
   },
   {
-    "learningResourceId": "Write a function that will convert 645 mins into the whole hours",
+    "text": "Write a function that will convert 645 mins into the whole hours",
     "conceptIds": [
       "Expressions and Statements"
     ],
     "dataImportance": "1"
   },
   {
-    "learningResourceId": "What does the modulus operator do?",
+    "text": "What does the modulus operator do?",
     "conceptIds": [
       "Expressions and Statements"
     ],
     "dataImportance": "0"
   },
   {
-    "learningResourceId": "What is an assignment token?",
+    "text": "What is an assignment token?",
     "conceptIds": [
       "Variables"
     ],
     "dataImportance": "1"
   },
   {
-    "learningResourceId": "What is a reference diagram?",
+    "text": "What is a reference diagram?",
     "conceptIds": [
       "Variables"
     ],
     "dataImportance": "1"
   },
   {
-    "learningResourceId": "What is printed then the following statements execute?",
+    "text": "What is printed then the following statements execute?",
     "conceptIds": [
       "Variables"
     ],
     "dataImportance": "1"
   },
   {
-    "learningResourceId": "Whats a key",
+    "text": "Whats a key",
     "conceptIds": [
       "Dictionaries"
     ],
     "dataImportance": "1"
   },
   {
-    "learningResourceId": "What’s a value",
+    "text": "What’s a value",
     "conceptIds": [
       "Dictionaries"
     ],
     "dataImportance": "1"
   },
   {
-    "learningResourceId": "What are values are accessed by?",
+    "text": "What are values are accessed by?",
     "conceptIds": [
       "Dictionaries"
     ],
     "dataImportance": "0"
   },
   {
-    "learningResourceId": "Is a dictionary ordered?",
+    "text": "Is a dictionary ordered?",
     "conceptIds": [
       "Dictionaries"
     ],
     "dataImportance": "1"
   },
   {
-    "learningResourceId": "Write a function that will calculate if the substring 'the' is in any user input",
+    "text": "Write a function that will calculate if the substring 'the' is in any user input",
     "conceptIds": [
       "Strings"
     ],

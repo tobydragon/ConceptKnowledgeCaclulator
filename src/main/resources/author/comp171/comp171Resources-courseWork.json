@@ -1,169 +1,169 @@
 [ {
-  "learningResourceId" : "HW01",
+  "text": "HW01",
   "conceptIds" : [ "Designing Solutions"],
   "dataImportance" : 1.0
 }, {
-  "learningResourceId" : "HW02",
+  "text": "HW02",
   "conceptIds" : ["Designing Solutions" ],
   "dataImportance" : 1.0
 }, {
-  "learningResourceId" : "HW03",
+  "text": "HW03",
   "conceptIds" : [ "Designing Solutions"],
   "dataImportance" : 1.0
 }, {
-  "learningResourceId" : "HW04",
+  "text": "HW04",
   "conceptIds" : [ "Designing Solutions"],
   "dataImportance" : 1.0
 }, {
-  "learningResourceId" : "HW05",
+  "text": "HW05",
   "conceptIds" : ["Expressions", "Assignment", "Literals", "Integers", "Floats", "Strings" ],
   "dataImportance" : 1.0
 }, {
-  "learningResourceId" : "HW-quiz2",
+  "text": "HW-quiz2",
   "conceptIds" : [ ],
   "dataImportance" : 1.0
 }, {
-  "learningResourceId" : "HW06",
+  "text": "HW06",
   "conceptIds" : [ "Booleans", "Boolean Expressions", "Assignment", "Stack Traces"],
   "dataImportance" : 1.0
 }, {
-  "learningResourceId" : "HW07",
+  "text": "HW07",
   "conceptIds" : [ "If Statements", "Boolean Expressions"],
   "dataImportance" : 1.0
 }, {
-  "learningResourceId" : "HW08",
+  "text": "HW08",
   "conceptIds" : ["While Loops", "Stack Traces" ],
   "dataImportance" : 1.0
 }, {
-  "learningResourceId" : "HW09",
+  "text": "HW09",
   "conceptIds" : ["While Loops" ],
   "dataImportance" : 1.0
 }, {
-  "learningResourceId" : "HW10",
+  "text": "HW10",
   "conceptIds" : ["While Loops" ],
   "dataImportance" : 1.0
 }, {
-  "learningResourceId" : "HW11",
+  "text": "HW11",
   "conceptIds" : ["Functions" ],
   "dataImportance" : 1.0
 }, {
-  "learningResourceId" : "HW11.5",
+  "text": "HW11.5",
   "conceptIds" : ["Defining Functions", "Calling Functions", "Stack Traces" ],
   "dataImportance" : 1.0
 }, {
-  "learningResourceId" : "HW12",
+  "text": "HW12",
   "conceptIds" : [ "For Loops"],
   "dataImportance" : 1.0
 }, {
-  "learningResourceId" : "HW13",
+  "text": "HW13",
   "conceptIds" : [  "Stack Traces", "Functions", "For Loops"],
   "dataImportance" : 1.0
 }, {
-  "learningResourceId" : "HW14",
+  "text": "HW14",
   "conceptIds" : [ "Functions", "For Loops", "Calling Functions"],
   "dataImportance" : 1.0
 }, {
-  "learningResourceId" : "HW15",
+  "text": "HW15",
   "conceptIds" : [  "Lists", "For Loops", "Stack Traces"],
   "dataImportance" : 1.0
 }, {
-  "learningResourceId" : "HW16",
+  "text": "HW16",
   "conceptIds" : ["Strings", "Lists", "Calling Functions" ],
   "dataImportance" : 1.0
 }, {
-  "learningResourceId" : "HW17",
+  "text": "HW17",
   "conceptIds" : [ "Collections of Collections", "Lists", "Strings"],
   "dataImportance" : 1.0
 }, {
-  "learningResourceId" : "HW18",
+  "text": "HW18",
   "conceptIds" : ["Collections of Collections", "Stack Traces" ],
   "dataImportance" : 1.0
 }, {
-  "learningResourceId" : "lab02design",
+  "text": "lab02design",
   "conceptIds" : [ "Designing Solutions"],
   "dataImportance" : 1.0
 }, {
-  "learningResourceId" : "lab03design",
+  "text": "lab03design",
   "conceptIds" : [ "Designing Solutions"],
   "dataImportance" : 1.0
 }, {
-  "learningResourceId" : "lab04design",
+  "text": "lab04design",
   "conceptIds" : [ "Designing Solutions"],
   "dataImportance" : 1.0
 }, {
-  "learningResourceId" : "lab05design",
+  "text": "lab05design",
   "conceptIds" : [ "Designing Solutions"],
   "dataImportance" : 1.0
 }, {
-  "learningResourceId" : "lab06design",
+  "text": "lab06design",
   "conceptIds" : [ "Designing Solutions"],
   "dataImportance" : 1.0
 }, {
-  "learningResourceId" : "lab07design",
+  "text": "lab07design",
   "conceptIds" : [ "Designing Solutions"],
   "dataImportance" : 1.0
 }, {
-  "learningResourceId" : "lab08design",
+  "text": "lab08design",
   "conceptIds" : [ "Designing Solutions"],
   "dataImportance" : 1.0
 }, {
-  "learningResourceId" : "project01design",
+  "text": "project01design",
   "conceptIds" : [ "Designing Solutions"],
   "dataImportance" : 1.0
 }, {
-  "learningResourceId" : "project02design",
+  "text": "project02design",
   "conceptIds" : [ "Designing Solutions"],
   "dataImportance" : 1.0
 }, {
-  "learningResourceId" : "project03design",
+  "text": "project03design",
   "conceptIds" : [ "Designing Solutions"],
   "dataImportance" : 1.0
 }, {
-  "learningResourceId" : "project01implementation",
+  "text": "project01implementation",
   "conceptIds" : [ "While Loops", "If Statements", "Expressions", "Floats"],
   "dataImportance" : 1.0
 }, {
-  "learningResourceId" : "project02implementation",
+  "text": "project02implementation",
   "conceptIds" : [ "Collections", "Loops", "Functions"],
   "dataImportance" : 1.0
 }, {
-  "learningResourceId" : "project03implementation",
+  "text": "project03implementation",
   "conceptIds" : [ "Collections", "Loops", "Calling Functions"],
   "dataImportance" : 1.0
 }, {
-  "learningResourceId" : "Quiz01",
+  "text": "Quiz01",
   "conceptIds" : [ "Designing Solutions"],
   "dataImportance" : 1.0
 }, {
-  "learningResourceId" : "Quiz02",
+  "text": "Quiz02",
   "conceptIds" : [ "Expressions", "Assignment", "Literals", "Integers", "Floats", "Strings"],
   "dataImportance" : 1.0
 }, {
-  "learningResourceId" : "Quiz03",
+  "text": "Quiz03",
   "conceptIds" : [ "Boolean Expressions", "If Statements"],
   "dataImportance" : 1.0
 }, {
-  "learningResourceId" : "Quiz04",
+  "text": "Quiz04",
   "conceptIds" : [ "While Loops", "Strings", "Stack Traces"],
   "dataImportance" : 1.0
 }, {
-  "learningResourceId" : "Quiz05",
+  "text": "Quiz05",
   "conceptIds" : [ "Arguments", "Defining and Using Parameters", "Functions"],
   "dataImportance" : 1.0
 }, {
-  "learningResourceId" : "Quiz06",
+  "text": "Quiz06",
   "conceptIds" : [ "Functions", "Arguments", "Defining and Using Parameters", "Stack Traces"],
   "dataImportance" : 1.0
 }, {
-  "learningResourceId" : "Quiz07",
+  "text": "Quiz07",
   "conceptIds" : [ "Lists", "Functions"],
   "dataImportance" : 1.0
 }, {
-  "learningResourceId" : "Quiz08",
+  "text": "Quiz08",
   "conceptIds" : [ "Strings", "Lists", "For Loops", "Stack Traces"],
   "dataImportance" : 1.0
 }, {
-  "learningResourceId" : "Quiz09",
+  "text": "Quiz09",
   "conceptIds" : ["Collections of Collections", "Lists", "Strings" ],
   "dataImportance" : 1.0
 } ]
